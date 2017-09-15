@@ -1,0 +1,56 @@
+<head>
+  <meta charset="utf-8">
+</head>
+
+<div class="row div-login">
+   <form class="col s12" [formGroup]="formulario" (ngSubmit)="sendMessage()">
+     <div class="row">
+       <div class="input-field col s12">
+         <i class="material-icons prefix">account_circle</i>
+         <input id="nome" required type="text" class="validate" formControlName="nome">
+         <label for="nome"
+             data-error="Por favor, insira um nome."
+	         data-success="Ok!"
+         >Usuário</label>
+       </div>  
+     </div>
+     <div class="row">
+       <div class="input-field col s12">
+         <i class="material-icons prefix">email</i>
+         <input id="email" required type="email" class="validate" formControlName="email">
+         <label for="email" 
+         	 data-error="Por favor, insira um email válido."
+	         data-success="Ok!"
+         >Email</label>
+       </div>
+     </div>
+     
+     <div class="row">
+       <div class="input-field col s12">
+         <i class="material-icons prefix">textsms</i>
+         <textarea id="mensagem" required class="materialize-textarea" formControlName="mensagem"></textarea>
+         <label for="mensagem"
+             data-error="Por favor, insira uma mensagem."
+	         data-success="Ok!"
+	     >Mensagem</label>
+       </div>
+     </div>
+     <div class="row">
+       <div class="msgError red-text " *ngIf="verifyValidForm()">
+         <div class="card-panel red lighten-1">
+          <span class="white-text">Existem campos inválidos no formulário.</span>
+        </div>
+       </div>
+     </div>
+     <div class="row">
+       <div *ngIf="enviadoComSucesso">
+         <div class="card-panel green">
+          <span class="white-text">Mensagem enviada com sucesso.</span>
+        </div>
+       </div>
+     </div>
+     <div class='row'>
+       <button type="submit" class="btn btn-primary" >Enviar</button>
+     </div>
+   </form>
+ </div>

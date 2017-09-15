@@ -1,0 +1,38 @@
+<head>
+  <meta charset="utf-8">
+</head>
+
+ <div class="row div-login">
+   <form class="col s12" [formGroup]="formulario" (ngSubmit)="login()">
+     <div class="row">
+       <div class="input-field col s12">
+         <i class="material-icons prefix">account_circle</i>
+         <input id="chave" type="text" class="validate" formControlName="chave">
+         <label for="chave" 
+	         data-success="Ok!"
+         >Usuário</label>
+       </div>  
+     </div>
+     <div class="row">
+       <div class="input-field col s12">
+         <i class="material-icons prefix">vpn_key</i>
+         <input id="senha" type="password" class="validate" formControlName="senha">
+         <label for="senha" 
+	         data-success="Ok!"
+         >Senha</label>
+       </div>
+     </div>
+     <div class="row">
+       <div class="msgError red-text " *ngIf="verifyValidAuthentication()">
+         <div class="card-panel red lighten-1">
+          <span class="white-text">Usuário ou senha inválidos.</span>
+        </div>
+       </div>
+     </div>
+     <div class='row'>
+       <button type="submit" class="btn btn-primary" [disabled]="isValid()">Login</button>
+       <a class="btn btn-primary right" (click)="forgotPassword()">Esqueci a senha</a>
+     </div>
+   </form>
+ </div>
+ 
