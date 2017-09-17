@@ -1,7 +1,7 @@
 export class Usuario {
-    id: number;
     chave: string;
-    token: string;
+    id: number;
     senha: string;
+    token: string;    
     version: number;
 }

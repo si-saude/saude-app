@@ -1,0 +1,17 @@
+<head>
+  <meta charset="utf-8">
+</head>
+
+<nav [ngClass]="theme">
+  <div class="container">
+    <div class="col l6 s12">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo">Sansim</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a routerLink="contato">Cadastro</a></li>
+          <li><a (click)="logout()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
