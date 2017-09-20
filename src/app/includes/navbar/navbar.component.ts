@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { GlobalVariable } from './../../global';
 
 @Component({

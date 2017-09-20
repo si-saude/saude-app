@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
 
@@ -11,25 +12,33 @@ import { AuthService } from './auth.service';
 export class LoginComponent implements OnInit {
 
   private formulario: FormGroup;
-  private isAuthenticated: boolean = false;
-  private authenticationFailure: boolean = false;
+  
+  private msgError: string = '';
+  private verifyError: boolean = false;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) { }
+  constructor(
+          private authService: AuthService, 
+          private formBuilder: FormBuilder,
+          private router: Router) { }
 
   ngOnInit() {
       this.formulario = this.formBuilder.group({
          chave: [null, Validators.required ],
          senha: [null, Validators.required ]
       });
+      
+//      let ls = window.localStorage.getItem("token");
+      if ( window.localStorage.getItem("token") !== undefined ||
+              window.localStorage.getItem("token") !== null ||
+              window.localStorage.getItem("token") !== '' ) {
+          this.router.navigate(['/home']);
+      }
   }
 
   login() {
-    console.log(this.authService.login(this.formulario.value));
-    if ( this.authService.login(this.formulario.value) ) {
-        this.authenticationFailure = false;
-    } else {
-        this.authenticationFailure = true;
-    }
+     this.authService.login(this.formulario.value);
+     
+     this.verifyMsgError();
   }
   
   isValid() {
@@ -41,13 +50,18 @@ export class LoginComponent implements OnInit {
  
   forgotPassword() { }
   
-  verifyValidAuthentication() {
-      if ( this.authenticationFailure ) {
-          return true;
-      } else { 
-          return false;
-      }
-      
+  verifyMsgError() {
+      this.authService.errorMsgEmitter.subscribe(error => {
+         if ( error != '' ) {
+             this.verifyError = true;
+             this.msgError = error;
+             return true;
+         } else {
+             this.verifyError = false;
+             this.msgError = '';
+             return false;
+         }
+      });
   }
   
 }

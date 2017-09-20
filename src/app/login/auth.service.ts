@@ -11,7 +11,12 @@ import { Usuario } from './../model/usuario';
 @Injectable()
 export class AuthService {
 
-  private authenticatedUser: boolean = false;
+  public showMenuEvent = new EventEmitter<boolean>();
+  public errorMsgEmitter = new EventEmitter<string>();
+  
+//  private authenticatedUser: boolean = false;
+  
+  private usuario: Usuario = new Usuario();
   private headers = new Headers({'Content-Type': 'application/json'});
   private URL: string = GlobalVariable.BASE_API_URL; 
 
@@ -24,21 +29,35 @@ export class AuthService {
 //    }
   let urlLogin = this.URL + "/usuario/login";
   this.http
-      .post(urlLogin, JSON.stringify({usuario}), {headers: this.headers})
+      .post(urlLogin, JSON.stringify(usuario), {headers: this.headers})
       .toPromise()
       .then(res => {
-          console.log(res.headers);
-          console.log(res.json());
+          this.showMenuEvent.emit(true);
+//          this.authenticatedUser = true;
+//          console.log(res.headers);
+//          console.log(res.json());
+//          this.usuario = JSON.parse(res.json());
+          window.localStorage.setItem("token", res.json().token);
+          this.router.navigate(["/home"]);
+          //gravar token e permissoes
       })
-      .catch(this.handleError);
+      .catch(error => {
+//          this.authenticatedUser = false;
+          this.errorMsgEmitter.emit(error._body);
+      });
   }
-
-  userIsAuthenticated(){
-    return this.authenticatedUser;
-  }
-  
+//
+//  getAuthenticatedUser(){
+//    return this.authenticatedUser;
+//  }
+//  
+//  setAuthenticatedUser(value: boolean) {
+//      this.authenticatedUser = value;
+//  }
+//  
   private handleError(error: any): Promise<any> {
-      console.error('An error occurred', error); // for demo purposes only
+//      console.log(error._body);
+      console.error('Um erro ocorreu: ', error._body); // for demo purposes only
       return Promise.reject(error.message || error);
   }
 

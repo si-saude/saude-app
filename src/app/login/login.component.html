@@ -23,9 +23,9 @@
        </div>
      </div>
      <div class="row">
-       <div class="msgError red-text " *ngIf="verifyValidAuthentication()">
+       <div class="msgError red-text " *ngIf="verifyError">
          <div class="card-panel red lighten-1">
-          <span class="white-text">Usuário ou senha inválidos.</span>
+          <span class="white-text">{{msgError}}</span>
         </div>
        </div>
      </div>
