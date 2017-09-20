@@ -1,0 +1,68 @@
+<h3>{{titulo}}</h3>
+
+<div class="collection">
+  <div *ngFor="let perfil of perfis">
+    <div class="row">
+    	<div class="col s10">
+	    	<a [routerLinkActive]="['active']" class="collection-item">{{perfil.titulo}}</a>
+	    </div>
+	  	<div class="col s1">
+			<a [routerLink]="['/perfil/editar', perfil.id]"><i class="material-icons">mode_edit</i></a>
+	  	</div>
+	  	<div class="col s1">
+			<a (click)="delete(perfil.id)"><i class="material-icons">delete</i></a>
+	  	</div>
+  	</div>
+  </div>
+</div>
+<!-- 
+<ul class="pagination">
+    <li class=""><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+    <li class="active"><a href="#!">1</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">3</a></li>
+    <li class="waves-effect"><a href="#!">4</a></li>
+    <li class="waves-effect"><a href="#!">5</a></li>
+    <li class=""><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+</ul>
+ -->
+ 
+ <!-- Paginação -->
+<ul class="pagination center-align" *ngIf="paginas">
+<li class="disabled"><a (click)="goToPage(1)"><i class="material-icons">first_page</i></a></li>
+<li class="disabled"><a (click)="goToPage(perfilFilter.getPageNumber()-1)"><i class="material-icons">chevron_left</i></a></li>
+	<li [ngClass]="activePage(i+1)" class="waves-effect" 
+	*ngFor="let pagina of paginas; let i = index">
+	<a (click)="goToPage(i+1)">{{i+1}}</a>
+	</li>
+<li class="disabled"><a (click)="goToPage(perfilFilter.getPageNumber()+1)"><i class="material-icons">chevron_right</i></a></li>
+<li class="disabled"><a (click)="goToPage(paginas.length)"><i class="material-icons">last_page</i></a></li>
+
+</ul>
+
+<!-- Botoes navegacao paginacao 
+<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+ -->
+ 
+<a [routerLink]="['/perfil/cadastrar']" 
+class="waves-effect waves-light btn">Adicionar</a>
+<a class="waves-effect waves-light btn modal-trigger">Filtro</a>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal" 
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+	
+	<div class="input-field col s8">
+		<div class="modal-content">
+			<input type="text" id="titulo" [(ngModel)]="perfilFilter.titulo" name="titulo">
+			<label for="titulo">Titulo</label>
+		</div>
+	</div>
+  	  	
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+    	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="filterTitulo()">Filtrar</a>
+  	</div>
+  	
+</div>

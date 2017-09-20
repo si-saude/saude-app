@@ -1,0 +1,72 @@
+<head>
+  <meta charset="utf-8">
+</head>
+
+ <div class="row">
+ <h3>{{titulo}}</h3>
+   <form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+     <div class="row">
+       <div class="input-field col s12">
+         <input id="titulo" type="text" required formControlName="titulo">
+         <label for="titulo" 
+         data-error="Campo obrigatório.">Titulo</label>
+       </div>
+     </div>
+     
+	<input id="id" name="id" type="hidden" formControlName="id">	
+   		
+ 	<input id="version" name="version" type="hidden" formControlName="version">
+     
+    <fieldset>
+    <a class="btn-floating waves-effect waves-light green" (click)="addPermission()"><i class="material-icons center-icon">add</i></a>
+    <legend>Permissões:</legend>
+    <div class="form-group">
+	    <div  formArrayName="permissoes">
+	    	<div *ngFor="let permissao of permissoesArray.controls;let i = index" [formGroupName]="i">
+	    	
+	    	<p>Index: {{i}}</p>
+				<div class="row">
+					<div class="input-field col s4">
+				    	<input required name="funcao" id="funcao" type="text"
+				    	materialize="autocomplete" [materializeParams]="funcoes"
+				    	(ngModelChange)="changedExtraHandler($event)"
+				    	class="validate" formControlName="funcao"/>
+				        <label for="funcao" data-error="Campo obrigatório.">Função</label>
+				    </div>
+				    
+				    <div class="col s3">
+						<input name="leitura{{i}}" id="leitura{{i}}" type="checkbox" 
+						formControlName="leitura"/>
+						<label for="leitura{{i}}">Leitura</label>
+					</div>
+					
+					<div class="col s3">
+						<input name="escrita{{i}}" id="escrita{{i}}" type="checkbox" 
+						formControlName="escrita"/>
+						<label for="escrita{{i}}">Escrita</label>
+					</div>
+					
+					<div class="col s2">
+						<a class="btn-floating waves-effect waves-light red" (click)="removePermission(i)"><i class="material-icons center-icon">delete</i></a>
+					</div>
+					
+				</div>
+				
+	        	<input id="id{{i}}" name="id{{i}}" type="hidden" formControlName="id">	
+	      		
+	    		<input id="version{{i}}" name="version{{i}}" type="hidden" formControlName="version">	
+	      			
+			</div>
+		</div>
+	</div>
+	</fieldset>
+ 
+	<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+	
+	<div class='row'>
+	  <button type="submit" class="btn btn-primary" [disabled]="!isValid()">Salvar</button> 
+	</div>
+     
+   </form>
+ </div>
+ 

@@ -14,6 +14,8 @@ import { NavbarPrincipalComponent } from './includes/navbar-principal/navbar-pri
 import { AuthService } from './login/auth.service';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
+import { PermissaoComponent } from './permissao/permissao.component';
+import { PerfilModule } from './perfil/perfil.module';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import { AuthGuard } from './guards/auth.guard';
     NavbarComponent,
     FooterComponent,
     NavbarPrincipalComponent,
-    HomeComponent
+    HomeComponent,
+    PermissaoComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     LoginModule,
     ContatoModule,
+    PerfilModule,
     AppRoutingModule
   ],
   providers: [ 

@@ -43,6 +43,7 @@ export class AuthService {
       })
       .catch(error => {
 //          this.authenticatedUser = false;
+          console.log(error);
           this.errorMsgEmitter.emit(error._body);
       });
   }
