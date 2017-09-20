@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  private logoSansim = require("./../assets/img/logo_sansim.jpg");
+//  private logo = require("./../assets/img/logo.jpg");
 }
