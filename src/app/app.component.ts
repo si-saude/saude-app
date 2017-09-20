@@ -9,6 +9,9 @@ import { AuthService } from './login/auth.service';
 })
 export class AppComponent {
   title = 'app';
+<<<<<<< HEAD
+//  private logo = require("./../assets/img/logo.jpg");
+=======
 //  private logoSansim = require("./../assets/img/logo_sansim.jpg");
   private showMenu = false;
   
@@ -19,4 +22,5 @@ export class AppComponent {
           mostrar => this.showMenu = mostrar);
   }
   
+>>>>>>> branch 'master' of https://github.com/si-saude/saude-app.git
 }
