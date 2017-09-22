@@ -1,0 +1,89 @@
+<head>
+  <meta charset="utf-8">
+</head>
+
+<h3 [ngStyle]="{'color': corTitulo}" class="center-align">Localizações</h3>
+ 
+<app-mensagem-form  *ngIf="verifyEmptyPaginas" 
+[msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
+</app-mensagem-form>
+
+<div class="collection">
+
+	<!-- Preload  --> 
+	<div class="center-align preload" *ngIf="showPreload">
+		<app-preload [msg]="msgPreload"></app-preload>
+	</div>
+ 
+	<div *ngFor="let localizacao of localizacoes">
+		<div class="row row-collection">
+			<div class="col s10">
+				<a [routerLinkActive]="['active']" class="collection-item">{{localizacao.nome}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/localizacao/editar', localizacao.id]"><i class="material-icons">mode_edit</i></a>
+		 	</div>
+		 	<div class="col s1">
+				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(localizacao.id)"><i class="material-icons">delete</i></a>
+		 	</div>
+		</div>
+	</div>
+	 
+</div>
+ 
+ <!-- Paginação -->
+<ul class="pagination center-align">
+
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(1)">
+	<i class="material-icons arrow-pagination">first_page</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(localizacaoFilter.getPageNumber()-1)">
+	<i class="material-icons arrow-pagination">chevron_left</i>
+	</a></li>
+	
+	<li [ngClass]="activePage(i+1)" class="waves-effect" 
+	*ngFor="let pagina of paginas; let i = index">
+	<a (click)="goToPage(i+1)">{{i+1}}
+	</a></li>
+	
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(localizacaoFilter.getPageNumber()+1)">
+	<i class="material-icons arrow-pagination">chevron_right</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(paginas.length)">
+	<i class="material-icons arrow-pagination">last_page</i>
+	</a></li>
+
+</ul>
+
+<!-- Botoes navegacao paginacao 
+<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+ -->
+ 
+
+<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+<a [routerLink]="['/localizacao/cadastrar']" 
+class="waves-effect waves-light btn button-add">Adicionar</a>
+
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal" 
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+
+	<div class="input-field col s8">
+		<div class="modal-content">
+			<input type="text" id="nome" [(ngModel)]="localizacaoFilter.nome" name="nome">
+			<label for="nome">Nome</label>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+    	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="filterNome()">Filtrar</a>
+  	</div>
+
+</div>

@@ -8,27 +8,35 @@ import { PerfilService } from './../perfil.service';
 import { Perfil } from './../../model/perfil';
 import { Permissao } from './../../model/permissao';
 import { MensagemFormComponent } from './../../includes/mensagem-form/mensagem-form.component';
+import { GlobalVariable } from './../../global';
+import { GenericPerfilComponent } from './../../generics/generic.perfil.component';
 
 @Component({
   selector: 'app-perfil-editar',
   templateUrl: './../perfil-form/perfil-form.html',
   styleUrls: ['./../perfil-form/perfil-form.css']
 })
-export class PerfilEditarComponent implements OnInit {
+export class PerfilEditarComponent extends GenericPerfilComponent implements OnInit {
 
+  private titulo: string = "Editar";
+  private corTitulo: string = GlobalVariable.COLOR_TITLE;
   private inscricao: Subscription;
   private perfil: Perfil;
-  private formulario: FormGroup;
-  private permissoesArray: FormArray;
-  private funcoes: Array<Object>;
-  private colorMsg: string;
-  private msg: string;
-  private verifyMsg: boolean = false;
+//  private formulario: FormGroup;
+//  private permissoesArray: FormArray;
+//  private funcoes: Array<Object>;
+//  private colorMsg: string;
+//  private msg: string;
+//  private verifyMsg: boolean = false;
+  
     
   constructor(private route: ActivatedRoute,
-          private perfilService: PerfilService,
-          private formBuilder: FormBuilder) { }
+          perfilService: PerfilService,
+          formBuilder: FormBuilder) { 
+      super(perfilService, formBuilder);
+  }
 
+  onChange($event){}
   ngOnInit() {
       
       this.formulario = this.formBuilder.group({
@@ -88,17 +96,73 @@ export class PerfilEditarComponent implements OnInit {
   }
   
   addPermission() {
-      
-      let permissao = new FormGroup({});
-      permissao.addControl("funcao", new FormControl(''));
-      permissao.addControl("leitura", new FormControl(false));
-      permissao.addControl("escrita", new FormControl(false));
-      permissao.addControl("perfil", new FormControl(null));
-      permissao.addControl("id", new FormControl(0));
-      permissao.addControl("version", new FormControl(0));
-      
-      this.permissoesArray.push(permissao);
+      super.addPermission();
   }
+  
+  removePermission(i: number) {
+      super.removePermission(i);
+  }
+  
+  isValid():boolean {
+      return super.isValid();
+  }
+  
+  save() {
+      super.save();
+  }
+  
+  changedExtraHandler(evento: string) {
+      super.changedExtraHandler(evento);
+  }
+  
+//  addPermission() {
+//      
+//      let permissao = new FormGroup({});
+//      permissao.addControl("funcao", new FormControl(''));
+//      permissao.addControl("leitura", new FormControl(false));
+//      permissao.addControl("escrita", new FormControl(false));
+//      permissao.addControl("perfil", new FormControl(null));
+//      permissao.addControl("id", new FormControl(0));
+//      permissao.addControl("version", new FormControl(0));
+//      
+//      this.permissoesArray.push(permissao);
+//  }
+//
+//  removePermission(i: number) {
+//      this.permissoesArray.removeAt(i);
+//  }
+//  
+//  isValid() {
+//      if ( this.formulario.valid ) { 
+//          return true;
+//      } else { return false; }
+//      
+//  }
+//  
+//  save() {
+//      this.perfilService.submit(this.formulario.value)
+//          .then(res => { 
+//              this.verifyMsg = true;
+//              this.colorMsg = "green";
+//              this.msg = res.text();
+//          })
+//          .catch(error => {
+//              this.verifyMsg = true;
+//              this.colorMsg = "red";
+//              this.msg = error.text();
+//          });
+//  }
+//  
+//  changedExtraHandler(evento: string) {
+//      if ( evento != undefined ) {
+//          if ( evento.length > 3 ) {
+//              
+//            this.perfilService.getFuncoes(evento).
+//            then(res => 
+//                this.funcoes = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));  
+//          }
+//      }
+//  }
   
   includePermission(permissao:Permissao) {
       let permissaoForm = new FormGroup({});
@@ -111,45 +175,8 @@ export class PerfilEditarComponent implements OnInit {
       this.permissoesArray.push(permissaoForm);
   }
   
-  isValid() {
-      if ( this.formulario.valid ) { 
-          return true;
-      } else { return false; }
-      
-  }
-  
-  save() {
-      console.log(this.formulario.value);
-      this.perfilService.submit(this.formulario.value)
-          .then(res => { 
-              this.verifyMsg = true;
-              this.colorMsg = "green";
-              this.msg = res.text();
-          })
-          .catch(error => {
-              this.verifyMsg = true;
-              this.colorMsg = "red";
-              this.msg = error.text();
-          });
-  }
-  
   onDestroy() {
       this.inscricao.unsubscribe();
-  }
-  
-  removePermission(i: number) {
-      this.permissoesArray.removeAt(i);
-  }
-  
-  changedExtraHandler(evento: string) {
-      
-      if ( evento != undefined ) 
-          if ( evento.length > 3 ) {
-              
-            this.perfilService.getFuncoes(evento).
-            then(res => 
-                this.funcoes = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));  
-          }
   }
 
 }

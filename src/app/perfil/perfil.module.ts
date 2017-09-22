@@ -10,25 +10,24 @@ import { PerfilService } from './perfil.service';
 import { PerfilCadastrarComponent } from './perfil-cadastrar/perfil-cadastrar.component';
 import { PerfilRoutingModule } from './perfil.routing.module';
 import { PerfilEditarComponent } from './perfil-editar/perfil-editar.component';
-import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
+//import { PreloadComponent } from './../includes/preload/preload.component';
+//import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
+import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        PerfilComponent,
        PerfilCadastrarComponent,
-       PerfilEditarComponent,
-       MensagemFormComponent
+       PerfilEditarComponent
+//       MensagemFormComponent,
+//       PreloadComponent
      ],
      imports: [
-        CommonModule,
-        HttpModule,
-        FormsModule,
-        MaterializeModule,
-        ReactiveFormsModule,
-        PerfilRoutingModule
+        PerfilRoutingModule,
+        SharedModule
      ],
      providers: [
         PerfilService
-     ]  
+     ]
 })
 export class PerfilModule{}

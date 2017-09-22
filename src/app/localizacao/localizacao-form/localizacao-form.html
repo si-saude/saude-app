@@ -1,0 +1,33 @@
+<head>
+  <meta charset="utf-8">
+</head>
+
+<div class="row">
+<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+ 
+   <form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+     <div class="row">
+       <div class="input-field col s12">
+         <input id="nome" type="text" required formControlName="nome">
+         <label for="nome" 
+         data-error="Campo obrigatório.">Nome</label>
+       </div>
+     </div>
+     
+	<input id="id" name="id" type="hidden" formControlName="id">	
+   		
+ 	<input id="version" name="version" type="hidden" formControlName="version">
+     
+    <app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+	
+	<div class='row row-btns'>
+	  <div class="col s6">
+	  	<button type="submit" class="btn btn-primary" [disabled]="!isValid()">Salvar</button>
+	  </div>
+	  <div class="col s6">
+	  	<a [routerLink]="['/localizacao']" class="btn btn-primary btn-listar-perfis">Listar</a>
+	  </div>
+	</div>
+     
+   </form>
+ </div>

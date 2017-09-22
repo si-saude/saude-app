@@ -7,17 +7,20 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PermissaoComponent } from './permissao/permissao.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { LocalizacaoComponent } from './localizacao/localizacao.component';
+import { EquipeComponent } from './equipe/equipe.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contato', component: ContatoComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'permissao', component: PermissaoComponent },
-  { path: 'home', 
-      component: HomeComponent,
+  { path: 'home', component: HomeComponent,
       canActivate: [AuthGuard] 
   },
-  { path: '', pathMatch: 'full', redirectTo: '/perfil'}
+  { path: 'localizacao', component: LocalizacaoComponent },
+  { path: 'equipe', component: EquipeComponent },
+  { path: '', pathMatch: 'full', redirectTo: '/equipe'}
 ];
 
 @NgModule({

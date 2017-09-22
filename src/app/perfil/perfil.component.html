@@ -1,19 +1,33 @@
-<h3>{{titulo}}</h3>
+<head>
+  <meta charset="utf-8">
+</head>
 
+<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+<!-- --> 
+<app-mensagem-form  *ngIf="verifyEmptyPaginas" 
+ [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
+</app-mensagem-form>
+ 
 <div class="collection">
-  <div *ngFor="let perfil of perfis">
-    <div class="row">
-    	<div class="col s10">
-	    	<a [routerLinkActive]="['active']" class="collection-item">{{perfil.titulo}}</a>
-	    </div>
-	  	<div class="col s1">
-			<a [routerLink]="['/perfil/editar', perfil.id]"><i class="material-icons">mode_edit</i></a>
-	  	</div>
-	  	<div class="col s1">
-			<a (click)="delete(perfil.id)"><i class="material-icons">delete</i></a>
-	  	</div>
-  	</div>
-  </div>
+
+	<!-- Preload  --> 
+	<div class="center-align preload" *ngIf="showPreload">
+		<app-preload [msg]="msgPreload"></app-preload>
+	</div>
+
+	<div *ngFor="let perfil of perfis">
+		<div class="row row-collection">
+			<div class="col s10">
+				<a [routerLinkActive]="['active']" class="collection-item">{{perfil.titulo}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/perfil/editar', perfil.id]"><i class="material-icons">mode_edit</i></a>
+		 	</div>
+		 	<div class="col s1">
+				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(perfil.id)"><i class="material-icons">delete</i></a>
+		 	</div>
+		</div>
+	</div>
 </div>
 <!-- 
 <ul class="pagination">
@@ -27,16 +41,31 @@
 </ul>
  -->
  
- <!-- Paginação -->
-<ul class="pagination center-align" *ngIf="paginas">
-<li class="disabled"><a (click)="goToPage(1)"><i class="material-icons">first_page</i></a></li>
-<li class="disabled"><a (click)="goToPage(perfilFilter.getPageNumber()-1)"><i class="material-icons">chevron_left</i></a></li>
+ <!-- PaginaÃ§Ã£o -->
+<ul class="pagination center-align">
+
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(1)">
+	<i class="material-icons arrow-pagination">first_page</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(perfilFilter.getPageNumber()-1)">
+	<i class="material-icons arrow-pagination">chevron_left</i>
+	</a></li>
+	
 	<li [ngClass]="activePage(i+1)" class="waves-effect" 
 	*ngFor="let pagina of paginas; let i = index">
-	<a (click)="goToPage(i+1)">{{i+1}}</a>
-	</li>
-<li class="disabled"><a (click)="goToPage(perfilFilter.getPageNumber()+1)"><i class="material-icons">chevron_right</i></a></li>
-<li class="disabled"><a (click)="goToPage(paginas.length)"><i class="material-icons">last_page</i></a></li>
+	<a (click)="goToPage(i+1)">{{i+1}}
+	</a></li>
+	
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(perfilFilter.getPageNumber()+1)">
+	<i class="material-icons arrow-pagination">chevron_right</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}" 
+	(click)="goToPage(paginas.length)">
+	<i class="material-icons arrow-pagination">last_page</i>
+	</a></li>
 
 </ul>
 
@@ -45,24 +74,26 @@
 <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
  -->
  
+
+<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
 <a [routerLink]="['/perfil/cadastrar']" 
-class="waves-effect waves-light btn">Adicionar</a>
-<a class="waves-effect waves-light btn modal-trigger">Filtro</a>
+class="waves-effect waves-light btn button-add">Adicionar</a>
+
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal" 
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
-	
+
 	<div class="input-field col s8">
 		<div class="modal-content">
 			<input type="text" id="titulo" [(ngModel)]="perfilFilter.titulo" name="titulo">
 			<label for="titulo">Titulo</label>
 		</div>
 	</div>
-  	  	
+
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
     	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="filterTitulo()">Filtrar</a>
   	</div>
-  	
+
 </div>

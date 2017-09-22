@@ -1,10 +1,10 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
-import { Headers, Http } from '@angular/http';
 
 import {MaterializeDirective,MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
 
+import { GlobalVariable } from './../global';
 import { Perfil } from './../model/perfil';
 import { PerfilService } from './perfil.service';
 import { PerfilFilter } from './perfil.filter';
@@ -16,7 +16,9 @@ import { PerfilFilter } from './perfil.filter';
 })
 export class PerfilComponent implements OnInit {
 
-  private titulo = "Listar Perfis";
+  private titulo = "Perfis";
+  private corTitulo = GlobalVariable.COLOR_TITLE;
+  
   private formulario: FormGroup;  
   private permissoesArray: FormArray;  
   private funcoes: Array<Object>;
@@ -26,24 +28,33 @@ export class PerfilComponent implements OnInit {
   
   private msgError: string = '';
   private verifyError: boolean = false;
+  private verifyEmptyPaginas: boolean = false;
+  private msgEmptyPaginas: string = "Nenhum registro encontrado.";
+  private colorEmptyPaginas: string = "orange";
+  private showPreload: boolean = true;
+  private msgPreload: string = "Aguarde processamento...";
   
   modalActions = new EventEmitter<string|MaterializeAction>();
   modelParams = [{
       dismissible: false,
-      complete: function() { console.log('Closed'); }
+      complete: function() { }
   }]
   
-  constructor(private http: Http, 
-          private perfilService: PerfilService, 
+  constructor(private perfilService: PerfilService, 
           private formBuilder: FormBuilder) { }
 
   ngOnInit() {
       
       this.perfilService.list(this.perfilFilter)
           .then(res => {
+              this.showPreload = false;
               this.perfis = JSON.parse(JSON.stringify(res.json())).list;
               this.paginas = this.getPaginas(res.json().total);
-              console.log(res.json().total);
+              if (res.json().total === 0){
+                  this.verifyEmptyPaginas = true;
+              } else {
+                  this.verifyEmptyPaginas = false;
+              }
       });
   }
   
@@ -54,19 +65,25 @@ export class PerfilComponent implements OnInit {
       } else {
           return Array(total / pageSize);
       }
-      
-      
+  }
+  
+  filterTitulo() {
+      this.showPreload = true;
+      this.perfilService.list(this.perfilFilter)
+      .then(res => {
+          this.perfis = JSON.parse(JSON.stringify(res.json())).list;
+          this.paginas = this.getPaginas(res.json().total);
+          if (res.json().total === 0){
+              this.verifyEmptyPaginas = true;
+          } else {
+              this.verifyEmptyPaginas = false;
+          }
+          this.showPreload = false;
+       });
   }
   
   openModal() {
       this.modalActions.emit({action:"modal",params:['open']});
-  }
-  
-  filterTitulo() {
-      this.perfilService.list(this.perfilFilter)
-      .then(res => { 
-          this.perfis = JSON.parse(JSON.stringify(res.json())).list;
-       });
   }
   
   closeModal() {
@@ -74,20 +91,22 @@ export class PerfilComponent implements OnInit {
   }
   
   goToPage(index: number) {
-      console.log(this.paginas.length);
+      this.showPreload = true;
       if (index < 1 || index > this.paginas.length) {
+          this.showPreload = false;
           return;
       }
       this.perfilFilter.setPageNumber(index);
       this.perfilFilter.setPageSize(2);
       this.perfilService.list(this.perfilFilter)
-      .then(res => {
-          this.perfis = JSON.parse(JSON.stringify(res.json())).list;
-          this.paginas = this.getPaginas(res.json().total);
-       })
-       .catch(error => {
-           console.log(error);
-       });
+          .then(res => {
+              this.perfis = JSON.parse(JSON.stringify(res.json())).list;
+              this.paginas = this.getPaginas(res.json().total);
+              this.showPreload = false;
+           })
+           .catch(error => {
+               console.log(error);
+           });
   }
   
   activePage(index: number) {
@@ -99,12 +118,14 @@ export class PerfilComponent implements OnInit {
   }
   
   delete(id) {
+      this.showPreload = true;
       this.perfilService.delete(id)
           .then(res => {
-              console.log(res.text());
+              this.showPreload = false;
               window.location.reload();
           })
           .catch(error => {
+              this.showPreload = false;
               console.log(error.text());
           })
       
