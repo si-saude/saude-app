@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MaterializeModule } from 'angular2-materialize';
+
+import { GerenciaComponent } from './gerencia.component';
+import { GerenciaService } from './gerencia.service';
+import { GerenciaCadastrarComponent } from './gerencia-cadastrar/gerencia-cadastrar.component';
+import { GerenciaRoutingModule } from './gerencia.routing.module';
+import { GerenciaEditarComponent } from './gerencia-editar/gerencia-editar.component';
+//import { PreloadComponent } from './../includes/preload/preload.component';
+//import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
+import { SharedModule } from './../shared.module';
+
+@NgModule({
+    declarations: [
+       GerenciaComponent,
+       GerenciaCadastrarComponent,
+       GerenciaEditarComponent
+     ],
+     imports: [
+        GerenciaRoutingModule,
+        SharedModule
+     ],
+     providers: [
+        GerenciaService
+     ]
+})
+export class GerenciaModule{}

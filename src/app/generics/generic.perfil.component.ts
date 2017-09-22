@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 
 import { Subscription } from 'rxjs/Rx';
 
-import { PerfilService } from './../perfil/perfil.service';
+import { PerfilService } from '../controller/perfil/perfil.service';
 
 export abstract class GenericPerfilComponent {  
 

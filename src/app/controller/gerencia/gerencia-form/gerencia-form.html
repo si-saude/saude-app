@@ -1,0 +1,47 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+
+	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+
+		<div class="row">
+			<div class="input-field col s8">
+				<input id="codigo" type="text" required formControlName="codigo">
+				<label for="codigo" data-error="Campo obrigatório.">Codigo</label>
+			</div>
+
+			<div class="input-field col s4">
+				<select class="browser-default" formControlName="gerencia">
+					<option disabled selected value>Selecione uma gerencia</option>
+					<option *ngFor="let gerencia of gerencias" value="{{gerencia.id}}">{{gerencia.codigo}}</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<input id="descricao" type="text" required
+					formControlName="descricao"> <label for="descricao">Descrição</label>
+			</div>
+		</div>
+
+		<input id="id" name="id" type="hidden" formControlName="id"> 
+		<input id="version" name="version" type="hidden" formControlName="version">
+
+		<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary"
+					[disabled]="!isValid()">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/gerencia']" class="btn btn-primary btn-listar-perfis">Listar</a>
+			</div>
+		</div>
+
+	</form>
+</div>

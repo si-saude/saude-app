@@ -14,10 +14,11 @@ import { NavbarPrincipalComponent } from './includes/navbar-principal/navbar-pri
 import { AuthService } from './login/auth.service';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
-import { PermissaoComponent } from './permissao/permissao.component';
-import { PerfilModule } from './perfil/perfil.module';
-import { LocalizacaoModule } from './localizacao/localizacao.module';
-import { EquipeModule } from './equipe/equipe.module';
+import { PermissaoComponent } from './controller/permissao/permissao.component';
+import { PerfilModule } from './controller/perfil/perfil.module';
+import { LocalizacaoModule } from './controller/localizacao/localizacao.module';
+import { EquipeModule } from './controller/equipe/equipe.module';
+import { GerenciaModule } from './controller/gerencia/gerencia.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { EquipeModule } from './equipe/equipe.module';
     PerfilModule,
     LocalizacaoModule,
     EquipeModule,
+    GerenciaModule,
     AppRoutingModule
   ],
   providers: [ 
