@@ -7,24 +7,26 @@ import { GlobalVariable } from './../../../global';
 import { GerenciaService } from './../gerencia.service';
 import { GerenciaFilter } from './../gerencia.filter';
 import { Gerencia } from './../../../model/gerencia';
+import { GenericGerenciaComponent } from './../../../generics/generic.gerencia.component';
 
 @Component( {
     selector: 'app-gerencia-cadastrar',
     templateUrl: './../gerencia-form/gerencia-form.html',
     styleUrls: ['./../gerencia-form/gerencia-form.css']
 } )
-export class GerenciaCadastrarComponent implements OnInit {
+export class GerenciaCadastrarComponent extends GenericGerenciaComponent implements OnInit {
     private titulo = "Cadastrar";
     private corTitulo = GlobalVariable.COLOR_TITLE;
-    private formulario: FormGroup;
-    private gerencias: Array<Gerencia>;
-    private gerenciaFilter: GerenciaFilter = new GerenciaFilter();
-    private verifyMsg: boolean = false;
-    private colorMsg: string = "green";
-    private msg: string = '';
+//    private formulario: FormGroup;
+//    private gerencias: Array<Gerencia>;
+//    private gerenciaFilter: GerenciaFilter = new GerenciaFilter();
+//    private verifyMsg: boolean = false;
+//    private colorMsg: string = "green";
+//    private msg: string = '';
 
-    constructor( private gerenciaService: GerenciaService,
-            private formBuilder: FormBuilder ) {
+    constructor( gerenciaService: GerenciaService,
+            formBuilder: FormBuilder ) {
+        super(gerenciaService, formBuilder);
     }
 
     ngOnInit() {
@@ -33,12 +35,13 @@ export class GerenciaCadastrarComponent implements OnInit {
             id: [0],
             version: [0],
             descricao: [''],
-            gerencia: [null]
+            gerencia: ['']
         } );
         
-        this.gerenciaService.list(this.gerenciaFilter)
+        this.gerenciaService.selectList(this.gerenciaFilter)
             .then(res => {
-                this.gerencias = JSON.parse(JSON.stringify(res.json())).list;
+                this.gerencias = JSON.parse(JSON.stringify(res.json()));
+                console.log(res.json());
             })
             .catch(error => {
                 console.log(error)
@@ -47,24 +50,17 @@ export class GerenciaCadastrarComponent implements OnInit {
     }
 
     isValid() {
-        if ( this.formulario.valid ) {
-            return true;
-        } else { return false; }
-
+        return super.isValid();
     }
 
     save() {
-        this.gerenciaService.submit( this.formulario.value )
-            .then( res => {
-                this.verifyMsg = true;
-                this.colorMsg = "green";
-                this.msg = res.text();
-            } )
-            .catch( error => {
-                this.verifyMsg = true;
-                this.colorMsg = "red";
-                this.msg = error.text();
-            } );
+        super.save();
+    }
+    
+    isPossibleDeactivate() {
+        if( this.formulario.dirty ) {
+            return false;
+        } else return true;
     }
 
 }

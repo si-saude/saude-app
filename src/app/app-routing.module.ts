@@ -10,6 +10,9 @@ import { PerfilComponent } from './controller/perfil/perfil.component';
 import { LocalizacaoComponent } from './controller/localizacao/localizacao.component';
 import { EquipeComponent } from './controller/equipe/equipe.component';
 import { GerenciaComponent } from './controller/gerencia/gerencia.component';
+import { ProfissionalSaudeComponent } from './controller/profissional-saude/profissional-saude.component';
+import { FuncaoComponent } from './controller/funcao/funcao.component';
+import { CursoComponent } from './controller/curso/curso.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,7 +25,10 @@ const routes: Routes = [
   { path: 'localizacao', component: LocalizacaoComponent },
   { path: 'equipe', component: EquipeComponent },
   { path: 'gerencia', component: GerenciaComponent },
-  { path: '', pathMatch: 'full', redirectTo: '/gerencia'}
+  { path: 'profissional-saude', component: ProfissionalSaudeComponent },
+  { path: 'funcao', component: FuncaoComponent },
+  { path: 'curso', component: CursoComponent },
+  { path: '', pathMatch: 'full', redirectTo: '/curso'}
 ];
 
 @NgModule({

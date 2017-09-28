@@ -15,8 +15,8 @@
 
 			<div class="input-field col s4">
 				<select class="browser-default" formControlName="gerencia">
-					<option disabled selected value>Selecione uma gerencia</option>
-					<option *ngFor="let gerencia of gerencias" value="{{gerencia.id}}">{{gerencia.codigo}}</option>
+					<option selected value>Selecione uma gerencia</option>
+					<option *ngFor="let gerencia of gerencias" value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
 				</select>
 			</div>
 		</div>

@@ -1,0 +1,76 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+
+	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<input id="nome" type="text" required formControlName="nome">
+				<label for="nome" data-error="Campo obrigatório.">Nome</label>
+			</div>
+			
+		</div>
+			<fieldset>
+
+				<legend class="legend-permissoes"> Cursos Obrigatórios
+					<a class="btn-floating waves-effect waves-light green btn-add-permissoes" 
+						(click)="addCurso()"> 
+						<i class="material-icons center-icon">add</i>
+					</a>
+				</legend>
+				<div class="form-group">
+					<div formArrayName="cursos">
+						<div *ngFor="let curso of cursosArray.controls;let i = index"
+							[formGroupName]="i">
+
+							<div class="row">
+								 
+								<div class="input-field col s10">
+							    	<input required name="curso" id="curso" 
+								    	type="text" materialize="autocomplete" 
+								    	[materializeParams]="cursos"
+									    (ngModelChange)="changedExtraHandler($event)"
+									    class="validate" formControlName="curso"/>
+							        <label for="curso" data-error="Campo obrigatório.">Curso Obrigatório</label>
+							    </div>
+
+								<div class="col s2">
+									<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+										(click)="removeCurso(i)"> 
+										<i class="material-icons center-icon">delete</i>
+									</a>
+								</div>
+
+							</div>
+
+							<input id="id{{i}}" name="id{{i}}" type="hidden" formControlName="id"> 
+							<input id="version{{i}}" name="version{{i}}" type="hidden" formControlName="version">
+
+						</div>
+					</div>
+				</div>
+				 
+			</fieldset>
+			
+			<input id="id" name="id" type="hidden" formControlName="id">
+			<input id="version" name="version" type="hidden" formControlName="version">
+
+			<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+
+			<div class='row row-btns'>
+				<div class="col s6">
+					<button type="submit" class="btn btn-primary"
+						[disabled]="!isValid()">Salvar</button>
+				</div>
+				<div class="col s6">
+					<a [routerLink]="['/funcao']"
+						class="btn btn-primary btn-listar-perfis">Listar</a>
+				</div>
+			</div>
+	</form>
+</div>

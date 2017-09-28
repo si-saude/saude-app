@@ -8,30 +8,32 @@ import { GerenciaFilter } from './../gerencia.filter';
 import { GerenciaService } from './../gerencia.service';
 import { Gerencia } from './../../../model/gerencia';
 import { GlobalVariable } from './../../../global';
+import { GenericGerenciaComponent } from './../../../generics/generic.gerencia.component';
 
 @Component( {
     selector: 'app-gerencia-editar',
     templateUrl: './../gerencia-form/gerencia-form.html',
     styleUrls: ['./../gerencia-form/gerencia-form.css']
 } )
-export class GerenciaEditarComponent implements OnInit {
+export class GerenciaEditarComponent extends GenericGerenciaComponent implements OnInit {
 
     private titulo: string = "Editar";
     private corTitulo: string = GlobalVariable.COLOR_TITLE;
     private inscricao: Subscription;
-    private gerencia: Gerencia = new Gerencia();
-    private formulario: FormGroup;
+//    private gerencia: Gerencia = new Gerencia();
+//    private formulario: FormGroup;
     //  private permissoesArray: FormArray;
-    private gerenciaFilter: GerenciaFilter = new GerenciaFilter();
-    private gerencias: Array<Gerencia>;
-    private colorMsg: string;
-    private msg: string;
-    private verifyMsg: boolean = false;
+//    private gerenciaFilter: GerenciaFilter = new GerenciaFilter();
+//    private gerencias: Array<Gerencia>;
+//    private colorMsg: string;
+//    private msg: string;
+//    private verifyMsg: boolean = false;
 
 
     constructor( private route: ActivatedRoute,
-        private gerenciaService: GerenciaService,
-        private formBuilder: FormBuilder ) {
+        gerenciaService: GerenciaService,
+        formBuilder: FormBuilder ) {
+        super(gerenciaService, formBuilder);
     }
 
     ngOnInit() {
@@ -43,14 +45,6 @@ export class GerenciaEditarComponent implements OnInit {
             version: [null],
             gerencia: ['']
         } );
-
-        this.gerenciaService.list( this.gerenciaFilter )
-            .then( res => {
-                this.gerencias = JSON.parse( JSON.stringify( res.json().list ) );
-            } )
-            .catch( error => {
-                console.log( error );
-            } )
 
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
@@ -64,6 +58,17 @@ export class GerenciaEditarComponent implements OnInit {
     }
 
     addFormWithGerencia( id: number ) {
+        
+        this.gerenciaFilter.setId(id);
+        
+        this.gerenciaService.selectList( this.gerenciaFilter )
+            .then( res => {
+//                console.log( JSON.stringify( res.json()) );
+                this.gerencias = JSON.parse( JSON.stringify( res.json() ) );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
 
         this.gerenciaService.get( id )
             .then( res => {
@@ -91,28 +96,14 @@ export class GerenciaEditarComponent implements OnInit {
             } )
             .catch( error =>
                 console.log( error ) );
-
     }
 
     isValid() {
-        if ( this.formulario.valid ) {
-            return true;
-        } else { return false; }
+        return super.isValid();
     }
 
     save() {
-        console.log( this.formulario.value );
-                this.gerenciaService.submit( this.formulario.value )
-                    .then( res => {
-                        this.verifyMsg = true;
-                        this.colorMsg = "green";
-                        this.msg = res.text();
-                    } )
-                    .catch( error => {
-                        this.verifyMsg = true;
-                        this.colorMsg = "red";
-                        this.msg = error.text();
-                    } );
+        super.save();
     }
 
     onDestroy() {

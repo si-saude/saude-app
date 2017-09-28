@@ -1,0 +1,214 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<!-- <h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>  -->
+
+	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s6">
+						<a RouterLinkActive="active" href="#dadosGerais">Dados Gerais</a>
+					</li>
+					<li class="tab col s6">
+						<a RouterLinkActive="active" href="#endereco">Informações Adicionais</a>
+					</li>
+				</ul>
+			</div>
+			<div id="dadosGerais">
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="nome" type="text" required formControlName="nome">
+						<label for="nome" data-error="Campo obrigatório." maxlength="220">Nome</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s8">
+						<input id="matricula" type="text" formControlName="matricula">
+						<label for="matricula" maxlength="10">Matricula</label>
+					</div>
+					 
+					<div class="input-field col s4">
+						<input id="dataNascimento" type="text"
+							formControlName="dataNascimento" materialize="pickadate"
+							[materializeParams]="[{format: 'dd/mm/yyyy'}]"> <label
+							for="dataNascimento">Data de Nascimento</label>
+					</div>
+					 
+					
+				</div>
+
+				<div class="row">
+					<div class="input-field col s8">
+						<input id="ramal" type="text" formControlName="ramal"> <label
+							for="ramal" maxlength="12">Ramal</label>
+					</div>
+					<div class="input-field col s4">
+						<input id="chave" type="text" formControlName="chave"
+							maxlength="8"> <label for="chave">Chave</label>
+					</div>
+				</div>
+
+				<div class="row selects">
+
+					<div class="input-field col s6">
+						<select class="browser-default" formControlName="localizacao">
+							<option selected value>Selecione uma localização</option>
+							<option *ngFor="let localizacao of localizacoes"
+								value="{{localizacao.id}}">{{localizacao.nome}}</option>
+						</select>
+					</div>
+					<div class="input-field col s6">
+						<select class="browser-default" formControlName="gerencia">
+							<option selected value>Selecione uma gerencia</option>
+							<option *ngFor="let gerencia of gerencias"
+								value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
+						</select>
+					</div>
+					
+				</div>
+				
+				<div class="row selects selects-bottom">
+				
+					<div class="input-field col s6">
+						<select class="browser-default" formControlName="equipe">
+							<option selected value>Selecione uma equipe</option>
+							<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+						</select>
+					</div>
+					<div class="input-field col s6">
+						<select class="browser-default" formControlName="funcao">
+							<option selected value>Selecione uma função</option>
+							<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
+						</select>
+					</div>
+					
+				</div>
+				
+			</div>
+
+			<div id="endereco">
+				<fieldset>
+
+					<legend class="legend">
+						Telefones 
+						<a class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							(click)="addTelefone()"> 
+							<i class="material-icons center-icon">add</i>
+						</a>
+					</legend>
+					<div class="form-group">
+						<div formArrayName="telefones">
+							<div
+								*ngFor="let telefone of telefonesArray.controls;let i = index"
+								[formGroupName]="i">
+
+								<div class="row">
+									<div class="input-field col s10">
+										<input id="numero" type="text" formControlName="numero">
+										<label for="numero" maxlength="16">Numero</label>
+									</div>
+
+									<div class="col s2">
+										<a
+											class="btn-floating waves-effect waves-light red btn-remove-permission"
+											(click)="removeTelefone(i)"> <i
+											class="material-icons center-icon">delete</i>
+										</a>
+									</div>
+
+								</div>
+
+								<input id="id{{i}}" name="id{{i}}" type="hidden" formControlName="id"> 
+								<input id="version{{i}}" name="version{{i}}" type="hidden" formControlName="version">
+
+							</div>
+						</div>
+					</div>
+
+				</fieldset>
+
+				<fieldset>
+
+					<legend class="legend"> Endereço </legend>
+					<div class="form-group">
+						<div formGroupName="endereco">
+
+							<div class="row">
+								<div class="input-field col s12">
+									<input required id="logradouro" type="text" formControlName="logradouro">
+									<label for="logradouro" maxlength="200">Logradouro</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<input id="bairro" type="text" formControlName="bairro">
+									<label for="bairro" maxlength="100">Bairro</label>
+								</div>
+
+								<div class="input-field col s4">
+									<input id="numero" type="text" formControlName="numero">
+									<label for="numero" maxlength="12">Numero</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<input id="complemento" type="text" formControlName="complemento"> 
+									<label for="complemento" maxlength="200">Complemento</label>
+								</div>
+
+								<div class="input-field col s4">
+									<input id="cep" type="text" formControlName="cep"> 
+									<label for="cep" maxlength="9">CEP</label>
+								</div>
+							</div>
+							
+							<div class="row">	
+								<div class="input-field col s6">
+							    	<input required name="cidade" id="cidade" type="text"
+							    	[materialize]="autocomplete" [materializeParams]="cidades"
+							    	(ngModelChange)="changedExtraHandler($event)"
+							    	class="validate" formControlName="cidade"/>
+							        <label for="cidade">Cidade</label>
+							    </div>
+							</div>
+								
+							
+							
+							<input id="id" name="id" type="hidden" formControlName="id"> 
+							<input id="version" name="version" type="hidden" formControlName="version">
+
+						</div>
+
+					</div>
+ 
+				</fieldset>
+				
+			</div>
+
+		</div>
+
+		<input id="id" name="id" type="hidden" formControlName="id"> 
+		<input id="version" name="version" type="hidden" formControlName="version">
+
+		<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary"
+					[disabled]="!isValid()">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/profissional-saude']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
+			</div>
+		</div>
+
+	</form>
+</div>

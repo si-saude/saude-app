@@ -2,7 +2,7 @@
   <meta charset="utf-8">
 </head>
 
-<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+<h4 [ngStyle]="{'color': corTitulo}" class="center-align titulo">{{titulo}}</h4>
 <!-- --> 
 <app-mensagem-form  *ngIf="verifyEmptyPaginas" 
  [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
@@ -38,7 +38,7 @@
 	<i class="material-icons arrow-pagination">first_page</i>
 	</a></li>
 	<li><a [ngStyle]="{'cursor': 'pointer'}" 
-	(click)="goToPage(perfilFilter.getPageNumber()-1)">
+	(click)="goToPage(gerenciaFilter.getPageNumber()-1)">
 	<i class="material-icons arrow-pagination">chevron_left</i>
 	</a></li>
 	
@@ -48,7 +48,7 @@
 	</a></li>
 	
 	<li><a [ngStyle]="{'cursor': 'pointer'}" 
-	(click)="goToPage(perfilFilter.getPageNumber()+1)">
+	(click)="goToPage(gerenciaFilter.getPageNumber()+1)">
 	<i class="material-icons arrow-pagination">chevron_right</i>
 	</a></li>
 	<li><a [ngStyle]="{'cursor': 'pointer'}" 

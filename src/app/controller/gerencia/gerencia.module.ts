@@ -10,8 +10,6 @@ import { GerenciaService } from './gerencia.service';
 import { GerenciaCadastrarComponent } from './gerencia-cadastrar/gerencia-cadastrar.component';
 import { GerenciaRoutingModule } from './gerencia.routing.module';
 import { GerenciaEditarComponent } from './gerencia-editar/gerencia-editar.component';
-//import { PreloadComponent } from './../includes/preload/preload.component';
-//import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({

@@ -37,6 +37,13 @@ export class GerenciaService {
             .post( urlList, gerenciaFilter, { headers: this.headers } )
             .toPromise();
     }
+    
+    selectList( gerenciaFilter: GerenciaFilter ) {
+        let urlList = this.URL + "/selectList";
+        return this.http
+            .post( urlList, gerenciaFilter, { headers: this.headers } )
+            .toPromise();
+    }
 
     delete( id ) {
         let urlDelete = this.URL + "/delete";

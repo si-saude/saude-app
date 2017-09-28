@@ -22,16 +22,11 @@ export abstract class GenericPerfilComponent {
       this.perfilService = perfilService;
       this.formBuilder = formBuilder;
       
-      this.perfilService.getFuncoes("").
-      then(res => {
-//          console.log(res.json());
-//          console.log('[{"data":' + JSON.stringify(res.json()) + '}]');
-//          this.funcoes = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]');
-//        this.funcoes = JSON.parse(JSON.stringify(res.json()));
-          this.funcoes = Object.keys(res.json());
-          console.log(this.funcoes);
-//          console.log(Object.keys(res.json()).map(function(k) { return res.json()[k] }));
-      });
+      this.perfilService.getFuncoes("")
+          .then(res => {
+              this.funcoes = Object.keys(res.json());
+              console.log(this.funcoes);
+          });
   }
   
   addPermission() {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 
 import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
@@ -47,16 +47,19 @@ export class GerenciaComponent implements OnInit {
       this.gerenciaService.list(this.gerenciaFilter)
           .then(res => {
               this.showPreload = false;
-              console.log(res.json());
               this.gerencias = JSON.parse(JSON.stringify(res.json())).list;
-              console.log(this.gerencias);
               this.paginas = this.getPaginas(res.json().total);
               if (res.json().total === 0){
                   this.verifyEmptyPaginas = true;
               } else {
                   this.verifyEmptyPaginas = false;
               }
-      });
+          })
+          .catch(error => {
+              this.showPreload = false;
+              this.verifyError = true;
+              this.msgError = error.text();
+          })
   }
   
   getPaginas(total: number) {

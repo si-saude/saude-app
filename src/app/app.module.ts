@@ -19,6 +19,9 @@ import { PerfilModule } from './controller/perfil/perfil.module';
 import { LocalizacaoModule } from './controller/localizacao/localizacao.module';
 import { EquipeModule } from './controller/equipe/equipe.module';
 import { GerenciaModule } from './controller/gerencia/gerencia.module';
+import { ProfissionalSaudeModule } from './controller/profissional-saude/profissional-saude.module';
+import { FuncaoModule } from './controller/funcao/funcao.module';
+import { CursoModule } from './controller/curso/curso.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { GerenciaModule } from './controller/gerencia/gerencia.module';
     LocalizacaoModule,
     EquipeModule,
     GerenciaModule,
+    ProfissionalSaudeModule,
+    FuncaoModule,
+    CursoModule,
     AppRoutingModule
   ],
   providers: [ 

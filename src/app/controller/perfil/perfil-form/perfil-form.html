@@ -1,37 +1,38 @@
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
 
 <div class="row">
-<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
- 
-   <form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
-     <div class="row">
-       <div class="input-field col s12">
-         <input id="titulo" type="text" required formControlName="titulo">
-         <label for="titulo" 
-         data-error="Campo obrigatório.">Titulo</label>
-       </div>
-     </div>
-     
-	<input id="id" name="id" type="hidden" formControlName="id">	
-   		
- 	<input id="version" name="version" type="hidden" formControlName="version">
-     
-    <fieldset>
-    
-    <legend class="legend-permissoes">Permissões
-    	<a class="btn-floating waves-effect waves-light green btn-add-permissoes" (click)="addPermission()">
-    		<i class="material-icons center-icon">add</i>
-    	</a>
-    </legend>
-    <div class="form-group">
-	    <div  formArrayName="permissoes">
-	    	<div *ngFor="let permissao of permissoesArray.controls;let i = index" [formGroupName]="i">
-	    	
-				<div class="row">
-				<!-- 
+	<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+
+	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+		<div class="row">
+			<div class="input-field col s12">
+				<input id="titulo" type="text" required formControlName="titulo">
+				<label for="titulo" data-error="Campo obrigatório.">Titulo</label>
+			</div>
+		</div>
+
+		<input id="id" name="id" type="hidden" formControlName="id"> <input
+			id="version" name="version" type="hidden" formControlName="version">
+
+		<fieldset>
+
+			<legend class="legend-permissoes"> Permissões 
+				<a class="btn-floating waves-effect waves-light green btn-add-permissoes"
+					(click)="addPermission()"> 
+					<i class="material-icons center-icon">add</i>
+				</a>
+			</legend>
+			<div class="form-group">
+				<div formArrayName="permissoes">
+					<div
+						*ngFor="let permissao of permissoesArray.controls;let i = index"
+						[formGroupName]="i">
+
+						<div class="row">
+							<!-- 
 					<div class="input-field col s4">
 				    	<input required name="funcao" id="funcao" type="text"
 				    	[materialize]="autocomplete" [materializeParams]="funcoes"
@@ -40,54 +41,56 @@
 				        <label for="funcao" data-error="Campo obrigatório.">Função</label>
 				    </div>
 				     -->
-				     
-				    <div class="input-field col s4">
-				    	<select required class="browser-default" formControlName="funcao">
-				    		<option disabled selected value>Selecione uma função</option>
-				    		<option *ngFor="let funcao of funcoes" value="{{funcao}}">{{funcao}}</option>
-				    	</select>
-				    </div>
-				    
-				    <div class="col s3 btn-tipo-permissao">
-						<input name="leitura{{i}}" id="leitura{{i}}" type="checkbox" 
-						formControlName="leitura"/>
-						<label for="leitura{{i}}">Leitura</label>
+
+							<div class="input-field col s4">
+								<select required class="browser-default"
+									formControlName="funcao">
+									<option disabled selected value>Selecione uma função</option>
+									<option *ngFor="let funcao of funcoes" value="{{funcao}}">{{funcao}}</option>
+								</select>
+							</div>
+
+							<div class="col s3 btn-tipo-permissao">
+								<input name="leitura{{i}}" id="leitura{{i}}" type="checkbox"
+									formControlName="leitura" /> <label for="leitura{{i}}">Leitura</label>
+							</div>
+
+							<div class="col s3 btn-tipo-permissao">
+								<input name="escrita{{i}}" id="escrita{{i}}" type="checkbox"
+									formControlName="escrita" /> <label for="escrita{{i}}">Escrita</label>
+							</div>
+
+							<div class="col s2">
+								<a
+									class="btn-floating waves-effect waves-light red btn-remove-permission"
+									(click)="removePermission(i)"> <i
+									class="material-icons center-icon">delete</i>
+								</a>
+							</div>
+
+						</div>
+
+						<input id="id{{i}}" name="id{{i}}" type="hidden" formControlName="id"> 
+						<input id="version{{i}}" name="version{{i}}" type="hidden" formControlName="version">
+
 					</div>
-					
-					<div class="col s3 btn-tipo-permissao">
-						<input name="escrita{{i}}" id="escrita{{i}}" type="checkbox" 
-						formControlName="escrita"/>
-						<label for="escrita{{i}}">Escrita</label>
-					</div>
-					
-					<div class="col s2">
-						<a class="btn-floating waves-effect waves-light red btn-remove-permission" 
-						(click)="removePermission(i)">
-							<i class="material-icons center-icon">delete</i>
-						</a>
-					</div>
-					
 				</div>
-				
-	        	<input id="id{{i}}" name="id{{i}}" type="hidden" formControlName="id">	
-	      		
-	    		<input id="version{{i}}" name="version{{i}}" type="hidden" formControlName="version">	
-	      			
+			</div>
+			
+		</fieldset>
+
+		<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary"
+					[disabled]="!isValid()">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/perfil']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
 			</div>
 		</div>
-	</div>
-	</fieldset>
- 
-	<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
-	
-	<div class='row row-btns'>
-	  <div class="col s6">
-	  	<button type="submit" class="btn btn-primary" [disabled]="!isValid()">Salvar</button>
-	  </div>
-	  <div class="col s6">
-	  	<a [routerLink]="['/perfil']" class="btn btn-primary btn-listar-perfis">Listar</a>
-	  </div> 
-	</div>
-     
-   </form>
- </div>
+
+	</form>
+</div>
