@@ -10,10 +10,13 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs" materialize="tabs">
-					<li class="tab col s6">
+					<li class="tab col s4">
 						<a RouterLinkActive="active" href="#dadosGerais">Dados Gerais</a>
 					</li>
-					<li class="tab col s6">
+					<li class="tab col s4">
+						<a RouterLinkActive="active" href="#curriculo">Currículo</a>
+					</li>
+					<li class="tab col s4">
 						<a RouterLinkActive="active" href="#endereco">Informações Adicionais</a>
 					</li>
 				</ul>
@@ -33,10 +36,14 @@
 					</div>
 					 
 					<div class="input-field col s4">
+						<my-date-picker name="dataNascimento" [options]="myDatePickerOptions"
+	                    	formControlName="dataNascimento" placeholder="Data de Nascimento"></my-date-picker>
+                    <!-- 
 						<input id="dataNascimento" type="text"
 							formControlName="dataNascimento" materialize="pickadate"
 							[materializeParams]="[{format: 'dd/mm/yyyy'}]"> <label
 							for="dataNascimento">Data de Nascimento</label>
+					-->
 					</div>
 					 
 					
@@ -54,41 +61,112 @@
 				</div>
 
 				<div class="row selects">
-
-					<div class="input-field col s6">
-						<select class="browser-default" formControlName="localizacao">
+					<div class="input-field col s4" formGroupName="localizacao">
+						<select class="browser-default" formControlName="id">
 							<option selected value>Selecione uma localização</option>
 							<option *ngFor="let localizacao of localizacoes"
 								value="{{localizacao.id}}">{{localizacao.nome}}</option>
 						</select>
 					</div>
-					<div class="input-field col s6">
-						<select class="browser-default" formControlName="gerencia">
-							<option selected value>Selecione uma gerencia</option>
-							<option *ngFor="let gerencia of gerencias"
-								value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
-						</select>
-					</div>
 					
-				</div>
-				
-				<div class="row selects selects-bottom">
-				
-					<div class="input-field col s6">
-						<select class="browser-default" formControlName="equipe">
+					<div class="input-field col s4" formGroupName="equipe">
+						<select class="browser-default" formControlName="id">
 							<option selected value>Selecione uma equipe</option>
 							<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
 						</select>
 					</div>
-					<div class="input-field col s6">
-						<select class="browser-default" formControlName="funcao">
+					
+					<div class="input-field col s4" formGroupName="funcao">
+						<select class="browser-default" formControlName="id">
 							<option selected value>Selecione uma função</option>
 							<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
 						</select>
 					</div>
 					
+					
 				</div>
 				
+			</div>
+			<div id="curriculo">
+				<div class="form-group">
+						<div formGroupName="curriculo">
+
+							<div class="row">
+								<div class="input-field col s12">
+									<textarea required id="historico" class="materialize-textarea"
+									formControlName="historico"
+									date-error="É necessário informar um histórico."></textarea>
+									<label for="historico" maxlength="4096">Histórico</label>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="input-field col s12">
+									<textarea id="formacao" class="materialize-textarea"
+									formControlName="formacao"></textarea>
+									<label for="formacao" maxlength="512">Formação</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s12">
+									<textarea id="atuacao" class="materialize-textarea"
+									formControlName="atuacao"></textarea>
+									<label for="atuacao" maxlength="512">Atuação</label>
+								</div>
+							</div>
+							
+				<fieldset>
+					<legend class="legend"> Cursos
+						<a class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							(click)="addCurriculoCurso()"> 
+							<i class="material-icons center-icon">add</i>
+						</a>
+					</legend>
+					<div class="form-group">
+						<div formArrayName="curriculoCursos">
+							<div
+								*ngFor="let curriculoCurso of curriculoCursosArray.controls;let i = index"
+								[formGroupName]="i">
+
+								<div class="row">
+									<div class="input-field col s6" formGroupName="curso">
+										<select class="browser-default" formControlName="id">
+											<option selected value>Selecione uma curso</option>
+											<option *ngFor="let curso of cursos"
+												value="{{curso.id}}">{{curso.nome}}
+											</option>
+										</select>
+									</div>
+									
+									<div class="input-field col s4">
+										<my-date-picker name="data" [options]="myDatePickerOptions"
+					                    	formControlName="data" placeholder="Data">
+					                    </my-date-picker>
+									</div>
+									
+									<div class="col s2">
+										<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+											(click)="removeCurriculoCurso(i)"> 
+											<i class="material-icons center-icon">delete</i>
+										</a>
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+				</fieldset>
+							
+
+							<input id="id" name="id" type="hidden" formControlName="id"> 
+							<input id="version" name="version" type="hidden" formControlName="version">
+
+						</div>
+
+					</div>
 			</div>
 
 			<div id="endereco">

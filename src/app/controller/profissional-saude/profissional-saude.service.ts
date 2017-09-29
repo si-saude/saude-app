@@ -8,8 +8,9 @@ import { GlobalVariable } from './../../global';
 import { ProfissionalSaude } from './../../model/profissional-saude';
 import { ProfissionalSaudeFilter } from './profissional-saude.filter';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
-import { GerenciaFilter } from './../gerencia/gerencia.filter';
+import { FuncaoFilter } from './../funcao/funcao.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
+import { CursoFilter } from './../curso/curso.filter';
 
 @Injectable()
 export class ProfissionalSaudeService {
@@ -40,10 +41,10 @@ export class ProfissionalSaudeService {
             .toPromise();
     }
     
-    getGerencias(gerenciaFilter: GerenciaFilter) {
-        let urlGetGerencia = GlobalVariable.BASE_API_URL + "/gerencia/selectList";
+    getFuncoes(funcaoFilter: FuncaoFilter) {
+        let urlGetFuncao = GlobalVariable.BASE_API_URL + "/funcao/selectList";
         return this.http
-            .post( urlGetGerencia, gerenciaFilter, { headers: this.headers })
+            .post( urlGetFuncao, funcaoFilter, { headers: this.headers })
             .toPromise();
     }
     
@@ -53,6 +54,14 @@ export class ProfissionalSaudeService {
             .post( urlGetEquipe, equipeFilter, { headers: this.headers })
             .toPromise();
     }
+    
+    getCursos(cursoFilter: CursoFilter) {
+        let urlGetCurso = GlobalVariable.BASE_API_URL + "/curso/selectList";
+        return this.http
+            .post( urlGetCurso, cursoFilter, { headers: this.headers })
+            .toPromise();
+    }
+    
     
     list( profissionalSaudeFilter: ProfissionalSaudeFilter ) {
         let urlList = this.URL + "/list";

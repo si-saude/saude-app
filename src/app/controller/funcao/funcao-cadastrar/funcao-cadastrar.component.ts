@@ -30,25 +30,12 @@ export class FuncaoCadastrarComponent extends GenericFuncaoComponent implements 
     }
 
     ngOnInit() {
-        this.formulario = this.formBuilder.group( {
-            nome: [null, Validators.required],
-            id: [0],
-            version: [0],
-            cursos: this.formBuilder.array([
-                this.formBuilder.group({
-                    curso: [null, Validators.required],
-                    id: [0],
-                    version: [0]
-                }),
-            ]),
-        } );
         
-        this.cursosArray = this.formulario.get('cursos') as FormArray;
-
     }
     
-    addCurso() {
-        super.addCurso();
+    addCurso(valor) {
+//        console.log(valor);
+        super.addCurso(valor);
     }
     
     removeCurso(i: number) {

@@ -8,69 +8,109 @@
 	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
 
 		<div class="row">
-		
+
 			<div class="input-field col s12">
 				<input id="nome" type="text" required formControlName="nome">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label>
 			</div>
-			
-		</div>
-			<fieldset>
 
-				<legend class="legend-permissoes"> Cursos Obrigatórios
-					<a class="btn-floating waves-effect waves-light green btn-add-permissoes" 
-						(click)="addCurso()"> 
-						<i class="material-icons center-icon">add</i>
-					</a>
-				</legend>
-				<div class="form-group">
-					<div formArrayName="cursos">
+		</div>
+
+		<div class="row">
+
+			<div class="input-field col s4">
+				<select class="browser-default" #curso>
+					<option disabled selected value>Selecione um curso</option>
+					<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}</option>
+
+				</select>
+			</div>
+
+			<div class="col s2">
+				<a
+					class="btn-floating waves-effect waves-light green btn-remove-permission"
+					(click)="addCurso(curso.value)"> 
+					<i class="material-icons center-icon">add</i>
+				</a>
+			</div>
+
+		</div>
+		
+		<div class="row">
+			<div class="form-group">
+				<div formArrayName="cursos">
+					
+						<table class="striped">
+							<thead>
+								<tr class="row col s12">
+						        	<th class="col s3">Nome</th>
+						            <th class="col s3">Descrição</th>
+						            <th class="col s3">Validade (anos)</th>
+						            <th class="col s3">Remover</th>
+						        </tr>
+					        </thead>
+			        
+			        <!-- 
+					<div class="row col s12">
+						<p class="col s3">Nome</p>
+						<p class="col s3">Descrição</p>
+						<p class="col s3">Validade</p>
+						<p class="col s3">Remover</p>
+					</div>
+					 -->
 						<div *ngFor="let curso of cursosArray.controls;let i = index"
 							[formGroupName]="i">
-
-							<div class="row">
-								 
-								<div class="input-field col s10">
-							    	<input required name="curso" id="curso" 
-								    	type="text" materialize="autocomplete" 
-								    	[materializeParams]="cursos"
-									    (ngModelChange)="changedExtraHandler($event)"
-									    class="validate" formControlName="curso"/>
-							        <label for="curso" data-error="Campo obrigatório.">Curso Obrigatório</label>
-							    </div>
-
-								<div class="col s2">
+							<tbody class="col s12">
+						        <tr class="col s12">
+						        	<input type="hidden" formControlName="nome" value="{{curso.value.nome}}">
+						        	<input type="hidden" formControlName="descricao" value="{{curso.value.descricao}}">
+						        	<input type="hidden" formControlName="validade" value="{{curso.value.validade}}">
+						        	<input type="hidden" formControlName="id" value="{{curso.value.id}}">
+							        <td class="col s3">{{curso.value.nome}}</td>
+							        <td class="col s3">{{curso.value.descricao}}</td>
+							        <td class="col s3">{{curso.value.validade}}</td>
+							        <td class="col s3">
+										<a class="btn-floating waves-effect waves-light red btn-remove"
+											(click)="removeCurso(i)"> 
+											<i class="material-icons center-icon">delete</i>
+										</a>
+									</td> 
+						        </tr>
+					        </tbody>
+							
+							<!-- 
+							<div class="row col s12">
+								<div class="col s3">{{curso.value.curso.nome}}</div>
+								<div class="col s3">{{curso.value.curso.descricao}}</div>
+								<div class="col s3">{{curso.value.curso.validade}}</div>
+								<div class="col s3">
 									<a class="btn-floating waves-effect waves-light red btn-remove-permission"
-										(click)="removeCurso(i)"> 
+									(click)="removeCurso(i)"> 
 										<i class="material-icons center-icon">delete</i>
 									</a>
 								</div>
-
 							</div>
-
-							<input id="id{{i}}" name="id{{i}}" type="hidden" formControlName="id"> 
-							<input id="version{{i}}" name="version{{i}}" type="hidden" formControlName="version">
-
+							 -->
 						</div>
-					</div>
-				</div>
-				 
-			</fieldset>
-			
-			<input id="id" name="id" type="hidden" formControlName="id">
-			<input id="version" name="version" type="hidden" formControlName="version">
-
-			<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
-
-			<div class='row row-btns'>
-				<div class="col s6">
-					<button type="submit" class="btn btn-primary"
-						[disabled]="!isValid()">Salvar</button>
-				</div>
-				<div class="col s6">
-					<a [routerLink]="['/funcao']"
-						class="btn btn-primary btn-listar-perfis">Listar</a>
+					
+					</table>
+				
 				</div>
 			</div>
-	</form>
+		</div>
+
+
+
+<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+
+<div class='row row-btns'>
+	<div class="col s6">
+		<button type="submit" class="btn btn-primary" [disabled]="!isValid()">Salvar</button>
+	</div>
+	<div class="col s6">
+		<a [routerLink]="['/funcao']"
+			class="btn btn-primary btn-listar-perfis">Listar</a>
+	</div>
+</div>
+</form>
 </div>

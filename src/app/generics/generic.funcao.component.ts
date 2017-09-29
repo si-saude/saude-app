@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 
 import { Funcao } from './../model/funcao';
 import { Curso } from './../model/curso';
@@ -26,24 +26,43 @@ export abstract class GenericFuncaoComponent {
         this.funcaoService = funcaoService;
         this.formBuilder = formBuilder;
         
+        this.formulario = this.formBuilder.group({
+            nome: [null, Validators.required],
+            id: [0],
+            version: [0],
+            cursos: this.formBuilder.array([
+                this.formBuilder.group({
+                    nome: [''],
+                    descricao: [''],
+                    validade: [0],
+                    id: [0],
+                }),
+            ]),
+        } );
+        
+        this.cursosArray = this.formulario.get('cursos') as FormArray;
+        this.cursosArray.removeAt(0);
+        
         this.funcaoService.getCursos( this.cursoFilter )
             .then(res => {
                 this.cursos = res.json();
-                console.log(res.json());
             })
             .catch(error => {
                 console.log(error);
             })
-        
     }
 
-    addCurso() {
-        let curso = new FormGroup({});
-        curso.addControl("curso", new FormControl(null));
-        curso.addControl("id", new FormControl(0));
-        curso.addControl("version", new FormControl(0));
+    addCurso(valor: number) {
+        this.funcaoService.getCursoById(valor)
+            .then(res => {
+                let curso = new FormGroup({});
+                curso.addControl("nome", new FormControl(res.json().nome));
+                curso.addControl("descricao", new FormControl(res.json().descricao));
+                curso.addControl("validade", new FormControl(res.json().validade));
+                curso.addControl("id", new FormControl(res.json().id));
+                this.cursosArray.push(curso);
+            })
         
-        this.cursosArray.push(curso);
     }
 
     removeCurso(i: number) {
@@ -57,6 +76,7 @@ export abstract class GenericFuncaoComponent {
     }
 
     save() {
+        console.log(this.formulario.value);
         this.funcaoService.submit( this.formulario.value )
             .then( res => {
                 this.verifyMsg = true;
@@ -74,12 +94,16 @@ export abstract class GenericFuncaoComponent {
         if ( evento != undefined ) {
             if ( evento.length > 3 ) {
                 
-//              this.funcaoService.getCursos(evento)
-//                  .then(res => {
-//                      this.cursos = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]')); 
-//                  });
-//                this.cursos = "['data':{'apple': null, 'google': null}}]";
-                                
+                this.funcaoService.getCursos( this.cursoFilter )
+                    .then(res => {
+                        console.log(JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));
+//                        this.cursos = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]');
+                        console.log(res.json());
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                
             }
         }
     }

@@ -25,7 +25,7 @@ export abstract class GenericPerfilComponent {
       this.perfilService.getFuncoes("")
           .then(res => {
               this.funcoes = Object.keys(res.json());
-              console.log(this.funcoes);
+//              console.log(this.funcoes);
           });
   }
   

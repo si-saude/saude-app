@@ -2,9 +2,7 @@
 <meta charset="utf-8">
 </head>
 
-<div class="row">
-	<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
-
+<div class="row form-container">
 	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
 
 		<div class="row">
@@ -25,7 +23,7 @@
 
 			<div class="input-field col s4">
 				<input id="validade" type="text" formControlName="validade">
-				<label for="validade">Validade</label>
+				<label for="validade">Validade (anos)</label>
 			</div>
 
 		</div>
@@ -41,7 +39,7 @@
 					[disabled]="!isValid()">Salvar</button>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/funcao']"
+				<a [routerLink]="['/curso']"
 					class="btn btn-primary btn-listar-perfis">Listar</a>
 			</div>
 		</div>

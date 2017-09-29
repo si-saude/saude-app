@@ -1,25 +1,34 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
+
+import {IMyDpOptions} from 'mydatepicker';
 
 import { ProfissionalSaude } from './../model/profissional-saude';
 import { ProfissionalSaudeService } from './../controller/profissional-saude/profissional-saude.service';
 import { ProfissionalSaudeFilter } from './../controller/profissional-saude/profissional-saude.filter';
 import { LocalizacaoFilter } from './../controller/localizacao/localizacao.filter';
-import { GerenciaFilter } from './../controller/gerencia/gerencia.filter';
+import { FuncaoFilter } from './../controller/funcao/funcao.filter';
 import { EquipeFilter } from './../controller/equipe/equipe.filter';
+import { CursoFilter } from './../controller/curso/curso.filter';
 import { Localizacao } from './../model/localizacao';
 import { Equipe } from './../model/equipe';
-import { Gerencia } from './../model/gerencia';
+import { Funcao } from './../model/funcao';
+import { Curso } from './../model/curso';
 
 export class GenericProfissionalSaudeComponent {
 
     formulario: FormGroup;
     telefonesArray: FormArray;
+    curriculoCursosArray: FormArray;
     profissionaisSaude: Array<ProfissionalSaude>;
     profissionalSaude: ProfissionalSaude;
     localizacoes: Array<Localizacao>;
     equipes: Array<Equipe>;
-    gerencias: Array<Gerencia>;
+    funcoes: Array<Funcao>;
+    cursos: Array<Curso>;
+    myDatePickerOptions: IMyDpOptions = {
+        dateFormat: 'dd.mm.yyyy'
+    };
 
     colorMsg: string;
     msg: string;
@@ -27,8 +36,9 @@ export class GenericProfissionalSaudeComponent {
     profissionalSaudeService: ProfissionalSaudeService;
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
     localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter();
-    gerenciaFilter: GerenciaFilter = new GerenciaFilter();
     equipeFilter: EquipeFilter = new EquipeFilter();
+    funcaoFilter: FuncaoFilter = new FuncaoFilter();
+    cursoFilter: CursoFilter = new CursoFilter();
     formBuilder: FormBuilder;
 
     constructor( profissionalSaudeService: ProfissionalSaudeService,
@@ -36,50 +46,91 @@ export class GenericProfissionalSaudeComponent {
         this.profissionalSaudeService = profissionalSaudeService;
         this.formBuilder = formBuilder;
         
+        this.formulario = this.formBuilder.group( {
+            id: [0],
+            version: [0],
+            nome: [null, Validators.required],
+            matricula: [null],
+            dataNascimento: [null],        
+            ramal: [null],
+            chave: [null],
+            localizacao: this.formBuilder.group({
+               id: ['']
+            }),
+            equipe: this.formBuilder.group({
+                id: [''] 
+            }),
+            funcao: this.formBuilder.group({
+                id: ['']
+            }),
+            telefones: this.formBuilder.array([
+                this.formBuilder.group({
+                    numero: [null],
+                    id: [0],
+                    version: [0]
+                }),                                          
+            ]),
+            endereco: this.formBuilder.group({
+                logradouro: [null],
+                bairro: [null],
+                numero: [null],
+                complemento: [null],
+                cep: [null],
+                cidade: [null],
+                id: [0],
+                version: [0]
+            }),
+            curriculo: this.formBuilder.group({
+                historico: [''],
+                formacao: [''],
+                atuacao: [''],
+                curriculoCursos: this.formBuilder.array([
+                    this.formBuilder.group({
+                        curso: this.formBuilder.group({
+                            id: ['']
+                        }),
+                        data: [null]
+                    }),                                          
+                ]),
+                id: [0],
+                version: [0]
+            })
+        } );
+        
+        this.telefonesArray = this.formulario.get('telefones') as FormArray;
+        this.curriculoCursosArray = this.formulario.get('curriculo').get('curriculoCursos') as FormArray;
+        
         this.profissionalSaudeService.getLocalizacoes(this.localizacaoFilter)
             .then(res => {
                 this.localizacoes = res.json();
-                console.log(this.localizacoes);
             })
             .catch(error => {
                 console.log(error);
             })
         
-        this.profissionalSaudeService.getGerencias(this.gerenciaFilter)
-        .then(res => {
-            this.gerencias = res.json();
-            console.log(this.gerencias);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-        
         this.profissionalSaudeService.getEquipe(this.equipeFilter)
-        .then(res => {
-            this.equipes = res.json();
-            console.log(this.equipes);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(res => {
+                this.equipes = res.json();
+            })
+            .catch(error => {
+                console.log(error);
+            })
         
-        this.profissionalSaudeService.getLocalizacoes(this.localizacaoFilter)
-        .then(res => {
-            this.localizacoes = res.json();
-            console.log(this.localizacoes);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        this.profissionalSaudeService.getFuncoes(this.funcaoFilter)
+            .then(res => {
+                this.funcoes = res.json();
+            })
+            .catch(error => {
+                console.log(error);
+            })
         
-//        this.profissionalSaudeService.getFuncoes(this.funcaoFilter)
-//        .then(res => {
-//            this.funcoes = res.json();
-//            console.log(this.funcoes);
-//        })
-//        .catch(error => {
-//            console.log(error);
-//        })
+        this.profissionalSaudeService.getCursos(this.cursoFilter)
+            .then(res => {
+                this.cursos = res.json();
+            })
+            .catch(error => {
+                console.log(error);
+            }) 
         
     }
 
@@ -96,6 +147,20 @@ export class GenericProfissionalSaudeComponent {
         this.telefonesArray.removeAt(i);
     }
     
+    addCurriculoCurso() {
+        let curriculoCurso = new FormGroup({});
+        let curso = new FormGroup({});
+        curriculoCurso.addControl("curso", new FormControl(null));
+        curriculoCurso.addControl(curso.addControl("id", new FormControl(null)), new FormControl(null));
+        curriculoCurso.addControl("data", new FormControl(null));
+        
+        this.curriculoCursosArray.push(curriculoCurso);
+    }
+
+    removeCurriculoCurso(i: number) {
+        this.curriculoCursosArray.removeAt(i);
+    }
+    
     isValid() {
         if ( this.formulario.valid ) {
             return true;
@@ -103,26 +168,31 @@ export class GenericProfissionalSaudeComponent {
     }
 
     save() {
-        let stringDate = this.formulario.value.dataNascimento.split("/");
-        let dateFormated = new Date(stringDate[2], stringDate[1] - 1, stringDate[0]);
-        this.formulario.value.dataNascimento = dateFormated;
-
-        if (this.formulario.value.localizacao === '') {
-            this.formulario.value.localizacao = null;
-        }
-
-        if (this.formulario.value.gerencia === '') {
-            this.formulario.value.gerencia = null;
-        }
-
-        if (this.formulario.value.equipe === '') {
-            this.formulario.value.equipe = null;
+        if ( this.formulario.value.dataNascimento !== null && 
+                this.formulario.value.dataNascimento !== undefined ) {
+            this.formulario.value.dataNascimento = this.formulario.value.dataNascimento.jsdate;
+//            let stringDate = this.formulario.value.dataNascimento.split("/");
+//            let dateFormated = new Date(stringDate[2], stringDate[1] - 1, stringDate[0]);
+//            this.formulario.value.dataNascimento = dateFormated;
         }
         
-        if (this.formulario.value.funcao === '') {
-            this.formulario.value.funcao = null;
+        if ( this.formulario.value.curriculo.curriculoCursos !== null && 
+                this.formulario.value.curriculo.curriculoCursos !== undefined ) {
+            this.formulario.value.curriculo.curriculoCursos.data = this.formulario.value.curriculo.curriculoCursos.data.jsdate;
         }
-        
+
+        if (this.formulario.value.localizacao.id === '') {
+            this.formulario.value.localizacao.id = 0;
+        }
+
+        if (this.formulario.value.funcao.id === '') {
+            this.formulario.value.funcao.id = 0;
+        }
+
+        if (this.formulario.value.equipe.id === '') {
+            this.formulario.value.equipe.id = 0;
+        }
+        console.log(this.formulario.value);
         this.profissionalSaudeService.submit( this.formulario.value )
             .then( res => {
                 this.verifyMsg = true;
@@ -140,4 +210,22 @@ export class GenericProfissionalSaudeComponent {
         
     }
 
+
+    setDate(): void {
+        // Set today date using the patchValue function
+        let date = new Date();
+        this.formulario.patchValue({dataNascimento: {
+            date: {
+                year: date.getFullYear(),
+                month: date.getMonth() + 1,
+                day: date.getDate()}
+            }
+        });
+    }
+
+    clearDate(): void {
+        // Clear the date using the patchValue function
+        this.formulario.patchValue({myDate: null});
+    }
+    
 }

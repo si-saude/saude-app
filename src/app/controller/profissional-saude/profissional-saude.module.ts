@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { MyDatePickerModule } from 'mydatepicker';
 import { MaterializeModule } from 'angular2-materialize';
 
 import { ProfissionalSaudeComponent } from './profissional-saude.component';
@@ -20,6 +21,7 @@ import { ProfissionalSaudeEditarComponent } from './profissional-saude-editar/pr
      ],
      imports: [
         ProfissionalSaudeRoutingModule,
+        MyDatePickerModule,
         SharedModule
      ],
      providers: [

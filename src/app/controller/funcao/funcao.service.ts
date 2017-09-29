@@ -38,6 +38,13 @@ export class FuncaoService {
             .post( urlGetCursos, cursoFilter, { headers: this.headers } )
             .toPromise();
     }
+    
+    getCursoById( id: number ){
+        let urlGetCursos = GlobalVariable.BASE_API_URL + "/curso";
+        return this.http
+            .get( urlGetCursos + "?id=" + id, { headers: this.headers } )
+            .toPromise();
+    }
 
     list( funcaoFilter: FuncaoFilter ) {
         let urlList = this.URL + "/list";

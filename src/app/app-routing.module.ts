@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'profissional-saude', component: ProfissionalSaudeComponent },
   { path: 'funcao', component: FuncaoComponent },
   { path: 'curso', component: CursoComponent },
-  { path: '', pathMatch: 'full', redirectTo: '/curso'}
+  { path: '', pathMatch: 'full', redirectTo: '/profissional-saude'}
 ];
 
 @NgModule({

@@ -41,3 +41,7 @@ select{
     left: 20px;
     opacity: 10;
 }
+
+.form-container{
+	margin-top: 50px;
+}

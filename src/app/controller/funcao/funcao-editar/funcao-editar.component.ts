@@ -37,22 +37,7 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
 
   onChange($event){}
   ngOnInit() {
-      
-      this.formulario = this.formBuilder.group({
-              nome: [null, Validators.required],
-              id: [0],
-              version: [0],
-              cursos: this.formBuilder.array([
-                  this.formBuilder.group({
-                      curso: [null, Validators.required],
-                      id: [0],
-                      version: [0]
-                  }),
-              ]),
-          } );
-      
-      this.cursosArray = this.formulario.get('cursos') as FormArray;
-      
+            
       this.inscricao = this.route.params.subscribe(
           (params: any) => {
             let id = params['id'];
@@ -60,19 +45,21 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
             this.funcaoService.get(id)
                 .then(res => {
                     this.funcao = res.json();
+                    console.log(this.funcao);
                     this.formulario = this.formBuilder.group({
-                        nome: [null, Validators.required],
-                        id: [0],
-                        version: [0],
+                        nome: [this.funcao.nome, Validators.required],
+                        id: [this.funcao.id],
+                        version: [this.funcao.version],
                         cursos: this.formBuilder.array([
                             this.formBuilder.group({
-                                curso: [null, Validators.required],
+                                nome: [''],
+                                descricao: [''],
+                                validade: [0],
                                 id: [0],
-                                version: [0]
                             }),
                         ]),
                     } );
-                
+
                 this.cursosArray = this.formulario.get('cursos') as FormArray;
                 this.cursosArray.removeAt(0);
                 
@@ -88,9 +75,9 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
       );
   }
   
-  addCurso() {
-      super.addCurso();
-  }
+//  addCurso() {
+//      super.addCurso();
+//  }
   
   removeCurso(i: number) {
       super.removeCurso(i);
@@ -160,8 +147,9 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
   includeCurso(curso: Curso) {
       let cursoForm = new FormGroup({});
       cursoForm.addControl("nome", new FormControl(curso.nome));
+      cursoForm.addControl("descricao", new FormControl(curso.descricao));
+      cursoForm.addControl("validade", new FormControl(curso.validade));
       cursoForm.addControl("id", new FormControl(curso.id));
-      cursoForm.addControl("version", new FormControl(curso.version));
       this.cursosArray.push(cursoForm);
   }
   

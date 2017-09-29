@@ -9,14 +9,14 @@ import { CursoComponent } from './curso.component';
 import { CursoService } from './curso.service';
 import { CursoCadastrarComponent } from './curso-cadastrar/curso-cadastrar.component';
 import { CursoRoutingModule } from './curso.routing.module';
-//import { CursoEditarComponent } from './curso-editar/curso-editar.component';
+import { CursoEditarComponent } from './curso-editar/curso-editar.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        CursoComponent,
-       CursoCadastrarComponent
-//       FuncaoEditarComponent
+       CursoCadastrarComponent,
+       CursoEditarComponent
      ],
      imports: [
         CursoRoutingModule,

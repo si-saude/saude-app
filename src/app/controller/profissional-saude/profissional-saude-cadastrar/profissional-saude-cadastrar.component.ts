@@ -29,40 +29,8 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
     }
 
     ngOnInit() {
-        this.formulario = this.formBuilder.group( {
-            id: [0],
-            version: [0],
-            nome: [null, Validators.required],
-            matricula: [null],
-            dataNascimento: [null],
-            ramal: [null],
-            chave: [null],
-            localizacao: [''],
-            gerencia: [''],
-            equipe: [''],
-            funcao: [''],
-            telefones: this.formBuilder.array([
-                this.formBuilder.group({
-                    numero: [null],
-                    id: [0],
-                    version: [0]
-                }),                                          
-            ]),
-            endereco: this.formBuilder.group({
-                logradouro: [null],
-                bairro: [null],
-                numero: [null],
-                complemento: [null],
-                cep: [null],
-                cidade: [null],
-                id: [0],
-                version: [0]
-            })
-        } );
         
-        this.telefonesArray = this.formulario.get('telefones') as FormArray;
-
-        this.profissionalSaudeService.list( this.profissionalSaudeFilter )
+//        this.profissionalSaudeService.list( this.profissionalSaudeFilter )
 //            .then( res => {
 //                this.profissionaisSaude = JSON.parse( JSON.stringify( res.json() ) );
 //                console.log( res.json() );
@@ -81,6 +49,14 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
         super.removeTelefone(index);
     }
 
+    addCurriculoCurso() {
+        super.addCurriculoCurso();
+    }
+
+    removeCurriculoCurso(i: number) {
+        super.removeCurriculoCurso(i);
+    }
+    
     isValid() {
         return super.isValid();
     }

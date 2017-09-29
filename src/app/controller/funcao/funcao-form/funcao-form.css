@@ -19,8 +19,8 @@
 	margin-top: 27px;
 }
 
-.btn-remove-permission {
-	margin-top: 15px;	
+.btn-remove {
+	margin-top: -5px;	
 }
 
 .btn-listar-perfis {
@@ -29,6 +29,10 @@
 
 select{
 	display:inline;
+}
+
+tbody{
+	margin-top: 20px;	
 }
 
 .input-field > select {
