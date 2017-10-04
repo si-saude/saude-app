@@ -29,7 +29,7 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
     }
 
     ngOnInit() {
-        
+
 //        this.profissionalSaudeService.list( this.profissionalSaudeFilter )
 //            .then( res => {
 //                this.profissionaisSaude = JSON.parse( JSON.stringify( res.json() ) );
@@ -57,6 +57,14 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
         super.removeCurriculoCurso(i);
     }
     
+    addVacina() {
+        super.addVacina();
+    }
+    
+    removeVacina(i: number) {
+        super.removeVacina(i);
+    }
+    
     isValid() {
         return super.isValid();
     }
@@ -73,6 +81,12 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
 
     changedExtraHandler( evento: string ) {
         super.changedExtraHandler( evento );
+    }
+    
+    parseStringToDate(data) {
+        let s = data.split("/");
+        let d: Date = new Date(Number.parseInt(s[2]), Number.parseInt(s[1]), Number.parseInt(s[0]));
+        return d;
     }
 
 }

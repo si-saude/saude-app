@@ -11,6 +11,7 @@ import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { FuncaoFilter } from './../funcao/funcao.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { CursoFilter } from './../curso/curso.filter';
+import { CidadeFilter } from './../cidade/cidade.filter';
 
 @Injectable()
 export class ProfissionalSaudeService {
@@ -29,9 +30,9 @@ export class ProfissionalSaudeService {
 
     get( id: number ) {
         let urlGet = this.URL;
-//        return this.http
-//            .get( urlGet + "?id=" + id, { headers: this.headers } )
-//            .toPromise();
+        return this.http
+            .get( urlGet + "?id=" + id, { headers: this.headers } )
+            .toPromise();
     }
 
     getLocalizacoes(localizacaoFilter: LocalizacaoFilter) {
@@ -62,6 +63,12 @@ export class ProfissionalSaudeService {
             .toPromise();
     }
     
+    getCidades(cidadeFilter: CidadeFilter) {
+        let urlGetCidade = GlobalVariable.BASE_API_URL + "/cidade/selectList";
+        return this.http
+            .post( urlGetCidade, cidadeFilter, { headers: this.headers })
+            .toPromise();
+    }
     
     list( profissionalSaudeFilter: ProfissionalSaudeFilter ) {
         let urlList = this.URL + "/list";
@@ -72,9 +79,9 @@ export class ProfissionalSaudeService {
     
     delete( id ) {
         let urlDelete = this.URL + "/delete";
-//        return this.http
-//            .post( urlDelete, id, { headers: this.headers } )
-//            .toPromise();
+        return this.http
+            .post( urlDelete, id, { headers: this.headers } )
+            .toPromise();
     }
 
     private handleError( error: any ): Promise<any> {

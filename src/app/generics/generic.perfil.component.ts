@@ -15,23 +15,23 @@ export abstract class GenericPerfilComponent {
   verifyMsg: boolean = false;
   perfilService: PerfilService;
   formBuilder: FormBuilder;
-  funcoes: Array<string>;
+  funcionalidades: Array<string>;
     
   constructor(perfilService: PerfilService,
       formBuilder: FormBuilder) { 
       this.perfilService = perfilService;
       this.formBuilder = formBuilder;
       
-      this.perfilService.getFuncoes("")
+      this.perfilService.getFuncionalidades("")
           .then(res => {
-              this.funcoes = Object.keys(res.json());
-//              console.log(this.funcoes);
+//              this.funcionalidades = res.json();
+              console.log(res.json());
           });
   }
   
   addPermission() {
       let permissao = new FormGroup({});
-      permissao.addControl("funcao", new FormControl(''));
+      permissao.addControl("funcionalidade", new FormControl(''));
       permissao.addControl("leitura", new FormControl(false));
       permissao.addControl("escrita", new FormControl(false));
       permissao.addControl("perfil", new FormControl(null));
@@ -70,7 +70,7 @@ export abstract class GenericPerfilComponent {
       if ( evento != undefined ) {
           if ( evento.length > 3 ) {
               
-            this.perfilService.getFuncoes(evento).
+            this.perfilService.getFuncionalidades(evento).
             then(res => {
                 console.log(res.json());
 //                this.funcoes = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]')

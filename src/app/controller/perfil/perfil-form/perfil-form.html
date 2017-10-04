@@ -45,8 +45,9 @@
 							<div class="input-field col s4">
 								<select required class="browser-default"
 									formControlName="funcao">
-									<option disabled selected value>Selecione uma função</option>
-									<option *ngFor="let funcao of funcoes" value="{{funcao}}">{{funcao}}</option>
+									<option disabled selected value>Selecione uma funcionalidade</option>
+									<option *ngFor="let funcionalidade of funcionalidades" 
+										value="{{funcionalidade}}">{{funcionalidade}}</option>
 								</select>
 							</div>
 

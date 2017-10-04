@@ -19,17 +19,8 @@
 	margin-top: 27px;
 }
 
-.btn-remove {
-	margin-top: -5px;	
-}
-
 .btn-remove-permission {
-	margin-top: 17px;
-}
-
-.row-curso {
-	margin-bottom: 50px;
-    margin-left: -20px;
+	margin-top: 15px;	
 }
 
 .btn-listar-perfis {
@@ -38,10 +29,6 @@
 
 select{
 	display:inline;
-}
-
-tbody{
-	margin-top: 20px;	
 }
 
 .input-field > select {
@@ -53,4 +40,8 @@ tbody{
     top: 0;
     left: 20px;
     opacity: 10;
+}
+
+.form-container{
+	margin-top: 50px;
 }

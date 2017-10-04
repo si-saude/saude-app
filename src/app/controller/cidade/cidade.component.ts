@@ -5,24 +5,23 @@ import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
 
 import { GlobalVariable } from './../../global';
-import { Gerencia } from './../../model/gerencia';
-import { GerenciaService } from './gerencia.service';
-import { GerenciaFilter } from './gerencia.filter';
+import { Cidade } from './../../model/cidade';
+import { CidadeService } from './cidade.service';
+import { CidadeFilter } from './cidade.filter';
 
 @Component({
-  selector: 'app-gerencia',
-  templateUrl: './gerencia.component.html',
-  styleUrls: ['./gerencia.component.css']
+  selector: 'app-cidade',
+  templateUrl: './cidade.component.html',
+  styleUrls: ['./cidade.component.css']
 })
-export class GerenciaComponent implements OnInit {
+export class CidadeComponent implements OnInit {
 
-  private titulo = "Gerencias";
+  private titulo = "Funções";
   private corTitulo = GlobalVariable.COLOR_TITLE;
   
   private formulario: FormGroup;  
-  private permissoesArray: FormArray;  
-  private gerencias: Array<Gerencia>;
-  private gerenciaFilter: GerenciaFilter = new GerenciaFilter();
+  private cidades: Array<Cidade>;
+  private cidadeFilter: CidadeFilter = new CidadeFilter();
   private paginas: number[];
   
   private msgError: string = '';
@@ -39,15 +38,15 @@ export class GerenciaComponent implements OnInit {
       complete: function() { }
   }]
   
-  constructor(private gerenciaService: GerenciaService, 
+  constructor(private cidadeService: CidadeService, 
           private formBuilder: FormBuilder) { }
 
   ngOnInit() {
       
-      this.gerenciaService.list(this.gerenciaFilter)
+      this.cidadeService.list(this.cidadeFilter)
           .then(res => {
               this.showPreload = false;
-              this.gerencias = JSON.parse(JSON.stringify(res.json())).list;
+              this.cidades = JSON.parse(JSON.stringify(res.json())).list;
               this.paginas = this.getPaginas(res.json().total);
               if (res.json().total === 0){
                   this.verifyEmptyPaginas = true;
@@ -63,7 +62,7 @@ export class GerenciaComponent implements OnInit {
   }
   
   getPaginas(total: number) {
-      let pageSize = this.gerenciaFilter.getPageSize();
+      let pageSize = this.cidadeFilter.getPageSize();
       if ( total % pageSize > 0 ) {
           return Array(Math.floor((total / pageSize)+1)); 
       } else {
@@ -73,11 +72,11 @@ export class GerenciaComponent implements OnInit {
   
   filter() {
       this.showPreload = true;
-      this.gerenciaService.list(this.gerenciaFilter)
+      this.cidadeService.list(this.cidadeFilter)
       .then(res => {
-          this.gerencias = JSON.parse(JSON.stringify(res.json())).list;
+          this.cidades = JSON.parse(JSON.stringify(res.json())).list;
           this.paginas = this.getPaginas(res.json().total);
-          if (res.json().total === 0){
+          if (res.json().total === 0) {
               this.verifyEmptyPaginas = true;
           } else {
               this.verifyEmptyPaginas = false;
@@ -100,13 +99,13 @@ export class GerenciaComponent implements OnInit {
           this.showPreload = false;
           return;
       }
-      this.gerenciaFilter.setPageNumber(index);
-      this.gerenciaFilter.setPageSize(4);
-      this.gerenciaService.list(this.gerenciaFilter)
+      this.cidadeFilter.setPageNumber(index);
+      this.cidadeFilter.setPageSize(2);
+      this.cidadeService.list(this.cidadeFilter)
           .then(res => {
-              this.gerencias = JSON.parse(JSON.stringify(res.json())).list;
-              this.paginas = this.getPaginas(res.json().total);
               this.showPreload = false;
+              this.cidades = JSON.parse(JSON.stringify(res.json())).list;
+              this.paginas = this.getPaginas(res.json().total);
            })
            .catch(error => {
                console.log(error);
@@ -114,7 +113,7 @@ export class GerenciaComponent implements OnInit {
   }
   
   activePage(index: number) {
-      if (index === this.gerenciaFilter.getPageNumber()) {
+      if (index === this.cidadeFilter.getPageNumber()) {
           return 'active';
       } else {
           return '';
@@ -123,7 +122,7 @@ export class GerenciaComponent implements OnInit {
   
   delete(id) {
       this.showPreload = true;
-      this.gerenciaService.delete(id)
+      this.cidadeService.delete(id)
           .then(res => {
               this.showPreload = false;
               window.location.reload();

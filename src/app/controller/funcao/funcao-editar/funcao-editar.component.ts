@@ -17,7 +17,7 @@ import { GenericFuncaoComponent } from './../../../generics/generic.funcao.compo
 })
 export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnInit {
 
-  private titulo: string = "Editar";
+  private titulo: string = "Editar Função";
   private corTitulo: string = GlobalVariable.COLOR_TITLE;
   private inscricao: Subscription;
   private funcao: Funcao;

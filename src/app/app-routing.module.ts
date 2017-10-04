@@ -13,21 +13,21 @@ import { GerenciaComponent } from './controller/gerencia/gerencia.component';
 import { ProfissionalSaudeComponent } from './controller/profissional-saude/profissional-saude.component';
 import { FuncaoComponent } from './controller/funcao/funcao.component';
 import { CursoComponent } from './controller/curso/curso.component';
+import { CidadeComponent } from './controller/cidade/cidade.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contato', component: ContatoComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'permissao', component: PermissaoComponent },
-  { path: 'home', component: HomeComponent,
-      canActivate: [AuthGuard] 
-  },
+  { path: 'home', component: HomeComponent},
   { path: 'localizacao', component: LocalizacaoComponent },
   { path: 'equipe', component: EquipeComponent },
   { path: 'gerencia', component: GerenciaComponent },
   { path: 'profissional-saude', component: ProfissionalSaudeComponent },
   { path: 'funcao', component: FuncaoComponent },
   { path: 'curso', component: CursoComponent },
+  { path: 'cidade', component: CidadeComponent },
   { path: '', pathMatch: 'full', redirectTo: '/profissional-saude'}
 ];
 

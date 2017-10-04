@@ -4,30 +4,29 @@ import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@ang
 import 'rxjs/add/operator/toPromise';
 
 import { GlobalVariable } from './../../../global';
-import { CursoService } from './../curso.service';
-import { CursoFilter } from './../curso.filter';
-import { Curso } from './../../../model/curso';
-import { GenericCursoComponent } from './../../../generics/generic.curso.component';
+import { CidadeService } from './../cidade.service';
+import { CidadeFilter } from './../cidade.filter';
+import { Cidade } from './../../../model/cidade';
+import { GenericCidadeComponent } from './../../../generics/generic.cidade.component';
 
 @Component( {
-    selector: 'app-curso-cadastrar',
-    templateUrl: './../curso-form/curso-form.html',
-    styleUrls: ['./../curso-form/curso-form.css']
+    selector: 'app-cidade-cadastrar',
+    templateUrl: './../cidade-form/cidade-form.html',
+    styleUrls: ['./../cidade-form/cidade-form.css']
 } )
-export class CursoCadastrarComponent extends GenericCursoComponent implements OnInit {
-    private titulo = "Cadastrar Curso";
+export class CidadeCadastrarComponent extends GenericCidadeComponent implements OnInit {
+    private titulo = "Cadastrar Cidade";
     private corTitulo = GlobalVariable.COLOR_TITLE;
 
-    constructor( cursoService: CursoService,
+    constructor( cidadeService: CidadeService,
             formBuilder: FormBuilder ) {
-        super(cursoService, formBuilder);
+        super(cidadeService, formBuilder);
     }
 
     ngOnInit() {
         this.formulario = this.formBuilder.group( {
             nome: [null, Validators.required],
-            descricao: [null],
-            validade: [0],
+            uf: [null],
             id: [0],
             version: [0]
         } );

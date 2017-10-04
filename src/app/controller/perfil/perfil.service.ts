@@ -16,9 +16,8 @@ export class PerfilService {
 
   constructor(private http: Http, private router: Router) { }
 
-  getFuncoes(substring: string){
-      
-      let urlLogin = this.URL + "/generic/funcao?filter=";
+  getFuncionalidades(substring: string){
+      let urlLogin = this.URL + "/generic/funcionalidade?filter=";
       return this.http
           .get(urlLogin + substring, {headers: this.headers})
           .toPromise();

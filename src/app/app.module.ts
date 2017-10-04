@@ -22,6 +22,8 @@ import { GerenciaModule } from './controller/gerencia/gerencia.module';
 import { ProfissionalSaudeModule } from './controller/profissional-saude/profissional-saude.module';
 import { FuncaoModule } from './controller/funcao/funcao.module';
 import { CursoModule } from './controller/curso/curso.module';
+import { CidadeModule } from './controller/cidade/cidade.module';
+import { MenuComponent } from './includes/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { CursoModule } from './controller/curso/curso.module';
     FooterComponent,
     NavbarPrincipalComponent,
     HomeComponent,
-    PermissaoComponent
+    PermissaoComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { CursoModule } from './controller/curso/curso.module';
     ProfissionalSaudeModule,
     FuncaoModule,
     CursoModule,
+    CidadeModule,
     AppRoutingModule
   ],
   providers: [ 

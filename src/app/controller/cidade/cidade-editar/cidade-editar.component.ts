@@ -4,22 +4,22 @@ import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@ang
 
 import { Subscription } from 'rxjs/Rx';
 
-import { CursoService } from './../curso.service';
-import { Curso } from './../../../model/curso';
+import { CidadeService } from './../cidade.service';
+import { Cidade } from './../../../model/cidade';
 import { GlobalVariable } from './../../../global';
-import { GenericCursoComponent } from './../../../generics/generic.curso.component';
+import { GenericCidadeComponent } from './../../../generics/generic.cidade.component';
 
 @Component({
-  selector: 'app-curso-editar',
-  templateUrl: './../curso-form/curso-form.html',
-  styleUrls: ['./../curso-form/curso-form.css']
+  selector: 'app-cidade-editar',
+  templateUrl: './../cidade-form/cidade-form.html',
+  styleUrls: ['./../cidade-form/cidade-form.css']
 })
-export class CursoEditarComponent extends GenericCursoComponent implements OnInit {
+export class CidadeEditarComponent extends GenericCidadeComponent implements OnInit {
 
-  private titulo: string = "Editar Curso";
+  private titulo: string = "Editar Cidade";
   private corTitulo: string = GlobalVariable.COLOR_TITLE;
   private inscricao: Subscription;
-  private curso: Curso;
+  private cidade: Cidade;
 //  private formulario: FormGroup;
 //  private permissoesArray: FormArray;
 //  private funcoes: Array<Object>;
@@ -29,9 +29,9 @@ export class CursoEditarComponent extends GenericCursoComponent implements OnIni
   
     
   constructor(private route: ActivatedRoute,
-          cursoService: CursoService,
+          cidadeService: CidadeService,
           formBuilder: FormBuilder) { 
-      super(cursoService, formBuilder);
+      super(cidadeService, formBuilder);
   }
 
   onChange($event){}
@@ -39,8 +39,7 @@ export class CursoEditarComponent extends GenericCursoComponent implements OnIni
       
       this.formulario = this.formBuilder.group({
               nome: [null, Validators.required],
-              descricao: [null],
-              validade: [0],
+              uf: [null],
               id: [0],
               version: [0]
           } );
@@ -49,15 +48,14 @@ export class CursoEditarComponent extends GenericCursoComponent implements OnIni
           (params: any) => {
             let id = params['id'];
             
-            this.cursoService.get(id)
+            this.cidadeService.get(id)
                 .then(res => {
-                    this.curso = res.json();
+                    this.cidade = res.json();
                     this.formulario = this.formBuilder.group({
-                        nome: [this.curso.nome, Validators.required],
-                        descricao: [this.curso.descricao],
-                        validade: [this.curso.validade],
-                        id: [this.curso.id],
-                        version: [this.curso.version]
+                        nome: [this.cidade.nome, Validators.required],
+                        uf: [this.cidade.uf],
+                        id: [this.cidade.id],
+                        version: [this.cidade.version]
                     } );
                 })
                 .catch(error =>

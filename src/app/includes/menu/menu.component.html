@@ -1,0 +1,56 @@
+<head>
+	<meta charset="utf-8">
+</head>
+
+<a class='dropdown-button btn' data-activates='menu' data-beloworigin="true">Menu</a>
+
+<ul id='menu' class='dropdown-content nested'>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-cidade' data-hover="hover" data-alignment="left">Cidade</a></li>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-curso' data-hover="hover" data-alignment="left">Curso</a></li>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-equipe' data-hover="hover" data-alignment="left">Equipe</a></li>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-funcao' data-hover="hover" data-alignment="left">Função</a></li>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-gerencia' data-hover="hover" data-alignment="left">Gerência</a></li>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-localizacao' data-hover="hover" data-alignment="left">Localização</a></li>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-perfil' data-hover="hover" data-alignment="left">Perfil</a></li>
+    <li><a class='dropdown-button d' href='#' data-activates='dropdown-profissional-saude' data-hover="hover" data-alignment="left">Profissional de Saúde</a></li>
+</ul>
+
+<ul id='dropdown-cidade' class='dropdown-content'>
+    <li><a [routerLink]="['/cidade']">Listar</a></li>
+    <li><a [routerLink]="['/cidade/cadastrar']">Cadastrar</a></li>
+</ul>
+
+<ul id='dropdown-curso' class='dropdown-content'>
+    <li><a [routerLink]="['/curso']">Listar</a></li>
+    <li><a [routerLink]="['/curso/cadastrar']">Cadastrar</a></li>
+</ul>
+
+<ul id='dropdown-equipe' class='dropdown-content'>
+    <li><a [routerLink]="['/equipe']">Listar</a></li>
+    <li><a [routerLink]="['/equipe/cadastrar']">Cadastrar</a></li>
+</ul>
+
+<ul id='dropdown-funcao' class='dropdown-content'>
+    <li><a [routerLink]="['/funcao']">Listar</a></li>
+    <li><a [routerLink]="['/funcao/cadastrar']">Cadastrar</a></li>
+</ul>
+
+<ul id='dropdown-gerencia' class='dropdown-content'>
+    <li><a [routerLink]="['/gerencia']">Listar</a></li>
+    <li><a [routerLink]="['/gerencia/cadastrar']">Cadastrar</a></li>
+</ul>
+
+<ul id='dropdown-localizacao' class='dropdown-content'>
+    <li><a [routerLink]="['/localizacao']">Listar</a></li>
+    <li><a [routerLink]="['/localizacao/cadastrar']">Cadastrar</a></li>
+</ul>
+
+<ul id='dropdown-perfil' class='dropdown-content'>
+    <li><a [routerLink]="['/perfil']">Listar</a></li>
+    <li><a [routerLink]="['/perfil/cadastrar']">Cadastrar</a></li>
+</ul>
+
+<ul id='dropdown-profissional-saude' class='dropdown-content'>
+    <li><a [routerLink]="['/profissional-saude']">Listar</a></li>
+    <li><a [routerLink]="['/profissional-saude/cadastrar']">Cadastrar</a></li>
+</ul>

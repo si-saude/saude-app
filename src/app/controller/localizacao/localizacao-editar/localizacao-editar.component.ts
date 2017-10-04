@@ -52,10 +52,10 @@ export class LocalizacaoEditarComponent implements OnInit {
                         id: [this.localizacao.id],
                         version: [this.localizacao.version]
                     });
-            })
-            .catch(error =>
-                console.log(error));
-          });
+                })
+                .catch(error =>
+                    console.log(error));
+            });
   }
   
   isValid() {

@@ -1,0 +1,11 @@
+.dropdown-content {
+	width: 115px !important;
+}
+
+.dropdown-content.nested {
+   overflow-y: visible;
+}
+
+.dropdown-content .dropdown-content {
+   margin-left: 100%;
+}

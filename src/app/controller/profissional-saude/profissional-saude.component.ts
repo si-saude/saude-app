@@ -88,7 +88,7 @@ export class ProfissionalSaudeComponent implements OnInit {
             return;
         }
         this.profissionalSaudeFilter.setPageNumber(index);
-        this.profissionalSaudeFilter.setPageSize(2);
+        this.profissionalSaudeFilter.setPageSize(4);
         this.profissionalSaudeService.list(this.profissionalSaudeFilter)
             .then(res => {
                 this.profissionaisSaude = JSON.parse(JSON.stringify(res.json())).list;
@@ -110,15 +110,15 @@ export class ProfissionalSaudeComponent implements OnInit {
     
     delete(id) {
         this.showPreload = true;
-//        this.profissionalSaudeService.delete(id)
-//            .then(res => {
-//                this.showPreload = false;
-//                window.location.reload();
-//            })
-//            .catch(error => {
-//                this.showPreload = false;
-//                console.log(error.text());
-//            })
+        this.profissionalSaudeService.delete(id)
+            .then(res => {
+                this.showPreload = false;
+                window.location.reload();
+            })
+            .catch(error => {
+                this.showPreload = false;
+                console.log(error.text());
+            })
         
     }
       

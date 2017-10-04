@@ -2,8 +2,8 @@
 <meta charset="utf-8">
 </head>
 
+<h5 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h5>
 <div class="row">
-	<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
 
 	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
 
@@ -16,24 +16,28 @@
 
 		</div>
 
-		<div class="row">
-
-			<div class="input-field col s4">
-				<select class="browser-default" #curso>
-					<option disabled selected value>Selecione um curso</option>
-					<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}</option>
-
-				</select>
-			</div>
-
-			<div class="col s2">
-				<a
-					class="btn-floating waves-effect waves-light green btn-remove-permission"
-					(click)="addCurso(curso.value)"> 
-					<i class="material-icons center-icon">add</i>
-				</a>
-			</div>
-
+	<fieldset>
+		<legend>Cursos</legend>
+		<div class="row row-curso">
+	
+	
+				<div class="input-field col s4">
+					<select class="browser-default" #curso>
+						<option disabled selected value>Selecione um curso</option>
+						<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}</option>
+	
+					</select>
+				</div>
+	
+				<div class="col s2">
+					<a
+						class="btn-floating waves-effect waves-light green btn-remove-permission"
+						(click)="addCurso(curso.value)"> 
+						<i class="material-icons center-icon">add</i>
+					</a>
+				</div>
+				
+			
 		</div>
 		
 		<div class="row">
@@ -98,7 +102,7 @@
 				</div>
 			</div>
 		</div>
-
+</fieldset>
 
 
 <app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>

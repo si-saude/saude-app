@@ -9,25 +9,16 @@
 
 		<div class="row">
 
-			<div class="input-field col s12">
+			<div class="input-field col s8">
 				<input id="nome" type="text" required formControlName="nome">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label>
 			</div>
-			
-		</div>
 		
-		<div class="row">
-		
-			<div class="input-field col s8">
-				<input id="descricao" type="text" formControlName="descricao">
-				<label for="descricao">Descricao</label>
-			</div>
-
 			<div class="input-field col s4">
-				<input id="validade" type="text" formControlName="validade">
-				<label for="validade">Validade (anos)</label>
+				<input id="uf" type="text" formControlName="uf">
+				<label for="uf">UF</label>
 			</div>
-
+	
 		</div>
 
 		<input id="id" name="id" type="hidden" formControlName="id"> 
@@ -41,7 +32,7 @@
 					[disabled]="!isValid()">Salvar</button>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/curso']"
+				<a [routerLink]="['/cidade']"
 					class="btn btn-primary btn-listar-perfis">Listar</a>
 			</div>
 		</div>

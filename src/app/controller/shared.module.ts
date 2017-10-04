@@ -11,7 +11,7 @@ import { PreloadComponent } from './../includes/preload/preload.component';
 @NgModule({
   declarations: [
     MensagemFormComponent,
-    PreloadComponent,
+    PreloadComponent
   ],
   imports: [ 
     CommonModule,
