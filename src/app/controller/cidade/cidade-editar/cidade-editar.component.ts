@@ -34,15 +34,16 @@ export class CidadeEditarComponent extends GenericCidadeComponent implements OnI
       super(cidadeService, formBuilder);
   }
 
-  onChange($event){}
   ngOnInit() {
       
-      this.formulario = this.formBuilder.group({
-              nome: [null, Validators.required],
-              uf: [null],
-              id: [0],
-              version: [0]
-          } );
+      this.cidade = new Cidade();
+  
+      this.cidade.setNome(null);
+      this.cidade.setUf(null);
+      this.cidade.setId(0);
+      this.cidade.setVersion(0);
+      
+      this.formulario = this.formBuilder.group(this.cidade);
       
       this.inscricao = this.route.params.subscribe(
           (params: any) => {
@@ -51,12 +52,7 @@ export class CidadeEditarComponent extends GenericCidadeComponent implements OnI
             this.cidadeService.get(id)
                 .then(res => {
                     this.cidade = res.json();
-                    this.formulario = this.formBuilder.group({
-                        nome: [this.cidade.nome, Validators.required],
-                        uf: [this.cidade.uf],
-                        id: [this.cidade.id],
-                        version: [this.cidade.version]
-                    } );
+                    this.formulario = this.formBuilder.group(this.cidade);
                 })
                 .catch(error =>
                     console.log(error));

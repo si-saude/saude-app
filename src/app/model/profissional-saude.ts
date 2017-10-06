@@ -4,22 +4,29 @@ import { EquipeFilter } from './../controller/equipe/equipe.filter';
 import { GerenciaFilter } from './../controller/gerencia/gerencia.filter';
 import { Endereco } from './endereco';
 import { Telefone } from './telefone';
+import { Funcao } from './funcao';
+import { Localizacao } from './localizacao';
+import { Equipe } from './equipe';
+import { ProfissionalConselho } from './profissional-conselho';
+import { Curriculo } from './curriculo';
 
 
 export class ProfissionalSaude {
     id: number;
     version: number;
     nome: string;
-    dataNascimento: DateFilter;
+    private dataNascimento: Date;
     matricula: string;
     chave: string;
     ramal: string;
-    localizacao: LocalizacaoFilter;
-    equipe: EquipeFilter;
-    gerencia: GerenciaFilter;
+    localizacao: Localizacao;
+    equipe: Equipe;
+    funcao: Funcao;
     mi: string;
-    enderecos: Array<Endereco>;
+    endereco: Endereco;
     telefones: Array<Telefone>;
+    curriculo: Curriculo;
+    profissionalConselho: ProfissionalConselho;
 
     getId() {
         return this.id;
@@ -49,7 +56,7 @@ export class ProfissionalSaude {
         return this.dataNascimento;
     }
     
-    setDataNascimento(dN: DateFilter) {
+    setDataNascimento(dN: Date) {
         this.dataNascimento = dN;
     }
     
@@ -81,7 +88,7 @@ export class ProfissionalSaude {
         return this.localizacao;
     }
     
-    setLocalizacao(l: LocalizacaoFilter) {
+    setLocalizacao(l: Localizacao) {
         this.localizacao= l;
     }
     
@@ -89,16 +96,16 @@ export class ProfissionalSaude {
         return this.equipe;
     }
     
-    setEquipe(e: EquipeFilter) {
+    setEquipe(e: Equipe) {
         this.equipe= e;
     }
     
-    getGerencia() {
-        return this.gerencia;
+    getFuncao() {
+        return this.funcao;
     }
     
-    setGerencia(g: GerenciaFilter) {
-        this.gerencia = g;
+    setFuncao(f: Funcao) {
+        this.funcao= f;
     }
     
     getMi() {
@@ -108,5 +115,30 @@ export class ProfissionalSaude {
     setMi(mi: string) {
         this.mi = mi;
     }
+    
+    getCurriculo() {
+        return this.curriculo;
+    }
+    
+    setCurriculo(curriculo: Curriculo) {
+        this.curriculo = curriculo;
+    }
+    
+    getProfissionalConselho() {
+        return this.profissionalConselho;
+    }
+    
+    setProfissionalConselho(profissionalConselho: ProfissionalConselho) {
+        this.profissionalConselho = profissionalConselho;
+    }
+    
+    getEndereco() {
+        return this.endereco;
+    }
+    
+    setEndereco(endereco: Endereco) {
+        this.endereco = endereco;
+    }
+    
 
 }

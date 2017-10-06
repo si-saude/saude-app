@@ -8,7 +8,6 @@ import { CidadeFilter } from './../controller/cidade/cidade.filter';
 export abstract class GenericCidadeComponent {
 
     formulario: FormGroup;
-    cidadesArray: FormArray;
     cidadeFilter: CidadeFilter = new CidadeFilter();
 
     colorMsg: string;
@@ -29,37 +28,26 @@ export abstract class GenericCidadeComponent {
             return true;
         } else { return false; }
     }
+    
+    processReturn(sucess:boolean, res:any){
+        if(sucess){
+            this.verifyMsg = true;
+            this.colorMsg = "green";
+            this.msg = res.text();
+        }else{
+            this.verifyMsg = true;
+            this.colorMsg = "red";
+            this.msg = res.text();
+        }
+    }
 
     save() {
         this.cidadeService.submit( this.formulario.value )
             .then( res => {
-                this.verifyMsg = true;
-                this.colorMsg = "green";
-                this.msg = res.text();
+                this.processReturn(true,res);
             } )
             .catch( error => {
-                this.verifyMsg = true;
-                this.colorMsg = "red";
-                this.msg = error.text();
+                this.processReturn(false,error);
             } )
     }
-    
-//    changedExtraHandler(evento: string) {
-//        if ( evento != undefined ) {
-//            if ( evento.length > 3 ) {
-//                
-////                this.cidadeService.getcidades( this.cidadeFilter )
-////                    .then(res => {
-////                        console.log(JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));
-//////                        this.cidades = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]');
-////                        console.log(res.json());
-////                    })
-////                    .catch(error => {
-////                        console.log(error);
-//                    })
-//                
-//            }
-//        }
-//    }
-
 }

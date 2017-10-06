@@ -24,20 +24,15 @@ export class CidadeCadastrarComponent extends GenericCidadeComponent implements 
     }
 
     ngOnInit() {
-        this.formulario = this.formBuilder.group( {
-            nome: [null, Validators.required],
-            uf: [null],
-            id: [0],
-            version: [0]
-        } );
-    }
-    
-    isValid() {
-        return super.isValid();
-    }
-
-    save() {
-        super.save();
+               
+        let cidade:Cidade = new Cidade();
+        
+        cidade.setNome(null);
+        cidade.setUf(null);
+        cidade.setId(0);
+        cidade.setVersion(0);
+        
+        this.formulario = this.formBuilder.group(cidade);
     }
     
     isPossibleDeactivate() {

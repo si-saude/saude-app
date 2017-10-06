@@ -14,7 +14,7 @@ import { GenericProfissionalSaudeComponent } from './../../../generics/generic.p
 } )
 export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaudeComponent implements OnInit {
 
-    private titulo = "Cadastrar";
+    private titulo = "Cadastrar Profissional de Saude";
     private corTitulo = GlobalVariable.COLOR_TITLE;
     //        private formulario: FormGroup;
     //        private profissionalSaudes: Array<profissionalSaude>;
@@ -23,9 +23,8 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
     //        private colorMsg: string = "green";
     //        private msg: string = '';
 
-    constructor( profissionalSaudeService: ProfissionalSaudeService,
-        formBuilder: FormBuilder ) {
-        super( profissionalSaudeService, formBuilder );
+    constructor( profissionalSaudeService: ProfissionalSaudeService ) {
+        super( profissionalSaudeService );
     }
 
     ngOnInit() {
@@ -84,9 +83,13 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
     }
     
     parseStringToDate(data) {
-        let s = data.split("/");
-        let d: Date = new Date(Number.parseInt(s[2]), Number.parseInt(s[1]), Number.parseInt(s[0]));
-        return d;
+        return super.parseStringToDate(data);
+//        super.parseStringToDate(data);
     }
+//    parseStringToDate(data) {
+//        let s = data.split("/");
+//        let d: Date = new Date(Number.parseInt(s[2]), Number.parseInt(s[1]), Number.parseInt(s[0]));
+//        return d;
+//    }
 
 }

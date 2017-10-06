@@ -2,12 +2,10 @@
 <meta charset="utf-8">
 </head>
 
-<h5 [ngStyle]="{'color': corTitulo}" class="center-align">Cadastrar
-	Profissional de Saúde</h5>
+<h5 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h5>
 <div class="row">
 
-
-	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+	<form class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 			<div class="col s12">
@@ -21,296 +19,172 @@
 					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#profissionalConselho">Conselho</a></li>
 					<li class="tab col s3"><a RouterLinkActive="active"
-						href="#endereco">Informações Adicionais</a></li>
+						href="#informacoesAdicionais">Informações Adicionais</a></li>
 				</ul>
 			</div>
 
 			<div id="dadosGerais">
 				<div class="row">
 					<div class="input-field col s12">
-						<input id="nome" type="text" required 
-						maxlength="220" formControlName="nome">
-						<label data-error="Campo obrigatório." for="nome">Nome</label>
+						<input id="nome" type="text" required maxlength="220"
+							[(ngModel)]="profissionalSaude.nome" name="nome"> <label
+							data-error="Campo obrigatório." for="nome">Nome</label>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="input-field col s8">
 						<input id="matricula" maxlength="10" type="text"
-							formControlName="matricula"> <label for="matricula">Matricula</label>
+							[(ngModel)]="profissionalSaude.matricula" name="matricula">
+						<label for="matricula">Matricula</label>
 					</div>
 
 					<div class="input-field col s4">
-						<!--
 						<my-date-picker name="dataNascimento"
-							[options]="myDatePickerOptions" formControlName="dataNascimento"
+							[options]="myDatePickerOptions"
+							[(ngModel)]="dataNascimento"
 							placeholder="Data de Nascimento"></my-date-picker>
-						-->
-						<input id="dataNascimento" type="text"
-							formControlName="dataNascimento" materialize="pickadate"
-							[materializeParams]="[{format: 'dd/mm/yyyy'}]"> <label
-							for="dataNascimento">Data de Nascimento</label>
-
 					</div>
-
 				</div>
 
 				<div class="row">
 					<div class="input-field col s8">
-						<input id="ramal" type="text" formControlName="ramal"> <label
+						<input id="ramal" type="text"
+							[(ngModel)]="profissionalSaude.ramal" name="ramal"> <label
 							for="ramal" maxlength="12">Ramal</label>
 					</div>
+
 					<div class="input-field col s4">
-						<input id="chave" type="text" formControlName="chave"
-							maxlength="8"> <label for="chave">Chave</label>
+						<input id="chave" type="text"
+							[(ngModel)]="profissionalSaude.chave" maxlength="8" name="chave">
+						<label for="chave">Chave</label>
 					</div>
 				</div>
-
+ 
 				<div class="row selects">
-					<div class="input-field col s4" formGroupName="localizacao">
+
+					<div class="input-field col s4">
 						<fieldset>
 							<legend>Localização</legend>
-							<select class="browser-default" formControlName="id">
-								<option selected value>Selecione uma localização</option>
+							<select name="localizacao" class="browser-default"
+								[(ngModel)]="profissionalSaude.localizacao.id">
+								<option disabled selected value=0>Selecione uma localização</option>
 								<option *ngFor="let localizacao of localizacoes"
 									value="{{localizacao.id}}">{{localizacao.nome}}</option>
 							</select>
-							</fieldset>
-						</div>
-						
-				
-				
-					<div class="input-field col s4" formGroupName="equipe">
+						</fieldset>
+					</div>
+ 
+					<div class="input-field col s4">
 						<fieldset>
-						<legend>Equipe</legend>
-							<select class="browser-default" formControlName="id">
-								<option selected value>Selecione uma equipe</option>
+							<legend>Equipe</legend>
+							<select name="equipe" class="browser-default"
+								[(ngModel)]="profissionalSaude.equipe.id">
+								<option selected value=0>Selecione uma equipe</option>
 								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
 							</select>
 						</fieldset>
 					</div>
-					
-					
-					<div class="input-field col s4" formGroupName="funcao">
+
+
+					<div class="input-field col s4">
 						<fieldset>
 							<legend>Função</legend>
-							<select required class="browser-default" formControlName="id">
-								<option selected value>Selecione uma função</option>
+							<select name="funcao" class="browser-default"
+								[(ngModel)]="profissionalSaude.funcao.id">
+								<option selected value=0>Selecione uma função</option>
 								<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
 							</select>
 						</fieldset>
 					</div>
-					
+
 				</div>
-				
+
 			</div>
+
 			<div id="curriculo">
+
 				<div class="form-group">
-					<div formGroupName="curriculo">
-
-						<div class="row">
-							<div class="input-field col s12">
-								<textarea id="historico" class="materialize-textarea"
-									formControlName="historico"
-									date-error="É necessário informar um histórico."></textarea>
-								<label for="historico" maxlength="4096">Histórico</label>
-							</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<textarea id="historico" class="materialize-textarea"
+								[(ngModel)]="profissionalSaude.curriculo.historico" name="curriculo.historico"
+								date-error="É necessário informar um histórico."></textarea>
+							<label for="historico" maxlength="4096">Histórico</label>
 						</div>
-
-						<div class="row">
-							<div class="input-field col s12">
-								<textarea id="formacao" class="materialize-textarea"
-									formControlName="formacao"></textarea>
-								<label for="formacao" maxlength="512">Formação</label>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="input-field col s12">
-								<textarea id="atuacao" class="materialize-textarea"
-									formControlName="atuacao"></textarea>
-								<label for="atuacao" maxlength="512">Atuação</label>
-							</div>
-						</div>
-
-						<fieldset>
-							<legend class="legend">
-								Cursos <a
-									class="btn-floating waves-effect waves-light green btn-add-permissoes"
-									(click)="addCurriculoCurso()"> <i
-									class="material-icons center-icon">add</i>
-								</a>
-							</legend>
-							<div class="form-group">
-								<div formArrayName="curriculoCursos">
-									<div
-										*ngFor="let curriculoCurso of curriculoCursosArray.controls;let i = index"
-										[formGroupName]="i">
-
-										<div class="row">
-											<div class="input-field col s6" formGroupName="curso">
-												<select class="browser-default" formControlName="id">
-													<option selected value>Selecione uma curso</option>
-													<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}
-											</option>
-												</select>
-											</div>
-
-											<div class="input-field col s4">
-
-												<input id="data" type="text"
-													formControlName="data" materialize="pickadate"
-													[materializeParams]="[{format: 'dd/mm/yyyy'}]"> 
-												<label for="data">Data</label>
-												<!-- 
-												<my-date-picker name="data" [options]="myDatePickerOptions"
-													formControlName="data" placeholder="Data">
-												</my-date-picker>
-												 -->
-											</div>
-
-											<div class="col s2">
-												<a
-													class="btn-floating waves-effect waves-light red btn-remove-permission"
-													(click)="removeCurriculoCurso(i)"> <i
-													class="material-icons center-icon">delete</i>
-												</a>
-											</div>
-
-										</div>
-
-									</div>
-								</div>
-							</div>
-
-						</fieldset>
-
-
-						<input id="id" name="id" type="hidden" formControlName="id">
-						<input id="version" name="version" type="hidden"
-							formControlName="version">
-
 					</div>
 
-				</div>
-			</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<textarea id="formacao" class="materialize-textarea"
+								[(ngModel)]="profissionalSaude.curriculo.formacao" name="curriculo.formacao"></textarea>
+							<label for="formacao" maxlength="512">Formação</label>
+						</div>
+					</div>
 
-			<div id="endereco">
-				<fieldset>
+					<div class="row">
+						<div class="input-field col s12">
+							<textarea id="atuacao" class="materialize-textarea"
+								[(ngModel)]="profissionalSaude.curriculo.atuacao" name="curriculo.atuacao"></textarea>
+							<label for="atuacao" maxlength="512">Atuação</label>
+						</div>
+					</div>
 
-					<legend class="legend">
-						Telefones <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
-							(click)="addTelefone()"> <i
-							class="material-icons center-icon">add</i>
-						</a>
-					</legend>
-					<div class="form-group">
-						<div formArrayName="telefones">
+					<fieldset>
+						<legend class="legend">
+							Cursos <a
+								class="btn-floating waves-effect waves-light green btn-add-permissoes"
+								(click)="addCurriculoCurso()"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</legend>
+						<div class="form-group">
 							<div
-								*ngFor="let telefone of telefonesArray.controls;let i = index"
-								[formGroupName]="i">
+								*ngFor="let curriculoCurso of profissionalSaude.curriculo.curriculoCursos;let i = index">
 
 								<div class="row">
-									<div class="input-field col s10">
-										<input id="numero" type="text" formControlName="numero">
-										<label for="numero" maxlength="16">Numero</label>
+									<div class="input-field col s6">
+										<select class="browser-default" name="curriculo.curso.id"
+											[(ngModel)]="curriculoCurso.curso.id">
+											<option selected value>Selecione uma curso</option>
+											<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}
+											</option>
+										</select>
+									</div>
+
+									<div class="input-field col s4">
+										<my-date-picker name="data" [options]="myDatePickerOptions"
+											[(ngModel)]="curriculoCurso.curso.data" name="curriculo.curso.data"
+											placeholder="Data">
+										</my-date-picker>
 									</div>
 
 									<div class="col s2">
 										<a
 											class="btn-floating waves-effect waves-light red btn-remove-permission"
-											(click)="removeTelefone(i)"> <i
+											(click)="removeCurriculoCurso(i)"> <i
 											class="material-icons center-icon">delete</i>
 										</a>
 									</div>
 
 								</div>
 
-								<input id="id{{i}}" name="id{{i}}" type="hidden"
-									formControlName="id"> <input id="version{{i}}"
-									name="version{{i}}" type="hidden" formControlName="version">
-
 							</div>
-						</div>
-					</div>
-
-				</fieldset>
-
-				<fieldset>
-
-					<legend class="legend"> Endereço </legend>
-					<div class="form-group">
-						<div formGroupName="endereco">
-
-							<div class="row">
-								<div class="input-field col s12">
-									<input required id="logradouro" type="text"
-										formControlName="logradouro"> <label for="logradouro"
-										maxlength="200">Logradouro</label>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="input-field col s8">
-									<input id="bairro" type="text" formControlName="bairro">
-									<label for="bairro" maxlength="100">Bairro</label>
-								</div>
-
-								<div class="input-field col s4">
-									<input id="numero" type="text" formControlName="numero">
-									<label for="numero" maxlength="12">Numero</label>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="input-field col s8">
-									<input id="complemento" type="text"
-										formControlName="complemento"> <label
-										for="complemento" maxlength="200">Complemento</label>
-								</div>
-
-								<div class="input-field col s4">
-									<input id="cep" type="text" formControlName="cep"> <label
-										for="cep" maxlength="9">CEP</label>
-								</div>
-							</div>
-
-
-							<div class="row">
-								<div class="input-field col s6" formGroupName="cidade">
-									<fieldset>
-										<legend>Cidade</legend>
-										<select class="browser-default" formControlName="id">
-											<option selected value>Selecione uma cidade</option>
-											<option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
-										</select>
-									</fieldset>
-								</div>
-							</div>
-							<!-- 
-								<div class="input-field col s6">
-							    	<input required name="cidade" id="cidade" type="text"
-							    	[materialize]="autocomplete" [materializeParams]="cidades"
-							    	(ngModelChange)="changedExtraHandler($event)"
-							    	class="validate" formControlName="cidade"/>
-							        <label for="cidade">Cidade</label>
-							    </div>
-							    -->
-
-
-							<input id="id" name="id" type="hidden" formControlName="id">
-							<input id="version" name="version" type="hidden"
-								formControlName="version">
 
 						</div>
 
-					</div>
+					</fieldset>
 
-				</fieldset>
+
+					<input id="id" name="curriculo.id{{i}}" type="hidden"
+						[(ngModel)]="curriculo.id"> 
+					<input id="version" name="curriculo.version{{i}}" type="hidden"
+						[(ngModel)]="curriculo.version">
+
+				</div>
 
 			</div>
-
+			
 			<div id="vacinas">
 
 				<fieldset>
@@ -321,156 +195,230 @@
 						</a>
 					</legend>
 					<div class="form-group">
-						<div formArrayName="vacinas">
-							<div *ngFor="let vacina of vacinasArray.controls;let i = index"
-								[formGroupName]="i">
+						<div
+							*ngFor="let vacina of profissionalSaude.vacinas;let i = index">
 
-								<fieldset>
-									<legend class="legend">
-										Vacina <a
-											class="btn-floating waves-effect waves-light red btn-add-permissoes"
-											(click)="removeVacina(i)"> <i
-											class="material-icons center-icon">delete</i>
-										</a>
-									</legend>
-									<div class="row">
-										<div class="input-field col s8">
-											<input id="descricao" type="text" formControlName="descricao">
-											<label for="descricao" maxlength="200">Descrição</label>
-										</div>
-
-										<div class="input-field col s4">
-											<input id="data" type="text"
-												formControlName="data" materialize="pickadate"
-												[materializeParams]="[{format: 'dd/mm/yyyy'}]"> 
-											<label for="data">Data</label>
-											<!-- 
-											<my-date-picker name="data" [options]="myDatePickerOptions"
-												formControlName="data" placeholder="Data">
-											</my-date-picker>
-											 -->
-										</div>
-
+							<fieldset>
+								<legend class="legend">
+									Vacina <a
+										class="btn-floating waves-effect waves-light red btn-add-permissoes"
+										(click)="removeVacina(i)"> <i
+										class="material-icons center-icon">delete</i>
+									</a>
+								</legend>
+								<div class="row">
+									<div class="input-field col s8">
+										<input id="descricao" type="text" name="vacina.descricao"
+											[(ngModel)]="vacina.descricao"> <label
+											for="descricao" maxlength="200">Descrição</label>
 									</div>
 
-									<div class="row">
-										<div class="input-field col s8">
-											<input id="lote" type="text" formControlName="lote">
-											<label for="lote" maxlength="32">Lote</label>
-										</div>
-
-										<div class="input-field col s4">
-											<input id="dose" type="number" formControlName="dose">
-											<label for="laboratorio" min="1">Dose</label>
-										</div>
-
+									<div class="input-field col s4">
+										<my-date-picker name="data" [options]="myDatePickerOptions"
+											[(ngModel)]="vacina.data" name="vacina.data"
+											placeholder="Data">
+										</my-date-picker>
 									</div>
 
-									<div class="row">
-										<div class="input-field col s8">
-											<input id="laboratorio" type="text"
-												formControlName="laboratorio"> <label
-												for="laboratorio" maxlength="128">Laboratório</label>
-										</div>
+								</div>
 
-										<div class="input-field col s4">
-											<input id="proximaDose" type="text"
-												formControlName="proximaDose" materialize="pickadate"
-												[materializeParams]="[{format: 'dd/mm/yyyy'}]"> 
-											<label for="proximaDose">Próxima Dose</label>
-											<!-- 
-											<my-date-picker name="proximaDose"
-												[options]="myDatePickerOptions"
-												formControlName="proximaDose" placeholder="Próxima dose">
-											</my-date-picker>
-											 -->
-										</div>
+								<div class="row">
+									<div class="input-field col s8">
+										<input id="lote" type="text" name="vacina.lote"
+										[(ngModel)]="vacina.lote">
+										<label for="lote" maxlength="32">Lote</label>
 									</div>
 
-								</fieldset>
-							</div>
+									<div class="input-field col s4">
+										<input id="dose" type="number" name="vacina.dose"  
+										[(ngModel)]="vacina.dose">
+										<label for="laboratorio" min="1">Dose</label>
+									</div>
+
+								</div>
+
+								<div class="row">
+									<div class="input-field col s8">
+										<input id="laboratorio" type="text" name="vacina.laboratorio"
+											[(ngModel)]="vacina.laboratorio"> <label
+											for="laboratorio" maxlength="128">Laboratório</label>
+									</div>
+
+									<div class="input-field col s4">
+										<my-date-picker name="proximaDose"
+											[options]="myDatePickerOptions" name="vacina.proximaDose"
+											[(ngModel)]="vacina.proximaDose" placeholder="Próxima dose">
+										</my-date-picker>
+									</div>
+								</div>
+
+							</fieldset>
 						</div>
+
 					</div>
 
 				</fieldset>
 
 			</div>
-
+			
 			<div id="profissionalConselho">
 
 				<div class="form-group">
-					<div formGroupName="profissionalConselho">
-
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="conselho" type="text"
-									formControlName="conselho"> <label for="conselho"
-									maxlength="200">Conselho</label>
-							</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input id="conselho" type="text" name="profissionalSaude.profissionalConselho.conselho"
+								name="profissionalConselho.conselho" [(ngModel)]="profissionalSaude.profissionalConselho.conselho">
+							<label for="conselho" maxlength="200">Conselho</label>
 						</div>
-
-						<div class="row">
-							<div class="input-field col s4">
-								<input id="numero" type="text" formControlName="numero">
-								<label for="numero" maxlength="26">Numero</label>
-							</div>
-
-							<div class="input-field col s4">
-								<input id="uf" type="text" formControlName="uf"> <label
-									for="uf" maxlength="2">UF</label>
-							</div>
-
-							<div class="input-field col s4">
-								<input id="vencimento" type="text"
-									formControlName="vencimento" materialize="pickadate"
-									[materializeParams]="[{format: 'dd/mm/yyyy'}]"> 
-								<label for="vencimento">Vencimento</label>
-								<!-- 
-								<my-date-picker name="vencimento"
-									[options]="myDatePickerOptions" formControlName="vencimento"
-									placeholder="Vencimento"></my-date-picker>
-									 -->
-							</div>
-						</div>
-
-						<!-- 
-						<input id="dataNascimento" type="text"
-							formControlName="dataNascimento" materialize="pickadate"
-							[materializeParams]="[{format: 'dd/mm/yyyy'}]"> <label
-							for="dataNascimento">Data de Nascimento</label>
-					-->
-						<!-- 
-							<div class="input-field col s6">
-						    	<input required name="cidade" id="cidade" type="text"
-						    	[materialize]="autocomplete" [materializeParams]="cidades"
-						    	(ngModelChange)="changedExtraHandler($event)"
-						    	class="validate" formControlName="cidade"/>
-						        <label for="cidade">Cidade</label>
-						    </div>
-						    -->
-
-						<input id="id" name="id" type="hidden" formControlName="id">
-						<input id="version" name="version" type="hidden"
-							formControlName="version">
-
 					</div>
 
+					<div class="row">
+						<div class="input-field col s4">
+							<input id="numero" type="text" name="profissionalSaude.profissionalConselho.numero"
+							 	[(ngModel)]="profissionalSaude.profissionalConselho.numero">
+							<label for="numero" maxlength="26">Numero</label>
+						</div>
+
+						<div class="input-field col s4">
+							<input id="uf" type="text" name="profissionalSaude.profissionalConselho.uf" 
+								[(ngModel)]="profissionalSaude.profissionalConselho.uf"> <label
+								for="uf" maxlength="2">UF</label>
+						</div>
+
+						<div class="input-field col s4">
+							<my-date-picker name="profissionalConselho.vencimento" [options]="myDatePickerOptions"
+								[(ngModel)]="profissionalSaude.profissionalConselho.vencimento" placeholder="Vencimento"></my-date-picker>
+						</div>
+					</div>
+
+					<input id="id" name="profissionalConselho.id" type="hidden" 
+						[(ngModel)]="profissionalSaude.profissionalConselho.id">
+					<input id="version" name="version" type="hidden"
+						[(ngModel)]="profissionalSaude.profissionalConselho.version">
 				</div>
 
 			</div>
 
+			<div id="informacoesAdicionais">
+
+				<fieldset>
+					<legend class="legend">
+						Telefones <a
+							class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							(click)="addTelefone()"> <i
+							class="material-icons center-icon">add</i>
+						</a>
+					</legend>
+					<div class="form-group">
+						<div
+							*ngFor="let telefone of profissionalSaude.telefones;let i = index">
+
+							<div class="row">
+								<div class="input-field col s10">
+									<input id="numero" name="numero{{i}}" type="text"
+										[(ngModel)]="telefone.numero"> <label for="numero"
+										maxlength="16">Numero</label>
+								</div>
+
+								<div class="col s2">
+									<a
+										class="btn-floating waves-effect waves-light red btn-remove-permission"
+										(click)="removeTelefone(i)"> <i
+										class="material-icons center-icon">delete</i>
+									</a>
+								</div>
+
+							</div>
+
+							<input [(ngModel)]="telefone.id" id="telefone.id{{i}}" 
+								name="telefone.id{{i}}" type="hidden"> 
+							<input [(ngModel)]="telefone.version" id="telefone.version{{i}}" 
+								name="telefone.version{{i}}" type="hidden">
+
+						</div>
+
+					</div>
+
+				</fieldset>
+
+				<fieldset>
+
+					<legend class="legend"> Endereço </legend>
+					<div class="form-group">
+						<div>
+
+							<div class="row">
+								<div class="input-field col s12">
+									<input [(ngModel)]="profissionalSaude.endereco.logradouro" id="logradouro"
+										type="text" name="endereco.logradouro"> 
+									<label for="logradouro" maxlength="200">Logradouro</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<input [(ngModel)]="profissionalSaude.endereco.bairro" id="bairro" type="text"
+										name="endereco.bairro">
+									<label for="bairro" maxlength="100">Bairro</label>
+								</div>
+
+								<div class="input-field col s4">
+									<input [(ngModel)]="profissionalSaude.endereco.numero" id="numero" type="text"
+										name="endereco.numero">
+									<label for="numero" maxlength="12">Numero</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<input [(ngModel)]="profissionalSaude.endereco.complemento" id="complemento"
+										name="endereco.complemento"
+										type="text"> <label for="complemento" maxlength="200">Complemento</label>
+								</div>
+
+								<div class="input-field col s4">
+									<input id="cep" type="text" [(ngModel)]="profissionalSaude.endereco.cep"
+										name="endereco.cep"> <label for="cep"
+										maxlength="9">CEP</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s6">
+									<fieldset>
+										<legend>Cidade</legend>
+										<select class="browser-default" name="cidade"
+											[(ngModel)]="profissionalSaude.endereco.cidade.id">
+											<option selected value=0>Selecione uma cidade</option>
+											<option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
+										</select>
+									</fieldset>
+								</div>
+							</div>
+
+							<input [(ngModel)]="endereco.id" id="id" name="endereco.id" type="hidden">
+							<input [(ngModel)]="endereco.version" id="endereco.version" name="version"
+								type="hidden">
+
+						</div>
+
+					</div>
+
+				</fieldset>
+
+			</div>
+			
 		</div>
 
-		<input id="id" name="id" type="hidden" formControlName="id"> <input
-			id="version" name="version" type="hidden" formControlName="version">
+		<input id="id" name="id" type="hidden"> 
+		<input id="version" name="version" type="hidden">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
 		</div>
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary"
-					[disabled]="!isValid()">Salvar</button>
+				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 			<div class="col s6">
 				<a [routerLink]="['/profissional-saude']"

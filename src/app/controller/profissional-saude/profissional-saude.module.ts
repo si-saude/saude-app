@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterializeModule } from 'angular2-materialize';
+import { MyDatePickerModule } from 'mydatepicker';
 
 import { ProfissionalSaudeComponent } from './profissional-saude.component';
 import { ProfissionalSaudeService } from './profissional-saude.service';
@@ -20,6 +21,7 @@ import { ProfissionalSaudeEditarComponent } from './profissional-saude-editar/pr
      ],
      imports: [
         ProfissionalSaudeRoutingModule,
+        MyDatePickerModule,
         SharedModule
      ],
      providers: [
