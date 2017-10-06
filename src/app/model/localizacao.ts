@@ -1,7 +1,7 @@
 export class Localizacao {
-    id: number;
-    version: number;
-    nome: string;
+    private id: number;
+    private version: number;
+    private nome: string;
 
     getId() {
         return this.id;

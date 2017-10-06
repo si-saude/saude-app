@@ -5,10 +5,6 @@ export class GerenciaFilter extends GenericFilter {
     private codigoCompleto: string;
     private descricao: string;
 
-    constructor() {
-        super();
-    }
-
     public getCodigo() {
         return this.codigo;
     }

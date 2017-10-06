@@ -8,25 +8,27 @@ import { Funcao } from './funcao';
 import { Localizacao } from './localizacao';
 import { Equipe } from './equipe';
 import { ProfissionalConselho } from './profissional-conselho';
+import { ProfissionalVacina } from './profissional-vacina';
 import { Curriculo } from './curriculo';
 
 
 export class ProfissionalSaude {
-    id: number;
-    version: number;
-    nome: string;
+    private id: number;
+    private nome: string;
     private dataNascimento: Date;
-    matricula: string;
-    chave: string;
-    ramal: string;
-    localizacao: Localizacao;
-    equipe: Equipe;
-    funcao: Funcao;
-    mi: string;
-    endereco: Endereco;
-    telefones: Array<Telefone>;
-    curriculo: Curriculo;
-    profissionalConselho: ProfissionalConselho;
+    private matricula: string;
+    private chave: string;
+    private ramal: string;
+    private localizacao: Localizacao;
+    private equipe: Equipe;
+    private funcao: Funcao;
+    private mi: string;
+    private telefones: Array<Telefone>;
+    private endereco: Endereco;
+    private curriculo: Curriculo;
+    private profissionalConselho: ProfissionalConselho;
+    private profissionalVacinas: Array<ProfissionalVacina> ;
+    private version: number;    
 
     getId() {
         return this.id;
@@ -130,6 +132,14 @@ export class ProfissionalSaude {
     
     setProfissionalConselho(profissionalConselho: ProfissionalConselho) {
         this.profissionalConselho = profissionalConselho;
+    }
+    
+    getProfissionalVacinas() {
+        return this.profissionalVacinas;
+    }
+    
+    setProfissionalVacinas(profissionalVacinas: Array<ProfissionalVacina>) {
+        this.profissionalVacinas = profissionalVacinas;
     }
     
     getEndereco() {

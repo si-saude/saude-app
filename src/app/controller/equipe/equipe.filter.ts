@@ -3,10 +3,6 @@ import { GenericFilter } from './../../generics/generic.filter';
 export class EquipeFilter extends GenericFilter {
     private nome: string;
 
-    constructor() {
-        super();
-    }
-
     public getNome() {
         return this.nome;
     }

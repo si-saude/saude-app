@@ -2,22 +2,24 @@ import { GenericFilter } from './../../generics/generic.filter';
 import { DateFilter } from './../../generics/date.filter';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
-import { GerenciaFilter } from './../gerencia/gerencia.filter';
+import { FuncaoFilter } from './../funcao/funcao.filter';
+import { CurriculoFilter } from './../curriculo/curriculo.filter';
+import { ProfissionalConselhoFilter } from './../profissional-conselho/profissional-conselho.filter';
+import { EnderecoFilter } from './../endereco/endereco.filter';
 
 export class ProfissionalSaudeFilter extends GenericFilter {
-    nome: string;
-    dataNascimento: DateFilter;
-    matricula: string;
-    chave: string;
-    ramal: string;
-    localizacao: LocalizacaoFilter;
-    equipe: EquipeFilter;
-    gerencia: GerenciaFilter;
-    mi: string;
-
-    constructor() {
-        super();
-    }
+    private nome: string;
+    private dataNascimento: DateFilter;
+    private matricula: string;
+    private chave: string;
+    private ramal: string;
+    private localizacao: LocalizacaoFilter;
+    private equipe: EquipeFilter;
+    private funcao: FuncaoFilter;
+    private curriculo: CurriculoFilter;
+    private profissionalConselho: ProfissionalConselhoFilter;
+    private endereco: EnderecoFilter;
+    private mi: string;
 
     getNome() {
         return this.nome;
@@ -75,12 +77,36 @@ export class ProfissionalSaudeFilter extends GenericFilter {
         this.equipe= e;
     }
     
-    getGerencia() {
-        return this.gerencia;
+    getFuncao() {
+        return this.funcao;
     }
     
-    setGerencia(g: GerenciaFilter) {
-        this.gerencia = g;
+    setFuncao(funcao: FuncaoFilter) {
+        this.funcao = funcao;
+    }
+    
+    getCurriculo() {
+        return this.curriculo;
+    }
+    
+    setCurriculo(curriculo: CurriculoFilter) {
+        this.curriculo = curriculo;
+    }
+    
+    getProfissionalConselho() {
+        return this.profissionalConselho;
+    }
+    
+    setProfissionalConselho(profissionalConselho: ProfissionalConselhoFilter) {
+        this.profissionalConselho = profissionalConselho;
+    }
+    
+    getEndereco() {
+        return this.endereco;
+    }
+    
+    setEndereco(endereco: EnderecoFilter) {
+        this.endereco = endereco;
     }
     
     getMi() {

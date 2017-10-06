@@ -1,12 +1,12 @@
 import { ProfissionalSaude } from './profissional-saude';
 
 export class ProfissionalConselho {
-    id: number;
-    conselho: string;
-    uf: string;
-    numero: string;
-    vencimento: Date;
-    profissional: ProfissionalSaude;
+    private id: number;
+    private conselho: string;
+    private uf: string;
+    private numero: string;
+    private vencimento: Date;
+    private profissional: ProfissionalSaude;
 
     getId() {
         return this.id;
