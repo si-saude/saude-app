@@ -1,8 +1,8 @@
 export class Cidade {
-    id: number;
-    nome: string;
-    uf: string;
-    version: number;
+    private id: number;
+    private nome: string;
+    private uf: string;
+    private version: number;
 
     getId(): number {
         return this.id;
@@ -35,5 +35,4 @@ export class Cidade {
     setNome(nome: string) {
         this.nome = nome;
     }
-    
 }

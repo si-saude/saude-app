@@ -2,13 +2,13 @@ import { ProfissionalSaude } from './profissional-saude';
 import { CurriculoCurso } from './curriculo-curso';
 
 export class Curriculo {
-    id: number;
-    historico: string;
-    formacao: string;
-    atuacao: string;
-    profissional: ProfissionalSaude;
-    curriculoCursos: Array<CurriculoCurso>;
-    version: number;
+    private id: number;
+    private historico: string;
+    private formacao: string;
+    private atuacao: string;
+    private profissional: ProfissionalSaude;
+    private curriculoCursos: Array<CurriculoCurso>;
+    private version: number;
 
     getId() {
         return this.id;

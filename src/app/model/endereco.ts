@@ -1,16 +1,14 @@
 import { Cidade } from './cidade';
-import { ProfissionalSaude } from './profissional-saude';
 
 export class Endereco {
-    id: number;
-    logradouro: string;
-    numero: string;
-    complemento: string;
-    bairro: string;
-    cep: string;
-    cidade: Cidade;
-    profissionais: Array<ProfissionalSaude>;
-    version: number;
+    private id: number;
+    private logradouro: string;
+    private numero: string;
+    private complemento: string;
+    private bairro: string;
+    private cep: string;
+    private cidade: Cidade;
+    private version: number;
 
     getLogradouro() {
         return this.logradouro;
@@ -58,14 +56,6 @@ export class Endereco {
     
     setCidade(cidade: Cidade) {
         this.cidade = cidade;
-    }
-    
-    getProfissionais() {
-        return this.profissionais;
-    }
-    
-    setProfissionais(profissionais: Array<ProfissionalSaude>) {
-        this.profissionais = profissionais;
     }
     
     getVersion() {

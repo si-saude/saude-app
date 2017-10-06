@@ -1,6 +1,10 @@
-export class Equipe {
+
+
+export class Empregado{
     private id: number;
-    private nome: string;
+    private nome:string;
+    private cpf:string;
+    private dataNascimento:Date;
     private version: number;
 
     getId(): number {
@@ -25,5 +29,21 @@ export class Equipe {
     
     setNome(nome:string){
         this.nome = nome;
+    }
+    
+    getCpf():string{
+        return this.cpf;
+    }
+    
+    setCpf(cpf:string){
+        this.cpf = cpf;
+    }
+    
+    getDataNascimento():Date{
+        return this.dataNascimento;
+    }
+    
+    setDataNascimento(dN:Date){
+        this.dataNascimento = dn;
     }
 }
