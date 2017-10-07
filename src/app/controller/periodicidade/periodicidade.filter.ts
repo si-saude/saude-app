@@ -8,7 +8,7 @@ export class PeriodicidadeFilter extends GenericFilter {
     }
     
     public setDescricao(descricao: string) {
-        this.descricao = t;
+        this.descricao = descricao;
     }
     
 }

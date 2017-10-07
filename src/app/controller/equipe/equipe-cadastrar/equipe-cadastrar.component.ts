@@ -34,17 +34,17 @@ export class EquipeCadastrarComponent implements OnInit {
     }
     
     save() {
-        this.equipeService.submit(this.formulario.value)
-            .then(res => {
-                this.verifyMsg = true;
-                this.colorMsg = "green";
-                this.msg = res.text();
-            })
-            .catch(error => {
-                this.verifyMsg = true;
-                this.colorMsg = "red";
-                this.msg = error.text();
-            })
+//        this.equipeService.submit(this.formulario.value)
+//            .then(res => {
+//                this.verifyMsg = true;
+//                this.colorMsg = "green";
+//                this.msg = res.text();
+//            })
+//            .catch(error => {
+//                this.verifyMsg = true;
+//                this.colorMsg = "red";
+//                this.msg = error.text();
+//            })
     }
   
     isValid() {

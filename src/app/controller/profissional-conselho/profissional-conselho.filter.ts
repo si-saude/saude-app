@@ -27,7 +27,7 @@ export class ProfissionalConselhoFilter extends GenericFilter {
         return this.numero;
     }
     
-    setNumero(vencimento: string) {
+    setNumero(numero: string) {
         this.numero = numero;
     }
     

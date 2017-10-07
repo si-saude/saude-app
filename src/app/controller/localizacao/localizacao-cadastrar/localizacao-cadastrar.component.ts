@@ -48,9 +48,9 @@ export class LocalizacaoCadastrarComponent implements OnInit {
     }
   
     isValid() {
-        if ( this.formulario.valid ) { 
-            return true;
-        } else { return false; }    
+//        if ( this.formulario.valid ) { 
+//            return true;
+//        } else { return false; }    
     }
     
   }

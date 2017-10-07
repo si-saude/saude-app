@@ -46,12 +46,12 @@ export class LocalizacaoEditarComponent implements OnInit {
             
             this.localizacaoService.get(id)
                 .then(res => {
-                    this.localizacao = res.json();
-                    this.formulario = this.formBuilder.group({
-                        nome: [this.localizacao.nome, Validators.required],            
-                        id: [this.localizacao.id],
-                        version: [this.localizacao.version]
-                    });
+//                    this.localizacao = res.json();
+//                    this.formulario = this.formBuilder.group({
+//                        nome: [this.localizacao.nome, Validators.required],            
+//                        id: [this.localizacao.id],
+//                        version: [this.localizacao.version]
+//                    });
                 })
                 .catch(error =>
                     console.log(error));
@@ -59,23 +59,23 @@ export class LocalizacaoEditarComponent implements OnInit {
   }
   
   isValid() {
-      if ( this.formulario.valid ) { 
-          return true;
-      } else { return false; }    
+//      if ( this.formulario.valid ) { 
+//          return true;
+//      } else { return false; }    
   }
   
   save() {
-      this.localizacaoService.submit(this.formulario.value)
-      .then(res => {
-          this.verifyMsg = true;
-          this.colorMsg = "green";
-          this.msg = res.text();
-      })
-      .catch(error => {
-          this.verifyMsg = true;
-          this.colorMsg = "red";
-          this.msg = error.text();
-      })
+//      this.localizacaoService.submit(this.formulario.value)
+//      .then(res => {
+//          this.verifyMsg = true;
+//          this.colorMsg = "green";
+//          this.msg = res.text();
+//      })
+//      .catch(error => {
+//          this.verifyMsg = true;
+//          this.colorMsg = "red";
+//          this.msg = error.text();
+//      })
   }
     
   onDestroy() {

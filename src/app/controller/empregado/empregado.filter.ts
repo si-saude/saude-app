@@ -19,7 +19,7 @@ export class EmpregadoFilter extends GenericFilter {
     }
     
     public getCpf() {
-        return this.uf;
+        return this.cpf;
     }
     
     public setCpf(cpf: string) {

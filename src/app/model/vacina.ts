@@ -1,4 +1,4 @@
-import { ProfissionalVacina } from './profissional-vacina.ts';
+import { ProfissionalVacina } from './profissional-vacina';
 
 export class Vacina {
     private id: number;
@@ -28,7 +28,7 @@ export class Vacina {
         return this.doses;
     }
     
-    setDoses(doses: string) {
+    setDoses(doses: number) {
         this.doses = doses;
     }
     
@@ -36,7 +36,7 @@ export class Vacina {
         return this.reforco;
     }
     
-    setReforco(reforco: string) {
+    setReforco(reforco: number) {
         this.reforco = reforco;
     }
     

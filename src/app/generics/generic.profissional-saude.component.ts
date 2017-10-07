@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
 
-import { MyDatePickerModule } from 'mydatepicker';
-import {IMyDpOptions} from 'mydatepicker';
+import { MyDatePickerModule } from 'mydatepicker'; 
+import { IMyDpOptions } from 'mydatepicker'; 
 
 import { ProfissionalSaude } from './../model/profissional-saude';
 import { ProfissionalSaudeService } from './../controller/profissional-saude/profissional-saude.service';
@@ -74,11 +74,11 @@ export class GenericProfissionalSaudeComponent {
         this.profissionalSaude.setLocalizacao(this.localizacao);
         
         this.equipe = new Equipe();
-        this.equipe.id = 0;
+        this.equipe.setId(0);
         this.profissionalSaude.setEquipe(this.equipe);
         
         this.funcao = new Funcao();
-        this.funcao.id = 0;
+        this.funcao.setId(0);
         this.profissionalSaude.setFuncao(this.funcao);
         
         this.curriculo = new Curriculo();

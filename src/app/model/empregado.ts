@@ -43,7 +43,7 @@ export class Empregado{
         return this.dataNascimento;
     }
     
-    setDataNascimento(dN:Date){
-        this.dataNascimento = dn;
+    setDataNascimento(dN: Date){
+        this.dataNascimento = dN;
     }
 }

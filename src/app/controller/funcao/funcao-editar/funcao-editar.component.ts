@@ -17,7 +17,7 @@ import { GenericFuncaoComponent } from './../../../generics/generic.funcao.compo
 })
 export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnInit {
 
-  private titulo: string = "Editar Função";
+  private titulo: string = "Editar Funï¿½ï¿½o";
   private corTitulo: string = GlobalVariable.COLOR_TITLE;
   private inscricao: Subscription;
   private funcao: Funcao;
@@ -44,28 +44,28 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
             
             this.funcaoService.get(id)
                 .then(res => {
-                    this.funcao = res.json();
-                    console.log(this.funcao);
-                    this.formulario = this.formBuilder.group({
-                        nome: [this.funcao.nome, Validators.required],
-                        id: [this.funcao.id],
-                        version: [this.funcao.version],
-                        cursos: this.formBuilder.array([
-                            this.formBuilder.group({
-                                nome: [''],
-                                descricao: [''],
-                                validade: [0],
-                                id: [0],
-                            }),
-                        ]),
-                    } );
-
-                this.cursosArray = this.formulario.get('cursos') as FormArray;
-                this.cursosArray.removeAt(0);
-                
-                for (var index = 0; index < this.funcao.cursos.length; index++) {
-                    this.includeCurso(this.funcao.cursos[index]);
-                }
+//                    this.funcao = res.json();
+//                    console.log(this.funcao);
+//                    this.formulario = this.formBuilder.group({
+//                        nome: [this.funcao.nome, Validators.required],
+//                        id: [this.funcao.id],
+//                        version: [this.funcao.version],
+//                        cursos: this.formBuilder.array([
+//                            this.formBuilder.group({
+//                                nome: [''],
+//                                descricao: [''],
+//                                validade: [0],
+//                                id: [0],
+//                            }),
+//                        ]),
+//                    } );
+//
+//                this.cursosArray = this.formulario.get('cursos') as FormArray;
+//                this.cursosArray.removeAt(0);
+//                
+//                for (var index = 0; index < this.funcao.cursos.length; index++) {
+//                    this.includeCurso(this.funcao.cursos[index]);
+//                }
                 
             })
             .catch(error =>
@@ -145,12 +145,12 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
 //  }
   
   includeCurso(curso: Curso) {
-      let cursoForm = new FormGroup({});
-      cursoForm.addControl("nome", new FormControl(curso.nome));
-      cursoForm.addControl("descricao", new FormControl(curso.descricao));
-      cursoForm.addControl("validade", new FormControl(curso.validade));
-      cursoForm.addControl("id", new FormControl(curso.id));
-      this.cursosArray.push(cursoForm);
+//      let cursoForm = new FormGroup({});
+//      cursoForm.addControl("nome", new FormControl(curso.nome));
+//      cursoForm.addControl("descricao", new FormControl(curso.descricao));
+//      cursoForm.addControl("validade", new FormControl(curso.validade));
+//      cursoForm.addControl("id", new FormControl(curso.id));
+//      this.cursosArray.push(cursoForm);
   }
   
   onDestroy() {
