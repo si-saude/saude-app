@@ -44,24 +44,24 @@ export abstract class GenericFuncaoComponent {
         this.cursosArray.removeAt(0);
         
         this.funcaoService.getCursos( this.cursoFilter )
-            .then(res => {
-                this.cursos = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
+//            .then(res => {
+//                this.cursos = res.json();
+//            })
+//            .catch(error => {
+//                console.log(error);
+//            })
     }
 
     addCurso(valor: number) {
         this.funcaoService.getCursoById(valor)
-            .then(res => {
-                let curso = new FormGroup({});
-                curso.addControl("nome", new FormControl(res.json().nome));
-                curso.addControl("descricao", new FormControl(res.json().descricao));
-                curso.addControl("validade", new FormControl(res.json().validade));
-                curso.addControl("id", new FormControl(res.json().id));
-                this.cursosArray.push(curso);
-            })
+//            .then(res => {
+//                let curso = new FormGroup({});
+//                curso.addControl("nome", new FormControl(res.json().nome));
+//                curso.addControl("descricao", new FormControl(res.json().descricao));
+//                curso.addControl("validade", new FormControl(res.json().validade));
+//                curso.addControl("id", new FormControl(res.json().id));
+//                this.cursosArray.push(curso);
+//            })
         
     }
 
@@ -95,14 +95,14 @@ export abstract class GenericFuncaoComponent {
             if ( evento.length > 3 ) {
                 
                 this.funcaoService.getCursos( this.cursoFilter )
-                    .then(res => {
-                        console.log(JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));
-//                        this.cursos = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]');
-                        console.log(res.json());
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
+//                    .then(res => {
+//                        console.log(JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));
+////                        this.cursos = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]');
+//                        console.log(res.json());
+//                    })
+//                    .catch(error => {
+//                        console.log(error);
+//                    })
                 
             }
         }
