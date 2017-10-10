@@ -51,14 +51,14 @@ export class CursoEditarComponent extends GenericCursoComponent implements OnIni
             
             this.cursoService.get(id)
                 .then(res => {
-                    this.curso = res.json();
-                    this.formulario = this.formBuilder.group({
-                        nome: [this.curso.nome, Validators.required],
-                        descricao: [this.curso.descricao],
-                        validade: [this.curso.validade],
-                        id: [this.curso.id],
-                        version: [this.curso.version]
-                    } );
+//                    this.curso = res.json();
+//                    this.formulario = this.formBuilder.group({
+//                        nome: [this.curso.nome, Validators.required],
+//                        descricao: [this.curso.descricao],
+//                        validade: [this.curso.validade],
+//                        id: [this.curso.id],
+//                        version: [this.curso.version]
+//                    } );
                 })
                 .catch(error =>
                     console.log(error));

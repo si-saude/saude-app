@@ -69,7 +69,7 @@ export class ProfissionalVacina {
     }
 
     getProximaDose() {
-        return proximaDose;
+        return this.proximaDose;
     }
 
     setProximaDose(proximaDose: Date) {
@@ -77,7 +77,7 @@ export class ProfissionalVacina {
     }
 
     getVersion() {
-        return version;
+        return this.version;
     }
 
     setVersion(version: number) {

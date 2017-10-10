@@ -20,4 +20,5 @@ export class CidadeComponent extends GenericListComponent<Cidade,CidadeFilter> {
       this.titulo = "Funcoes";
       this.filter = new CidadeFilter();
   }
+  
 }

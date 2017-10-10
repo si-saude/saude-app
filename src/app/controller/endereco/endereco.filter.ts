@@ -1,5 +1,7 @@
 import { GenericFilter } from './../../generics/generic.filter';
 
+import { CidadeFilter } from './../cidade/cidade.filter';
+
 export class EnderecoFilter extends GenericFilter {
     private logradouro: string;
     private numero: string;

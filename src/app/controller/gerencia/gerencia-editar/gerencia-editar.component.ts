@@ -72,27 +72,27 @@ export class GerenciaEditarComponent extends GenericGerenciaComponent implements
 
         this.gerenciaService.get( id )
             .then( res => {
-                this.gerencia = JSON.parse( JSON.stringify( res.json() ) );
-
-                if ( this.gerencia.gerencia !== undefined ) {
-
-                    this.formulario = this.formBuilder.group( {
-                        codigo: [this.gerencia.codigo],
-                        id: [this.gerencia.id],
-                        version: [this.gerencia.version],
-                        descricao: [this.gerencia.descricao],
-                        gerencia: [this.gerencia.gerencia.id]
-                    } );
-
-                } else {
-                    this.formulario = this.formBuilder.group( {
-                        codigo: [this.gerencia.codigo],
-                        id: [this.gerencia.id],
-                        version: [this.gerencia.version],
-                        descricao: [this.gerencia.descricao],
-                        gerencia: ['']
-                    } );
-                }
+//                this.gerencia = JSON.parse( JSON.stringify( res.json() ) );
+//
+//                if ( this.gerencia.gerencia !== undefined ) {
+//
+//                    this.formulario = this.formBuilder.group( {
+//                        codigo: [this.gerencia.codigo],
+//                        id: [this.gerencia.id],
+//                        version: [this.gerencia.version],
+//                        descricao: [this.gerencia.descricao],
+//                        gerencia: [this.gerencia.gerencia.id]
+//                    } );
+//
+//                } else {
+//                    this.formulario = this.formBuilder.group( {
+//                        codigo: [this.gerencia.codigo],
+//                        id: [this.gerencia.id],
+//                        version: [this.gerencia.version],
+//                        descricao: [this.gerencia.descricao],
+//                        gerencia: ['']
+//                    } );
+//                }
             } )
             .catch( error =>
                 console.log( error ) );

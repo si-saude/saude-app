@@ -62,29 +62,29 @@ export class PerfilEditarComponent extends GenericPerfilComponent implements OnI
             
             this.perfilService.get(id)
             .then(res => {
-                this.perfil = res.json();
-                this.formulario = this.formBuilder.group({
-                    titulo: [this.perfil.titulo, Validators.required],            
-                    id: [this.perfil.id],
-                    version: [this.perfil.version],
-                    permissoes: this.formBuilder.array([
-                                    this.formBuilder.group({
-                                        id: [0],
-                                        version: [0],
-                                        funcao: [''],
-                                        leitura: [false],
-                                        escrita: [false],
-                                        perfil: [null]
-                                    }),
-                                ])
-                });
-                
-                this.permissoesArray = this.formulario.get('permissoes') as FormArray;
-                this.permissoesArray.removeAt(0);
-                
-                for (var index = 0; index < this.perfil.permissoes.length; index++) {
-                    this.includePermission(this.perfil.permissoes[index]);
-                }
+//                this.perfil = res.json();
+//                this.formulario = this.formBuilder.group({
+//                    titulo: [this.perfil.titulo, Validators.required],            
+//                    id: [this.perfil.id],
+//                    version: [this.perfil.version],
+//                    permissoes: this.formBuilder.array([
+//                                    this.formBuilder.group({
+//                                        id: [0],
+//                                        version: [0],
+//                                        funcao: [''],
+//                                        leitura: [false],
+//                                        escrita: [false],
+//                                        perfil: [null]
+//                                    }),
+//                                ])
+//                });
+//                
+//                this.permissoesArray = this.formulario.get('permissoes') as FormArray;
+//                this.permissoesArray.removeAt(0);
+//                
+//                for (var index = 0; index < this.perfil.permissoes.length; index++) {
+//                    this.includePermission(this.perfil.permissoes[index]);
+//                }
                 
             })
             .catch(error =>
@@ -164,14 +164,14 @@ export class PerfilEditarComponent extends GenericPerfilComponent implements OnI
 //  }
   
   includePermission(permissao:Permissao) {
-      let permissaoForm = new FormGroup({});
-      permissaoForm.addControl("funcao", new FormControl(permissao.funcao));
-      permissaoForm.addControl("leitura", new FormControl(permissao.leitura));
-      permissaoForm.addControl("escrita", new FormControl(permissao.escrita));
-      permissaoForm.addControl("perfil", new FormControl(permissao.perfil));
-      permissaoForm.addControl("id", new FormControl(permissao.id));
-      permissaoForm.addControl("version", new FormControl(permissao.version));
-      this.permissoesArray.push(permissaoForm);
+//      let permissaoForm = new FormGroup({});
+//      permissaoForm.addControl("funcao", new FormControl(permissao.funcao));
+//      permissaoForm.addControl("leitura", new FormControl(permissao.leitura));
+//      permissaoForm.addControl("escrita", new FormControl(permissao.escrita));
+//      permissaoForm.addControl("perfil", new FormControl(permissao.perfil));
+//      permissaoForm.addControl("id", new FormControl(permissao.id));
+//      permissaoForm.addControl("version", new FormControl(permissao.version));
+//      this.permissoesArray.push(permissaoForm);
   }
   
   onDestroy() {

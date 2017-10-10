@@ -44,7 +44,7 @@ export class Usuario {
         return this.version;
     }
     
-    setVersion(version: string) {
+    setVersion(version: number) {
         this.version = version;
     }
     

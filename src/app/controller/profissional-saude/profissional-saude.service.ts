@@ -12,28 +12,15 @@ import { FuncaoFilter } from './../funcao/funcao.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { CursoFilter } from './../curso/curso.filter';
 import { CidadeFilter } from './../cidade/cidade.filter';
+import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
-export class ProfissionalSaudeService {
+export class ProfissionalSaudeService extends GenericService{
 
-    private headers = new Headers( { 'Content-Type': 'application/json' } );
-    private URL: string = GlobalVariable.BASE_API_URL + "/profissional";
-
-    constructor( private http: Http, private router: Router ) { }
-
-    submit( formulario: any ) {
-        let urlSubmit = this.URL;
-        return this.http
-            .post( urlSubmit, formulario, { headers: this.headers } )
-            .toPromise();
+    constructor( http: Http, router: Router ) { 
+        super(http, router, "profissional");
     }
 
-    get( id: number ) {
-        let urlGet = this.URL;
-        return this.http
-            .get( urlGet + "?id=" + id, { headers: this.headers } )
-            .toPromise();
-    }
 
     getLocalizacoes(localizacaoFilter: LocalizacaoFilter) {
         let urlGetLocalizacao = GlobalVariable.BASE_API_URL + "/localizacao/selectList";
@@ -69,24 +56,4 @@ export class ProfissionalSaudeService {
             .post( urlGetCidade, cidadeFilter, { headers: this.headers })
             .toPromise();
     }
-    
-    list( profissionalSaudeFilter: ProfissionalSaudeFilter ) {
-        let urlList = this.URL + "/list";
-        return this.http
-            .post( urlList, profissionalSaudeFilter, { headers: this.headers } )
-            .toPromise();
-    }
-    
-    delete( id ) {
-        let urlDelete = this.URL + "/delete";
-        return this.http
-            .post( urlDelete, id, { headers: this.headers } )
-            .toPromise();
-    }
-
-    private handleError( error: any ): Promise<any> {
-        console.error( 'Um erro ocorreu: ', error._body );
-        return Promise.reject( error.message || error );
-    }
-
 }

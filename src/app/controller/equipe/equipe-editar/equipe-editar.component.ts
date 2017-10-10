@@ -46,12 +46,12 @@ export class EquipeEditarComponent implements OnInit {
             
             this.equipeService.get(id)
                 .then(res => {
-                    this.equipe = res.json();
-                    this.formulario = this.formBuilder.group({
-                        nome: [this.equipe.nome, Validators.required],            
-                        id: [this.equipe.id],
-                        version: [this.equipe.version]
-                    });
+//                    this.equipe = res.json();
+//                    this.formulario = this.formBuilder.group({
+//                        nome: [this.equipe.nome, Validators.required],            
+//                        id: [this.equipe.id],
+//                        version: [this.equipe.version]
+//                    });
             })
             .catch(error =>
                 console.log(error));
@@ -65,17 +65,17 @@ export class EquipeEditarComponent implements OnInit {
   }
   
   save() {
-      this.equipeService.submit(this.formulario.value)
-      .then(res => {
-          this.verifyMsg = true;
-          this.colorMsg = "green";
-          this.msg = res.text();
-      })
-      .catch(error => {
-          this.verifyMsg = true;
-          this.colorMsg = "red";
-          this.msg = error.text();
-      })
+//      this.equipeService.submit(this.formulario.value)
+//      .then(res => {
+//          this.verifyMsg = true;
+//          this.colorMsg = "green";
+//          this.msg = res.text();
+//      })
+//      .catch(error => {
+//          this.verifyMsg = true;
+//          this.colorMsg = "red";
+//          this.msg = error.text();
+//      })
   }
     
   onDestroy() {
