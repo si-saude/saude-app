@@ -16,6 +16,7 @@ export class ProfissionalSaude {
     private id: number;
     private nome: string;
     private dataNascimento: Date;
+    private dataAso: Date;
     private matricula: string;
     private chave: string;
     private ramal: string;
@@ -60,6 +61,14 @@ export class ProfissionalSaude {
     
     setDataNascimento(dN: Date) {
         this.dataNascimento = dN;
+    }
+    
+    getDataAso() {
+        return this.dataAso;
+    }
+    
+    setDataAso(dA: Date) {
+        this.dataAso = dA;
     }
     
     getMatricula() {

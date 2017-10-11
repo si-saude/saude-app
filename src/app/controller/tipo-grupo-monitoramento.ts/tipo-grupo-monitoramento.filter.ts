@@ -1,4 +1,6 @@
-export class TipoGrupoMonitoramentoFilter {
+import { GenericFilter } from './../../generics/generic.filter';
+
+export class TipoGrupoMonitoramentoFilter extends GenericFilter {
 
     private nome: string;
     private descricao: string;
