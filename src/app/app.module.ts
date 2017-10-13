@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-import { MaterializeModule } from 'angular2-materialize';
 import { CommonModule } from '@angular/common';
+
+import { MaterializeModule } from 'angular2-materialize';
 
 import { AppRoutingModule } from './app-routing.module';
 import { LoginModule } from './login/login.module';
@@ -20,9 +21,10 @@ import { LocalizacaoModule } from './controller/localizacao/localizacao.module';
 import { EquipeModule } from './controller/equipe/equipe.module';
 import { GerenciaModule } from './controller/gerencia/gerencia.module';
 import { ProfissionalSaudeModule } from './controller/profissional-saude/profissional-saude.module';
-import { FuncaoModule } from './controller/funcao/funcao.module';
+import { CargoModule } from './controller/cargo/cargo.module';
 import { CursoModule } from './controller/curso/curso.module';
 import { CidadeModule } from './controller/cidade/cidade.module';
+import { VacinaModule } from './controller/vacina/vacina.module';
 import { MenuComponent } from './includes/menu/menu.component';
 
 @NgModule({
@@ -37,6 +39,7 @@ import { MenuComponent } from './includes/menu/menu.component';
   ],
   imports: [
     BrowserModule,
+    MaterializeModule,
     HttpModule,
     LoginModule,
     ContatoModule,
@@ -45,9 +48,10 @@ import { MenuComponent } from './includes/menu/menu.component';
     EquipeModule,
     GerenciaModule,
     ProfissionalSaudeModule,
-    FuncaoModule,
+    CargoModule,
     CursoModule,
     CidadeModule,
+    VacinaModule,
     AppRoutingModule
   ],
   providers: [ 

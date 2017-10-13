@@ -2,7 +2,7 @@ import { Endereco } from './endereco';
 import { Telefone } from './telefone';
 
 export class Fornecedor{
-    private id: number;
+    private id: number = 0;
     private razaoSocial: string;
     private tipoPessoa: string;
     private cpfCnpj: string;
@@ -64,7 +64,7 @@ export class Fornecedor{
         return this.email;
     }
     
-    setEmails(email:string){
+    setEmail(email:string){
         this.email = email;
     }
     

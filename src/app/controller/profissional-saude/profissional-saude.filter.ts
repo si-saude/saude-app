@@ -2,7 +2,7 @@ import { GenericFilter } from './../../generics/generic.filter';
 import { DateFilter } from './../../generics/date.filter';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
-import { FuncaoFilter } from './../funcao/funcao.filter';
+import { CargoFilter } from './../cargo/cargo.filter';
 import { CurriculoFilter } from './../curriculo/curriculo.filter';
 import { ProfissionalConselhoFilter } from './../profissional-conselho/profissional-conselho.filter';
 import { EnderecoFilter } from './../endereco/endereco.filter';
@@ -15,7 +15,7 @@ export class ProfissionalSaudeFilter extends GenericFilter {
     private ramal: string;
     private localizacao: LocalizacaoFilter;
     private equipe: EquipeFilter;
-    private funcao: FuncaoFilter;
+    private cargo: CargoFilter;
     private curriculo: CurriculoFilter;
     private profissionalConselho: ProfissionalConselhoFilter;
     private endereco: EnderecoFilter;
@@ -77,12 +77,12 @@ export class ProfissionalSaudeFilter extends GenericFilter {
         this.equipe= e;
     }
     
-    getFuncao() {
-        return this.funcao;
+    getCargo() {
+        return this.cargo;
     }
     
-    setFuncao(funcao: FuncaoFilter) {
-        this.funcao = funcao;
+    setCargo(cargo: CargoFilter) {
+        this.cargo = cargo;
     }
     
     getCurriculo() {

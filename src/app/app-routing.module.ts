@@ -11,7 +11,7 @@ import { LocalizacaoComponent } from './controller/localizacao/localizacao.compo
 import { EquipeComponent } from './controller/equipe/equipe.component';
 import { GerenciaComponent } from './controller/gerencia/gerencia.component';
 import { ProfissionalSaudeComponent } from './controller/profissional-saude/profissional-saude.component';
-import { FuncaoComponent } from './controller/funcao/funcao.component';
+import { CargoComponent } from './controller/cargo/cargo.component';
 import { CursoComponent } from './controller/curso/curso.component';
 import { CidadeComponent } from './controller/cidade/cidade.component';
 
@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'equipe', component: EquipeComponent },
   { path: 'gerencia', component: GerenciaComponent },
   { path: 'profissional-saude', component: ProfissionalSaudeComponent },
-  { path: 'funcao', component: FuncaoComponent },
+  { path: 'cargo', component: CargoComponent },
   { path: 'curso', component: CursoComponent },
   { path: 'cidade', component: CidadeComponent },
   { path: '', pathMatch: 'full', redirectTo: '/profissional-saude'}

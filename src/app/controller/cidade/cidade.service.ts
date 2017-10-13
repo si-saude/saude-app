@@ -14,4 +14,8 @@ export class CidadeService extends GenericService {
     constructor( http: Http, router: Router ) { 
         super(http,router,"cidade");
     }
+    
+    getCidades() {
+        return this.selectList(new CidadeFilter());
+    }
 }

@@ -1,12 +1,12 @@
-import { ProfissionalSaude } from './profissional-saude';
+import { Profissional } from './profissional';
 import { CurriculoCurso } from './curriculo-curso';
 
 export class Curriculo {
-    private id: number;
+    private id: number = 0;
     private historico: string;
     private formacao: string;
     private atuacao: string;
-    private profissional: ProfissionalSaude;
+    private profissional: Profissional;
     private curriculoCursos: Array<CurriculoCurso>;
     private version: number;
 
@@ -46,7 +46,7 @@ export class Curriculo {
         return this.profissional;
     }
 
-    setProfissional(profissional: ProfissionalSaude) {
+    setProfissional(profissional: Profissional) {
         this.profissional = profissional;
     }
 

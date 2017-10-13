@@ -5,7 +5,7 @@ import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
 
 import { GlobalVariable } from './../../global';
-import { ProfissionalSaude } from './../../model/profissional-saude';
+import { Profissional } from './../../model/profissional';
 import { ProfissionalSaudeService } from './profissional-saude.service';
 import { ProfissionalSaudeFilter } from './profissional-saude.filter';
 import { GenericListComponent } from './../../generics/generic.list.component';
@@ -15,11 +15,11 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './profissional-saude.component.html',
   styleUrls: ['./profissional-saude.component.css']
 })
-export class ProfissionalSaudeComponent extends GenericListComponent<ProfissionalSaude, ProfissionalSaudeFilter> {
-
-    constructor(profissionalSaudeService: ProfissionalSaudeService, 
-            formBuilder: FormBuilder) { 
-        super(profissionalSaudeService, formBuilder);
+export class ProfissionalSaudeComponent extends GenericListComponent<Profissional> {
+    
+    constructor(profissionalSaudeService: ProfissionalSaudeService) {
+        let profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+        super(profissionalSaudeService, profissionalSaudeFilter);
     }
 
       

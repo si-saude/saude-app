@@ -15,13 +15,11 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './curso.component.html',
   styleUrls: ['./curso.component.css']
 })
-export class CursoComponent extends GenericListComponent<Curso,CursoFilter> {
+export class CursoComponent extends GenericListComponent<Curso> {
   
-  constructor(cursoService: CursoService, 
-          formBuilder: FormBuilder) { 
-      super(cursoService, formBuilder);
-      this.titulo = "Curso";
-      this.filter = new CursoFilter();
+  constructor(cursoService: CursoService) {
+      let cursoFilter: CursoFilter = new CursoFilter();
+      super(cursoService, cursoFilter);
   }
     
 }

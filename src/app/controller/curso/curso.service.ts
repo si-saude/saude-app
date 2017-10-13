@@ -15,4 +15,8 @@ export class CursoService extends GenericService {
     constructor( http: Http, router: Router ) { 
         super(http, router, "curso");
     }
+    
+    getCursos() {
+        return this.selectList(new CursoFilter());
+    }
 }

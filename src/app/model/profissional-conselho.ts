@@ -1,12 +1,13 @@
-import { ProfissionalSaude } from './profissional-saude';
+import { Profissional } from './profissional';
 
 export class ProfissionalConselho {
-    private id: number;
+    private id: number = 0;
     private conselho: string;
     private uf: string;
     private numero: string;
     private vencimento: Date;
-    private profissional: ProfissionalSaude;
+    private profissional: Profissional;
+    private version:number;
 
     getId() {
         return this.id;
@@ -52,7 +53,15 @@ export class ProfissionalConselho {
         return this.profissional;
     }
 
-    setProfissional(profissional: ProfissionalSaude) {
+    setProfissional(profissional: Profissional) {
         this.profissional = profissional;
+    }
+    
+    getVersion() {
+        return this.version;
+    }
+    
+    setVersion(version: number) {
+        this.version = version;
     }
 }

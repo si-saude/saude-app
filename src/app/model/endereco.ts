@@ -1,7 +1,7 @@
 import { Cidade } from './cidade';
 
 export class Endereco {
-    private id: number;
+    private id: number = 0;
     private logradouro: string;
     private numero: string;
     private complemento: string;

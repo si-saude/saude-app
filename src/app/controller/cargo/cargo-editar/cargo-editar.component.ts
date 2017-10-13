@@ -4,23 +4,23 @@ import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@ang
 
 import { Subscription } from 'rxjs/Rx';
 
-import { FuncaoService } from './../funcao.service';
-import { Funcao } from './../../../model/funcao';
+import { CargoService } from './../cargo.service';
+import { Cargo } from './../../../model/cargo';
 import { Curso } from './../../../model/curso';
 import { GlobalVariable } from './../../../global';
-import { GenericFuncaoComponent } from './../../../generics/generic.funcao.component';
+import { GenericCargoComponent } from './../../../generics/generic.cargo.component';
 
 @Component({
-  selector: 'app-funcao-editar',
-  templateUrl: './../funcao-form/funcao-form.html',
-  styleUrls: ['./../funcao-form/funcao-form.css']
+  selector: 'app-cargo-editar',
+  templateUrl: './../cargo-form/cargo-form.html',
+  styleUrls: ['./../cargo-form/cargo-form.css']
 })
-export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnInit {
+export class CargoEditarComponent extends GenericCargoComponent implements OnInit {
 
   private titulo: string = "Editar Fun��o";
   private corTitulo: string = GlobalVariable.COLOR_TITLE;
   private inscricao: Subscription;
-  private funcao: Funcao;
+  private cargo: Cargo;
 //  private formulario: FormGroup;
 //  private permissoesArray: FormArray;
 //  private funcoes: Array<Object>;
@@ -30,9 +30,9 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
   
     
   constructor(private route: ActivatedRoute,
-          funcaoService: FuncaoService,
+          cargoService: CargoService,
           formBuilder: FormBuilder) { 
-      super(funcaoService, formBuilder);
+      super(cargoService, formBuilder);
   }
 
   onChange($event){}
@@ -42,7 +42,7 @@ export class FuncaoEditarComponent extends GenericFuncaoComponent implements OnI
           (params: any) => {
             let id = params['id'];
             
-            this.funcaoService.get(id)
+            this.cargoService.get(id)
                 .then(res => {
 //                    this.funcao = res.json();
 //                    console.log(this.funcao);

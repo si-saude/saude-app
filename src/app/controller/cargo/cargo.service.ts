@@ -6,12 +6,13 @@ import 'rxjs/add/operator/toPromise';
 
 import { GenericService } from './../../generics/generic.service';
 import { CursoFilter } from './../curso/curso.filter';
+import { CargoFilter } from './../cargo/cargo.filter';
 
 @Injectable()
-export class FuncaoService extends GenericService{
+export class CargoService extends GenericService{
 
     constructor( http: Http, router: Router ) { 
-        super(http, router, "funcao");
+        super(http, router, "cargo");
     }
 
     getCursoById(valor){
@@ -22,5 +23,8 @@ export class FuncaoService extends GenericService{
         //implementar
     }
     
+    getCargos() {
+        return this.selectList(new CargoFilter())
+    }
     
 }

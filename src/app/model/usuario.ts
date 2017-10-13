@@ -2,7 +2,7 @@ import { Perfil } from './perfil';
 
 export class Usuario {
     private chave: string;
-    private id: number;
+    private id: number = 0;
     private senha: string;
     private token: string;
     private perfis: Array<Perfil>;

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 
-import { Funcao } from './../model/funcao';
+import { Cargo } from './../model/cargo';
 import { Curso } from './../model/curso';
-import { FuncaoService } from './../controller/funcao/funcao.service';
-import { FuncaoFilter } from './../controller/funcao/funcao.filter';
+import { CargoService } from './../controller/cargo/cargo.service';
+import { CargoFilter } from './../controller/cargo/cargo.filter';
 import { CursoFilter } from './../controller/curso/curso.filter';
 
-export abstract class GenericFuncaoComponent {
+export abstract class GenericCargoComponent {
 
     formulario: FormGroup;
     cursosArray: FormArray;
@@ -17,13 +17,13 @@ export abstract class GenericFuncaoComponent {
     colorMsg: string;
     msg: string;
     verifyMsg: boolean = false;
-    funcaoService: FuncaoService;
-    funcaoFilter: FuncaoFilter = new FuncaoFilter();
+    cargoService: CargoService;
+    cargoFilter: CargoFilter = new CargoFilter();
     formBuilder: FormBuilder;
 
-    constructor( funcaoService: FuncaoService,
+    constructor( cargoService: CargoService,
         formBuilder: FormBuilder ) {
-        this.funcaoService = funcaoService;
+        this.cargoService = cargoService;
         this.formBuilder = formBuilder;
         
         this.formulario = this.formBuilder.group({
@@ -43,7 +43,7 @@ export abstract class GenericFuncaoComponent {
         this.cursosArray = this.formulario.get('cursos') as FormArray;
         this.cursosArray.removeAt(0);
         
-        this.funcaoService.getCursos( this.cursoFilter )
+        this.cargoService.getCursos( this.cursoFilter )
 //            .then(res => {
 //                this.cursos = res.json();
 //            })
@@ -53,7 +53,7 @@ export abstract class GenericFuncaoComponent {
     }
 
     addCurso(valor: number) {
-        this.funcaoService.getCursoById(valor)
+        this.cargoService.getCursoById(valor)
 //            .then(res => {
 //                let curso = new FormGroup({});
 //                curso.addControl("nome", new FormControl(res.json().nome));
@@ -77,7 +77,7 @@ export abstract class GenericFuncaoComponent {
 
     save() {
         console.log(this.formulario.value);
-        this.funcaoService.submit( this.formulario.value )
+        this.cargoService.submit( this.formulario.value )
             .then( res => {
                 this.verifyMsg = true;
                 this.colorMsg = "green";
@@ -94,7 +94,7 @@ export abstract class GenericFuncaoComponent {
         if ( evento != undefined ) {
             if ( evento.length > 3 ) {
                 
-                this.funcaoService.getCursos( this.cursoFilter )
+                this.cargoService.getCursos( this.cursoFilter )
 //                    .then(res => {
 //                        console.log(JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));
 ////                        this.cursos = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]');

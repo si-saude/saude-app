@@ -15,11 +15,11 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './localizacao.component.html',
   styleUrls: ['./localizacao.component.css']
 })
-export class LocalizacaoComponent extends GenericListComponent<Localizacao, LocalizacaoFilter> {
+export class LocalizacaoComponent extends GenericListComponent<Localizacao> {
 
-  constructor(localizacaoService: LocalizacaoService, 
-        formBuilder: FormBuilder) { 
-      super(localizacaoService, formBuilder);
+  constructor(localizacaoService: LocalizacaoService) {
+      let localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter(); 
+      super(localizacaoService, localizacaoFilter);
   }
   
 }

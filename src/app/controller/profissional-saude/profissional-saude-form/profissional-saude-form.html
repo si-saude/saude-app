@@ -26,38 +26,42 @@
 			<div id="dadosGerais">
 				<div class="row">
 					<div class="input-field col s12">
+						<label data-error="Campo obrigatório." class="active" for="nome">Nome</label>
 						<input id="nome" type="text" required maxlength="220"
-							[(ngModel)]="profissionalSaude.nome" name="nome"> <label
-							data-error="Campo obrigatório." for="nome">Nome</label>
+							[(ngModel)]="profissionalSaude.nome" name="nome">
 					</div>
 				</div>
 
 				<div class="row">
+				
 					<div class="input-field col s8">
+						<label for="matricula">Matricula</label>
 						<input id="matricula" maxlength="10" type="text"
 							[(ngModel)]="profissionalSaude.matricula" name="matricula">
-						<label for="matricula">Matricula</label>
 					</div>
-
+					
 					<div class="input-field col s4">
+						<label for="dataNascimento">Data de Nascimento</label>
 						<my-date-picker name="dataNascimento"
 							[options]="myDatePickerOptions"
 							[(ngModel)]="dataNascimento"
-							placeholder="Data de Nascimento"></my-date-picker>
+							placeholder="Data de Nascimento">
+						</my-date-picker>
 					</div>
+				
 				</div>
 
 				<div class="row">
 					<div class="input-field col s8">
+						<label for="ramal" maxlength="12">Ramal</label>
 						<input id="ramal" type="text"
-							[(ngModel)]="profissionalSaude.ramal" name="ramal"> <label
-							for="ramal" maxlength="12">Ramal</label>
+							[(ngModel)]="profissionalSaude.ramal" name="ramal">
 					</div>
 
 					<div class="input-field col s4">
+						<label for="chave">Chave</label>
 						<input id="chave" type="text"
 							[(ngModel)]="profissionalSaude.chave" maxlength="8" name="chave">
-						<label for="chave">Chave</label>
 					</div>
 				</div>
  
@@ -90,10 +94,10 @@
 					<div class="input-field col s4">
 						<fieldset>
 							<legend>Função</legend>
-							<select name="funcao" class="browser-default"
-								[(ngModel)]="profissionalSaude.funcao.id">
-								<option selected value=0>Selecione uma função</option>
-								<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
+							<select name="cargo" required class="browser-default"
+								[(ngModel)]="profissionalSaude.cargo.id">
+								<option selected value=0>Selecione um cargo</option>
+								<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
 							</select>
 						</fieldset>
 					</div>
@@ -107,26 +111,26 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="input-field col s12">
+							<label for="historico" maxlength="4096">Histórico</label>
 							<textarea id="historico" class="materialize-textarea"
 								[(ngModel)]="profissionalSaude.curriculo.historico" name="curriculo.historico"
 								date-error="É necessário informar um histórico."></textarea>
-							<label for="historico" maxlength="4096">Histórico</label>
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="input-field col s12">
+							<label for="formacao" maxlength="512">Formação</label>
 							<textarea id="formacao" class="materialize-textarea"
 								[(ngModel)]="profissionalSaude.curriculo.formacao" name="curriculo.formacao"></textarea>
-							<label for="formacao" maxlength="512">Formação</label>
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="input-field col s12">
+							<label for="atuacao" maxlength="512">Atuação</label>
 							<textarea id="atuacao" class="materialize-textarea"
 								[(ngModel)]="profissionalSaude.curriculo.atuacao" name="curriculo.atuacao"></textarea>
-							<label for="atuacao" maxlength="512">Atuação</label>
 						</div>
 					</div>
 
@@ -144,17 +148,23 @@
 
 								<div class="row">
 									<div class="input-field col s6">
-										<select class="browser-default" name="curriculo.curso.id"
-											[(ngModel)]="curriculoCurso.curso.id">
-											<option selected value>Selecione uma curso</option>
-											<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}
+										<fieldset>
+											<legend>Curso</legend>
+											<select class="browser-default" 
+												name="profissionalSaude.curriculo.curriculoCursos[{{i}}].curso.id"
+												[(ngModel)]="profissionalSaude.curriculo.curriculoCursos[i].curso.id">
+												<option selected disabled value=0>Selecione uma curso</option>
+												<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}
 											</option>
-										</select>
+											</select>
+										</fieldset>
 									</div>
 
 									<div class="input-field col s4">
+										<label for="dataCurriculoCurso">Data</label>
 										<my-date-picker name="data" [options]="myDatePickerOptions"
-											[(ngModel)]="curriculoCurso.curso.data" name="curriculo.curso.data"
+											name="profissionalSaude.curriculo.curriculoCursos[{{i}}].data"
+											[(ngModel)]="dataCurriculoCursos[i]" 
 											placeholder="Data">
 										</my-date-picker>
 									</div>
@@ -177,9 +187,9 @@
 
 
 					<input id="id" name="curriculo.id{{i}}" type="hidden"
-						[(ngModel)]="curriculo.id"> 
+						[(ngModel)]="profissionalSaude.curriculo.id"> 
 					<input id="version" name="curriculo.version{{i}}" type="hidden"
-						[(ngModel)]="curriculo.version">
+						[(ngModel)]="profissionalSaude.curriculo.version">
 
 				</div>
 
@@ -196,7 +206,7 @@
 					</legend>
 					<div class="form-group">
 						<div
-							*ngFor="let vacina of profissionalSaude.vacinas;let i = index">
+							*ngFor="let vacina of profissionalSaude.profissionalVacinas;let i = index">
 
 							<fieldset>
 								<legend class="legend">
@@ -206,16 +216,26 @@
 										class="material-icons center-icon">delete</i>
 									</a>
 								</legend>
+									
 								<div class="row">
 									<div class="input-field col s8">
-										<input id="descricao" type="text" name="vacina.descricao"
-											[(ngModel)]="vacina.descricao"> <label
-											for="descricao" maxlength="200">Descrição</label>
+										<fieldset>
+											<legend>Nome</legend>
+											<select name="profissionalSaude.profissionalVacinas[{{i}}].id" class="browser-default"
+												[(ngModel)]="profissionalSaude.profissionalVacinas[i].id">
+												<option disabled selected value=0>Selecione uma vacina</option>
+												<option *ngFor="let vacina of vacinas"
+													value="{{vacina.id}}">{{vacina.descricao}}</option>
+											</select>
+										</fieldset>
 									</div>
 
 									<div class="input-field col s4">
-										<my-date-picker name="data" [options]="myDatePickerOptions"
-											[(ngModel)]="vacina.data" name="vacina.data"
+										<label for="data">Data</label>
+										<my-date-picker name="profissionalVacinas.data" 
+											[options]="myDatePickerOptions"
+											name="profissionalSaude.profissionalVacinas[{{i}}].data"
+											[(ngModel)]="dataVacinas[i]"
 											placeholder="Data">
 										</my-date-picker>
 									</div>
@@ -224,30 +244,35 @@
 
 								<div class="row">
 									<div class="input-field col s8">
-										<input id="lote" type="text" name="vacina.lote"
-										[(ngModel)]="vacina.lote">
 										<label for="lote" maxlength="32">Lote</label>
+										<input id="lote" type="text" 
+										name="profissionalSaude.profissionalVacinas.lote{{i}}"
+										[(ngModel)]="profissionalSaude.profissionalVacinas[i].lote">
 									</div>
 
 									<div class="input-field col s4">
-										<input id="dose" type="number" name="vacina.dose"  
-										[(ngModel)]="vacina.dose">
 										<label for="laboratorio" min="1">Dose</label>
+										<input id="dose" type="number" 
+										name="profissionalSaude.profissionalVacinas.dose{{i}}"  
+										[(ngModel)]="profissionalSaude.profissionalVacinas[i].dose">
 									</div>
 
 								</div>
 
 								<div class="row">
 									<div class="input-field col s8">
-										<input id="laboratorio" type="text" name="vacina.laboratorio"
-											[(ngModel)]="vacina.laboratorio"> <label
-											for="laboratorio" maxlength="128">Laboratório</label>
+										<label for="laboratorio" maxlength="128">Laboratório</label>
+										<input id="laboratorio" type="text" 
+											name="vacina.laboratorio{{i}}"
+											[(ngModel)]="profissionalSaude.profissionalVacinas[i].laboratorio">
 									</div>
 
 									<div class="input-field col s4">
+										<label for="proximaDose" maxlength="128">Próxima Dose</label>
 										<my-date-picker name="proximaDose"
-											[options]="myDatePickerOptions" name="vacina.proximaDose"
-											[(ngModel)]="vacina.proximaDose" placeholder="Próxima dose">
+											[options]="myDatePickerOptions" 
+											name="profissionalSaude.profissionalVacinas[{{i}}].proximaDose"
+											[(ngModel)]="proximaDoseVacinas[i]" placeholder="Próxima dose">
 										</my-date-picker>
 									</div>
 								</div>
@@ -266,28 +291,29 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="input-field col s12">
+							<label for="conselho" maxlength="200">Conselho</label>
 							<input id="conselho" type="text" name="profissionalSaude.profissionalConselho.conselho"
 								name="profissionalConselho.conselho" [(ngModel)]="profissionalSaude.profissionalConselho.conselho">
-							<label for="conselho" maxlength="200">Conselho</label>
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="input-field col s4">
+							<label for="numero" maxlength="26">Numero</label>
 							<input id="numero" type="text" name="profissionalSaude.profissionalConselho.numero"
 							 	[(ngModel)]="profissionalSaude.profissionalConselho.numero">
-							<label for="numero" maxlength="26">Numero</label>
 						</div>
 
 						<div class="input-field col s4">
+							<label for="uf" maxlength="2">UF</label>
 							<input id="uf" type="text" name="profissionalSaude.profissionalConselho.uf" 
-								[(ngModel)]="profissionalSaude.profissionalConselho.uf"> <label
-								for="uf" maxlength="2">UF</label>
+								[(ngModel)]="profissionalSaude.profissionalConselho.uf">
 						</div>
 
 						<div class="input-field col s4">
-							<my-date-picker name="profissionalConselho.vencimento" [options]="myDatePickerOptions"
-								[(ngModel)]="profissionalSaude.profissionalConselho.vencimento" placeholder="Vencimento"></my-date-picker>
+							<label for="vencimento" maxlength="2">Vencimento</label>
+							<my-date-picker name="vencimentoProfissionalConselho" [options]="myDatePickerOptions"
+								[(ngModel)]="vencimentoProfissionalConselho" placeholder="Vencimento"></my-date-picker>
 						</div>
 					</div>
 
@@ -315,16 +341,15 @@
 
 							<div class="row">
 								<div class="input-field col s10">
+									<label for="numero"	maxlength="16">Numero</label>
 									<input id="numero" name="numero{{i}}" type="text"
-										[(ngModel)]="telefone.numero"> <label for="numero"
-										maxlength="16">Numero</label>
+										[(ngModel)]="profissionalSaude.telefones[i].numero">
 								</div>
 
 								<div class="col s2">
-									<a
-										class="btn-floating waves-effect waves-light red btn-remove-permission"
-										(click)="removeTelefone(i)"> <i
-										class="material-icons center-icon">delete</i>
+									<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+										(click)="removeTelefone(i)"> 
+										<i class="material-icons center-icon">delete</i>
 									</a>
 								</div>
 
@@ -349,37 +374,39 @@
 
 							<div class="row">
 								<div class="input-field col s12">
-									<input [(ngModel)]="profissionalSaude.endereco.logradouro" id="logradouro"
-										type="text" name="endereco.logradouro"> 
 									<label for="logradouro" maxlength="200">Logradouro</label>
+									<input [(ngModel)]="profissionalSaude.endereco.logradouro" id="logradouro"
+										type="text" name="endereco.logradouro">
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="input-field col s8">
+									<label for="bairro" maxlength="100">Bairro</label>
 									<input [(ngModel)]="profissionalSaude.endereco.bairro" id="bairro" type="text"
 										name="endereco.bairro">
-									<label for="bairro" maxlength="100">Bairro</label>
 								</div>
 
 								<div class="input-field col s4">
+									<label for="numero" maxlength="12">Numero</label>
 									<input [(ngModel)]="profissionalSaude.endereco.numero" id="numero" type="text"
 										name="endereco.numero">
-									<label for="numero" maxlength="12">Numero</label>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="input-field col s8">
+									<label for="complemento" maxlength="200">Complemento</label>
 									<input [(ngModel)]="profissionalSaude.endereco.complemento" id="complemento"
 										name="endereco.complemento"
-										type="text"> <label for="complemento" maxlength="200">Complemento</label>
+										type="text">
 								</div>
 
 								<div class="input-field col s4">
+									<label for="cep" maxlength="9">CEP</label>
 									<input id="cep" type="text" [(ngModel)]="profissionalSaude.endereco.cep"
-										name="endereco.cep"> <label for="cep"
-										maxlength="9">CEP</label>
+										name="endereco.cep"> 
+										
 								</div>
 							</div>
 
@@ -396,8 +423,8 @@
 								</div>
 							</div>
 
-							<input [(ngModel)]="endereco.id" id="id" name="endereco.id" type="hidden">
-							<input [(ngModel)]="endereco.version" id="endereco.version" name="version"
+							<input [(ngModel)]="profissionalSaude.endereco.id" id="id" name="endereco.id" type="hidden">
+							<input [(ngModel)]="profissionalSaude.endereco.version" id="endereco.version" name="version"
 								type="hidden">
 
 						</div>

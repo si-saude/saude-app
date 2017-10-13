@@ -1,7 +1,7 @@
 import { ProfissionalVacina } from './profissional-vacina';
 
 export class Vacina {
-    private id: number;
+    private id: number = 0;
     private descricao: string;
     private doses: number;
     private reforco: number;

@@ -5,7 +5,7 @@ export abstract class GenericFilter {
 
     constructor() {
         this.pageNumber = 1;
-        this.pageSize = 4;
+        this.pageSize = 1;
         this.id = 0;
     }
     

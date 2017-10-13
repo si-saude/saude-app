@@ -16,9 +16,6 @@ import { GenericCidadeComponent } from './../../../generics/generic.cidade.compo
 })
 export class CidadeEditarComponent extends GenericCidadeComponent implements OnInit {
 
-  private titulo: string = "Editar Cidade";
-  private corTitulo: string = GlobalVariable.COLOR_TITLE;
-  private inscricao: Subscription;
   private cidade: Cidade;
 //  private formulario: FormGroup;
 //  private permissoesArray: FormArray;
@@ -31,7 +28,7 @@ export class CidadeEditarComponent extends GenericCidadeComponent implements OnI
   constructor(private route: ActivatedRoute,
           cidadeService: CidadeService,
           formBuilder: FormBuilder) { 
-      super(cidadeService, formBuilder);
+      super(cidadeService);
   }
 
   ngOnInit() {
@@ -43,33 +40,25 @@ export class CidadeEditarComponent extends GenericCidadeComponent implements OnI
       this.cidade.setId(0);
       this.cidade.setVersion(0);
       
-      this.formulario = this.formBuilder.group(this.cidade);
-      
-      this.inscricao = this.route.params.subscribe(
-          (params: any) => {
-            let id = params['id'];
-            
-            this.cidadeService.get(id)
-                .then(res => {
-                    this.cidade = res.json();
-                    this.formulario = this.formBuilder.group(this.cidade);
-                })
-                .catch(error =>
-                    console.log(error));
-          
-          });
+//      this.formulario = this.formBuilder.group(this.cidade);
+//      
+//      this.inscricao = this.route.params.subscribe(
+//          (params: any) => {
+//            let id = params['id'];
+//            
+//            this.cidadeService.get(id)
+//                .then(res => {
+//                    this.cidade = res.json();
+//                    this.formulario = this.formBuilder.group(this.cidade);
+//                })
+//                .catch(error =>
+//                    console.log(error));
+//          
+//          });
   }
-  
-  isValid():boolean {
-      return super.isValid();
-  }
-  
-  save() {
-      super.save();
-  }
-  
+    
   onDestroy() {
-      this.inscricao.unsubscribe();
+//      this.inscricao.unsubscribe();
   }
 
 }

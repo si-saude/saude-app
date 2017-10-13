@@ -4,41 +4,37 @@ import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractCon
 import { MyDatePickerModule } from 'mydatepicker'; 
 import { IMyDpOptions } from 'mydatepicker'; 
 
-import { ProfissionalSaude } from './../model/profissional-saude';
+import { Profissional } from './../model/profissional';
 import { ProfissionalSaudeService } from './../controller/profissional-saude/profissional-saude.service';
 import { ProfissionalSaudeFilter } from './../controller/profissional-saude/profissional-saude.filter';
 import { LocalizacaoFilter } from './../controller/localizacao/localizacao.filter';
-import { FuncaoFilter } from './../controller/funcao/funcao.filter';
+import { CargoFilter } from './../controller/cargo/cargo.filter';
 import { EquipeFilter } from './../controller/equipe/equipe.filter';
 import { CursoFilter } from './../controller/curso/curso.filter';
 import { CidadeFilter } from './../controller/cidade/cidade.filter';
 import { Localizacao } from './../model/localizacao';
 import { Equipe } from './../model/equipe';
-import { Funcao } from './../model/funcao';
+import { Cargo } from './../model/cargo';
 import { Curso } from './../model/curso';
+import { CurriculoCurso } from './../model/curriculo-curso';
 import { Cidade } from './../model/cidade';
 import { Curriculo } from './../model/curriculo';
 import { Endereco } from './../model/endereco';
 import { Telefone } from './../model/telefone';
 import { ProfissionalConselho } from './../model/profissional-conselho';
+import { ProfissionalVacina } from './../model/profissional-vacina';
 
 export class GenericProfissionalSaudeComponent {
-
     formulario: FormGroup;
-    profissionaisSaude: Array<ProfissionalSaude>;
-    profissionalSaude: ProfissionalSaude;
+    profissionalSaude: Profissional;
     localizacoes: Array<Localizacao>;
     equipes: Array<Equipe>;
-    funcoes: Array<Funcao>;
+    funcoes: Array<Cargo>;
     cursos: Array<Curso>;
     cidades: Array<Cidade>;
-    localizacao: Localizacao;
-    equipe:Equipe;
-    funcao:Funcao;
-    curriculo: Curriculo;
-    endereco: Endereco;
-    cidade: Cidade;
-    profissionalConselho: ProfissionalConselho;
+
+    //ngModel
+    dataNascimento;
 
     colorMsg: string;
     msg: string;
@@ -47,63 +43,60 @@ export class GenericProfissionalSaudeComponent {
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
     localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter();
     equipeFilter: EquipeFilter = new EquipeFilter();
-    funcaoFilter: FuncaoFilter = new FuncaoFilter();
+    cargoFilter: CargoFilter = new CargoFilter();
     cursoFilter: CursoFilter = new CursoFilter();
     cidadeFilter: CidadeFilter = new CidadeFilter();
-    formBuilder: FormBuilder;
 
     myDatePickerOptions: IMyDpOptions = {
         dateFormat: 'dd/mm/yyyy'
     };
 
     constructor( profissionalSaudeService: ProfissionalSaudeService) {
+
         this.profissionalSaudeService = profissionalSaudeService;
+        this.profissionalSaude = new Profissional();
+        this.profissionalSaude.setLocalizacao(new Localizacao());
+        this.profissionalSaude.setEquipe(new Equipe());
+        this.profissionalSaude.setCargo(new Cargo());
+        this.profissionalSaude.setCurriculo(new Curriculo());
+        this.profissionalSaude.setProfissionalConselho(new ProfissionalConselho());
+        this.profissionalSaude.setEndereco(new Endereco());
+        this.profissionalSaude.getEndereco().setCidade(new Cidade());
         
-        this.profissionalSaude = new ProfissionalSaude();
-        this.profissionalSaude.setId(0);
-        this.profissionalSaude.setNome(null);
-        this.profissionalSaude.setDataNascimento(null);
-        this.profissionalSaude.setMatricula(null);
-        this.profissionalSaude.setChave(null);
-        this.profissionalSaude.setMi(null);
-        this.profissionalSaude.setRamal(null);
-        this.profissionalSaude.setVersion(0);
-        
-        this.localizacao = new Localizacao();
-        this.localizacao.setId(0);
-        this.profissionalSaude.setLocalizacao(this.localizacao);
-        
-        this.equipe = new Equipe();
-        this.equipe.setId(0);
-        this.profissionalSaude.setEquipe(this.equipe);
-        
-        this.funcao = new Funcao();
-        this.funcao.setId(0);
-        this.profissionalSaude.setFuncao(this.funcao);
-        
-        this.curriculo = new Curriculo();
-        this.profissionalSaude.setCurriculo(this.curriculo);
-        
-        this.profissionalConselho = new ProfissionalConselho();
-        this.profissionalSaude.setProfissionalConselho(this.profissionalConselho);
-        
-        this.endereco = new Endereco();
-        
-        this.cidade = new Cidade();
-        this.cidade.setId(0);
-        this.endereco.setId(0);
-        this.endereco.setCidade(this.cidade);
-        this.profissionalSaude.setEndereco(this.endereco);
-        
-//        let telefone:Telefone = new Telefone();
-//        telefone.numero = "3344-5678";
+//        this.profissionalSaude.setId(0);
+//        this.profissionalSaude.setVersion(0);
 //        
-//        this.profissionalSaude.telefones = new Array<Telefone>();
-//        this.profissionalSaude.telefones.push(telefone);
-//        this.profissionalSaude.telefones.push(telefone);
-//        this.profissionalSaude.telefones.push(telefone);
-        
+//        let localizacao: Localizacao = new Localizacao();
+//        localizacao.setId(0);
+//        this.profissionalSaude.setLocalizacao(localizacao);
 //        
+//        let equipe: Equipe = new Equipe();
+//        equipe.setId(0);
+//        this.profissionalSaude.setEquipe(equipe);
+//        
+//        let cargo: Cargo = new Cargo();
+//        cargo.setId(0);
+//        this.profissionalSaude.setCargo(cargo);
+//        
+//        let curriculo: Curriculo = new Curriculo();
+//        this.profissionalSaude.setCurriculo(curriculo);
+//        
+//        let telefones: Array<Telefone> = new Array<Telefone>();
+//        this.profissionalSaude.setTelefones(telefones);
+//        
+//        let profissionalVacinas: Array<ProfissionalVacina> = new Array<ProfissionalVacina>();
+//        this.profissionalSaude.setProfissionalVacinas(profissionalVacinas);
+//        
+//        let profissionalConselho: ProfissionalConselho = new ProfissionalConselho();
+//        this.profissionalSaude.setProfissionalConselho(profissionalConselho);
+//        
+//        let endereco: Endereco = new Endereco();
+//        let cidade: Cidade = new Cidade();
+//        cidade.setId(0);
+//        endereco.setId(0);
+//        endereco.setCidade(cidade);
+//        this.profissionalSaude.setEndereco(endereco);
+          
 //        this.formBuilder.group(this.profissionalSaude);
 //        console.log(this.formulario.value);
         
@@ -124,7 +117,7 @@ export class GenericProfissionalSaudeComponent {
 //            equipe: this.formBuilder.group({
 //                id: [''] 
 //            }),
-//            funcao: this.formBuilder.group({
+//            cargo: this.formBuilder.group({
 //                id: ['']
 //            }),
 //            telefones: this.formBuilder.array([
@@ -196,53 +189,59 @@ export class GenericProfissionalSaudeComponent {
 //        this.telefonesArray.removeAt(0);
 //        this.vacinasArray.removeAt(0);
        
-        this.profissionalSaudeService.getLocalizacoes(this.localizacaoFilter)
-            .then(res => {
-                this.localizacoes = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        
-        this.profissionalSaudeService.getEquipe(this.equipeFilter)
-            .then(res => {
-                this.equipes = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        
-        this.profissionalSaudeService.getFuncoes(this.funcaoFilter)
-            .then(res => {
-                this.funcoes = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        
-        this.profissionalSaudeService.getCursos(this.cursoFilter)
-            .then(res => {
-                this.cursos = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            }) 
-        
-        this.profissionalSaudeService.getCidades(this.cidadeFilter)
-            .then(res => {
-                this.cidades = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
-        
-//        console.log(this.formulario);
+//        this.profissionalSaudeService.getLocalizacoes(this.localizacaoFilter)
+//            .then(res => {
+//                this.localizacoes = res.json();
+//            })
+//            .catch(error => {
+//                console.log(error);
+//            })
+//        
+//        this.profissionalSaudeService.getEquipe(this.equipeFilter)
+//            .then(res => {
+//                this.equipes = res.json();
+//            })
+//            .catch(error => {
+//                console.log(error);
+//            })
+//        
+//        this.profissionalSaudeService.getFuncoes(this.cargoFilter)
+//            .then(res => {
+//                console.log(res.json());
+//                this.funcoes = res.json();
+//            })
+//            .catch(error => {
+//                console.log(error);
+//            })
+//        
+//        this.profissionalSaudeService.getCursos(this.cursoFilter)
+//            .then(res => {
+//                this.cursos = res.json();
+//            })
+//            .catch(error => {
+//                console.log(error);
+//            }) 
+//        
+//        this.profissionalSaudeService.getCidades(this.cidadeFilter)
+//            .then(res => {
+//                this.cidades = res.json();
+//            })
+//            .catch(error => {
+//                console.log(error);
+//            })
         
     }
 
     addCurriculoCurso() {
-        let c: Curriculo = new Curriculo;
-
+        if ( this.profissionalSaude.getCurriculo().getCurriculoCursos() === undefined ) {
+            this.profissionalSaude.getCurriculo().setCurriculoCursos(new Array<CurriculoCurso>());   
+        }
+        let cc: CurriculoCurso = new CurriculoCurso();
+        cc.setCurriculo(new Curriculo());
+        cc.setCurso(new Curso());
+        cc.setId(0);
+        this.profissionalSaude.getCurriculo().getCurriculoCursos().push(cc);
+        
 //      let curriculoCurso = new FormGroup({});
 //      let curso = new FormGroup({});
 //      let curriculo = new FormGroup({});
@@ -256,8 +255,16 @@ export class GenericProfissionalSaudeComponent {
 //      this.curriculoCursosArray.push(curriculoCurso);
   }
     
+
+    removeCurriculoCurso(i: number) {
+        this.profissionalSaude.getCurriculo().getCurriculoCursos().splice(i, 1);
+    }
+    
     addTelefone() {
-//        this.profissionalSaude.telefones.push(new Telefone());
+        if ( this.profissionalSaude.getTelefones() === undefined ) {
+            this.profissionalSaude.setTelefones(new Array<Telefone>());   
+        }
+        this.profissionalSaude.getTelefones().push(new Telefone());
 //        let telefone = new FormGroup({});
 //        telefone.addControl("numero", new FormControl(null));
 //        telefone.addControl("id", new FormControl(0));
@@ -267,33 +274,18 @@ export class GenericProfissionalSaudeComponent {
     }
 
     removeTelefone(i: number) {
-//        this.telefonesArray.removeAt(i);
+        this.profissionalSaude.getTelefones().splice(i, 1);
     }
 
-    removeCurriculoCurso(i: number) {
-//        this.curriculoCursosArray.removeAt(i);
-    }
-    
-    addVacina(){
-//        let vacina = new FormGroup({});
-//        let profissional = new FormGroup({});
-//        profissional.addControl("id", new FormControl(0));
-//        
-//        vacina.addControl("descricao", new FormControl(null));
-//        vacina.addControl("data", new FormControl(null));
-//        vacina.addControl("lote", new FormControl(''));
-//        vacina.addControl("laboratorio", new FormControl(''));
-//        vacina.addControl("dose", new FormControl(0));
-//        vacina.addControl("proximaDose", new FormControl(null));
-//        vacina.addControl("id", new FormControl(0));
-//        vacina.addControl("version", new FormControl(0));
-//        vacina.addControl("profissional", profissional);
-//        
-//        this.vacinasArray.push(vacina);
+    addVacina() {
+        if ( this.profissionalSaude.getProfissionalVacinas() === undefined ) {
+            this.profissionalSaude.setProfissionalVacinas(new Array<ProfissionalVacina>());
+        }
+        this.profissionalSaude.getProfissionalVacinas().push(new ProfissionalVacina());
     }
     
     removeVacina(i: number) {
-//        this.vacinasArray.removeAt(i);
+        this.profissionalSaude.getProfissionalVacinas().splice(i, 1);
     }
     
     isValid() {
@@ -303,6 +295,7 @@ export class GenericProfissionalSaudeComponent {
     }
 
     save() {
+        this.verifyAndSetDates();
         
 //        if (this.formulario.value.localizacao !== undefined && 
 //                this.formulario.value.localizacao !== null){
@@ -311,10 +304,10 @@ export class GenericProfissionalSaudeComponent {
 //            }
 //        }
 //
-//        if (this.formulario.value.funcao !== undefined && 
-//                this.formulario.value.funcao !== null){
-//            if (this.formulario.value.funcao.id === '') {
-//                this.formulario.value.funcao = null;
+//        if (this.formulario.value.cargo !== undefined && 
+//                this.formulario.value.cargo !== null){
+//            if (this.formulario.value.cargo.id === '') {
+//                this.formulario.value.cargo = null;
 //            }
 //        }
 //        
@@ -359,22 +352,32 @@ export class GenericProfissionalSaudeComponent {
 //        }
 //               
         
-        if(this.profissionalSaude.getEndereco().getId() === 0 
-                && this.profissionalSaude.getEndereco().getCidade().getId() === 0 )
-            this.profissionalSaude.setEndereco(null);
+//        if(this.profissionalSaude.getEndereco().getId() === 0 
+//                && this.profissionalSaude.getEndereco().getCidade().getId() === 0 )
+//            this.profissionalSaude.setEndereco(null);
         
-        console.log(this.profissionalSaude);
-        this.profissionalSaudeService.submit( this.profissionalSaude )
-            .then( res => {
-                this.verifyMsg = true;
-                this.colorMsg = "green";
-                this.msg = res.text();
-            } )
-            .catch( error => {
-                this.verifyMsg = true;
-                this.colorMsg = "red";
-                this.msg = error.text();
-            } )
+//        this.profissionalSaude.getLocalizacao().setId(
+//                Number.parseInt(this.profissionalSaude.getLocalizacao().getId().toString()));
+//        this.profissionalSaude.getEquipe().setId(
+//                Number.parseInt(this.profissionalSaude.getEquipe().getId().toString()));
+//        this.profissionalSaude.getCargo().setId(
+//                Number.parseInt(this.profissionalSaude.getCargo().getId().toString()));
+//        this.profissionalSaude.getEndereco().getCidade().setId(
+//                Number.parseInt(this.profissionalSaude.getEndereco().getCidade().getId().toString()));
+//        this.profissionalSaude.getCurriculo().setCurriculoCursos(null);
+//        console.log(this.profissionalSaude);
+        
+//        this.profissionalSaudeService.submit( this.profissionalSaude )
+//            .then( res => {
+//                this.verifyMsg = true;
+//                this.colorMsg = "green";
+//                this.msg = res.text();
+//            } )
+//            .catch( error => {
+//                this.verifyMsg = true;
+//                this.colorMsg = "red";
+//                this.msg = error.text();
+//            } )
 
     }
 
@@ -382,20 +385,36 @@ export class GenericProfissionalSaudeComponent {
         
     }
     
-    verifyAndSetDate( data ): any {
-        if ( data !== null && data !== undefined ) {
-            if ( typeof(data) === 'string' ) {
-                return data;
-            } else {
-                return this.setDate(data);
-            }
-        } else return null;
-//          if (data === "") {
-//              return null;
-//          } else {
-//              return this.setDate(data); 
-//          }
-//      } else { return null }
+    verifyAndSetDates() {
+//        this.profissionalSaude.setDataNascimento(this.parseDatePickerToDate(this.dataNascimento));
+//        if ( this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined && 
+//                this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
+//            for (let i=0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++) {
+//                this.profissionalSaude.
+//                    getCurriculo().getCurriculoCursos()[i].
+//                    setData(this.parseDatePickerToData(this.profissionalSaude.
+//                        getCurriculo().getCurriculoCursos()[i].getDate())); 
+//            }
+//        }
+//        if ( this.profissionalSaude.getProfissionalVacinas() !== undefined &&
+//                this.profissionalSaude.getProfissionalVacinas() !== null ) {
+//            for (let i=0; i < this.profissionalSaude.getProfissionalVacinas().length; i++) {
+//                this.profissionalSaude.
+//                    getProfissionalVacinas()[i].
+//                    setData(this.parseDatePickerToDate(this.profissionalSaude.
+//                        getProfissionalVacinas()[i].getData())); 
+//                this.profissionalSaude.
+//                getProfissionalVacinas()[i].
+//                setProximaDose(this.parseDatePickerToDate(this.profissionalSaude.
+//                    getProfissionalVacinas()[i].getProximaDose()));
+//            }
+//        }
+//        if ( this.profissionalSaude.getProfissionalConselho() !== undefined && 
+//                this.profissionalSaude.getProfissionalConselho() !== null) {
+//            this.profissionalSaude.getProfissionalConselho().
+//                setVencimento(this.parseDatePickerToDate(this.profissionalSaude.
+//                        getProfissionalConselho().getVencimento()));
+//        }
     }
 
     setDate(data) {
@@ -432,8 +451,14 @@ export class GenericProfissionalSaudeComponent {
         let o = Object.create({data: { year: datas[0], month: datas[1], day: datas[2] }});
         return o;   
     }
-    
-    teste() {
-        console.log(this.profissionalSaude);
+        
+    parseDatePickerToDate(data) {
+        if (data === undefined || data === null) {
+            return null;
+        } else if (data instanceof Date) {
+            return data;
+        }   
+        let d: Date = new Date(data.date.year, data.date.month - 1, data.date.day);
+        return d;
     }
 }

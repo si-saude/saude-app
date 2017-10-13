@@ -1,5 +1,5 @@
 export class Localizacao {
-    private id: number;
+    private id: number = 0;
     private version: number;
     private nome: string;
 

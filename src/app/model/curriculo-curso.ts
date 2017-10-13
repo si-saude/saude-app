@@ -2,7 +2,7 @@ import { Curso } from './curso';
 import { Curriculo } from './curriculo';
 
 export class CurriculoCurso {
-    private id: number;
+    private id: number = 0;
     private curriculo: Curriculo;
     private curso: Curso;
     private data: Date;
@@ -40,11 +40,11 @@ export class CurriculoCurso {
         this.curso = curso;
     }
     
-    getDate():Date{
+    getData():Date{
         return this.data;
     }
     
-    setDate(data:Date){
+    setData(data:Date){
         this.data = data;
     }
 } 

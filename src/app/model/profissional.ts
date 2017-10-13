@@ -1,10 +1,6 @@
-import { DateFilter } from './../generics/date.filter';
-import { LocalizacaoFilter } from './../controller/localizacao/localizacao.filter';
-import { EquipeFilter } from './../controller/equipe/equipe.filter';
-import { GerenciaFilter } from './../controller/gerencia/gerencia.filter';
 import { Endereco } from './endereco';
 import { Telefone } from './telefone';
-import { Funcao } from './funcao';
+import { Cargo } from './cargo';
 import { Localizacao } from './localizacao';
 import { Equipe } from './equipe';
 import { ProfissionalConselho } from './profissional-conselho';
@@ -12,8 +8,8 @@ import { ProfissionalVacina } from './profissional-vacina';
 import { Curriculo } from './curriculo';
 
 
-export class ProfissionalSaude {
-    private id: number;
+export class Profissional {
+    private id: number = 0;
     private nome: string;
     private dataNascimento: Date;
     private matricula: string;
@@ -21,7 +17,7 @@ export class ProfissionalSaude {
     private ramal: string;
     private localizacao: Localizacao;
     private equipe: Equipe;
-    private funcao: Funcao;
+    private cargo: Cargo;
     private mi: string;
     private telefones: Array<Telefone>;
     private endereco: Endereco;
@@ -102,12 +98,12 @@ export class ProfissionalSaude {
         this.equipe= e;
     }
     
-    getFuncao() {
-        return this.funcao;
+    getCargo() {
+        return this.cargo;
     }
     
-    setFuncao(f: Funcao) {
-        this.funcao= f;
+    setCargo(f: Cargo) {
+        this.cargo = f;
     }
     
     getMi() {
@@ -141,6 +137,14 @@ export class ProfissionalSaude {
     setProfissionalVacinas(profissionalVacinas: Array<ProfissionalVacina>) {
         this.profissionalVacinas = profissionalVacinas;
     }
+
+    getTelefones() {
+        return this.telefones;
+    }
+    
+    setTelefones(telefones: Array<Telefone>) {
+        this.telefones = telefones;
+    }
     
     getEndereco() {
         return this.endereco;
@@ -149,6 +153,5 @@ export class ProfissionalSaude {
     setEndereco(endereco: Endereco) {
         this.endereco = endereco;
     }
-    
 
 }

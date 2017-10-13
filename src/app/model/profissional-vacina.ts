@@ -1,9 +1,9 @@
-import { ProfissionalSaude } from './profissional-saude';
+import { Profissional } from './profissional';
 import { Vacina } from './vacina';
 
 export class ProfissionalVacina {
-    private id: number;
-    private profissional: ProfissionalSaude;
+    private id: number = 0;
+    private profissional: Profissional;
     private vacina: Vacina;
     private data: Date;
     private lote: string;
@@ -24,7 +24,7 @@ export class ProfissionalVacina {
         return this.profissional;
     }
 
-    setProfissional(profissional: ProfissionalSaude) {
+    setProfissional(profissional: Profissional) {
         this.profissional = profissional;
     }
 

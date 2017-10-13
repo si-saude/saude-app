@@ -1,7 +1,7 @@
 
 
 export class Empregado{
-    private id: number;
+    private id: number = 0;
     private nome:string;
     private cpf:string;
     private dataNascimento:Date;
