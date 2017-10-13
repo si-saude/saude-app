@@ -1,5 +1,5 @@
 export class Criterio {
-    private id: number;
+    private id: number = 0;
     private nome: string;
     private tipo: string;
     private version: number;

@@ -5,7 +5,7 @@ import { IndicadorRiscoSanitarioInstalacao } from './indicador-risco-sanitario-i
 import { IndicadorRiscoSaudeAmbientalInstalacao } from './indicador-risco-saude-ambiental-instalacao';
 
 export class Instalacao {
-    private id: number;
+    private id: number = 0;
     private version: number;
     private nome: string;
     private indicadorRiscoAcidenteInstalacoes: Array<IndicadorRiscoAcidenteInstalacao>;
