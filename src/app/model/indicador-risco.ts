@@ -1,7 +1,7 @@
 import { Periodicidade } from './periodicidade';
 
 export abstract class IndicadorRisco {
-    private id: number;
+    private id: number = 0;
     private version: number;
     private nome: string;
     private periodicidade: Periodicidade;

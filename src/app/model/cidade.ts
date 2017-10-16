@@ -1,5 +1,5 @@
 export class Cidade {
-    private id: number;
+    private id: number = 0;
     private nome: string;
     private uf: string;
     private version: number;

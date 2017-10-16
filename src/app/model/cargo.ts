@@ -1,8 +1,8 @@
 import { Curso } from './curso';
 import { Vacina } from './vacina';
 
-export class Funcao {
-    private id: number;
+export class Cargo {
+    private id: number = 0;
     private version: number;
     private nome: string;
     private cursos: Array<Curso>;

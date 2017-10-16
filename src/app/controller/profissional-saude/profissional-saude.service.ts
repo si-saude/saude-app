@@ -5,55 +5,51 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { GlobalVariable } from './../../global';
-import { ProfissionalSaude } from './../../model/profissional-saude';
+import { Profissional } from './../../model/profissional';
 import { ProfissionalSaudeFilter } from './profissional-saude.filter';
-import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
-import { FuncaoFilter } from './../funcao/funcao.filter';
-import { EquipeFilter } from './../equipe/equipe.filter';
-import { CursoFilter } from './../curso/curso.filter';
-import { CidadeFilter } from './../cidade/cidade.filter';
+import { LocalizacaoService } from './../localizacao/localizacao.service';
+import { CargoService } from './../cargo/cargo.service';
+import { EquipeService } from './../equipe/equipe.service';
+import { CursoService } from './../curso/curso.service';
+import { CidadeService } from './../cidade/cidade.service';
+import { VacinaService } from './../vacina/vacina.service';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
-export class ProfissionalSaudeService extends GenericService{
+export class ProfissionalSaudeService extends GenericService {
 
-    constructor( http: Http, router: Router ) { 
+    constructor( http: Http, router: Router, 
+            private localizacaoService: LocalizacaoService,
+            private cargoService: CargoService,
+            private equipeService: EquipeService,
+            private cursoService: CursoService,
+            private cidadeService: CidadeService,
+            private vacinaService: VacinaService) { 
         super(http, router, "profissional");
     }
 
-
-    getLocalizacoes(localizacaoFilter: LocalizacaoFilter) {
-        let urlGetLocalizacao = GlobalVariable.BASE_API_URL + "/localizacao/selectList";
-        return this.http
-            .post( urlGetLocalizacao, localizacaoFilter, { headers: this.headers })
-            .toPromise();
+    getLocalizacoes() {
+        return this.localizacaoService.getLocalizacoes();
     }
     
-    getFuncoes(funcaoFilter: FuncaoFilter) {
-        let urlGetFuncao = GlobalVariable.BASE_API_URL + "/funcao/selectList";
-        return this.http
-            .post( urlGetFuncao, funcaoFilter, { headers: this.headers })
-            .toPromise();
+    getCargos() {
+        return this.cargoService.getCargos();
     }
     
-    getEquipe(equipeFilter: EquipeFilter) {
-        let urlGetEquipe = GlobalVariable.BASE_API_URL + "/equipe/selectList";
-        return this.http
-            .post( urlGetEquipe, equipeFilter, { headers: this.headers })
-            .toPromise();
+    getEquipe() {
+        return this.equipeService.getEquipes();
     }
     
-    getCursos(cursoFilter: CursoFilter) {
-        let urlGetCurso = GlobalVariable.BASE_API_URL + "/curso/selectList";
-        return this.http
-            .post( urlGetCurso, cursoFilter, { headers: this.headers })
-            .toPromise();
+    getCursos() {
+        return this.cursoService.getCursos();
     }
     
-    getCidades(cidadeFilter: CidadeFilter) {
-        let urlGetCidade = GlobalVariable.BASE_API_URL + "/cidade/selectList";
-        return this.http
-            .post( urlGetCidade, cidadeFilter, { headers: this.headers })
-            .toPromise();
+    getCidades() {
+        return this.cidadeService.getCidades();
     }
+    
+    getVacinas() {
+        return this.vacinaService.getVacinas();
+    }
+    
 }

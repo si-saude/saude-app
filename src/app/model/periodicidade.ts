@@ -1,5 +1,5 @@
 export class Periodicidade {
-    private id: number;
+    private id: number = 0;
     private descricao: string;
     private version: number;
     private meses: number;

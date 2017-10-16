@@ -13,12 +13,11 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './cidade.component.html',
   styleUrls: ['./cidade.component.css']
 })
-export class CidadeComponent extends GenericListComponent<Cidade,CidadeFilter> {
+export class CidadeComponent extends GenericListComponent<Cidade> {
 
-  constructor(service: CidadeService, formBuilder: FormBuilder) { 
-      super(service,formBuilder)
-      this.titulo = "Funcoes";
-      this.filter = new CidadeFilter();
+  constructor(service: CidadeService) {
+      let cidadeFilter: CidadeFilter = new CidadeFilter();
+      super(service, cidadeFilter)
   }
   
 }

@@ -21,7 +21,6 @@ export abstract class GenericCursoComponent {
         formBuilder: FormBuilder ) {
         this.cursoService = cursoService;
         this.formBuilder = formBuilder;
-        
     }
     
     isValid() {

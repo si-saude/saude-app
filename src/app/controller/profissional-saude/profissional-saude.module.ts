@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MaterializeModule } from 'angular2-materialize';
 import { MyDatePickerModule } from 'mydatepicker';
 
 import { ProfissionalSaudeComponent } from './profissional-saude.component';
@@ -12,10 +11,12 @@ import { ProfissionalSaudeRoutingModule } from './profissional-saude.routing.mod
 import { SharedModule } from './../shared.module';
 import { ProfissionalSaudeCadastrarComponent } from './profissional-saude-cadastrar/profissional-saude-cadastrar.component';
 import { ProfissionalSaudeEditarComponent } from './profissional-saude-editar/profissional-saude-editar.component';
+import { ProfissionalSaudeFormComponent } from './profissional-saude-form/profissional-saude-form.component';
 
 @NgModule({
     declarations: [
        ProfissionalSaudeComponent,
+       ProfissionalSaudeFormComponent,
        ProfissionalSaudeCadastrarComponent,
        ProfissionalSaudeEditarComponent
      ],

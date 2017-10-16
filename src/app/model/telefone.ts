@@ -1,11 +1,11 @@
-import { ProfissionalSaude } from './profissional-saude';
+import { Profissional } from './profissional';
 import { Fornecedor } from './fornecedor';
 
 export class Telefone {
-    private id: number;
+    private id: number = 0;
     private version: number;
     private numero: string;
-    private profissionais: Array<ProfissionalSaude>;
+    private profissionais: Array<Profissional>;
     private fornecedores: Array<Fornecedor>;
 
     getId() {
@@ -36,7 +36,7 @@ export class Telefone {
         return this.profissionais;
     }
     
-    setProfissionais(profissionais: Array<ProfissionalSaude>) {
+    setProfissionais(profissionais: Array<Profissional>) {
         this.profissionais = profissionais;
     }
     

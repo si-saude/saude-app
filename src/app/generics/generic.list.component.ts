@@ -7,16 +7,13 @@ import { GlobalVariable } from './../global';
 import { GenericFilter } from './generic.filter';
 import { GenericService } from './generic.service';
 
-
-
-export abstract class GenericListComponent<T,F extends GenericFilter> implements OnInit {
-    
+export abstract class GenericListComponent<T> implements OnInit {
     protected titulo:string;
     protected corTitulo;
     protected formulario: FormGroup;
     protected array: Array<T>;
-    protected filter: F;
     protected paginas: number[];
+    protected paginasAtuais: Array<number>;
     protected msgError: string;
     protected verifyError: boolean;
     protected verifyEmptyPaginas: boolean;
@@ -25,9 +22,11 @@ export abstract class GenericListComponent<T,F extends GenericFilter> implements
     protected showPreload: boolean;
     protected msgPreload: string;
     protected modalActions;
+    protected modalDelete;
     protected modelParams;
+    private flagDelete;
     
-    constructor(protected service: GenericService, protected formBuilder: FormBuilder) { 
+    constructor(protected service: GenericService, protected filter: GenericFilter) {
         this.corTitulo = GlobalVariable.COLOR_TITLE;
         this.msgError = '';
         this.verifyError = false;
@@ -37,6 +36,7 @@ export abstract class GenericListComponent<T,F extends GenericFilter> implements
         this.showPreload = true;
         this.msgPreload = "Aguarde processamento...";
         this.modalActions = new EventEmitter<string|MaterializeAction>();
+        this.modalDelete = new EventEmitter<string|MaterializeAction>();
         this.modelParams = [{
             dismissible: false,
             complete: function() { }
@@ -49,6 +49,7 @@ export abstract class GenericListComponent<T,F extends GenericFilter> implements
                 this.showPreload = false;
                 this.array = JSON.parse(JSON.stringify(res.json())).list;
                 this.paginas = this.getPaginas(res.json().total);
+                this.paginator();
                 if (res.json().total === 0){
                     this.verifyEmptyPaginas = true;
                 } else {
@@ -71,6 +72,60 @@ export abstract class GenericListComponent<T,F extends GenericFilter> implements
         }
     }
     
+    goToPage(index: number) {
+        this.showPreload = true;
+        if (index < 1 || index > this.paginas.length) {
+            this.showPreload = false;
+            return;
+        }
+        
+        this.filter.setPageNumber(index);
+        this.service.list(this.filter)
+            .then(res => {
+                this.showPreload = false;
+                this.array = JSON.parse(JSON.stringify(res.json())).list;
+                this.paginas = this.getPaginas(res.json().total);
+                this.paginator();
+             })
+             .catch(error => {
+                 console.log(error);
+             });
+    }
+    
+    activePage(index: number) {
+        if (index === this.filter.getPageNumber()) {
+            return 'active';
+        } else {
+            return '';
+        }
+    }
+    
+    paginator() {
+        let ini = this.filter.getPageNumber() - 5;
+        let fim = this.filter.getPageNumber() + 5;
+
+        while( ini < 1 ) {
+            ini++;
+            fim++;
+        }
+        
+        while( fim > this.paginas.length ) {
+            fim--;
+            ini--;
+        } 
+        
+        while( ini < 1) {
+            ini++;
+        }
+
+        this.paginasAtuais = Array((fim-ini)+1);
+        let pos = 0;
+        for ( let i = ini; i <= fim; i++ ){
+            this.paginasAtuais[pos] = i;
+            pos++;
+        }
+    }
+    
     setFilter() {
         this.showPreload = true;
         this.service.list(this.filter)
@@ -86,43 +141,13 @@ export abstract class GenericListComponent<T,F extends GenericFilter> implements
          });
     }
     
-    goToPage(index: number) {
-        this.showPreload = true;
-        if (index < 1 || index > this.paginas.length) {
-            this.showPreload = false;
-            return;
-        }
-        this.filter.setPageNumber(index);
-        this.service.list(this.filter)
-            .then(res => {
-                this.showPreload = false;
-                this.array = JSON.parse(JSON.stringify(res.json())).list;
-                this.paginas = this.getPaginas(res.json().total);
-             })
-             .catch(error => {
-                 console.log(error);
-             });
-    }
-    
-    activePage(index: number) {
-        if (index === this.filter.getPageNumber()) {
-            return 'active';
-        } else {
-            return '';
-        }
-    }
-    
     delete(id) {
-        this.showPreload = true;
-        this.service.delete(id)
-            .then(res => {
-                this.showPreload = false;
-                window.location.reload();
-            })
-            .catch(error => {
-                this.showPreload = false;
-                console.log(error.text());
-            })
+        this.modalDelete.emit({action:"modal",params:['open']});
+        this.flagDelete = id; 
+    }
+
+    closeModalDelete() {
+        this.modalDelete.emit({action:"modal",params:['close']});
     }
     
     openModal() {
@@ -131,5 +156,18 @@ export abstract class GenericListComponent<T,F extends GenericFilter> implements
     
     closeModal() {
         this.modalActions.emit({action:"modal",params:['close']});
+    }
+    
+    confirmDelete() {
+        this.showPreload = true;
+        this.service.delete(this.flagDelete)
+            .then(res => {
+                this.showPreload = false;
+                window.location.reload();
+            })
+            .catch(error => {
+                this.showPreload = false;
+                console.log(error.text());
+            })
     }
 }

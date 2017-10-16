@@ -4,7 +4,7 @@ import { EquipeFilter } from './../controller/equipe/equipe.filter';
 import { GerenciaFilter } from './../controller/gerencia/gerencia.filter';
 import { Endereco } from './endereco';
 import { Telefone } from './telefone';
-import { Funcao } from './funcao';
+import { Cargo } from './cargo';
 import { Localizacao } from './localizacao';
 import { Equipe } from './equipe';
 import { ProfissionalConselho } from './profissional-conselho';
@@ -22,7 +22,7 @@ export class ProfissionalSaude {
     private ramal: string;
     private localizacao: Localizacao;
     private equipe: Equipe;
-    private funcao: Funcao;
+    private cargo: Cargo;
     private mi: string;
     private telefones: Array<Telefone>;
     private endereco: Endereco;
@@ -111,12 +111,12 @@ export class ProfissionalSaude {
         this.equipe= e;
     }
     
-    getFuncao() {
-        return this.funcao;
+    getCargo() {
+        return this.cargo;
     }
     
-    setFuncao(f: Funcao) {
-        this.funcao= f;
+    setCargo(f: Cargo) {
+        this.cargo = f;
     }
     
     getMi() {

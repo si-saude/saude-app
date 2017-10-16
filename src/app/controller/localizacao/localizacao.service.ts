@@ -1,11 +1,7 @@
 import { Router } from '@angular/router';
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
-
-import { GlobalVariable } from './../../global'; 
-import { Usuario } from './../../model/usuario';
 import { LocalizacaoFilter } from './localizacao.filter';
 import { GenericService } from './../../generics/generic.service';
 
@@ -16,4 +12,7 @@ export class LocalizacaoService extends GenericService{
       super(http, router, "localizacao");
   }
 
+  getLocalizacoes() {
+      return this.selectList(new LocalizacaoFilter());
+  }
 }

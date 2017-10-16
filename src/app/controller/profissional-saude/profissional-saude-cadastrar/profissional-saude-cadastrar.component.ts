@@ -83,7 +83,7 @@ export class ProfissionalSaudeCadastrarComponent extends GenericProfissionalSaud
     }
     
     parseStringToDate(data) {
-        return super.parseStringToDate(data);
+//        return super.parseStringToDate(data);
 //        super.parseStringToDate(data);
     }
 //    parseStringToDate(data) {

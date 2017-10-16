@@ -4,17 +4,17 @@ import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@ang
 import 'rxjs/add/operator/toPromise';
 
 import { GlobalVariable } from './../../../global';
-import { FuncaoService } from './../funcao.service';
-import { FuncaoFilter } from './../funcao.filter';
-import { Funcao } from './../../../model/funcao';
-import { GenericFuncaoComponent } from './../../../generics/generic.funcao.component';
+import { CargoService } from './../cargo.service';
+import { CargoFilter } from './../cargo.filter';
+import { Cargo } from './../../../model/cargo';
+import { GenericCargoComponent } from './../../../generics/generic.cargo.component';
 
 @Component( {
-    selector: 'app-funcao-cadastrar',
-    templateUrl: './../funcao-form/funcao-form.html',
-    styleUrls: ['./../funcao-form/funcao-form.css']
+    selector: 'app-cargo-cadastrar',
+    templateUrl: './../cargo-form/cargo-form.html',
+    styleUrls: ['./../cargo-form/cargo-form.css']
 } )
-export class FuncaoCadastrarComponent extends GenericFuncaoComponent implements OnInit {
+export class CargoCadastrarComponent extends GenericCargoComponent implements OnInit {
     private titulo = "Cadastrar";
     private corTitulo = GlobalVariable.COLOR_TITLE;
 //    private formulario: FormGroup;
@@ -24,7 +24,7 @@ export class FuncaoCadastrarComponent extends GenericFuncaoComponent implements 
 //    private colorMsg: string = "green";
 //    private msg: string = '';
 
-    constructor( funcaoService: FuncaoService,
+    constructor( funcaoService: CargoService,
             formBuilder: FormBuilder ) {
         super(funcaoService, formBuilder);
     }

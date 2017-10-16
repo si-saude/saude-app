@@ -1,6 +1,6 @@
 import { GenericFilter } from './../../generics/generic.filter';
 
-export class FuncaoFilter extends GenericFilter {
+export class CargoFilter extends GenericFilter {
     private nome: string;
     
     public getNome() {

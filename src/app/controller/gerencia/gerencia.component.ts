@@ -15,11 +15,11 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './gerencia.component.html',
   styleUrls: ['./gerencia.component.css']
 })
-export class GerenciaComponent  extends GenericListComponent<Gerencia, GerenciaFilter> {
+export class GerenciaComponent  extends GenericListComponent<Gerencia> {
 
-  constructor( gerenciaService: GerenciaService, 
-           formBuilder: FormBuilder) { 
-      super(gerenciaService, formBuilder);
+  constructor( gerenciaService: GerenciaService) {
+      let gerenciaFilter: GerenciaFilter = new GerenciaFilter(); 
+      super(gerenciaService, gerenciaFilter);
   }
     
 }

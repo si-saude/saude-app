@@ -14,7 +14,6 @@ export abstract class GenericService {
     }
     
     submit( formulario: any ) {
-        console.log( "submit" + JSON.stringify( formulario ) );
         let urlSubmit = this.URL;
         return this.http
             .post( urlSubmit, formulario, { headers: this.headers } )
@@ -36,6 +35,7 @@ export abstract class GenericService {
     }
     
     delete( id ) {
+        console.log(typeof(id));
         let urlDelete = this.URL + "/delete";
         return this.http
             .post( urlDelete, id, { headers: this.headers } )

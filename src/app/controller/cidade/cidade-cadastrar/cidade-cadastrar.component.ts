@@ -8,37 +8,35 @@ import { CidadeService } from './../cidade.service';
 import { CidadeFilter } from './../cidade.filter';
 import { Cidade } from './../../../model/cidade';
 import { GenericCidadeComponent } from './../../../generics/generic.cidade.component';
+import { GenericFormComponent } from './../../../generics/generic.form.component';
 
 @Component( {
     selector: 'app-cidade-cadastrar',
     templateUrl: './../cidade-form/cidade-form.html',
     styleUrls: ['./../cidade-form/cidade-form.css']
 } )
-export class CidadeCadastrarComponent extends GenericCidadeComponent implements OnInit {
-    private titulo = "Cadastrar Cidade";
-    private corTitulo = GlobalVariable.COLOR_TITLE;
+export class CidadeCadastrarComponent extends GenericFormComponent<Cidade> implements OnInit {
+    private cidade: Cidade;
 
-    constructor( cidadeService: CidadeService,
-            formBuilder: FormBuilder ) {
-        super(cidadeService, formBuilder);
+    constructor( cidadeService: CidadeService ) {
+        super(cidadeService);
+        
+        this.cidade = new Cidade();
     }
 
     ngOnInit() {
-               
-        let cidade:Cidade = new Cidade();
         
-        cidade.setNome(null);
-        cidade.setUf(null);
-        cidade.setId(0);
-        cidade.setVersion(0);
+        this.cidade.setNome(null);
+        this.cidade.setUf(null);
+        this.cidade.setId(0);
+        this.cidade.setVersion(0);
         
-        this.formulario = this.formBuilder.group(cidade);
     }
     
     isPossibleDeactivate() {
-        if( this.formulario.dirty ) {
-            return false;
-        } else return true;
+//        if( this.formulario.dirty ) {
+//            return false;
+//        } else return true;
     }
 
 }

@@ -29,3 +29,12 @@ footer {
 .div-login {
 	margin-top: 30px;
 }
+
+.input-field.col label {
+    left: 0;
+}
+
+.input-field label {
+    color: #26a69a;
+    position: relative;
+}

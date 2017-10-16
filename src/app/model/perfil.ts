@@ -1,7 +1,7 @@
 import { Permissao } from './permissao';
 
 export class Perfil {
-    private id: number;
+    private id: number = 0;
     private titulo: string;
     private permissoes: Array<Permissao>;
     private version: number;

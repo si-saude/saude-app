@@ -15,11 +15,12 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
-export class PerfilComponent  extends GenericListComponent<Perfil, PerfilFilter>{
+export class PerfilComponent  extends GenericListComponent<Perfil>{
+    
 
-  constructor( perfilService: PerfilService, 
-          formBuilder: FormBuilder) { 
-      super(perfilService, formBuilder);
+  constructor( perfilService: PerfilService) {
+      let perfilFilter: PerfilFilter = new PerfilFilter();
+      super(perfilService, perfilFilter);
   }
     
 }

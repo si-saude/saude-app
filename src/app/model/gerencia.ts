@@ -1,5 +1,5 @@
 export class Gerencia {
-    private id: number;
+    private id: number = 0;
     private codigo: string;
     private codigoCompleto: string;
     private descricao: string;
