@@ -11,6 +11,8 @@ export abstract class IndicadorRisco {
     private indice3: string;
     private indice4: string;
     private indice5: string;
+    private requisito: string;
+    private critico: boolean;
 
     getId(): number {
         return this.id;
@@ -90,5 +92,21 @@ export abstract class IndicadorRisco {
     
     setIndice5(i:string){
         this.indice5 = i;
+    }
+    
+    public getRequisito():string{
+        return this.requisito;
+    }
+    
+    public setRequisito(requisito:string){
+        this.requisito = requisito;
+    }
+    
+    public getCritico():boolean{
+        return this.critico;
+    }
+    
+    public setCritico(critico:boolean){
+        this.critico = critico;
     }
 }

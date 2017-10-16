@@ -10,6 +10,7 @@ import { EnderecoFilter } from './../endereco/endereco.filter';
 export class ProfissionalSaudeFilter extends GenericFilter {
     private nome: string;
     private dataNascimento: DateFilter;
+    private dataAso: DateFilter;
     private matricula: string;
     private chave: string;
     private ramal: string;
@@ -35,6 +36,14 @@ export class ProfissionalSaudeFilter extends GenericFilter {
     
     setDataNascimento(dN: DateFilter) {
         this.dataNascimento = dN;
+    }
+    
+    getDataAso() {
+        return this.dataAso;
+    }
+    
+    setDataAso(dA: DateFilter) {
+        this.dataAso = dA;
     }
     
     getMatricula() {

@@ -1,4 +1,4 @@
-import { GenericFilter } from './../../generics/generic.filter';
+import { BooleanFilter } from './../../generics/boolean.filter';
 
 import { PeriodicidadeFilter } from './../periodicidade/periodicidade.filter';
 
@@ -11,6 +11,8 @@ export class IndicadorRiscoFilter extends GenericFilter {
     private indice4: string;
     private indice5: string;
     private periodicidade: PeriodicidadeFilter;
+    private requisito: string;
+    private critico: BooleanFilter;
 
     public getNome() {
         return this.nome;
@@ -74,5 +76,21 @@ export class IndicadorRiscoFilter extends GenericFilter {
     
     public setPeriodicidade(periodicidade: PeriodicidadeFilter) {
         this.periodicidade = periodicidade;
+    }
+    
+    public getRequisito():string{
+        return this.requisito;
+    }
+    
+    public setRequisito(requisito:string){
+        this.requisito = requisito;
+    }
+    
+    public getCritico():BooleanFilter{
+        return this.critico;
+    }
+    
+    public setCritico(critico:BooleanFilter){
+        this.critico = critico;
     }
 }

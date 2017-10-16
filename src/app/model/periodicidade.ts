@@ -2,6 +2,7 @@ export class Periodicidade {
     private id: number = 0;
     private descricao: string;
     private version: number;
+    private meses: number;
 
     getId() {
         return this.id;
@@ -25,5 +26,13 @@ export class Periodicidade {
 
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    public getMeses():number{
+        return this.meses;
+    }
+    
+    public setMeses(meses:number){
+        this.meses = meses;
     }
 }
