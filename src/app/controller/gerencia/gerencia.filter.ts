@@ -1,9 +1,13 @@
 import { GenericFilter } from './../../generics/generic.filter';
+import { EmpregadoFilter } from './../empregado/empregado.filter';
 
 export class GerenciaFilter extends GenericFilter {
     private codigo: string;
     private codigoCompleto: string;
     private descricao: string;
+    private gerente: EmpregadoFilter;
+    private secretario1: EmpregadoFilter;
+    private secretario2: EmpregadoFilter;
 
     public getCodigo() {
         return this.codigo;
@@ -29,4 +33,27 @@ export class GerenciaFilter extends GenericFilter {
         this.descricao = d;
     }
     
+    public getGerente():EmpregadoFilter{
+        return this.gerente;
+    }
+    
+    public setGerente(g:EmpregadoFilter){
+        this.gerente = g;
+    }
+    
+    public getSecretario1():EmpregadoFilter{
+        return this.secretario1;
+    }
+    
+    public setSecretario1(s:EmpregadoFilter){
+        this.secretario1 = s;
+    }
+    
+    public getSecretario2():EmpregadoFilter{
+        return this.secretario2;
+    }
+    
+    public setSecretario2(s:EmpregadoFilter){
+        this.secretario2 = s;
+    }
 }
