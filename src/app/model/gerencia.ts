@@ -1,9 +1,14 @@
+import { Empregado } from './empregado';
+
 export class Gerencia {
     private id: number = 0;
     private codigo: string;
     private codigoCompleto: string;
     private descricao: string;
     private gerencia: Gerencia;
+    private gerente: Empregado;
+    private secretario1: Empregado;
+    private secretario2: Empregado;
     private version: number;
 
     getId(): number {
@@ -52,5 +57,29 @@ export class Gerencia {
     
     setGerencia(g:Gerencia){
         this.gerencia = g;
+    }
+    
+    getGerente():Empregado{
+        return this.gerente;
+    }
+    
+    setGerente(g:Empregado){
+        this.gerente = g;
+    }
+    
+    getSecretario1():Empregado{
+        return this.secretario1;
+    }
+    
+    setSecretario1(s:Empregado){
+        this.secretario1 = s;
+    }
+    
+    getSecretario2():Empregado{
+        return this.secretario2;
+    }
+    
+    setSecretario2(s:Empregado){
+        this.secretario2 = s;
     }
 }

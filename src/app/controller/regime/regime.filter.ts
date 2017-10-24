@@ -14,5 +14,5 @@ export class RegimeFilter extends GenericFilter {
     public setNome(n: string) {
         this.nome = n;
     }
-       
+
 }
