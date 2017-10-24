@@ -2,118 +2,164 @@
 <meta charset="utf-8">
 </head>
 
+<!-- Preload  
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>-->
+
+<!-- Confirm Save 
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save> -->
+
 <h5 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h5>
 <div class="row">
 
-	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+	<form class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 
 			<div class="input-field col s12">
-				<input id="nome" type="text" required formControlName="nome">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label>
+				<input id="nome" type="text" required 
+					[(ngModel)]="cargo.nome" name="cargo.nome">
 			</div>
 
 		</div>
 
-	<fieldset>
-		<legend>Cursos</legend>
-		<div class="row row-curso">
-	
+		<fieldset>
+			<legend>Cursos</legend>
+			<div class="row row-curso">
+
 				<div class="input-field col s4">
 					<select class="browser-default" #curso>
-						<option disabled selected value>Selecione um curso</option>
+						<option disabled selected value=0>Selecione um curso</option>
 						<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}</option>
-	
+
 					</select>
 				</div>
-	
+
 				<div class="col s2">
 					<a
 						class="btn-floating waves-effect waves-light green btn-remove-permission"
-						(click)="addCurso(curso.value)"> 
-						<i class="material-icons center-icon">add</i>
+						(click)="addCurso(curso.value)"> <i
+						class="material-icons center-icon">add</i>
 					</a>
 				</div>
-				
-			
-		</div>
-		
-		<div class="row">
-			<div class="form-group">
-				<div formArrayName="cursos">
-					
-						<table class="striped">
-							<thead>
-								<tr class="row col s12">
-						        	<th class="col s3">Nome</th>
-						            <th class="col s3">Descrição</th>
-						            <th class="col s3">Validade (anos)</th>
-						            <th class="col s3">Remover</th>
-						        </tr>
-					        </thead>
-			        
-			        <!-- 
-					<div class="row col s12">
-						<p class="col s3">Nome</p>
-						<p class="col s3">Descrição</p>
-						<p class="col s3">Validade</p>
-						<p class="col s3">Remover</p>
-					</div>
-					 -->
-						<div *ngFor="let curso of cursosArray.controls;let i = index"
-							[formGroupName]="i">
+
+
+			</div>
+
+			<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s3">Nome</th>
+								<th class="col s3">Descrição</th>
+								<th class="col s3">Validade (anos)</th>
+								<th class="col s3">Remover</th>
+							</tr>
+						</thead>
+						<div *ngFor="let curso of cargo.cursos;let i = index">
 							<tbody class="col s12">
-						        <tr class="col s12">
-						        	<input type="hidden" formControlName="nome" value="{{curso.value.nome}}">
-						        	<input type="hidden" formControlName="descricao" value="{{curso.value.descricao}}">
-						        	<input type="hidden" formControlName="validade" value="{{curso.value.validade}}">
-						        	<input type="hidden" formControlName="id" value="{{curso.value.id}}">
-							        <td class="col s3">{{curso.value.nome}}</td>
-							        <td class="col s3">{{curso.value.descricao}}</td>
-							        <td class="col s3">{{curso.value.validade}}</td>
-							        <td class="col s3">
-										<a class="btn-floating waves-effect waves-light red btn-remove"
-											(click)="removeCurso(i)"> 
-											<i class="material-icons center-icon">delete</i>
-										</a>
-									</td> 
-						        </tr>
-					        </tbody>
-							
-							<!-- 
-							<div class="row col s12">
-								<div class="col s3">{{curso.value.curso.nome}}</div>
-								<div class="col s3">{{curso.value.curso.descricao}}</div>
-								<div class="col s3">{{curso.value.curso.validade}}</div>
-								<div class="col s3">
-									<a class="btn-floating waves-effect waves-light red btn-remove-permission"
-									(click)="removeCurso(i)"> 
-										<i class="material-icons center-icon">delete</i>
-									</a>
-								</div>
-							</div>
-							 -->
+								<tr class="col s12">
+									<input type="hidden" [(ngModel)]="curso.nome"
+										value="{{curso.nome}}" name="curso[{{i}}].nome">
+									<input type="hidden" [(ngModel)]="curso.descricao"
+										value="{{curso.descricao}}" name="curso[{{i}}].descricao">
+									<input type="hidden" [(ngModel)]="curso.validade"
+										value="{{curso.validade}}" name="curso[{{i}}].validade">
+									<input type="hidden" [(ngModel)]="curso.id"
+										value="{{curso.id}}" name="curso[{{i}}].id">
+									<td class="col s3">{{curso.nome}}</td>
+									<td class="col s3">{{curso.descricao}}</td>
+									<td class="col s3">{{curso.validade}}</td>
+									<td class="col s3"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeCurso(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
 						</div>
-					
+
 					</table>
-				
+
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<legend>Vacinas</legend>
+			<div class="row row-curso">
+
+				<div class="input-field col s4">
+					<select class="browser-default" #vacina>
+						<option disabled selected value=0>Selecione uma vacina</option>
+						<option *ngFor="let vacina of vacinas" value="{{vacina.id}}">{{vacina.descricao}}</option>
+
+					</select>
 				</div>
+
+				<div class="col s2">
+					<a
+						class="btn-floating waves-effect waves-light green btn-remove-permission"
+						(click)="addVacina(vacina.value)"> <i
+						class="material-icons center-icon">add</i>
+					</a>
+				</div>
+
+
+			</div>
+
+			<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s3">Descrição</th>
+								<th class="col s3">Doses</th>
+								<th class="col s3">Reforço</th>
+								<th class="col s3">Remover</th>
+							</tr>
+						</thead>
+
+						<div *ngFor="let vacina of cargo.vacinas;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<input type="hidden" [(ngModel)]="vacina.descricao"
+										value="{{vacina.descricao}}" name="vacina[{{i}}].descricao">
+									<input type="hidden" [(ngModel)]="vacina.doses"
+										value="{{vacina.doses}}" name="vacina[{{i}}].doses">
+									<input type="hidden" [(ngModel)]="vacina.reforco"
+										value="{{vacina.reforco}}" name="vacina[{{i}}].reforco">
+									<input type="hidden" [(ngModel)]="vacina.id"
+										value="{{vacina.id}}" name="vacina[{{i}}].id">
+									<td class="col s3">{{vacina.descricao}}</td>
+									<td class="col s3">{{vacina.doses}}</td>
+									<td class="col s3">{{vacina.reforco}}</td>
+									<td class="col s3"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeVacina(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+
+						</div>
+
+					</table>
+
+			</div>
+		</fieldset>
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/cargo']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
 			</div>
 		</div>
-</fieldset>
-
-
-<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
-
-<div class='row row-btns'>
-	<div class="col s6">
-		<button type="submit" class="btn btn-primary" [disabled]="!isValid()">Salvar</button>
-	</div>
-	<div class="col s6">
-		<a [routerLink]="['/cargo']"
-			class="btn btn-primary btn-listar-perfis">Listar</a>
-	</div>
-</div>
-</form>
+	</form>
 </div>

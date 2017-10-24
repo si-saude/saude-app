@@ -1,7 +1,7 @@
 import { DateFilter } from './../generics/date.filter';
 import { LocalizacaoFilter } from './../controller/localizacao/localizacao.filter';
 import { EquipeFilter } from './../controller/equipe/equipe.filter';
-import { GerenciaFilter } from './../controller/gerencia/gerencia.filter';
+import { GerenciaFilter } from '../controller/gerencia/gerencia.filter';
 import { Endereco } from './endereco';
 import { Telefone } from './telefone';
 import { Cargo } from './cargo';
@@ -10,7 +10,6 @@ import { Equipe } from './equipe';
 import { ProfissionalConselho } from './profissional-conselho';
 import { ProfissionalVacina } from './profissional-vacina';
 import { Curriculo } from './curriculo';
-
 
 export class ProfissionalSaude {
     private id: number;
@@ -159,5 +158,4 @@ export class ProfissionalSaude {
         this.endereco = endereco;
     }
     
-
 }

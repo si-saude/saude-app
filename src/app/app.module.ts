@@ -25,6 +25,24 @@ import { CargoModule } from './controller/cargo/cargo.module';
 import { CursoModule } from './controller/curso/curso.module';
 import { CidadeModule } from './controller/cidade/cidade.module';
 import { VacinaModule } from './controller/vacina/vacina.module';
+import { GheModule } from './controller/ghe/ghe.module';
+import { PeriodicidadeModule } from './controller/periodicidade/periodicidade.module';
+import { IndicadorRiscoAcidenteModule } from './controller/indicador-risco-acidente/indicador-risco-acidente.module';
+import { IndicadorRiscoAmbientalModule } from './controller/indicador-risco-ambiental/indicador-risco-ambiental.module';
+import { IndicadorRiscoErgonomicoModule } from './controller/indicador-risco-ergonomico/indicador-risco-ergonomico.module';
+import { IndicadorRiscoSanitarioModule } from './controller/indicador-risco-sanitario/indicador-risco-sanitario.module';
+import { IndicadorRiscoSaudeAmbientalModule } from './controller/indicador-risco-saude-ambiental/indicador-risco-saude-ambiental.module';
+import { InstalacaoModule } from './controller/instalacao/instalacao.module';
+import { FuncaoModule } from './controller/funcao/funcao.module';
+import { RegimeModule } from './controller/regime/regime.module';
+import { BaseModule } from './controller/base/base.module';
+import { GheeModule } from './controller/ghee/ghee.module';
+import { EmpregadoModule } from './controller/empregado/empregado.module';
+import { TipoGrupoMonitoramentoModule } from './controller/tipo-grupo-monitoramento/tipo-grupo-monitoramento.module';
+import { CriterioModule } from './controller/criterio/criterio.module';
+import { ExameModule } from './controller/exame/exame.module';
+import { GrupoMonitoramentoModule } from './controller/grupo-monitoramento/grupo-monitoramento.module';
+import { ProfissiogramaModule } from './controller/profissiograma/profissiograma.module';
 import { MenuComponent } from './includes/menu/menu.component';
 
 @NgModule({
@@ -52,6 +70,24 @@ import { MenuComponent } from './includes/menu/menu.component';
     CursoModule,
     CidadeModule,
     VacinaModule,
+    GheModule,
+    PeriodicidadeModule,
+    IndicadorRiscoAcidenteModule,
+    IndicadorRiscoAmbientalModule,
+    IndicadorRiscoErgonomicoModule,
+    IndicadorRiscoSanitarioModule,
+    IndicadorRiscoSaudeAmbientalModule,
+    InstalacaoModule,
+    FuncaoModule,
+    RegimeModule,
+    BaseModule,
+    GheeModule,
+    EmpregadoModule,
+    TipoGrupoMonitoramentoModule,
+    CriterioModule,
+    ExameModule,
+    GrupoMonitoramentoModule,
+    ProfissiogramaModule,
     AppRoutingModule
   ],
   providers: [ 

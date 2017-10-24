@@ -8,12 +8,10 @@
 [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
 </app-mensagem-form>
 
-<div class="collection">
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
-	<!-- Preload  --> 
-	<div class="center-align preload" *ngIf="showPreload">
-		<app-preload [msg]="msgPreload"></app-preload>
-	</div>
+<div class="collection">
  
 	<div *ngFor="let localizacao of localizacoes">
 		<div class="row row-collection">

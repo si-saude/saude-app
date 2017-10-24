@@ -1,0 +1,87 @@
+<head>
+<meta charset="utf-8">
+</head>
+<div class="center-align">
+	<h5 [ngClass]="corTitulo">Ghee</h5>
+</div>
+
+<!-- Preload  
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>-->
+
+<!-- Confirm Save 
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save> -->
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s12">
+				<label for="nome" data-error="Campo obrigatório.">Nome</label>
+				<input id="nome" type="text" required
+				[(ngModel)]="ghee.nome" name="ghee.nome">
+			</div>
+		
+		</div>
+		<div class="row">
+		
+			<div class="input-field col s8">
+				<label for="codigo">Código</label>
+				<input id="codigo" type="text"
+				[(ngModel)]="ghee.codigo" name="ghee.codigo">
+			</div>
+			
+			<div class="input-field col s4">
+				<label for="duracaoJornada">Duração da Jornada</label>
+				<input id="duracaoJornada" type="number"
+				[(ngModel)]="ghee.duracaoJornada" name="ghee.duracaoJornada">
+			</div>
+			
+		</div>
+			
+		<div class="row">
+		
+			<div class="input-field col s6">
+				<label for="dataCriacao">Data de Criação</label>
+				<my-date-picker name="dataCriacao"
+					[options]="myDatePickerOptions"
+					[(ngModel)]="dataCriacao"
+					placeholder="Data de Criação">
+				</my-date-picker>
+			</div>
+			
+			<div class="input-field col s6">
+				<label for="dataDesativacao">Data de Desativação</label>
+				<my-date-picker name="dataDesativacao"
+					[options]="myDatePickerOptions"
+					[(ngModel)]="dataDesativacao"
+					placeholder="Data de Desativação">
+				</my-date-picker>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="descricao" maxlength="1024">Descrição</label>
+					<textarea id="descricao" class="materialize-textarea"
+						[(ngModel)]="ghee.descricao" name="ghee.descricao"></textarea>
+				</div>
+			</div>
+			
+		</div>
+		
+		<input id="id" name="id" type="hidden" [(ngModel)]="ghee.id">
+		<input id="version" name="version" type="hidden" [(ngModel)]="ghee.version">
+
+		<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/ghee']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

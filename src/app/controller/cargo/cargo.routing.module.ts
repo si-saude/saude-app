@@ -5,11 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { CargoComponent } from './cargo.component';
 import { CargoCadastrarComponent } from './cargo-cadastrar/cargo-cadastrar.component';
 import { CargoEditarComponent } from './cargo-editar/cargo-editar.component';
+import { CargoFormComponent } from './cargo-form/cargo-form.component';
     
 const cargoRoutes: Routes = [
     { path: 'cargo', component: CargoComponent },
-    { path: 'cargo/cadastrar', component: CargoCadastrarComponent },
-    { path: 'cargo/editar/:id', component: CargoEditarComponent }
+    { path: 'cargo/cadastrar', component: CargoFormComponent },
+    { path: 'cargo/editar/:id', component: CargoFormComponent }
 ];
 
 @NgModule({

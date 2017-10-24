@@ -1,7 +1,6 @@
 import { GenericFilter } from './../../generics/generic.filter';
 
 export class CriterioFilter extends GenericFilter {
-    
     private nome: string;
     private tipo: string;
 

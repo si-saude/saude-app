@@ -15,7 +15,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './cargo.component.html',
   styleUrls: ['./cargo.component.css']
 })
-export class CargoComponent  extends GenericListComponent<Cargo> {
+export class CargoComponent extends GenericListComponent<Cargo, CargoFilter> {
 
     constructor(service: CargoService) {
       let cargoFilter: CargoFilter = new CargoFilter();

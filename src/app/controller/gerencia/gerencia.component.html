@@ -8,12 +8,10 @@
  [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
 </app-mensagem-form>
  
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+ 
 <div class="collection">
-
-	<!-- Preload  --> 
-	<div class="center-align preload" *ngIf="showPreload">
-		<app-preload [msg]="msgPreload"></app-preload>
-	</div>
 
 	<div *ngFor="let gerencia of gerencias">
 		<div class="row row-collection">

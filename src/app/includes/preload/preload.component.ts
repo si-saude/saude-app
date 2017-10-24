@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { EventEmitter, SimpleChanges, Component, Input, OnInit } from '@angular/core';
+
+import { MaterializeAction } from "angular2-materialize";
 
 @Component({
   selector: 'app-preload',
@@ -6,12 +8,29 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./preload.component.css']
 })
 export class PreloadComponent implements OnInit {
-    
   @Input() msg: string;
-
-  constructor() { }
-
-  ngOnInit() {
+  @Input() show: boolean;
+  modalPreload;
+  modelParams;
+  
+  constructor() {
+      this.modalPreload = new EventEmitter<string|MaterializeAction>();
+      this.modelParams = [{
+          dismissible: false,
+          complete: function() { }
+      }];
   }
 
+  ngOnInit() {}
+  
+  ngOnChanges(changes: SimpleChanges) {
+      if (changes["show"].currentValue === true)
+          setTimeout(() => this.modalPreload.emit({action: "modal", params: ["open"]}), 1);
+      else setTimeout(() => this.modalPreload.emit({action: "modal", params: ["close"]}), 1);
+  }
+  
+  onDestroy() {
+      this.modalPreload.emit({action: "modal", params: ["close"]});
+  }
+  
 }

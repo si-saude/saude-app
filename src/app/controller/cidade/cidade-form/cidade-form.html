@@ -27,9 +27,12 @@
 
 		<input id="id" name="id" type="hidden" [(ngModel)]="cidade.id" formControlName="id"> 
 		<input id="version" name="version" type="hidden" [(ngModel)]="cidade.version" formControlName="version">
+		
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
 
-		<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
-
+		
 		<div class='row row-btns'>
 			<div class="col s6">
 				<button type="submit" class="btn btn-primary"

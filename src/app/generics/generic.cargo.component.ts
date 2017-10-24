@@ -43,7 +43,7 @@ export abstract class GenericCargoComponent {
         this.cursosArray = this.formulario.get('cursos') as FormArray;
         this.cursosArray.removeAt(0);
         
-        this.cargoService.getCursos( this.cursoFilter )
+//        this.cargoService.getCursos( this.cursoFilter )
 //            .then(res => {
 //                this.cursos = res.json();
 //            })
@@ -94,7 +94,7 @@ export abstract class GenericCargoComponent {
         if ( evento != undefined ) {
             if ( evento.length > 3 ) {
                 
-                this.cargoService.getCursos( this.cursoFilter )
+//                this.cargoService.getCursos( this.cursoFilter )
 //                    .then(res => {
 //                        console.log(JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]'));
 ////                        this.cursos = JSON.parse('[{"data":' + JSON.stringify(res.json()) + '}]');

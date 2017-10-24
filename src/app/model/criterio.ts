@@ -1,7 +1,7 @@
 export class Criterio {
     private id: number = 0;
     private nome: string;
-    private tipo: string;
+    private tipo: string = "";
     private version: number;
 
     getId(): number {

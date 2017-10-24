@@ -1,0 +1,54 @@
+<head>
+<meta charset="utf-8">
+</head>
+<div class="center-align">
+	<h5 [ngClass]="corTitulo">Tipo Grupo Monitoramento</h5>
+</div>
+
+<!-- Preload  
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>-->
+
+<!-- Confirm Save
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  -->
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s12">
+				<label for="nome">Nome</label>
+				<input id="nome" type="text" 
+				name="nome" [(ngModel)]="tipoGrupoMonitoramento.nome">
+			</div>
+		
+		</div>
+		
+		<div class="row">
+
+			<div class="input-field col s12">
+				<label for="descricao">Descricao</label>
+				<textarea class="materialize-textarea" id="descricao" 
+					[(ngModel)]="tipoGrupoMonitoramento.descricao" name="tipoGrupoMonitoramento.descricao"></textarea>
+			</div>
+		
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="tipoGrupoMonitoramento.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="tipoGrupoMonitoramento.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/tipo-grupo-monitoramento']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,50 @@
+<head>
+<meta charset="utf-8">
+</head>
+<div class="center-align">
+	<h5 [ngClass]="corTitulo">Periodicidade</h5>
+</div>
+
+<!-- Preload 
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload> -->
+
+<!-- Confirm Save
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  -->
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s8">
+				<label for="nome">Descrição</label>
+				<input id="nome" type="text" name="periodicidade.descricao"
+				[(ngModel)]="periodicidade.descricao">
+			</div>
+		
+			<div class="input-field col s4">
+				<label for="meses">Meses</label>
+				<input id="uf" type="text" name="periodicidade.meses"
+				[(ngModel)]="periodicidade.meses">
+			</div>
+	
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="periodicidade.id">
+		<input id="version" name="version" type="hidden" [(ngModel)]="periodicidade.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/periodicidade']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

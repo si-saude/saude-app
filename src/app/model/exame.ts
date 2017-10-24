@@ -1,6 +1,6 @@
 
 export class Exame{
-    private id: number;
+    private id: number = 0;
     private version: number;
     private codigo: string;
     private descricao: string;

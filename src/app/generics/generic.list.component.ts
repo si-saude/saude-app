@@ -1,16 +1,16 @@
 import { EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 
-import { MaterializeDirective, MaterializeAction } from "angular2-materialize";
+import { MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../global';
 import { GenericFilter } from './generic.filter';
+import { GenericComponent } from './generic.component';
 import { GenericService } from './generic.service';
+import { TypeFilter } from './type.filter';
 
-export abstract class GenericListComponent<T> implements OnInit {
+export abstract class GenericListComponent<T, F extends GenericFilter> extends GenericComponent implements OnInit {
     protected titulo:string;
     protected corTitulo;
-    protected formulario: FormGroup;
     protected array: Array<T>;
     protected paginas: number[];
     protected paginasAtuais: Array<number>;
@@ -19,28 +19,28 @@ export abstract class GenericListComponent<T> implements OnInit {
     protected verifyEmptyPaginas: boolean;
     protected msgEmptyPaginas: string;
     protected colorEmptyPaginas: string;
-    protected showPreload: boolean;
-    protected msgPreload: string;
     protected modalActions;
     protected modalDelete;
     protected modelParams;
-    private flagDelete;
+    protected typeFilter;
+    private tempDelete;
     
-    constructor(protected service: GenericService, protected filter: GenericFilter) {
+    constructor(protected service: GenericService, protected filter: F) {
+        super();
         this.corTitulo = GlobalVariable.COLOR_TITLE;
         this.msgError = '';
         this.verifyError = false;
         this.verifyEmptyPaginas = false;
         this.msgEmptyPaginas = "Nenhum registro encontrado.";
         this.colorEmptyPaginas = "orange";
-        this.showPreload = true;
-        this.msgPreload = "Aguarde processamento...";
+        this.typeFilter = TypeFilter;
         this.modalActions = new EventEmitter<string|MaterializeAction>();
         this.modalDelete = new EventEmitter<string|MaterializeAction>();
         this.modelParams = [{
             dismissible: false,
             complete: function() { }
         }];
+        
     }
     
     ngOnInit() {
@@ -61,6 +61,11 @@ export abstract class GenericListComponent<T> implements OnInit {
                 this.verifyError = true;
                 this.msgError = error.text();
             })
+    }
+    
+    typeFilters(): Array<string> {
+        var keys = Object.keys(this.typeFilter);
+        return keys.slice(keys.length / 2);
     }
     
     getPaginas(total: number) {
@@ -88,6 +93,7 @@ export abstract class GenericListComponent<T> implements OnInit {
                 this.paginator();
              })
              .catch(error => {
+                 this.showPreload = false;
                  console.log(error);
              });
     }
@@ -129,21 +135,26 @@ export abstract class GenericListComponent<T> implements OnInit {
     setFilter() {
         this.showPreload = true;
         this.service.list(this.filter)
-        .then(res => {
-            this.array = JSON.parse(JSON.stringify(res.json())).list;
-            this.paginas = this.getPaginas(res.json().total);
-            if (res.json().total === 0) {
-                this.verifyEmptyPaginas = true;
-            } else {
-                this.verifyEmptyPaginas = false;
-            }
-            this.showPreload = false;
-         });
+            .then(res => {
+                this.showPreload = false;
+                this.array = JSON.parse(JSON.stringify(res.json())).list;
+                this.paginas = this.getPaginas(res.json().total);
+                this.paginator();
+                if (res.json().total === 0) {
+                    this.verifyEmptyPaginas = true;
+                } else {
+                    this.verifyEmptyPaginas = false;
+                }
+             })
+             .catch(error => {
+                 this.showPreload = false;
+                 console.log(error);
+             })
     }
     
     delete(id) {
         this.modalDelete.emit({action:"modal",params:['open']});
-        this.flagDelete = id; 
+        this.tempDelete = id; 
     }
 
     closeModalDelete() {
@@ -160,7 +171,7 @@ export abstract class GenericListComponent<T> implements OnInit {
     
     confirmDelete() {
         this.showPreload = true;
-        this.service.delete(this.flagDelete)
+        this.service.delete(this.tempDelete)
             .then(res => {
                 this.showPreload = false;
                 window.location.reload();
@@ -169,5 +180,28 @@ export abstract class GenericListComponent<T> implements OnInit {
                 this.showPreload = false;
                 console.log(error.text());
             })
+    }
+    
+    parseDataToObjectDatePicker(data) {
+        if ( data === undefined || data === null ) {
+            return undefined;
+        }
+        let s = data.split("T");
+        let datas = s[0].split("-");
+        if ( datas[2].substring(0,1) === "0" ) {
+            datas[2] = datas[2].replace("0", "");
+        }
+        let o = Object.create({date: { year: datas[0], month: datas[1], day: datas[2] }});
+        return o;   
+    }
+        
+    parseDatePickerToDate(data) {
+        if (data === undefined || data === null) {
+            return null;
+        } else if (data instanceof Date) {
+            return data;
+        }   
+        let d: Date = new Date(data.date.year, data.date.month - 1, data.date.day);
+        return d;
     }
 }

@@ -1,0 +1,138 @@
+<head>
+<meta charset="utf-8">
+</head>
+<div class="center-align">
+	<h5 [ngClass]="corTitulo">Indicador de Risco Ergonomico</h5>
+</div>
+
+<!-- Preload  
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>-->
+
+<!-- Confirm Save 
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save> -->
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s10">
+				<label for="nome">Nome</label>
+				<input id="nome" type="text" 
+				[(ngModel)]="indicadorRiscoErgonomico.nome" name="indicadorRiscoErgonomico.nome">
+			</div>
+			
+			<div class="input-field col s2">
+				<input type="checkbox" id="critico" 
+					[(ngModel)]="indicadorRiscoErgonomico.critico" name="indicadorRiscoErgonomico.critico">
+                <label for="critico">Crítico</label>
+			</div>
+	
+		</div>
+		
+		<div class="row">
+			
+			<div class="input-field col s6">
+				<fieldset>
+					<legend>Periodicidade</legend>
+					<select name="indicadorRiscoErgonomico.periodicidade" class="browser-default"
+						[(ngModel)]="indicadorRiscoErgonomico.periodicidade.id">
+						<option disabled selected value=0>Selecione uma periodicidade</option>
+						<option *ngFor="let periodicidade of periodicidades"
+							value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
+					</select>
+				</fieldset>
+			</div>
+			
+			<div class="input-field col s6">
+				<fieldset>
+					<legend>Requisito</legend>
+					<select name="indicadorRiscoErgonomico.requisito" class="browser-default"
+						[(ngModel)]="indicadorRiscoErgonomico.requisito">
+						<option disabled selected value="">Selecione um requisito</option>
+						<option *ngFor="let requisito of requisitos"
+							value="{{requisito}}">{{requisito}}</option>
+					</select>
+				</fieldset>
+			</div>
+			
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice0">Indice 0</label>
+				<textarea class="materialize-textarea" id="indice0" 
+					[(ngModel)]="indicadorRiscoErgonomico.indice0" name="indicadorRiscoErgonomico.indice0"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice1">Indice 1</label>
+				<textarea class="materialize-textarea" id="indice1" 
+					[(ngModel)]="indicadorRiscoErgonomico.indice1" name="indicadorRiscoErgonomico.indice1"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice2">Indice 2</label>
+				<textarea class="materialize-textarea" id="indice2" 
+					[(ngModel)]="indicadorRiscoErgonomico.indice2" name="indicadorRiscoErgonomico.indice2"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice3">Indice 3</label>
+				<textarea class="materialize-textarea" id="indice3" 
+					[(ngModel)]="indicadorRiscoErgonomico.indice3" name="indicadorRiscoErgonomico.indice3"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice4">Indice 4</label>
+				<textarea class="materialize-textarea" id="indice4" 
+					[(ngModel)]="indicadorRiscoErgonomico.indice4" name="indicadorRiscoErgonomico.indice4"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice5">Indice 5</label>
+				<textarea class="materialize-textarea" id="indice5" 
+					[(ngModel)]="indicadorRiscoErgonomico.indice5" name="indicadorRiscoErgonomico.indice5"></textarea>
+			</div>
+
+		</div>
+		
+		<input id="id" name="id" type="hidden" [(ngModel)]="indicadorRiscoErgonomico.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="indicadorRiscoErgonomico.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/indicador-risco-ergonomico']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

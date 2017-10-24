@@ -1,11 +1,11 @@
 import { IndicadorRiscoAcidente } from './indicador-risco-acidente';
 import { Instalacao } from './instalacao';
 
-export class IndicadorRiscoAcidenteInstalacao{
+export class IndicadorRiscoAcidenteInstalacao {
     private id: number;
     private version: number;
     private instalacao: Instalacao;
-    private indicadorRiscoAcidente: IndicadorRiscoAcidente;
+    private indicadorRisco: IndicadorRiscoAcidente;
     private dataInspecao: Date;
     private avaliacao: number;
     
@@ -33,12 +33,12 @@ export class IndicadorRiscoAcidenteInstalacao{
         this.instalacao = instalacao;
     }
     
-    getIndicadorRiscoAcidente():IndicadorRiscoAcidente{
-        return this.indicadorRiscoAcidente;
+    getIndicadorRisco():IndicadorRiscoAcidente{
+        return this.indicadorRisco;
     }
     
-    setIndicadorRiscoAcidente(indicador:IndicadorRiscoAcidente){
-        this.indicadorRiscoAcidente = indicador;
+    setIndicadorRisco(indicador:IndicadorRiscoAcidente){
+        this.indicadorRisco = indicador;
     }
     
     getDataInspecao():Date{

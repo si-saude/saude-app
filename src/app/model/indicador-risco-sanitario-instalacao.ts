@@ -5,7 +5,7 @@ export class IndicadorRiscoSanitarioInstalacao{
     private id: number;
     private version: number;
     private instalacao: Instalacao;
-    private indicadorRiscoSanitario: IndicadorRiscoSanitario;
+    private indicadorRisco: IndicadorRiscoSanitario;
     private dataInspecao: Date;
     private avaliacao: number;
     
@@ -33,12 +33,12 @@ export class IndicadorRiscoSanitarioInstalacao{
         this.instalacao = instalacao;
     }
     
-    getIndicadorRiscoSanitario():IndicadorRiscoSanitario{
-        return this.indicadorRiscoSanitario;
+    getIndicadorRisco():IndicadorRiscoSanitario{
+        return this.indicadorRisco;
     }
     
-    setIndicadorRiscoSanitario(indicador:IndicadorRiscoSanitario){
-        this.indicadorRiscoSanitario = indicador;
+    setIndicadorRisco(indicador:IndicadorRiscoSanitario){
+        this.indicadorRisco = indicador;
     }
     
     getDataInspecao():Date{

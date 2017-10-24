@@ -15,7 +15,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './localizacao.component.html',
   styleUrls: ['./localizacao.component.css']
 })
-export class LocalizacaoComponent extends GenericListComponent<Localizacao> {
+export class LocalizacaoComponent extends GenericListComponent<Localizacao, LocalizacaoFilter> {
 
   constructor(localizacaoService: LocalizacaoService) {
       let localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter(); 

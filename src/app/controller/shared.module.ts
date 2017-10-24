@@ -7,11 +7,13 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
 import { PreloadComponent } from './../includes/preload/preload.component';
+import { ConfirmSaveComponent } from './../includes/confirm-save/confirm-save.component';
 
 @NgModule({
   declarations: [
     MensagemFormComponent,
-    PreloadComponent
+    PreloadComponent,
+    ConfirmSaveComponent
   ],
   imports: [ 
     CommonModule,
@@ -27,7 +29,8 @@ import { PreloadComponent } from './../includes/preload/preload.component';
     MaterializeModule,
     ReactiveFormsModule,
     MensagemFormComponent,
-    PreloadComponent
+    PreloadComponent,
+    ConfirmSaveComponent
   ]
 })
 export class SharedModule { }

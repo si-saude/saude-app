@@ -1,6 +1,6 @@
 import { GenericFilter } from './../../generics/generic.filter';
 
-export class Instalacao extends GenericFilter {
+export class InstalacaoFilter extends GenericFilter {
     private nome: string;
 
     public getNome() {

@@ -5,22 +5,33 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { GenericService } from './../../generics/generic.service';
-import { CursoFilter } from './../curso/curso.filter';
-import { CargoFilter } from './../cargo/cargo.filter';
+import { CargoFilter } from './cargo.filter';
+import { CursoService } from './../curso/curso.service';
+import { VacinaService } from './../vacina/vacina.service';
 
 @Injectable()
 export class CargoService extends GenericService{
 
-    constructor( http: Http, router: Router ) { 
+    constructor( http: Http, router: Router,
+            private cursoService: CursoService,
+            private vacinaService: VacinaService) { 
         super(http, router, "cargo");
     }
 
     getCursoById(valor){
-        //implementar
+        return this.cursoService.get(valor);
     }
     
-    getCursos(cursoFilter: CursoFilter){
-        //implementar
+    getCursos(){
+        return this.cursoService.getCursos();
+    }
+    
+    getVacinaById(valor){
+        return this.vacinaService.get(valor);
+    }
+    
+    getVacinas(){
+        return this.vacinaService.getVacinas();
     }
     
     getCargos() {

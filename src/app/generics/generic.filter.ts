@@ -1,11 +1,11 @@
 export abstract class GenericFilter {
-    private id: number;
+    protected id: number;
     private pageNumber: number;
     private pageSize: number;
 
     constructor() {
         this.pageNumber = 1;
-        this.pageSize = 1;
+        this.pageSize = 5;
         this.id = 0;
     }
     

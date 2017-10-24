@@ -8,11 +8,6 @@ import { GlobalVariable } from './../../../global';
 import { Profissional } from './../../../model/profissional';
 import { ProfissionalSaudeService } from './../profissional-saude.service';
 import { ProfissionalSaudeFilter } from './../profissional-saude.filter';
-import { CargoFilter } from './../../cargo/cargo.filter';
-import { EquipeFilter } from './../../equipe/equipe.filter';
-import { CursoFilter } from './../../curso/curso.filter';
-import { CidadeFilter } from './../../cidade/cidade.filter';
-import { VacinaFilter } from './../../vacina/vacina.filter';
 import { Localizacao } from './../../../model/localizacao';
 import { Equipe } from './../../../model/equipe';
 import { Cargo } from './../../../model/cargo';
@@ -54,6 +49,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profiss
     constructor( private route: ActivatedRoute,
         private profissionalSaudeService: ProfissionalSaudeService) { 
         super(profissionalSaudeService);
+        this.goTo = "profissional-saude";
         
         this.profissionalSaude = new ProfissionalSaudeBuilder().initialize(this.profissionalSaude);
     }
@@ -64,13 +60,16 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profiss
             ( params: any ) => {
                 if( params['id'] !== undefined ) {
                     let id = params['id'];
-
+                    this.showPreload = true;
+                    
                     this.profissionalSaudeService.get( id )
                         .then( res => {
+                            this.showPreload = false;
                             this.profissionalSaude = new ProfissionalSaudeBuilder().clone(res.json());
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
+                            this.showPreload = false;
                             console.log( error );
                         } )
                 }

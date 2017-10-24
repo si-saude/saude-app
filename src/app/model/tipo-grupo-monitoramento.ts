@@ -1,4 +1,3 @@
-
 export class TipoGrupoMonitoramento {
     private id: number = 0;
     private nome: string;

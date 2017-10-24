@@ -1,6 +1,6 @@
 export class Ghe {
  
-    private id: number;
+    private id: number = 0;
     private version: number;
     private nome: string;
     private codigo: string;
@@ -56,7 +56,7 @@ export class Ghe {
     }
     
     setDataDesativacao(dD:Date){
-        this.dataDesativacao = dC;
+        this.dataDesativacao = dD;
     }
     
     getDescricao():string{

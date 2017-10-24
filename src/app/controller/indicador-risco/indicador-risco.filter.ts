@@ -1,6 +1,6 @@
 import { BooleanFilter } from './../../generics/boolean.filter';
-
 import { PeriodicidadeFilter } from './../periodicidade/periodicidade.filter';
+import { GenericFilter } from './../../generics/generic.filter';
 
 export class IndicadorRiscoFilter extends GenericFilter {
     private nome: string;

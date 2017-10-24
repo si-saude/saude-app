@@ -1,7 +1,31 @@
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modelParams" [materializeActions]="modalPreload">
+
+	<div class="center-align preload">
+		<div class="preloader-wrapper big active">
+			<div class="spinner-layer spinner-blue-only">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+		<p>{{msg}}</p>
+	</div>
+
+</div>
+
+<!-- 
 <div class="preloader-wrapper big active">
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">
@@ -14,3 +38,4 @@
     </div>
 </div>
 <p>{{msg}}</p>
+ -->

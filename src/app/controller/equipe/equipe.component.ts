@@ -15,7 +15,7 @@ import { Equipe } from './../../model/equipe';
     templateUrl: './equipe.component.html',
     styleUrls: ['./equipe.component.css']
 } )
-export class EquipeComponent extends GenericListComponent<Equipe>  {
+export class EquipeComponent extends GenericListComponent<Equipe, EquipeFilter>  {
 
     constructor( equipeService: EquipeService) {
         let equipeFilter: EquipeFilter = new EquipeFilter(); 

@@ -9,7 +9,7 @@ import { EnderecoFilter } from './../endereco/endereco.filter';
 
 export class ProfissionalSaudeFilter extends GenericFilter {
     private nome: string;
-    private dataNascimento: DateFilter;
+    private dataNascimento: DateFilter = new DateFilter();
     private dataAso: DateFilter;
     private matricula: string;
     private chave: string;

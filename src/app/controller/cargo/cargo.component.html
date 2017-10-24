@@ -2,7 +2,7 @@
   <meta charset="utf-8">
 </head>
 
-<h4 [ngStyle]="{'color': corTitulo}" class="center-align titulo">Funções</h4>
+<h4 [ngStyle]="{'color': corTitulo}" class="center-align titulo">Cargo</h4>
 <!-- --> 
 <app-mensagem-form  *ngIf="verifyEmptyPaginas" 
  [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
@@ -15,16 +15,16 @@
 		<app-preload [msg]="msgPreload"></app-preload>
 	</div>
 
-	<div *ngFor="let cargo of cargos">
+	<div *ngFor="let a of array">
 		<div class="row row-collection">
 			<div class="col s10">
-				<a [routerLinkActive]="['active']" class="collection-item">{{cargo.nome}}</a>
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
 			</div>
 			<div class="col s1">
-				<a [routerLink]="['/cargo/editar', cargo.id]"><i class="material-icons">mode_edit</i></a>
+				<a [routerLink]="['/cargo/editar', a.id]"><i class="material-icons">mode_edit</i></a>
 		 	</div>
 		 	<div class="col s1">
-				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(cargo.id)"><i class="material-icons">delete</i></a>
+				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i class="material-icons">delete</i></a>
 		 	</div>
 		</div>
 	</div>
@@ -38,17 +38,17 @@
 	<i class="material-icons arrow-pagination">first_page</i>
 	</a></li>
 	<li><a [ngStyle]="{'cursor': 'pointer'}" 
-	(click)="goToPage(cargoFilter.getPageNumber()-1)">
+	(click)="goToPage(filter.getPageNumber()-1)">
 	<i class="material-icons arrow-pagination">chevron_left</i>
 	</a></li>
 	
-	<li [ngClass]="activePage(i+1)" class="waves-effect" 
-	*ngFor="let pagina of paginas; let i = index">
-	<a (click)="goToPage(i+1)">{{i+1}}
+	<li [ngClass]="activePage(paginaAtual)" class="waves-effect" 
+	*ngFor="let paginaAtual of paginasAtuais; let i = index">
+	<a (click)="goToPage(paginaAtual)">{{paginaAtual}}
 	</a></li>
 	
 	<li><a [ngStyle]="{'cursor': 'pointer'}" 
-	(click)="goToPage(cargoFilter.getPageNumber()+1)">
+	(click)="goToPage(filter.getPageNumber()+1)">
 	<i class="material-icons arrow-pagination">chevron_right</i>
 	</a></li>
 	<li><a [ngStyle]="{'cursor': 'pointer'}" 

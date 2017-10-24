@@ -11,23 +11,7 @@ export class GheFilter extends GenericFilter {
     private descricaoAmbiente: string;
     private descricaoTarefas: string;
     private duracaoJornada: number;
-
-    getId(): number {
-        return this.id;
-    }
-    
-    setId(id: number) {
-        this.id = id;
-    }
-    
-    getVersion(): number {
-        return this.version;
-    }
-    
-    setVersion(version: number) {
-        this.version = version;
-    }
-    
+        
     getCodigo():string{
         return this.codigo;
     }
@@ -57,7 +41,7 @@ export class GheFilter extends GenericFilter {
     }
     
     setDataDesativacao(dD:DateFilter){
-        this.dataDesativacao = dC;
+        this.dataDesativacao = dD;
     }
     
     getDescricao():string{

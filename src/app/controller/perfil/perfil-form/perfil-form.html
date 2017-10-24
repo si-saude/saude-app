@@ -80,7 +80,9 @@
 			
 		</fieldset>
 
-		<app-mensagem-form *ngIf="verifyMsg" [color]="colorMsg" [msg]="msg"></app-mensagem-form>
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
 
 		<div class='row row-btns'>
 			<div class="col s6">

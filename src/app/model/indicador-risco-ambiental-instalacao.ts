@@ -5,7 +5,7 @@ export class IndicadorRiscoAmbientalInstalacao{
     private id: number;
     private version: number;
     private instalacao: Instalacao;
-    private indicadorRiscoAmbiental: IndicadorRiscoAmbiental;
+    private indicadorRisco: IndicadorRiscoAmbiental;
     private dataInspecao: Date;
     private avaliacao: number;
 
@@ -33,12 +33,12 @@ export class IndicadorRiscoAmbientalInstalacao{
         this.instalacao = instalacao;
     }
     
-    getIndicadorRiscoAmbiental():IndicadorRiscoAmbiental{
-        return this.indicadorRiscoAmbiental;
+    getIndicadorRisco():IndicadorRiscoAmbiental{
+        return this.indicadorRisco;
     }
     
-    setIndicadorRiscoAmbiental(indicador:IndicadorRiscoAmbiental){
-        this.indicadorRiscoAmbiental = indicador;
+    setIndicadorRisco(indicador:IndicadorRiscoAmbiental){
+        this.indicadorRisco = indicador;
     }
     
     getDataInspecao():Date{

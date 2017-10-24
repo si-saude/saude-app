@@ -1,14 +1,18 @@
 import { GenericFilter } from './../../generics/generic.filter';
 
 export class BaseFilter extends GenericFilter {
- 
     private nome: string;
+   
+    constructor() {
+        super();
+    }
 
-    getNome():string{
+    public getNome() {
         return this.nome;
     }
     
-    setNome(nome:string){
-        this.nome = nome;
+    public setNome(n: string) {
+        this.nome = n;
     }
+       
 }

@@ -5,7 +5,7 @@ export class IndicadorRiscoErgonomicoInstalacao{
     private id: number;
     private version: number;
     private instalacao: Instalacao;
-    private indicadorRiscoErgonomico: IndicadorRiscoErgonomico;
+    private indicadorRisco: IndicadorRiscoErgonomico;
     private dataInspecao: Date;
     private avaliacao: number;
     
@@ -33,12 +33,12 @@ export class IndicadorRiscoErgonomicoInstalacao{
         this.instalacao = instalacao;
     }
     
-    getIndicadorRiscoErgonomico():IndicadorRiscoErgonomico{
-        return this.indicadorRiscoErgonomico;
+    getIndicadorRisco():IndicadorRiscoErgonomico{
+        return this.indicadorRisco;
     }
     
-    setIndicadorRiscoErgonomico(indicador:IndicadorRiscoErgonomico){
-        this.indicadorRiscoErgonomico = indicador;
+    setIndicadorRisco(indicador:IndicadorRiscoErgonomico){
+        this.indicadorRisco = indicador;
     }
     
     getDataInspecao():Date{

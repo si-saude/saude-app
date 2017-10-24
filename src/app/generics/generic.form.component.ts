@@ -2,23 +2,27 @@ import { IMyDpOptions } from 'mydatepicker';
 import { Subscription } from 'rxjs/Rx';
 
 import { GenericService } from './generic.service';
+import { GenericComponent } from './generic.component';
 import { GlobalVariable } from './../global';
 
-export abstract class GenericFormComponent<T> {
-
-    colorMsg: string;
-    msg: string;
-    verifyMsg: boolean = false;
+export abstract class GenericFormComponent<T> extends GenericComponent {
+    colorError: string;
+    msgError: string;
+    verifyError: boolean = false;
     titulo: string;
     corTitulo: string = GlobalVariable.COLOR_TITLE;
     inscricao: Subscription;
+    protected showPreload: boolean;
 
     myDatePickerOptions: IMyDpOptions = {
         dateFormat: 'dd/mm/yyyy'
     };
     
-
-    constructor(protected service: GenericService){}
+    constructor(protected service: GenericService){
+        super();
+        this.showPreload = false;
+        this.showConfirmSave = false;
+    }
     
     isValid() {
 //        if ( this.formulario.valid ) {
@@ -27,6 +31,7 @@ export abstract class GenericFormComponent<T> {
     }
     
     save(object: T) {
+        this.showPreload = true;
         this.service.submit( object )
             .then( res => {
                 this.processReturn(true,res);
@@ -37,15 +42,15 @@ export abstract class GenericFormComponent<T> {
     }
     
     processReturn(sucess:boolean, res:any){
-        if(sucess){
-            this.verifyMsg = true;
-            this.colorMsg = "green";
-            this.msg = res.text();
+        if(sucess) {
+            this.msgConfirmSave = res.text();
+            this.showConfirmSave = true;
         }else{
-            this.verifyMsg = true;
-            this.colorMsg = "red";
-            this.msg = res.text();
+            this.verifyError = true;
+            this.colorError = "red";
+            this.msgError = res.text();
         }
+        this.showPreload = false;
     }
     
     parseDataToObjectDatePicker(data) {
@@ -69,6 +74,17 @@ export abstract class GenericFormComponent<T> {
         }   
         let d: Date = new Date(data.date.year, data.date.month - 1, data.date.day);
         return d;
+    }
+    
+    parseDataToString(data) {
+        if ( data === undefined || data === null ) {
+            return undefined;
+        }
+        let s = data.split("T");
+        let datas = s[0].split("-");
+        
+        
+        return datas[2] + "/" + datas[1] + "/" + datas[0];   
     }
 
 }

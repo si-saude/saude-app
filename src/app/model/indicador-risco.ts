@@ -11,7 +11,7 @@ export abstract class IndicadorRisco {
     private indice3: string;
     private indice4: string;
     private indice5: string;
-    private requisito: string;
+    private requisito: string = "";
     private critico: boolean;
 
     getId(): number {

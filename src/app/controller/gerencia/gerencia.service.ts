@@ -16,4 +16,7 @@ export class GerenciaService extends GenericService {
         super(http, router, "gerencia");
     }
 
+    getGerencias() {
+        return this.selectList(new GerenciaFilter());
+    }
 }
