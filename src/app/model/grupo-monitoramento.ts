@@ -11,6 +11,7 @@ export class GrupoMonitoramento {
     private grupoMonitoramentoExames: Array<GrupoMonitoramentoExame>;
     private profissiogramas: Array<Profissiograma>;
     private empregados: Array<Empregado>;
+    private recorrente: boolean;
     private version: number;
 
     getId() {
@@ -59,6 +60,14 @@ export class GrupoMonitoramento {
     
     setEmpregados(empregados: Array<Empregado>) {
         this.empregados = empregados;
+    }
+    
+    getRecorrente() {
+        return this.recorrente;
+    }
+    
+    setRecorrente(recorrente: boolean) {
+        this.recorrente = recorrente;
     }
     
     getVersion() {
