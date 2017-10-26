@@ -3,17 +3,14 @@
 </head>
 
 <h4 [ngStyle]="{'color': corTitulo}" class="center-align titulo">Critérios</h4>
-<!-- --> 
-<app-mensagem-form  *ngIf="verifyEmptyPaginas" 
- [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
-</app-mensagem-form>
+
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
  
 <div class="collection">
-
-	<!-- Preload  --> 
-	<div class="center-align preload" *ngIf="showPreload">
-		<app-preload [msg]="msgPreload"></app-preload>
-	</div>
 
 	<div *ngFor="let a of array">
 		<div class="row row-collection">

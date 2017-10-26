@@ -2,89 +2,155 @@
 <meta charset="utf-8">
 </head>
 
-<h5 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h5>
+<h5 [ngStyle]="{'color': corTitulo}" class="center-align">Profissiograma</h5>
 
-<div class="row">
+<form class="col s12 form-profissiograma" (ngSubmit)="save()">
 
-	<form class="col s12" (ngSubmit)="save()">
+	<div class="row">
+		<div class="input-field col s12">
+			<label data-error="Campo obrigatório." for="nome">Nome</label> <input
+				id="nome" type="text" required maxlength="400"
+				[(ngModel)]="profissiograma.nome" name="nome">
+		</div>
+	</div>
 
-		<div class="row">
-			<div class="input-field col s12">
-				<label data-error="Campo obrigatório." for="nome">Nome</label> <input
-					id="nome" type="text" required maxlength="400"
-					[(ngModel)]="profissiograma.nome" name="nome">
+	<div class="row">
+
+		<div class="input-field col s4">
+			<div class="collection">
+
+				<fieldset>
+					<legend>Grupos Monitoramento</legend>
+					<div class="row">
+
+						<div class="input-field col s4">
+							<select class="browser-default" #grupoMonitoramento>
+								<option disabled selected value=0>Selecione um grupo monitoramento</option>
+								<option *ngFor="let grupoMonitoramento of gruposMonitoramento"
+									value="{{grupoMonitoramento.id}}">{{grupoMonitoramento.nome}}</option>
+							</select>
+						</div>
+
+						<div class="col s2">
+							<a
+								class="btn-floating waves-effect waves-light green btn-remove-permission"
+								(click)="addGrupoMonitoramento(grupoMonitoramento.value)"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+					</div>
+				</fieldset>
+
+				<div
+					*ngFor="let grupoMonitoramento of profissiograma.grupoMonitoramentos; let gM = index">
+					<div class="row row-collection">
+						<div class="col s12">
+							<a [ngClass]="selectedGrupoMonitoramento(gM)" 
+								[routerLinkActive]="['active']" class="collection-item"
+								(click)="selectGrupoMonitoramento(gM)">
+								{{grupoMonitoramento.nome}} </a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	<!-- 
-		<div class="row">
-			<div class="input-field col s4">
-				<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-					class="row-border hover">
-					<thead>
-						<tr>
-							<th>Grupo Monitoramento</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let grupoMonitoramento of gruposMonitoramento; #gM = index">
-							<td>{{ grupoMonitoramento.nome }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			
-			<div class="input-field col s4">
-				<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-					class="row-border hover">
-					<thead>
-						<tr>
-							<th>Exame</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let grupoMonitoramentoExame of gruposMonitoramento.grupoMonitoramentoExames; #e = index">
-							<td>{{ gruposMonitoramento[gm].grupoMonitoramentoExames[e].exame.descricao }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			
-			<div class="input-field col s4">
-				<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
-					class="row-border hover">
-					<thead>
-						<tr>
-							<th>Critério</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let criterio of gruposMonitoramento[gm].grupoMonitoramentoExames[e].criterios; #c = index">
-							<td>{{ gruposMonitoramento[gm].grupoMonitoramentoExames[e].criterios[c].nome }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
 
-		</div>
- -->
-		<input id="id" name="id" type="hidden"> <input id="version"
-			name="version" type="hidden">
+		<div class="input-field col s4">
+			<div class="collection">
 
-		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
-				[msg]="msgError"></app-mensagem-form>
+				<fieldset>
+					<legend>Exames</legend>
+					<div class="row">
+
+						<div class="input-field col s4">
+							<select class="browser-default" #exame>
+								<option disabled selected value=0>Selecione um exame</option>
+								<option *ngFor="let exame of exames" value="{{exame.id}}">{{exame.codigo}}</option>
+							</select>
+						</div>
+
+						<div class="col s2">
+							<a class="btn-floating waves-effect waves-light green btn-remove-permission"
+								(click)="addExame(exame.value)"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+					</div>
+				</fieldset>
+
+				<div
+					*ngFor="let grupoMonitoramentoExame of gruposMonitoramentoExame; let gME = index">
+					<div class="row row-collection">
+						<div class="col s12">
+							<a [ngClass]="selectedExame(gME)"
+								[routerLinkActive]="['active']" class="collection-item"
+								(click)="selectExame(gME)">
+								{{grupoMonitoramentoExame.exame.codigo}} </a>
+						</div>
+					</div>
+				</div>
+
+			</div>
 		</div>
 
 
-		<div class='row row-btns'>
-			<div class="col s6">
-				<button type="submit" class="btn btn-primary">Salvar</button>
-			</div>
-			<div class="col s6">
-				<a [routerLink]="['/profissiograma']"
-					class="btn btn-primary btn-listar-perfis">Listar</a>
+		<div class="input-field col s4">
+			<div class="collection">
+
+				<fieldset>
+					<legend>Critérios</legend>
+					<div class="row">
+
+						<div class="input-field col s4">
+							<select class="browser-default" #criterio>
+								<option disabled selected value=0>Selecione um critério</option>
+								<option *ngFor="let criterio of criterios" value="{{criterio.id}}">{{criterio.nome}}</option>
+							</select>
+						</div>
+
+						<div class="col s2">
+							<a
+								class="btn-floating waves-effect waves-light green btn-remove-permission"
+								(click)="addCriterio(criterio.value)"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+					</div>
+				</fieldset>
+
+				<div
+					*ngFor="let criterio of arrayCriterio; let c = index">
+					<div class="row row-collection">
+						<div class="col s12">
+							<a [routerLinkActive]="['active']" class="collection-item">
+								{{criterio.nome}} </a>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
- 
-	</form>
-</div>
+
+	</div>
+
+	<input id="id" name="id" type="hidden"> <input id="version"
+		name="version" type="hidden">
+
+	<div class="mensagem">
+		<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+			[msg]="msgError"></app-mensagem-form>
+	</div>
+
+	<div class='row row-btns'>
+		<div class="col s6">
+			<button type="submit" class="btn btn-primary">Salvar</button>
+		</div>
+		<div class="col s6">
+			<a [routerLink]="['/profissiograma']"
+				class="btn btn-primary btn-listar-perfis">Listar</a>
+		</div>
+	</div>
+	
+	<div materialize [materializeParams]="toastParams" [materializeActions]="globalActions"></div>
+
+</form>

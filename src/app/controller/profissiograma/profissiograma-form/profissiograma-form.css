@@ -20,7 +20,8 @@
 }
 
 .btn-remove-permission {
-	margin-top: 15px;	
+	margin-top: 15px;
+	margin-left: 155px;
 }
 
 .btn-listar-perfis {
@@ -56,4 +57,13 @@ select{
 
 .mensagem {
 	margin-top: 50px;
+}
+
+.form-profissiograma {
+	margin-left: -100px;
+	margin-right: -100px;
+}
+
+.collection .collection-item:last-child { 
+    cursor: pointer;
 }
