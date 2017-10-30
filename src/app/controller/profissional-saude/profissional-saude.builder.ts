@@ -55,6 +55,7 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
         cloneProfissionalSaude.setMi(this.getValue(profissionalSaude, "getMi"));
         cloneProfissionalSaude.setNome(this.getValue(profissionalSaude, "getNome"));
         cloneProfissionalSaude.setRamal(this.getValue(profissionalSaude,"getRamal"));
+        cloneProfissionalSaude.setAssinaturaBase64(this.getValue(profissionalSaude,"getAssinaturaBase64"));
         cloneProfissionalSaude.setVersion(this.getValue(profissionalSaude, "getVersion"));
         
         if (this.getValue(profissionalSaude, "getEquipe") !== undefined) { 

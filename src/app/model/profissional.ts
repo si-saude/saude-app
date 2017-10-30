@@ -24,6 +24,8 @@ export class Profissional {
     private curriculo: Curriculo;
     private profissionalConselho: ProfissionalConselho;
     private profissionalVacinas: Array<ProfissionalVacina> ;
+    private assinatura: any;
+    private assinaturaBase64: string;
     private version: number;    
 
     getId() {
@@ -153,5 +155,20 @@ export class Profissional {
     setEndereco(endereco: Endereco) {
         this.endereco = endereco;
     }
-
+    
+    getAssinatura():any{
+        return this.assinatura;
+    }
+    
+    setAssinatura(assinatura:any){
+        this.assinatura = assinatura;
+    }
+    
+    getAssinaturaBase64():string{
+        return this.assinaturaBase64;
+    }
+    
+    setAssinaturaBase64(a:string){
+        this.assinaturaBase64 = a;
+    }
 }
