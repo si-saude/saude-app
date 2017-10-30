@@ -1,9 +1,11 @@
 import { GenericFilter } from './../../generics/generic.filter';
+import { BooleanFilter } from './../../generics/boolean.filter';
 import { TipoGrupoMonitoramentoFilter } from './../tipo-grupo-monitoramento/tipo-grupo-monitoramento.filter';
 
 export class GrupoMonitoramentoFilter extends GenericFilter {
     private nome: string;
     private tipoGrupoMonitoramento: TipoGrupoMonitoramentoFilter;
+    private recorrente: BooleanFilter;
     
     getNome() {
         return this.nome;
@@ -19,6 +21,14 @@ export class GrupoMonitoramentoFilter extends GenericFilter {
     
     setTipoGrupoMonitoramento(tipoGrupoMonitoramento: TipoGrupoMonitoramentoFilter) {
         this.tipoGrupoMonitoramento = tipoGrupoMonitoramento;
+    }
+    
+    getRecorrente() {
+        return this.recorrente;
+    }
+    
+    setRecorrente(recorrente: BooleanFilter) {
+        this.recorrente = recorrente;
     }
        
 }

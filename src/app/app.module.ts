@@ -44,6 +44,7 @@ import { ExameModule } from './controller/exame/exame.module';
 import { GrupoMonitoramentoModule } from './controller/grupo-monitoramento/grupo-monitoramento.module';
 import { ProfissiogramaModule } from './controller/profissiograma/profissiograma.module';
 import { MenuComponent } from './includes/menu/menu.component';
+import { SidenavComponent } from './includes/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { MenuComponent } from './includes/menu/menu.component';
     NavbarPrincipalComponent,
     HomeComponent,
     PermissaoComponent,
-    MenuComponent
+    MenuComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,

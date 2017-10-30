@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';
-//import { DataTablesModule } from 'angular-datatables';
 
 import { ProfissiogramaComponent } from './profissiograma.component';
 import { ProfissiogramaService } from './profissiograma.service';
@@ -20,7 +19,6 @@ import { ProfissiogramaFormComponent } from './profissiograma-form/profissiogram
      imports: [
         ProfissiogramaRoutingModule,
         MyDatePickerModule,
-//        DataTablesModule,
         SharedModule
      ],
      providers: [

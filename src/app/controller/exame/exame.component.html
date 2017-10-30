@@ -3,16 +3,14 @@
 </head>
 
 <h4 [ngStyle]="{'color': corTitulo}" class="center-align titulo">Exames</h4>
-<!-- -->
+
 <app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
 	[color]="colorEmptyPaginas"> </app-mensagem-form>
 
-<div class="collection">
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
-	<!-- Preload  -->
-	<div class="center-align preload" *ngIf="showPreload">
-		<app-preload [msg]="msgPreload"></app-preload>
-	</div>
+<div class="collection">
 
 	<div *ngFor="let a of array">
 		<div class="row row-collection">

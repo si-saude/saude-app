@@ -1,0 +1,30 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<ul id="slide-out1" class="side-nav">
+	<li>
+		<a materialize="sideNav"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActions2" data-activates="slide-out2"
+			(click)="closeSidenav1()">Cadastrar
+		</a>
+	</li>
+		
+</ul>
+
+<ul id="slide-out2" class="side-nav">
+	<li>
+		<a materialize="sideNav"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActions2" data-activates="slide-out1"
+			(click)="closeSidenav2()"><i class="material-icons">chevron_left</i>
+		</a>
+		<a [routerLink]="['/profissional-saude/cadastrar']">Profissional de Saúde</a> 
+		<a [routerLink]="['/empregado/cadastrar']">Empregado</a>
+	</li>
+</ul>
+
+<a materialize="sideNav" [materializeParams]="sidenavParams"
+	[materializeActions]="sidenavActions1" data-activates="slide-out1"
+	class="btn-floating btn-flat waves-effect waves-light transparent"><i class="large material-icons">menu</i></a>
