@@ -30,6 +30,7 @@
 			</div>
 
 			<div id="dadosGerais">
+				
 				<div class="row">
 					<div class="input-field col s12">
 						<label data-error="Campo obrigatório." class="active" for="nome">Nome</label>
@@ -104,6 +105,18 @@
 						</fieldset>
 					</div>
 
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label class="active" >Assinatura</label>
+						<input id="assinatura" type="file" name="assinatura" accept=".png" #assinatura>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<img id="assinaturaPreview" src="{{assinaturaSrc}}" width="500" heigth="500" />
+					</div>
 				</div>
 
 			</div>
@@ -334,7 +347,7 @@
 			</div>
 
 			<div id="informacoesAdicionais">
-
+				
 				<fieldset>
 					<legend class="legend">
 						Telefones <a

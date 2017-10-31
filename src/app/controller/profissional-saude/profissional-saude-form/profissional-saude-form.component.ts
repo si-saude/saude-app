@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -29,6 +29,9 @@ import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
     styleUrls: ['./profissional-saude-form.css']
 } )
 export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profissional> implements OnInit {
+    
+    @ViewChild('assinatura') inputEl: ElementRef;
+    
     profissionalSaude: Profissional;
     localizacoes: Array<Localizacao>;
     equipes: Array<Equipe>;
@@ -43,6 +46,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profiss
     dataVacinas: Array<any> = new Array<any>();
     proximaDoseVacinas: Array<any> = new Array<any>();
     vencimentoProfissionalConselho: any;
+    assinaturaSrc: any;
     
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
     
@@ -51,10 +55,15 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profiss
         super(profissionalSaudeService);
         this.goTo = "profissional-saude";
         
-        this.profissionalSaude = new ProfissionalSaudeBuilder().initialize(this.profissionalSaude);
+        this.profissionalSaude = new ProfissionalSaudeBuilder().initialize(this.profissionalSaude);        
     }
 
     ngOnInit() {
+        
+        let component = this;
+        document.getElementById('assinatura').onchange = function() {
+            component.loadAssinatura();
+        };
         
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
@@ -67,6 +76,9 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profiss
                             this.showPreload = false;
                             this.profissionalSaude = new ProfissionalSaudeBuilder().clone(res.json());
                             this.parseAndSetDates();
+                            
+                            if(this.profissionalSaude.getAssinaturaBase64() !== undefined)
+                                this.assinaturaSrc = "data:image/png;base64," + this.profissionalSaude.getAssinaturaBase64();
                         } )
                         .catch( error => {
                             this.showPreload = false;
@@ -125,11 +137,48 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profiss
             
     }
     
+    loadAssinatura(){
+        let inputEl: HTMLInputElement = this.inputEl.nativeElement;
+        
+        if(inputEl.files.length > 0){
+            let reader = new FileReader();
+            let component = this;
+            
+            reader.onload = function () {
+                component.assinaturaSrc = reader.result.toString().replace('data:;base64','data:image/png;base64');
+            };
+            
+            reader.readAsDataURL(new Blob([inputEl.files[0]]));
+        }
+    }
+    
     save() {
         this.verifyAndSetDates();
         
-        super.save(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
-    }   
+        let inputEl: HTMLInputElement = this.inputEl.nativeElement;          
+                
+        if(inputEl.files.length > 0){
+            let reader = new FileReader();
+            let array : Uint8Array;
+            let component = this;
+            
+            reader.onload = function () {
+                let arrayBuffer:ArrayBuffer = reader.result;
+                array = new Uint8Array( arrayBuffer );
+                let profissional:Profissional = new ProfissionalSaudeBuilder().clone(component.profissionalSaude); 
+                profissional.setAssinatura(array);
+                component.salvar(profissional);
+            };
+            
+            reader.readAsArrayBuffer(new Blob([inputEl.files[0]]));
+        }else{
+            super.save(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
+        }
+    }
+    
+    salvar(profissional){
+        super.save(profissional);
+    }
 
     addCurriculoCurso() {
         if ( this.profissionalSaude.getCurriculo().getCurriculoCursos() === undefined ) {
