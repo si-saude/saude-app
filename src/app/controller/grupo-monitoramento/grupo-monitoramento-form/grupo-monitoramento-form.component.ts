@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import {MaterializeDirective,MaterializeAction} from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
 import { GrupoMonitoramento } from './../../../model/grupo-monitoramento';
 import { TipoGrupoMonitoramento } from './../../../model/tipo-grupo-monitoramento';
 import { GrupoMonitoramentoExame } from './../../../model/grupo-monitoramento-exame';
+import { GrupoMonitoramentoExameBuilder } from './../../grupo-monitoramento-exame/grupo-monitoramento-exame.builder';
 import { Exame } from './../../../model/exame';
 import { ExameBuilder } from './../../exame/exame.builder';
 import { Criterio } from './../../../model/criterio';
@@ -24,19 +26,25 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent<GrupoM
     grupoMonitoramento: GrupoMonitoramento;
     exames: Array<Exame>;
     criterios: Array<Criterio>;
-    criteriosSelecteds: Array<Criterio>;
+    arrayCriterio: Array<Criterio>;
+    gruposMonitoramentoExame: Array<GrupoMonitoramentoExame>;
+
+    globalActions = new EventEmitter<string|MaterializeAction>();
+    toastParams = ['', 4000];
+
+    selectedExm = null;
     
     constructor( private route: ActivatedRoute,
             private grupoMonitoramentoService: GrupoMonitoramentoService) { 
             super(grupoMonitoramentoService);
             this.goTo = "grupo-monitoramento";
             
+            this.arrayCriterio = new Array<Criterio>();
+            this.gruposMonitoramentoExame = new Array<GrupoMonitoramentoExame>();
             this.grupoMonitoramento = new GrupoMonitoramentoBuilder().initialize(this.grupoMonitoramento);
         }
     
     ngOnInit() {
-        this.criteriosSelecteds = new Array<Criterio>();
-        
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if( params['id'] !== undefined ) {
@@ -81,37 +89,65 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent<GrupoM
     }
     
     save() {
+//        console.log(new GrupoMonitoramentoBuilder().clone(this.grupoMonitoramento));
         super.save(new GrupoMonitoramentoBuilder().clone(this.grupoMonitoramento));
     }   
     
-    addGrupoMonitoramentoExame() {
-        let grupoMonitoramentoExame: GrupoMonitoramentoExame = new GrupoMonitoramentoExame();
-    
-        grupoMonitoramentoExame.setExame(new ExameBuilder().initialize(new Exame()));
-        grupoMonitoramentoExame.setCriterios(new CriterioBuilder().initializeList(new Array<Criterio>()));
-        grupoMonitoramentoExame.setGrupoMonitoramento(new GrupoMonitoramento());
-        
-        this.grupoMonitoramento.getGrupoMonitoramentoExames().push(grupoMonitoramentoExame);
+    addExame(valor: number) {
+        if ( valor == 0 ) {
+            this.toastParams = ['Por favor, selecione um exame', 4000];
+            this.globalActions.emit('toast');
+        } else {
+            let exame = this.exames.find(o => o["id"] == valor);
+            let grupoMonitoramentoExame = new GrupoMonitoramentoExameBuilder().initialize(new GrupoMonitoramentoExame());
+            grupoMonitoramentoExame.setExame(new ExameBuilder().clone(exame));
+            grupoMonitoramentoExame.setCriterios(new CriterioBuilder().initializeList(new Array<Criterio>()));
+            
+            this.grupoMonitoramento.getGrupoMonitoramentoExames().push(grupoMonitoramentoExame);
+        }
     }
 
-    removeGrupoMonitoramentoExame(i: number) {
+    removeExame(i: number) {
         this.grupoMonitoramento.getGrupoMonitoramentoExames().splice(i, 1);
     }
     
-    addCriterio(grupoMonitoramentoExameId, valor: number) {
-        this.grupoMonitoramentoService.getCriterioById(valor)
-            .then(res => {
-                this.grupoMonitoramento.getGrupoMonitoramentoExames()[grupoMonitoramentoExameId].
-                    getCriterios().push(res.json());
-            })
-            .catch(error => {
-                console.log(error);
-            })
+    selectExame(index: number) {
+        this.selectedExm = this.grupoMonitoramento.getGrupoMonitoramentoExames()[index].getExame();
+        this.arrayCriterio = this.grupoMonitoramento.getGrupoMonitoramentoExames()[index].getCriterios();
+    }
+    
+    selectedExame(e: number) {
+        if ( this.grupoMonitoramento.getGrupoMonitoramentoExames()[e].getExame() === this.selectedExm ) {
+            return "active";
+        } else return "";
+    }
+    
+//    addExame() {
+//        let grupoMonitoramentoExame: GrupoMonitoramentoExame = new GrupoMonitoramentoExame();
+//    
+//        grupoMonitoramentoExame.setExame(new ExameBuilder().initialize(new Exame()));
+//        grupoMonitoramentoExame.setCriterios(new CriterioBuilder().initializeList(new Array<Criterio>()));
+//        grupoMonitoramentoExame.setGrupoMonitoramento(new GrupoMonitoramento());
+//        
+//        this.grupoMonitoramento.getGrupoMonitoramentoExames().push(grupoMonitoramentoExame);
+//    }
+//
+//    removeExame(i: number) {
+//        this.grupoMonitoramento.getGrupoMonitoramentoExames().splice(i, 1);
+//    }
+    
+    addCriterio(valor: number) {
+        if ( this.selectedExm === null ) { 
+            this.toastParams = ['Por favor, escolha um exame', 4000];
+            this.globalActions.emit('toast');
+        } else {
+            let criterio = this.criterios.find(o => o["id"] == valor);
+            this.arrayCriterio.push(criterio);
+        }
     }
 
-    removeCriterio(grupoMonitoramentoExameId, i: number) {
-        this.grupoMonitoramento.getGrupoMonitoramentoExames()[grupoMonitoramentoExameId].
-        getCriterios().splice(i, 1);
+    removeCriterio(i: number) {
+        this.arrayCriterio.splice(i, 1);
     }
     
 }

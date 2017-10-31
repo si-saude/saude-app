@@ -24,6 +24,10 @@ export class ProfissiogramaService extends GenericService {
         return this.grupoMonitoramentoService.getGruposMonitoramento();
     }
     
+    getGrupoMonitoramentoById(id: number) {
+        return this.grupoMonitoramentoService.getGrupoMonitoramentoById(id);
+    }
+    
     getExames() {
         return this.exameService.getExames();
     }

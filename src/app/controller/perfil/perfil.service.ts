@@ -16,10 +16,10 @@ export class PerfilService extends GenericService{
       super(http, router, "perfil");
   }
 
-  getFuncionalidades(substring: string){
+  getFuncionalidades(){
       let urlLogin = GlobalVariable.BASE_API_URL + "/generic/funcionalidade?filter=";
       return this.http
-          .get(urlLogin + substring, {headers: this.headers})
+          .get(urlLogin, {headers: this.headers})
           .toPromise();
   }
   

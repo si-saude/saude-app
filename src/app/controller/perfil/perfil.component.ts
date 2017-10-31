@@ -17,7 +17,6 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class PerfilComponent  extends GenericListComponent<Perfil, PerfilFilter>{
     
-
   constructor( perfilService: PerfilService) {
       let perfilFilter: PerfilFilter = new PerfilFilter();
       super(perfilService, perfilFilter);

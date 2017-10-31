@@ -1,42 +1,42 @@
 <head>
 <meta charset="utf-8">
 </head>
-<div class="center-align">
-	<h5 [ngClass]="corTitulo">{{titulo}}</h5>
-</div>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+
 <div class="row form-container">
-	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+	<form class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 
 			<div class="input-field col s8">
-				<input id="nome" type="text" required 
-				[(ngModel)]="cidade.nome"
-				formControlName="nome">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label>
+				<input id="nome" type="text" required 
+				[(ngModel)]="cidade.nome" name="cidade.nome">
 			</div>
 		
 			<div class="input-field col s4">
-				<input id="uf" type="text"
-				[(ngModel)]="cidade.uf" 
-				formControlName="uf">
 				<label for="uf">UF</label>
+				<input id="uf" type="text"
+				[(ngModel)]="cidade.uf" name="cidade.uf">
 			</div>
 	
 		</div>
 
-		<input id="id" name="id" type="hidden" [(ngModel)]="cidade.id" formControlName="id"> 
-		<input id="version" name="version" type="hidden" [(ngModel)]="cidade.version" formControlName="version">
+		<input id="id" name="id" type="hidden" [(ngModel)]="cidade.id" name="cidade.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="cidade.version" name="cidade.version">
 		
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
 		</div>
 
-		
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary"
-					[disabled]="!isValid()">Salvar</button>
+				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 			<div class="col s6">
 				<a [routerLink]="['/cidade']"

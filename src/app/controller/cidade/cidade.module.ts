@@ -7,16 +7,18 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { CidadeComponent } from './cidade.component';
 import { CidadeService } from './cidade.service';
-import { CidadeCadastrarComponent } from './cidade-cadastrar/cidade-cadastrar.component';
 import { CidadeRoutingModule } from './cidade.routing.module';
-import { CidadeEditarComponent } from './cidade-editar/cidade-editar.component';
+import { CidadeFormComponent } from './cidade-form/cidade-form.component';
+//import { CidadeCadastrarComponent } from './cidade-cadastrar/cidade-cadastrar.component';
+//import { CidadeEditarComponent } from './cidade-editar/cidade-editar.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        CidadeComponent,
-       CidadeCadastrarComponent,
-       CidadeEditarComponent
+       CidadeFormComponent
+//       CidadeCadastrarComponent,
+//       CidadeEditarComponent
      ],
      imports: [
         CidadeRoutingModule,

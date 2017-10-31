@@ -58,7 +58,6 @@ select{
 	margin-top: 50px;
 }
 
-
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
     position: absolute;
     opacity: 0;

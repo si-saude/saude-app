@@ -7,20 +7,18 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { PerfilComponent } from './perfil.component';
 import { PerfilService } from './perfil.service';
-import { PerfilCadastrarComponent } from './perfil-cadastrar/perfil-cadastrar.component';
 import { PerfilRoutingModule } from './perfil.routing.module';
-import { PerfilEditarComponent } from './perfil-editar/perfil-editar.component';
-//import { PreloadComponent } from './../includes/preload/preload.component';
-//import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
+import { PerfilFormComponent } from './perfil-form/perfil-form.component';
+//import { PerfilCadastrarComponent } from './perfil-cadastrar/perfil-cadastrar.component';
+//import { PerfilEditarComponent } from './perfil-editar/perfil-editar.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        PerfilComponent,
-       PerfilCadastrarComponent,
-       PerfilEditarComponent
-//       MensagemFormComponent,
-//       PreloadComponent
+     PerfilFormComponent
+//       PerfilCadastrarComponent,
+//       PerfilEditarComponent
      ],
      imports: [
         PerfilRoutingModule,

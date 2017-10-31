@@ -33,6 +33,17 @@ export class EmpregadoService extends GenericService {
             private grupoMonitoramentoService: GrupoMonitoramentoService) { 
         super(http, router, "empregado");
     }
+    
+    getEmpregados() {
+        return this.selectList(new EmpregadoFilter());
+    }
+    
+    getEmpregadoByName(nome: string) {
+        let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+        empregadoFilter.setNome(nome);
+        
+        return this.selectList(empregadoFilter);
+    }
 
     getStatuses() {
         let urlStatuses = GlobalVariable.BASE_API_URL + "/generic/status-empregado";

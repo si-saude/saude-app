@@ -9,6 +9,7 @@ import { EquipeComponent } from './equipe.component';
 import { EquipeService } from './equipe.service';
 import { EquipeRoutingModule } from './equipe.routing.module';
 import { SharedModule } from './../shared.module';
+import { EquipeFormComponent } from './equipe-form/equipe-form.component';
 import { EquipeCadastrarComponent } from './equipe-cadastrar/equipe-cadastrar.component';
 import { EquipeEditarComponent } from './equipe-editar/equipe-editar.component';
 //import { LocalizacaoCadastrarComponent } from './localizacao-cadastrar/localizacao-cadastrar.component';
@@ -17,8 +18,9 @@ import { EquipeEditarComponent } from './equipe-editar/equipe-editar.component';
 @NgModule({
     declarations: [
        EquipeComponent,
-       EquipeCadastrarComponent,
-       EquipeEditarComponent
+       EquipeFormComponent
+//       EquipeCadastrarComponent,
+//       EquipeEditarComponent
 //       LocalizacaoEditarComponent
      ],
      imports: [

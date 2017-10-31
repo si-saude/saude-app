@@ -67,3 +67,27 @@ select{
 .collection .collection-item:last-child { 
     cursor: pointer;
 }
+
+.row-item-collection {
+	border-top: solid 1px #a2a2a2;
+	line-height: 0;
+}
+
+.row-collection {
+	margin-bottom: 0px;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}
+
+.select {
+	margin-bottom: 20px;
+}
+
+.btn-delete {
+	margin-top: -5px;
+}

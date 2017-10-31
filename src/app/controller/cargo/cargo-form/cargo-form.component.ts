@@ -44,7 +44,6 @@ export class CargoFormComponent extends GenericFormComponent<Cargo> implements O
                         .then( res => {
                             this.showPreload = false;
                             this.cargo = new CargoBuilder().clone(res.json());
-                            console.log(res.json());
                         } )
                         .catch( error => {
                             this.showPreload = false;

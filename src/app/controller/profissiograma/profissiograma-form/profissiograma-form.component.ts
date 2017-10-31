@@ -86,12 +86,12 @@ export class ProfissiogramaFormComponent extends GenericFormComponent<Profissiog
               })
           
           this.profissiogramaService.getCriterios()
-          .then(res => {
-              this.criterios = res.json();
-          })
-          .catch(error => {
-              console.log(error);
-          })
+              .then(res => {
+                  this.criterios = res.json();
+              })
+              .catch(error => {
+                  console.log(error);
+              })
       }
         
     save() {
@@ -99,8 +99,19 @@ export class ProfissiogramaFormComponent extends GenericFormComponent<Profissiog
     }
     
     addGrupoMonitoramento(valor: number) {
-        let grupoMonitoramento = this.gruposMonitoramento.find(o => o["id"] == valor);
-        this.profissiograma.getGrupoMonitoramentos().push(new GrupoMonitoramentoBuilder().clone(grupoMonitoramento));
+        if ( valor == 0 ) {
+            this.toastParams = ['Por favor, selecione um grupo monitoramento', 4000];
+            this.globalActions.emit('toast');
+        } else {
+            this.profissiogramaService.getGrupoMonitoramentoById(valor)
+                .then(res => {
+                    let grupoMonitoramento = res.json();
+                    this.profissiograma.getGrupoMonitoramentos().push(new GrupoMonitoramentoBuilder().clone(grupoMonitoramento));
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
     
 
@@ -112,6 +123,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent<Profissiog
         this.selectedGM = this.gruposMonitoramento[index];
         this.gruposMonitoramentoExame = this.profissiograma.getGrupoMonitoramentos()[index].getGrupoMonitoramentoExames();
         this.arrayCriterio = new Array<Criterio>();
+        this.selectedExm = null;
     }
   
     addExame(valor: number) {
@@ -144,7 +156,6 @@ export class ProfissiogramaFormComponent extends GenericFormComponent<Profissiog
         } else {
             let criterio = this.criterios.find(o => o["id"] == valor);
             this.arrayCriterio.push(criterio);
-            console.log(this.arrayCriterio);
         }
     }
 

@@ -2,92 +2,93 @@
 <meta charset="utf-8">
 </head>
 
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row">
-	<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+	<form class="col s12" (ngSubmit)="save()">
 
-	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
 		<div class="row">
 			<div class="input-field col s12">
-				<input id="titulo" type="text" required formControlName="titulo">
-				<label for="titulo" data-error="Campo obrigatório.">Titulo</label>
+				<label for="titulo" data-error="Campo obrigatório.">Titulo</label> <input
+					id="titulo" type="text" required name="perfil.titulo"
+					[(ngModel)]="perfil.titulo">
 			</div>
 		</div>
 
-		<input id="id" name="id" type="hidden" formControlName="id"> <input
-			id="version" name="version" type="hidden" formControlName="version">
+		<input id="id" name="id" type="hidden" name="perfil.id"
+			[(ngModel)]="perfil.id"> <input id="version" name="version"
+			type="hidden" name="perfil.version" [(ngModel)]="perfil.version">
 
 		<fieldset>
-
 			<legend class="legend-permissoes"> Permissões 
 				<a class="btn-floating waves-effect waves-light green btn-add-permissoes"
-					(click)="addPermission()"> 
+					(click)="addPermissao()"> 
 					<i class="material-icons center-icon">add</i>
 				</a>
 			</legend>
 			<div class="form-group">
-				<div formArrayName="permissoes">
-					<div
-						*ngFor="let permissao of permissoesArray.controls;let i = index"
-						[formGroupName]="i">
+				<div *ngFor="let permissao of perfil.permissoes;let i = index">
 
-						<div class="row">
-							<!-- 
-					<div class="input-field col s4">
-				    	<input required name="funcao" id="funcao" type="text"
-				    	[materialize]="autocomplete" [materializeParams]="funcoes"
-				    	(ngModelChange)="changedExtraHandler($event)"
-				    	class="validate" formControlName="funcao"/>
-				        <label for="funcao" data-error="Campo obrigatório.">Função</label>
-				    </div>
-				     -->
+					<div class="row">
 
-							<div class="input-field col s4">
-								<select required class="browser-default"
-									formControlName="funcao">
+						<div class="input-field col s4">
+							<fieldset>
+								<legend>Funcionalidade</legend>
+								<select class="browser-default" name="permissao.funcionalidade{{i}}"
+									[(ngModel)]="permissao.funcionalidade">
 									<option disabled selected value>Selecione uma funcionalidade</option>
-									<option *ngFor="let funcionalidade of funcionalidades" 
+									<option *ngFor="let funcionalidade of funcionalidades"
 										value="{{funcionalidade}}">{{funcionalidade}}</option>
 								</select>
-							</div>
-
-							<div class="col s3 btn-tipo-permissao">
-								<input name="leitura{{i}}" id="leitura{{i}}" type="checkbox"
-									formControlName="leitura" /> <label for="leitura{{i}}">Leitura</label>
-							</div>
-
-							<div class="col s3 btn-tipo-permissao">
-								<input name="escrita{{i}}" id="escrita{{i}}" type="checkbox"
-									formControlName="escrita" /> <label for="escrita{{i}}">Escrita</label>
-							</div>
-
-							<div class="col s2">
-								<a
-									class="btn-floating waves-effect waves-light red btn-remove-permission"
-									(click)="removePermission(i)"> <i
-									class="material-icons center-icon">delete</i>
-								</a>
-							</div>
-
+							</fieldset>
 						</div>
 
-						<input id="id{{i}}" name="id{{i}}" type="hidden" formControlName="id"> 
-						<input id="version{{i}}" name="version{{i}}" type="hidden" formControlName="version">
+						<div class="col s3 btn-tipo-permissao">
+							<input name="leitura{{i}}" id="leitura{{i}}" type="checkbox"
+								name="permissao.leitura{{i}}" [(ngModel)]="permissao.leitura" />
+							<label for="leitura{{i}}">Leitura</label>
+						</div>
+
+						<div class="col s3 btn-tipo-permissao">
+							<input name="escrita{{i}}" id="escrita{{i}}" type="checkbox"
+								name="permissao.escrita{{i}}" [(ngModel)]="permissao.escrita" />
+							<label for="escrita{{i}}">Escrita</label>
+						</div>
+
+						<div class="col s2">
+							<a
+								class="btn-floating waves-effect waves-light red btn-remove-permission"
+								(click)="removePermissao(i)"> <i
+								class="material-icons center-icon">delete</i>
+							</a>
+						</div>
 
 					</div>
+
+					<input id="id{{i}}" type="hidden" name="permissao.id{{i}}"
+						[(ngModel)]="permissao.id"> 
+					<input id="version{{i}}" type="hidden" name="permissao.version{{i}}"
+						[(ngModel)]="permissao.version">
+
 				</div>
+
 			</div>
-			
+
 		</fieldset>
 
 		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
 		</div>
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary"
-					[disabled]="!isValid()">Salvar</button>
+				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 			<div class="col s6">
 				<a [routerLink]="['/perfil']"

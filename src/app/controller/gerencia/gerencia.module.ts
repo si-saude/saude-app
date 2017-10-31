@@ -7,16 +7,18 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { GerenciaComponent } from './gerencia.component';
 import { GerenciaService } from './gerencia.service';
-import { GerenciaCadastrarComponent } from './gerencia-cadastrar/gerencia-cadastrar.component';
 import { GerenciaRoutingModule } from './gerencia.routing.module';
-import { GerenciaEditarComponent } from './gerencia-editar/gerencia-editar.component';
+import { GerenciaFormComponent } from './gerencia-form/gerencia-form.component';
+//import { GerenciaCadastrarComponent } from './gerencia-cadastrar/gerencia-cadastrar.component';
+//import { GerenciaEditarComponent } from './gerencia-editar/gerencia-editar.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        GerenciaComponent,
-       GerenciaCadastrarComponent,
-       GerenciaEditarComponent
+       GerenciaFormComponent
+//       GerenciaCadastrarComponent,
+//       GerenciaEditarComponent
      ],
      imports: [
         GerenciaRoutingModule,

@@ -21,7 +21,7 @@ export class ProfissiogramaBuilder extends GenericBuilder{
         cloneProfissiograma.setId(this.getValue(profissiograma, "getId"));
         cloneProfissiograma.setVersion(this.getValue(profissiograma, "getVersion"));
         cloneProfissiograma.setNome(this.getValue(profissiograma, "getNome"));
-        
+        cloneProfissiograma.setConcluido(this.getValue(profissiograma, "getConcluido"));
         
         cloneProfissiograma.setGrupoMonitoramentos(
                 new GrupoMonitoramentoBuilder().cloneList(this.getValue(profissiograma, "getGrupoMonitoramentos")));

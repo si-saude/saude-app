@@ -141,4 +141,16 @@ export class EmpregadoBuilder extends GenericBuilder{
         
         return cloneEmpregado;
     }
+    
+    cloneList(empregados: Array<Empregado>): Array<Empregado> {
+        let array:Array<Empregado> = new Array<Empregado>();
+    
+        if (empregados !== null && empregados !== undefined) { 
+            for (let empregado of empregados) {
+                array.push(this.clone(empregado));
+            }
+        }
+        
+        return array;
+    }
 }

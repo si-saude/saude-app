@@ -2,47 +2,84 @@
 <meta charset="utf-8">
 </head>
 
-<div class="row">
-	<h3 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h3>
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload> 
 
-	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+
+<div class="row">
+	<form class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 			<div class="input-field col s8">
-				<input id="codigo" type="text" required formControlName="codigo">
 				<label for="codigo" data-error="Campo obrigatório.">Codigo</label>
+				<input id="codigo" type="text" required name="gerencia.codigo" [(ngModel)]="gerencia.codigo">
 			</div>
-
 			
 			<div class="input-field col s4">
 				<fieldset>
 					<legend>Gerência</legend>
-					<select class="browser-default" formControlName="gerencia">
-						<option selected value>Selecione uma gerência</option>
+					<select class="browser-default" name="gerencia.gerencia" [(ngModel)]="gerencia.gerencia.id">
+						<option selected value=0>Selecione uma gerência</option>
 						<option *ngFor="let gerencia of gerencias" value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
 					</select>
 				</fieldset>
 			</div>
 		</div>
-
+		
 		<div class="row">
-			<div class="input-field col s12">
-				<input id="descricao" type="text" required
-					formControlName="descricao"> <label for="descricao">Descrição</label>
+			<div class="input-field col s4">
+				<label for="gerente">Gerente</label>
+				<input type="text" materialize="autocomplete" 
+					name="gerencia.gerente.nome" [(ngModel)]="gerencia.gerente.nome"
+					(focusout)="getGerente($event)"
+					(ngModelChange)="selectEmpregado($event)"
+					[materializeParams]="autocompleteEmpregado">
+				<input id="gerencia.gerente.id" type="hidden" 
+					name="gerencia.gerente.id" [(ngModel)]="gerencia.gerente.id">
+			</div>
+			
+			<div class="input-field col s4">
+				<label for="secretario1">Secretário 1</label>
+				<input type="text" materialize="autocomplete" 
+					name="gerencia.secretario1.nome" [(ngModel)]="gerencia.secretario1.nome"
+					(focusout)="getSecretario1($event)"
+					(ngModelChange)="selectEmpregado($event)" 
+					[materializeParams]="autocompleteEmpregado">
+				<input id="gerencia.secretario1.id" type="hidden" 
+					name="gerencia.secretario1.id" [(ngModel)]="gerencia.secretario1.id">
+			</div>
+			
+			<div class="input-field col s4">
+				<label for="secretario2">Secretário 2</label>
+				<input type="text" materialize="autocomplete" 
+					name="gerencia.secretario2.nome" [(ngModel)]="gerencia.secretario2.nome"
+					(focusout)="getSecretario2($event)"
+					(ngModelChange)="selectEmpregado($event)"  
+					[materializeParams]="autocompleteEmpregado">
+				<input id="gerencia.secretario2.id" type="hidden" 
+					name="gerencia.secretario2.id" [(ngModel)]="gerencia.secretario2.id">
 			</div>
 		</div>
 
-		<input id="id" name="id" type="hidden" formControlName="id"> 
-		<input id="version" name="version" type="hidden" formControlName="version">
-				
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="descricao">Descrição</label>
+				<input id="descricao" type="text" name="gerencia.descricao" [(ngModel)]="gerencia.descricao">
+			</div>
+		</div>
+
+		<input id="id" name="id" type="hidden" name="gerencia.id" [(ngModel)]="gerencia.id"> 
+		<input id="version" name="version" type="hidden" name="gerencia.version" [(ngModel)]="gerencia.version">
+
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
 		</div>
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary"
-					[disabled]="!isValid()">Salvar</button>
+				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 			<div class="col s6">
 				<a [routerLink]="['/gerencia']" class="btn btn-primary btn-listar-perfis">Listar</a>

@@ -1,17 +1,21 @@
 <head>
 <meta charset="utf-8">
 </head>
-<div class="center-align">
-	<h5 [ngClass]="corTitulo">{{titulo}}</h5>
-</div>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+
 <div class="row form-container">
-	<form class="col s12" [formGroup]="formulario" (ngSubmit)="save()">
+	<form class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 
 			<div class="input-field col s12">
-				<input id="nome" type="text" required formControlName="nome">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label>
+				<input id="nome" type="text" required name="curso.nome" [(ngModel)]="curso.nome">
 			</div>
 			
 		</div>
@@ -19,29 +23,27 @@
 		<div class="row">
 		
 			<div class="input-field col s8">
-				<input id="descricao" type="text" formControlName="descricao">
 				<label for="descricao">Descricao</label>
+				<input id="descricao" type="text" name="curso.descricao" [(ngModel)]="curso.descricao">
 			</div>
 
 			<div class="input-field col s4">
-				<input id="validade" type="text" formControlName="validade">
 				<label for="validade">Validade (anos)</label>
+				<input id="validade" type="number" name="curso.validade" [(ngModel)]="curso.validade">
 			</div>
 
 		</div>
 
-		<input id="id" name="id" type="hidden" formControlName="id"> 
-		<input id="version" name="version" type="hidden" formControlName="version">
+		<input id="id" type="hidden" name="curso.id" [(ngModel)]="curso.id"> 
+		<input id="version" type="hidden" name="curso.version" [(ngModel)]="curso.version">
 		
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
 		</div>
 
-		
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary"
-					[disabled]="!isValid()">Salvar</button>
+				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 			<div class="col s6">
 				<a [routerLink]="['/curso']"

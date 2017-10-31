@@ -19,6 +19,7 @@ export class AppComponent {
   ngOnInit() {
       this.authService.showMenuEvent.subscribe(
           mostrar => this.showMenu = mostrar);
+      
   }
   
 }
