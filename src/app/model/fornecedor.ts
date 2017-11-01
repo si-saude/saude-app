@@ -4,7 +4,7 @@ import { Telefone } from './telefone';
 export class Fornecedor{
     private id: number = 0;
     private razaoSocial: string;
-    private tipoPessoa: string;
+    private tipoPessoa: string = "";
     private cpfCnpj: string;
     private codigoSap: string;
     private email: string;

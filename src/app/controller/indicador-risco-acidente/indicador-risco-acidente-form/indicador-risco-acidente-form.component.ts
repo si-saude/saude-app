@@ -30,7 +30,6 @@ export class IndicadorRiscoAcidenteFormComponent extends GenericFormComponent<In
     }
 
     ngOnInit() {
-        
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if( params['id'] !== undefined ) {
@@ -52,8 +51,6 @@ export class IndicadorRiscoAcidenteFormComponent extends GenericFormComponent<In
       this.indicadorRiscoAcidenteService.getRequisitos()
           .then(res => {
               this.requisitos = Object.keys(res.json());
-              this.verifyAndSetRequisito();
-//              console.log(Object.keys(res.json()));
           })
           .catch(error => {
               console.log(error);
@@ -68,19 +65,8 @@ export class IndicadorRiscoAcidenteFormComponent extends GenericFormComponent<In
           })
             
     }
-    
-    verifyAndSetRequisito() {
-        if ( this.indicadorRiscoAcidente.getRequisito() === null || 
-                this.indicadorRiscoAcidente.getRequisito() === undefined ) {
-            this.indicadorRiscoAcidente.setRequisito('0');
-        }
-    }
-    
+        
     save() {
-        if (this.indicadorRiscoAcidente.getRequisito() === '0') {
-            this.indicadorRiscoAcidente.setRequisito('');
-        }
-        console.log(new IndicadorRiscoAcidenteBuilder().clone(this.indicadorRiscoAcidente));
         super.save(new IndicadorRiscoAcidenteBuilder().clone(this.indicadorRiscoAcidente));
     }   
 

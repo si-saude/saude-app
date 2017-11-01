@@ -8,6 +8,8 @@ export class Instalacao {
     private id: number = 0;
     private version: number;
     private nome: string;
+    private latitude: number;
+    private longitude: number;
     private indicadorRiscoAcidenteInstalacoes: Array<IndicadorRiscoAcidenteInstalacao>;
     private indicadorRiscoAmbientalInstalacoes: Array<IndicadorRiscoAmbientalInstalacao>;
     private indicadorRiscoErgonomicoInstalacoes: Array<IndicadorRiscoErgonomicoInstalacao>;
@@ -36,6 +38,22 @@ export class Instalacao {
     
     setNome(nome:string){
         this.nome = nome;
+    }
+    
+    getLatitude(): number{
+        return this.latitude;
+    }
+    
+    setLatitude(latitude: number){
+        this.latitude = latitude;
+    }
+    
+    getLongitude():number{
+        return this.longitude;
+    }
+    
+    setLongitude(longitude:number){
+        this.longitude = longitude;
     }
     
     getIndicadorRiscoAcidenteInstalacoes():Array<IndicadorRiscoAcidenteInstalacao>{

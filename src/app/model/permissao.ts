@@ -2,7 +2,7 @@ import { Perfil } from './perfil';
 
 export class Permissao {
     private id: number = 0;
-    private funcionalidade: string;
+    private funcionalidade: string = "";
     private leitura: boolean;
     private escrita: boolean;
     private perfil: Perfil;

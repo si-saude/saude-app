@@ -52,7 +52,6 @@ export class IndicadorRiscoSaudeAmbientalFormComponent extends GenericFormCompon
       this.indicadorRiscoSaudeAmbientalService.getRequisitos()
           .then(res => {
               this.requisitos = Object.keys(res.json());
-              this.verifyAndSetRequisito();
 //              console.log(Object.keys(res.json()));
           })
           .catch(error => {
@@ -69,18 +68,7 @@ export class IndicadorRiscoSaudeAmbientalFormComponent extends GenericFormCompon
             
     }
     
-    verifyAndSetRequisito() {
-        if ( this.indicadorRiscoSaudeAmbiental.getRequisito() === null || 
-                this.indicadorRiscoSaudeAmbiental.getRequisito() === undefined ) {
-            this.indicadorRiscoSaudeAmbiental.setRequisito('0');
-        }
-    }
-    
     save() {
-        if (this.indicadorRiscoSaudeAmbiental.getRequisito() === '0') {
-            this.indicadorRiscoSaudeAmbiental.setRequisito('');
-        }
-        console.log(new IndicadorRiscoSaudeAmbientalBuilder().clone(this.indicadorRiscoSaudeAmbiental));
         super.save(new IndicadorRiscoSaudeAmbientalBuilder().clone(this.indicadorRiscoSaudeAmbiental));
     }   
 

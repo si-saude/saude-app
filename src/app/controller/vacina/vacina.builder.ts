@@ -1,10 +1,14 @@
 import { Vacina } from './../../model/vacina';
+import { ProfissionalVacina } from './../../model/profissional-vacina';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class VacinaBuilder extends GenericBuilder {
     
     initialize(vacina: Vacina) {
         vacina = new Vacina();
+        
+        vacina.setProfissionalVacinas(new Array<ProfissionalVacina>());
+        
         return vacina;
     }
     
@@ -33,6 +37,7 @@ export class VacinaBuilder extends GenericBuilder {
         cloneVacina.setDescricao(this.getValue(vacina,"getDescricao"));
         cloneVacina.setReforco(this.getValue(vacina,"getReforco"));
         cloneVacina.setDoses(this.getValue(vacina,"getDoses"));
+        cloneVacina.setProfissionalVacinas(new Array<ProfissionalVacina>());
         
         return cloneVacina;
     }

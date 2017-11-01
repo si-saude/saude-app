@@ -43,6 +43,7 @@ import { CriterioModule } from './controller/criterio/criterio.module';
 import { ExameModule } from './controller/exame/exame.module';
 import { GrupoMonitoramentoModule } from './controller/grupo-monitoramento/grupo-monitoramento.module';
 import { ProfissiogramaModule } from './controller/profissiograma/profissiograma.module';
+import { FornecedorModule } from './controller/fornecedor/fornecedor.module';
 import { MenuComponent } from './includes/menu/menu.component';
 import { SidenavComponent } from './includes/sidenav/sidenav.component';
 
@@ -90,6 +91,7 @@ import { SidenavComponent } from './includes/sidenav/sidenav.component';
     ExameModule,
     GrupoMonitoramentoModule,
     ProfissiogramaModule,
+    FornecedorModule,
     AppRoutingModule
   ],
   providers: [ 

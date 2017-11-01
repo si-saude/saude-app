@@ -52,7 +52,6 @@ export class IndicadorRiscoSanitarioFormComponent extends GenericFormComponent<I
       this.indicadorRiscoSanitarioService.getRequisitos()
           .then(res => {
               this.requisitos = Object.keys(res.json());
-              this.verifyAndSetRequisito();
 //              console.log(Object.keys(res.json()));
           })
           .catch(error => {
@@ -69,18 +68,7 @@ export class IndicadorRiscoSanitarioFormComponent extends GenericFormComponent<I
             
     }
     
-    verifyAndSetRequisito() {
-        if ( this.indicadorRiscoSanitario.getRequisito() === null || 
-                this.indicadorRiscoSanitario.getRequisito() === undefined ) {
-            this.indicadorRiscoSanitario.setRequisito('0');
-        }
-    }
-    
     save() {
-        if (this.indicadorRiscoSanitario.getRequisito() === '0') {
-            this.indicadorRiscoSanitario.setRequisito('');
-        }
-        console.log(new IndicadorRiscoSanitarioBuilder().clone(this.indicadorRiscoSanitario));
         super.save(new IndicadorRiscoSanitarioBuilder().clone(this.indicadorRiscoSanitario));
     }   
 

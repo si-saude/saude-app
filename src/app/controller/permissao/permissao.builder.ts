@@ -28,11 +28,16 @@ export class PermissaoBuilder extends GenericBuilder {
     }
     
     clone(permissao: Permissao): Permissao {
+        let clonePermissao = new Permissao();
         
         if (permissao === null || permissao === undefined)
             permissao = new Permissao();
         
-        let clonePermissao = new Permissao();
+        let funcionalidade:string = this.getValue(permissao, "getFuncionalidade");
+        if(funcionalidade == "")
+            funcionalidade = undefined;
+        clonePermissao.setFuncionalidade(funcionalidade);
+        
         clonePermissao.setId(this.getValue(permissao,"getId"));
         clonePermissao.setVersion(this.getValue(permissao,"getVersion"));
         clonePermissao.setEscrita(this.getValue(permissao,"getEscrita"));

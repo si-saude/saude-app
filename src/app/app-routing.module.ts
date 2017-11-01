@@ -32,6 +32,8 @@ import { CriterioComponent } from './controller/criterio/criterio.component';
 import { ExameComponent } from './controller/exame/exame.component';
 import { GrupoMonitoramentoComponent } from './controller/grupo-monitoramento/grupo-monitoramento.component';
 import { ProfissiogramaComponent } from './controller/profissiograma/profissiograma.component';
+import { VacinaComponent } from './controller/vacina/vacina.component';
+import { FornecedorComponent } from './controller/fornecedor/fornecedor.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -64,7 +66,9 @@ const routes: Routes = [
   { path: 'exame', component: ExameComponent },
   { path: 'grupo-monitoramento', component: GrupoMonitoramentoComponent },
   { path: 'profissiograma', component: ProfissiogramaComponent },
-  { path: '', pathMatch: 'full', redirectTo: '/profissiograma'}
+  { path: 'vacina', component: VacinaComponent },
+  { path: 'fornecedor', component: FornecedorComponent },
+  { path: '', pathMatch: 'full', redirectTo: '/fornecedor'}
 ];
 
 @NgModule({

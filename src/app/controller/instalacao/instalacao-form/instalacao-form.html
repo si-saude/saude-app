@@ -34,12 +34,26 @@
 
 				<div class="row">
 					<div class="input-field col s12">
-						<label data-error="Campo obrigatório." for="nome">Nome</label> <input
-							id="nome" type="text" required [(ngModel)]="instalacao.nome"
-							name="nome">
+						<label data-error="Campo obrigatório." for="nome">Nome</label> 
+						<input id="nome" type="text" required 
+							[(ngModel)]="instalacao.nome" name="nome">
 					</div>
 				</div>
-
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="latitude">Latitude</label> 
+						<input id="latitude" type="text" 
+							[(ngModel)]="instalacao.latitude" name="latitude">
+					</div>
+				
+					<div class="input-field col s6">
+						<label for="longitude">Longitude</label> 
+						<input id="longitude" type="text" 
+							[(ngModel)]="instalacao.longitude" name="longitude">
+					</div>
+				</div>
+				
 			</div>
 
 			<div id="acidente">

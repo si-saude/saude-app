@@ -6,9 +6,9 @@ import { GenericComponent } from './generic.component';
 import { GlobalVariable } from './../global';
 
 export abstract class GenericFormComponent<T> extends GenericComponent {
-    colorError: string;
-    msgError: string;
-    verifyError: boolean = false;
+//    colorError: string;
+//    msgError: string;
+//    verifyError: boolean = false;
     titulo: string;
     corTitulo: string = GlobalVariable.COLOR_TITLE;
     inscricao: Subscription;

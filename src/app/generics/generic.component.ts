@@ -4,6 +4,9 @@ export abstract class GenericComponent {
     protected showConfirmSave: boolean;
     protected msgConfirmSave: string;
     protected goTo: string;
+    protected colorError: string;
+    protected msgError: string;
+    protected verifyError: boolean = false;
 
     constructor() {
         this.showPreload = true;

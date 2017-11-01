@@ -30,10 +30,10 @@ export class IndicadorRiscoErgonomicoBuilder extends GenericBuilder{
         cloneIndicadorRiscoErgonomico.setIndice4(this.getValue(indicadorRiscoErgonomico, "getIndice4"));
         cloneIndicadorRiscoErgonomico.setIndice5(this.getValue(indicadorRiscoErgonomico, "getIndice5"));
         
-        let requisito:string = this.getValue(indicadorRiscoErgonomico, "getRequisito");
-        if(requisito == "")
-            requisito = undefined;
-        cloneIndicadorRiscoErgonomico.setRequisito(requisito);
+        if(this.getValue(indicadorRiscoErgonomico, "getRequisito") == "")
+            cloneIndicadorRiscoErgonomico.setRequisito(undefined);
+        else
+            cloneIndicadorRiscoErgonomico.setRequisito("");
         
         if (this.getValue(indicadorRiscoErgonomico, "getPeriodicidade") !== undefined) { 
             cloneIndicadorRiscoErgonomico.setPeriodicidade(

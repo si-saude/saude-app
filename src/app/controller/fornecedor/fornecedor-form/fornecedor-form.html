@@ -1,0 +1,210 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#informacoesAdicionais">Informações Adicionais</a></li>
+				</ul>
+			</div>
+
+			<div id="dadosGerais">
+				<div class="row">
+
+					<div class="input-field col s8">
+						<label for="fornecedor.razaoSocial">Razão Social</label> <input
+							id="fornecedor.razaoSocial" type="text"
+							[(ngModel)]="fornecedor.razaoSocial"
+							name="fornecedor.razaoSocial">
+					</div>
+
+					<div class="input-field col s4">
+						<fieldset>
+							<legend>Tipo Pessoa</legend>
+							<select name="fornecedor.tipoPessoa" class="browser-default"
+								[(ngModel)]="fornecedor.tipoPessoa">
+								<option disabled selected value="">Selecione um tipo de pessoa</option>
+								<option *ngFor="let tipoPessoa of tiposPessoa"
+									value="{{tipoPessoa}}">{{tipoPessoa}}</option>
+							</select>
+						</fieldset>
+					</div>
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s6">
+						<label for="fornecedor.cpfCnpj">CPF/CNPJ</label> 
+						<input type="text" id="fornecedor.cpfCnpj"
+							[(ngModel)]="fornecedor.cpfCnpj" name="fornecedor.cpfCnpj">
+					</div>
+
+					<div class="input-field col s6">
+						<label for="fornecedor.codigoSap">Código SAP</label> <input
+							type="text" id="fornecedor.codigoSap"
+							[(ngModel)]="fornecedor.codigoSap" name="fornecedor.codigoSap">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="fornecedor.email">Email</label> 
+						<input type="email" id="fornecedor.email" 
+						[(ngModel)]="fornecedor.email" name="fornecedor.email">
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="informacoesAdicionais">
+
+				<fieldset>
+					<legend class="legend">
+						Telefones <a
+							class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							(click)="addTelefone()"> <i
+							class="material-icons center-icon">add</i>
+						</a>
+					</legend>
+					<div class="form-group">
+						<div
+							*ngFor="let telefone of fornecedor.telefones;let i = index">
+
+							<div class="row">
+								<div class="input-field col s10">
+									<label for="numero" maxlength="16">Numero</label> <input
+										id="numero" name="numero{{i}}" type="text"
+										[(ngModel)]="fornecedor.telefones[i].numero">
+								</div>
+
+								<div class="col s2">
+									<a
+										class="btn-floating waves-effect waves-light red btn-remove-permission"
+										(click)="removeTelefone(i)"> <i
+										class="material-icons center-icon">delete</i>
+									</a>
+								</div>
+
+							</div>
+
+							<input [(ngModel)]="telefone.id" id="telefone.id{{i}}"
+								name="telefone.id{{i}}" type="hidden"> <input
+								[(ngModel)]="telefone.version" id="telefone.version{{i}}"
+								name="telefone.version{{i}}" type="hidden">
+
+						</div>
+
+					</div>
+
+				</fieldset>
+
+				<fieldset>
+
+					<legend class="legend"> Endereço </legend>
+					<div class="form-group">
+						<div>
+
+							<div class="row">
+								<div class="input-field col s12">
+									<label for="logradouro" maxlength="200">Logradouro</label> <input
+										[(ngModel)]="fornecedor.endereco.logradouro"
+										id="logradouro" type="text" name="endereco.logradouro">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<label for="bairro" maxlength="100">Bairro</label> <input
+										[(ngModel)]="fornecedor.endereco.bairro" id="bairro"
+										type="text" name="endereco.bairro">
+								</div>
+
+								<div class="input-field col s4">
+									<label for="numero" maxlength="12">Numero</label> <input
+										[(ngModel)]="fornecedor.endereco.numero" id="numero"
+										type="text" name="endereco.numero">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<label for="complemento" maxlength="200">Complemento</label> <input
+										[(ngModel)]="fornecedor.endereco.complemento"
+										id="complemento" name="endereco.complemento" type="text">
+								</div>
+
+								<div class="input-field col s4">
+									<label for="cep" maxlength="9">CEP</label> <input id="cep"
+										type="text" [(ngModel)]="fornecedor.endereco.cep"
+										name="endereco.cep">
+
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s6">
+									<fieldset>
+										<legend>Cidade</legend>
+										<select class="browser-default" name="cidade"
+											[(ngModel)]="fornecedor.endereco.cidade.id">
+											<option selected value=0>Selecione uma cidade</option>
+											<option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
+										</select>
+									</fieldset>
+								</div>
+							</div>
+
+							<input [(ngModel)]="fornecedor.endereco.id" id="id"
+								name="endereco.id" type="hidden"> <input
+								[(ngModel)]="fornecedor.endereco.version"
+								id="endereco.version" name="version" type="hidden">
+
+						</div>
+
+					</div>
+
+				</fieldset>
+
+			</div>
+
+			<input id="id" name="id" type="hidden" [(ngModel)]="fornecedor.id">
+			<input id="version" name="version" type="hidden"
+				[(ngModel)]="fornecedor.version">
+
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</div>
+			<div class="col s6">
+				<a [routerLink]="['/fornecedor']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

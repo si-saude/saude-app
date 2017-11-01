@@ -52,7 +52,6 @@ export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent<
       this.indicadorRiscoErgonomicoService.getRequisitos()
           .then(res => {
               this.requisitos = Object.keys(res.json());
-              this.verifyAndSetRequisito();
 //              console.log(Object.keys(res.json()));
           })
           .catch(error => {
@@ -69,18 +68,7 @@ export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent<
             
     }
     
-    verifyAndSetRequisito() {
-        if ( this.indicadorRiscoErgonomico.getRequisito() === null || 
-                this.indicadorRiscoErgonomico.getRequisito() === undefined ) {
-            this.indicadorRiscoErgonomico.setRequisito('0');
-        }
-    }
-    
     save() {
-        if (this.indicadorRiscoErgonomico.getRequisito() === '0') {
-            this.indicadorRiscoErgonomico.setRequisito('');
-        }
-        console.log(new IndicadorRiscoErgonomicoBuilder().clone(this.indicadorRiscoErgonomico));
         super.save(new IndicadorRiscoErgonomicoBuilder().clone(this.indicadorRiscoErgonomico));
     }   
 

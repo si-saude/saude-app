@@ -25,18 +25,7 @@
 		</div>
 	</div>
 </div>
-<!-- 
-<ul class="pagination">
-    <li class=""><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-    <li class="active"><a href="#!">1</a></li>
-    <li class="waves-effect"><a href="#!">2</a></li>
-    <li class="waves-effect"><a href="#!">3</a></li>
-    <li class="waves-effect"><a href="#!">4</a></li>
-    <li class="waves-effect"><a href="#!">5</a></li>
-    <li class=""><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-</ul>
- -->
- 
+
  <!-- Paginação -->
 <ul class="pagination center-align">
 
@@ -64,12 +53,6 @@
 	</a></li>
 
 </ul>
-
-<!-- Botoes navegacao paginacao 
-<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
- -->
- 
 
 <a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
 <a [routerLink]="['/perfil/cadastrar']" 
@@ -111,4 +94,8 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 			(click)="closeModalDelete()">Cancelar</a>
 	</div>
 
+</div>
+
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
 </div>

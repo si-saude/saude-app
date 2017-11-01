@@ -37,9 +37,16 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
     }
     
     initializeList(profissionaisSaude: Array<Profissional>) {
+        let array:Array<Profissional> = new Array<Profissional>();
+    
+        if(profissionaisSaude === null || profissionaisSaude === undefined)
+            profissionaisSaude = new Array<Profissional>();
+        
         for (let profissionalSaude of profissionaisSaude) {
-            this.initialize(profissionalSaude);
+            array.push(this.initialize(profissionalSaude));
         }
+        
+        return array;
     }
     
    clone(profissionalSaude: Profissional): Profissional {        

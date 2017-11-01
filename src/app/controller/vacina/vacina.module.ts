@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MaterializeModule } from 'angular2-materialize';
-import { MyDatePickerModule } from 'mydatepicker';
-
-import { SharedModule } from './../shared.module';
+import { VacinaComponent } from './vacina.component';
 import { VacinaService } from './vacina.service';
+import { VacinaFormComponent } from './vacina-form/vacina-form.component';
+import { VacinaRoutingModule } from './vacina.routing.module';
+import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
+       VacinaComponent,
+       VacinaFormComponent
      ],
      imports: [
-        MyDatePickerModule,
+        VacinaRoutingModule,
         SharedModule
      ],
      providers: [

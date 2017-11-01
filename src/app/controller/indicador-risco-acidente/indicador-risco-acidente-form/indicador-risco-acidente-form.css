@@ -64,3 +64,7 @@ select{
     margin-top: 15px;
     pointer-events: auto;
 }
+
+.checkbox-critico {
+	margin-top: 30px;
+}

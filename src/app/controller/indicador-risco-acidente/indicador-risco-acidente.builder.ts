@@ -30,10 +30,10 @@ export class IndicadorRiscoAcidenteBuilder extends GenericBuilder{
         cloneIndicadorRiscoAcidente.setIndice4(this.getValue(indicadorRiscoAcidente, "getIndice4"));
         cloneIndicadorRiscoAcidente.setIndice5(this.getValue(indicadorRiscoAcidente, "getIndice5"));
         
-        let requisito:string = this.getValue(indicadorRiscoAcidente, "getRequisito");
-        if(requisito == "")
-            requisito = undefined;
-        cloneIndicadorRiscoAcidente.setRequisito(requisito);
+        if(this.getValue(indicadorRiscoAcidente, "getRequisito") == "")
+            cloneIndicadorRiscoAcidente.setRequisito(undefined);
+        else
+            cloneIndicadorRiscoAcidente.setRequisito("");
         
         if (this.getValue(indicadorRiscoAcidente, "getPeriodicidade") !== undefined) { 
             cloneIndicadorRiscoAcidente.setPeriodicidade(

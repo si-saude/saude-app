@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit, ViewChild } from '@angular/core'; 
 import { ActivatedRoute } from '@angular/router'; 
+import { NgForm } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';  
 
@@ -63,6 +64,7 @@ export class InstalacaoFormComponent extends GenericFormComponent<Instalacao> im
                         .then( res => {
                             this.showPreload = false;
                             this.instalacao = new InstalacaoBuilder().clone(res.json());
+                            console.log(res.json());
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
@@ -116,7 +118,6 @@ export class InstalacaoFormComponent extends GenericFormComponent<Instalacao> im
     
     save() {
         this.verifyAndSetDates();
-        console.log(new InstalacaoBuilder().clone(this.instalacao));
         super.save(new InstalacaoBuilder().clone(this.instalacao));
     }   
 

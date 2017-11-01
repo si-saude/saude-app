@@ -55,7 +55,6 @@ export class GheFormComponent extends GenericFormComponent<Ghe> implements OnIni
     
     save() {
         this.verifyAndSetDates();
-        
         super.save(new GheBuilder().clone(this.ghe));
     }   
 

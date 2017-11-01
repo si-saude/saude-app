@@ -5,9 +5,9 @@
 <ul id="slide-out1" class="side-nav">
 	<li>
 		<a materialize="sideNav"
-			[materializeParams]="sidenavParams"
-			[materializeActions]="sidenavActions2" data-activates="slide-out2"
-			(click)="closeSidenav1()">Cadastrar
+			[materializeParams]="[{closeOnClick: true}]"
+			[materializeActions]="sidenavActions3" data-activates="slide-out3"
+			(click)="closeSidenav1()">Cadastro
 		</a>
 	</li>
 		
@@ -20,8 +20,70 @@
 			[materializeActions]="sidenavActions2" data-activates="slide-out1"
 			(click)="closeSidenav2()"><i class="material-icons">chevron_left</i>
 		</a>
-		<a [routerLink]="['/profissional-saude/cadastrar']">Profissional de Saúde</a> 
+		<a [routerLink]="['/base/cadastrar']">Base</a>
+		<a [routerLink]="['/cargo/cadastrar']">Cargo</a>
+		<a [routerLink]="['/cidade/cadastrar']">Cidade</a>
+		<a [routerLink]="['/criterio/cadastrar']">Critério</a>
+		<a [routerLink]="['/curso/cadastrar']">Curso</a>
 		<a [routerLink]="['/empregado/cadastrar']">Empregado</a>
+		<a [routerLink]="['/equipe/cadastrar']">Equipe</a>
+		<a [routerLink]="['/exame/cadastrar']">Exame</a>
+		<a [routerLink]="['/funcao/cadastrar']">Função</a>
+		<a [routerLink]="['/gerencia/cadastrar']">Gerência</a>
+		<a [routerLink]="['/ghe/cadastrar']">GHE</a>
+		<a [routerLink]="['/ghee/cadastrar']">GHEE</a>
+		<a [routerLink]="['/grupo-monitoramento/cadastrar']">Grupo Monitoramento</a>
+		<a [routerLink]="['/indicador-risco-acidente/cadastrar']">Indicador de Risco Acidente</a>
+		<a [routerLink]="['/indicador-risco-ambiental/cadastrar']">Indicador de Risco Ambiental</a>
+		<a [routerLink]="['/indicador-risco-ergonomico/cadastrar']">Indicador de Risco Ergonômico</a>
+		<a [routerLink]="['/indicador-risco-sanitario/cadastrar']">Indicador de Risco Sanitário</a>
+		<a [routerLink]="['/indicador-risco-saude-ambiental/cadastrar']">Indicador de Risco Saúde Ambiental</a>
+		<a [routerLink]="['/instalacao/cadastrar']">Instalação</a>
+		<a [routerLink]="['/localizacao/cadastrar']">Localização</a>
+		<a [routerLink]="['/perfil/cadastrar']">Perfil</a>
+		<a [routerLink]="['/periodicidade/cadastrar']">Periodicidade</a>
+		<a [routerLink]="['/profissiograma/cadastrar']">Profissiograma</a>
+		<a [routerLink]="['/profissional-saude/cadastrar']">Profissional de Saúde</a>
+		<a [routerLink]="['/regime/cadastrar']">Regime</a>
+		<a [routerLink]="['/tipo-grupo-monitoramento/cadastrar']">Tipo Grupo Monitoramento</a> 
+		
+	</li>
+</ul>
+
+<ul id="slide-out3" class="side-nav">
+	<li>
+		<a materialize="sideNav"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActions3" data-activates="slide-out1"
+			(click)="closeSidenav3()"><i class="material-icons">chevron_left</i>
+		</a>
+		<a [routerLink]="['/base']">Base</a>
+		<a [routerLink]="['/cargo']">Cargo</a>
+		<a [routerLink]="['/cidade']">Cidade</a>
+		<a [routerLink]="['/criterio']">Critério</a>
+		<a [routerLink]="['/curso']">Curso</a>
+		<a [routerLink]="['/empregado']">Empregado</a>
+		<a [routerLink]="['/equipe']">Equipe</a>
+		<a [routerLink]="['/exame']">Exame</a>
+		<a [routerLink]="['/funcao']">funcao</a>
+		<a [routerLink]="['/gerencia']">Gerência</a>
+		<a [routerLink]="['/ghe']">GHE</a>
+		<a [routerLink]="['/ghee']">GHEE</a>
+		<a [routerLink]="['/grupo-monitoramento']">Grupo Monitoramento</a>
+		<a [routerLink]="['/indicador-risco-acidente']">Indicador de Risco Acidente</a>
+		<a [routerLink]="['/indicador-risco-ambiental']">Indicador de Risco Ambiental</a>
+		<a [routerLink]="['/indicador-risco-ergonomico']">Indicador de Risco Ergonômico</a>
+		<a [routerLink]="['/indicador-risco-sanitario']">Indicador de Risco Sanitário</a>
+		<a [routerLink]="['/indicador-risco-saude-ambiental']">Indicador de Risco Saúde Ambiental</a>
+		<a [routerLink]="['/instalacao']">Instalação</a>
+		<a [routerLink]="['/localizacao']">Localização</a>
+		<a [routerLink]="['/perfil']">Perfil</a>
+		<a [routerLink]="['/periodicidade']">Periodicidade</a>
+		<a [routerLink]="['/profissiograma']">Profissiograma</a>
+		<a [routerLink]="['/profissional-saude']">Profissional de Saúde</a>
+		<a [routerLink]="['/regime']">Regime</a>
+		<a [routerLink]="['/tipo-grupo-monitoramento']">Tipo Grupo Monitoramento</a> 
+		
 	</li>
 </ul>
 

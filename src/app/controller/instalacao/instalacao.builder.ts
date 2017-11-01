@@ -57,6 +57,8 @@ export class InstalacaoBuilder extends GenericBuilder{
         
         cloneInstalacao.setId(this.getValue(instalacao, "getId"));
         cloneInstalacao.setVersion(this.getValue(instalacao, "getVersion"));
+        cloneInstalacao.setLatitude(this.getValue(instalacao, "getLatitude"));
+        cloneInstalacao.setLongitude(this.getValue(instalacao, "getLongitude"));
         cloneInstalacao.setNome(this.getValue(instalacao, "getNome"));
         
         cloneInstalacao.setIndicadorRiscoAcidenteInstalacoes(

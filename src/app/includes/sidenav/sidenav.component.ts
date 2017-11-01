@@ -10,6 +10,7 @@ import { MaterializeAction } from "angular2-materialize";
 export class SidenavComponent implements OnInit {
     sidenavActions1 = new EventEmitter<any|MaterializeAction>();
     sidenavActions2 = new EventEmitter<any|MaterializeAction>();
+    sidenavActions3 = new EventEmitter<any|MaterializeAction>();
     sidenavParams = [];
     
     constructor() { }
@@ -31,6 +32,14 @@ export class SidenavComponent implements OnInit {
     
     closeSidenav2() {
         this.sidenavActions2.emit( { action: "sideNav", params: ['hide'] } );
+    }
+    
+    openSidenav3() {
+        this.sidenavActions3.emit( { action: "sideNav", params: ['show'] } );
+    }
+    
+    closeSidenav3() {
+        this.sidenavActions3.emit( { action: "sideNav", params: ['hide'] } );
     }
     
 }

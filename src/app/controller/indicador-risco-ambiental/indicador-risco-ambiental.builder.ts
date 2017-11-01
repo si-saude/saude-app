@@ -30,10 +30,10 @@ export class IndicadorRiscoAmbientalBuilder extends GenericBuilder{
         cloneIndicadorRiscoAmbiental.setIndice4(this.getValue(indicadorRiscoAmbiental, "getIndice4"));
         cloneIndicadorRiscoAmbiental.setIndice5(this.getValue(indicadorRiscoAmbiental, "getIndice5"));
         
-        let requisito:string = this.getValue(indicadorRiscoAmbiental, "getRequisito");
-        if(requisito == "")
-            requisito = undefined;
-        cloneIndicadorRiscoAmbiental.setRequisito(requisito);
+        if(this.getValue(indicadorRiscoAmbiental, "getRequisito") == "")
+            cloneIndicadorRiscoAmbiental.setRequisito(undefined);
+        else
+            cloneIndicadorRiscoAmbiental.setRequisito("");
         
         if (this.getValue(indicadorRiscoAmbiental, "getPeriodicidade") !== undefined) { 
             cloneIndicadorRiscoAmbiental.setPeriodicidade(

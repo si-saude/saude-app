@@ -59,6 +59,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
             .catch(error => {
                 this.showPreload = false;
                 this.verifyError = true;
+                this.colorError = "red";
                 this.msgError = error.text();
             })
     }
@@ -178,6 +179,9 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
             })
             .catch(error => {
                 this.showPreload = false;
+                this.verifyError = true;
+                this.colorError = "red";
+                this.msgError = error.text();
                 console.log(error.text());
             })
     }
