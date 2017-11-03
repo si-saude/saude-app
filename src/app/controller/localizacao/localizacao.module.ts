@@ -10,15 +10,11 @@ import { LocalizacaoService } from './localizacao.service';
 import { LocalizacaoRoutingModule } from './localizacao.routing.module';
 import { SharedModule } from './../shared.module';
 import { LocalizacaoFormComponent } from './localizacao-form/localizacao-form.component';
-//import { LocalizacaoCadastrarComponent } from './localizacao-cadastrar/localizacao-cadastrar.component';
-//import { LocalizacaoEditarComponent } from './localizacao-editar/localizacao-editar.component';
 
 @NgModule({
     declarations: [
        LocalizacaoComponent,
      LocalizacaoFormComponent,
-//       LocalizacaoCadastrarComponent,
-//       LocalizacaoEditarComponent
      ],
      imports: [
         SharedModule,

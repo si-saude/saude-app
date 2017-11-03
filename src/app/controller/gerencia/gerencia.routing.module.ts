@@ -4,8 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { GerenciaComponent } from './gerencia.component';
 import { GerenciaFormComponent } from './gerencia-form/gerencia-form.component';
-//import { GerenciaCadastrarComponent } from './gerencia-cadastrar/gerencia-cadastrar.component';
-//import { GerenciaEditarComponent } from './gerencia-editar/gerencia-editar.component';
     
 const gerenciaRoutes: Routes = [
     { path: 'gerencia', component: GerenciaComponent },

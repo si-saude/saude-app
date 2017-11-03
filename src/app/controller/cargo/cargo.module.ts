@@ -7,18 +7,14 @@ import { MaterializeModule } from 'angular2-materialize';
 
 import { CargoComponent } from './cargo.component';
 import { CargoService } from './cargo.service';
-import { CargoCadastrarComponent } from './cargo-cadastrar/cargo-cadastrar.component';
 import { CargoFormComponent } from './cargo-form/cargo-form.component';
 import { CargoRoutingModule } from './cargo.routing.module';
-import { CargoEditarComponent } from './cargo-editar/cargo-editar.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        CargoComponent,
-       CargoCadastrarComponent,
-       CargoFormComponent,
-       CargoEditarComponent
+       CargoFormComponent
      ],
      imports: [
         CargoRoutingModule,

@@ -4,8 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { EquipeComponent } from './equipe.component';
 import { EquipeFormComponent } from './equipe-form/equipe-form.component';
-//import { EquipeCadastrarComponent } from './equipe-cadastrar/equipe-cadastrar.component';
-//import { EquipeEditarComponent } from './equipe-editar/equipe-editar.component';
 
 const equipeRoutes: Routes = [
     { path: 'equipe', component: EquipeComponent },

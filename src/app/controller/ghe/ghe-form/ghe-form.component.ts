@@ -15,7 +15,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './ghe-form.html',
     styleUrls: ['./ghe-form.css']
 } )
-export class GheFormComponent extends GenericFormComponent<Ghe> implements OnInit {
+export class GheFormComponent extends GenericFormComponent implements OnInit {
     ghe: Ghe;
     
     //ngModel
@@ -57,12 +57,6 @@ export class GheFormComponent extends GenericFormComponent<Ghe> implements OnIni
         this.verifyAndSetDates();
         super.save(new GheBuilder().clone(this.ghe));
     }   
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
     
     onDestroy() {
         this.inscricao.unsubscribe();

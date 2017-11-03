@@ -27,7 +27,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './instalacao-form.html',
     styleUrls: ['./instalacao-form.css']
 } )
-export class InstalacaoFormComponent extends GenericFormComponent<Instalacao> implements OnInit {
+export class InstalacaoFormComponent extends GenericFormComponent implements OnInit {
     instalacao: Instalacao;
     indicadoresRiscoAcidente: Array<IndicadorRiscoAcidente>;
     indicadoresRiscoAmbiental: Array<IndicadorRiscoAmbiental>;
@@ -189,12 +189,6 @@ export class InstalacaoFormComponent extends GenericFormComponent<Instalacao> im
     
     removeIndicadoresRiscoSaudeAmbientalInstalacao(i: number) {
         this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes().splice(i, 1);
-    }
-    
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
     }
     
     onDestroy() {

@@ -12,16 +12,11 @@ import { SharedModule } from './../shared.module';
 import { EquipeFormComponent } from './equipe-form/equipe-form.component';
 import { EquipeCadastrarComponent } from './equipe-cadastrar/equipe-cadastrar.component';
 import { EquipeEditarComponent } from './equipe-editar/equipe-editar.component';
-//import { LocalizacaoCadastrarComponent } from './localizacao-cadastrar/localizacao-cadastrar.component';
-//import { LocalizacaoEditarComponent } from './localizacao-editar/localizacao-editar.component';
 
 @NgModule({
     declarations: [
        EquipeComponent,
        EquipeFormComponent
-//       EquipeCadastrarComponent,
-//       EquipeEditarComponent
-//       LocalizacaoEditarComponent
      ],
      imports: [
         SharedModule,

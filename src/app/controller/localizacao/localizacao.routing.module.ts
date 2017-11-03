@@ -4,8 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LocalizacaoComponent } from './localizacao.component';
 import { LocalizacaoFormComponent } from './localizacao-form/localizacao-form.component';
-//import { LocalizacaoCadastrarComponent } from './localizacao-cadastrar/localizacao-cadastrar.component';
-//import { LocalizacaoEditarComponent } from './localizacao-editar/localizacao-editar.component';
 
 const localizacaoRoutes: Routes = [
     { path: 'localizacao', component: LocalizacaoComponent },

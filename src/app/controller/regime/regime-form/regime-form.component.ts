@@ -12,7 +12,7 @@ import { RegimeService } from './../regime.service';
     templateUrl: './regime-form.html',
     styleUrls: ['./regime-form.css']
 } )
-export class RegimeFormComponent extends GenericFormComponent<Regime> implements OnInit { 
+export class RegimeFormComponent extends GenericFormComponent implements OnInit { 
     regime: Regime;
     
     constructor( private route: ActivatedRoute,

@@ -13,8 +13,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 export class CriterioComponent extends GenericListComponent<Criterio, CriterioFilter> {
 
   constructor(service: CriterioService) {
-      let tipoGrupoMonitoramentoFilter: CriterioFilter = new CriterioFilter();
-      super(service, tipoGrupoMonitoramentoFilter);
+      let criterioFilter: CriterioFilter = new CriterioFilter();
+      super(service, criterioFilter);
   }
   
 }

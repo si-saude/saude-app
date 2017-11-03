@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
@@ -12,13 +12,15 @@ import { BaseService } from './../base.service';
     templateUrl: './base-form.html',
     styleUrls: ['./base-form.css']
 } )
-export class BaseFormComponent extends GenericFormComponent<Base> implements OnInit { 
+export class BaseFormComponent extends GenericFormComponent implements OnInit {
+//    @ViewChild("form") form;
     base: Base;
     
     constructor( private route: ActivatedRoute,
             private baseService: BaseService) { 
             super(baseService);
             
+//            this.formulario = this.form;
             this.goTo = "base";
             this.base = new BaseBuilder().initialize(this.base);
         }

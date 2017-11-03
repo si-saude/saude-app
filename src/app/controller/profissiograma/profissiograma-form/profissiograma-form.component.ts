@@ -23,7 +23,7 @@ import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-mon
     templateUrl: './profissiograma-form.html',
     styleUrls: ['./profissiograma-form.css']
 } )
-export class ProfissiogramaFormComponent extends GenericFormComponent<Profissiograma> {
+export class ProfissiogramaFormComponent extends GenericFormComponent {
     profissiograma: Profissiograma;
     gruposMonitoramento: Array<GrupoMonitoramento>;
     gruposMonitoramentoExame: Array<GrupoMonitoramentoExame>;
@@ -173,12 +173,6 @@ export class ProfissiogramaFormComponent extends GenericFormComponent<Profissiog
         if ( this.gruposMonitoramentoExame[e].getExame() === this.selectedExm ) {
             return "active";
         } else return "";
-    }
-    
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
     }
     
     onDestroy() {

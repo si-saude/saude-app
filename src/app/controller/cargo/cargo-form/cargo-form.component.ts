@@ -15,7 +15,7 @@ import { CargoService } from './../cargo.service';
     templateUrl: './cargo-form.html',
     styleUrls: ['./cargo-form.css']
 } )
-export class CargoFormComponent extends GenericFormComponent<Cargo> implements OnInit { 
+export class CargoFormComponent extends GenericFormComponent implements OnInit { 
     cargo: Cargo;
     cursos: Array<Curso>;
     vacinas: Array<Vacina>;

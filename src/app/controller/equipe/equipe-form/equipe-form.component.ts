@@ -12,7 +12,7 @@ import { EquipeService } from './../equipe.service';
     templateUrl: './equipe-form.html',
     styleUrls: ['./equipe-form.css']
 } )
-export class EquipeFormComponent extends GenericFormComponent<Equipe> implements OnInit { 
+export class EquipeFormComponent extends GenericFormComponent implements OnInit { 
     equipe: Equipe;
     
     constructor( private route: ActivatedRoute,

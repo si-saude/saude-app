@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
 
 <div class="row form-container">
-	<form class="col s12" (ngSubmit)="save()">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 
@@ -34,8 +34,26 @@
 			</div>
 			<div class="col s6">
 				<a [routerLink]="['/base']"
-					class="btn btn-primary btn-listar-perfis">Listar</a>
+					class="btn btn-primary btn-listar-perfis" (click)="">Listar</a>
 			</div>
 		</div>
 	</form>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams" [materializeActions]="modalDeactivate">
+
+	<h5 class="titleModalDelete">Confirmação para remoção</h5>
+	<p class="paragraphModalDelete">Deseja realmente sair dessa tela?</p>
+	<p class="paragraphModalDelete">Se desejar sair, suas alterações não
+		serão salvas.</p>
+
+	<div class="modal-footer">
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="confirmDeactivate()">Confirmar</a> <a
+			class="waves-effect waves-green btn-flat"
+			(click)="closeModalDeactivate()">Cancelar</a>
+	</div>
+
 </div>

@@ -9,16 +9,12 @@ import { ProfissionalSaudeComponent } from './profissional-saude.component';
 import { ProfissionalSaudeService } from './profissional-saude.service';
 import { ProfissionalSaudeRoutingModule } from './profissional-saude.routing.module';
 import { SharedModule } from './../shared.module';
-import { ProfissionalSaudeCadastrarComponent } from './profissional-saude-cadastrar/profissional-saude-cadastrar.component';
-import { ProfissionalSaudeEditarComponent } from './profissional-saude-editar/profissional-saude-editar.component';
 import { ProfissionalSaudeFormComponent } from './profissional-saude-form/profissional-saude-form.component';
 
 @NgModule({
     declarations: [
        ProfissionalSaudeComponent,
-       ProfissionalSaudeFormComponent,
-       ProfissionalSaudeCadastrarComponent,
-       ProfissionalSaudeEditarComponent
+       ProfissionalSaudeFormComponent
      ],
      imports: [
         ProfissionalSaudeRoutingModule,

@@ -3,8 +3,6 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProfissionalSaudeComponent } from './profissional-saude.component';
-import { ProfissionalSaudeCadastrarComponent } from './profissional-saude-cadastrar/profissional-saude-cadastrar.component';
-import { ProfissionalSaudeEditarComponent } from './profissional-saude-editar/profissional-saude-editar.component';
 import { ProfissionalSaudeFormComponent } from './profissional-saude-form/profissional-saude-form.component';
     
 const profissionalSaudeRoutes: Routes = [

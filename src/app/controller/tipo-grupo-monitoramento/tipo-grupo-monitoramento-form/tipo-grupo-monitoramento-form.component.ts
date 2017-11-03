@@ -12,7 +12,7 @@ import { TipoGrupoMonitoramentoService } from './../tipo-grupo-monitoramento.ser
     templateUrl: './tipo-grupo-monitoramento-form.html',
     styleUrls: ['./tipo-grupo-monitoramento-form.css']
 } )
-export class TipoGrupoMonitoramentoFormComponent extends GenericFormComponent<TipoGrupoMonitoramento> implements OnInit { 
+export class TipoGrupoMonitoramentoFormComponent extends GenericFormComponent implements OnInit { 
     tipoGrupoMonitoramento: TipoGrupoMonitoramento;
     
     constructor( private route: ActivatedRoute,

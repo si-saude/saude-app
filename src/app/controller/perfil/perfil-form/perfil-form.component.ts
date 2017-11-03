@@ -15,7 +15,7 @@ import { PermissaoBuilder } from './../../permissao/permissao.builder';
     templateUrl: './perfil-form.html',
     styleUrls: ['./perfil-form.css']
 } )
-export class PerfilFormComponent extends GenericFormComponent<Perfil> implements OnInit {
+export class PerfilFormComponent extends GenericFormComponent implements OnInit {
     perfil: Perfil;
     funcionalidades: Array<string>;
     
@@ -70,12 +70,6 @@ export class PerfilFormComponent extends GenericFormComponent<Perfil> implements
     removePermissao(i: number) {
         this.perfil.getPermissoes().splice(i, 1);
     }
-    
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false; 
-//        } else return true; 
-    } 
     
     onDestroy() { 
         this.inscricao.unsubscribe();

@@ -13,7 +13,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './criterio-form.html',
     styleUrls: ['./criterio-form.css']
 } )
-export class CriterioFormComponent extends GenericFormComponent<Criterio> implements OnInit {
+export class CriterioFormComponent extends GenericFormComponent implements OnInit {
     criterio: Criterio;
     tipos: Array<string>;
     
@@ -50,7 +50,6 @@ export class CriterioFormComponent extends GenericFormComponent<Criterio> implem
       this.criterioService.getTipos()
           .then(res => {
               this.tipos = Object.keys(res.json());
-//              console.log(Object.keys(res.json()));
           })
           .catch(error => {
               console.log(error);
@@ -61,13 +60,6 @@ export class CriterioFormComponent extends GenericFormComponent<Criterio> implem
     save() {
         super.save(new CriterioBuilder().clone(this.criterio));
     }   
-
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
     
     onDestroy() {
         this.inscricao.unsubscribe();

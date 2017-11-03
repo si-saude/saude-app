@@ -16,7 +16,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './fornecedor-form.html',
     styleUrls: ['./fornecedor-form.css']
 } )
-export class FornecedorFormComponent extends GenericFormComponent<Fornecedor> implements OnInit {
+export class FornecedorFormComponent extends GenericFormComponent implements OnInit {
     fornecedor: Fornecedor;
     tiposPessoa: Array<string>;
     cidades: Array<Cidade>;
@@ -84,12 +84,6 @@ export class FornecedorFormComponent extends GenericFormComponent<Fornecedor> im
 
     removeTelefone(i: number) {
         this.fornecedor.getTelefones().splice(i, 1);
-    }
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
     }
     
     onDestroy() {

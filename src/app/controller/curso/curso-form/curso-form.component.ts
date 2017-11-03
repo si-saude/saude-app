@@ -12,7 +12,7 @@ import { CursoService } from './../curso.service';
     templateUrl: './curso-form.html',
     styleUrls: ['./curso-form.css']
 } )
-export class CursoFormComponent extends GenericFormComponent<Curso> implements OnInit { 
+export class CursoFormComponent extends GenericFormComponent implements OnInit { 
     curso: Curso;
     
     constructor( private route: ActivatedRoute,

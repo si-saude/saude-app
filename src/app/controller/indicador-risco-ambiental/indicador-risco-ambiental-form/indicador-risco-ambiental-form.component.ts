@@ -14,7 +14,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './indicador-risco-ambiental-form.html',
     styleUrls: ['./indicador-risco-ambiental-form.css']
 } )
-export class IndicadorRiscoAmbientalFormComponent extends GenericFormComponent<IndicadorRiscoAmbiental> implements OnInit {
+export class IndicadorRiscoAmbientalFormComponent extends GenericFormComponent implements OnInit {
     indicadorRiscoAmbiental: IndicadorRiscoAmbiental;
     requisitos: Array<string>;
     periodicidades: Array<Periodicidade>;
@@ -52,7 +52,6 @@ export class IndicadorRiscoAmbientalFormComponent extends GenericFormComponent<I
       this.indicadorRiscoAmbientalService.getRequisitos()
           .then(res => {
               this.requisitos = Object.keys(res.json());
-//              console.log(Object.keys(res.json()));
           })
           .catch(error => {
               console.log(error);
@@ -72,13 +71,6 @@ export class IndicadorRiscoAmbientalFormComponent extends GenericFormComponent<I
         super.save(new IndicadorRiscoAmbientalBuilder().clone(this.indicadorRiscoAmbiental));
     }   
 
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
-    
     onDestroy() {
         this.inscricao.unsubscribe();
     }

@@ -13,7 +13,7 @@ import { LocalizacaoService } from './../localizacao.service';
     templateUrl: './localizacao-form.html',
     styleUrls: ['./localizacao-form.css']
 } )
-export class LocalizacaoFormComponent extends GenericFormComponent<Localizacao> implements OnInit {
+export class LocalizacaoFormComponent extends GenericFormComponent implements OnInit {
     localizacao: Localizacao;
     
     localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter();
@@ -50,12 +50,6 @@ export class LocalizacaoFormComponent extends GenericFormComponent<Localizacao> 
     
     save() {
         super.save(new LocalizacaoBuilder().clone(this.localizacao));
-    }
-    
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
     }
     
     onDestroy() {

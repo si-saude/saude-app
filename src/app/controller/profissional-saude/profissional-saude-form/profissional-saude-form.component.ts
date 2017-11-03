@@ -28,7 +28,7 @@ import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
     templateUrl: './profissional-saude-form.html',
     styleUrls: ['./profissional-saude-form.css']
 } )
-export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profissional> implements OnInit {
+export class ProfissionalSaudeFormComponent extends GenericFormComponent implements OnInit {
     
     @ViewChild('assinatura') inputEl: ElementRef;
     
@@ -220,12 +220,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent<Profiss
         this.profissionalSaude.getTelefones().splice(i, 1);
     }
 
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
-    
     onDestroy() {
         this.inscricao.unsubscribe();
     }

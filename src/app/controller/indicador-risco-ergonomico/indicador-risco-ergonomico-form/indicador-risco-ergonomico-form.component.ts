@@ -14,7 +14,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './indicador-risco-ergonomico-form.html',
     styleUrls: ['./indicador-risco-ergonomico-form.css']
 } )
-export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent<IndicadorRiscoErgonomico> implements OnInit {
+export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent implements OnInit {
     indicadorRiscoErgonomico: IndicadorRiscoErgonomico;
     requisitos: Array<string>;
     periodicidades: Array<Periodicidade>;
@@ -52,7 +52,6 @@ export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent<
       this.indicadorRiscoErgonomicoService.getRequisitos()
           .then(res => {
               this.requisitos = Object.keys(res.json());
-//              console.log(Object.keys(res.json()));
           })
           .catch(error => {
               console.log(error);
@@ -72,13 +71,6 @@ export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent<
         super.save(new IndicadorRiscoErgonomicoBuilder().clone(this.indicadorRiscoErgonomico));
     }   
 
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
-    
     onDestroy() {
         this.inscricao.unsubscribe();
     }

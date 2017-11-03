@@ -3,8 +3,6 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CargoComponent } from './cargo.component';
-import { CargoCadastrarComponent } from './cargo-cadastrar/cargo-cadastrar.component';
-import { CargoEditarComponent } from './cargo-editar/cargo-editar.component';
 import { CargoFormComponent } from './cargo-form/cargo-form.component';
     
 const cargoRoutes: Routes = [

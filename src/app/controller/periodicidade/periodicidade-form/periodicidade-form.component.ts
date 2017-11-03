@@ -13,7 +13,7 @@ import { PeriodicidadeService } from './../periodicidade.service';
     templateUrl: './periodicidade-form.html',
     styleUrls: ['./periodicidade-form.css']
 } )
-export class PeriodicidadeFormComponent extends GenericFormComponent<Periodicidade> implements OnInit {
+export class PeriodicidadeFormComponent extends GenericFormComponent implements OnInit {
     periodicidade: Periodicidade;
     
     periodicidadeFilter: PeriodicidadeFilter = new PeriodicidadeFilter();
@@ -51,13 +51,7 @@ export class PeriodicidadeFormComponent extends GenericFormComponent<Periodicida
     save() {
         super.save(new PeriodicidadeBuilder().clone(this.periodicidade));
     }
-    
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
-    
+
     onDestroy() {
         this.inscricao.unsubscribe();
     }

@@ -21,7 +21,7 @@ import { GrupoMonitoramentoService } from './../grupo-monitoramento.service';
     templateUrl: './grupo-monitoramento-form.html',
     styleUrls: ['./grupo-monitoramento-form.css']
 } )
-export class GrupoMonitoramentoFormComponent extends GenericFormComponent<GrupoMonitoramento> implements OnInit {
+export class GrupoMonitoramentoFormComponent extends GenericFormComponent implements OnInit {
     tiposGrupoMonitoramento: Array<TipoGrupoMonitoramento>;
     grupoMonitoramento: GrupoMonitoramento;
     exames: Array<Exame>;

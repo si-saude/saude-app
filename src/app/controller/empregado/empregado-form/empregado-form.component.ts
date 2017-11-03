@@ -31,7 +31,7 @@ import { HistoricoGrupoMonitoramentoBuilder } from './../../historico-grupo-moni
     templateUrl: './empregado-form.html',
     styleUrls: ['./empregado-form.css']
 } )
-export class EmpregadoFormComponent extends GenericFormComponent<Empregado> implements OnInit {
+export class EmpregadoFormComponent extends GenericFormComponent implements OnInit {
     empregado: Empregado;
     statuses: Array<string>;
     sexos: Array<string>;
@@ -237,12 +237,6 @@ export class EmpregadoFormComponent extends GenericFormComponent<Empregado> impl
     
     removeInstalacao(i: number) {
         this.empregado.getInstalacoes().splice(i, 1);
-    }
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
     }
     
     onDestroy() {

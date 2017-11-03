@@ -13,7 +13,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './exame-form.html',
     styleUrls: ['./exame-form.css']
 } )
-export class ExameFormComponent extends GenericFormComponent<Exame> implements OnInit {
+export class ExameFormComponent extends GenericFormComponent implements OnInit {
     exame: Exame;
     
     exameFilter: ExameFilter = new ExameFilter();
@@ -53,13 +53,6 @@ export class ExameFormComponent extends GenericFormComponent<Exame> implements O
         super.save(new ExameBuilder().clone(this.exame));
     }   
 
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
-    
     onDestroy() {
         this.inscricao.unsubscribe();
     }

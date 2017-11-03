@@ -12,7 +12,7 @@ import { FuncaoService } from './../funcao.service';
     templateUrl: './funcao-form.html',
     styleUrls: ['./funcao-form.css']
 } )
-export class FuncaoFormComponent extends GenericFormComponent<Funcao> implements OnInit { 
+export class FuncaoFormComponent extends GenericFormComponent implements OnInit { 
     funcao: Funcao;
     
     constructor( private route: ActivatedRoute,

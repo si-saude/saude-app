@@ -4,8 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CursoComponent } from './curso.component';
 import { CursoFormComponent } from './curso-form/curso-form.component';
-//import { CursoCadastrarComponent } from './curso-cadastrar/curso-cadastrar.component';
-//import { CursoEditarComponent } from './curso-editar/curso-editar.component';
     
 const cursoRoutes: Routes = [
     { path: 'curso', component: CursoComponent },

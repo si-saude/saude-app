@@ -12,7 +12,7 @@ import { VacinaService } from './../vacina.service';
     templateUrl: './vacina-form.html',
     styleUrls: ['./vacina-form.css']
 } )
-export class VacinaFormComponent extends GenericFormComponent<Vacina> implements OnInit { 
+export class VacinaFormComponent extends GenericFormComponent implements OnInit { 
     vacina: Vacina;
     
     constructor( private route: ActivatedRoute,

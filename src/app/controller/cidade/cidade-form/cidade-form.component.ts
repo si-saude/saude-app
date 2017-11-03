@@ -12,7 +12,7 @@ import { CidadeService } from './../cidade.service';
     templateUrl: './cidade-form.html',
     styleUrls: ['./cidade-form.css']
 } )
-export class CidadeFormComponent extends GenericFormComponent<Cidade> implements OnInit { 
+export class CidadeFormComponent extends GenericFormComponent implements OnInit { 
     cidade: Cidade;
     
     constructor( private route: ActivatedRoute,

@@ -14,7 +14,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './indicador-risco-sanitario-form.html',
     styleUrls: ['./indicador-risco-sanitario-form.css']
 } )
-export class IndicadorRiscoSanitarioFormComponent extends GenericFormComponent<IndicadorRiscoSanitario> implements OnInit {
+export class IndicadorRiscoSanitarioFormComponent extends GenericFormComponent implements OnInit {
     indicadorRiscoSanitario: IndicadorRiscoSanitario;
     requisitos: Array<string>;
     periodicidades: Array<Periodicidade>;
@@ -72,13 +72,6 @@ export class IndicadorRiscoSanitarioFormComponent extends GenericFormComponent<I
         super.save(new IndicadorRiscoSanitarioBuilder().clone(this.indicadorRiscoSanitario));
     }   
 
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
-    
     onDestroy() {
         this.inscricao.unsubscribe();
     }

@@ -8,6 +8,7 @@ import { BaseService } from './base.service';
 import { BaseFormComponent } from './base-form/base-form.component';
 import { BaseRoutingModule } from './base.routing.module';
 import { SharedModule } from './../shared.module';
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { SharedModule } from './../shared.module';
         SharedModule
      ],
      providers: [
-        BaseService
+        BaseService,
+        CanDeactivateGuard
      ]
 })
 export class BaseModule{}

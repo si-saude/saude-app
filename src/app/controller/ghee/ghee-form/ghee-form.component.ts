@@ -15,7 +15,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     templateUrl: './ghee-form.html',
     styleUrls: ['./ghee-form.css']
 } )
-export class GheeFormComponent extends GenericFormComponent<Ghee> implements OnInit {
+export class GheeFormComponent extends GenericFormComponent implements OnInit {
     ghee: Ghee;
     
     //ngModel
@@ -59,12 +59,6 @@ export class GheeFormComponent extends GenericFormComponent<Ghee> implements OnI
         
         super.save(new GheeBuilder().clone(this.ghee));
     }   
-
-    isPossibleDeactivate() {
-//        if ( this.formulario.dirty ) {
-//            return false;
-//        } else return true;
-    }
     
     onDestroy() {
         this.inscricao.unsubscribe();
