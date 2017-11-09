@@ -10,8 +10,6 @@ import { EquipeService } from './equipe.service';
 import { EquipeRoutingModule } from './equipe.routing.module';
 import { SharedModule } from './../shared.module';
 import { EquipeFormComponent } from './equipe-form/equipe-form.component';
-import { EquipeCadastrarComponent } from './equipe-cadastrar/equipe-cadastrar.component';
-import { EquipeEditarComponent } from './equipe-editar/equipe-editar.component';
 
 @NgModule({
     declarations: [

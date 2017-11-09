@@ -1,27 +1,26 @@
 import { Cargo } from './cargo';
+import { Pessoa } from './pessoa';
 import { Funcao } from './funcao';
 import { Regime } from './regime';
 import { Gerencia } from './gerencia';
 import { Base } from './base';
 import { Ghe } from './ghe';
 import { Ghee } from './ghee';
+import { Endereco } from './endereco';
 import { Instalacao } from './instalacao';
-import { Telefone } from './telefone';
 import { EmpregadoVacina } from './empregado-vacina';
 import { GrupoMonitoramento } from './grupo-monitoramento';
 import { HistoricoGrupoMonitoramento } from './historico-grupo-monitoramento';
 
-export class Empregado{
+export class Empregado {
     private id: number = 0;
-    private nome:string;
-    private cpf:string;
-    private dataNascimento:Date;
     private chave: string;
     private matricula: string;
-    private rg: string;
-    private sexo: string = "";
     private ramal: string;
     private status: string = "";
+    private estadoCivil: string = "";
+    private escolaridade: string = "";
+    private pessoa: Pessoa;
     private cargo: Cargo;
     private funcao: Funcao;
     private regime: Regime;
@@ -30,10 +29,13 @@ export class Empregado{
     private ghe: Ghe;
     private ghee: Ghee;
     private instalacoes: Array<Instalacao>;
-    private telefones: Array<Telefone>;
     private empregadoVacinas: Array<EmpregadoVacina>;
     private grupoMonitoramentos: Array<GrupoMonitoramento>;
     private historicoGrupoMonitoramentos: Array<HistoricoGrupoMonitoramento>;
+    private foto: any;
+    private fotoBase64: string;
+    private assinatura: any;
+    private assinaturaBase64: string;
     private version: number;
 
     getId(): number {
@@ -52,30 +54,6 @@ export class Empregado{
         this.version = version;
     }
     
-    getNome():string{
-        return this.nome;
-    }
-    
-    setNome(nome:string){
-        this.nome = nome;
-    }
-    
-    getCpf():string{
-        return this.cpf;
-    }
-    
-    setCpf(cpf:string){
-        this.cpf = cpf;
-    }
-    
-    getDataNascimento():Date{
-        return this.dataNascimento;
-    }
-    
-    setDataNascimento(dN: Date){
-        this.dataNascimento = dN;
-    }
-    
     getChave(): string{
         return this.chave;
     }
@@ -92,22 +70,6 @@ export class Empregado{
         this.matricula = matricula;
     }
     
-    getRg(): string{
-        return this.rg;
-    }
-    
-    setRg(rg: string){
-        this.rg = rg;
-    }
-    
-    getSexo(): string{
-        return this.sexo;
-    }
-    
-    setSexo(sexo: string){
-        this.sexo = sexo;
-    }
-    
     getRamal(): string{
         return this.ramal;
     }
@@ -122,6 +84,30 @@ export class Empregado{
     
     setStatus(status: string){
         this.status = status;
+    }
+    
+    getEstadoCivil(): string{
+        return this.estadoCivil;
+    }
+    
+    setEstadoCivil(estadoCivil: string){
+        this.estadoCivil = estadoCivil;
+    }
+    
+    getEscolaridade(): string{
+        return this.escolaridade;
+    }
+    
+    setEscolaridade(escolaridade: string){
+        this.escolaridade = escolaridade;
+    }
+    
+    getPessoa(): Pessoa {
+        return this.pessoa;
+    }
+    
+    setPessoa(pessoa: Pessoa) {
+        this.pessoa = pessoa;
     }
     
     getCargo(): Cargo{
@@ -188,14 +174,6 @@ export class Empregado{
         this.instalacoes = instalacoes;
     }
     
-    getTelefones(): Array<Telefone>{
-        return this.telefones;
-    }
-    
-    setTelefones(telefones: Array<Telefone>){
-        this.telefones = telefones;
-    }
-    
     getEmpregadoVacinas(): Array<EmpregadoVacina>{
         return this.empregadoVacinas;
     }
@@ -218,6 +196,38 @@ export class Empregado{
     
     setHistoricoGrupoMonitoramentos(historicoGrupoMonitoramentos: Array<HistoricoGrupoMonitoramento>){
         this.historicoGrupoMonitoramentos = historicoGrupoMonitoramentos;
+    }
+    
+    getFoto():any{
+        return this.foto;
+    }
+    
+    setFoto(foto:any){
+        this.foto = foto;
+    }
+    
+    getFotoBase64():string{
+        return this.fotoBase64;
+    }
+    
+    setFotoBase64(f:string){
+        this.fotoBase64 = f;
+    }
+    
+    getAssinatura():any{
+        return this.assinatura;
+    }
+    
+    setAssinatura(assinatura:any){
+        this.assinatura = assinatura;
+    }
+    
+    getAssinaturaBase64():string{
+        return this.assinaturaBase64;
+    }
+    
+    setAssinaturaBase64(a:string){
+        this.assinaturaBase64 = a;
     }
     
 }

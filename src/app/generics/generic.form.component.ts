@@ -1,6 +1,9 @@
-import { ViewChild, EventEmitter } from '@angular/core';
+import { ViewChild, EventEmitter, Injector } from '@angular/core';
 import { IMyDpOptions } from 'mydatepicker';
 import { Subscription } from 'rxjs/Rx';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 
 import { MaterializeAction } from "angular2-materialize";
 
@@ -16,8 +19,6 @@ export abstract class GenericFormComponent extends GenericComponent {
     @ViewChild( "form" ) formulario;
     protected modelParams;
     protected modalDeactivate;
-    protected deactivateForm;
-
     myDatePickerOptions: IMyDpOptions = {
         dateFormat: 'dd/mm/yyyy'
     };
@@ -26,7 +27,6 @@ export abstract class GenericFormComponent extends GenericComponent {
         super();
         this.showPreload = false;
         this.showConfirmSave = false;
-        this.deactivateForm = false;
         this.modalDeactivate = new EventEmitter<string | MaterializeAction>();
         this.modelParams = [{
             dismissible: false,
@@ -35,12 +35,10 @@ export abstract class GenericFormComponent extends GenericComponent {
     }
 
     isValid() {
-        //        if ( this.formulario.valid ) {
-        //            return true;
-        //        } else { return false; }
     }
 
     save( object ) {
+        
         this.showPreload = true;
         this.service.submit( object )
             .then( res => {
@@ -98,7 +96,6 @@ export abstract class GenericFormComponent extends GenericComponent {
     }
 
     isPossibleDeactivate() {
-        console.log( this.formulario );
         if ( this.formulario.dirty ) {
             return false;
         } else return true;
@@ -108,12 +105,11 @@ export abstract class GenericFormComponent extends GenericComponent {
         this.modalDeactivate.emit({action:"modal",params:['open']});
     }
     
+    confirmDeactivate() {
+        
+    }
+    
     closeModalDeactivate() {
         this.modalDeactivate.emit({action:"modal",params:['close']});
     }
-    
-    confirmDeactivate() {
-        this.deactivateForm = true;
-    }
-    
 }

@@ -42,11 +42,9 @@ export class FornecedorFormComponent extends GenericFormComponent implements OnI
                         .then( res => {
                             this.showPreload = false;
                             this.fornecedor = new FornecedorBuilder().clone(res.json());
-                            console.log(res.json());
                         } )
                         .catch( error => {
                             this.showPreload = false;
-                            console.log( "erro" );
                             console.log( error );
                         } )
                 }
@@ -71,7 +69,6 @@ export class FornecedorFormComponent extends GenericFormComponent implements OnI
     }
     
     save() {
-//        console.log(this.fornecedor);
         super.save(new FornecedorBuilder().clone(this.fornecedor));
     }   
 

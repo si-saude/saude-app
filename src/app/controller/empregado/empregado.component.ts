@@ -19,16 +19,16 @@ export class EmpregadoComponent extends GenericListComponent<Empregado, Empregad
     }
     
     initializeFilterDate() {
-        if (this.filter.getDataNascimento().getInicio() !== null && 
-                this.filter.getDataNascimento().getInicio() !== undefined ) {
-            this.filter.getDataNascimento().setInicio(
-                    this.parseDatePickerToDate(this.filter.getDataNascimento().getInicio()));
+        if (this.filter.getPessoa().getDataNascimento().getInicio() !== null && 
+                this.filter.getPessoa().getDataNascimento().getInicio() !== undefined ) {
+            this.filter.getPessoa().getDataNascimento().setInicio(
+                    this.parseDatePickerToDate(this.filter.getPessoa().getDataNascimento().getInicio()));
         }
         
-        if (this.filter.getDataNascimento().getFim() !== null && 
-                this.filter.getDataNascimento().getFim() !== undefined ) {
-            this.filter.getDataNascimento().setFim(
-                    this.parseDatePickerToDate(this.filter.getDataNascimento().getFim()));
+        if (this.filter.getPessoa().getDataNascimento().getFim() !== null && 
+                this.filter.getPessoa().getDataNascimento().getFim() !== undefined ) {
+            this.filter.getPessoa().getDataNascimento().setFim(
+                    this.parseDatePickerToDate(this.filter.getPessoa().getDataNascimento().getFim()));
         }
     }
     

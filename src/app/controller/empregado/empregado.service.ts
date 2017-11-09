@@ -12,6 +12,7 @@ import { GerenciaService } from '../gerencia/gerencia.service';
 import { BaseService } from './../base/base.service';
 import { GheService } from './../ghe/ghe.service';
 import { GheeService } from './../ghee/ghee.service';
+import { CidadeService } from './../cidade/cidade.service';
 import { InstalacaoService } from './../instalacao/instalacao.service';
 import { VacinaService } from './../vacina/vacina.service';
 import { GrupoMonitoramentoService } from './../grupo-monitoramento/grupo-monitoramento.service';
@@ -30,6 +31,7 @@ export class EmpregadoService extends GenericService {
             private gheeService: GheeService,
             private instalacaoService: InstalacaoService,
             private vacinaService: VacinaService,
+            private cidadeService: CidadeService,
             private grupoMonitoramentoService: GrupoMonitoramentoService) { 
         super(http, router, "empregado");
     }
@@ -40,7 +42,14 @@ export class EmpregadoService extends GenericService {
     
     getEmpregadoByName(nome: string) {
         let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-        empregadoFilter.setNome(nome);
+        empregadoFilter.getPessoa().setNome(nome);
+        
+        return this.selectList(empregadoFilter);
+    }
+    
+    getEmpregadoByChave(chave: string) {
+        let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+        empregadoFilter.setChave(chave);
         
         return this.selectList(empregadoFilter);
     }
@@ -53,9 +62,23 @@ export class EmpregadoService extends GenericService {
     }
     
     getSexos() {
-        let urlStatuses = GlobalVariable.BASE_API_URL + "/generic/sexo";
+        let urlSexos = GlobalVariable.BASE_API_URL + "/generic/sexo";
         return this.http
-            .get( urlStatuses + "?filter=", { headers: this.headers } )
+            .get( urlSexos + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEstadosCivies() {
+        let urlEstadosCivies = GlobalVariable.BASE_API_URL + "/generic/estado-civil";
+        return this.http
+            .get( urlEstadosCivies + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEscolaridades() {
+        let urlEscolaridades = GlobalVariable.BASE_API_URL + "/generic/escolaridade";
+        return this.http
+            .get( urlEscolaridades + "?filter=", { headers: this.headers } )
             .toPromise();
     }
     
@@ -85,6 +108,10 @@ export class EmpregadoService extends GenericService {
     
     getGhees() {
         return this.gheeService.getGhees();
+    }
+    
+    getCidades() {
+        return this.cidadeService.getCidades();
     }
     
     getInstalacoes() {

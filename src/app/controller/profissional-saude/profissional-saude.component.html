@@ -14,7 +14,7 @@
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
 			<div class="col s10">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.empregado.pessoa.nome}}</a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/profissional-saude/editar', a.id]"><i
@@ -69,7 +69,7 @@
 				[(ngModel)]="filter.nome" name="nome">
 		</div>
 	</div>
-
+<!-- 
 	<div class="row">
 		<div class="input-field col s12">
 			<div class="input-field col s4">
@@ -101,14 +101,14 @@
 			</div>
 		</div>
 	</div>
-
+ 
 	<div class="input-field col s8">
 		<div class="modal-content">
 			<label for="matricula">Matricula</label> <input type="text"
-				id="matricula" [(ngModel)]="filter.matricula" name="matricula">
+				id="matricula" [(ngModel)]="filter.empregado.matricula" name="matricula">
 		</div>
 	</div>
-
+-->
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
@@ -119,7 +119,7 @@
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modelParams" [materializeActions]="modalDelete">
+	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
 	<h5 class="titleModalDelete">Confirmação para remoção</h5>
 	<p class="paragraphModalDelete">Deseja realmente excluir esse

@@ -13,7 +13,6 @@ import { BaseService } from './../base.service';
     styleUrls: ['./base-form.css']
 } )
 export class BaseFormComponent extends GenericFormComponent implements OnInit {
-//    @ViewChild("form") form;
     base: Base;
     
     constructor( private route: ActivatedRoute,

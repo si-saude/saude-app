@@ -1,12 +1,10 @@
 import { Curso } from './curso';
-import { Vacina } from './vacina';
 
 export class Cargo {
     private id: number = 0;
     private version: number;
     private nome: string;
     private cursos: Array<Curso>;
-    private vacinas: Array<Vacina>;
 
     getId(): number {
         return this.id;
@@ -40,11 +38,4 @@ export class Cargo {
         this.cursos = cursos;
     }
     
-    getVacinas():Array<Vacina>{
-        return this.vacinas;
-    }
-    
-    setVacinas(vacinas:Array<Vacina>){
-        this.vacinas = vacinas;
-    }
 }

@@ -16,12 +16,10 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs" materialize="tabs">
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s6"><a RouterLinkActive="active"
 						href="#dadosGerais">Dados Gerais</a></li>
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s6"><a RouterLinkActive="active"
 						href="#cursos">Cursos</a></li>
-					<li class="tab col s4"><a RouterLinkActive="active"
-						href="#vacinas">Vacinas</a></li>
 				</ul>
 			</div>
 
@@ -103,75 +101,6 @@
 				</fieldset>
 			</div>
 
-			<div id="vacinas">
-
-				<fieldset>
-					<legend>Vacinas</legend>
-					<div class="row row-curso">
-
-						<div class="input-field col s4">
-							<select class="browser-default" #vacina>
-								<option disabled selected value=0>Selecione uma vacina</option>
-								<option *ngFor="let vacina of vacinas" value="{{vacina.id}}">{{vacina.descricao}}</option>
-
-							</select>
-						</div>
-
-						<div class="col s2">
-							<a
-								class="btn-floating waves-effect waves-light green btn-remove-permission"
-								(click)="addVacina(vacina.value)"> <i
-								class="material-icons center-icon">add</i>
-							</a>
-						</div>
-
-
-					</div>
-
-					<div class="row">
-
-						<table class="striped">
-							<thead>
-								<tr class="row col s12">
-									<th class="col s3">Descrição</th>
-									<th class="col s3">Doses</th>
-									<th class="col s3">Reforço</th>
-									<th class="col s3">Remover</th>
-								</tr>
-							</thead>
-
-							<div *ngFor="let vacina of cargo.vacinas;let i = index">
-								<tbody class="col s12">
-									<tr class="col s12">
-										<input type="hidden" [(ngModel)]="vacina.descricao"
-											value="{{vacina.descricao}}" name="vacina[{{i}}].descricao">
-										<input type="hidden" [(ngModel)]="vacina.doses"
-											value="{{vacina.doses}}" name="vacina[{{i}}].doses">
-										<input type="hidden" [(ngModel)]="vacina.reforco"
-											value="{{vacina.reforco}}" name="vacina[{{i}}].reforco">
-										<input type="hidden" [(ngModel)]="vacina.id"
-											value="{{vacina.id}}" name="vacina[{{i}}].id">
-										<td class="col s3">{{vacina.descricao}}</td>
-										<td class="col s3">{{vacina.doses}}</td>
-										<td class="col s3">{{vacina.reforco}}</td>
-										<td class="col s3"><a
-											class="btn-floating waves-effect waves-light red btn-remove"
-											(click)="removeVacina(i)"> <i
-												class="material-icons center-icon">delete</i>
-										</a></td>
-									</tr>
-								</tbody>
-
-							</div>
-
-						</table>
-
-					</div>
-
-				</fieldset>
-				
-			</div>
-			
 		</div>
 
 		<div class="mensagem">

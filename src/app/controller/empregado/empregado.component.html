@@ -14,7 +14,7 @@
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
 			<div class="col s10">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.pessoa.nome}}</a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/empregado/editar', a.id]"><i
@@ -62,7 +62,7 @@
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
-
+<!-- 
 	<div class="input-field col s8">
 		<div class="modal-content">
 			<label for="nome">Nome</label> <input type="text" id="nome"
@@ -76,7 +76,7 @@
 				<label for="dataNascimentoInicial">Data de Nascimento Inicial</label> 
 				<my-date-picker name="dataNascimentoInicio"
 					[options]="myDatePickerOptions"
-					[(ngModel)]="filter.dataNascimento.inicio"
+					[(ngModel)]="filter.pessoa.dataNascimento.inicio"
 					placeholder="Data de Nascimento Inicial">
 				</my-date-picker>
 			</div>
@@ -84,7 +84,7 @@
 				<label for="dataNascimentoFinal">Data de Nascimento Final</label> 
 				<my-date-picker name="dataNascimentoFim"
 					[options]="myDatePickerOptions"
-					[(ngModel)]="filter.dataNascimento.fim"
+					[(ngModel)]="filter.pessoa.dataNascimento.fim"
 					placeholder="Data de Nascimento Final">
 				</my-date-picker>
 			</div>
@@ -93,15 +93,16 @@
 				<fieldset>
 					<legend>Tipo do Filtro</legend>
 					<select name="tipo" class="browser-default" 
-						[(ngModel)]="filter.dataNascimento.typeFilter">
+						[(ngModel)]="filter.pessoa.dataNascimento.typeFilter">
 						<option disabled selected value=0>Selecione um tipo</option>
 						<option *ngFor="let item of typeFilters()" value="{{item}}">{{item}}</option>
 					</select>
 				</fieldset>
 			</div>
+			 
 		</div>
 	</div>
-
+-->
 	<div class="input-field col s8">
 		<div class="modal-content">
 			<label for="matricula">Matricula</label> <input type="text"
@@ -119,7 +120,7 @@
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modelParams" [materializeActions]="modalDelete">
+	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
 	<h5 class="titleModalDelete">Confirmação para remoção</h5>
 	<p class="paragraphModalDelete">Deseja realmente excluir esse

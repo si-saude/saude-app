@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import { GlobalVariable } from './../../../global';
 import { Cargo } from './../../../model/cargo';
 import { Curso } from './../../../model/curso';
-import { Vacina } from './../../../model/vacina';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { CargoBuilder } from './../cargo.builder';
 import { CargoService } from './../cargo.service';
@@ -18,9 +17,7 @@ import { CargoService } from './../cargo.service';
 export class CargoFormComponent extends GenericFormComponent implements OnInit { 
     cargo: Cargo;
     cursos: Array<Curso>;
-    vacinas: Array<Vacina>;
     cursosSelecteds: Array<Curso>;
-    vacinasSelecteds: Array<Vacina>;
     
     constructor( private route: ActivatedRoute,
             private cargoService: CargoService) { 
@@ -32,7 +29,6 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
     
     ngOnInit() {
         this.cursosSelecteds = new Array<Curso>();
-        this.vacinasSelecteds = new Array<Vacina>();
         
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
@@ -60,13 +56,6 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
                 console.log(error);
             })
         
-        this.cargoService.getVacinas()
-            .then(res => {
-                this.vacinas = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
     }
     
     save() {
@@ -86,21 +75,6 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
 
     removeCurso(i: number) {
         this.cargo.getCursos().splice(i, 1);
-    }
-    
-    addVacina(valor: number) {
-        this.cargoService.getVacinaById(valor)
-            .then(res => {
-                this.vacinasSelecteds.push(res.json());
-                this.cargo.setVacinas(this.vacinasSelecteds);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
-    removeVacina(i: number) {
-        this.cargo.getVacinas().splice(i, 1);
     }
     
 }

@@ -1,5 +1,4 @@
-import { Endereco } from './endereco';
-import { Telefone } from './telefone';
+import { Empregado } from './empregado';
 import { Cargo } from './cargo';
 import { Localizacao } from './localizacao';
 import { Equipe } from './equipe';
@@ -7,25 +6,16 @@ import { ProfissionalConselho } from './profissional-conselho';
 import { ProfissionalVacina } from './profissional-vacina';
 import { Curriculo } from './curriculo';
 
-
 export class Profissional {
     private id: number = 0;
-    private nome: string;
-    private dataNascimento: Date;
-    private matricula: string;
-    private chave: string;
-    private ramal: string;
+    private empregado: Empregado;
+    private dataAso: Date;
     private localizacao: Localizacao;
     private equipe: Equipe;
-    private cargo: Cargo;
     private mi: string;
-    private telefones: Array<Telefone>;
-    private endereco: Endereco;
     private curriculo: Curriculo;
     private profissionalConselho: ProfissionalConselho;
     private profissionalVacinas: Array<ProfissionalVacina> ;
-    private assinatura: any;
-    private assinaturaBase64: string;
     private version: number;    
 
     getId() {
@@ -44,44 +34,12 @@ export class Profissional {
         this.version = version;
     }
 
-    getNome() {
-        return this.nome;
+    getEmpregado() {
+        return this.empregado;
     }
     
-    setNome(n: string) {
-        this.nome = n;
-    }
-    
-    getDataNascimento() {
-        return this.dataNascimento;
-    }
-    
-    setDataNascimento(dN: Date) {
-        this.dataNascimento = dN;
-    }
-    
-    getMatricula() {
-        return this.matricula;
-    }
-    
-    setMatricula(m: string) {
-        this.matricula = m;
-    }
-    
-    getChave() {
-        return this.chave;
-    }
-    
-    setChave(c: string) {
-        this.chave = c;
-    }
-    
-    getRamal() {
-        return this.ramal;
-    }
-    
-    setRamal(r: string) {
-        this.ramal = r;
+    setEmpregado(empregado: Empregado) {
+        this.empregado = empregado;
     }
     
     getLocalizacao() {
@@ -98,14 +56,6 @@ export class Profissional {
     
     setEquipe(e: Equipe) {
         this.equipe= e;
-    }
-    
-    getCargo() {
-        return this.cargo;
-    }
-    
-    setCargo(f: Cargo) {
-        this.cargo = f;
     }
     
     getMi() {
@@ -140,35 +90,4 @@ export class Profissional {
         this.profissionalVacinas = profissionalVacinas;
     }
 
-    getTelefones() {
-        return this.telefones;
-    }
-    
-    setTelefones(telefones: Array<Telefone>) {
-        this.telefones = telefones;
-    }
-    
-    getEndereco() {
-        return this.endereco;
-    }
-    
-    setEndereco(endereco: Endereco) {
-        this.endereco = endereco;
-    }
-    
-    getAssinatura():any{
-        return this.assinatura;
-    }
-    
-    setAssinatura(assinatura:any){
-        this.assinatura = assinatura;
-    }
-    
-    getAssinaturaBase64():string{
-        return this.assinaturaBase64;
-    }
-    
-    setAssinaturaBase64(a:string){
-        this.assinaturaBase64 = a;
-    }
 }

@@ -1,5 +1,6 @@
 import { GenericFilter } from './../../generics/generic.filter';
 import { DateFilter } from './../../generics/date.filter';
+import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { CargoFilter } from './../cargo/cargo.filter';
@@ -8,34 +9,20 @@ import { ProfissionalConselhoFilter } from './../profissional-conselho/profissio
 import { EnderecoFilter } from './../endereco/endereco.filter';
 
 export class ProfissionalSaudeFilter extends GenericFilter {
-    private nome: string;
-    private dataNascimento: DateFilter = new DateFilter();
+    private empregado: EmpregadoFilter;
     private dataAso: DateFilter;
-    private matricula: string;
-    private chave: string;
-    private ramal: string;
     private localizacao: LocalizacaoFilter;
     private equipe: EquipeFilter;
-    private cargo: CargoFilter;
     private curriculo: CurriculoFilter;
     private profissionalConselho: ProfissionalConselhoFilter;
-    private endereco: EnderecoFilter;
     private mi: string;
 
-    getNome() {
-        return this.nome;
+    getEmpregado() {
+        return this.empregado;
     }
     
-    setNome(n: string) {
-        this.nome = n;
-    }
-    
-    getDataNascimento() {
-        return this.dataNascimento;
-    }
-    
-    setDataNascimento(dN: DateFilter) {
-        this.dataNascimento = dN;
+    setEmpregado(empregado: EmpregadoFilter) {
+        this.empregado = empregado;
     }
     
     getDataAso() {
@@ -44,30 +31,6 @@ export class ProfissionalSaudeFilter extends GenericFilter {
     
     setDataAso(dA: DateFilter) {
         this.dataAso = dA;
-    }
-    
-    getMatricula() {
-        return this.matricula;
-    }
-    
-    setMatricula(m: string) {
-        this.matricula = m;
-    }
-    
-    getChave() {
-        return this.chave;
-    }
-    
-    setChave(c: string) {
-        this.chave = c;
-    }
-    
-    getRamal() {
-        return this.ramal;
-    }
-    
-    setRamal(r: string) {
-        this.ramal = r;
     }
     
     getLocalizacao() {
@@ -86,14 +49,6 @@ export class ProfissionalSaudeFilter extends GenericFilter {
         this.equipe= e;
     }
     
-    getCargo() {
-        return this.cargo;
-    }
-    
-    setCargo(cargo: CargoFilter) {
-        this.cargo = cargo;
-    }
-    
     getCurriculo() {
         return this.curriculo;
     }
@@ -108,14 +63,6 @@ export class ProfissionalSaudeFilter extends GenericFilter {
     
     setProfissionalConselho(profissionalConselho: ProfissionalConselhoFilter) {
         this.profissionalConselho = profissionalConselho;
-    }
-    
-    getEndereco() {
-        return this.endereco;
-    }
-    
-    setEndereco(endereco: EnderecoFilter) {
-        this.endereco = endereco;
     }
     
     getMi() {

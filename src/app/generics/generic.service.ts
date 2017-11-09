@@ -42,6 +42,7 @@ export abstract class GenericService {
     }
     
     selectList( genericFilter: GenericFilter ) {
+        genericFilter.setPageSize(Math.pow(2, 31)-1);
         let urlList = this.URL + "/selectList";
         return this.http
             .post( urlList, genericFilter, { headers: this.headers } )

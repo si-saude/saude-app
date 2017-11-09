@@ -1,4 +1,5 @@
 import { GenericFilter } from './../../generics/generic.filter';
+import { PessoaFilter } from './../pessoa/pessoa.filter';
 import { CargoFilter } from './../cargo/cargo.filter';
 import { FuncaoFilter } from './../funcao/funcao.filter';
 import { RegimeFilter } from './../regime/regime.filter';
@@ -6,18 +7,13 @@ import { GerenciaFilter } from '../gerencia/gerencia.filter';
 import { BaseFilter } from './../base/base.filter';
 import { GheFilter } from './../ghe/ghe.filter';
 import { GheeFilter } from './../ghee/ghee.filter';
-import { DateFilter } from './../../generics/date.filter';
 
 export class EmpregadoFilter extends GenericFilter {
-    private nome:string;
-    private cpf:string;
-    private dataNascimento: DateFilter = new DateFilter();
     private chave: string;
     private matricula: string;
-    private rg: string;
-    private sexo: string;
     private ramal: string;
     private status: string;
+    private pessoa: PessoaFilter = new PessoaFilter();
     private cargo: CargoFilter;
     private funcao: FuncaoFilter;
     private regime: RegimeFilter;
@@ -25,30 +21,6 @@ export class EmpregadoFilter extends GenericFilter {
     private base: BaseFilter;
     private ghe: GheFilter;
     private ghee: GheeFilter;
-    
-    getNome():string{
-        return this.nome;
-    }
-    
-    setNome(nome:string){
-        this.nome = nome;
-    }
-    
-    getCpf():string{
-        return this.cpf;
-    }
-    
-    setCpf(cpf:string){
-        this.cpf = cpf;
-    }
-    
-    getDataNascimento():DateFilter{
-        return this.dataNascimento;
-    }
-    
-    setDataNascimento(dN: DateFilter){
-        this.dataNascimento = dN;
-    }
     
     getChave(): string{
         return this.chave;
@@ -66,22 +38,6 @@ export class EmpregadoFilter extends GenericFilter {
         this.matricula = matricula;
     }
     
-    getRg(): string{
-        return this.rg;
-    }
-    
-    setRg(rg: string){
-        this.rg = rg;
-    }
-    
-    getSexo(): string{
-        return this.sexo;
-    }
-    
-    setSexo(sexo: string){
-        this.sexo = sexo;
-    }
-    
     getRamal(): string{
         return this.ramal;
     }
@@ -96,6 +52,14 @@ export class EmpregadoFilter extends GenericFilter {
     
     setStatus(status: string){
         this.status = status;
+    }
+    
+    getPessoa(): PessoaFilter {
+        return this.pessoa;
+    }
+    
+    setPessoa(pessoa: PessoaFilter) {
+        this.pessoa = pessoa;
     }
     
     getCargo(): CargoFilter{

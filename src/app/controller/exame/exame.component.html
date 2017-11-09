@@ -13,7 +13,7 @@
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
 			<div class="col s10">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.codigo}}</a>
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.codigo}} - {{a.descricao}}</a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/exame/editar', a.id]"><i
@@ -79,7 +79,7 @@
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modelParams" [materializeActions]="modalDelete">
+	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
 	<h5 class="titleModalDelete">Confirmação para remoção</h5>
 	<p class="paragraphModalDelete">Deseja realmente excluir esse

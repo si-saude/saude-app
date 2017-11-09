@@ -20,16 +20,16 @@ export class ProfissionalSaudeComponent extends GenericListComponent<Profissiona
     }
     
     initializeFilterDate() {
-        if (this.filter.getDataNascimento().getInicio() !== null && 
-                this.filter.getDataNascimento().getInicio() !== undefined ) {
-            this.filter.getDataNascimento().setInicio(
-                    this.parseDatePickerToDate(this.filter.getDataNascimento().getInicio()));
+        if (this.filter.getEmpregado().getPessoa().getDataNascimento().getInicio() !== null && 
+                this.filter.getEmpregado().getPessoa().getDataNascimento().getInicio() !== undefined ) {
+            this.filter.getEmpregado().getPessoa().getDataNascimento().setInicio(
+                    this.parseDatePickerToDate(this.filter.getEmpregado().getPessoa().getDataNascimento().getInicio()));
         }
         
-        if (this.filter.getDataNascimento().getFim() !== null && 
-                this.filter.getDataNascimento().getFim() !== undefined ) {
-            this.filter.getDataNascimento().setFim(
-                    this.parseDatePickerToDate(this.filter.getDataNascimento().getFim()));
+        if (this.filter.getEmpregado().getPessoa().getDataNascimento().getFim() !== null && 
+                this.filter.getEmpregado().getPessoa().getDataNascimento().getFim() !== undefined ) {
+            this.filter.getEmpregado().getPessoa().getDataNascimento().setFim(
+                    this.parseDatePickerToDate(this.filter.getEmpregado().getPessoa().getDataNascimento().getFim()));
         }
     }
     

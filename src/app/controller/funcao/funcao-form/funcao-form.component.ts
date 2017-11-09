@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Funcao } from './../../../model/funcao';
+import { Vacina } from './../../../model/vacina';
+import { VacinaBuilder } from './../../vacina/vacina.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { FuncaoBuilder } from './../funcao.builder';
 import { FuncaoService } from './../funcao.service';
@@ -14,6 +16,8 @@ import { FuncaoService } from './../funcao.service';
 } )
 export class FuncaoFormComponent extends GenericFormComponent implements OnInit { 
     funcao: Funcao;
+    vacinas: Array<Vacina>;
+    vacinasSelecteds: Array<Vacina>;
     
     constructor( private route: ActivatedRoute,
             private funcaoService: FuncaoService) { 
@@ -24,6 +28,8 @@ export class FuncaoFormComponent extends GenericFormComponent implements OnInit 
         }
     
     ngOnInit() {
+        this.vacinasSelecteds = new Array<Vacina>();
+        
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if( params['id'] !== undefined ) {
@@ -42,11 +48,30 @@ export class FuncaoFormComponent extends GenericFormComponent implements OnInit 
                 }
             } );
         
+        this.funcaoService.getVacinas()
+            .then(res => {
+                this.vacinas = new VacinaBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        
     }
     
     save() {
         super.save(new FuncaoBuilder().clone(this.funcao));
     }   
     
+    addVacina(valor: number) {
+        let vacina:Vacina = this.vacinas.find(v => {
+            return v.getId() == valor;
+        });
+        this.vacinasSelecteds.push(vacina);
+        this.funcao.setVacinas(this.vacinasSelecteds);
+    }
+
+    removeVacina(i: number) {
+        this.funcao.getVacinas().splice(i, 1);
+    }
     
 }

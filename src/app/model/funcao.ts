@@ -1,7 +1,10 @@
+import { Vacina } from './vacina';
+
 export class Funcao {
     private id: number = 0;
     private nome: string;
     private version: number;
+    private vacinas: Array<Vacina>;
 
     getId() {
         return this.id;
@@ -25,6 +28,14 @@ export class Funcao {
     
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    getVacinas():Array<Vacina>{
+        return this.vacinas;
+    }
+    
+    setVacinas(vacinas:Array<Vacina>){
+        this.vacinas = vacinas;
     }
     
 }

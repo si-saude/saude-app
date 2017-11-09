@@ -7,14 +7,12 @@ import 'rxjs/add/operator/toPromise';
 import { GenericService } from './../../generics/generic.service';
 import { CargoFilter } from './cargo.filter';
 import { CursoService } from './../curso/curso.service';
-import { VacinaService } from './../vacina/vacina.service';
 
 @Injectable()
 export class CargoService extends GenericService{
 
     constructor( http: Http, router: Router,
-            private cursoService: CursoService,
-            private vacinaService: VacinaService) { 
+            private cursoService: CursoService) { 
         super(http, router, "cargo");
     }
 
@@ -24,14 +22,6 @@ export class CargoService extends GenericService{
     
     getCursos(){
         return this.cursoService.getCursos();
-    }
-    
-    getVacinaById(valor){
-        return this.vacinaService.get(valor);
-    }
-    
-    getVacinas(){
-        return this.vacinaService.getVacinas();
     }
     
     getCargos() {

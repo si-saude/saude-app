@@ -6,7 +6,8 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <h5 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h5>
 <div class="row">
@@ -16,61 +17,57 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs" materialize="tabs">
-					<li class="tab col s2"><a RouterLinkActive="active"
+					<li class="tab col s4"><a RouterLinkActive="active"
 						href="#dadosGerais">Dados Gerais</a></li>
-					<li class="tab col s2"><a RouterLinkActive="active"
+					<li class="tab col s4"><a RouterLinkActive="active"
 						href="#curriculo">Currículo</a></li>
-					<li class="tab col s2"><a RouterLinkActive="active"
-						href="#vacinas">Vacinas</a></li>
-					<li class="tab col s3"><a RouterLinkActive="active"
+					<li class="tab col s4"><a RouterLinkActive="active"
 						href="#profissionalConselho">Conselho</a></li>
-					<li class="tab col s3"><a RouterLinkActive="active"
-						href="#informacoesAdicionais">Informações Adicionais</a></li>
 				</ul>
 			</div>
 
 			<div id="dadosGerais">
-				
+
 				<div class="row">
 					<div class="input-field col s12">
-						<label data-error="Campo obrigatório." class="active" for="nome">Nome</label>
-						<input id="nome" type="text" required maxlength="220"
-							[(ngModel)]="profissionalSaude.nome" name="nome">
+						<label for="empregado">Nome do Empregado</label> <input
+							type="text" materialize="autocomplete"
+							name="profissionalSaude.empregado.pessoa.nome"
+							[(ngModel)]="profissionalSaude.empregado.pessoa.nome"
+							(focusout)="getEmpregado($event)"
+							(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
+							[materializeParams]="autocompleteEmpregado"> <input
+							id="profissionalSaude.empregado.pessoa.id" type="hidden"
+							name="profissionalSaude.empregado.pessoa.id"
+							[(ngModel)]="profissionalSaude.empregado.pessoa.id">
 					</div>
 				</div>
 
 				<div class="row">
-
-					<div class="input-field col s8">
-						<label for="matricula">Matricula</label> <input id="matricula"
-							maxlength="10" type="text"
-							[(ngModel)]="profissionalSaude.matricula" name="matricula">
+				
+					<div class="input-field col s4">
+						<label for="matricula">Matricula</label> <input disabled
+							id="matricula" maxlength="10" type="text"
+							[(ngModel)]="profissionalSaude.empregado.matricula"
+							name="matricula">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="ramal" maxlength="12">Ramal</label> <input disabled
+							id="ramal" type="text"
+							[(ngModel)]="profissionalSaude.empregado.ramal" name="ramal">
 					</div>
 
 					<div class="input-field col s4">
-						<label for="dataNascimento">Data de Nascimento</label>
-						<my-date-picker name="dataNascimento"
-							[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
-							placeholder="Data de Nascimento"> </my-date-picker>
-					</div>
-
-				</div>
-
-				<div class="row">
-					<div class="input-field col s8">
-						<label for="ramal" maxlength="12">Ramal</label> <input id="ramal"
-							type="text" [(ngModel)]="profissionalSaude.ramal" name="ramal">
-					</div>
-
-					<div class="input-field col s4">
-						<label for="chave">Chave</label> <input id="chave" type="text"
-							[(ngModel)]="profissionalSaude.chave" maxlength="8" name="chave">
+						<label for="chave">Chave</label> <input disabled id="chave"
+							type="text" [(ngModel)]="profissionalSaude.empregado.chave"
+							maxlength="8" name="chave">
 					</div>
 				</div>
 
 				<div class="row selects">
 
-					<div class="input-field col s4">
+					<div class="input-field col s6">
 						<fieldset>
 							<legend>Localização</legend>
 							<select name="localizacao" class="browser-default"
@@ -82,7 +79,7 @@
 						</fieldset>
 					</div>
 
-					<div class="input-field col s4">
+					<div class="input-field col s6">
 						<fieldset>
 							<legend>Equipe</legend>
 							<select name="equipe" class="browser-default"
@@ -93,31 +90,12 @@
 						</fieldset>
 					</div>
 
+				</div>
 
-					<div class="input-field col s4">
-						<fieldset>
-							<legend>Função</legend>
-							<select name="cargo" required class="browser-default"
-								[(ngModel)]="profissionalSaude.cargo.id">
-								<option selected value=0>Selecione um cargo</option>
-								<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
-							</select>
-						</fieldset>
-					</div>
-
-				</div>
-				
-				<div class="row">
-					<div class="input-field col s12">
-						<label class="active" >Assinatura</label>
-						<input id="assinatura" type="file" name="assinatura" accept=".png" #assinatura>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<img id="assinaturaPreview" src="{{assinaturaSrc}}" width="500" heigth="500" />
-					</div>
-				</div>
+				<input id="id" name="profissionalSaude.empregado.pessoa.id{{i}}" type="hidden"
+					[(ngModel)]="profissionalSaude.empregado.pessoa.id"> <input
+					id="version" name="profissionalSaude.empregado.pessoa.version{{i}}" type="hidden"
+					[(ngModel)]="profissionalSaude.empregado.pessoa.version">
 
 			</div>
 
@@ -212,96 +190,6 @@
 
 			</div>
 
-			<div id="vacinas">
-
-				<fieldset>
-					<legend class="legend">
-						Vacinas <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
-							(click)="addVacina()"> <i class="material-icons center-icon">add</i>
-						</a>
-					</legend>
-					<div class="form-group">
-						<div
-							*ngFor="let vacina of profissionalSaude.profissionalVacinas;let i = index">
-
-							<fieldset>
-								<legend class="legend">
-									Vacina <a
-										class="btn-floating waves-effect waves-light red btn-add-permissoes"
-										(click)="removeVacina(i)"> <i
-										class="material-icons center-icon">delete</i>
-									</a>
-								</legend>
-
-								<div class="row">
-									<div class="input-field col s8">
-										<fieldset>
-											<legend>Vacina</legend>
-											<select
-												name="profissionalSaude.profissionalVacinas[{{i}}].vacina.id"
-												class="browser-default"
-												[(ngModel)]="profissionalSaude.profissionalVacinas[i].vacina.id">
-												<option disabled selected value=0>Selecione uma vacina</option>
-												<option *ngFor="let vacina of vacinas" value="{{vacina.id}}">{{vacina.descricao}}</option>
-											</select>
-										</fieldset>
-									</div>
-
-									<div class="input-field col s4">
-										<label for="data">Data</label>
-										<my-date-picker name="profissionalVacinas.data"
-											[options]="myDatePickerOptions"
-											name="profissionalSaude.profissionalVacinas[{{i}}].data"
-											[(ngModel)]="dataVacinas[i]" placeholder="Data">
-										</my-date-picker>
-									</div>
-
-								</div>
-
-								<div class="row">
-									<div class="input-field col s8">
-										<label for="lote" maxlength="32">Lote</label> <input id="lote"
-											type="text"
-											name="profissionalSaude.profissionalVacinas.lote{{i}}"
-											[(ngModel)]="profissionalSaude.profissionalVacinas[i].lote">
-									</div>
-
-									<div class="input-field col s4">
-										<label for="laboratorio" min="1">Dose</label> <input id="dose"
-											type="number"
-											name="profissionalSaude.profissionalVacinas.dose{{i}}"
-											[(ngModel)]="profissionalSaude.profissionalVacinas[i].dose">
-									</div>
-
-								</div>
-
-								<div class="row">
-									<div class="input-field col s8">
-										<label for="laboratorio" maxlength="128">Laboratório</label> <input
-											id="laboratorio" type="text" name="vacina.laboratorio{{i}}"
-											[(ngModel)]="profissionalSaude.profissionalVacinas[i].laboratorio">
-									</div>
-
-									<div class="input-field col s4">
-										<label for="proximaDose" maxlength="128">Próxima Dose</label>
-										<my-date-picker name="proximaDose"
-											[options]="myDatePickerOptions"
-											name="profissionalSaude.profissionalVacinas[{{i}}].proximaDose"
-											[(ngModel)]="proximaDoseVacinas[i]"
-											placeholder="Próxima dose"> </my-date-picker>
-									</div>
-								</div>
-
-							</fieldset>
-						</div>
-
-					</div>
-
-				</fieldset>
-
-			</div>
-
 			<div id="profissionalConselho">
 
 				<div class="form-group">
@@ -346,124 +234,14 @@
 
 			</div>
 
-			<div id="informacoesAdicionais">
-				
-				<fieldset>
-					<legend class="legend">
-						Telefones <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
-							(click)="addTelefone()"> <i
-							class="material-icons center-icon">add</i>
-						</a>
-					</legend>
-					<div class="form-group">
-						<div
-							*ngFor="let telefone of profissionalSaude.telefones;let i = index">
-
-							<div class="row">
-								<div class="input-field col s10">
-									<label for="numero" maxlength="16">Numero</label> <input
-										id="numero" name="numero{{i}}" type="text"
-										[(ngModel)]="profissionalSaude.telefones[i].numero">
-								</div>
-
-								<div class="col s2">
-									<a
-										class="btn-floating waves-effect waves-light red btn-remove-permission"
-										(click)="removeTelefone(i)"> <i
-										class="material-icons center-icon">delete</i>
-									</a>
-								</div>
-
-							</div>
-
-							<input [(ngModel)]="telefone.id" id="telefone.id{{i}}"
-								name="telefone.id{{i}}" type="hidden"> <input
-								[(ngModel)]="telefone.version" id="telefone.version{{i}}"
-								name="telefone.version{{i}}" type="hidden">
-
-						</div>
-
-					</div>
-
-				</fieldset>
-
-				<fieldset>
-
-					<legend class="legend"> Endereço </legend>
-					<div class="form-group">
-						<div>
-
-							<div class="row">
-								<div class="input-field col s12">
-									<label for="logradouro" maxlength="200">Logradouro</label> <input
-										[(ngModel)]="profissionalSaude.endereco.logradouro"
-										id="logradouro" type="text" name="endereco.logradouro">
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="input-field col s8">
-									<label for="bairro" maxlength="100">Bairro</label> <input
-										[(ngModel)]="profissionalSaude.endereco.bairro" id="bairro"
-										type="text" name="endereco.bairro">
-								</div>
-
-								<div class="input-field col s4">
-									<label for="numero" maxlength="12">Numero</label> <input
-										[(ngModel)]="profissionalSaude.endereco.numero" id="numero"
-										type="text" name="endereco.numero">
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="input-field col s8">
-									<label for="complemento" maxlength="200">Complemento</label> <input
-										[(ngModel)]="profissionalSaude.endereco.complemento"
-										id="complemento" name="endereco.complemento" type="text">
-								</div>
-
-								<div class="input-field col s4">
-									<label for="cep" maxlength="9">CEP</label> <input id="cep"
-										type="text" [(ngModel)]="profissionalSaude.endereco.cep"
-										name="endereco.cep">
-
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="input-field col s6">
-									<fieldset>
-										<legend>Cidade</legend>
-										<select class="browser-default" name="cidade"
-											[(ngModel)]="profissionalSaude.endereco.cidade.id">
-											<option selected value=0>Selecione uma cidade</option>
-											<option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
-										</select>
-									</fieldset>
-								</div>
-							</div>
-
-							<input [(ngModel)]="profissionalSaude.endereco.id" id="id"
-								name="endereco.id" type="hidden"> <input
-								[(ngModel)]="profissionalSaude.endereco.version"
-								id="endereco.version" name="version" type="hidden">
-
-						</div>
-
-					</div>
-
-				</fieldset>
-
-			</div>
-
 		</div>
 
 		<input id="id" name="id" type="hidden"> <input id="version"
 			name="version" type="hidden">
 
 		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
 		</div>
 
 		<div class='row row-btns'>

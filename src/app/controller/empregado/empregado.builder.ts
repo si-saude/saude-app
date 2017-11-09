@@ -1,5 +1,6 @@
 import { Empregado } from './../../model/empregado';
 import { BaseBuilder } from './../base/base.builder';
+import { PessoaBuilder } from './../pessoa/pessoa.builder';
 import { CargoBuilder } from './../cargo/cargo.builder';
 import { EmpregadoVacinaBuilder } from './../empregado-vacina/empregado-vacina.builder';
 import { FuncaoBuilder } from './../funcao/funcao.builder';
@@ -8,7 +9,6 @@ import { GheBuilder } from './../ghe/ghe.builder';
 import { GheeBuilder } from './../ghee/ghee.builder';
 import { InstalacaoBuilder } from './../instalacao/instalacao.builder';
 import { RegimeBuilder } from './../regime/regime.builder';
-import { TelefoneBuilder } from './../telefone/telefone.builder';
 import { GrupoMonitoramentoBuilder } from './../grupo-monitoramento/grupo-monitoramento.builder';
 import { HistoricoGrupoMonitoramentoBuilder } from './../historico-grupo-monitoramento/historico-grupo-monitoramento.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
@@ -18,6 +18,7 @@ export class EmpregadoBuilder extends GenericBuilder{
     initialize(empregado: Empregado): Empregado {
         empregado = new Empregado();
         
+        empregado.setPessoa(new PessoaBuilder().initialize(empregado.getPessoa()));
         empregado.setFuncao(new FuncaoBuilder().initialize(empregado.getFuncao()));
         empregado.setGerencia(new GerenciaBuilder().initialize(empregado.getGerencia()));
         empregado.setBase(new BaseBuilder().initialize(empregado.getBase()));
@@ -25,8 +26,6 @@ export class EmpregadoBuilder extends GenericBuilder{
         empregado.setGhe(new GheBuilder().initialize(empregado.getGhe()));
         empregado.setGhee(new GheeBuilder().initialize(empregado.getGhee()));
         empregado.setRegime(new RegimeBuilder().initialize(empregado.getRegime()));
-        
-        empregado.setTelefones(new TelefoneBuilder().initializeList(empregado.getTelefones()));
         empregado.setInstalacoes(new InstalacaoBuilder().initializeList(empregado.getInstalacoes()));
         empregado.setEmpregadoVacinas(new EmpregadoVacinaBuilder().initializeList(empregado.getEmpregadoVacinas()));
         empregado.setGrupoMonitoramentos(new GrupoMonitoramentoBuilder().initializeList(empregado.getGrupoMonitoramentos()));
@@ -42,24 +41,37 @@ export class EmpregadoBuilder extends GenericBuilder{
         if (empregado === null || empregado === undefined)
             empregado = new Empregado();
         
-        let status:string = this.getValue(empregado, "getStatus");
-        if(status == "")
-            status = undefined;
-        cloneEmpregado.setStatus(status);
+        if(this.getValue(empregado, "getStatus") == "")
+            cloneEmpregado.setStatus(undefined);
+        else if (this.getValue(empregado, "getStatus") == undefined)
+            cloneEmpregado.setStatus("");
+        else
+            cloneEmpregado.setStatus(this.getValue(empregado, "getStatus"));
         
-        let sexo:string = this.getValue(empregado, "getSexo");
-        if(sexo == "")
-            sexo = undefined;
-        cloneEmpregado.setSexo(sexo);
+        if(this.getValue(empregado, "getEstadoCivil") == "")
+            cloneEmpregado.setEstadoCivil(undefined);
+        else if (this.getValue(empregado, "getEstadoCivil") == undefined)
+            cloneEmpregado.setEstadoCivil("");
+        else
+            cloneEmpregado.setEstadoCivil(this.getValue(empregado, "getEstadoCivil"));
+        
+        if(this.getValue(empregado, "getEscolaridade") == "")
+            cloneEmpregado.setEscolaridade(undefined);
+        else if (this.getValue(empregado, "getEscolaridade") == undefined )
+            cloneEmpregado.setEscolaridade("");
+        else
+            cloneEmpregado.setEscolaridade(this.getValue(empregado, "getEscolaridade"));
         
         cloneEmpregado.setId(this.getValue(empregado, "getId"));
         cloneEmpregado.setVersion(this.getValue(empregado, "getVersion"));
-        cloneEmpregado.setCpf(this.getValue(empregado, "getCpf"));
-        cloneEmpregado.setDataNascimento(this.getValue(empregado, "getDataNascimento"));
+        cloneEmpregado.setChave(this.getValue(empregado, "getChave"));
         cloneEmpregado.setMatricula(this.getValue(empregado, "getMatricula"));
-        cloneEmpregado.setNome(this.getValue(empregado, "getNome"));
         cloneEmpregado.setRamal(this.getValue(empregado, "getRamal"));
-        cloneEmpregado.setRg(this.getValue(empregado, "getRg"));
+        cloneEmpregado.setFotoBase64(this.getValue(empregado, "getFotoBase64"));
+        cloneEmpregado.setAssinaturaBase64(this.getValue(empregado, "getAssinaturaBase64"));
+        
+        cloneEmpregado.setPessoa(
+                new PessoaBuilder().clone(this.getValue(empregado,"getPessoa")));
         
         if (this.getValue(empregado, "getBase") !== undefined) { 
             cloneEmpregado.setBase(
@@ -135,9 +147,6 @@ export class EmpregadoBuilder extends GenericBuilder{
         
         cloneEmpregado.setInstalacoes(
                 new InstalacaoBuilder().cloneList(this.getValue(empregado, "getInstalacoes")));
-        
-        cloneEmpregado.setTelefones(
-                new TelefoneBuilder().cloneList(this.getValue(empregado, "getTelefones")));
         
         return cloneEmpregado;
     }

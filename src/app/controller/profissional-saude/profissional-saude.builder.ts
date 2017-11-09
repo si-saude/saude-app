@@ -1,4 +1,6 @@
 import { Profissional } from './../../model/profissional';
+import { Empregado } from './../../model/empregado';
+import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { Endereco } from './../../model/endereco';
 import { EnderecoBuilder } from './../endereco/endereco.builder';
 import { Curriculo } from './../../model/curriculo';
@@ -22,16 +24,14 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
     initialize(profissionalSaude: Profissional):Profissional {
         profissionalSaude = new Profissional();
         
-        profissionalSaude.setEndereco(new EnderecoBuilder().initialize(profissionalSaude.getEndereco()));
+        profissionalSaude.setEmpregado(new EmpregadoBuilder().initialize(profissionalSaude.getEmpregado()));
         profissionalSaude.setEquipe(new EquipeBuilder().initialize(profissionalSaude.getEquipe()));
         profissionalSaude.setLocalizacao(new LocalizacaoBuilder().initialize(profissionalSaude.getLocalizacao()));
-        profissionalSaude.setCargo(new CargoBuilder().initialize(profissionalSaude.getCargo()));
         profissionalSaude.setProfissionalConselho(
                 new ProfissionalConselhoBuilder().initialize(profissionalSaude.getProfissionalConselho()));
         profissionalSaude.setCurriculo(new CurriculoBuilder().initialize(profissionalSaude.getCurriculo()));
         profissionalSaude.setProfissionalVacinas(
                 new ProfissionalVacinaBuilder().initializeList(profissionalSaude.getProfissionalVacinas()));
-        profissionalSaude.setTelefones(new TelefoneBuilder().initializeList(profissionalSaude.getTelefones()));
         
         return profissionalSaude;
     }
@@ -56,14 +56,11 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
             profissionalSaude = new Profissional();
         
         cloneProfissionalSaude.setId(this.getValue(profissionalSaude, "getId"));
-        cloneProfissionalSaude.setChave(this.getValue(profissionalSaude, "getChave"));
-        cloneProfissionalSaude.setDataNascimento(this.getValue(profissionalSaude, "getDataNascimento"));
-        cloneProfissionalSaude.setMatricula(this.getValue(profissionalSaude,"getMatricula"));
         cloneProfissionalSaude.setMi(this.getValue(profissionalSaude, "getMi"));
-        cloneProfissionalSaude.setNome(this.getValue(profissionalSaude, "getNome"));
-        cloneProfissionalSaude.setRamal(this.getValue(profissionalSaude,"getRamal"));
-        cloneProfissionalSaude.setAssinaturaBase64(this.getValue(profissionalSaude,"getAssinaturaBase64"));
         cloneProfissionalSaude.setVersion(this.getValue(profissionalSaude, "getVersion"));
+        
+        cloneProfissionalSaude.setEmpregado(
+                new EmpregadoBuilder().clone(this.getValue(profissionalSaude, "getEmpregado")));
         
         if (this.getValue(profissionalSaude, "getEquipe") !== undefined) { 
             cloneProfissionalSaude.setEquipe(
@@ -73,16 +70,6 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
         } else {
             cloneProfissionalSaude.setEquipe(new EquipeBuilder().initialize(null));
         }
-        
-        if (this.getValue(profissionalSaude, "getCargo") !== undefined) {
-            cloneProfissionalSaude.setCargo(
-                    new CargoBuilder().clone(this.getValue(profissionalSaude, "getCargo")));
-            if(!this.idGtZero(cloneProfissionalSaude.getCargo()))
-                cloneProfissionalSaude.setCargo(undefined);
-       } else {
-           cloneProfissionalSaude.setCargo(new CargoBuilder().initialize(null));
-       }
-        
         
         if (this.getValue(profissionalSaude, "getLocalizacao") !== undefined) {
             cloneProfissionalSaude.setLocalizacao(
@@ -105,32 +92,18 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
         }
         
         if(this.getValue(profissionalSaude, "getProfissionalConselho") !== undefined){
-            if(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length === 2 && 
-                    profissionalSaude.getProfissionalConselho().getVencimento() === null)
+            if(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length === 1 && 
+                    profissionalSaude.getProfissionalConselho().getVencimento() === undefined)
                 cloneProfissionalSaude.setProfissionalConselho(undefined);
-            else
+            else 
                 cloneProfissionalSaude.setProfissionalConselho(
                         new ProfissionalConselhoBuilder().clone(this.getValue(profissionalSaude, "getProfissionalConselho")));
         } else {
             cloneProfissionalSaude.setProfissionalConselho(new ProfissionalConselhoBuilder().initialize(null));
         }
         
-        if(this.getValue(profissionalSaude, "getEndereco") !== undefined){
-            if(Object.keys(this.getValue(profissionalSaude, "getEndereco")).length === 2 && 
-                    profissionalSaude.getEndereco().getCidade().getId() === 0)
-                cloneProfissionalSaude.setEndereco(undefined);
-            else
-                cloneProfissionalSaude.setEndereco(
-                        new EnderecoBuilder().clone(this.getValue(profissionalSaude, "getEndereco")));
-        } else {
-            cloneProfissionalSaude.setEndereco(new EnderecoBuilder().initialize(null));
-        }
-       
         cloneProfissionalSaude.setProfissionalVacinas(
                 new ProfissionalVacinaBuilder().cloneList(this.getValue(profissionalSaude, "getProfissionalVacinas")));
-        
-        cloneProfissionalSaude.setTelefones(
-                new TelefoneBuilder().cloneList(this.getValue(profissionalSaude, "getTelefones")));
         
         return cloneProfissionalSaude;
     } 

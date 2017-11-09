@@ -6,7 +6,8 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row">
 
@@ -17,12 +18,12 @@
 				<ul class="tabs" materialize="tabs">
 					<li class="tab col s2"><a RouterLinkActive="active"
 						href="#dadosGerais">Dados Gerais</a></li>
-					<li class="tab col s2"><a RouterLinkActive="active"
+					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#grupoMonitoramento">Grupo Monitoramento</a></li>
 					<li class="tab col s2"><a RouterLinkActive="active"
 						href="#historico">Histórico</a></li>
-					<li class="tab col s3"><a RouterLinkActive="active"
-						href="#informacoesAdicionais">Informações Adicionais</a></li>
+					<li class="tab col s2"><a RouterLinkActive="active"
+						href="#endereco">Endereço</a></li>
 					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#outrasInformacoes">Outras Informações</a></li>
 				</ul>
@@ -33,14 +34,14 @@
 					<div class="input-field col s12">
 						<label data-error="Campo obrigatório." for="nome">Nome</label> <input
 							id="nome" type="text" required maxlength="400"
-							[(ngModel)]="empregado.nome" name="nome">
+							[(ngModel)]="empregado.pessoa.nome" name="nome">
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="input-field col s6">
 						<label for="cpf">CPF</label> <input id="cpf" type="text"
-							maxlength="11" [(ngModel)]="empregado.cpf" name="cpf">
+							maxlength="11" [(ngModel)]="empregado.pessoa.cpf" name="cpf">
 					</div>
 
 					<div class="input-field col s4">
@@ -67,28 +68,29 @@
 				<div class="row">
 					<div class="input-field col s6">
 						<label for="rg">RG</label> <input id="rg" type="text"
-							maxlength="32" [(ngModel)]="empregado.rg" name="rg">
+							maxlength="32" [(ngModel)]="empregado.pessoa.rg" name="rg">
 					</div>
 
-					<div class="input-field col s6">
-						<fieldset>
-							<legend>Sexo</legend>
-							<select name="sexo" class="browser-default"
-								[(ngModel)]="empregado.sexo">
-								<option disabled selected value="">Selecione um sexo</option>
-								<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
-							</select>
-						</fieldset>
-					</div>
-				</div>
-
-				<div class="row">
 					<div class="input-field col s6">
 						<label for="ramal">Ramal</label> <input id="ramal" type="text"
 							maxlength="16" [(ngModel)]="empregado.ramal" name="ramal">
 					</div>
 
-					<div class="input-field col s6">
+				</div>
+
+				<div class="row">
+					<div class="input-field col s4">
+						<fieldset>
+							<legend>Sexo</legend>
+							<select name="sexo" class="browser-default"
+								[(ngModel)]="empregado.pessoa.sexo">
+								<option disabled selected value="">Selecione um sexo</option>
+								<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
+							</select>
+						</fieldset>
+					</div>
+
+					<div class="input-field col s4">
 						<fieldset>
 							<legend>Status</legend>
 							<select name="status" class="browser-default"
@@ -98,96 +100,34 @@
 							</select>
 						</fieldset>
 					</div>
+
+					<div class="input-field col s4">
+						<fieldset>
+							<legend>Estado Civil</legend>
+							<select name="estadoCivil" class="browser-default"
+								[(ngModel)]="empregado.estadoCivil">
+								<option disabled selected value="">Selecione um estado civil</option>
+								<option *ngFor="let estadoCivil of estadosCivies"
+									value="{{estadoCivil}}">{{estadoCivil}}</option>
+							</select>
+						</fieldset>
+					</div>
 				</div>
 
-			</div>
-
-			<div id="grupoMonitoramento">
-
-				<fieldset>
-					<legend>Grupos Monitoramento</legend>
-					<div class="row row-curso">
-
-						<div class="input-field col s4">
-							<select class="browser-default" #grupoMonitoramento>
-								<option disabled selected value=0>Selecione um grupo monitoramento</option>
-								<option *ngFor="let grupoMonitoramento of gruposMonitoramento"
-									value="{{grupoMonitoramento.id}}">{{grupoMonitoramento.nome}}</option>
+				<div class="row">
+					<div class="input-field col s12">
+						<fieldset>
+							<legend>Escolaridade</legend>
+							<select name="escolaridade" class="browser-default"
+								[(ngModel)]="empregado.escolaridade">
+								<option disabled selected value="">Selecione uma escolaridade</option>
+								<option *ngFor="let escolaridade of escolaridades"
+									value="{{escolaridade}}">{{escolaridade}}</option>
 							</select>
-						</div>
-
-						<div class="col s2">
-							<a
-								class="btn-floating waves-effect waves-light green btn-remove-permission"
-								(click)="addGrupoMonitoramento(grupoMonitoramento.value)"> <i
-								class="material-icons center-icon">add</i>
-							</a>
-						</div>
+						</fieldset>
 					</div>
 
-					<div class="row">
-
-						<table class="striped">
-							<thead>
-								<tr class="row col s12">
-									<th class="col s10">Nome</th>
-									<th class="col s2">Remoção</th>
-								</tr>
-							</thead>
-							<div
-								*ngFor="let grupoMonitoramento of empregado.grupoMonitoramentos;let i = index">
-								<tbody class="col s12">
-									<tr class="col s12">
-										<input type="hidden"
-											[(ngModel)]="empregado.grupoMonitoramentos[i].nome"
-											value="{{grupoMonitoramento.nome}}"
-											name="grupoMonitoramento[{{i}}].nome">
-										<input type="hidden"
-											[(ngModel)]="empregado.grupoMonitoramentos[i].id"
-											value="{{grupoMonitoramento.id}}"
-											name="grupoMonitoramento[{{i}}].id">
-										<td class="col s10">{{grupoMonitoramento.nome}}</td>
-										<td class="col s2"><a
-											class="btn-floating waves-effect waves-light red btn-remove"
-											(click)="removeGrupoMonitoramento(i)"> <i
-												class="material-icons center-icon">delete</i>
-										</a></td>
-									</tr>
-								</tbody>
-							</div>
-
-						</table>
-
-					</div>
-				</fieldset>
-
-
-			</div>
-
-			<div id="historico">
-
-				<table class="striped">
-					<thead>
-						<tr class="row col s12">
-							<th class="col s8">Grupo Monitoramento</th>
-							<th class="col s4">Data Remoção</th>
-						</tr>
-					</thead>
-					<div
-						*ngFor="let grupoMonitoramento of empregado.historicoGrupoMonitoramentos;let i = index">
-						<tbody class="col s12">
-							<tr class="col s12">
-								<td class="col s8">{{empregado.historicoGrupoMonitoramentos[i].grupoMonitoramento.nome}}</td>
-								<td class="col s4">{{dataRemocaoHistoricos[i]}}</td>
-							</tr>
-						</tbody>
-					</div>
-
-				</table>
-
-			</div>
-
-			<div id="informacoesAdicionais">
+				</div>
 
 				<div class="row">
 
@@ -278,6 +218,191 @@
 					</div>
 
 				</div>
+
+				<div class="row">
+					<div class="input-field col s12">
+						<label class="active">Foto</label> <input id="foto" type="file"
+							name="foto" accept=".png" #foto>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<img id="fotoPreview" src="{{fotoSrc}}" [ngStyle]="fotoSrcStyle" />
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label class="active" >Assinatura</label>
+						<input id="assinatura" type="file" name="assinatura" accept=".png" #assinatura>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<img id="assinaturaPreview" src="{{assinaturaSrc}}" [ngStyle]="assinaturaSrcStyle" />
+					</div>
+				</div>
+				
+				<input [(ngModel)]="empregado.pessoa.id" id="empregado.pessoa.id"
+					name="empregado.pessoa.id" type="hidden"> 
+				<input [(ngModel)]="empregado.pessoa.version" id="empregado.pessoa.version"
+					name="empregado.pessoa.version" type="hidden">
+
+			</div>
+
+			<div id="grupoMonitoramento">
+
+				<fieldset>
+					<legend>Grupos Monitoramento</legend>
+					<div class="row row-curso">
+
+						<div class="input-field col s4">
+							<select class="browser-default" #grupoMonitoramento>
+								<option disabled selected value=0>Selecione um grupo monitoramento</option>
+								<option *ngFor="let grupoMonitoramento of gruposMonitoramento"
+									value="{{grupoMonitoramento.id}}">{{grupoMonitoramento.nome}}</option>
+							</select>
+						</div>
+
+						<div class="col s2">
+							<a
+								class="btn-floating waves-effect waves-light green btn-remove-permission"
+								(click)="addGrupoMonitoramento(grupoMonitoramento.value)"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+					</div>
+
+					<div class="row">
+
+						<table class="striped">
+							<thead>
+								<tr class="row col s12">
+									<th class="col s10">Nome</th>
+									<th class="col s2">Remoção</th>
+								</tr>
+							</thead>
+							<div
+								*ngFor="let grupoMonitoramento of empregado.grupoMonitoramentos;let i = index">
+								<tbody class="col s12">
+									<tr class="col s12">
+										<input type="hidden"
+											[(ngModel)]="empregado.grupoMonitoramentos[i].nome"
+											value="{{grupoMonitoramento.nome}}"
+											name="grupoMonitoramento[{{i}}].nome">
+										<input type="hidden"
+											[(ngModel)]="empregado.grupoMonitoramentos[i].id"
+											value="{{grupoMonitoramento.id}}"
+											name="grupoMonitoramento[{{i}}].id">
+										<td class="col s10">{{grupoMonitoramento.nome}}</td>
+										<td class="col s2"><a
+											class="btn-floating waves-effect waves-light red btn-remove"
+											(click)="removeGrupoMonitoramento(i)"> <i
+												class="material-icons center-icon">delete</i>
+										</a></td>
+									</tr>
+								</tbody>
+							</div>
+
+						</table>
+
+					</div>
+				</fieldset>
+
+
+			</div>
+
+			<div id="historico">
+
+				<table class="striped">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s8">Grupo Monitoramento</th>
+							<th class="col s4">Data Remoção</th>
+						</tr>
+					</thead>
+					<div
+						*ngFor="let grupoMonitoramento of empregado.historicoGrupoMonitoramentos;let i = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s8">{{empregado.historicoGrupoMonitoramentos[i].grupoMonitoramento.nome}}</td>
+								<td class="col s4">{{dataRemocaoHistoricos[i]}}</td>
+							</tr>
+						</tbody>
+					</div>
+
+				</table>
+
+			</div>
+
+			<div id="endereco">
+
+				<fieldset>
+
+					<legend class="legend"> Endereço </legend>
+					<div class="form-group">
+						<div>
+
+							<div class="row">
+								<div class="input-field col s12">
+									<label for="logradouro" maxlength="200">Logradouro</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.logradouro" id="logradouro"
+										type="text" name="endereco.logradouro">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<label for="bairro" maxlength="100">Bairro</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.bairro" id="bairro"
+										type="text" name="endereco.bairro">
+								</div>
+
+								<div class="input-field col s4">
+									<label for="numero" maxlength="12">Numero</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.numero" id="numero"
+										type="text" name="endereco.numero">
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<label for="complemento" maxlength="200">Complemento</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.complemento" id="complemento"
+										name="endereco.complemento" type="text">
+								</div>
+
+								<div class="input-field col s4">
+									<label for="cep" maxlength="9">CEP</label> <input id="cep"
+										type="text" [(ngModel)]="empregado.pessoa.endereco.cep"
+										name="endereco.cep">
+
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s6">
+									<fieldset>
+										<legend>Cidade</legend>
+										<select class="browser-default" name="cidade"
+											[(ngModel)]="empregado.pessoa.endereco.cidade.id">
+											<option selected value=0>Selecione uma cidade</option>
+											<option *ngFor="let cidade of cidades" value="{{cidade.id}}">{{cidade.nome}}</option>
+										</select>
+									</fieldset>
+								</div>
+							</div>
+
+							<input [(ngModel)]="empregado.pessoa.endereco.id" id="empregado.pessoa.endereco.id"
+								name="empregado.pessoa.endereco.id" type="hidden"> <input
+								[(ngModel)]="empregado.pessoa.endereco.version" id="empregado.pessoa.endereco.version"
+								name="empregado.pessoa.endereco.version" type="hidden">
+
+						</div>
+
+					</div>
+
+				</fieldset>
 
 			</div>
 
@@ -385,13 +510,13 @@
 							</a>
 						</legend>
 
-						<div *ngFor="let telefone of empregado.telefones;let i = index">
+						<div *ngFor="let telefone of empregado.pessoa.telefones;let i = index">
 
 							<div class="row">
 								<div class="input-field col s10">
 									<label for="numero" maxlength="16">Numero</label> <input
 										id="numero" name="numero{{i}}" type="text"
-										[(ngModel)]="empregado.telefones[i].numero">
+										[(ngModel)]="empregado.pessoa.telefones[i].numero">
 								</div>
 
 								<div class="col s2">
@@ -426,29 +551,69 @@
 							</a>
 						</legend>
 
-						<div
-							*ngFor="let instalacao of empregado.instalacoes;let i = index">
+						<fieldset>
+							<legend>Instalações</legend>
+							<div class="row row-curso">
 
-							<fieldset>
-								<legend>
-									Instalação <a
-										class="btn-floating waves-effect waves-light red btn-add-permissoes"
-										(click)="removeInstalacao(i)"> <i
-										class="material-icons center-icon">delete</i>
+								<div class="input-field col s4">
+									<select class="browser-default" #instalacao>
+										<option disabled selected value=0>Selecione uma instalação</option>
+										<option *ngFor="let instalacao of instalacoes" value="{{instalacao.id}}">{{instalacao.nome}}</option>
+
+									</select>
+								</div>
+
+								<div class="col s2">
+									<a
+										class="btn-floating waves-effect waves-light green btn-remove-permission"
+										(click)="addInstalacao(instalacao.value)"> <i
+										class="material-icons center-icon">add</i>
 									</a>
-								</legend>
+								</div>
 
-								<select class="browser-default"
-									name="empregado.instalacoes[{{i}}].id"
-									[(ngModel)]="empregado.instalacoes[i].id">
-									<option selected disabled value=0>Selecione um instalacao</option>
-									<option *ngFor="let instalacao of instalacoes"
-										value="{{instalacao.id}}">{{instalacao.nome}}</option>
-								</select>
+							</div>
 
-							</fieldset>
+							<div class="row">
 
-						</div>
+								<table class="striped">
+									<thead>
+										<tr class="row col s12">
+											<th class="col s3">Nome</th>
+											<th class="col s3">Latitude</th>
+											<th class="col s3">Longitude</th>
+											<th class="col s3">Remover</th>
+										</tr>
+									</thead>
+
+									<div *ngFor="let instalacao of empregado.instalacoes;let i = index">
+										<tbody class="col s12">
+											<tr class="col s12">
+												<input type="hidden" [(ngModel)]="instalacao.nome"
+													value="{{instalacao.nome}}" name="instalacao[{{i}}].nome">
+												<input type="hidden" [(ngModel)]="instalacao.latitude"
+													value="{{instalacao.latitude}}" name="instalacao[{{i}}].latitude">
+												<input type="hidden" [(ngModel)]="instalacao.longitude"
+													value="{{instalacao.longitude}}" name="instalacao[{{i}}].longitude">
+												<input type="hidden" [(ngModel)]="instalacao.id"
+													value="{{instalacao.id}}" name="instalacao[{{i}}].id">
+												<td class="col s3">{{instalacao.nome}}</td>
+												<td class="col s3">{{instalacao.latitude}}</td>
+												<td class="col s3">{{instalacao.longitude}}</td>
+												<td class="col s3"><a
+													class="btn-floating waves-effect waves-light red btn-remove"
+													(click)="removeInstalacao(i)"> <i
+														class="material-icons center-icon">delete</i>
+												</a></td>
+											</tr>
+										</tbody>
+
+									</div>
+
+								</table>
+
+							</div>
+
+						</fieldset>
 
 					</fieldset>
 

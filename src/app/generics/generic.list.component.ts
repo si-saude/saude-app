@@ -21,7 +21,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
     protected colorEmptyPaginas: string;
     protected modalActions;
     protected modalDelete;
-    protected modelParams;
+    protected modalParams;
     protected typeFilter;
     private tempDelete;
     
@@ -36,7 +36,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
         this.typeFilter = TypeFilter;
         this.modalActions = new EventEmitter<string|MaterializeAction>();
         this.modalDelete = new EventEmitter<string|MaterializeAction>();
-        this.modelParams = [{
+        this.modalParams = [{
             dismissible: false,
             complete: function() { }
         }];

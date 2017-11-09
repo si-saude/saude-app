@@ -15,8 +15,7 @@ export class CanDeactivateGuard implements CanDeactivate<GenericFormComponent> {
             if ( component.isPossibleDeactivate() ) {
                 return true;
             } else {
-                component.openModalDeactivate();
-                
+                return confirm("Tem certeza que deseja sair? Nada do que foi feito vai ser salvo.");
             }
     }
 }

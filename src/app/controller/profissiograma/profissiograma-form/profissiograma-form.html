@@ -81,7 +81,7 @@
 						<div class="input-field col s4">
 							<select class="browser-default" #exame>
 								<option disabled selected value=0>Selecione um exame</option>
-								<option *ngFor="let exame of exames" value="{{exame.id}}">{{exame.codigo}}</option>
+								<option *ngFor="let exame of exames" value="{{exame.id}}">{{exame.codigo}} - {{exame.descricao}}</option>
 							</select>
 						</div>
 
@@ -101,7 +101,7 @@
 							<a [ngClass]="selectedExame(gME)"
 								[routerLinkActive]="['active']" class="collection-item"
 								(click)="selectExame(gME)">
-								{{grupoMonitoramentoExame.exame.codigo}} </a>
+								{{grupoMonitoramentoExame.exame.codigo}} - {{grupoMonitoramentoExame.exame.descricao}} </a>
 						</div>
 						<div class="col s2 btn-delete">
 							<a [ngStyle]="{'cursor': 'pointer'}" 
