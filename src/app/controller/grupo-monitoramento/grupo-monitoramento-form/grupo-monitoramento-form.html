@@ -28,26 +28,42 @@
 			<div id="dadosGerais">
 				<div class="row">
 
-					<div class="input-field col s12">
-						<label for="nome">Nome</label> <input id="nome" type="text"
-							[(ngModel)]="grupoMonitoramento.nome"
-							name="grupoMonitoramento.nome">
-					</div>
+					<div class="row">
+						<div class="input-field col s6">
+							<label for="nome">Nome</label> <input id="nome" type="text"
+								[(ngModel)]="grupoMonitoramento.nome"
+								name="grupoMonitoramento.nome">
+						</div>
 
-					<div class="input-field col s8">
-						<fieldset>
-							<legend>Tipo Grupo Monitoramento</legend>
-							<select name="grupoMonitoramento.tipoGrupoMonitoramento"
-								class="browser-default"
-								[(ngModel)]="grupoMonitoramento.tipoGrupoMonitoramento.id">
-								<option disabled selected value=0>Selecione um tipo grupo monitoramento</option>
-								<option
-									*ngFor="let tipoGrupoMonitoramento of tiposGrupoMonitoramento"
-									value="{{tipoGrupoMonitoramento.id}}">{{tipoGrupoMonitoramento.nome}}</option>
-							</select>
-						</fieldset>
+						<div class="input-field col s3 checkbox">
+							<input type="checkbox" id="recorrente"
+								[(ngModel)]="grupoMonitoramento.recorrente"
+								name="grupoMonitoramento.recorrente"> <label
+								for="recorrente">Recorrente</label>
+						</div>
+						<div class="input-field col s3 checkbox">
+							<input type="checkbox" id="relatorio"
+								[(ngModel)]="grupoMonitoramento.relatorio"
+								name="grupoMonitoramento.relatorio"> <label
+								for="relatorio">Relatório</label>
+						</div>
 					</div>
-
+					
+					<div class="row">
+						<div class="input-field col s6">
+							<fieldset>
+								<legend>Tipo Grupo Monitoramento</legend>
+								<select name="grupoMonitoramento.tipoGrupoMonitoramento"
+									class="browser-default"
+									[(ngModel)]="grupoMonitoramento.tipoGrupoMonitoramento.id">
+									<option disabled selected value=0>Selecione um tipo grupo monitoramento</option>
+									<option
+										*ngFor="let tipoGrupoMonitoramento of tiposGrupoMonitoramento"
+										value="{{tipoGrupoMonitoramento.id}}">{{tipoGrupoMonitoramento.nome}}</option>
+								</select>
+							</fieldset>
+						</div>
+					</div>
 
 				</div>
 			</div>
@@ -73,26 +89,26 @@
 									<div class="col s2">
 										<a
 											class="btn-floating waves-effect waves-light green btn-remove-permission"
-											(click)="addExame(exame.value)"> 
-											<i class="material-icons center-icon">add</i>
+											(click)="addExame(exame.value)"> <i
+											class="material-icons center-icon">add</i>
 										</a>
 									</div>
 								</div>
 							</fieldset>
 
-							<div class="row-item-collection" 
+							<div class="row-item-collection"
 								*ngFor="let grupoMonitoramentoExame of grupoMonitoramento.grupoMonitoramentoExames; let gME = index">
 								<div class="row row-collection">
 									<div class="col s10">
 										<a [ngClass]="selectedExame(gME)"
-											[routerLinkActive]="['active']" class="collection-item"	
+											[routerLinkActive]="['active']" class="collection-item"
 											(click)="selectExame(gME)">
-											{{grupoMonitoramentoExame.exame.codigo}} - {{grupoMonitoramentoExame.exame.descricao}} </a>
+											{{grupoMonitoramentoExame.exame.codigo}} -
+											{{grupoMonitoramentoExame.exame.descricao}} </a>
 									</div>
 									<div class="col s2 btn-delete">
 										<a [ngStyle]="{'cursor': 'pointer'}"
-											(click)="removeExame(gME)">
-											<i class="material-icons">delete</i>
+											(click)="removeExame(gME)"> <i class="material-icons">delete</i>
 										</a>
 									</div>
 								</div>
@@ -126,7 +142,7 @@
 								</div>
 							</fieldset>
 
-							<div class="row-item-collection" 
+							<div class="row-item-collection"
 								*ngFor="let criterio of arrayCriterio; let c = index">
 								<div class="row row-collection">
 									<div class="col s10">
@@ -168,9 +184,10 @@
 					class="btn btn-primary btn-listar-perfis">Listar</a>
 			</div>
 		</div>
-		
-	<div materialize [materializeParams]="toastParams" [materializeActions]="globalActions"></div>
-	
+
+		<div materialize [materializeParams]="toastParams"
+			[materializeActions]="globalActions"></div>
+
 	</form>
-		
+
 </div>

@@ -12,6 +12,7 @@ export class GrupoMonitoramento {
     private profissiogramas: Array<Profissiograma>;
     private empregados: Array<Empregado>;
     private recorrente: boolean;
+    private relatorio: boolean;
     private version: number;
 
     getId() {
@@ -68,6 +69,14 @@ export class GrupoMonitoramento {
     
     setRecorrente(recorrente: boolean) {
         this.recorrente = recorrente;
+    }
+    
+    getRelatorio() {
+        return this.relatorio;
+    }
+    
+    setRelatorio(relatorio: boolean) {
+        this.relatorio = relatorio;
     }
     
     getVersion() {

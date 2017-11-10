@@ -89,7 +89,6 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
     }
     
     save() {
-//        console.log(new GrupoMonitoramentoBuilder().clone(this.grupoMonitoramento));
         super.save(new GrupoMonitoramentoBuilder().clone(this.grupoMonitoramento));
     }   
     

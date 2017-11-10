@@ -30,13 +30,22 @@ export class CriterioBuilder extends GenericBuilder {
         let cloneCriterio = new Criterio();
         cloneCriterio.setId(this.getValue(criterio,"getId"));
         cloneCriterio.setNome(this.getValue(criterio, "getNome"));
-        cloneCriterio.setTipo(this.getValue(criterio, "getTipo"));
+        cloneCriterio.setOperador(this.getValue(criterio, "getOperador"));
         cloneCriterio.setVersion(this.getValue(criterio, "getVersion"));
         
-        let tipo:string = this.getValue(criterio, "getTipo");
-        if(tipo == "")
-            tipo = undefined;
-        cloneCriterio.setTipo(tipo);
+        if(this.getValue(criterio, "getTipo") == "")
+            cloneCriterio.setTipo(undefined);
+        else if (this.getValue(criterio, "getTipo") == undefined)
+            cloneCriterio.setTipo("");
+        else
+            cloneCriterio.setTipo(this.getValue(criterio, "getTipo"));
+        
+        if(this.getValue(criterio, "getValor") == "")
+            cloneCriterio.setValor(undefined);
+        else if (this.getValue(criterio, "getValor") == undefined)
+            cloneCriterio.setValor("");
+        else
+            cloneCriterio.setValor(this.getValue(criterio, "getValor"));
         
         return cloneCriterio;
     }

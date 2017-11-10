@@ -86,3 +86,14 @@ select{
 .btn-delete {
 	margin-top: -5px;
 }
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}
+
+.checkbox {
+	margin-top: 30px;
+}

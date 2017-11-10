@@ -6,7 +6,8 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row form-container">
 	<form class="col s12" (ngSubmit)="save()">
@@ -14,30 +15,87 @@
 		<div class="row">
 
 			<div class="input-field col s8">
-				<label for="nome">Nome</label>
-				<input id="nome" type="text" 
-				[(ngModel)]="criterio.nome" name="criterio.nome">
+				<label for="nome">Nome</label> <input id="nome" type="text"
+					[(ngModel)]="criterio.nome" name="criterio.nome">
 			</div>
-			
+
 			<div class="input-field col s4">
 				<fieldset>
 					<legend>Tipo</legend>
 					<select name="criterio.tipo" class="browser-default"
-						[(ngModel)]="criterio.tipo">
+						[(ngModel)]="criterio.tipo" (ngModelChange)="selectTipo()">
 						<option disabled selected value="">Selecione um tipo</option>
-						<option *ngFor="let tipo of tipos"
-							value="{{tipo}}">{{tipo}}</option>
+						<option *ngFor="let tipo of tipos" value="{{tipo}}">{{tipo}}</option>
 					</select>
 				</fieldset>
 			</div>
-	
+
 		</div>
-		
-		<input id="id" name="id" type="hidden" [(ngModel)]="criterio.id"> 
-		<input id="version" name="version" type="hidden" [(ngModel)]="criterio.version">
-		
+
+		<div class="row">
+
+			<div class="row" *ngIf="selectedIdadeOrExame">
+				<div class="input-field col s8">
+					<label for="valor">Valor</label> <input id="valor" type="text"
+						[(ngModel)]="criterio.valor" name="criterio.valor">
+				</div>
+			</div>
+
+			<div class="row" *ngIf="selectedFuncao">
+				<div class="input-field col s6">
+					<fieldset>
+						<legend>Valor</legend>
+						<select name="valor" class="browser-default"
+							[(ngModel)]="criterio.valor">
+							<option disabled selected value="">Selecione uma função</option>
+							<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>
+
+			<div class="row" *ngIf="selectedCargo">
+				<div class="input-field col s6">
+					<fieldset>
+						<legend>Valor</legend>
+						<select name="valor" class="browser-default"
+							[(ngModel)]="criterio.valor">
+							<option disabled selected value="">Selecione um cargo</option>
+							<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>
+
+			<div class="row" *ngIf="selectedSexo">
+				<div class="input-field col s6">
+					<fieldset>
+						<legend>Valor</legend>
+						<select name="valor" class="browser-default"
+							[(ngModel)]="criterio.valor">
+							<option disabled selected value="">Selecione um sexo</option>
+							<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="operador">Operador</label> <input id="operador" type="text"
+					[(ngModel)]="criterio.operador" name="criterio.operador">
+			</div>
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="criterio.id">
+		<input id="version" name="version" type="hidden"
+			[(ngModel)]="criterio.version">
+
 		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
 		</div>
 
 		<div class='row row-btns'>

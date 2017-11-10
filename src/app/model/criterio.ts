@@ -1,7 +1,9 @@
 export class Criterio {
     private id: number = 0;
     private nome: string;
+    private operador: string;
     private tipo: string = "";
+    private valor: string = "";
     private version: number;
 
     getId(): number {
@@ -27,6 +29,14 @@ export class Criterio {
     setNome(nome: string) {
         this.nome = nome;
     }
+
+    getOperador():string{
+        return this.operador;
+    }
+    
+    setOperador(operador:string){
+        this.operador = operador;
+    }
     
     getTipo():string{
         return this.tipo;
@@ -34,5 +44,13 @@ export class Criterio {
     
     setTipo(tipo: string){
         this.tipo = tipo;
+    }
+    
+    getValor():string{
+        return this.valor;
+    }
+    
+    setValor(valor: string){
+        this.valor = valor;
     }
 }

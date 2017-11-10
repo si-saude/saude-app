@@ -95,7 +95,11 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     getGerente() {
         if (this.gerencia.getGerente().getPessoa().getNome() !== undefined) {
             
-            let gerente = this.gerentes.find(e => e.getPessoa().getNome() == this.gerencia.getGerente().getPessoa().getNome());
+            let gerente = this.gerentes.find(e => { 
+                    return e.getChave()+" - "+e.getPessoa().getNome() == 
+                        this.gerencia.getGerente().getPessoa().getNome();
+                });
+            console.log(gerente);
             if ( gerente !== undefined ) {
                 this.gerencia.setGerente(gerente);
             } else this.gerencia.setGerente(new EmpregadoBuilder().initialize(new Empregado()));
@@ -123,20 +127,12 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
         } else this.gerencia.setSecretario2(new EmpregadoBuilder().initialize(new Empregado()));
     }
     
-//    getAutocompleteValue(valor: string) {
-//        if (valor !== undefined) {
-//            let empregado = this.empregados.find(e => e.getNome() === valor); 
-//            if ( empregado !== undefined ) {
-//                return empregado;
-//            } else return new EmpregadoBuilder().initialize(new Empregado());
-//        } else return new EmpregadoBuilder().initialize(new Empregado());
-//    }
-    
     selectGerente(evento) {
         if( evento.length > 3 ) {
             this.empregadoService.getEmpregadoByName(evento)
                 .then(res => {
                     this.gerentes = new EmpregadoBuilder().cloneList(res.json());
+                    console.log(this.gerentes)
                     this.autocompleteGerente = [this.buildAutocompleteEmpregado(this.gerentes)];
                 })
                 .catch(error => {
@@ -209,7 +205,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     buildAutocompleteEmpregado(empregados) {
         let data = {} ;
         empregados.forEach(item => {
-            data[item.getChave() + " - " + item.getNome()] = null;
+            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
         });
         
         let array = {};

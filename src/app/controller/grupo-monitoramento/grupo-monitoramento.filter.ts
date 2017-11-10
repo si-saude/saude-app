@@ -6,6 +6,7 @@ export class GrupoMonitoramentoFilter extends GenericFilter {
     private nome: string;
     private tipoGrupoMonitoramento: TipoGrupoMonitoramentoFilter;
     private recorrente: BooleanFilter;
+    private relatorio: BooleanFilter;
     
     getNome() {
         return this.nome;
@@ -29,6 +30,14 @@ export class GrupoMonitoramentoFilter extends GenericFilter {
     
     setRecorrente(recorrente: BooleanFilter) {
         this.recorrente = recorrente;
+    }
+    
+    getRelatorio() {
+        return this.relatorio;
+    }
+    
+    setRelatorio(relatorio: BooleanFilter) {
+        this.relatorio = relatorio;
     }
        
 }
