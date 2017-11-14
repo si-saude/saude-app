@@ -1,10 +1,9 @@
 import { ViewChild, EventEmitter, Injector } from '@angular/core';
-import { IMyDpOptions } from 'mydatepicker';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-
+import { IMyDpOptions } from 'mydatepicker';
 import { MaterializeAction } from "angular2-materialize";
 
 import { GenericService } from './generic.service';

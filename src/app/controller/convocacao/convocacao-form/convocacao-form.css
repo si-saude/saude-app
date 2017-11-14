@@ -1,0 +1,70 @@
+.center-icon {
+	margin-top: 0px;
+}
+
+.legend-permissoes{ 
+	color: #004d40;
+	font-size: 16px;
+}
+
+.btn-add-permissoes {
+	margin-left: 15px;
+}
+
+.row-btns {
+    margin-top: 40px;
+}
+
+.btn-tipo-permissao {
+	margin-top: 27px;
+}
+
+.btn-remove-permission {
+	margin-top: 15px;	
+}
+
+.btn-listar-perfis {
+	float: right;
+}
+
+select{
+	display:inline;
+}
+
+.input-field > select {
+    display: block;
+    position: absolute;
+    width: 250px;
+    pointer-events: all;
+    height: 50px;
+    top: 0;
+    left: 20px;
+    opacity: 10;
+}
+
+.tabs {
+	margin-top: 3px;
+}
+
+.selects {
+	margin-left: 2%;
+}
+
+.selects-bottom {
+	margin-top: 40px;
+}
+
+.mensagem {
+	margin-top: 50px;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}
+
+.checkbox {
+	margin-top: 0px;
+}

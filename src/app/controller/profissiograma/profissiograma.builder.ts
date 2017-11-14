@@ -12,6 +12,20 @@ export class ProfissiogramaBuilder extends GenericBuilder{
         return profissiograma;
     }
     
+    initializeList(profissiogramas: Array<Profissiograma>) {
+        
+        let array:Array<Profissiograma> = new Array<Profissiograma>();
+        
+        if(profissiogramas === null || profissiogramas === undefined)
+            profissiogramas = new Array<Profissiograma>();
+        
+        for (let profissiograma of profissiogramas) {
+            array.push(this.initialize(profissiograma));
+        }
+        
+        return array;
+    }
+    
     clone(profissiograma: Profissiograma): Profissiograma {
         let cloneProfissiograma = new Profissiograma();
         
@@ -27,5 +41,17 @@ export class ProfissiogramaBuilder extends GenericBuilder{
                 new GrupoMonitoramentoBuilder().cloneList(this.getValue(profissiograma, "getGrupoMonitoramentos")));
         
         return cloneProfissiograma;
+    }
+    
+    cloneList(profissiogramas: Array<Profissiograma>): Array<Profissiograma> {
+        let array:Array<Profissiograma> = new Array<Profissiograma>();
+    
+        if (profissiogramas !== null && profissiogramas !== undefined) { 
+            for (let profissiograma of profissiogramas) {
+                array.push(this.clone(profissiograma));
+            }
+        }
+        
+        return array;
     }
 }

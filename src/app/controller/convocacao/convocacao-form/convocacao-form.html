@@ -1,0 +1,254 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<form class="col s12 form-convocacao" (ngSubmit)="save()">
+
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs" materialize="tabs">
+				<li class="tab col s4"><a RouterLinkActive="active"
+					href="#dadosGerais">Dados Gerais</a></li>
+				<li class="tab col s4"><a RouterLinkActive="active"
+					href="#cronogramaGerencias">Cronograma das Gerências</a></li>
+				<li class="tab col s4"><a RouterLinkActive="active"
+					href="#empregados">Empregados</a></li>
+			</ul>
+		</div>
+
+		<div id="dadosGerais">
+
+			<div class="row">
+				<div class="input-field col s12">
+					<label data-error="Campo obrigatório." for="titulo">Titulo</label>
+					<input id="nome" type="text" required maxlength="400"
+						[(ngModel)]="convocacao.titulo" name="titulo">
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="input-field col s6">
+					<fieldset>
+						<legend>Tipo</legend>
+						<select name="convocacao.tipo" class="browser-default"
+							[(ngModel)]="convocacao.tipo">
+							<option disabled selected value="">Selecione um tipo</option>
+							<option *ngFor="let tipo of tipos" value="{{tipo}}">{{tipo}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+				<div class="input-field col s6">
+					<fieldset>
+						<legend>Profissiograma</legend>
+						<select name="profissiograma" class="browser-default"
+							[(ngModel)]="convocacao.profissiograma.id">
+							<option disabled selected value=0>Selecione um profissiograma</option>
+							<option *ngFor="let profissiograma of profissiogramas"
+								value="{{profissiograma.id}}">{{profissiograma.nome}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="cronogramaGerencias">
+			<div class="row">
+
+				<div class="input-field col s8">
+					<div class="input-field col s12">
+						<label for="filtroGerenciaConvocacoes">Filtrar Gerências</label> <input
+							id="filtroGerenciaConvocacoes" type="text"
+							name="filtroGerenciaConvocacoes"
+							(ngModelChange)="filterGerenciaConvocacoes($event)"
+							[(ngModel)]="filterGerenciaByCodigoCompleto">
+
+						<fieldset>
+							<legend>Gerências</legend>
+
+							<div class="collection">
+
+								<div class="row-item-collection"
+									*ngFor="let gerenciaConvocacao of gerenciaConvocacoes; let gC = index">
+									<div class="row row-collection">
+										<div class="col s10">
+											<a class="collection-item">
+												{{gerenciaConvocacao.gerencia.codigoCompleto}} </a>
+										</div>
+										<div class="input-field col s2 checkbox">
+											<input type="checkbox"
+												id="gerenciaConvocacao.selecionado[{{gC}}]"
+												[(ngModel)]="gerenciaConvocacao.selecionado"
+												(click)="selectGerenciaConvocacao(gC)"
+												name="gerenciaConvocacao.selecionado[{{gC}}]"> <label
+												for="gerenciaConvocacao.selecionado[{{gC}}]"></label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+
+				</div>
+				<div class="input-field col s4" *ngIf="selectedGerenciaConvocacao">
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="dataGerenciaConvocacaoInicio">Início</label>
+							<my-date-picker name="dataGerenciaConvocacaoInicio"
+								[options]="myDatePickerOptions"
+								[(ngModel)]="dataGerenciaConvocacaoInicio" placeholder="Início">
+							</my-date-picker>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="dataGerenciaConvocacaoFim">Fim</label>
+							<my-date-picker name="dataGerenciaConvocacaoFim"
+								[options]="myDatePickerOptions"
+								[(ngModel)]="dataGerenciaConvocacaoFim" placeholder="Fim">
+							</my-date-picker>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="empregados">
+
+			<div class="row">
+				<div class="input-field col s10">
+					<label for="empregado">Empregado</label> <input type="text"
+						materialize="autocomplete" name="addEmpregado"
+						(focusout)="getEmpregado($event)"
+						[(ngModel)]="empregadoToAdd.pessoa.nome"
+						(ngModelChange)="selectEmpregadoByChave($event);selectEmpregado($event);"
+						[materializeParams]="autocompleteEmpregado">
+				</div>
+				<div class="input-field col s2">
+					<a
+						class="btn-floating waves-effect waves-light green btn-add-permissoes"
+						(click)="addEmpregado()"> <i
+						class="material-icons center-icon">add</i>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s2">
+					<label for="filterEmpregadoByChave">Chave</label> <input
+						id="filterEmpregadoByChave" type="text"
+						name="filterEmpregadoByChave" [(ngModel)]="filterChaveEmpregado"
+						(ngModelChange)="filterEmpregadoByChave($event)">
+				</div>
+				<div class="input-field col s5">
+					<label for="filterEmpregadoByNome">Nome</label> <input
+						id="filterEmpregadoByNome" type="text"
+						name="filterEmpregadoByNome" [(ngModel)]="filterNomeEmpregado"
+						(ngModelChange)="filterEmpregadoByNome($event)">
+				</div>
+				<div class="input-field col s4">
+					<label for="filterEmpregadoByGerencia">Gerência</label> <input
+						id="filterEmpregadoByGerencia" type="text"
+						name="filterEmpregadoByGerencia"
+						[(ngModel)]="filterGerenciaEmpregado"
+						(ngModelChange)="filterEmpregadoByGerencia($event)">
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="collection">
+
+					<div class="row-item-collection"
+						*ngFor="let empregadoConvocacao of empregadoConvocacoes; let eC = index">
+						<div class="row row-collection">
+							<div class="col s2">
+								<a class="collection-item">
+									{{empregadoConvocacao.empregado.chave}} </a>
+							</div>
+							<div class="col s5">
+								<a class="collection-item">
+									{{empregadoConvocacao.empregado.pessoa.nome}} </a>
+							</div>
+							<div class="col s4">
+								<a class="collection-item">
+									{{empregadoConvocacao.empregado.gerencia.codigoCompleto}} </a>
+							</div>
+							<div class="col s1">
+								<a (click)="showDetailEmpregado(eC)"
+									[ngStyle]="{'cursor': 'pointer'}"><i class="material-icons">mode_edit</i></a>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<input id="id" name="id" type="hidden"> <input id="version"
+		name="version" type="hidden">
+
+	<div class="mensagem">
+		<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+			[msg]="msgError"></app-mensagem-form>
+	</div>
+
+	<div class='row row-btns'>
+		<div class="col s6">
+			<button type="submit" class="btn btn-primary">Salvar</button>
+		</div>
+		<div class="col s6">
+			<a [routerLink]="['convocacao']"
+				class="btn btn-primary btn-listar-perfis">Listar</a>
+		</div>
+	</div>
+
+</form>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams"
+	[materializeActions]="modalEditEmpregado">
+
+	<h5 class="titleModalDelete">Exame - Empregado</h5>
+
+	<div class="collection">
+
+		<div class="row-item-collection"
+			*ngFor="let exame of empregadoDetail.exames; let e = index">
+			<div class="row row-collection">
+				<div class="col s6">
+					<a class="collection-item">
+						{{exame.codigo}} </a>
+				</div>
+				<div class="col s6">
+					<a class="collection-item">
+						{{exame.detalhe}} </a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat"
+			(click)="closeModal()">Fechar</a>
+	</div>
+
+</div>

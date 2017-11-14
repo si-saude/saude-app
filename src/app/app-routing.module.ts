@@ -34,16 +34,22 @@ import { GrupoMonitoramentoComponent } from './controller/grupo-monitoramento/gr
 import { ProfissiogramaComponent } from './controller/profissiograma/profissiograma.component';
 import { VacinaComponent } from './controller/vacina/vacina.component';
 import { FornecedorComponent } from './controller/fornecedor/fornecedor.component';
+import { ConvocacaoComponent } from './controller/convocacao/convocacao.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contato', component: ContatoComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'permissao', component: PermissaoComponent },
-  { path: 'home', component: HomeComponent},
-  { path: 'localizacao', component: LocalizacaoComponent },
-  { path: 'equipe', component: EquipeComponent },
-  { path: 'gerencia', component: GerenciaComponent },
+  { path: 'home', component: HomeComponent,
+      canActivate: [AuthGuard]},
+  { path: 'localizacao', component: LocalizacaoComponent,
+      canActivate: [AuthGuard] },
+  { path: 'equipe', component: EquipeComponent,
+      canActivate: [AuthGuard],
+      canActivateChild: [AuthGuard] },
+  { path: 'gerencia', component: GerenciaComponent,
+      canActivate: [AuthGuard]},
   { path: 'profissional-saude', component: ProfissionalSaudeComponent },
   { path: 'cargo', component: CargoComponent },
   { path: 'curso', component: CursoComponent },
@@ -68,7 +74,8 @@ const routes: Routes = [
   { path: 'profissiograma', component: ProfissiogramaComponent },
   { path: 'vacina', component: VacinaComponent },
   { path: 'fornecedor', component: FornecedorComponent },
-  { path: '', pathMatch: 'full', redirectTo: '/fornecedor'}
+  { path: 'convocacao', component: ConvocacaoComponent },
+  { path: '', pathMatch: 'full', redirectTo: '/convocacao'}
 ];
 
 @NgModule({

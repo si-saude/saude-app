@@ -2,7 +2,7 @@ import { GrupoMonitoramento } from './grupo-monitoramento';
 
 export class Profissiograma {
 
-    private id: number;
+    private id: number = 0;
     private nome: string;
     private concluido: boolean;
     private grupoMonitoramentos: Array<GrupoMonitoramento>;

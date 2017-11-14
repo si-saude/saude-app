@@ -44,6 +44,7 @@ import { ExameModule } from './controller/exame/exame.module';
 import { GrupoMonitoramentoModule } from './controller/grupo-monitoramento/grupo-monitoramento.module';
 import { ProfissiogramaModule } from './controller/profissiograma/profissiograma.module';
 import { FornecedorModule } from './controller/fornecedor/fornecedor.module';
+import { ConvocacaoModule } from './controller/convocacao/convocacao.module';
 import { MenuComponent } from './includes/menu/menu.component';
 import { SidenavComponent } from './includes/sidenav/sidenav.component';
 
@@ -92,6 +93,7 @@ import { SidenavComponent } from './includes/sidenav/sidenav.component';
     GrupoMonitoramentoModule,
     ProfissiogramaModule,
     FornecedorModule,
+    ConvocacaoModule,
     AppRoutingModule
   ],
   providers: [ 

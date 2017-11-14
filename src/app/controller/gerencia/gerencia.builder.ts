@@ -1,6 +1,7 @@
 import { Gerencia } from './../../model/gerencia';
 import { Empregado } from './../../model/empregado';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
+import { PessoaBuilder } from './../pessoa/pessoa.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class GerenciaBuilder extends GenericBuilder {
@@ -10,8 +11,11 @@ export class GerenciaBuilder extends GenericBuilder {
 
         gerencia.setGerencia( new Gerencia() );
         gerencia.setGerente( new Empregado() );
+        gerencia.getGerente().setPessoa(new PessoaBuilder().initialize(gerencia.getGerente().getPessoa()));
         gerencia.setSecretario1( new Empregado() );
+        gerencia.getSecretario1().setPessoa(new PessoaBuilder().initialize(gerencia.getGerente().getPessoa()));
         gerencia.setSecretario2( new Empregado() );
+        gerencia.getSecretario2().setPessoa(new PessoaBuilder().initialize(gerencia.getGerente().getPessoa()));
 
         return gerencia;
     }

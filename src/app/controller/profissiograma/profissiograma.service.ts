@@ -36,4 +36,9 @@ export class ProfissiogramaService extends GenericService {
         return this.criterioService.getCriterios();
     }
     
+    getProfissiogramas() {
+        let profissiogramaFilter: ProfissiogramaFilter = new ProfissiogramaFilter();
+        return this.selectList(profissiogramaFilter);
+    }
+    
 }

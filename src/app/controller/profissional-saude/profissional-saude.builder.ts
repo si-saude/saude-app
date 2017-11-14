@@ -54,9 +54,9 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
         
         if (profissionalSaude === null || profissionalSaude === undefined)
             profissionalSaude = new Profissional();
-        
         cloneProfissionalSaude.setId(this.getValue(profissionalSaude, "getId"));
         cloneProfissionalSaude.setMi(this.getValue(profissionalSaude, "getMi"));
+        cloneProfissionalSaude.setDataAso(this.getValue(profissionalSaude, "getDataAso"));
         cloneProfissionalSaude.setVersion(this.getValue(profissionalSaude, "getVersion"));
         
         cloneProfissionalSaude.setEmpregado(
@@ -92,8 +92,10 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
         }
         
         if(this.getValue(profissionalSaude, "getProfissionalConselho") !== undefined){
-            if(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length === 1 && 
-                    profissionalSaude.getProfissionalConselho().getVencimento() === undefined)
+//            console.log(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length);
+            console.log(profissionalSaude.getProfissionalConselho().getVencimento());
+            if(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length === 2 && 
+                    profissionalSaude.getProfissionalConselho().getVencimento() === null)
                 cloneProfissionalSaude.setProfissionalConselho(undefined);
             else 
                 cloneProfissionalSaude.setProfissionalConselho(

@@ -29,7 +29,7 @@
 			<div id="dadosGerais">
 
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s8">
 						<label for="empregado">Nome do Empregado</label> <input
 							type="text" materialize="autocomplete"
 							name="profissionalSaude.empregado.pessoa.nome"
@@ -40,6 +40,13 @@
 							id="profissionalSaude.empregado.pessoa.id" type="hidden"
 							name="profissionalSaude.empregado.pessoa.id"
 							[(ngModel)]="profissionalSaude.empregado.pessoa.id">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="dataAso">Data do ASO</label>
+						<my-date-picker name="dataAso"
+							[options]="myDatePickerOptions" [(ngModel)]="dataAso"
+							placeholder="Data do ASO"> </my-date-picker>
 					</div>
 				</div>
 
@@ -89,7 +96,7 @@
 							</select>
 						</fieldset>
 					</div>
-
+					
 				</div>
 
 				<input id="id" name="profissionalSaude.empregado.pessoa.id{{i}}" type="hidden"

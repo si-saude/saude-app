@@ -42,6 +42,14 @@ export class Profissional {
         this.empregado = empregado;
     }
     
+    getDataAso() {
+        return this.dataAso;
+    }
+    
+    setDataAso(dataAso: Date) {
+        this.dataAso = dataAso;
+    }
+    
     getLocalizacao() {
         return this.localizacao;
     }

@@ -5,7 +5,6 @@ export class TipoGrupoMonitoramentoBuilder extends GenericBuilder {
 
     initialize(tipoGrupoMonitoramento: TipoGrupoMonitoramento) {
         tipoGrupoMonitoramento = new TipoGrupoMonitoramento();
-        console.log(tipoGrupoMonitoramento);
         return tipoGrupoMonitoramento;
     }
     
