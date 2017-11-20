@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
@@ -8,6 +8,8 @@ import { Profissiograma } from './../../../model/profissiograma';
 import { ProfissiogramaBuilder } from './../../profissiograma/profissiograma.builder';
 import { Convocacao } from './../../../model/convocacao';
 import { Empregado } from './../../../model/empregado';
+import { Exame } from './../../../model/exame';
+import { ExameBuilder } from './../../exame/exame.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { ConvocacaoBuilder } from './../convocacao.builder';
 import { ConvocacaoService } from './../convocacao.service';
@@ -29,11 +31,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     convocacao: Convocacao;
     empregados: Array<Empregado>;
     profissiogramas: Array<Profissiograma>;
+    exames: Array<Exame>;
     gerenciaConvocacoes: Array<GerenciaConvocacao>;
     empregadoConvocacoes: Array<EmpregadoConvocacao>;
-    autocompleteGerenciaConvocacoes = [];
-    autocompleteEmpregado = [];
-    selectedGerenciaConvocacao: boolean;
+    autocompleteGerenciaConvocacoes;
+    autocompleteEmpregado;
+    selectedGerenciaConvocacao: Array<boolean>;
     checkBoxSelecteds: Array<boolean>;
     filterGerenciaByCodigoCompleto: any;
     filterChaveEmpregado: any;
@@ -41,39 +44,51 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     filterGerenciaEmpregado: any;
     empregadoToAdd: Empregado;
     empregadoDetail: EmpregadoConvocacao;
-    
+    checkEmpregados: boolean;
+
+    selectedGC;
+    existProfissiograma;
+
     modalEditEmpregado;
+    modalConfirmProfissiograma;
 
     dataGerenciaConvocacaoInicio: Array<any>;
     dataGerenciaConvocacaoFim: Array<any>;
 
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
-        private empregadoService: EmpregadoService) {
+        private empregadoService: EmpregadoService ) {
         super( convocacaoService );
 
         this.tipos = new Array<string>();
         this.goTo = "convocacao";
         this.convocacao = new ConvocacaoBuilder().initialize( this.convocacao );
         this.empregados = new Array<Empregado>();
-        this.empregadoToAdd = new EmpregadoBuilder().initialize(this.empregadoToAdd);
-        this.empregadoDetail = new EmpregadoConvocacaoBuilder().initialize(this.empregadoDetail);
-        this.profissiogramas = new Array<Profissiograma>();
-        this.gerenciaConvocacoes = new Array<GerenciaConvocacao>();
-        this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
-        this.selectedGerenciaConvocacao = false;
+        this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
+        this.empregadoDetail = new EmpregadoConvocacaoBuilder().initialize( this.empregadoDetail );
+        this.profissiogramas = new ProfissiogramaBuilder().initializeList( Array<Profissiograma>() );
+        this.gerenciaConvocacoes = new GerenciaConvocacaoBuilder().initializeList( Array<GerenciaConvocacao>() );
+        this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().initializeList( Array<EmpregadoConvocacao>() );
+        this.selectedGerenciaConvocacao = new Array<boolean>();
         this.checkBoxSelecteds = new Array<boolean>();
         this.dataGerenciaConvocacaoInicio = new Array<any>();
         this.dataGerenciaConvocacaoFim = new Array<any>();
-        this.modalEditEmpregado = new EventEmitter<string|MaterializeAction>();
+        this.autocompleteGerenciaConvocacoes = [];
+        this.autocompleteEmpregado = [];
+        this.selectedGC = null;
+        this.existProfissiograma = false;
+        this.modalEditEmpregado = new EventEmitter<string | MaterializeAction>();
+        this.modalConfirmProfissiograma = new EventEmitter<string | MaterializeAction>();
+        this.checkEmpregados = false;
     }
 
     ngOnInit() {
         this.convocacaoService.get( 0 )
             .then( res => {
                 this.convocacao = new ConvocacaoBuilder().clone( res.json() );
-                this.convocacao.setProfissiograma(new ProfissiogramaBuilder().initialize(new Profissiograma()));
+                this.convocacao.setProfissiograma( new ProfissiogramaBuilder().initialize( new Profissiograma() ) );
                 this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
+                this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
             } )
             .catch( error => {
                 console.log( error );
@@ -89,7 +104,11 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     this.convocacaoService.get( id )
                         .then( res => {
                             this.showPreload = false;
+                            this.existProfissiograma = true;
                             this.convocacao = new ConvocacaoBuilder().clone( res.json() );
+                            this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
+                            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
+                            this.parseAndSetDates();
                         } )
                         .catch( error => {
                             this.showPreload = false;
@@ -105,10 +124,18 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             .catch( error => {
                 console.log( error );
             } )
-        
+
         this.convocacaoService.getProfissiogramas()
+            .then( res => {
+                this.profissiogramas = new ProfissiogramaBuilder().cloneList( res.json() );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+        
+        this.convocacaoService.getExames()
             .then(res => {
-                this.profissiogramas = new ProfissiogramaBuilder().cloneList(res.json());
+                this.exames = new ExameBuilder().cloneList(res.json());
             })
             .catch(error => {
                 console.log(error);
@@ -116,10 +143,13 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     }
 
     save() {
+        this.setSelectedsGerencias();
+        this.verifyAndSetDates();
+        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
         super.save( new ConvocacaoBuilder().clone( this.convocacao ) );
     }
 
-    filterGerenciaConvocacoes(evento: string) {
+    filterGerenciaConvocacoes( evento: string ) {
         if ( this.convocacao.getGerenciaConvocacoes().length > 0 ) {
             this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes().filter( gC => {
                 evento = evento.toLowerCase();
@@ -130,46 +160,48 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     }
 
     selectGerenciaConvocacao( index: number ) {
+        this.selectedGC = this.gerenciaConvocacoes[index];
         setTimeout(() => {
             if ( this.gerenciaConvocacoes[index].getSelecionado() == true ) {
-                this.selectedGerenciaConvocacao = true;
+                this.selectedGerenciaConvocacao[index] = true;
                 this.dataGerenciaConvocacaoInicio[index] = this.gerenciaConvocacoes[index].getInicio();
                 this.dataGerenciaConvocacaoFim[index] = this.gerenciaConvocacoes[index].getFim();
-                
-                let sendConvocacao = new ConvocacaoBuilder().initialize(new Convocacao());
-                sendConvocacao.setProfissiograma(this.convocacao.getProfissiograma());
+
+                let sendConvocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
+                sendConvocacao.setProfissiograma( this.convocacao.getProfissiograma() );
                 sendConvocacao.getGerenciaConvocacoes().push(
-                        new GerenciaConvocacaoBuilder().clone(this.gerenciaConvocacoes[index]));
+                    new GerenciaConvocacaoBuilder().clone( this.gerenciaConvocacoes[index] ) );
+                sendConvocacao.setId(this.convocacao.getId());
 
                 this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
                     .then( res => {
                         let eCs = new EmpregadoConvocacaoBuilder().cloneList( res.json().empregadoConvocacoes );
-                        this.empregadoConvocacoes = this.empregadoConvocacoes.concat(eCs);
+                        this.empregadoConvocacoes = this.empregadoConvocacoes.concat( eCs );
+                        this.convocacao.setEmpregadoConvocacoes( this.empregadoConvocacoes );
                     } )
                     .catch( error => {
                         console.log( error );
                     } )
             } else {
-                let indexsRemove: Array<number> = new Array<number>();
-                this.selectedGerenciaConvocacao = false;
+                this.selectedGerenciaConvocacao[index] = false;
                 let empregadoConvocacoes: Array<EmpregadoConvocacao> = this.empregadoConvocacoes.filter( eC => {
-                    return JSON.stringify(
-                            eC.getEmpregado().getGerencia()) === JSON.stringify(this.gerenciaConvocacoes[index].getGerencia());
+                    return eC.getEmpregado().getGerencia().getId() == this.gerenciaConvocacoes[index].getGerencia().getId();
                 } );
-                
-                //remover empregados desselecionados do array de empregado convocacoes
-                for (let i=0; i < this.empregadoConvocacoes.length; i++) {
-                    empregadoConvocacoes.forEach(e => {
-                        if ( JSON.stringify(e.getEmpregado()) === JSON.stringify(this.empregadoConvocacoes[i].getEmpregado()) ) {
-                            this.empregadoConvocacoes.splice(i, 1);
-                        }
-                    })
-                }
+
+                empregadoConvocacoes.forEach( eC1 => {
+                    this.empregadoConvocacoes.splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
+                } )
             }
-        }, 500 );
+        }, 250 );
     }
-    
-    getEmpregado(evento) {
+
+    choisedGerenciaConvocacao( gC: number ) {
+        if ( this.gerenciaConvocacoes[gC] === this.selectedGC ) {
+            return "active";
+        } else return "";
+    }
+
+    getEmpregado( evento ) {
         if ( this.empregadoToAdd !== undefined ) {
 
             let empregado = this.empregados.find( e => {
@@ -179,84 +211,135 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
             if ( empregado !== undefined ) {
                 this.empregadoToAdd = empregado;
-            } else this.empregadoToAdd = new EmpregadoBuilder().initialize(this.empregadoToAdd);
-        } else this.empregadoToAdd = new EmpregadoBuilder().initialize(this.empregadoToAdd);
+            } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
+        } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
     }
-    
+
     private oldChaveEmpregado: string;
-    selectEmpregadoByChave(evento) {
+    selectEmpregadoByChave( evento ) {
         if ( this.oldChaveEmpregado != evento ) {
             this.oldChaveEmpregado = evento;
-            
-            this.empregadoService.getEmpregadoByChave(evento)
-                .then(res => {
+
+            this.empregadoService.getEmpregadoByChave( evento )
+                .then( res => {
                     this.empregados = new EmpregadoBuilder().cloneList( res.json() );
                     this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-            
+                } )
+                .catch( error => {
+                    console.log( error );
+                } )
+
         }
     }
-    
+
     addEmpregado() {
         if ( this.empregadoToAdd.getPessoa().getNome() != undefined ) {
-            //VERIFICAR SE O EMPREGADO JÁ FOI ADICIONADO
-            let eC = new EmpregadoConvocacaoBuilder().initialize(new EmpregadoConvocacao());
-            eC.setEmpregado(this.empregadoToAdd)
-            this.empregadoConvocacoes.push(eC);
-        }
-    }
-    
-    private oldNomeEmpregado: string;
-    selectEmpregado(evento: string) {
-        if ( this.oldNomeEmpregado != evento ) {
-            this.oldNomeEmpregado = evento;
-            if (evento.length > 3) {
-                this.empregadoService.getEmpregadoByName(evento)
-                    .then(res => {
-                        this.empregados = new EmpregadoBuilder().cloneList( res.json() );
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
+
+            let empregado = this.empregados.find( e => {
+                return e.getPessoa().getNome() ==
+                    this.empregadoToAdd.getPessoa().getNome();
+            } );
+
+            if ( empregado != undefined ) {
+                let empregado2 = this.empregadoConvocacoes.find( eC => {
+                    return eC.getEmpregado().getId() === empregado.getId();
+                } );
+
+                if ( empregado2 == undefined ) {
+                    let eC = new EmpregadoConvocacaoBuilder().initialize( new EmpregadoConvocacao() );
+                    let convocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
+                    eC.setEmpregado( this.empregadoToAdd )
+                    convocacao.setProfissiograma( this.convocacao.getProfissiograma() );
+                    convocacao.getEmpregadoConvocacoes().push( eC );
+
+                    this.convocacaoService.getEmpregadoConvocacao( convocacao )
+                        .then( res => {
+                            convocacao = new ConvocacaoBuilder().clone( res.json() );
+                            this.empregadoConvocacoes.push( convocacao.getEmpregadoConvocacoes()[0] );
+                        } )
+                        .catch( error => {
+                            console.log( error );
+                        } )
+                } else {
+                    this.toastParams = ['Empregado adicionado anteriormente', 4000];
+                    this.globalActions.emit( 'toast' );
+                }
+            } else {
+                this.toastParams = ['Empregado inexistente', 4000];
+                this.globalActions.emit( 'toast' );
             }
         }
     }
-    
-    filterEmpregadoByChave(evento) {
-        
+
+    removeEmpregadoToList( index: number ) {
+        this.empregadoConvocacoes.splice( index, 1 );
     }
-    
-    filterEmpregadoByNome(evento) {
-        
+
+    private oldNomeEmpregado: string;
+    selectEmpregado( evento: string ) {
+        if ( this.oldNomeEmpregado != evento ) {
+            this.oldNomeEmpregado = evento;
+            if ( evento.length > 3 ) {
+                this.empregadoService.getEmpregadoByName( evento )
+                    .then( res => {
+                        this.empregados = new EmpregadoBuilder().cloneList( res.json() );
+                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
+        }
     }
-    
-    filterEmpregadoByGerencia(evento) {
-        
+
+    filterEmpregadoByChave( evento ) {
+        if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
+            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
+                evento = evento.toLowerCase();
+                let lowerCaseC = eC.getEmpregado().getChave().toLowerCase();
+                return lowerCaseC.includes( evento );
+            } )
+        }
     }
-    
-    showDetailEmpregado(index: number) {
+
+    filterEmpregadoByNome( evento ) {
+        if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
+            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
+                evento = evento.toLowerCase();
+                let lowerCaseN = eC.getEmpregado().getPessoa().getNome().toLowerCase();
+                return lowerCaseN.includes( evento );
+            } )
+        }
+    }
+
+    filterEmpregadoByGerencia( evento ) {
+        if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
+            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
+                evento = evento.toLowerCase();
+                let lowerCaseCC = eC.getEmpregado().getGerencia().getCodigoCompleto().toLowerCase();
+                return lowerCaseCC.includes( evento );
+            } )
+        }
+    }
+
+    showDetailEmpregado( index: number ) {
         this.empregadoDetail = this.empregadoConvocacoes[index];
-        let convocacao = new ConvocacaoBuilder().initialize(new Convocacao());
-        let eC = new EmpregadoConvocacaoBuilder().initialize(new EmpregadoConvocacao());
-        eC.setEmpregado(this.empregadoConvocacoes[index].getEmpregado());
-        convocacao.setProfissiograma(this.convocacao.getProfissiograma());
-        convocacao.getEmpregadoConvocacoes().push(eC);
+
+        this.openModalEditEmpregado();
+    }
+    
+    addExame( value ) {
+        let exame = this.exames.find(e => {
+            return e.getId() == value;
+        })
         
-        this.convocacaoService.getEmpregadoConvocacao(convocacao)
-            .then(res => {
-                convocacao = new ConvocacaoBuilder().clone(res.json());
-                this.empregadoDetail = convocacao.getEmpregadoConvocacoes()[0];
-                console.log(this.empregadoDetail);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        exame = new ExameBuilder().clone(exame);
         
-        this.openModal();
+        this.empregadoDetail.getExames().push( exame );
+    }
+    
+    removeExame( value ) {
+        this.empregadoDetail.getExames().splice(value, 1);
     }
 
     verifyAndSetDates() {
@@ -279,6 +362,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     parseAndSetDates() {
         for ( let i = 0; i < this.gerenciaConvocacoes.length; i++ ) {
             if ( this.gerenciaConvocacoes[i].getSelecionado() == true ) {
+                this.selectedGerenciaConvocacao[i] = true;
                 this.dataGerenciaConvocacaoInicio[i] =
                     this.parseDataToObjectDatePicker(
                         this.gerenciaConvocacoes[i].getInicio() );
@@ -289,7 +373,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             }
         }
     }
-    
+
     buildAutocompleteEmpregado( empregados ) {
         let data = {};
         empregados.forEach( item => {
@@ -301,13 +385,85 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
         return array;
     }
-    
-    openModal() {
-        this.modalEditEmpregado.emit({action:"modal",params:['open']});
+
+    openModalEditEmpregado() {
+        this.modalEditEmpregado.emit( { action: "modal", params: ['open'] } );
+    }
+
+    closeModalEditEmpregado() {
+        this.modalEditEmpregado.emit( { action: "modal", params: ['close'] } );
+    }
+
+    openModalConfirmProfissiograma() {
+        this.modalConfirmProfissiograma.emit( { action: "modal", params: ['open'] } );
+    }
+
+    closeModalConfirmProfissiograma() {
+        this.modalConfirmProfissiograma.emit( { action: "modal", params: ['close'] } );
+    }
+
+    returnExistProfissiograma() {
+        if ( this.existProfissiograma ) return true;
+        return false;
+    }
+
+    confirmarProfissiograma() {
+        this.existProfissiograma = true;
+        this.closeModalConfirmProfissiograma();
+    }
+
+    cancelarProfissiograma() {
+        this.existProfissiograma = false;
+        this.convocacao.getProfissiograma().setId( 0 );
+        this.closeModalConfirmProfissiograma();
+    }
+
+    selectProfissiograma() {
+        if ( this.convocacao.getProfissiograma().getId() > 0 )
+            this.existProfissiograma = true;
+        if ( this.existProfissiograma ) return { 'display': 'none' };
+        else return { 'display': 'inline' };
+    }
+
+    selectProfissiogramaTab() {
+        if ( this.convocacao.getProfissiograma().getId() > 0 )
+            return '';
+        if ( !this.existProfissiograma ) return 'disabled';
+        else return '';
+    }
+
+    checkAllEmpregados() {
+        if ( this.empregadoConvocacoes.length > 0 ) {
+            setTimeout(() => {
+                if ( this.checkEmpregados == true ) {
+                    this.empregadoConvocacoes.forEach( eC => {
+                        eC.setSelecionado( true );
+                    } )
+                } else {
+                    this.empregadoConvocacoes.forEach( eC => {
+                        eC.setSelecionado( false );
+                    } )
+                }
+            }, 250 );
+        }
     }
     
-    closeModal() {
-        this.modalEditEmpregado.emit({action:"modal",params:['close']});
+    setSelectedsGerencias() {
+        this.convocacao.setGerenciaConvocacoes(this.gerenciaConvocacoes.filter(gC => {
+                return gC.getSelecionado() === true;
+            })
+        )
+    }
+    
+    bkgColorEmpregadoConvocacao(empregadoConvocacao: EmpregadoConvocacao) {
+        if (empregadoConvocacao.getAuditado() == false && empregadoConvocacao.getDivergente() == false) 
+            return { 'background-color': '' };
+        else if ( empregadoConvocacao.getAuditado() == false && empregadoConvocacao.getDivergente() == true )
+            return { 'background-color': 'yellow' };
+        else if ( empregadoConvocacao.getAuditado() == true && empregadoConvocacao.getDivergente() == false )
+            return { 'background-color': 'green' };
+        else if ( empregadoConvocacao.getAuditado() == true && empregadoConvocacao.getDivergente() == true )
+            return { 'background-color': 'red' };    
     }
 
 }

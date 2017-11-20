@@ -30,9 +30,6 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     exames: Array<Exame>;
     criterios: Array<Criterio>;
     arrayCriterio: Array<Criterio>;
-    
-    globalActions = new EventEmitter<string|MaterializeAction>();
-    toastParams = ['', 4000];
 
     selectedGM = null;
     selectedExm = null;
@@ -164,9 +161,17 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     }
     
     selectedGrupoMonitoramento(gM: number) {
-        if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
-            return "active";
-        } else return "";
+        if ( this.gruposMonitoramento != undefined ) {
+            if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
+                return "active";
+            } else return "";
+        } else {
+            setTimeout(() => {
+                if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
+                    return "active";
+                } else return "";
+            }, 500);
+        }
     }
     
     selectedExame(e: number) {

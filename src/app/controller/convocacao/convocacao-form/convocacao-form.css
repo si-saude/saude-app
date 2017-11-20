@@ -58,7 +58,7 @@ select{
 	margin-top: 50px;
 }
 
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked  {
     position: absolute;
     opacity: 0;
     margin-top: 15px;
@@ -67,4 +67,68 @@ select{
 
 .checkbox {
 	margin-top: 0px;
+	padding-left: 35px;
 }
+
+.checkbox_disabled {
+	margin-top: 15px;
+	padding-left: 35px;
+}
+
+.checkbox_empregados {
+	margin-top: -10px;
+	padding-left: 35px;
+}
+
+.checkbox_disabled_empregados {
+	margin-top: 2px;
+	padding-left: 35px;
+}
+
+
+.gerenciaConvocacaoDatas {
+	margin-top: 0px;
+}
+
+.gerencias {
+	height: 400px;
+    overflow: scroll;
+}
+
+.empregados {
+	max-height: 600px;
+	overflow: scroll;
+}
+
+
+.titleModal {
+	color: #26a69a;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.paragraphModal {
+	margin-left: 10px;
+}
+
+.datas {
+	margin-top: -20px;
+}
+
+.row-collection-empregados {
+	border-top: 1px solid #c0c0c0;
+	margin-bottom: 0px;
+}
+
+.btn_remove {
+	margin-top: -12px;
+}
+
+.btn_edit {
+	margin-top: -12px;
+}
+
+.collection-item {
+	color: black;
+}
+

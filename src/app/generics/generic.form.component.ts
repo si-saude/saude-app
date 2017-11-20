@@ -18,15 +18,20 @@ export abstract class GenericFormComponent extends GenericComponent {
     @ViewChild( "form" ) formulario;
     protected modelParams;
     protected modalDeactivate;
-    myDatePickerOptions: IMyDpOptions = {
-        dateFormat: 'dd/mm/yyyy'
-    };
+    myDatePickerOptions: IMyDpOptions; 
+    globalActions;
+    toastParams;
 
     constructor( protected service: GenericService ) {
         super();
         this.showPreload = false;
         this.showConfirmSave = false;
         this.modalDeactivate = new EventEmitter<string | MaterializeAction>();
+        this.myDatePickerOptions = {
+                dateFormat: 'dd/mm/yyyy'
+            };
+        this.globalActions = new EventEmitter<string|MaterializeAction>();
+        this.toastParams = ['', 4000];
         this.modelParams = [{
             dismissible: false,
             complete: function() { }
@@ -68,6 +73,9 @@ export abstract class GenericFormComponent extends GenericComponent {
         let datas = s[0].split( "-" );
         if ( datas[2].substring( 0, 1 ) === "0" ) {
             datas[2] = datas[2].replace( "0", "" );
+        }
+        if ( datas[1].substring( 0, 1 ) === "0" ) {
+            datas[1] = datas[1].replace( "0", "" );
         }
         let o = Object.create( { date: { year: datas[0], month: datas[1], day: datas[2] } } );
         return o;

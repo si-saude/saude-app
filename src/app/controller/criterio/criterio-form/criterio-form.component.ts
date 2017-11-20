@@ -21,12 +21,11 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
     funcoes: Array<Funcao>;
     cargos: Array<Cargo>;
     sexos: Array<string>;
+    operadores: Array<string>;
     selectedIdadeOrExame: boolean;
     selectedFuncao: boolean;
     selectedCargo: boolean;
     selectedSexo: boolean;
-    
-    criterioFilter: CriterioFilter = new CriterioFilter();
     
     constructor( private route: ActivatedRoute,
         private criterioService: CriterioService) { 
@@ -36,6 +35,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         this.cargos = new Array<Cargo>();
         this.funcoes = new Array<Funcao>();
         this.sexos = new Array<string>();
+        this.operadores = new Array<string>();
         this.selectedFuncao = false;
         this.selectedIdadeOrExame = false;
         this.selectedCargo = false;
@@ -55,6 +55,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
                         .then( res => {
                             this.showPreload = false;
                             this.criterio = new CriterioBuilder().clone(res.json());
+                            this.selectTipo();
                         } )
                         .catch( error => {
                             this.showPreload = false;
@@ -74,6 +75,14 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
       this.criterioService.getSexos()
           .then(res => {
               this.sexos = Object.keys(res.json());
+          })
+          .catch(error => {
+              console.log(error);
+          })
+      
+      this.criterioService.getOperadores() 
+          .then(res => {
+              this.operadores = Object.keys(res.json());
           })
           .catch(error => {
               console.log(error);
@@ -102,38 +111,35 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
     }   
     
     selectTipo() {
-        switch( this.criterio.getTipo() ) {
+        this.selectedIdadeOrExame = false;
+        this.selectedFuncao = false;
+        this.selectedCargo = false;
+        this.selectedSexo = false;
+        
+        let tipo = this.criterio.getTipo();
+        
+        if ( tipo.includes("FUN") )
+            tipo = "FUNCAO"
+            
+        switch( tipo ) {
         case "IDADE":
             this.selectedIdadeOrExame = true;
-            this.selectedFuncao = false;
-            this.selectedCargo = false;
-            this.selectedSexo = false;
             break;
         case "EXAME":
             this.selectedIdadeOrExame = true;
-            this.selectedFuncao = false;
-            this.selectedCargo = false;
-            this.selectedSexo = false;
             break;
-        case "FUNÇÃO":
-            this.selectedIdadeOrExame = false;
+        case "FUNCAO":
             this.selectedFuncao = true;
-            this.selectedCargo = false;
-            this.selectedSexo = false;
             break;
         case "CARGO":
-            this.selectedIdadeOrExame = false;
-            this.selectedFuncao = false;
             this.selectedCargo = true;
-            this.selectedSexo = false;
             break;
         case "SEXO":
-            this.selectedIdadeOrExame = false;
-            this.selectedFuncao = false;
-            this.selectedCargo = false;
             this.selectedSexo = true;
             break;
         }
+        
+        
     }
     
     onDestroy() {

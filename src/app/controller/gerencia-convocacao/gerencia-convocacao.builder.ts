@@ -11,6 +11,7 @@ export class GerenciaConvocacaoBuilder extends GenericBuilder{
         gerenciaConvocacao = new GerenciaConvocacao();
         
         gerenciaConvocacao.setGerencia(new GerenciaBuilder().initialize(gerenciaConvocacao.getGerencia()));
+        gerenciaConvocacao.setConvocacao(new Convocacao());
         
         return gerenciaConvocacao;
     }
@@ -40,6 +41,8 @@ export class GerenciaConvocacaoBuilder extends GenericBuilder{
         cloneGerenciaConvocacao.setInicio(this.getValue(gerenciaConvocacao, "getInicio"));
         cloneGerenciaConvocacao.setFim(this.getValue(gerenciaConvocacao, "getFim"));
         cloneGerenciaConvocacao.setSelecionado(this.getValue(gerenciaConvocacao, "getSelecionado"));
+        
+        cloneGerenciaConvocacao.setConvocacao(new Convocacao());
         
         cloneGerenciaConvocacao.setGerencia(new GerenciaBuilder().clone(this.getValue(gerenciaConvocacao, "getGerencia")));
         

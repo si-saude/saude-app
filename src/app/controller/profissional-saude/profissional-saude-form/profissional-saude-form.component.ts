@@ -37,7 +37,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     localizacoes: Array<Localizacao>;
     equipes: Array<Equipe>;
     cursos: Array<Curso>;
-    autocompleteEmpregado = [];
+    autocompleteEmpregado;
 
     //ngModel
     dataAso: any;
@@ -54,7 +54,8 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         
         this.dataCurriculoCursos = new Array<any>();
         this.empregados = new Array<Empregado>();
-        this.profissionalSaude = new ProfissionalSaudeBuilder().initialize(this.profissionalSaude);        
+        this.profissionalSaude = new ProfissionalSaudeBuilder().initialize(this.profissionalSaude);
+        this.autocompleteEmpregado = [];
     }
 
     ngOnInit() {
@@ -151,9 +152,21 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     
     save(){
         this.verifyAndSetDates();
-//        console.log(this.profissionalSaude.getProfissionalConselho().getVencimento());
-//        console.log(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
-        super.save(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
+        if ( this.verifyIfPessoaExist() )
+            super.save(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
+        else
+            this.toastParams = ['Por favor, selecione corretamente um empregado', 4000];
+            this.globalActions.emit('toast');
+    }
+    
+    verifyIfPessoaExist() {
+        let empregado = this.empregados.find(e => {
+            return JSON.stringify(this.profissionalSaude.getEmpregado()) === JSON.stringify(e);
+        })
+        if ( empregado != undefined )
+            return true;
+        
+        return false;
     }
     
     getEmpregado() {
@@ -171,13 +184,12 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     
     private oldNome:string;
     selectEmpregado(evento) {
-        if(this.oldNome != evento){
+        if(this.oldNome != evento) {
             this.oldNome = evento;
             if( evento.length > 3 ) {
                 this.profissionalSaudeService.getEmpregadoByName(evento)
                     .then(res => {
                         this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        console.log(this.empregados);
                         this.autocompleteEmpregado = [this.buildAutocompleteEmpregado(this.empregados)];
                     })
                     .catch(error => {
