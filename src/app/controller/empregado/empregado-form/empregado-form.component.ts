@@ -290,36 +290,62 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             this.fotoSrcStyle = { 'width': '0px', 'heigth': '0px' };
         }
     }
+    
+    callSave(i:number, total:number, empregado:Empregado){
+        if(i == total){
+            this.salvar(empregado);
+        }
+    }
 
     save() {
         this.verifyAndSetDates();
-
-        let inputEl: HTMLInputElement = this.inputElAssinatura.nativeElement;
-
-        if ( inputEl.files.length > 0 ) {
-            let readerAssinatura = new FileReader();
-            let foto = this.inputElFoto.nativeElement.files[0];
-            let readerFoto = new FileReader();
+        
+        let i:number = 0;
+        let total:number = 0;
+        let assinatura = undefined;
+        let foto = undefined;
+        
+        if(this.inputElAssinatura.nativeElement.files.length > 0){
+            assinatura = this.inputElAssinatura.nativeElement.files[0];
+            total++;
+        }
+        
+        if(this.inputElFoto.nativeElement.files[0]){
+            foto = this.inputElFoto.nativeElement.files[0];
+            total++;
+        }
+        
+        if(total > 0){
             let component = this;
-
-            readerAssinatura.onload = function() {
-                let arrayBuffer: ArrayBuffer = readerAssinatura.result;
-                let array = new Uint8Array( arrayBuffer );
-                let empregado: Empregado = new EmpregadoBuilder().clone( component.empregado );
-                empregado.setAssinatura( array );
-
-                readerFoto.onload = function() {
-                    arrayBuffer = readerFoto.result;
-                    array = new Uint8Array( arrayBuffer );
-                    empregado.setFoto( array );
-                    component.salvar( empregado );
-                };
-                
-                readerFoto.readAsArrayBuffer( new Blob( [foto] ) );
-            };
+            let empregado: Empregado = new EmpregadoBuilder().clone( component.empregado );
             
-            readerAssinatura.readAsArrayBuffer( new Blob( [inputEl.files[0]] ) );
-        } else {
+            if(assinatura != undefined){
+                let readerAssinatura = new FileReader();
+                
+                readerAssinatura.onload = function() {
+                    let arrayBuffer: ArrayBuffer = readerAssinatura.result;
+                    let array = new Uint8Array( arrayBuffer );
+                    empregado.setAssinatura( array );
+                    component.callSave(++i, total, empregado);
+                }
+                
+                readerAssinatura.readAsArrayBuffer( new Blob([assinatura]) );
+            }
+            
+            if(foto != undefined){
+                let readerFoto = new FileReader();
+                
+                readerFoto.onload = function() {
+                    let arrayBuffer: ArrayBuffer = readerFoto.result;
+                    let array = new Uint8Array( arrayBuffer );
+                    empregado.setFoto( array );
+                    component.callSave(++i, total, empregado);
+                }
+                
+                readerFoto.readAsArrayBuffer( new Blob([foto]) );
+            }
+            
+        }else {
             super.save( new EmpregadoBuilder().clone( this.empregado ) );
         }
     }
