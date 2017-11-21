@@ -32,6 +32,13 @@ export class CriterioService extends GenericService {
             .toPromise();
     }
     
+    getOperadores() {
+        let urlOperadores = GlobalVariable.BASE_API_URL + "/generic/operador";
+        return this.http
+            .get( urlOperadores + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
     getCriterios() {
         return this.selectList(new CriterioFilter());
     }

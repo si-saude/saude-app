@@ -12,6 +12,7 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         
         empregadoConvocacao.setEmpregado(new EmpregadoBuilder().initialize(empregadoConvocacao.getEmpregado()));
         empregadoConvocacao.setExames(new ExameBuilder().initializeList(empregadoConvocacao.getExames()));
+        empregadoConvocacao.setConvocacao(new Convocacao());
         
         return empregadoConvocacao;
     }
@@ -42,6 +43,8 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         cloneEmpregadoConvocacao.setConvocado(this.getValue(empregadoConvocacao, "getConvocado"));
         cloneEmpregadoConvocacao.setDivergente(this.getValue(empregadoConvocacao, "getDivergente"));
         cloneEmpregadoConvocacao.setSelecionado(this.getValue(empregadoConvocacao, "getSelecionado"));
+        
+        cloneEmpregadoConvocacao.setConvocacao(new Convocacao());
         
         cloneEmpregadoConvocacao.setEmpregado(new EmpregadoBuilder().clone(this.getValue(empregadoConvocacao, "getEmpregado")));
         

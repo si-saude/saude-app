@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
@@ -97,6 +97,7 @@ import { SidenavComponent } from './includes/sidenav/sidenav.component';
     AppRoutingModule
   ],
   providers: [ 
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     AuthService,
     AuthGuard
   ],

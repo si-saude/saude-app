@@ -21,9 +21,9 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     gerentes: Array<Empregado>;
     secretarios1: Array<Empregado>;
     secretarios2: Array<Empregado>;
-    autocompleteGerente = [];
-    autocompleteSecretario1 = [];
-    autocompleteSecretario2 = [];
+    autocompleteGerente;
+    autocompleteSecretario1;
+    autocompleteSecretario2;
     flagAutocomplete: boolean;
 
     constructor( private route: ActivatedRoute,
@@ -38,6 +38,9 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
         this.gerencias = new Array<Gerencia>();
         this.gerencia = new GerenciaBuilder().initialize( this.gerencia );
         this.flagAutocomplete = false;
+        this.autocompleteGerente = [];
+        this.autocompleteSecretario1 = [];
+        this.autocompleteSecretario2 = [];
     }
 
     ngOnInit() {
@@ -89,7 +92,34 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-        super.save( new GerenciaBuilder().clone( this.gerencia ) );
+        
+        if ( this.verifyIfExistEmpregados() ) {
+            super.save( new GerenciaBuilder().clone( this.gerencia ) );
+        } else {
+            this.toastParams = ['Por favor, selecione corretamente um empregado', 4000];
+            this.globalActions.emit('toast');
+        }
+    }
+    
+    verifyIfExistEmpregados() {
+        if ( this.gerencia.getGerente().getPessoa().getNome() != undefined ) {
+            if ( !this.verifyIfExistEmpregado (this.gerencia.getGerente(), this.gerentes ) ) return false;
+        } 
+        if ( this.gerencia.getSecretario1().getPessoa().getNome() != undefined ) {
+            if ( !this.verifyIfExistEmpregado (this.gerencia.getSecretario1(), this.secretarios1 ) ) return false;
+        } 
+        if ( this.gerencia.getSecretario2().getPessoa().getNome() != undefined ) {
+            if ( !this.verifyIfExistEmpregado (this.gerencia.getSecretario2(), this.secretarios2 ) ) return false;
+        }
+        
+       return true;
+    }
+    
+    verifyIfExistEmpregado(empregado: Empregado, lista: Array<Empregado>) {
+        let emp = lista.find(e => {
+            return empregado.getId() === e.getId(); 
+        });
+        return emp != undefined ? true : false;
     }
 
     getGerente() {

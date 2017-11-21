@@ -14,7 +14,7 @@
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
 			<div class="col s10">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.titulo}}</a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/convocacao/editar', a.id]"><i class="material-icons">mode_edit</i></a>

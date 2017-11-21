@@ -44,7 +44,7 @@
 			<div class="row" *ngIf="selectedFuncao">
 				<div class="input-field col s6">
 					<fieldset>
-						<legend>Valor</legend>
+						<legend>Função</legend>
 						<select name="valor" class="browser-default"
 							[(ngModel)]="criterio.valor">
 							<option disabled selected value="">Selecione uma função</option>
@@ -57,7 +57,7 @@
 			<div class="row" *ngIf="selectedCargo">
 				<div class="input-field col s6">
 					<fieldset>
-						<legend>Valor</legend>
+						<legend>Cargo</legend>
 						<select name="valor" class="browser-default"
 							[(ngModel)]="criterio.valor">
 							<option disabled selected value="">Selecione um cargo</option>
@@ -70,7 +70,7 @@
 			<div class="row" *ngIf="selectedSexo">
 				<div class="input-field col s6">
 					<fieldset>
-						<legend>Valor</legend>
+						<legend>Sexo</legend>
 						<select name="valor" class="browser-default"
 							[(ngModel)]="criterio.valor">
 							<option disabled selected value="">Selecione um sexo</option>
@@ -83,9 +83,15 @@
 		</div>
 
 		<div class="row">
-			<div class="input-field col s12">
-				<label for="operador">Operador</label> <input id="operador" type="text"
-					[(ngModel)]="criterio.operador" name="criterio.operador">
+			<div class="input-field col s6">
+				<fieldset>
+					<legend>Operador</legend>
+					<select name="criterio.operador" class="browser-default"
+						[(ngModel)]="criterio.operador">
+						<option disabled selected value="">Selecione um operador</option>
+						<option *ngFor="let operador of operadores" value="{{operador}}">{{operador}}</option>
+					</select>
+				</fieldset>
 			</div>
 		</div>
 

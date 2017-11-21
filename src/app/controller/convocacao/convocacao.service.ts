@@ -8,13 +8,15 @@ import { GenericService } from './../../generics/generic.service';
 import { Convocacao } from './../../model/convocacao';
 import { ConvocacaoFilter } from './convocacao.filter';
 import { ProfissiogramaService } from './../profissiograma/profissiograma.service';
+import { ExameService } from './../exame/exame.service';
 import { GlobalVariable } from './../../global';
 
 @Injectable()
 export class ConvocacaoService extends GenericService{
 
     constructor( http: Http, router: Router,
-            private profissiogramaService: ProfissiogramaService) { 
+            private profissiogramaService: ProfissiogramaService,
+            private exameService: ExameService) { 
         super(http, router, "convocacao");
     }
     
@@ -41,6 +43,10 @@ export class ConvocacaoService extends GenericService{
     
     getProfissiogramas() {
         return this.profissiogramaService.getProfissiogramas();
+    }
+    
+    getExames() {
+        return this.exameService.getExames();
     }
     
 }

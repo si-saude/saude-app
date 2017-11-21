@@ -30,7 +30,6 @@ export class CriterioBuilder extends GenericBuilder {
         let cloneCriterio = new Criterio();
         cloneCriterio.setId(this.getValue(criterio,"getId"));
         cloneCriterio.setNome(this.getValue(criterio, "getNome"));
-        cloneCriterio.setOperador(this.getValue(criterio, "getOperador"));
         cloneCriterio.setVersion(this.getValue(criterio, "getVersion"));
         
         if(this.getValue(criterio, "getTipo") == "")
@@ -39,6 +38,13 @@ export class CriterioBuilder extends GenericBuilder {
             cloneCriterio.setTipo("");
         else
             cloneCriterio.setTipo(this.getValue(criterio, "getTipo"));
+        
+        if(this.getValue(criterio, "getOperador") == "")
+            cloneCriterio.setOperador(undefined);
+        else if (this.getValue(criterio, "getOperador") == undefined)
+            cloneCriterio.setOperador("");
+        else
+            cloneCriterio.setOperador(this.getValue(criterio, "getOperador"));
         
         if(this.getValue(criterio, "getValor") == "")
             cloneCriterio.setValor(undefined);

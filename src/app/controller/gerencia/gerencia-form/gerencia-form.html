@@ -3,78 +3,86 @@
 </head>
 
 <!-- Preload -->
-<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload> 
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row">
 	<form class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 			<div class="input-field col s8">
-				<label for="codigo" data-error="Campo obrigatório.">Codigo</label>
-				<input id="codigo" type="text" required name="gerencia.codigo" [(ngModel)]="gerencia.codigo">
+				<label for="codigo" data-error="Campo obrigatório.">Codigo</label> <input
+					id="codigo" type="text" required name="gerencia.codigo"
+					[(ngModel)]="gerencia.codigo">
 			</div>
-			
+
 			<div class="input-field col s4">
 				<fieldset>
 					<legend>Gerência</legend>
-					<select class="browser-default" name="gerencia.gerencia" [(ngModel)]="gerencia.gerencia.id">
+					<select class="browser-default" name="gerencia.gerencia"
+						[(ngModel)]="gerencia.gerencia.id">
 						<option selected value=0>Selecione uma gerência</option>
 						<option *ngFor="let gerencia of gerencias" value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
 					</select>
 				</fieldset>
 			</div>
 		</div>
-		
+
 		<div class="row">
 			<div class="input-field col s4">
-				<label for="gerente">Gerente</label>
-				<input type="text" materialize="autocomplete" 
-					name="gerencia.gerente.pessoa.nome" [(ngModel)]="gerencia.gerente.pessoa.nome"
+				<label for="gerente">Gerente</label> <input type="text"
+					materialize="autocomplete" name="gerencia.gerente.pessoa.nome"
+					[(ngModel)]="gerencia.gerente.pessoa.nome"
 					(focusout)="getGerente($event)"
 					(ngModelChange)="selectGerenteByChave($event); selectGerente($event);"
-					[materializeParams]="autocompleteGerente">
-				<input id="gerencia.gerente.id" type="hidden" 
-					name="gerencia.gerente.id" [(ngModel)]="gerencia.gerente.id">
+					[materializeParams]="autocompleteGerente"> <input
+					id="gerencia.gerente.id" type="hidden" name="gerencia.gerente.id"
+					[(ngModel)]="gerencia.gerente.id">
 			</div>
-			
+
 			<div class="input-field col s4">
-				<label for="secretario1">Secretário 1</label>
-				<input type="text" materialize="autocomplete" 
-					name="gerencia.secretario1.pessoa.nome" [(ngModel)]="gerencia.secretario1.pessoa.nome"
+				<label for="secretario1">Secretário 1</label> <input type="text"
+					materialize="autocomplete" name="gerencia.secretario1.pessoa.nome"
+					[(ngModel)]="gerencia.secretario1.pessoa.nome"
 					(focusout)="getSecretario1($event)"
-					(ngModelChange)="selectSecretario1ByChave($event); selectSecretario1($event);" 
-					[materializeParams]="autocompleteSecretario1">
-				<input id="gerencia.secretario1.id" type="hidden" 
-					name="gerencia.secretario1.id" [(ngModel)]="gerencia.secretario1.id">
+					(ngModelChange)="selectSecretario1ByChave($event); selectSecretario1($event);"
+					[materializeParams]="autocompleteSecretario1"> <input
+					id="gerencia.secretario1.id" type="hidden"
+					name="gerencia.secretario1.id"
+					[(ngModel)]="gerencia.secretario1.id">
 			</div>
-			
+
 			<div class="input-field col s4">
-				<label for="secretario2">Secretário 2</label>
-				<input type="text" materialize="autocomplete" 
-					name="gerencia.secretario2.pessoa.nome" [(ngModel)]="gerencia.secretario2.pessoa.nome"
+				<label for="secretario2">Secretário 2</label> <input type="text"
+					materialize="autocomplete" name="gerencia.secretario2.pessoa.nome"
+					[(ngModel)]="gerencia.secretario2.pessoa.nome"
 					(focusout)="getSecretario2($event)"
-					(ngModelChange)="selectSecretario2ByChave($event); selectSecretario2($event);"  
-					[materializeParams]="autocompleteSecretario2">
-				<input id="gerencia.secretario2.id" type="hidden" 
-					name="gerencia.secretario2.id" [(ngModel)]="gerencia.secretario2.id">
+					(ngModelChange)="selectSecretario2ByChave($event); selectSecretario2($event);"
+					[materializeParams]="autocompleteSecretario2"> <input
+					id="gerencia.secretario2.id" type="hidden"
+					name="gerencia.secretario2.id"
+					[(ngModel)]="gerencia.secretario2.id">
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="input-field col s12">
-				<label for="descricao">Descrição</label>
-				<input id="descricao" type="text" name="gerencia.descricao" [(ngModel)]="gerencia.descricao">
+				<label for="descricao">Descrição</label> <input id="descricao"
+					type="text" name="gerencia.descricao"
+					[(ngModel)]="gerencia.descricao">
 			</div>
 		</div>
 
-		<input id="id" name="id" type="hidden" name="gerencia.id" [(ngModel)]="gerencia.id"> 
-		<input id="version" name="version" type="hidden" name="gerencia.version" [(ngModel)]="gerencia.version">
+		<input id="id" name="id" type="hidden" name="gerencia.id"
+			[(ngModel)]="gerencia.id"> <input id="version" name="version"
+			type="hidden" name="gerencia.version" [(ngModel)]="gerencia.version">
 
 		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
 		</div>
 
 		<div class='row row-btns'>
@@ -82,9 +90,13 @@
 				<button type="submit" class="btn btn-primary">Salvar</button>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/gerencia']" class="btn btn-primary btn-listar-perfis">Listar</a>
+				<a [routerLink]="['/gerencia']"
+					class="btn btn-primary btn-listar-perfis">Listar</a>
 			</div>
 		</div>
+
+		<div materialize [materializeParams]="toastParams"
+			[materializeActions]="globalActions"></div>
 
 	</form>
 </div>
