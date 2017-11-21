@@ -41,6 +41,13 @@ export class ConvocacaoService extends GenericService{
             .toPromise();
     }
     
+    getConvocacao(convocacao: Convocacao) {
+        let urlConvocar = GlobalVariable.BASE_API_URL + "/convocacao/processar-convocacao";
+        return this.http
+            .post( urlConvocar, convocacao, { headers: this.headers } )
+            .toPromise();
+    }
+    
     getProfissiogramas() {
         return this.profissiogramaService.getProfissiogramas();
     }

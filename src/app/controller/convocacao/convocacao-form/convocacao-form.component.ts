@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
 import { MaterializeAction } from "angular2-materialize";
+import 'rxjs/Rx';
 
 import { Profissiograma } from './../../../model/profissiograma';
 import { ProfissiogramaBuilder } from './../../profissiograma/profissiograma.builder';
@@ -132,20 +133,20 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             .catch( error => {
                 console.log( error );
             } )
-        
+
         this.convocacaoService.getExames()
-            .then(res => {
-                this.exames = new ExameBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log(error);
-            })
+            .then( res => {
+                this.exames = new ExameBuilder().cloneList( res.json() );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
     }
 
     save() {
         this.setSelectedsGerencias();
         this.verifyAndSetDates();
-        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
+        //        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
         super.save( new ConvocacaoBuilder().clone( this.convocacao ) );
     }
 
@@ -171,7 +172,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 sendConvocacao.setProfissiograma( this.convocacao.getProfissiograma() );
                 sendConvocacao.getGerenciaConvocacoes().push(
                     new GerenciaConvocacaoBuilder().clone( this.gerenciaConvocacoes[index] ) );
-                sendConvocacao.setId(this.convocacao.getId());
+                sendConvocacao.setId( this.convocacao.getId() );
 
                 this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
                     .then( res => {
@@ -244,6 +245,8 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 let empregado2 = this.empregadoConvocacoes.find( eC => {
                     return eC.getEmpregado().getId() === empregado.getId();
                 } );
+
+                //verifica se o empregado não está inserido na lista
 
                 if ( empregado2 == undefined ) {
                     let eC = new EmpregadoConvocacaoBuilder().initialize( new EmpregadoConvocacao() );
@@ -327,19 +330,19 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
         this.openModalEditEmpregado();
     }
-    
+
     addExame( value ) {
-        let exame = this.exames.find(e => {
+        let exame = this.exames.find( e => {
             return e.getId() == value;
-        })
-        
-        exame = new ExameBuilder().clone(exame);
-        
+        } )
+
+        exame = new ExameBuilder().clone( exame );
+
         this.empregadoDetail.getExames().push( exame );
     }
-    
+
     removeExame( value ) {
-        this.empregadoDetail.getExames().splice(value, 1);
+        this.empregadoDetail.getExames().splice( value, 1 );
     }
 
     verifyAndSetDates() {
@@ -447,23 +450,61 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             }, 250 );
         }
     }
-    
+
     setSelectedsGerencias() {
-        this.convocacao.setGerenciaConvocacoes(this.gerenciaConvocacoes.filter(gC => {
-                return gC.getSelecionado() === true;
-            })
+        this.convocacao.setGerenciaConvocacoes( this.gerenciaConvocacoes.filter( gC => {
+            return gC.getSelecionado() === true;
+        } )
         )
     }
-    
-    bkgColorEmpregadoConvocacao(empregadoConvocacao: EmpregadoConvocacao) {
-        if (empregadoConvocacao.getAuditado() == false && empregadoConvocacao.getDivergente() == false) 
+
+    bkgColorEmpregadoConvocacao( empregadoConvocacao: EmpregadoConvocacao ) {
+        if ( empregadoConvocacao.getAuditado() == false && empregadoConvocacao.getDivergente() == false )
             return { 'background-color': '' };
         else if ( empregadoConvocacao.getAuditado() == false && empregadoConvocacao.getDivergente() == true )
             return { 'background-color': 'yellow' };
         else if ( empregadoConvocacao.getAuditado() == true && empregadoConvocacao.getDivergente() == false )
             return { 'background-color': 'green' };
         else if ( empregadoConvocacao.getAuditado() == true && empregadoConvocacao.getDivergente() == true )
-            return { 'background-color': 'red' };    
+            return { 'background-color': 'red' };
+    }
+
+    convocar() {
+        if ( this.convocacao.getGerenciaConvocacoes().length != 0 ) {
+            if ( this.convocacao.getEmpregadoConvocacoes().length != 0 ) {
+                if ( this.convocacao.getTitulo() !== undefined ||
+                    this.convocacao.getTitulo() !== null ||
+                    this.convocacao.getTitulo() !== '' ) {
+
+                    this.setSelectedsGerencias();
+                    this.verifyAndSetDates();
+                    console.log( this.convocacao );
+                    this.convocacaoService.getConvocacao( this.convocacao )
+                        .then( res => {
+                            this.downloadFile( res )
+                        } )
+                        .catch( error => {
+
+                        } )
+
+                } else {
+                    this.toastParams = ['Adicione um titulo.', 4000];
+                    this.globalActions.emit( 'toast' );
+                }
+            } else {
+                this.toastParams = ['Sem empregados para convocar.', 4000];
+                this.globalActions.emit( 'toast' );
+            }
+        } else {
+            this.toastParams = ['Processo inconcluido.', 4000];
+            this.globalActions.emit( 'toast' );
+        }
+    }
+
+    downloadFile( data ) {
+        var blob = new Blob( [data], { type: 'application/x-zip-compressed' } );
+        var url = window.URL.createObjectURL( blob );
+        window.open( url );
     }
 
 }

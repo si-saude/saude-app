@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IndicadorRiscoAmbientalComponent } from './indicador-risco-ambiental.component';
 import { IndicadorRiscoAmbientalFormComponent } from './indicador-risco-ambiental-form/indicador-risco-ambiental-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const indicadorRiscoAmbientalRoutes: Routes = [
-    { path: 'indicador-risco-ambiental', component: IndicadorRiscoAmbientalComponent },
-    { path: 'indicador-risco-ambiental/cadastrar', component: IndicadorRiscoAmbientalFormComponent},
-    { path: 'indicador-risco-ambiental/editar/:id', component: IndicadorRiscoAmbientalFormComponent }
+    { path: '', component: IndicadorRiscoAmbientalComponent },
+    { path: 'cadastrar', component: IndicadorRiscoAmbientalFormComponent},
+    { path: 'editar/:id', component: IndicadorRiscoAmbientalFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

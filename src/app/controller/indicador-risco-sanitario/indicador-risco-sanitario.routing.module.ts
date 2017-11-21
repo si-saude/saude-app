@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IndicadorRiscoSanitarioComponent } from './indicador-risco-sanitario.component';
 import { IndicadorRiscoSanitarioFormComponent } from './indicador-risco-sanitario-form/indicador-risco-sanitario-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const indicadorRiscoSanitarioRoutes: Routes = [
-    { path: 'indicador-risco-sanitario', component: IndicadorRiscoSanitarioComponent },
-    { path: 'indicador-risco-sanitario/cadastrar', component: IndicadorRiscoSanitarioFormComponent},
-    { path: 'indicador-risco-sanitario/editar/:id', component: IndicadorRiscoSanitarioFormComponent }
+    { path: '', component: IndicadorRiscoSanitarioComponent },
+    { path: 'cadastrar', component: IndicadorRiscoSanitarioFormComponent},
+    { path: 'editar/:id', component: IndicadorRiscoSanitarioFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

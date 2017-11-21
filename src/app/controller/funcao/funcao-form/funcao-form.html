@@ -10,7 +10,7 @@
 	[goTo]="goTo"></app-confirm-save>
 
 <div class="row form-container">
-	<form class="col s12" (ngSubmit)="save()">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 		<div class="row">
 
 			<div class="col s12">

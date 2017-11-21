@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<form class="col s12 form-convocacao" (ngSubmit)="save()">
+<form #form="ngForm" class="col s12 form-convocacao" (ngSubmit)="save()">
 
 	<div class="row">
 		<div class="col s12">
@@ -284,10 +284,13 @@
 	</div>
 
 	<div class='row row-btns'>
-		<div class="col s6">
+		<div class="col s4">
 			<button type="submit" class="btn btn-primary">Salvar</button>
 		</div>
-		<div class="col s6">
+		<div class="col s4">
+			<a (click)="convocar()" class="btn btn-primary btn-convocar">Convocar</a>
+		</div>
+		<div class="col s4">
 			<a [routerLink]="['/convocacao']"
 				class="btn btn-primary btn-listar-perfis">Listar</a>
 		</div>

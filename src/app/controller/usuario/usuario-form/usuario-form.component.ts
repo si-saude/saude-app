@@ -1,26 +1,26 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
-import { Base } from './../../../model/base';
+import { Usuario } from './../../../model/usuario';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { BaseBuilder } from './../base.builder';
-import { BaseService } from './../base.service';
+import { UsuarioBuilder } from './../usuario.builder';
+import { UsuarioService } from './../usuario.service';
 
 @Component( {
-    selector: 'app-base-form',
-    templateUrl: './base-form.html',
-    styleUrls: ['./base-form.css']
+    selector: 'app-usuario-form',
+    templateUrl: './usuario-form.html',
+    styleUrls: ['./usuario-form.css']
 } )
-export class BaseFormComponent extends GenericFormComponent implements OnInit {
-    base: Base;
+export class UsuarioFormComponent extends GenericFormComponent implements OnInit { 
+    usuario: Usuario;
     
     constructor( private route: ActivatedRoute,
-            private baseService: BaseService) { 
-            super(baseService);
+            private usuarioService: UsuarioService) { 
+            super(usuarioService);
+            this.goTo = "usuario";
             
-            this.goTo = "base";
-            this.base = new BaseBuilder().initialize(this.base);
+            this.usuario = new UsuarioBuilder().initialize(this.usuario);
         }
     
     ngOnInit() {
@@ -30,10 +30,10 @@ export class BaseFormComponent extends GenericFormComponent implements OnInit {
                     let id = params['id'];
                     this.showPreload = true;
 
-                    this.baseService.get( id )
+                    this.usuarioService.get( id )
                         .then( res => {
                             this.showPreload = false;
-                            this.base = new BaseBuilder().clone(res.json());
+                            this.usuario = new UsuarioBuilder().clone(res.json());
                         } )
                         .catch( error => {
                             this.showPreload = false;
@@ -45,7 +45,7 @@ export class BaseFormComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
-        super.save(new BaseBuilder().clone(this.base));
+        super.save(new UsuarioBuilder().clone(this.usuario));
     }   
     
     

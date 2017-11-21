@@ -14,4 +14,6 @@ export abstract class GenericComponent {
         this.msgConfirmSave = "Salvo com sucesso! Ao confirmar, você será redirecionado para a tela de listagem.";
         this.msgPreload = "Aguarde processamento...";
     }
+    
+    
 }

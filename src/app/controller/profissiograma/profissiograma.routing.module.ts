@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProfissiogramaComponent } from './profissiograma.component';
 import { ProfissiogramaFormComponent } from './profissiograma-form/profissiograma-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const profissiogramaRoutes: Routes = [
-    { path: 'profissiograma', component: ProfissiogramaComponent },
-    { path: 'profissiograma/cadastrar', component: ProfissiogramaFormComponent},
-    { path: 'profissiograma/editar/:id', component: ProfissiogramaFormComponent }
+    { path: '', component: ProfissiogramaComponent },
+    { path: 'cadastrar', component: ProfissiogramaFormComponent},
+    { path: 'editar/:id', component: ProfissiogramaFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

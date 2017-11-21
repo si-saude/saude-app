@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { EquipeComponent } from './equipe.component';
 import { EquipeFormComponent } from './equipe-form/equipe-form.component';
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const equipeRoutes: Routes = [
-    { path: 'equipe', component: EquipeComponent },
-    { path: 'equipe/cadastrar', component: EquipeFormComponent },
-    { path: 'equipe/editar/:id', component: EquipeFormComponent }
+    { path: '', component: EquipeComponent },
+    { path: 'cadastrar', component: EquipeFormComponent },
+    { path: 'editar/:id', component: EquipeFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

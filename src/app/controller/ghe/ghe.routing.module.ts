@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { GheComponent } from './ghe.component';
 import { GheFormComponent } from './ghe-form/ghe-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const gheRoutes: Routes = [
-    { path: 'ghe', component: GheComponent },
-    { path: 'ghe/cadastrar', component: GheFormComponent },
-    { path: 'ghe/editar/:id', component: GheFormComponent }
+    { path: '', component: GheComponent },
+    { path: 'cadastrar', component: GheFormComponent },
+    { path: 'editar/:id', component: GheFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

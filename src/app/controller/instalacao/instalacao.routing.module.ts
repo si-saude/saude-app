@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { InstalacaoComponent } from './instalacao.component';
 import { InstalacaoFormComponent } from './instalacao-form/instalacao-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+ 
 const instalacaoRoutes: Routes = [
-    { path: 'instalacao', component: InstalacaoComponent },
-    { path: 'instalacao/cadastrar', component: InstalacaoFormComponent},
-    { path: 'instalacao/editar/:id', component: InstalacaoFormComponent }
+    { path: '', component: InstalacaoComponent },
+    { path: 'cadastrar', component: InstalacaoFormComponent},
+    { path: 'editar/:id', component: InstalacaoFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

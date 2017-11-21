@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CriterioComponent } from './criterio.component';
 import { CriterioFormComponent } from './criterio-form/criterio-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+  
 const criterioRoutes: Routes = [
-    { path: 'criterio', component: CriterioComponent },
-    { path: 'criterio/cadastrar', component: CriterioFormComponent },
-    { path: 'criterio/editar/:id', component: CriterioFormComponent }
+    { path: '', component: CriterioComponent },
+    { path: 'cadastrar', component: CriterioFormComponent },
+    { path: 'editar/:id', component: CriterioFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

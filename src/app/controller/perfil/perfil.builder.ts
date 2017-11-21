@@ -13,6 +13,20 @@ export class PerfilBuilder extends GenericBuilder {
         return perfil;
     }
     
+    initializeList(perfis: Array<Perfil>) {
+        
+        let array:Array<Perfil> = new Array<Perfil>();
+        
+        if(perfis === null || perfis === undefined)
+            perfis = new Array<Perfil>();
+        
+        for (let perfil of perfis) {
+            array.push(this.initialize(perfil));
+        }
+        
+        return array;
+    }
+    
     clone(perfil: Perfil) {
         
         if (perfil === null || perfil === undefined)
@@ -28,5 +42,17 @@ export class PerfilBuilder extends GenericBuilder {
                         this.getValue(perfil,"getPermissoes")));
         
         return clonePerfil;
+    }
+    
+    cloneList(perfis: Array<Perfil>): Array<Perfil> {
+        let array:Array<Perfil> = new Array<Perfil>();
+    
+        if (perfis !== null && perfis !== undefined) { 
+            for (let perfil of perfis) {
+                array.push(this.clone(perfil));
+            }
+        }
+        
+        return array;
     }
 }

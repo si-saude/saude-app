@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FornecedorComponent } from './fornecedor.component';
 import { FornecedorFormComponent } from './fornecedor-form/fornecedor-form.component';
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
     
 const fornecedor: Routes = [
-    { path: 'fornecedor', component: FornecedorComponent },
-    { path: 'fornecedor/cadastrar', component: FornecedorFormComponent},
-    { path: 'fornecedor/editar/:id', component: FornecedorFormComponent }
+    { path: '', component: FornecedorComponent },
+    { path: 'cadastrar', component: FornecedorFormComponent},
+    { path: 'editar/:id', component: FornecedorFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

@@ -1,38 +1,33 @@
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
- <div class="row div-login">
-   <form class="col s12" [formGroup]="formulario" (ngSubmit)="login()">
-     <div class="row">
-       <div class="input-field col s12">
-         <i class="material-icons prefix">account_circle</i>
-         <input id="chave" type="text" class="validate" formControlName="chave">
-         <label for="chave" 
-	         data-success="Ok!"
-         >Usuário</label>
-       </div>  
-     </div>
-     <div class="row">
-       <div class="input-field col s12">
-         <i class="material-icons prefix">vpn_key</i>
-         <input id="senha" type="password" class="validate" formControlName="senha">
-         <label for="senha" 
-	         data-success="Ok!"
-         >Senha</label>
-       </div>
-     </div>
-     <div class="row">
-       <div class="msgError red-text " *ngIf="verifyError">
-         <div class="card-panel red lighten-1">
-          <span class="white-text">{{msgError}}</span>
-        </div>
-       </div>
-     </div>
-     <div class='row'>
-       <button type="submit" class="btn btn-primary" [disabled]="isValid()">Login</button>
-       <a class="btn btn-primary right" (click)="forgotPassword()">Esqueci a senha</a>
-     </div>
-   </form>
- </div>
- 
+<div class="row div-login">
+	<form class="col s12" (ngSubmit)="login()">
+		<div class="row">
+			<div class="input-field col s12">
+				<i class="material-icons prefix">account_circle</i> 
+				<label for="chave" data-success="Ok!">Usuário</label> 
+				<input id="chave" type="text" name="chave" [(ngModel)]="usuario.chave">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<i class="material-icons prefix">vpn_key</i> 
+				<label for="senha" data-success="Ok!">Senha</label> 
+				<input id="senha" type="password" name="senha" [(ngModel)]="usuario.senha">
+			</div>
+		</div>
+		
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+		
+		<div class='row'>
+			<button type="submit" class="btn btn-primary">Login</button>
+			<a class="btn btn-primary right" (click)="forgotPassword()">Esqueci
+				a senha</a>
+		</div>
+	</form>
+</div>
+

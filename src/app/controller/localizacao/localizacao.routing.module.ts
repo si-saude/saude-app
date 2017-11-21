@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LocalizacaoComponent } from './localizacao.component';
 import { LocalizacaoFormComponent } from './localizacao-form/localizacao-form.component';
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const localizacaoRoutes: Routes = [
-    { path: 'localizacao', component: LocalizacaoComponent },
-    { path: 'localizacao/cadastrar', component: LocalizacaoFormComponent },
-    { path: 'localizacao/editar/:id', component: LocalizacaoFormComponent }
+    { path: '', component: LocalizacaoComponent },
+    { path: 'cadastrar', component: LocalizacaoFormComponent },
+    { path: 'editar/:id', component: LocalizacaoFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

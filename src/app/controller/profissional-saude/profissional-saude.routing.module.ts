@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ProfissionalSaudeComponent } from './profissional-saude.component';
 import { ProfissionalSaudeFormComponent } from './profissional-saude-form/profissional-saude-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const profissionalSaudeRoutes: Routes = [
-    { path: 'profissional-saude', component: ProfissionalSaudeComponent },
-    { path: 'profissional-saude/cadastrar', component: ProfissionalSaudeFormComponent},
-    { path: 'profissional-saude/editar/:id', component: ProfissionalSaudeFormComponent }
+    { path: '', component: ProfissionalSaudeComponent },
+    { path: 'cadastrar', component: ProfissionalSaudeFormComponent},
+    { path: 'editar/:id', component: ProfissionalSaudeFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

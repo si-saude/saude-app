@@ -9,17 +9,15 @@ import { AuthService } from './login/auth.service';
 })
 export class AppComponent {
   title = 'app';
-
-//  private logo = require("./../assets/img/logo.jpg");
-
-  private showMenu = false;
+  showMenu: boolean;
   
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+      this.showMenu = false;
+  }
   
   ngOnInit() {
-      this.authService.showMenuEvent.subscribe(
+      this.authService.showMenu.subscribe(
           mostrar => this.showMenu = mostrar);
-      
   }
   
 }

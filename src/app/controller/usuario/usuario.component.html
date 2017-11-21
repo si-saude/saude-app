@@ -1,0 +1,103 @@
+<head>
+  <meta charset="utf-8">
+</head>
+
+<!-- --> 
+<app-mensagem-form  *ngIf="verifyEmptyPaginas" 
+ [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
+</app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+ 
+<div class="collection">
+
+	<div *ngFor="let a of array">
+		<div class="row row-collection">
+			<div class="col s10">
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.chave}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/usuario/editar', a.id]"><i class="material-icons">mode_edit</i></a>
+		 	</div>
+		 	<div class="col s1">
+				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i class="material-icons">delete</i></a>
+		 	</div>
+		</div>
+	</div>
+</div>
+ 
+<!-- Paginação -->
+<ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
+
+	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
+			<i class="material-icons arrow-pagination">first_page</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}"
+		(click)="goToPage(filter.getPageNumber()-1)"> <i
+			class="material-icons arrow-pagination">chevron_left</i>
+	</a></li>
+
+	<li [ngClass]="activePage(paginaAtual)" class="waves-effect"
+		*ngFor="let paginaAtual of paginasAtuais; let i = index"><a
+		(click)="goToPage(paginaAtual)">{{paginaAtual}} </a></li>
+
+	<li><a [ngStyle]="{'cursor': 'pointer'}"
+		(click)="goToPage(filter.getPageNumber()+1)"> <i
+			class="material-icons arrow-pagination">chevron_right</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}"
+		(click)="goToPage(paginas.length)"> <i
+			class="material-icons arrow-pagination">last_page</i>
+	</a></li>
+
+</ul>
+
+<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+<a [routerLink]="['/usuario/cadastrar']" 
+class="waves-effect waves-light btn button-add">Adicionar</a>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal" 
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+
+	<div class="row">
+	
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<input type="text" id="chave" [(ngModel)]="filter.chave" name="chave">
+				<label for="chave">Chave</label>
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+    	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="setFilter()">Filtrar</a>
+  	</div>
+
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams" [materializeActions]="modalDelete">
+
+	<h5 class="titleModalDelete">Confirmação para remoção</h5>
+	<p class="paragraphModalDelete">Deseja realmente excluir esse
+		campo?</p>
+	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+		poderá mais ser resgatado.</p>
+
+	<div class="modal-footer">
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="confirmDelete()">Confirmar</a> <a
+			class="waves-effect waves-green btn-flat"
+			(click)="closeModalDelete()">Cancelar</a>
+	</div>
+
+</div>
+ 
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+</div>

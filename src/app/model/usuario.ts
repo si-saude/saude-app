@@ -1,12 +1,20 @@
 import { Perfil } from './perfil';
 
 export class Usuario {
-    private chave: string;
     private id: number = 0;
+    private chave: string;
     private senha: string;
     private token: string;
     private perfis: Array<Perfil>;
     private version: number;
+
+    getId() {
+        return this.id;
+    }
+    
+    setId(id: number) {
+        this.id = id;
+    }
 
     getChave() {
         return this.chave;
@@ -14,14 +22,6 @@ export class Usuario {
     
     setChave(chave: string) {
         this.chave = chave;
-    }
-    
-    getId() {
-        return this.id;
-    }
-    
-    setId(id: number) {
-        this.id = id;
     }
     
     getSenha() {

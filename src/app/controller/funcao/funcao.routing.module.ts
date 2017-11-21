@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FuncaoComponent } from './funcao.component';
 import { FuncaoFormComponent } from './funcao-form/funcao-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+  
 const funcaoRoutes: Routes = [
-    { path: 'funcao', component: FuncaoComponent },
-    { path: 'funcao/cadastrar', component: FuncaoFormComponent },
-    { path: 'funcao/editar/:id', component: FuncaoFormComponent }
+    { path: '', component: FuncaoComponent },
+    { path: 'cadastrar', component: FuncaoFormComponent },
+    { path: 'editar/:id', component: FuncaoFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

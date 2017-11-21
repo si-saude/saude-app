@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ConvocacaoComponent } from './convocacao.component';
 import { ConvocacaoFormComponent } from './convocacao-form/convocacao-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const convocacaoRoutes: Routes = [
-    { path: 'convocacao', component: ConvocacaoComponent },
-    { path: 'convocacao/cadastrar', component: ConvocacaoFormComponent },
-    { path: 'convocacao/editar/:id', component: ConvocacaoFormComponent }
+    { path: '', component: ConvocacaoComponent },
+    { path: 'cadastrar', component: ConvocacaoFormComponent },
+    { path: 'editar/:id', component: ConvocacaoFormComponent,
+        canDeactivate: [CanDeactivateGuard] }
 ];
 
 @NgModule({

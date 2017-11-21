@@ -132,3 +132,7 @@ select{
 	color: black;
 }
 
+.btn-convocar {
+	display: grid;
+}
+

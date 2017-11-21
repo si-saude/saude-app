@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { TipoGrupoMonitoramentoComponent } from './tipo-grupo-monitoramento.component';
 import { TipoGrupoMonitoramentoFormComponent } from './tipo-grupo-monitoramento-form/tipo-grupo-monitoramento-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const tipoGrupoMonitoramentoRoutes: Routes = [
-    { path: 'tipo-grupo-monitoramento', component: TipoGrupoMonitoramentoComponent },
-    { path: 'tipo-grupo-monitoramento/cadastrar', component: TipoGrupoMonitoramentoFormComponent },
-    { path: 'tipo-grupo-monitoramento/editar/:id', component: TipoGrupoMonitoramentoFormComponent }
+    { path: '', component: TipoGrupoMonitoramentoComponent },
+    { path: 'cadastrar', component: TipoGrupoMonitoramentoFormComponent },
+    { path: 'editar/:id', component: TipoGrupoMonitoramentoFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

@@ -4,11 +4,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CursoComponent } from './curso.component';
 import { CursoFormComponent } from './curso-form/curso-form.component';
-    
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
+
 const cursoRoutes: Routes = [
-    { path: 'curso', component: CursoComponent },
-    { path: 'curso/cadastrar', component: CursoFormComponent },
-    { path: 'curso/editar/:id', component: CursoFormComponent }
+    { path: '', component: CursoComponent },
+    { path: 'cadastrar', component: CursoFormComponent },
+    { path: 'editar/:id', component: CursoFormComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({
