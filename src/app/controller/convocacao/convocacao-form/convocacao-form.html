@@ -270,6 +270,11 @@
 					</div>
 				</fieldset>
 			</div>
+		<div class="row btn-convocar" *ngIf="ableToConvocate()">	
+			<div class="col s4">
+				<a (click)="convocar()" class="btn btn-primary">Convocar</a>
+			</div>
+		</div>
 
 		</div>
 
@@ -284,13 +289,10 @@
 	</div>
 
 	<div class='row row-btns'>
-		<div class="col s4">
+		<div class="col s6">
 			<button type="submit" class="btn btn-primary">Salvar</button>
 		</div>
-		<div class="col s4">
-			<a (click)="convocar()" class="btn btn-primary btn-convocar">Convocar</a>
-		</div>
-		<div class="col s4">
+		<div class="col s6">
 			<a [routerLink]="['/convocacao']"
 				class="btn btn-primary btn-listar-perfis">Listar</a>
 		</div>

@@ -4,24 +4,28 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { GlobalVariable } from './../../global'; 
+import { GlobalVariable } from './../../global';
 import { Usuario } from './../../model/usuario';
 import { PerfilFilter } from './perfil.filter';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
-export class PerfilService extends GenericService{
+export class PerfilService extends GenericService {
 
-  constructor( http: Http,  router: Router) { 
-      super(http, router, "perfil");
-  }
+    constructor( http: Http, router: Router ) {
+        super( http, router, "perfil" );
+    }
 
-  getFuncionalidades(){
-      let urlLogin = GlobalVariable.BASE_API_URL + "/generic/funcionalidade?filter=";
-      return this.http
-          .get(urlLogin, {headers: this.headers})
-          .toPromise();
-  }
-  
+    getFuncionalidades() {
+        let urlLogin = GlobalVariable.BASE_API_URL + "/generic/funcionalidade?filter=";
+        return this.http
+            .get( urlLogin, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getPerfis() {
+        return this.selectList(new PerfilFilter());
+    }
+
 
 }

@@ -64,12 +64,12 @@
 								</tr>
 							</thead>
 
-							<div *ngFor="let perfil of usario.perfis;let i = index">
+							<div *ngFor="let perfil of usuario.perfis;let i = index">
 								<tbody class="col s12">
 									<tr class="col s12">
 										<input type="hidden" [(ngModel)]="perfil.id"
 											value="{{perfil.id}}" name="perfil[{{i}}].id">
-										<td class="col s6">{{vacina.titulo}}</td>
+										<td class="col s6">{{perfil.titulo}}</td>
 										<td class="col s3"><a
 											class="btn-floating waves-effect waves-light red btn-remove"
 											(click)="removePerfil(i)"> <i
