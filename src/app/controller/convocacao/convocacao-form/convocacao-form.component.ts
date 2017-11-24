@@ -478,13 +478,15 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
                     this.setSelectedsGerencias();
                     this.verifyAndSetDates();
-                    console.log( this.convocacao );
+                    this.showPreload = true;
+                    
                     this.convocacaoService.getConvocacao( this.convocacao )
                         .then( res => {
-                            this.downloadFile( res )
+                            this.downloadFile( res, this.convocacao.getTitulo()+".zip" )
+                            this.showPreload = false;
                         } )
                         .catch( error => {
-
+                            this.showPreload = false;
                         } )
 
                 } else {
@@ -500,13 +502,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             this.globalActions.emit( 'toast' );
         }
     }
-
-    downloadFile( data ) {
-        var blob = new Blob( [data], { type: 'application/x-zip-compressed' } );
-        var url = window.URL.createObjectURL( blob );
-        window.open( url );
-    }
-
 }
 
 
