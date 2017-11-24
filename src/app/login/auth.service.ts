@@ -38,6 +38,7 @@ export class AuthService extends GenericService {
                             } );
                         } );
                     this.showMenu.emit(true);
+                    this.router.navigate( ['/home'] );
                 } )
                 .catch( error => {
                     console.log( error );

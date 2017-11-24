@@ -21,6 +21,7 @@ export abstract class GenericFormComponent extends GenericComponent {
     myDatePickerOptions: IMyDpOptions; 
     globalActions;
     toastParams;
+    canDeactivate:boolean;
 
     constructor( protected service: GenericService ) {
         super();
@@ -36,6 +37,7 @@ export abstract class GenericFormComponent extends GenericComponent {
             dismissible: false,
             complete: function() { }
         }];
+        this.canDeactivate = false;
     }
 
     isValid() {
@@ -44,6 +46,7 @@ export abstract class GenericFormComponent extends GenericComponent {
     save( object ) {
         
         this.showPreload = true;
+        this.canDeactivate = true;
         this.service.submit( object )
             .then( res => {
                 this.processReturn( true, res );
@@ -103,9 +106,9 @@ export abstract class GenericFormComponent extends GenericComponent {
     }
 
     isPossibleDeactivate() {
-        if ( this.formulario.dirty ) {
+        if ( this.formulario.dirty && !this.canDeactivate )
             return false;
-        } else return true;
+        return true;
     }
     
     openModalDeactivate() {

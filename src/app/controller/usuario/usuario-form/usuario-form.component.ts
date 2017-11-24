@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Usuario } from './../../../model/usuario';
+import { Perfil } from './../../../model/perfil';
+import { PerfilBuilder } from './../../perfil/perfil.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { UsuarioBuilder } from './../usuario.builder';
 import { UsuarioService } from './../usuario.service';
@@ -14,12 +16,14 @@ import { UsuarioService } from './../usuario.service';
 } )
 export class UsuarioFormComponent extends GenericFormComponent implements OnInit { 
     usuario: Usuario;
+    perfis: Array<Perfil>;
     
     constructor( private route: ActivatedRoute,
             private usuarioService: UsuarioService) { 
             super(usuarioService);
             this.goTo = "usuario";
             
+            this.perfis = new PerfilBuilder().initializeList(this.perfis);
             this.usuario = new UsuarioBuilder().initialize(this.usuario);
         }
     
@@ -42,11 +46,31 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
                 }
             } );
         
+        this.usuarioService.getPerfis()
+            .then(res => {
+                this.perfis = new PerfilBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        
     }
     
     save() {
         super.save(new UsuarioBuilder().clone(this.usuario));
-    }   
+    }
+
+    addPerfil( value ) {
+        let perfil: Perfil = this.perfis.find(p => {
+            return p.getId() == value;
+        });
+    
+        this.usuario.getPerfis().push(perfil);
+    }
+    
+    removePerfil( index ) {
+        this.usuario.getPerfis().splice(index, 1);
+    }
     
     
 }

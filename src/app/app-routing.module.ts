@@ -41,10 +41,8 @@ const routes: Routes = [
   { path: 'contato', component: ContatoComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'permissao', component: PermissaoComponent },
-  { path: 'home', component: HomeComponent,
-      canActivate: [AuthGuard]},
-  { path: 'localizacao', loadChildren: 'app/controller/localizacao/localizacao.module#LocalizacaoModule',
-      canActivate: [AuthGuard]},
+  { path: 'home', component: HomeComponent },
+  { path: 'localizacao', loadChildren: 'app/controller/localizacao/localizacao.module#LocalizacaoModule' },
   { path: 'equipe', loadChildren: 'app/controller/equipe/equipe.module#EquipeModule' },
   { path: 'gerencia', loadChildren: 'app/controller/gerencia/gerencia.module#GerenciaModule' },
   { path: 'profissional-saude', loadChildren: 'app/controller/profissional-saude/profissional-saude.module#ProfissionalSaudeModule' },
@@ -78,7 +76,7 @@ const routes: Routes = [
   { path: 'fornecedor', loadChildren: 'app/controller/fornecedor/fornecedor.module#FornecedorModule' },
   { path: 'convocacao', loadChildren: 'app/controller/convocacao/convocacao.module#ConvocacaoModule' },
   { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule' },
-  { path: '', pathMatch: 'full', redirectTo: '/convocacao'}
+  { path: '', pathMatch: 'full', redirectTo: '/usuario'}
 ];
 
 @NgModule({

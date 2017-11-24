@@ -84,18 +84,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     }
 
     ngOnInit() {
-        this.convocacaoService.get( 0 )
-            .then( res => {
-                this.convocacao = new ConvocacaoBuilder().clone( res.json() );
-                this.convocacao.setProfissiograma( new ProfissiogramaBuilder().initialize( new Profissiograma() ) );
-                this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
-                this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
-            } )
-            .catch( error => {
-                console.log( error );
-            } )
-
-
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if ( params['id'] !== undefined ) {
@@ -115,6 +103,17 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.showPreload = false;
                             console.log( error );
                         } )
+                } else {
+                    this.convocacaoService.get( 0 )
+                    .then( res => {
+                        this.convocacao = new ConvocacaoBuilder().clone( res.json() );
+                        this.convocacao.setProfissiograma( new ProfissiogramaBuilder().initialize( new Profissiograma() ) );
+                        this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
+                        this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
                 }
             } );
 
@@ -204,10 +203,16 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
     getEmpregado( evento ) {
         if ( this.empregadoToAdd !== undefined ) {
-
+            
             let empregado = this.empregados.find( e => {
-                return e.getChave() + " - " + e.getPessoa().getNome() ==
-                    this.empregadoToAdd.getPessoa().getNome();
+                if ( e.getChave() == undefined || 
+                        e.getChave() == null ||
+                        e.getChave() == '' ) {
+                    return "- " + e.getPessoa().getNome() == this.empregadoToAdd.getPessoa().getNome();
+                } else {
+                    return e.getChave() + " - " + e.getPessoa().getNome() ==
+                        this.empregadoToAdd.getPessoa().getNome();
+                }
             } );
 
             if ( empregado !== undefined ) {
@@ -502,6 +507,14 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             this.globalActions.emit( 'toast' );
         }
     }
+    
+    ableToConvocate() {
+        if ( this.convocacao.getGerenciaConvocacoes().length > 0 &&
+            this.convocacao.getEmpregadoConvocacoes().length > 0 )
+            return true;
+        else return false;
+    }
+
 }
 
 
