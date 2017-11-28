@@ -220,23 +220,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
     }
 
-    private oldNomeEmpregado: string;
-    selectEmpregado( evento: string ) {
-        if ( this.oldNomeEmpregado != evento ) {
-            this.oldNomeEmpregado = evento;
-            if ( evento.length > 3 ) {
-                this.empregadoService.getEmpregadoByName( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList( res.json() );
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
     private oldChaveEmpregado: string;
     selectEmpregadoByChave( evento ) {
         if ( this.oldChaveEmpregado != evento ) {
@@ -297,6 +280,23 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
     removeEmpregadoToList( index: number ) {
         this.empregadoConvocacoes.splice( index, 1 );
+    }
+
+    private oldNomeEmpregado: string;
+    selectEmpregado( evento: string ) {
+        if ( this.oldNomeEmpregado != evento ) {
+            this.oldNomeEmpregado = evento;
+            if ( evento.length > 3 ) {
+                this.empregadoService.getEmpregadoByName( evento )
+                    .then( res => {
+                        this.empregados = new EmpregadoBuilder().cloneList( res.json() );
+                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
+        }
     }
 
     filterEmpregadoByChave( evento ) {
@@ -482,9 +482,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
                     this.setSelectedsGerencias();
                     this.verifyAndSetDates();
+                    this.showPreload = true;
+                    
                     this.convocacaoService.getConvocacao( this.convocacao )
                         .then( res => {
-                            this.downloadFile( res )
+                            this.downloadFile( res, this.convocacao.getTitulo()+".zip" )
+                            this.showPreload = false;
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -503,13 +506,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             this.globalActions.emit( 'toast' );
         }
     }
-
-    downloadFile( data ) {
-        var blob = new Blob( [data], { type: 'application/x-zip-compressed' } );
-        var url = window.URL.createObjectURL( blob );
-        window.open( url );
-    }
-
+    
     ableToConvocate() {
         if ( this.convocacao.getGerenciaConvocacoes().length > 0 &&
             this.convocacao.getEmpregadoConvocacoes().length > 0 )
