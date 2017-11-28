@@ -49,4 +49,12 @@ export abstract class GenericService {
             .post( urlList, genericFilter, { headers: this.headers } )
             .toPromise();
     }
+    
+    sendFile( file ) {
+        let urlSendFile = this.URL + "/import";
+        this.headers = new Headers( { 'Content-Type': 'multipart/form-data' } );
+        return this.http
+            .post( urlSendFile, file, { headers: this.headers } )
+            .toPromise();
+    }
 }

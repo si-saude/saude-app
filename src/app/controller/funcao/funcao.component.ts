@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-funcao',
   templateUrl: './funcao.component.html',
-  styleUrls: ['./funcao.component.css']
+  styleUrls: ['./funcao.component.css', '../../../assets/css/list-component.css']
 })
 export class FuncaoComponent extends GenericListComponent<Funcao, FuncaoFilter> {
 

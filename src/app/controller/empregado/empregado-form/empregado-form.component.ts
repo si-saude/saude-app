@@ -45,6 +45,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     sexos: Array<string>;
     estadosCivies: Array<string>;
     escolaridades: Array<string>;
+    vinculos: Array<string>;
     cargos: Array<Cargo>;
     funcoes: Array<Funcao>;
     regimes: Array<Regime>;
@@ -120,8 +121,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                             
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );
@@ -153,6 +153,14 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.empregadoService.getEscolaridades()
             .then( res => {
                 this.escolaridades = Object.keys( res.json() );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+        
+        this.empregadoService.getVinculos()
+            .then( res => {
+                this.vinculos = Object.keys( res.json() );
             } )
             .catch( error => {
                 console.log( error );

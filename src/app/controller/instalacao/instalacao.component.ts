@@ -8,7 +8,7 @@ import { InstalacaoService } from './instalacao.service';
 @Component({
   selector: 'app-instalacao',
   templateUrl: './instalacao.component.html',
-  styleUrls: ['./instalacao.component.css']
+  styleUrls: ['./instalacao.component.css', '../../../assets/css/list-component.css']
 })
 export class InstalacaoComponent extends GenericListComponent<Instalacao, InstalacaoFilter> {
 

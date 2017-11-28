@@ -9,7 +9,7 @@ import { IndicadorRiscoAcidenteService } from './indicador-risco-acidente.servic
 @Component({
   selector: 'app-indicador-risco-acidente',
   templateUrl: './indicador-risco-acidente.component.html',
-  styleUrls: ['./indicador-risco-acidente.component.css']
+  styleUrls: ['./indicador-risco-acidente.component.css', '../../../assets/css/list-component.css']
 })
 export class IndicadorRiscoAcidenteComponent extends GenericListComponent<IndicadorRiscoAcidente, IndicadorRiscoAcidenteFilter> {
 

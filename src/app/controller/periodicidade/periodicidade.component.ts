@@ -9,7 +9,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-periodicidade',
   templateUrl: './periodicidade.component.html',
-  styleUrls: ['./periodicidade.component.css']
+  styleUrls: ['./periodicidade.component.css', '../../../assets/css/list-component.css']
 })
 export class PeriodicidadeComponent extends GenericListComponent<Periodicidade, PeriodicidadeFilter> {
     

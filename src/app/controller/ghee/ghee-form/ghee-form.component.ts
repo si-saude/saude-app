@@ -47,8 +47,7 @@ export class GheeFormComponent extends GenericFormComponent implements OnInit {
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

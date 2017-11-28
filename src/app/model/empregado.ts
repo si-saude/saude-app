@@ -20,6 +20,7 @@ export class Empregado {
     private status: string = "";
     private estadoCivil: string = "";
     private escolaridade: string = "";
+    private vinculo: string = "";
     private pessoa: Pessoa;
     private cargo: Cargo;
     private funcao: Funcao;
@@ -100,6 +101,14 @@ export class Empregado {
     
     setEscolaridade(escolaridade: string){
         this.escolaridade = escolaridade;
+    }
+    
+    getVinculo(): string{
+        return this.vinculo;
+    }
+    
+    setVinculo(vinculo: string){
+        this.vinculo = vinculo;
     }
     
     getPessoa(): Pessoa {

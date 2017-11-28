@@ -34,7 +34,7 @@
 							type="text" materialize="autocomplete"
 							name="profissionalSaude.empregado.pessoa.nome"
 							[(ngModel)]="profissionalSaude.empregado.pessoa.nome"
-							(focusout)="getEmpregado($event)"
+							(blur)="getEmpregado($event)"
 							(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
 							[materializeParams]="autocompleteEmpregado"> <input
 							id="profissionalSaude.empregado.pessoa.id" type="hidden"

@@ -40,8 +40,7 @@ export class PeriodicidadeFormComponent extends GenericFormComponent implements 
                             this.periodicidade = new PeriodicidadeBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

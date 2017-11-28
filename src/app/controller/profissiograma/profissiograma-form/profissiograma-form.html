@@ -6,9 +6,11 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
-<form #form="ngForm" class="col s12 form-profissiograma" (ngSubmit)="save()">
+<form #form="ngForm" class="col s12 form-profissiograma"
+	(ngSubmit)="save()">
 
 	<div class="row">
 		<div class="input-field col s10">
@@ -16,11 +18,11 @@
 				id="nome" type="text" required maxlength="400"
 				[(ngModel)]="profissiograma.nome" name="nome">
 		</div>
-		
+
 		<div class="input-field col s2 checkbox">
 			<input type="checkbox" id="critico"
-					[(ngModel)]="profissiograma.concluido" name="profissiograma.concluido">
-                <label for="concluido">Concluído</label>
+				[(ngModel)]="profissiograma.concluido"
+				name="profissiograma.concluido"> <label for="concluido">Concluído</label>
 		</div>
 	</div>
 
@@ -55,15 +57,15 @@
 					*ngFor="let grupoMonitoramento of profissiograma.grupoMonitoramentos; let gM = index">
 					<div class="row row-collection">
 						<div class="col s10">
-							<a [ngClass]="selectedGrupoMonitoramento(gM)" 
+							<a [ngClass]="selectedGrupoMonitoramento(gM)"
 								[routerLinkActive]="['active']" class="collection-item"
 								(click)="selectGrupoMonitoramento(gM)">
 								{{grupoMonitoramento.nome}} </a>
 						</div>
 						<div class="col s2 btn-delete">
-							<a [ngStyle]="{'cursor': 'pointer'}" 
-								(click)="removeGrupoMonitoramento(gM)">
-								<i class="material-icons">delete</i>
+							<a [ngStyle]="{'cursor': 'pointer'}"
+								(click)="removeGrupoMonitoramento(gM)"> <i
+								class="material-icons">delete</i>
 							</a>
 						</div>
 					</div>
@@ -86,7 +88,8 @@
 						</div>
 
 						<div class="col s2">
-							<a class="btn-floating waves-effect waves-light green btn-remove-permission"
+							<a
+								class="btn-floating waves-effect waves-light green btn-remove-permission"
 								(click)="addExame(exame.value)"> <i
 								class="material-icons center-icon">add</i>
 							</a>
@@ -97,15 +100,23 @@
 				<div class="row-item-collection"
 					*ngFor="let grupoMonitoramentoExame of gruposMonitoramentoExame; let gME = index">
 					<div class="row row-collection">
-						<div class="col s10">
-							<a [ngClass]="selectedExame(gME)"
-								[routerLinkActive]="['active']" class="collection-item"
-								(click)="selectExame(gME)">
-								{{grupoMonitoramentoExame.exame.codigo}} - {{grupoMonitoramentoExame.exame.descricao}} </a>
+						<div class="col s6">
+							<a [ngClass]="selectedExame(gME)" [routerLinkActive]="['active']"
+								class="collection-item" (click)="selectExame(gME)">
+								{{grupoMonitoramentoExame.exame.codigo}} -
+								{{grupoMonitoramentoExame.exame.descricao}} </a>
+						</div>
+						<div class="col s4">
+							<select class="browser-default"
+								name="grupoMonitoramentoExame[{{gME}}].periodicidade"
+								[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
+								<option selected value=0>Selecione uma periodicidade</option>
+								<option *ngFor="let periodicidade of periodicidades"
+									value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
+							</select>
 						</div>
 						<div class="col s2 btn-delete">
-							<a [ngStyle]="{'cursor': 'pointer'}" 
-								(click)="removeExame(gME)">
+							<a [ngStyle]="{'cursor': 'pointer'}" (click)="removeExame(gME)">
 								<i class="material-icons">delete</i>
 							</a>
 						</div>
@@ -126,7 +137,8 @@
 						<div class="input-field col s4">
 							<select class="browser-default" #criterio>
 								<option disabled selected value=0>Selecione um critério</option>
-								<option *ngFor="let criterio of criterios" value="{{criterio.id}}">{{criterio.nome}}</option>
+								<option *ngFor="let criterio of criterios"
+									value="{{criterio.id}}">{{criterio.nome}}</option>
 							</select>
 						</div>
 
@@ -148,8 +160,7 @@
 								{{criterio.nome}} </a>
 						</div>
 						<div class="col s2 btn-delete">
-							<a [ngStyle]="{'cursor': 'pointer'}" 
-								(click)="removeCriterio(c)">
+							<a [ngStyle]="{'cursor': 'pointer'}" (click)="removeCriterio(c)">
 								<i class="material-icons">delete</i>
 							</a>
 						</div>
@@ -178,7 +189,8 @@
 				class="btn btn-primary btn-listar-perfis">Listar</a>
 		</div>
 	</div>
-	
-	<div materialize [materializeParams]="toastParams" [materializeActions]="globalActions"></div>
+
+	<div materialize [materializeParams]="toastParams"
+		[materializeActions]="globalActions"></div>
 
 </form>

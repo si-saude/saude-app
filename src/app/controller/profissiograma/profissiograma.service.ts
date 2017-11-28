@@ -8,6 +8,7 @@ import { ProfissiogramaFilter } from './profissiograma.filter';
 import { GrupoMonitoramentoService } from './../grupo-monitoramento/grupo-monitoramento.service';
 import { ExameService } from './../exame/exame.service';
 import { CriterioService } from './../criterio/criterio.service';
+import { PeriodicidadeService } from './../periodicidade/periodicidade.service';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
@@ -16,7 +17,8 @@ export class ProfissiogramaService extends GenericService {
     constructor( http: Http, router: Router,
             private grupoMonitoramentoService: GrupoMonitoramentoService,
             private exameService: ExameService,
-            private criterioService: CriterioService) { 
+            private criterioService: CriterioService,
+            private periodicidadeService: PeriodicidadeService) { 
         super(http, router, "profissiograma");
     }
 
@@ -39,6 +41,10 @@ export class ProfissiogramaService extends GenericService {
     getProfissiogramas() {
         let profissiogramaFilter: ProfissiogramaFilter = new ProfissiogramaFilter();
         return this.selectList(profissiogramaFilter);
+    }
+    
+    getPeriodicidade() {
+        return this.periodicidadeService.getPeriodicidades();
     }
     
 }

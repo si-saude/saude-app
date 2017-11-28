@@ -36,8 +36,7 @@ export class CursoFormComponent extends GenericFormComponent implements OnInit {
                             this.curso = new CursoBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

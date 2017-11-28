@@ -9,7 +9,7 @@ import { ExameService } from './exame.service';
 @Component({
   selector: 'app-exame',
   templateUrl: './exame.component.html',
-  styleUrls: ['./exame.component.css']
+  styleUrls: ['./exame.component.css', '../../../assets/css/list-component.css']
 })
 export class ExameComponent extends GenericListComponent<Exame, ExameFilter> {
 

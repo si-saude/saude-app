@@ -13,7 +13,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-curso',
   templateUrl: './curso.component.html',
-  styleUrls: ['./curso.component.css']
+  styleUrls: ['./curso.component.css', '../../../assets/css/list-component.css']
 })
 export class CursoComponent extends GenericListComponent<Curso, CursoFilter> {
   

@@ -13,7 +13,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-gerencia',
   templateUrl: './gerencia.component.html',
-  styleUrls: ['./gerencia.component.css']
+  styleUrls: ['./gerencia.component.css', '../../../assets/css/list-component.css']
 })
 export class GerenciaComponent  extends GenericListComponent<Gerencia, GerenciaFilter> {
 

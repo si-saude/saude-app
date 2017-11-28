@@ -13,7 +13,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-cargo',
   templateUrl: './cargo.component.html',
-  styleUrls: ['./cargo.component.css']
+  styleUrls: ['./cargo.component.css', '../../../assets/css/list-component.css']
 })
 export class CargoComponent extends GenericListComponent<Cargo, CargoFilter> {
 

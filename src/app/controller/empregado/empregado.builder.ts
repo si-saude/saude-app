@@ -62,6 +62,13 @@ export class EmpregadoBuilder extends GenericBuilder{
         else
             cloneEmpregado.setEscolaridade(this.getValue(empregado, "getEscolaridade"));
         
+        if(this.getValue(empregado, "getVinculo") == "")
+            cloneEmpregado.setVinculo(undefined);
+        else if (this.getValue(empregado, "getVinculo") == undefined )
+            cloneEmpregado.setVinculo("");
+        else
+            cloneEmpregado.setVinculo(this.getValue(empregado, "getVinculo"));
+        
         cloneEmpregado.setId(this.getValue(empregado, "getId"));
         cloneEmpregado.setVersion(this.getValue(empregado, "getVersion"));
         cloneEmpregado.setChave(this.getValue(empregado, "getChave"));

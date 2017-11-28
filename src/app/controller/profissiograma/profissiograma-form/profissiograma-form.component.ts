@@ -14,6 +14,8 @@ import { Exame } from './../../../model/exame';
 import { ExameBuilder } from './../../exame/exame.builder';
 import { Criterio } from './../../../model/criterio';
 import { CriterioBuilder } from './../../criterio/criterio.builder';
+import { Periodicidade } from './../../../model/periodicidade';
+import { PeriodicidadeBuilder } from './../../periodicidade/periodicidade.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component'; 
 import { ProfissiogramaBuilder } from './../profissiograma.builder';
 import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-monitoramento.builder';
@@ -30,6 +32,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     exames: Array<Exame>;
     criterios: Array<Criterio>;
     arrayCriterio: Array<Criterio>;
+    periodicidades: Array<Periodicidade>;
 
     selectedGM = null;
     selectedExm = null;
@@ -45,6 +48,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
         
         this.gruposMonitoramentoExame = new Array<GrupoMonitoramentoExame>();
         this.arrayCriterio = new Array<Criterio>();
+        this.periodicidades = new PeriodicidadeBuilder().initializeList(this.periodicidades);
     }
 
     ngOnInit() {
@@ -60,8 +64,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
                             this.profissiograma = new ProfissiogramaBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );
@@ -85,6 +88,14 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
           this.profissiogramaService.getCriterios()
               .then(res => {
                   this.criterios = res.json();
+              })
+              .catch(error => {
+                  console.log(error);
+              })
+          
+          this.profissiogramaService.getPeriodicidade()
+              .then(res => {
+                  this.periodicidades = res.json();
               })
               .catch(error => {
                   console.log(error);

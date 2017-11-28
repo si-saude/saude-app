@@ -36,8 +36,7 @@ export class VacinaFormComponent extends GenericFormComponent implements OnInit 
                             this.vacina = new VacinaBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

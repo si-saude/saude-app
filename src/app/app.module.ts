@@ -49,6 +49,7 @@ import { MenuComponent } from './includes/menu/menu.component';
 import { SidenavComponent } from './includes/sidenav/sidenav.component';
 import { SharedModule } from './controller/shared.module';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
+
 @NgModule({
   declarations: [
     AppComponent,

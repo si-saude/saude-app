@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css']
+  styleUrls: ['./usuario.component.css', '../../../assets/css/list-component.css']
 })
 export class UsuarioComponent extends GenericListComponent<Usuario, UsuarioFilter> {
 

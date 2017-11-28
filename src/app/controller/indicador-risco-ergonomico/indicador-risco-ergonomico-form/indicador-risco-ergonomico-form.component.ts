@@ -43,8 +43,7 @@ export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent 
                             this.indicadorRiscoErgonomico = new IndicadorRiscoErgonomicoBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

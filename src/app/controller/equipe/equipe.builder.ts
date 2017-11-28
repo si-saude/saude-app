@@ -16,6 +16,7 @@ export class EquipeBuilder extends GenericBuilder {
         
         cloneEquipe.setId(this.getValue(equipe,"getId"));
         cloneEquipe.setNome(this.getValue(equipe,"getNome"));
+        cloneEquipe.setAbreviacao(this.getValue(equipe, "getAbreviacao"));
         cloneEquipe.setVersion(this.getValue(equipe,"getVersion"));
     
         return cloneEquipe;

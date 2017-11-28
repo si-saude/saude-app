@@ -48,7 +48,7 @@
 								for="relatorio">Relatório</label>
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="input-field col s6">
 							<fieldset>
@@ -72,7 +72,7 @@
 
 				<div class="row">
 
-					<div class="input-field col s6">
+					<div class="input-field col s7">
 						<div class="collection">
 
 							<fieldset>
@@ -99,25 +99,33 @@
 							<div class="row-item-collection"
 								*ngFor="let grupoMonitoramentoExame of grupoMonitoramento.grupoMonitoramentoExames; let gME = index">
 								<div class="row row-collection">
-									<div class="col s10">
+									<div class="col s6">
 										<a [ngClass]="selectedExame(gME)"
 											[routerLinkActive]="['active']" class="collection-item"
 											(click)="selectExame(gME)">
 											{{grupoMonitoramentoExame.exame.codigo}} -
 											{{grupoMonitoramentoExame.exame.descricao}} </a>
 									</div>
-									<div class="col s2 btn-delete">
+									<div class="col s5">
+										<select class="browser-default" name="grupoMonitoramentoExame[{{gME}}].periodicidade"
+											[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
+											<option selected value=0>Selecione uma periodicidade</option>
+											<option *ngFor="let periodicidade of periodicidades"
+												value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
+										</select>
+									</div>
+									<div class="col s1 btn-delete">
 										<a [ngStyle]="{'cursor': 'pointer'}"
 											(click)="removeExame(gME)"> <i class="material-icons">delete</i>
 										</a>
 									</div>
 								</div>
 							</div>
+
 						</div>
 					</div>
 
-
-					<div class="input-field col s6">
+					<div class="input-field col s5">
 						<div class="collection">
 
 							<fieldset>
@@ -163,7 +171,6 @@
 				</div>
 
 			</div>
-
 		</div>
 
 		<input id="id" name="id" type="hidden"

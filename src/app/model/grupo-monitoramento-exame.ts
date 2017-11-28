@@ -1,10 +1,12 @@
 import { Exame } from './exame';
+import { Periodicidade } from './periodicidade';
 import { GrupoMonitoramento } from './grupo-monitoramento';
 import { Criterio } from './criterio';
 
 export class GrupoMonitoramentoExame {
     private id: number;
     private exame: Exame;
+    private periodicidade: Periodicidade;
     private grupoMonitoramento: GrupoMonitoramento;
     private criterios: Array<Criterio>;
     private version: number;
@@ -23,6 +25,14 @@ export class GrupoMonitoramentoExame {
     
     setExame(exame: Exame) {
         this.exame = exame;
+    }
+    
+    getPeriodicidade() {
+        return this.periodicidade;
+    }
+    
+    setPeriodicidade(periodicidade: Periodicidade) {
+        this.periodicidade = periodicidade;
     }
     
     getGrupoMonitoramento() {

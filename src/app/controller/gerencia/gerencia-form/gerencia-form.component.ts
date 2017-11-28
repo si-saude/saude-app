@@ -75,8 +75,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
 
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 } else {
                     this.gerenciaService.getGerenciasWithFilterId( this.gerencia.getId() )

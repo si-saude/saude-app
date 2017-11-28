@@ -10,7 +10,7 @@ import { CidadeService } from './../cidade.service';
 @Component( {
     selector: 'app-cidade-form',
     templateUrl: './cidade-form.html',
-    styleUrls: ['./cidade-form.css']
+    styleUrls: ['./cidade-form.css', './../../../../assets/css/form-component.css']
 } )
 export class CidadeFormComponent extends GenericFormComponent implements OnInit { 
     cidade: Cidade;
@@ -36,8 +36,7 @@ export class CidadeFormComponent extends GenericFormComponent implements OnInit 
                             this.cidade = new CidadeBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

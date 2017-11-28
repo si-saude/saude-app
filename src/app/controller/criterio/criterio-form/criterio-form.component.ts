@@ -58,8 +58,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
                             this.selectTipo();
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

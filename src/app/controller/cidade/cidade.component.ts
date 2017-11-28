@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-cidade',
   templateUrl: './cidade.component.html',
-  styleUrls: ['./cidade.component.css']
+  styleUrls: ['./cidade.component.css', '../../../assets/css/list-component.css']
 })
 export class CidadeComponent extends GenericListComponent<Cidade, CidadeFilter> {
 

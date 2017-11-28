@@ -13,7 +13,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
-  styleUrls: ['./perfil.component.css']
+  styleUrls: ['./perfil.component.css', '../../../assets/css/list-component.css']
 })
 export class PerfilComponent  extends GenericListComponent<Perfil, PerfilFilter>{
     

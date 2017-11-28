@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-regime',
   templateUrl: './regime.component.html',
-  styleUrls: ['./regime.component.css']
+  styleUrls: ['./regime.component.css', '../../../assets/css/list-component.css']
 })
 export class RegimeComponent extends GenericListComponent<Regime, RegimeFilter> {
 

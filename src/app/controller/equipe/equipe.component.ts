@@ -13,7 +13,7 @@ import { Equipe } from './../../model/equipe';
 @Component( {
     selector: 'app-equipe',
     templateUrl: './equipe.component.html',
-    styleUrls: ['./equipe.component.css']
+    styleUrls: ['./equipe.component.css', '../../../assets/css/list-component.css']
 } )
 export class EquipeComponent extends GenericListComponent<Equipe, EquipeFilter>  {
 

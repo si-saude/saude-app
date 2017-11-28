@@ -43,8 +43,7 @@ export class IndicadorRiscoSanitarioFormComponent extends GenericFormComponent i
                             this.indicadorRiscoSanitario = new IndicadorRiscoSanitarioBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

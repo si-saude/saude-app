@@ -43,8 +43,7 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
                             this.perfil = new PerfilBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

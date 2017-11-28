@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-ghe',
   templateUrl: './ghe.component.html',
-  styleUrls: ['./ghe.component.css']
+  styleUrls: ['./ghe.component.css', '../../../assets/css/list-component.css']
 })
 export class GheComponent extends GenericListComponent<Ghe, GheFilter> implements OnInit {
 

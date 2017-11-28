@@ -9,7 +9,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-profissiograma',
   templateUrl: './profissiograma.component.html',
-  styleUrls: ['./profissiograma.component.css']
+  styleUrls: ['./profissiograma.component.css', '../../../assets/css/list-component.css']
 })
 export class ProfissiogramaComponent extends GenericListComponent<Profissiograma, ProfissiogramaFilter> {
     

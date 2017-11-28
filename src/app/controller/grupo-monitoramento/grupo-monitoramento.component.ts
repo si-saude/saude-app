@@ -9,7 +9,7 @@ import { GrupoMonitoramentoService } from './grupo-monitoramento.service';
 @Component({
   selector: 'app-grupo-monitoramento',
   templateUrl: './grupo-monitoramento.component.html',
-  styleUrls: ['./grupo-monitoramento.component.css']
+  styleUrls: ['./grupo-monitoramento.component.css', '../../../assets/css/list-component.css']
 })
 export class GrupoMonitoramentoComponent extends GenericListComponent<GrupoMonitoramento, GrupoMonitoramentoFilter> {
 

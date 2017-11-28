@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-vacina',
   templateUrl: './vacina.component.html',
-  styleUrls: ['./vacina.component.css']
+  styleUrls: ['./vacina.component.css', '../../../assets/css/list-component.css']
 })
 export class VacinaComponent extends GenericListComponent<Vacina, VacinaFilter> {
 

@@ -82,6 +82,13 @@ export class EmpregadoService extends GenericService {
             .toPromise();
     }
     
+    getVinculos() {
+        let urlVinculos = GlobalVariable.BASE_API_URL + "/generic/vinculo-empregado";
+        return this.http
+            .get( urlVinculos + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
     getCargos() {
         return this.cargoService.getCargos();
     }

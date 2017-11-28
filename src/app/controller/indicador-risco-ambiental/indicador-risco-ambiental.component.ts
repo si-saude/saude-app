@@ -9,7 +9,7 @@ import { IndicadorRiscoAmbientalService } from './indicador-risco-ambiental.serv
 @Component({
   selector: 'app-indicador-risco-ambiental',
   templateUrl: './indicador-risco-ambiental.component.html',
-  styleUrls: ['./indicador-risco-ambiental.component.css']
+  styleUrls: ['./indicador-risco-ambiental.component.css', '../../../assets/css/list-component.css']
 })
 export class IndicadorRiscoAmbientalComponent extends GenericListComponent<IndicadorRiscoAmbiental, IndicadorRiscoAmbientalFilter> {
 

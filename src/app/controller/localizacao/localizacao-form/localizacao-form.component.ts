@@ -40,8 +40,7 @@ export class LocalizacaoFormComponent extends GenericFormComponent implements On
                             this.localizacao = new LocalizacaoBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

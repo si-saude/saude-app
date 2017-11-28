@@ -12,6 +12,8 @@ import { Exame } from './../../../model/exame';
 import { ExameBuilder } from './../../exame/exame.builder';
 import { Criterio } from './../../../model/criterio';
 import { CriterioBuilder } from './../../criterio/criterio.builder';
+import { Periodicidade } from './../../../model/periodicidade';
+import { PeriodicidadeBuilder } from './../../periodicidade/periodicidade.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { GrupoMonitoramentoBuilder } from './../grupo-monitoramento.builder';
 import { GrupoMonitoramentoService } from './../grupo-monitoramento.service';
@@ -28,6 +30,7 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
     criterios: Array<Criterio>;
     arrayCriterio: Array<Criterio>;
     gruposMonitoramentoExame: Array<GrupoMonitoramentoExame>;
+    periodicidades: Array<Periodicidade>;
 
     globalActions = new EventEmitter<string|MaterializeAction>();
     toastParams = ['', 4000];
@@ -42,6 +45,7 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             this.arrayCriterio = new Array<Criterio>();
             this.gruposMonitoramentoExame = new Array<GrupoMonitoramentoExame>();
             this.grupoMonitoramento = new GrupoMonitoramentoBuilder().initialize(this.grupoMonitoramento);
+            this.periodicidades = new PeriodicidadeBuilder().initializeList(this.periodicidades);
         }
     
     ngOnInit() {
@@ -57,8 +61,7 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
                             this.grupoMonitoramento = new GrupoMonitoramentoBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );
@@ -82,6 +85,14 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
         this.grupoMonitoramentoService.getTiposGrupoMonitoramento() 
             .then(res => {
                 this.tiposGrupoMonitoramento = res.json();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        
+        this.grupoMonitoramentoService.getPeriodicidades()
+            .then(res => {
+                this.periodicidades = res.json();
             })
             .catch(error => {
                 console.log(error);

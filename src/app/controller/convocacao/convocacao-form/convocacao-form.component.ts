@@ -25,7 +25,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 @Component( {
     selector: 'app-convocacao-form',
     templateUrl: './convocacao-form.html',
-    styleUrls: ['./convocacao-form.css']
+    styleUrls: ['./convocacao-form.css', './../../../../assets/css/form-component.css']
 } )
 export class ConvocacaoFormComponent extends GenericFormComponent implements OnInit {
     tipos: Array<string>;
@@ -100,8 +100,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 } else {
                     this.convocacaoService.get( 0 )
@@ -112,7 +111,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                         this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
                     } )
                     .catch( error => {
-                        console.log( error );
+                        this.catchConfiguration( error );
                     } )
                 }
             } );
@@ -483,13 +482,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
                     this.setSelectedsGerencias();
                     this.verifyAndSetDates();
-                    console.log( this.convocacao );
                     this.convocacaoService.getConvocacao( this.convocacao )
                         .then( res => {
                             this.downloadFile( res )
                         } )
                         .catch( error => {
-
+                            this.catchConfiguration( error );
                         } )
 
                 } else {

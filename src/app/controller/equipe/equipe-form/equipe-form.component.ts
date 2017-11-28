@@ -36,8 +36,7 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
                             this.equipe = new EquipeBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

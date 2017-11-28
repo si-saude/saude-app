@@ -10,7 +10,7 @@ import { TypeFilter } from './../../generics/type.filter';
 @Component({
   selector: 'app-profissional-saude',
   templateUrl: './profissional-saude.component.html',
-  styleUrls: ['./profissional-saude.component.css']
+  styleUrls: ['./profissional-saude.component.css', '../../../assets/css/list-component.css']
 })
 export class ProfissionalSaudeComponent extends GenericListComponent<Profissional, ProfissionalSaudeFilter> {
     

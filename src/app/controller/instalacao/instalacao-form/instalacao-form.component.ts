@@ -68,8 +68,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

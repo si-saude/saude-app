@@ -43,8 +43,7 @@ export class IndicadorRiscoAmbientalFormComponent extends GenericFormComponent i
                             this.indicadorRiscoAmbiental = new IndicadorRiscoAmbientalBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

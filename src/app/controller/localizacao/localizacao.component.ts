@@ -13,7 +13,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-localizacao',
   templateUrl: './localizacao.component.html',
-  styleUrls: ['./localizacao.component.css']
+  styleUrls: ['./localizacao.component.css', '../../../assets/css/list-component.css']
 })
 export class LocalizacaoComponent extends GenericListComponent<Localizacao, LocalizacaoFilter> {
 

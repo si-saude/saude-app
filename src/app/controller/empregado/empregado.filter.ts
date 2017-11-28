@@ -13,6 +13,8 @@ export class EmpregadoFilter extends GenericFilter {
     private matricula: string;
     private ramal: string;
     private status: string;
+    private escolaridade: string;
+    private vinculo: string;
     private pessoa: PessoaFilter = new PessoaFilter();
     private cargo: CargoFilter;
     private funcao: FuncaoFilter;
@@ -52,6 +54,22 @@ export class EmpregadoFilter extends GenericFilter {
     
     setStatus(status: string){
         this.status = status;
+    }
+    
+    getEscolaridade(): string{
+        return this.escolaridade;
+    }
+    
+    setEscolaridade(escolaridade: string){
+        this.escolaridade = escolaridade;
+    }
+    
+    getVinculo(): string{
+        return this.vinculo;
+    }
+    
+    setVinculo(vinculo: string){
+        this.vinculo = vinculo;
     }
     
     getPessoa(): PessoaFilter {

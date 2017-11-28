@@ -44,8 +44,7 @@ export class FornecedorFormComponent extends GenericFormComponent implements OnI
                             this.fornecedor = new FornecedorBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

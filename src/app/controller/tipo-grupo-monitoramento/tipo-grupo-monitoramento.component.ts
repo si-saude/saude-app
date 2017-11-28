@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-tipo-grupo-monitoramento',
   templateUrl: './tipo-grupo-monitoramento.component.html',
-  styleUrls: ['./tipo-grupo-monitoramento.component.css']
+  styleUrls: ['./tipo-grupo-monitoramento.component.css', '../../../assets/css/list-component.css']
 })
 export class TipoGrupoMonitoramentoComponent extends GenericListComponent<TipoGrupoMonitoramento, TipoGrupoMonitoramentoFilter> {
 

@@ -1,6 +1,7 @@
 export class Equipe {
     private id: number = 0;
     private nome: string;
+    private abreviacao: string;
     private version: number;
 
     getId(): number {
@@ -25,5 +26,13 @@ export class Equipe {
     
     setNome(nome:string){
         this.nome = nome;
+    }
+    
+    getAbreviacao():string{
+        return this.abreviacao;
+    }
+    
+    setAbreviacao(abreviacao:string){
+        this.abreviacao = abreviacao;
     }
 }

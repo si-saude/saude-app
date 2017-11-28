@@ -36,7 +36,7 @@
 				<label for="gerente">Gerente</label> <input type="text"
 					materialize="autocomplete" name="gerencia.gerente.pessoa.nome"
 					[(ngModel)]="gerencia.gerente.pessoa.nome"
-					(focusout)="getGerente($event)"
+					(blur)="getGerente($event)"
 					(ngModelChange)="selectGerenteByChave($event); selectGerente($event);"
 					[materializeParams]="autocompleteGerente"> <input
 					id="gerencia.gerente.id" type="hidden" name="gerencia.gerente.id"
@@ -47,7 +47,7 @@
 				<label for="secretario1">Secretário 1</label> <input type="text"
 					materialize="autocomplete" name="gerencia.secretario1.pessoa.nome"
 					[(ngModel)]="gerencia.secretario1.pessoa.nome"
-					(focusout)="getSecretario1($event)"
+					(blur)="getSecretario1($event)"
 					(ngModelChange)="selectSecretario1ByChave($event); selectSecretario1($event);"
 					[materializeParams]="autocompleteSecretario1"> <input
 					id="gerencia.secretario1.id" type="hidden"
@@ -59,7 +59,7 @@
 				<label for="secretario2">Secretário 2</label> <input type="text"
 					materialize="autocomplete" name="gerencia.secretario2.pessoa.nome"
 					[(ngModel)]="gerencia.secretario2.pessoa.nome"
-					(focusout)="getSecretario2($event)"
+					(blur)="getSecretario2($event)"
 					(ngModelChange)="selectSecretario2ByChave($event); selectSecretario2($event);"
 					[materializeParams]="autocompleteSecretario2"> <input
 					id="gerencia.secretario2.id" type="hidden"

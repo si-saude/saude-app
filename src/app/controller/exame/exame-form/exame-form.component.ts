@@ -40,8 +40,7 @@ export class ExameFormComponent extends GenericFormComponent implements OnInit {
                             this.exame = new ExameBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

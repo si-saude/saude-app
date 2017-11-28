@@ -73,8 +73,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

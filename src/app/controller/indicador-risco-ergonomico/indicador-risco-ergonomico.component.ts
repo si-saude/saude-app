@@ -9,7 +9,7 @@ import { IndicadorRiscoErgonomicoService } from './indicador-risco-ergonomico.se
 @Component({
   selector: 'app-indicador-risco-ergonomico',
   templateUrl: './indicador-risco-ergonomico.component.html',
-  styleUrls: ['./indicador-risco-ergonomico.component.css']
+  styleUrls: ['./indicador-risco-ergonomico.component.css', '../../../assets/css/list-component.css']
 })
 export class IndicadorRiscoErgonomicoComponent extends GenericListComponent<IndicadorRiscoErgonomico, IndicadorRiscoErgonomicoFilter> {
 

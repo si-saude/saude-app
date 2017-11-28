@@ -18,10 +18,10 @@ export abstract class GenericFormComponent extends GenericComponent {
     @ViewChild( "form" ) formulario;
     protected modelParams;
     protected modalDeactivate;
-    myDatePickerOptions: IMyDpOptions; 
+    myDatePickerOptions: IMyDpOptions;
     globalActions;
     toastParams;
-    canDeactivate:boolean;
+    canDeactivate: boolean;
 
     constructor( protected service: GenericService ) {
         super();
@@ -29,9 +29,9 @@ export abstract class GenericFormComponent extends GenericComponent {
         this.showConfirmSave = false;
         this.modalDeactivate = new EventEmitter<string | MaterializeAction>();
         this.myDatePickerOptions = {
-                dateFormat: 'dd/mm/yyyy'
-            };
-        this.globalActions = new EventEmitter<string|MaterializeAction>();
+            dateFormat: 'dd/mm/yyyy'
+        };
+        this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
         this.modelParams = [{
             dismissible: false,
@@ -44,7 +44,7 @@ export abstract class GenericFormComponent extends GenericComponent {
     }
 
     save( object ) {
-        
+
         this.showPreload = true;
         this.canDeactivate = true;
         this.service.submit( object )
@@ -61,9 +61,7 @@ export abstract class GenericFormComponent extends GenericComponent {
             this.msgConfirmSave = res.text();
             this.showConfirmSave = true;
         } else {
-            this.verifyError = true;
-            this.colorError = "red";
-            this.msgError = res.text();
+            this.catchConfiguration( res );
         }
         this.showPreload = false;
     }
@@ -110,16 +108,16 @@ export abstract class GenericFormComponent extends GenericComponent {
             return false;
         return true;
     }
-    
+
     openModalDeactivate() {
-        this.modalDeactivate.emit({action:"modal",params:['open']});
+        this.modalDeactivate.emit( { action: "modal", params: ['open'] } );
     }
-    
+
     confirmDeactivate() {
-        
+
     }
-    
+
     closeModalDeactivate() {
-        this.modalDeactivate.emit({action:"modal",params:['close']});
+        this.modalDeactivate.emit( { action: "modal", params: ['close'] } );
     }
 }

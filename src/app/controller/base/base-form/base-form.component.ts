@@ -10,43 +10,44 @@ import { BaseService } from './../base.service';
 @Component( {
     selector: 'app-base-form',
     templateUrl: './base-form.html',
-    styleUrls: ['./base-form.css']
+    styleUrls: ['./base-form.css', './../../../../assets/css/form-component.css']
 } )
 export class BaseFormComponent extends GenericFormComponent implements OnInit {
     base: Base;
-    
+
     constructor( private route: ActivatedRoute,
-            private baseService: BaseService) { 
-            super(baseService);
-            
-            this.goTo = "base";
-            this.base = new BaseBuilder().initialize(this.base);
-        }
-    
+        private baseService: BaseService ) {
+        super( baseService );
+
+        this.goTo = "base";
+        this.base = new BaseBuilder().initialize( this.base );
+    }
+
     ngOnInit() {
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
-                if( params['id'] !== undefined ) {
+                if ( params['id'] !== undefined ) {
                     let id = params['id'];
                     this.showPreload = true;
 
-                    this.baseService.get( id )
+                    this.service.get( id )
                         .then( res => {
                             this.showPreload = false;
-                            this.base = new BaseBuilder().clone(res.json());
+                            this.base = new BaseBuilder().clone( res.json() );
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );
-        
+    }
+
+    ngOnDestroy() {
+        this.inscricao.unsubscribe();
     }
     
     save() {
-        super.save(new BaseBuilder().clone(this.base));
-    }   
-    
-    
+        super.save( new BaseBuilder().clone( this.base ) );
+    }
+
 }

@@ -42,8 +42,7 @@ export class IndicadorRiscoAcidenteFormComponent extends GenericFormComponent im
                             this.indicadorRiscoAcidente = new IndicadorRiscoAcidenteBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

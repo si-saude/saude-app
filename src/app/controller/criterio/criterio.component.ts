@@ -8,7 +8,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-criterio',
   templateUrl: './criterio.component.html',
-  styleUrls: ['./criterio.component.css']
+  styleUrls: ['./criterio.component.css', '../../../assets/css/list-component.css']
 })
 export class CriterioComponent extends GenericListComponent<Criterio, CriterioFilter> {
 

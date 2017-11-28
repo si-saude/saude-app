@@ -31,10 +31,20 @@
 
 			<div id="dadosGerais">
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s8">
 						<label data-error="Campo obrigatório." for="nome">Nome</label> <input
 							id="nome" type="text" required maxlength="400"
 							[(ngModel)]="empregado.pessoa.nome" name="nome">
+					</div>
+					<div class="input-field col s4">
+						<fieldset>
+							<legend>Vínculo</legend>
+							<select name="vinculo" class="browser-default"
+								[(ngModel)]="empregado.vinculo">
+								<option disabled selected value="">Selecione um vínculo</option>
+								<option *ngFor="let vinculo of vinculos" value="{{vinculo}}">{{vinculo}}</option>
+							</select>
+						</fieldset>
 					</div>
 				</div>
 

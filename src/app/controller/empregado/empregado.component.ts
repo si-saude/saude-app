@@ -9,7 +9,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 @Component({
   selector: 'app-empregado',
   templateUrl: './empregado.component.html',
-  styleUrls: ['./empregado.component.css']
+  styleUrls: ['./empregado.component.css', '../../../assets/css/list-component.css']
 })
 export class EmpregadoComponent extends GenericListComponent<Empregado, EmpregadoFilter> {
     

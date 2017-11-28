@@ -11,7 +11,7 @@ import { CargoService } from './../cargo.service';
 @Component( {
     selector: 'app-cargo-form',
     templateUrl: './cargo-form.html',
-    styleUrls: ['./cargo-form.css']
+    styleUrls: ['./cargo-form.css', './../../../../assets/css/form-component.css']
 } )
 export class CargoFormComponent extends GenericFormComponent implements OnInit { 
     cargo: Cargo;
@@ -41,8 +41,7 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
                             this.cargo = new CargoBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

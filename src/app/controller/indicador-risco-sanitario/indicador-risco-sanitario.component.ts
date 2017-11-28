@@ -9,7 +9,7 @@ import { IndicadorRiscoSanitarioService } from './indicador-risco-sanitario.serv
 @Component({
   selector: 'app-indicador-risco-sanitario',
   templateUrl: './indicador-risco-sanitario.component.html',
-  styleUrls: ['./indicador-risco-sanitario.component.css']
+  styleUrls: ['./indicador-risco-sanitario.component.css', '../../../assets/css/list-component.css']
 })
 export class IndicadorRiscoSanitarioComponent extends GenericListComponent<IndicadorRiscoSanitario, IndicadorRiscoSanitarioFilter> {
 

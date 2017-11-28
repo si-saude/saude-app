@@ -42,8 +42,7 @@ export class FuncaoFormComponent extends GenericFormComponent implements OnInit 
                             this.funcao = new FuncaoBuilder().clone(res.json());
                         } )
                         .catch( error => {
-                            this.showPreload = false;
-                            console.log( error );
+                            this.catchConfiguration( error );
                         } )
                 }
             } );

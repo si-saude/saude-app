@@ -2,6 +2,8 @@ import { Exame } from './../../model/exame';
 import { ExameBuilder } from './../exame/exame.builder';
 import { Criterio } from './../../model/criterio';
 import { CriterioBuilder } from './../criterio/criterio.builder';
+import { Periodicidade } from './../../model/periodicidade';
+import { PeriodicidadeBuilder } from './../periodicidade/periodicidade.builder';
 import { GrupoMonitoramentoExame } from './../../model/grupo-monitoramento-exame';
 import { GrupoMonitoramento } from './../../model/grupo-monitoramento';
 import { GenericBuilder } from './../../generics/generic.builder';
@@ -12,7 +14,8 @@ export class GrupoMonitoramentoExameBuilder extends GenericBuilder{
         grupoMonitoramentoExame = new GrupoMonitoramentoExame();
         
         grupoMonitoramentoExame.setExame(new ExameBuilder().initialize(grupoMonitoramentoExame.getExame()));
-        grupoMonitoramentoExame.setGrupoMonitoramento(new GrupoMonitoramento());        
+        grupoMonitoramentoExame.setGrupoMonitoramento(new GrupoMonitoramento());
+        grupoMonitoramentoExame.setPeriodicidade(new PeriodicidadeBuilder().initialize(grupoMonitoramentoExame.getPeriodicidade()));
         
         return grupoMonitoramentoExame;
     }
@@ -49,6 +52,15 @@ export class GrupoMonitoramentoExameBuilder extends GenericBuilder{
                 cloneGrupoMonitoramentoExame.setExame(undefined);
         } else {
             cloneGrupoMonitoramentoExame.setExame(new ExameBuilder().initialize(null));
+        }
+        
+        if (this.getValue(grupoMonitoramentoExame, "getPeriodicidade") !== undefined) { 
+            cloneGrupoMonitoramentoExame.setPeriodicidade(
+                    new PeriodicidadeBuilder().clone(this.getValue(grupoMonitoramentoExame,"getPeriodicidade")));
+            if(!this.idGtZero(cloneGrupoMonitoramentoExame.getPeriodicidade()))
+                cloneGrupoMonitoramentoExame.setPeriodicidade(undefined);
+        } else {
+            cloneGrupoMonitoramentoExame.setPeriodicidade(new PeriodicidadeBuilder().initialize(null));
         }
         
         cloneGrupoMonitoramentoExame.setCriterios(

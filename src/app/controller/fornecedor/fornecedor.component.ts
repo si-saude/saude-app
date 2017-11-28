@@ -9,7 +9,7 @@ import { FornecedorService } from './fornecedor.service';
 @Component({
   selector: 'app-fornecedor',
   templateUrl: './fornecedor.component.html',
-  styleUrls: ['./fornecedor.component.css']
+  styleUrls: ['./fornecedor.component.css', '../../../assets/css/list-component.css']
 })
 export class FornecedorComponent extends GenericListComponent<Fornecedor, FornecedorFilter> {
 
