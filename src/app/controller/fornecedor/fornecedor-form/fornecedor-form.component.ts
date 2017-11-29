@@ -14,7 +14,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 @Component( {
     selector: 'app-fornecedor-form',
     templateUrl: './fornecedor-form.html',
-    styleUrls: ['./fornecedor-form.css']
+    styleUrls: ['./fornecedor-form.css', './../../../../assets/css/form-component.css']
 } )
 export class FornecedorFormComponent extends GenericFormComponent implements OnInit {
     fornecedor: Fornecedor;

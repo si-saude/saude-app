@@ -151,7 +151,7 @@
 				<div class="input-field col s10">
 					<label for="empregado">Empregado</label> <input type="text"
 						materialize="autocomplete" name="addEmpregado"
-						(focusout)="getEmpregado($event)"
+						(blur)="getEmpregado($event)"
 						[(ngModel)]="empregadoToAdd.pessoa.nome"
 						(ngModelChange)="selectEmpregadoByChave($event);selectEmpregado($event);"
 						[materializeParams]="autocompleteEmpregado">
@@ -226,8 +226,7 @@
 						</div>
 						<div class="row-item-collection"
 							*ngFor="let empregadoConvocacao of empregadoConvocacoes; let eC = index">
-							<div class="row row-collection row-collection-empregados" 
-								[ngStyle]="bkgColorEmpregadoConvocacao(empregadoConvocacao)">
+							<div class="row row-collection row-collection-empregados">
 								<div class="col s1">
 									<a class="collection-item">
 										{{empregadoConvocacao.empregado.chave}} </a>
@@ -324,7 +323,13 @@
 				class="material-icons center-icon">add</i>
 			</a>
 		</div>
-		<div class="input-field col s4 checkbox">
+		<div class="input-field col s4 checkbox" *ngIf="!verifyAuditado()">
+			<input type="checkbox" id="auditado" disabled
+				[(ngModel)]="empregadoDetail.auditado"
+				name="empregadoDetail.auditado"> 
+			<label for="auditado">Auditado</label>
+		</div>
+		<div class="input-field col s4 checkbox" *ngIf="verifyAuditado()">
 			<input type="checkbox" id="auditado"
 				[(ngModel)]="empregadoDetail.auditado"
 				name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
@@ -333,18 +338,23 @@
 
 	<div class="collection">
 
-		<div class="row-item-collection"
-			*ngFor="let exame of empregadoDetail.exames; let e = index">
+		<div class="row"
+			*ngFor="let empregadoConvocacaoExame of empregadoDetail.empregadoConvocacaoExames; let e = index">
 			<div class="row row-collection">
-				<div class="col s5">
-					<a class="collection-item"> {{exame.codigo}} </a>
+				<div class="col s4">
+					<a class="collection-item"> {{empregadoConvocacaoExame.exame.codigo}} </a>
 				</div>
-				<div class="col s5">
-					<a class="collection-item"> {{exame.descricao}} </a>
+				<div class="col s4">
+					<a class="collection-item"> {{empregadoConvocacaoExame.exame.descricao}} </a>
+				</div>
+				<div class="col s2" *ngIf="!empregadoConvocacaoExame.pendenteRelatorio">
+					<input type="checkbox" id="empregadoConvocacaoExame[{{e}}].conforme" 
+						[(ngModel)]="empregadoConvocacaoExame.conforme" name="empregadoConvocacaoExame[{{e}}].conforme">
+                	<label for="empregadoConvocacaoExame[{{e}}].conforme">Conforme</label>
 				</div>
 				<div class="col s2">
-					<a (click)="removeExame(e)" [ngStyle]="{'cursor': 'pointer'}"><i
-						class="material-icons">delete</i></a>
+					<a (click)="removeExame(e)" [ngStyle]="{'cursor': 'pointer'}">
+					<i class="material-icons">delete</i></a>
 				</div>
 			</div>
 		</div>

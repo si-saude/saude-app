@@ -13,7 +13,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 @Component( {
     selector: 'app-ghe-form',
     templateUrl: './ghe-form.html',
-    styleUrls: ['./ghe-form.css']
+    styleUrls: ['./ghe-form.css', './../../../../assets/css/form-component.css']
 } )
 export class GheFormComponent extends GenericFormComponent implements OnInit {
     ghe: Ghe;

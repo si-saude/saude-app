@@ -31,7 +31,7 @@ import { HistoricoGrupoMonitoramentoBuilder } from './../../historico-grupo-moni
 @Component( {
     selector: 'app-empregado-form',
     templateUrl: './empregado-form.html',
-    styleUrls: ['./empregado-form.css']
+    styleUrls: ['./empregado-form.css', './../../../../assets/css/form-component.css']
 } )
 export class EmpregadoFormComponent extends GenericFormComponent implements OnInit {
 

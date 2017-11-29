@@ -25,6 +25,9 @@ export abstract class GenericComponent {
         this.colorError = "red";
         
         switch ( error.status ) {
+            case 400:
+                this.msgError = error;
+            break;
             case 401:
                 localStorage.setItem( 'token', '' );
                 this.msgError = "Usuário ou senha inválidos.";
@@ -36,7 +39,7 @@ export abstract class GenericComponent {
                 this.msgError = "Serviço indisponível. Por favor, entre em contado com o administrador do sistema.";
                 break;
             default:
-                this.msgError = "Erro interno. Por favor, entre em contato com o administrador do sistema.";
+                this.msgError = error;
                 break;
         }
 

@@ -51,7 +51,7 @@ export class CriterioBuilder extends GenericBuilder {
         else if (this.getValue(criterio, "getValor") == undefined)
             cloneCriterio.setValor("");
         else
-            cloneCriterio.setValor(this.getValue(criterio, "getValor"));
+            cloneCriterio.setValor(this.getValue(criterio, "getValor").toString());
         
         return cloneCriterio;
     }

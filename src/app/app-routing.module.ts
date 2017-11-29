@@ -76,6 +76,7 @@ const routes: Routes = [
   { path: 'fornecedor', loadChildren: 'app/controller/fornecedor/fornecedor.module#FornecedorModule' },
   { path: 'convocacao', loadChildren: 'app/controller/convocacao/convocacao.module#ConvocacaoModule' },
   { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule' },
+//  { path: 'relatorio-medico', loadChildren: 'app/controller/relatorio-medico/relatorio-medico.module#RelatorioMedico' },
   { path: '', pathMatch: 'full', redirectTo: '/usuario'}
 ];
 

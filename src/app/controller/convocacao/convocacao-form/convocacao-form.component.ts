@@ -18,6 +18,8 @@ import { EmpregadoService } from './../../empregado/empregado.service';
 import { GerenciaConvocacao } from './../../../model/gerencia-convocacao';
 import { EmpregadoConvocacao } from './../../../model/empregado-convocacao';
 import { EmpregadoConvocacaoBuilder } from './../../empregado-convocacao/empregado-convocacao.builder';
+import { EmpregadoConvocacaoExame } from './../../../model/empregado-convocacao-exame';
+import { EmpregadoConvocacaoExameBuilder } from './../../empregado-convocacao-exame/empregado-convocacao-exame.builder';
 import { GerenciaConvocacaoBuilder } from './../../gerencia-convocacao/gerencia-convocacao.builder';
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
@@ -46,6 +48,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     empregadoToAdd: Empregado;
     empregadoDetail: EmpregadoConvocacao;
     checkEmpregados: boolean;
+    pendenteRelatorio: boolean;
 
     selectedGC;
     existProfissiograma;
@@ -144,7 +147,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     save() {
         this.setSelectedsGerencias();
         this.verifyAndSetDates();
-        //        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
+        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
         super.save( new ConvocacaoBuilder().clone( this.convocacao ) );
     }
 
@@ -174,6 +177,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
                 this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
                     .then( res => {
+                        
                         let eCs = new EmpregadoConvocacaoBuilder().cloneList( res.json().empregadoConvocacoes );
                         this.empregadoConvocacoes = this.empregadoConvocacoes.concat( eCs );
                         this.convocacao.setEmpregadoConvocacoes( this.empregadoConvocacoes );
@@ -339,14 +343,36 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         let exame = this.exames.find( e => {
             return e.getId() == value;
         } )
-
-        exame = new ExameBuilder().clone( exame );
-
-        this.empregadoDetail.getExames().push( exame );
+        
+        let empregadoConvocacaoExame = new EmpregadoConvocacaoExameBuilder().clone(new EmpregadoConvocacaoExame());
+        empregadoConvocacaoExame.setExame(new ExameBuilder().clone( exame ));
+        
+        let eC = this.convocacao.getEmpregadoConvocacoes().find(eC => {
+            return this.empregadoDetail.getId() == eC.getId();
+        })
+        
+        eC.getEmpregadoConvocacaoExames().push(empregadoConvocacaoExame);
     }
 
     removeExame( value ) {
-        this.empregadoDetail.getExames().splice( value, 1 );
+        let eC = this.convocacao.getEmpregadoConvocacoes().find(eC => {
+            return this.empregadoDetail.getId() == eC.getId();
+        })
+        
+        eC.getEmpregadoConvocacaoExames().splice(value, 1);
+    }
+    
+
+    verifyAuditado() {
+        let ret: boolean = true;
+    
+        this.empregadoDetail.getEmpregadoConvocacaoExames().forEach(eCE => {
+            if ( eCE.getPendenteRelatorio() == true ) {
+                ret = false;
+            }
+        })
+        
+        return ret;
     }
 
     verifyAndSetDates() {
@@ -462,17 +488,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         )
     }
 
-    bkgColorEmpregadoConvocacao( empregadoConvocacao: EmpregadoConvocacao ) {
-        if ( empregadoConvocacao.getAuditado() == false && empregadoConvocacao.getDivergente() == false )
-            return { 'background-color': '' };
-        else if ( empregadoConvocacao.getAuditado() == false && empregadoConvocacao.getDivergente() == true )
-            return { 'background-color': 'yellow' };
-        else if ( empregadoConvocacao.getAuditado() == true && empregadoConvocacao.getDivergente() == false )
-            return { 'background-color': 'green' };
-        else if ( empregadoConvocacao.getAuditado() == true && empregadoConvocacao.getDivergente() == true )
-            return { 'background-color': 'red' };
-    }
-
     convocar() {
         if ( this.convocacao.getGerenciaConvocacoes().length != 0 ) {
             if ( this.convocacao.getEmpregadoConvocacoes().length != 0 ) {
@@ -513,7 +528,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             return true;
         else return false;
     }
-
+    
 }
 
 

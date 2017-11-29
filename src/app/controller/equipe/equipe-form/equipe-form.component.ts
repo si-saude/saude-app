@@ -10,7 +10,7 @@ import { EquipeService } from './../equipe.service';
 @Component( {
     selector: 'app-equipe-form',
     templateUrl: './equipe-form.html',
-    styleUrls: ['./equipe-form.css']
+    styleUrls: ['./equipe-form.css', './../../../../assets/css/form-component.css']
 } )
 export class EquipeFormComponent extends GenericFormComponent implements OnInit { 
     equipe: Equipe;

@@ -2,7 +2,7 @@ import { Empregado } from './../../model/empregado';
 import { Convocacao } from './../../model/convocacao';
 import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
-import { ExameBuilder } from './../exame/exame.builder';
+import { EmpregadoConvocacaoExameBuilder } from './../empregado-convocacao-exame/empregado-convocacao-exame.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class EmpregadoConvocacaoBuilder extends GenericBuilder{
@@ -11,7 +11,8 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         empregadoConvocacao = new EmpregadoConvocacao();
         
         empregadoConvocacao.setEmpregado(new EmpregadoBuilder().initialize(empregadoConvocacao.getEmpregado()));
-        empregadoConvocacao.setExames(new ExameBuilder().initializeList(empregadoConvocacao.getExames()));
+        empregadoConvocacao.setEmpregadoConvocacaoExames(
+                new EmpregadoConvocacaoExameBuilder().initializeList(empregadoConvocacao.getEmpregadoConvocacaoExames()));
         empregadoConvocacao.setConvocacao(new Convocacao());
         
         return empregadoConvocacao;
@@ -48,9 +49,9 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         
         cloneEmpregadoConvocacao.setEmpregado(new EmpregadoBuilder().clone(this.getValue(empregadoConvocacao, "getEmpregado")));
         
-        cloneEmpregadoConvocacao.setExames(
-                new ExameBuilder().cloneList(this.getValue(empregadoConvocacao, "getExames")));
-        
+        cloneEmpregadoConvocacao.setEmpregadoConvocacaoExames(
+                    new EmpregadoConvocacaoExameBuilder().cloneList(this.getValue(empregadoConvocacao,"getEmpregadoConvocacaoExames")));
+
         return cloneEmpregadoConvocacao;
     }
     

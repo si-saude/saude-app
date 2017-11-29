@@ -13,7 +13,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 @Component( {
     selector: 'app-criterio-form',
     templateUrl: './criterio-form.html',
-    styleUrls: ['./criterio-form.css']
+    styleUrls: ['./criterio-form.css', './../../../../assets/css/form-component.css']
 } )
 export class CriterioFormComponent extends GenericFormComponent implements OnInit {
     criterio: Criterio;
@@ -26,6 +26,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
     selectedFuncao: boolean;
     selectedCargo: boolean;
     selectedSexo: boolean;
+    selectedRelatorioMedico: boolean;
     
     constructor( private route: ActivatedRoute,
         private criterioService: CriterioService) { 
@@ -40,6 +41,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         this.selectedIdadeOrExame = false;
         this.selectedCargo = false;
         this.selectedSexo = false;
+        this.selectedRelatorioMedico = false;
         this.criterio = new CriterioBuilder().initialize(this.criterio);
     }
 
@@ -114,11 +116,14 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         this.selectedFuncao = false;
         this.selectedCargo = false;
         this.selectedSexo = false;
+        this.selectedRelatorioMedico = false;
         
         let tipo = this.criterio.getTipo();
         
         if ( tipo.includes("FUN") )
             tipo = "FUNCAO"
+        if ( tipo.includes("EXIGE RELAT"))
+            tipo = "EXIGE RELATORIO MEDICO"
             
         switch( tipo ) {
         case "IDADE":
@@ -135,6 +140,9 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
             break;
         case "SEXO":
             this.selectedSexo = true;
+            break;
+        case "EXIGE RELATORIO MEDICO":
+            this.selectedRelatorioMedico = true;
             break;
         }
         

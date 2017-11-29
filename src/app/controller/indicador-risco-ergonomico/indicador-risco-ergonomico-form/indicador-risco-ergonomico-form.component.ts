@@ -12,7 +12,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 @Component( {
     selector: 'app-indicador-risco-ergonomico-form',
     templateUrl: './indicador-risco-ergonomico-form.html',
-    styleUrls: ['./indicador-risco-ergonomico-form.css']
+    styleUrls: ['./indicador-risco-ergonomico-form.css', './../../../../assets/css/form-component.css']
 } )
 export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent implements OnInit {
     indicadorRiscoErgonomico: IndicadorRiscoErgonomico;

@@ -11,7 +11,7 @@ import { LocalizacaoService } from './../localizacao.service';
 @Component( {
     selector: 'app-localizacao-form',
     templateUrl: './localizacao-form.html',
-    styleUrls: ['./localizacao-form.css']
+    styleUrls: ['./localizacao-form.css', './../../../../assets/css/form-component.css']
 } )
 export class LocalizacaoFormComponent extends GenericFormComponent implements OnInit {
     localizacao: Localizacao;

@@ -13,13 +13,14 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
-
-			<div class="input-field col s8">
+			<div class="input-field col s12">
 				<label for="nome">Nome</label> <input id="nome" type="text"
 					[(ngModel)]="criterio.nome" name="criterio.nome">
 			</div>
+		</div>
 
-			<div class="input-field col s4">
+		<div class="row">
+			<div class="input-field col s6">
 				<fieldset>
 					<legend>Tipo</legend>
 					<select name="criterio.tipo" class="browser-default"
@@ -29,57 +30,6 @@
 					</select>
 				</fieldset>
 			</div>
-
-		</div>
-
-		<div class="row">
-
-			<div class="row" *ngIf="selectedIdadeOrExame">
-				<div class="input-field col s8">
-					<label for="valor">Valor</label> <input id="valor" type="text"
-						[(ngModel)]="criterio.valor" name="criterio.valor">
-				</div>
-			</div>
-
-			<div class="row" *ngIf="selectedFuncao">
-				<div class="input-field col s6">
-					<fieldset>
-						<legend>Função</legend>
-						<select name="valor" class="browser-default"
-							[(ngModel)]="criterio.valor">
-							<option disabled selected value="">Selecione uma função</option>
-							<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
-						</select>
-					</fieldset>
-				</div>
-			</div>
-
-			<div class="row" *ngIf="selectedCargo">
-				<div class="input-field col s6">
-					<fieldset>
-						<legend>Cargo</legend>
-						<select name="valor" class="browser-default"
-							[(ngModel)]="criterio.valor">
-							<option disabled selected value="">Selecione um cargo</option>
-							<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
-						</select>
-					</fieldset>
-				</div>
-			</div>
-
-			<div class="row" *ngIf="selectedSexo">
-				<div class="input-field col s6">
-					<fieldset>
-						<legend>Sexo</legend>
-						<select name="valor" class="browser-default"
-							[(ngModel)]="criterio.valor">
-							<option disabled selected value="">Selecione um sexo</option>
-							<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
-						</select>
-					</fieldset>
-				</div>
-			</div>
-
 		</div>
 
 		<div class="row">
@@ -93,6 +43,55 @@
 					</select>
 				</fieldset>
 			</div>
+		</div>
+
+		<div class="row">
+			
+			<div class="input-field col s6" *ngIf="selectedIdadeOrExame">
+				<label for="valor">Valor</label> <input id="valor" type="text"
+					[(ngModel)]="criterio.valor" name="criterio.valor">
+			</div>
+						
+			<div class="input-field col s6" *ngIf="selectedFuncao">
+				<fieldset>
+					<legend>Função</legend>
+					<select name="valor" class="browser-default"
+						[(ngModel)]="criterio.valor">
+						<option disabled selected value="">Selecione uma função</option>
+						<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
+					</select>
+				</fieldset>
+			</div>
+
+			<div class="input-field col s6" *ngIf="selectedCargo">
+				<fieldset>
+					<legend>Cargo</legend>
+					<select name="valor" class="browser-default"
+						[(ngModel)]="criterio.valor">
+						<option disabled selected value="">Selecione um cargo</option>
+						<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
+					</select>
+				</fieldset>
+			</div>
+			
+			<div class="input-field col s6" *ngIf="selectedSexo">
+				<fieldset>
+					<legend>Sexo</legend>
+					<select name="valor" class="browser-default"
+						[(ngModel)]="criterio.valor">
+						<option disabled selected value="">Selecione um sexo</option>
+						<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
+					</select>
+				</fieldset>
+			</div>
+			
+			
+			<div class="input-field col s6" *ngIf="selectedRelatorioMedico">
+				<input type="checkbox" id="valor" 
+					[(ngModel)]="criterio.valor" name="valor">
+               	<label for="criterio.valor">Valor</label>
+			</div>
+
 		</div>
 
 		<input id="id" name="id" type="hidden" [(ngModel)]="criterio.id">

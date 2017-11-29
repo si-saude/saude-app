@@ -10,7 +10,7 @@ import { CursoService } from './../curso.service';
 @Component( {
     selector: 'app-curso-form',
     templateUrl: './curso-form.html',
-    styleUrls: ['./curso-form.css']
+    styleUrls: ['./curso-form.css', './../../../../assets/css/form-component.css']
 } )
 export class CursoFormComponent extends GenericFormComponent implements OnInit { 
     curso: Curso;

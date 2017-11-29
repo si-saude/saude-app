@@ -21,7 +21,7 @@ import { GrupoMonitoramentoService } from './../grupo-monitoramento.service';
 @Component( {
     selector: 'app-grupo-monitoramento-form',
     templateUrl: './grupo-monitoramento-form.html',
-    styleUrls: ['./grupo-monitoramento-form.css']
+    styleUrls: ['./grupo-monitoramento-form.css', './../../../../assets/css/form-component.css']
 } )
 export class GrupoMonitoramentoFormComponent extends GenericFormComponent implements OnInit {
     tiposGrupoMonitoramento: Array<TipoGrupoMonitoramento>;

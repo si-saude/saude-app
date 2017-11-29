@@ -37,7 +37,8 @@ import { RegimeService } from './regime/regime.service';
 import { TipoGrupoMonitoramentoService } from './tipo-grupo-monitoramento/tipo-grupo-monitoramento.service';
 import { VacinaService } from './vacina/vacina.service';
 import { UsuarioService } from './usuario/usuario.service';
-import { CanDeactivateGuard} from './../guards/can-deactivate.guard';
+//import { RelatorioMedicoService } from './relatorio-medico/relatorio-medico.service';
+import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { CanDeactivateGuard} from './../guards/can-deactivate.guard';
     TipoGrupoMonitoramentoService,
     VacinaService,
     UsuarioService,
+//    RelatorioMedicoService,
     CanDeactivateGuard
   ]
 })

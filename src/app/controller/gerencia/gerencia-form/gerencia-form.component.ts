@@ -13,7 +13,7 @@ import { EmpregadoService } from './../../empregado/empregado.service';
 @Component( {
     selector: 'app-gerencia-form',
     templateUrl: './gerencia-form.html',
-    styleUrls: ['./gerencia-form.css']
+    styleUrls: ['./gerencia-form.css', './../../../../assets/css/form-component.css']
 } )
 export class GerenciaFormComponent extends GenericFormComponent implements OnInit {
     gerencia: Gerencia;

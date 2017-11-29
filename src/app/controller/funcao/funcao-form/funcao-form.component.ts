@@ -12,7 +12,7 @@ import { FuncaoService } from './../funcao.service';
 @Component( {
     selector: 'app-funcao-form',
     templateUrl: './funcao-form.html',
-    styleUrls: ['./funcao-form.css']
+    styleUrls: ['./funcao-form.css', './../../../../assets/css/form-component.css']
 } )
 export class FuncaoFormComponent extends GenericFormComponent implements OnInit { 
     funcao: Funcao;
