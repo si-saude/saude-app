@@ -23,6 +23,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
     protected colorEmptyPaginas: string;
     protected modalActions;
     protected modalDelete;
+    protected modalImport;
     protected modalParams;
     protected typeFilter;
     protected canImport;
@@ -39,6 +40,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
         this.typeFilter = TypeFilter;
         this.modalActions = new EventEmitter<string | MaterializeAction>();
         this.modalDelete = new EventEmitter<string | MaterializeAction>();
+        this.modalImport = new EventEmitter<string | MaterializeAction>();
         this.modalParams = [{
             dismissible: false,
             complete: function() { }
@@ -129,6 +131,14 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
 
     closeModal() {
         this.modalActions.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    openModalImport() {
+        this.modalImport.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    closeModalImport() {
+        this.modalImport.emit( { action: "modal", params: ['close'] } );
     }
 
     confirmDelete() {

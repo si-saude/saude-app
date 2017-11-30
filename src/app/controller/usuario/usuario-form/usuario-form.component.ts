@@ -12,7 +12,7 @@ import { UsuarioService } from './../usuario.service';
 @Component( {
     selector: 'app-usuario-form',
     templateUrl: './usuario-form.html',
-    styleUrls: ['./usuario-form.css']
+    styleUrls: ['./usuario-form.css', './../../../../assets/css/form-component.css']
 } )
 export class UsuarioFormComponent extends GenericFormComponent implements OnInit { 
     usuario: Usuario;

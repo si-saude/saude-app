@@ -8,7 +8,8 @@ import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const localizacaoRoutes: Routes = [
     { path: '', component: LocalizacaoComponent },
-    { path: 'cadastrar', component: LocalizacaoFormComponent },
+    { path: 'cadastrar', component: LocalizacaoFormComponent,
+        canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: LocalizacaoFormComponent,
         canDeactivate: [CanDeactivateGuard]}
 ];

@@ -24,9 +24,9 @@ export class LoginComponent extends GenericFormComponent {
     }
 
     ngOnInit() {
-        if ( localStorage.getItem("token") !== undefined || 
-                localStorage.getItem("token") !== null || 
-                localStorage.getItem("token") !== '') 
+        if ( localStorage.getItem("token") !== undefined && 
+                localStorage.getItem("token") !== null && 
+                localStorage.getItem("token") !== "") 
             this.router.navigate(['/home']);
     }
 

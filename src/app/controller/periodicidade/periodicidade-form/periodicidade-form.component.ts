@@ -11,7 +11,7 @@ import { PeriodicidadeService } from './../periodicidade.service';
 @Component( {
     selector: 'app-periodicidade-form',
     templateUrl: './periodicidade-form.html',
-    styleUrls: ['./periodicidade-form.css']
+    styleUrls: ['./periodicidade-form.css', './../../../../assets/css/form-component.css']
 } )
 export class PeriodicidadeFormComponent extends GenericFormComponent implements OnInit {
     periodicidade: Periodicidade;

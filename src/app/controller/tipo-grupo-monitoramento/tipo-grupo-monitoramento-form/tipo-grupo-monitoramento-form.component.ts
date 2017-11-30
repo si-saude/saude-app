@@ -10,7 +10,7 @@ import { TipoGrupoMonitoramentoService } from './../tipo-grupo-monitoramento.ser
 @Component( {
     selector: 'app-tipo-grupo-monitoramento-form',
     templateUrl: './tipo-grupo-monitoramento-form.html',
-    styleUrls: ['./tipo-grupo-monitoramento-form.css']
+    styleUrls: ['./tipo-grupo-monitoramento-form.css', './../../../../assets/css/form-component.css']
 } )
 export class TipoGrupoMonitoramentoFormComponent extends GenericFormComponent implements OnInit { 
     tipoGrupoMonitoramento: TipoGrupoMonitoramento;

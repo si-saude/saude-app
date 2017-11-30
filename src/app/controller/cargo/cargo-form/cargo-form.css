@@ -1,12 +1,49 @@
 .btn-remove {
-	margin-top: -5px;	
+	margin-top: -5px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
 }
 
 .row-curso {
-	margin-bottom: 50px;
     margin-left: -20px;
 }
 
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
 tbody{
-	margin-top: 20px;	
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.curso {
+	padding-left: 0px;
+}
+
+.descricao {
+	
+}
+
+.validade {
+	padding-left: 40px;
+}
+
+.botao-remover {
+	padding-left: 30px;
 }

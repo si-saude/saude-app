@@ -25,9 +25,6 @@ export abstract class GenericComponent {
         this.colorError = "red";
         
         switch ( error.status ) {
-            case 400:
-                this.msgError = error;
-            break;
             case 401:
                 localStorage.setItem( 'token', '' );
                 this.msgError = "Usuário ou senha inválidos.";

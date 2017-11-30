@@ -8,7 +8,8 @@ import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const vacinaRoutes: Routes = [
     { path: '', component: VacinaComponent },
-    { path: 'cadastrar', component: VacinaFormComponent },
+    { path: 'cadastrar', component: VacinaFormComponent,
+        canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: VacinaFormComponent,
         canDeactivate: [CanDeactivateGuard]}
 ];

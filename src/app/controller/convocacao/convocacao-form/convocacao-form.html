@@ -239,8 +239,14 @@
 									<a class="collection-item">
 										{{empregadoConvocacao.empregado.gerencia.codigoCompleto}} </a>
 								</div>
-								<div class="input-field col s1 checkbox_empregados">
+								<div class="input-field col s1 checkbox_empregados" *ngIf="empregadoConvocacao.auditado">
 									<input type="checkbox" id="empregadoConvocacao[{{eC}}].selecionado"
+										[(ngModel)]="empregadoConvocacao.selecionado"
+										name="empregadoConvocacao[{{eC}}].selecionado"> <label
+										for="empregadoConvocacao[{{eC}}].selecionado"></label>
+								</div>
+								<div class="input-field col s1 checkbox_empregados" *ngIf="!empregadoConvocacao.auditado">
+									<input type="checkbox" disabled id="empregadoConvocacao[{{eC}}].selecionado"
 										[(ngModel)]="empregadoConvocacao.selecionado"
 										name="empregadoConvocacao[{{eC}}].selecionado"> <label
 										for="empregadoConvocacao[{{eC}}].selecionado"></label>

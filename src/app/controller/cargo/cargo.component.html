@@ -52,9 +52,18 @@
 
 </ul>
 
-<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
-<a [routerLink]="['/cargo/cadastrar']" 
-class="waves-effect waves-light btn button-add">Adicionar</a>
+<div class="row">
+	<div class="col s4">
+		<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	</div>
+	<div class="col s4  button-import">
+		<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
+	</div>
+	<div class="col s4">
+		<a [routerLink]="['/cargo/cadastrar']"
+			class="waves-effect waves-light btn button-add">Adicionar</a>
+	</div>
+</div>
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal" 
@@ -97,23 +106,31 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
 </div> 
 
-<form #form="ngForm" class="col s12 form-import"
-	(ngSubmit)="importFile()" *ngIf="canImport">
-	<fieldset>
-		<legend>Importar Arquivo</legend>
-		<div class="row">
-			<div class="file-field input-field col s10">
-				<div class="btn">
-					<span>File</span> <input id="arquivo" type="file" #arquivo
-						name="arquivo" accept=".xls, .xlsx">
-				</div>
-				<div class="file-path-wrapper">
-					<input class="file-path validate" type="text">
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams" [materializeActions]="modalImport">
+
+	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">
+			
+			<h5 class="title-modal-import">Importar Arquivo</h5>
+			
+			<div class="row file-import">
+				<div class="file-field input-field col s12">
+					<div class="btn">
+						<span>File</span> <input id="arquivo" type="file" #arquivo
+							name="arquivo" accept=".xls, .xlsx">
+					</div>
+					<div class="file-path-wrapper">
+						<input class="file-path validate" type="text">
+					</div>
 				</div>
 			</div>
-			<div class="col s2">
-				<button type="submit" class="btn btn-importar">Importar</button>
+			
+			<div class="modal-footer">
+				<a type="submit" class="waves-effect waves-green btn-flat" (click)="importFile()">Importar</a>
+				<a class="waves-effect waves-green btn-flat" (click)="closeModalImport()">Fechar</a>
 			</div>
-		</div>
-	</fieldset>
-</form>
+		
+	</form>
+
+</div>

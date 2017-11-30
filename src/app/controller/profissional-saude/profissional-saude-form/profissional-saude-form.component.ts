@@ -28,7 +28,7 @@ import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
 @Component( {
     selector: 'app-profissional-saude-form',
     templateUrl: './profissional-saude-form.html',
-    styleUrls: ['./profissional-saude-form.css']
+    styleUrls: ['./profissional-saude-form.css', './../../../../assets/css/form-component.css']
 } )
 export class ProfissionalSaudeFormComponent extends GenericFormComponent implements OnInit {
     

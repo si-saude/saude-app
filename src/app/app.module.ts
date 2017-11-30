@@ -16,7 +16,7 @@ import { AuthService } from './login/auth.service';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PermissaoComponent } from './controller/permissao/permissao.component';
-import { PerfilModule } from './controller/perfil/perfil.module';
+//import { PerfilModule } from './controller/perfil/perfil.module';
 //import { LocalizacaoModule } from './controller/localizacao/localizacao.module';
 //import { EquipeModule } from './controller/equipe/equipe.module';
 //import { GerenciaModule } from './controller/gerencia/gerencia.module';
@@ -49,6 +49,7 @@ import { MenuComponent } from './includes/menu/menu.component';
 import { SidenavComponent } from './includes/sidenav/sidenav.component';
 import { SharedModule } from './controller/shared.module';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
     HomeComponent,
     PermissaoComponent,
     MenuComponent,
-    SidenavComponent
+    SidenavComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +69,7 @@ import { CanDeactivateGuard } from './guards/can-deactivate.guard';
     HttpModule,
     LoginModule,
     ContatoModule,
-    PerfilModule,
+//    PerfilModule,
 //    LocalizacaoModule,
 //    EquipeModule,
 //    GerenciaModule,

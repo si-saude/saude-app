@@ -22,6 +22,14 @@
 	float: right;
 }
 
+.button-import {
+	text-align: center;
+}
+
+.file-import {
+	padding: 10px;
+}
+
 .preload {
 	margin-top: 15px;
 }
@@ -35,6 +43,12 @@
 	color: #26a69a;
     text-align: center;
     margin-top: 20px;
+}
+
+.title-modal-import {
+	color: #26a69a;
+    text-align: center;
+    margin-top: 0px;
 }
 
 .paragraphModalDelete {

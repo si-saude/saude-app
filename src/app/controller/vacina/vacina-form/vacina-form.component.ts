@@ -10,7 +10,7 @@ import { VacinaService } from './../vacina.service';
 @Component( {
     selector: 'app-vacina-form',
     templateUrl: './vacina-form.html',
-    styleUrls: ['./vacina-form.css']
+    styleUrls: ['./vacina-form.css', './../../../../assets/css/form-component.css']
 } )
 export class VacinaFormComponent extends GenericFormComponent implements OnInit { 
     vacina: Vacina;

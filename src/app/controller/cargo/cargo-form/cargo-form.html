@@ -58,47 +58,47 @@
 							</a>
 						</div>
 
-
 					</div>
 
-					<div class="row">
-
-						<table class="striped">
-							<thead>
-								<tr class="row col s12">
-									<th class="col s3">Nome</th>
-									<th class="col s3">Descrição</th>
-									<th class="col s3">Validade (anos)</th>
-									<th class="col s3">Remover</th>
-								</tr>
-							</thead>
-							<div *ngFor="let curso of cargo.cursos;let i = index">
-								<tbody class="col s12">
-									<tr class="col s12">
-										<input type="hidden" [(ngModel)]="curso.nome"
-											value="{{curso.nome}}" name="curso[{{i}}].nome">
-										<input type="hidden" [(ngModel)]="curso.descricao"
-											value="{{curso.descricao}}" name="curso[{{i}}].descricao">
-										<input type="hidden" [(ngModel)]="curso.validade"
-											value="{{curso.validade}}" name="curso[{{i}}].validade">
-										<input type="hidden" [(ngModel)]="curso.id"
-											value="{{curso.id}}" name="curso[{{i}}].id">
-										<td class="col s3">{{curso.nome}}</td>
-										<td class="col s3">{{curso.descricao}}</td>
-										<td class="col s3">{{curso.validade}}</td>
-										<td class="col s3"><a
-											class="btn-floating waves-effect waves-light red btn-remove"
-											(click)="removeCurso(i)"> <i
-												class="material-icons center-icon">delete</i>
-										</a></td>
-									</tr>
-								</tbody>
-							</div>
-
-						</table>
-
-					</div>
 				</fieldset>
+
+				<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s3">Nome</th>
+								<th class="col s3">Descrição</th>
+								<th class="col s3">Validade (anos)</th>
+								<th class="col s3">Remover</th>
+							</tr>
+						</thead>
+						<div *ngFor="let curso of cargo.cursos;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<input type="hidden" [(ngModel)]="curso.nome"
+										value="{{curso.nome}}" name="curso[{{i}}].nome">
+									<input type="hidden" [(ngModel)]="curso.descricao"
+										value="{{curso.descricao}}" name="curso[{{i}}].descricao">
+									<input type="hidden" [(ngModel)]="curso.validade"
+										value="{{curso.validade}}" name="curso[{{i}}].validade">
+									<input type="hidden" [(ngModel)]="curso.id"
+										value="{{curso.id}}" name="curso[{{i}}].id">
+									<td class="col s3 curso">{{curso.nome}}</td>
+									<td class="col s3 descricao">{{curso.descricao}}</td>
+									<td class="col s3 validade">{{curso.validade}}</td>
+									<td class="col s3 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeCurso(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>
 			</div>
 
 		</div>

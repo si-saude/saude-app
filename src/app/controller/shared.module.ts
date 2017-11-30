@@ -8,6 +8,7 @@ import { MaterializeModule } from 'angular2-materialize';
 import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
 import { PreloadComponent } from './../includes/preload/preload.component';
 import { ConfirmSaveComponent } from './../includes/confirm-save/confirm-save.component';
+import { PerfilService } from './perfil/perfil.service';
 import { BaseService } from './base/base.service';
 import { CargoService } from './cargo/cargo.service';
 import { ConvocacaoService } from './convocacao/convocacao.service';
@@ -37,7 +38,7 @@ import { RegimeService } from './regime/regime.service';
 import { TipoGrupoMonitoramentoService } from './tipo-grupo-monitoramento/tipo-grupo-monitoramento.service';
 import { VacinaService } from './vacina/vacina.service';
 import { UsuarioService } from './usuario/usuario.service';
-//import { RelatorioMedicoService } from './relatorio-medico/relatorio-medico.service';
+import { RelatorioMedicoService } from './relatorio-medico/relatorio-medico.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 
 @NgModule({
@@ -64,6 +65,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     ConfirmSaveComponent
   ],
   providers: [
+    PerfilService,
     BaseService,
     CargoService,
     CidadeService,
@@ -92,7 +94,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     TipoGrupoMonitoramentoService,
     VacinaService,
     UsuarioService,
-//    RelatorioMedicoService,
+    RelatorioMedicoService,
     CanDeactivateGuard
   ]
 })

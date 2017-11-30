@@ -8,7 +8,8 @@ import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
  
 const instalacaoRoutes: Routes = [
     { path: '', component: InstalacaoComponent },
-    { path: 'cadastrar', component: InstalacaoFormComponent},
+    { path: 'cadastrar', component: InstalacaoFormComponent,
+        canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: InstalacaoFormComponent,
         canDeactivate: [CanDeactivateGuard]}
 ];

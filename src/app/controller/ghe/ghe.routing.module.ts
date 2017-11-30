@@ -8,7 +8,8 @@ import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const gheRoutes: Routes = [
     { path: '', component: GheComponent },
-    { path: 'cadastrar', component: GheFormComponent },
+    { path: 'cadastrar', component: GheFormComponent,
+        canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: GheFormComponent,
         canDeactivate: [CanDeactivateGuard]}
 ];

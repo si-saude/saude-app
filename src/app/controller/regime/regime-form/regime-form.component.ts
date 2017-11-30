@@ -10,7 +10,7 @@ import { RegimeService } from './../regime.service';
 @Component( {
     selector: 'app-regime-form',
     templateUrl: './regime-form.html',
-    styleUrls: ['./regime-form.css']
+    styleUrls: ['./regime-form.css', './../../../../assets/css/form-component.css']
 } )
 export class RegimeFormComponent extends GenericFormComponent implements OnInit { 
     regime: Regime;

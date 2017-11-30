@@ -23,7 +23,7 @@ import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-mon
 @Component( {
     selector: 'app-profissiograma-form',
     templateUrl: './profissiograma-form.html',
-    styleUrls: ['./profissiograma-form.css']
+    styleUrls: ['./profissiograma-form.css', './../../../../assets/css/form-component.css']
 } )
 export class ProfissiogramaFormComponent extends GenericFormComponent {
     profissiograma: Profissiograma;

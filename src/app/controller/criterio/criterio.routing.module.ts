@@ -8,7 +8,8 @@ import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
   
 const criterioRoutes: Routes = [
     { path: '', component: CriterioComponent },
-    { path: 'cadastrar', component: CriterioFormComponent },
+    { path: 'cadastrar', component: CriterioFormComponent,
+        canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: CriterioFormComponent,
         canDeactivate: [CanDeactivateGuard]}
 ];

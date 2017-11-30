@@ -41,7 +41,6 @@ export class AuthService extends GenericService {
                     this.router.navigate( ['/home'] );
                 } )
                 .catch( error => {
-                    console.log( error );
                     this.showMenu.emit(false);
                     this.router.navigate( ['/login'] );
                 } )
