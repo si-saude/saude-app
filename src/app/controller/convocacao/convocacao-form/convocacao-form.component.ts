@@ -39,7 +39,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     empregadoConvocacoes: Array<EmpregadoConvocacao>;
     autocompleteGerenciaConvocacoes;
     autocompleteEmpregado;
-    selectedGerenciaConvocacao: Array<boolean>;
+    
+    selectedGerenciaConvocacao: boolean;
+    selectedGerenciaConvocacaoCC: Array<string>;
+    
     checkBoxSelecteds: Array<boolean>;
     filterGerenciaByCodigoCompleto: any;
     filterChaveEmpregado: any;
@@ -49,6 +52,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     empregadoDetail: EmpregadoConvocacao;
     checkEmpregados: boolean;
     pendenteRelatorio: boolean;
+    conformList: Array<boolean>;
 
     selectedGC;
     existProfissiograma;
@@ -73,7 +77,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         this.profissiogramas = new ProfissiogramaBuilder().initializeList( Array<Profissiograma>() );
         this.gerenciaConvocacoes = new GerenciaConvocacaoBuilder().initializeList( Array<GerenciaConvocacao>() );
         this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().initializeList( Array<EmpregadoConvocacao>() );
-        this.selectedGerenciaConvocacao = new Array<boolean>();
+        
+        this.selectedGerenciaConvocacao = false;
+        this.selectedGerenciaConvocacaoCC = new Array<string>();
+        
         this.checkBoxSelecteds = new Array<boolean>();
         this.dataGerenciaConvocacaoInicio = new Array<any>();
         this.dataGerenciaConvocacaoFim = new Array<any>();
@@ -84,6 +91,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         this.modalEditEmpregado = new EventEmitter<string | MaterializeAction>();
         this.modalConfirmProfissiograma = new EventEmitter<string | MaterializeAction>();
         this.checkEmpregados = false;
+        this.conformList = new Array<boolean>();
     }
 
     ngOnInit() {
@@ -100,6 +108,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.convocacao = new ConvocacaoBuilder().clone( res.json() );
                             this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
                             this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
+                            this.selectedsGerenciaConvocacoes();
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
@@ -161,14 +170,19 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         }
     }
 
-    selectGerenciaConvocacao( index: number ) {
+    selectGerenciaConvocacao( index: number, gerenciaConvocacao: GerenciaConvocacao ) {
         this.selectedGC = this.gerenciaConvocacoes[index];
         setTimeout(() => {
             if ( this.gerenciaConvocacoes[index].getSelecionado() == true ) {
-                this.selectedGerenciaConvocacao[index] = true;
-                this.dataGerenciaConvocacaoInicio[index] = this.gerenciaConvocacoes[index].getInicio();
-                this.dataGerenciaConvocacaoFim[index] = this.gerenciaConvocacoes[index].getFim();
-
+                
+                let sG = this.selectedGerenciaConvocacaoCC.find(s => s == gerenciaConvocacao.getGerencia().getCodigoCompleto())
+                
+                if ( sG == undefined ) {
+                    this.selectedGerenciaConvocacaoCC.push(gerenciaConvocacao.getGerencia().getCodigoCompleto());
+                    this.dataGerenciaConvocacaoInicio[gerenciaConvocacao.getGerencia().getCodigoCompleto()] = gerenciaConvocacao.getInicio();
+                    this.dataGerenciaConvocacaoFim[gerenciaConvocacao.getGerencia().getCodigoCompleto()] = gerenciaConvocacao.getFim();
+                }
+                
                 let sendConvocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
                 sendConvocacao.setProfissiograma( this.convocacao.getProfissiograma() );
                 sendConvocacao.getGerenciaConvocacoes().push(
@@ -177,7 +191,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
                 this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
                     .then( res => {
-                        
                         let eCs = new EmpregadoConvocacaoBuilder().cloneList( res.json().empregadoConvocacoes );
                         this.empregadoConvocacoes = this.empregadoConvocacoes.concat( eCs );
                         this.convocacao.setEmpregadoConvocacoes( this.empregadoConvocacoes );
@@ -186,22 +199,29 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                         console.log( error );
                     } )
             } else {
-                this.selectedGerenciaConvocacao[index] = false;
+                let i: number = this.selectedGerenciaConvocacaoCC.findIndex(sG => sG == gerenciaConvocacao.getGerencia().getCodigoCompleto());
+                if (i >= 0)
+                    this.selectedGerenciaConvocacaoCC.splice(i, 1);
+                
                 let empregadoConvocacoes: Array<EmpregadoConvocacao> = this.empregadoConvocacoes.filter( eC => {
                     return eC.getEmpregado().getGerencia().getId() == this.gerenciaConvocacoes[index].getGerencia().getId();
                 } );
 
                 empregadoConvocacoes.forEach( eC1 => {
                     this.empregadoConvocacoes.splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
-                } )
+                } )                
             }
-        }, 250 );
+        }, 50 );
     }
 
-    choisedGerenciaConvocacao( gC: number ) {
+    choisedGerenciaConvocacao( gC: number,  gerenciaConvocacao: GerenciaConvocacao) {
         if ( this.gerenciaConvocacoes[gC] === this.selectedGC ) {
             return "active";
         } else return "";
+    }
+    
+    choiseGerenciaConvocacao( gC: number,  gerenciaConvocacao: GerenciaConvocacao ) {
+        this.selectedGC = this.gerenciaConvocacoes[gC];   
     }
 
     getEmpregado( evento ) {
@@ -244,15 +264,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     addEmpregado() {
         if ( this.empregadoToAdd.getPessoa().getNome() != undefined ) {
 
-            let empregado = this.empregados.find( e => {
-                return e.getPessoa().getNome() ==
-                    this.empregadoToAdd.getPessoa().getNome();
-            } );
+            let empregado = this.empregados.find( e => e.getPessoa().getNome() == this.empregadoToAdd.getPessoa().getNome() );
 
             if ( empregado != undefined ) {
-                let empregado2 = this.empregadoConvocacoes.find( eC => {
-                    return eC.getEmpregado().getId() === empregado.getId();
-                } );
+                let empregado2 = this.empregadoConvocacoes.find( eC => eC.getEmpregado().getId() === empregado.getId() );
 
                 //verifica se o empregado não está inserido na lista
 
@@ -350,8 +365,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         let eC = this.convocacao.getEmpregadoConvocacoes().find(eC => {
             return this.empregadoDetail.getId() == eC.getId();
         })
-        
+        console.log(eC.getEmpregadoConvocacaoExames());
         eC.getEmpregadoConvocacaoExames().push(empregadoConvocacaoExame);
+        
+        eC.setAuditado(false);
+        eC.setSelecionado(false);
+        this.conformList[this.empregadoDetail.getEmpregadoConvocacaoExames().length-1] = false;
     }
 
     removeExame( value ) {
@@ -360,47 +379,49 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         })
         
         eC.getEmpregadoConvocacaoExames().splice(value, 1);
+        this.conformList.splice(value, 1);
     }
     
+    selectConform( value ) {
+        setTimeout(() => {
+            this.conformList[value] = this.empregadoDetail.getEmpregadoConvocacaoExames()[value].getConforme();
+        }, 100);
+    }
 
     verifyAuditado() {
-        let ret: boolean = true;
-    
-        this.empregadoDetail.getEmpregadoConvocacaoExames().forEach(eCE => {
-            if ( eCE.getPendenteRelatorio() == true ) {
-                ret = false;
-            }
-        })
-        
-        return ret;
+        let ret: boolean = this.conformList.find( cL => cL == false );
+        if ( ret == undefined ) return true;
+        else return false;
     }
 
     verifyAndSetDates() {
         for ( let i = 0; i < this.gerenciaConvocacoes.length; i++ ) {
             if ( this.gerenciaConvocacoes[i].getSelecionado() == true ) {
-                if ( this.dataGerenciaConvocacaoInicio[i] != undefined &&
-                    this.dataGerenciaConvocacaoInicio[i] != null )
+                let cC = this.gerenciaConvocacoes[i].getGerencia().getCodigoCompleto();
+                
+                if ( this.dataGerenciaConvocacaoInicio[cC] != undefined &&
+                    this.dataGerenciaConvocacaoInicio[cC] != null )
                     this.gerenciaConvocacoes[i].setInicio(
-                        this.parseDatePickerToDate( this.dataGerenciaConvocacaoInicio[i] ) );
+                        this.parseDatePickerToDate( this.dataGerenciaConvocacaoInicio[cC] ) );
 
-                if ( this.dataGerenciaConvocacaoFim[i] != undefined &&
-                    this.dataGerenciaConvocacaoFim[i] != null )
+                if ( this.dataGerenciaConvocacaoFim[cC] != undefined &&
+                    this.dataGerenciaConvocacaoFim[cC] != null )
                     this.gerenciaConvocacoes[i].setFim(
-                        this.parseDatePickerToDate( this.dataGerenciaConvocacaoFim[i] ) );
-
+                        this.parseDatePickerToDate( this.dataGerenciaConvocacaoFim[cC] ) );
             }
         }
     }
 
     parseAndSetDates() {
         for ( let i = 0; i < this.gerenciaConvocacoes.length; i++ ) {
+            let cC = this.gerenciaConvocacoes[i].getGerencia().getCodigoCompleto();
+            
             if ( this.gerenciaConvocacoes[i].getSelecionado() == true ) {
-                this.selectedGerenciaConvocacao[i] = true;
-                this.dataGerenciaConvocacaoInicio[i] =
+                this.dataGerenciaConvocacaoInicio[cC] =
                     this.parseDataToObjectDatePicker(
                         this.gerenciaConvocacoes[i].getInicio() );
 
-                this.dataGerenciaConvocacaoFim[i] =
+                this.dataGerenciaConvocacaoFim[cC] =
                     this.parseDataToObjectDatePicker(
                         this.gerenciaConvocacoes[i].getFim() );
             }
@@ -468,16 +489,20 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     checkAllEmpregados() {
         if ( this.empregadoConvocacoes.length > 0 ) {
             setTimeout(() => {
+                
                 if ( this.checkEmpregados == true ) {
+                    
                     this.empregadoConvocacoes.forEach( eC => {
-                        eC.setSelecionado( true );
+                        if ( eC.getAuditado() == true )
+                            eC.setSelecionado( true );
                     } )
                 } else {
                     this.empregadoConvocacoes.forEach( eC => {
-                        eC.setSelecionado( false );
+                        if ( eC.getAuditado() == true )
+                            eC.setSelecionado( false );
                     } )
                 }
-            }, 250 );
+            }, 50 );
         }
     }
 
@@ -527,6 +552,14 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             this.convocacao.getEmpregadoConvocacoes().length > 0 )
             return true;
         else return false;
+    }
+    
+    selectedsGerenciaConvocacoes() {
+        this.gerenciaConvocacoes.forEach(gC => {
+            if ( gC.getSelecionado() == true ) {
+                this.selectedGerenciaConvocacaoCC.push(gC.getGerencia().getCodigoCompleto());
+            }
+        })
     }
     
 }

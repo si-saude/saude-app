@@ -229,34 +229,48 @@
 
 				</div>
 
-				<div class="row">
-					<div class="input-field col s12">
-						<label class="active">Foto</label> <input id="foto" type="file"
-							name="foto" accept=".png" #foto>
+				<div class="row file-import">
+					<div class="file-field input-field col s12">
+						<div class="btn">
+							<span>Foto</span> <input id="foto" type="file" name="foto"
+								accept=".png" #foto>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
 					</div>
 				</div>
+
 				<div class="row">
 					<div class="input-field col s12">
 						<img id="fotoPreview" src="{{fotoSrc}}" [ngStyle]="fotoSrcStyle" />
 					</div>
 				</div>
-				
-				<div class="row">
-					<div class="input-field col s12">
-						<label class="active" >Assinatura</label>
-						<input id="assinatura" type="file" name="assinatura" accept=".png" #assinatura>
+
+				<div class="row file-import">
+					<div class="file-field input-field col s12">
+						<div class="btn">
+							<span>Assinatura</span> <input id="assinatura" type="file"
+								name="assinatura" accept=".png" #assinatura>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
 					</div>
 				</div>
+
 				<div class="row">
 					<div class="input-field col s12">
-						<img id="assinaturaPreview" src="{{assinaturaSrc}}" [ngStyle]="assinaturaSrcStyle" />
+						<img id="assinaturaPreview" src="{{assinaturaSrc}}"
+							[ngStyle]="assinaturaSrcStyle" />
 					</div>
 				</div>
-				
+
 				<input [(ngModel)]="empregado.pessoa.id" id="empregado.pessoa.id"
-					name="empregado.pessoa.id" type="hidden"> 
-				<input [(ngModel)]="empregado.pessoa.version" id="empregado.pessoa.version"
-					name="empregado.pessoa.version" type="hidden">
+					name="empregado.pessoa.id" type="hidden"> <input
+					[(ngModel)]="empregado.pessoa.version"
+					id="empregado.pessoa.version" name="empregado.pessoa.version"
+					type="hidden">
 
 			</div>
 
@@ -283,41 +297,42 @@
 						</div>
 					</div>
 
-					<div class="row">
-
-						<table class="striped">
-							<thead>
-								<tr class="row col s12">
-									<th class="col s10">Nome</th>
-									<th class="col s2">Remoção</th>
-								</tr>
-							</thead>
-							<div
-								*ngFor="let grupoMonitoramento of empregado.grupoMonitoramentos;let i = index">
-								<tbody class="col s12">
-									<tr class="col s12">
-										<input type="hidden"
-											[(ngModel)]="empregado.grupoMonitoramentos[i].nome"
-											value="{{grupoMonitoramento.nome}}"
-											name="grupoMonitoramento[{{i}}].nome">
-										<input type="hidden"
-											[(ngModel)]="empregado.grupoMonitoramentos[i].id"
-											value="{{grupoMonitoramento.id}}"
-											name="grupoMonitoramento[{{i}}].id">
-										<td class="col s10">{{grupoMonitoramento.nome}}</td>
-										<td class="col s2"><a
-											class="btn-floating waves-effect waves-light red btn-remove"
-											(click)="removeGrupoMonitoramento(i)"> <i
-												class="material-icons center-icon">delete</i>
-										</a></td>
-									</tr>
-								</tbody>
-							</div>
-
-						</table>
-
-					</div>
 				</fieldset>
+
+				<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s10">Nome</th>
+								<th class="col s2">Remoção</th>
+							</tr>
+						</thead>
+						<div
+							*ngFor="let grupoMonitoramento of empregado.grupoMonitoramentos;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<input type="hidden"
+										[(ngModel)]="empregado.grupoMonitoramentos[i].nome"
+										value="{{grupoMonitoramento.nome}}"
+										name="grupoMonitoramento[{{i}}].nome">
+									<input type="hidden"
+										[(ngModel)]="empregado.grupoMonitoramentos[i].id"
+										value="{{grupoMonitoramento.id}}"
+										name="grupoMonitoramento[{{i}}].id">
+									<td class="col s10 grupo-monitoramento-nome">{{grupoMonitoramento.nome}}</td>
+									<td class="col s2 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeGrupoMonitoramento(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>
 
 
 			</div>
@@ -335,8 +350,8 @@
 						*ngFor="let grupoMonitoramento of empregado.historicoGrupoMonitoramentos;let i = index">
 						<tbody class="col s12">
 							<tr class="col s12">
-								<td class="col s8">{{empregado.historicoGrupoMonitoramentos[i].grupoMonitoramento.nome}}</td>
-								<td class="col s4">{{dataRemocaoHistoricos[i]}}</td>
+								<td class="col s8 grupo-monitoramento-nome">{{empregado.historicoGrupoMonitoramentos[i].grupoMonitoramento.nome}}</td>
+								<td class="col s4 data-remocao-historico">{{dataRemocaoHistoricos[i]}}</td>
 							</tr>
 						</tbody>
 					</div>
@@ -356,8 +371,8 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<label for="logradouro" maxlength="200">Logradouro</label> <input
-										[(ngModel)]="empregado.pessoa.endereco.logradouro" id="logradouro"
-										type="text" name="endereco.logradouro">
+										[(ngModel)]="empregado.pessoa.endereco.logradouro"
+										id="logradouro" type="text" name="endereco.logradouro">
 								</div>
 							</div>
 
@@ -378,8 +393,8 @@
 							<div class="row">
 								<div class="input-field col s8">
 									<label for="complemento" maxlength="200">Complemento</label> <input
-										[(ngModel)]="empregado.pessoa.endereco.complemento" id="complemento"
-										name="endereco.complemento" type="text">
+										[(ngModel)]="empregado.pessoa.endereco.complemento"
+										id="complemento" name="endereco.complemento" type="text">
 								</div>
 
 								<div class="input-field col s4">
@@ -403,9 +418,11 @@
 								</div>
 							</div>
 
-							<input [(ngModel)]="empregado.pessoa.endereco.id" id="empregado.pessoa.endereco.id"
+							<input [(ngModel)]="empregado.pessoa.endereco.id"
+								id="empregado.pessoa.endereco.id"
 								name="empregado.pessoa.endereco.id" type="hidden"> <input
-								[(ngModel)]="empregado.pessoa.endereco.version" id="empregado.pessoa.endereco.version"
+								[(ngModel)]="empregado.pessoa.endereco.version"
+								id="empregado.pessoa.endereco.version"
 								name="empregado.pessoa.endereco.version" type="hidden">
 
 						</div>
@@ -520,7 +537,8 @@
 							</a>
 						</legend>
 
-						<div *ngFor="let telefone of empregado.pessoa.telefones;let i = index">
+						<div
+							*ngFor="let telefone of empregado.pessoa.telefones;let i = index">
 
 							<div class="row">
 								<div class="input-field col s10">
@@ -553,22 +571,15 @@
 				<div class="input-field col s12">
 
 					<fieldset>
-						<legend>
-							Instalações <a
-								class="btn-floating waves-effect waves-light green btn-add-permissoes"
-								(click)="addInstalacao()"> <i
-								class="material-icons center-icon">add</i>
-							</a>
-						</legend>
+						<legend> Instalações </legend>
 
-						<fieldset>
-							<legend>Instalações</legend>
 							<div class="row row-curso">
 
 								<div class="input-field col s4">
 									<select class="browser-default" #instalacao>
 										<option disabled selected value=0>Selecione uma instalação</option>
-										<option *ngFor="let instalacao of instalacoes" value="{{instalacao.id}}">{{instalacao.nome}}</option>
+										<option *ngFor="let instalacao of instalacoes"
+											value="{{instalacao.id}}">{{instalacao.nome}}</option>
 
 									</select>
 								</div>
@@ -595,21 +606,24 @@
 										</tr>
 									</thead>
 
-									<div *ngFor="let instalacao of empregado.instalacoes;let i = index">
+									<div
+										*ngFor="let instalacao of empregado.instalacoes;let i = index">
 										<tbody class="col s12">
 											<tr class="col s12">
 												<input type="hidden" [(ngModel)]="instalacao.nome"
 													value="{{instalacao.nome}}" name="instalacao[{{i}}].nome">
 												<input type="hidden" [(ngModel)]="instalacao.latitude"
-													value="{{instalacao.latitude}}" name="instalacao[{{i}}].latitude">
+													value="{{instalacao.latitude}}"
+													name="instalacao[{{i}}].latitude">
 												<input type="hidden" [(ngModel)]="instalacao.longitude"
-													value="{{instalacao.longitude}}" name="instalacao[{{i}}].longitude">
+													value="{{instalacao.longitude}}"
+													name="instalacao[{{i}}].longitude">
 												<input type="hidden" [(ngModel)]="instalacao.id"
 													value="{{instalacao.id}}" name="instalacao[{{i}}].id">
-												<td class="col s3">{{instalacao.nome}}</td>
-												<td class="col s3">{{instalacao.latitude}}</td>
-												<td class="col s3">{{instalacao.longitude}}</td>
-												<td class="col s3"><a
+												<td class="col s3 instalacao-nome">{{instalacao.nome}}</td>
+												<td class="col s3 instalacao-lat">{{instalacao.latitude}}</td>
+												<td class="col s3 instalacao-long">{{instalacao.longitude}}</td>
+												<td class="col s3 botao-remover"><a
 													class="btn-floating waves-effect waves-light red btn-remove"
 													(click)="removeInstalacao(i)"> <i
 														class="material-icons center-icon">delete</i>
@@ -622,8 +636,6 @@
 								</table>
 
 							</div>
-
-						</fieldset>
 
 					</fieldset>
 

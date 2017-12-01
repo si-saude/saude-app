@@ -9,16 +9,12 @@ import { PerfilComponent } from './perfil.component';
 import { PerfilService } from './perfil.service';
 import { PerfilRoutingModule } from './perfil.routing.module';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
-//import { PerfilCadastrarComponent } from './perfil-cadastrar/perfil-cadastrar.component';
-//import { PerfilEditarComponent } from './perfil-editar/perfil-editar.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        PerfilComponent,
-     PerfilFormComponent
-//       PerfilCadastrarComponent,
-//       PerfilEditarComponent
+       PerfilFormComponent
      ],
      imports: [
         PerfilRoutingModule,

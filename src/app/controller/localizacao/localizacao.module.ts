@@ -14,7 +14,7 @@ import { LocalizacaoFormComponent } from './localizacao-form/localizacao-form.co
 @NgModule({
     declarations: [
        LocalizacaoComponent,
-     LocalizacaoFormComponent,
+       LocalizacaoFormComponent,
      ],
      imports: [
         SharedModule,
