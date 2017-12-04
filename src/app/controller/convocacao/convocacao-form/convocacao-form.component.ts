@@ -147,7 +147,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     save() {
         this.setSelectedsGerencias();
         this.verifyAndSetDates();
-        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
+//        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
         super.save( new ConvocacaoBuilder().clone( this.convocacao ) );
     }
 

@@ -45,7 +45,8 @@ export class EmpregadoConvocacaoExameBuilder extends GenericBuilder {
         cloneEmpregadoConvocacaoExame.setEmpregadoConvocacao( new EmpregadoConvocacao() );
 
         if ( this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ) !== undefined &&
-                this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ) !== null ) {
+                this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ) !== null &&
+                this.idGtZero(this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ))) {
             cloneEmpregadoConvocacaoExame.setRelatorioMedico(
                 new RelatorioMedicoBuilder().clone( this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ) ) );
         } else {
