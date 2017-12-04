@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GlobalVariable } from './../../../global';
 import { Cargo } from './../../../model/cargo';
 import { Curso } from './../../../model/curso';
+import { CursoBuilder } from './../../curso/curso.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { CargoBuilder } from './../cargo.builder';
 import { CargoService } from './../cargo.service';
@@ -48,7 +49,7 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
         
         this.cargoService.getCursos()
             .then(res => {
-                this.cursos = res.json();
+                this.cursos = new CursoBuilder().cloneList(res.json());
             })
             .catch(error => {
                 console.log(error);
@@ -61,14 +62,14 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
     }   
     
     addCurso(valor: number) {
-        this.cargoService.getCursoById(valor)
-            .then(res => {
-                this.cursosSelecteds.push(res.json());
+        if ( valor != 0 ) {
+            let c = this.cursosSelecteds.find(c => c.getId() == valor);
+            if ( c == undefined ) {
+                let curso: Curso = this.cursos.find(c => c.getId() == valor);
+                this.cursosSelecteds.push(curso);
                 this.cargo.setCursos(this.cursosSelecteds);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+            }
+        }
     }
 
     removeCurso(i: number) {

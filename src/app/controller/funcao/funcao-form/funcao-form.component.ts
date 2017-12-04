@@ -62,11 +62,15 @@ export class FuncaoFormComponent extends GenericFormComponent implements OnInit 
     }   
     
     addVacina(valor: number) {
-        let vacina:Vacina = this.vacinas.find(v => {
-            return v.getId() == valor;
-        });
-        this.vacinasSelecteds.push(vacina);
-        this.funcao.setVacinas(this.vacinasSelecteds);
+        if ( valor != 0 ) {
+            let v = this.vacinasSelecteds.find(v => v.getId() == valor);
+            
+            if ( v == null ) {
+                let vacina:Vacina = this.vacinas.find(v => v.getId() == valor);
+                this.vacinasSelecteds.push(vacina);
+                this.funcao.setVacinas(this.vacinasSelecteds);
+            }
+        }
     }
 
     removeVacina(i: number) {

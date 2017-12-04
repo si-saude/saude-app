@@ -56,6 +56,7 @@
 						</div>
 
 					</div>
+				</fieldset>
 
 					<div class="row">
 
@@ -80,10 +81,10 @@
 											value="{{vacina.reforco}}" name="vacina[{{i}}].reforco">
 										<input type="hidden" [(ngModel)]="vacina.id"
 											value="{{vacina.id}}" name="vacina[{{i}}].id">
-										<td class="col s3">{{vacina.descricao}}</td>
-										<td class="col s3">{{vacina.doses}}</td>
-										<td class="col s3">{{vacina.reforco}}</td>
-										<td class="col s3"><a
+										<td class="col s3 vacina-descricao">{{vacina.descricao}}</td>
+										<td class="col s3 vacina-doses">{{vacina.doses}}</td>
+										<td class="col s3 vacina-reforco">{{vacina.reforco}}</td>
+										<td class="col s3 botao-remover"><a
 											class="btn-floating waves-effect waves-light red btn-remove"
 											(click)="removeVacina(i)"> <i
 												class="material-icons center-icon">delete</i>
@@ -96,8 +97,6 @@
 						</table>
 
 					</div>
-
-				</fieldset>
 
 			</div>
 

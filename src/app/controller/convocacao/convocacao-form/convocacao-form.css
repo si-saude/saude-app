@@ -34,6 +34,14 @@
     overflow: scroll;
 }
 
+.datas {
+	height: 400px;
+    overflow-y: scroll;
+    margin-top: 8px;
+    border-top: 1px solid #CCB;
+    border-bottom: 1px solid #CCC
+}
+
 .empregados {
 	max-height: 600px;
 	overflow: scroll;
@@ -50,17 +58,16 @@
 	margin-left: 10px;
 }
 
-.datas {
-	margin-top: -20px;
-}
-
 .row-collection-empregados {
 	border-top: 1px solid #c0c0c0;
 	margin-bottom: 0px;
 }
 
-.btn_remove {
-	margin-top: -12px;
+.btn-remove {
+	margin-top: -5px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
 }
 
 .btn_edit {
@@ -75,3 +82,51 @@
 	margin-left: 40%;
 }
 
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.checkbox_selecionado {
+	margin-top: 1px;
+	padding-left: 40px;
+}
+
+.checkbox_convocado {
+	padding-left: 45px;
+}
+
+.btn_edit {
+	margin-top: 2px;
+    padding-left: 25px;
+}
+
+.btn_remove {
+	padding-left: 35px;
+}
+
+.codigo_completo { 
+	padding-left: 0px;
+}
+
+.nome {
+	padding-left: 0px;
+}
+
+.chave {
+	padding-left: 3px;
+}

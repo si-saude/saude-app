@@ -10,7 +10,7 @@
 	[goTo]="goTo"></app-confirm-save>
 
 <div class="row">
-	<form class="col s12" (ngSubmit)="save()">
+	<form class="col s12" (ngSubmit)="save()" #form="ngForm">
 
 		<div class="row">
 			<div class="input-field col s12">
@@ -48,13 +48,13 @@
 							</fieldset>
 						</div>
 
-						<div class="col s3 btn-tipo-permissao">
+						<div class="col s3 permissao-leitura">
 							<input name="leitura{{i}}" id="leitura{{i}}" type="checkbox"
 								name="permissao.leitura{{i}}" [(ngModel)]="permissao.leitura" />
 							<label for="leitura{{i}}">Leitura</label>
 						</div>
 
-						<div class="col s3 btn-tipo-permissao">
+						<div class="col s3 permissao-escrita">
 							<input name="escrita{{i}}" id="escrita{{i}}" type="checkbox"
 								name="permissao.escrita{{i}}" [(ngModel)]="permissao.escrita" />
 							<label for="escrita{{i}}">Escrita</label>

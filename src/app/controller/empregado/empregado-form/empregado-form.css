@@ -1,0 +1,50 @@
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.btn-remove {
+	margin-top: -5px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
+}
+
+.grupo-monitoramento-nome {
+	padding-left: 0px;
+}
+
+.botao-remover {
+	padding-left: 35px;
+}
+
+.data-remocao-historico {
+	padding-left: 25px;
+}
+
+.instalacao-nome {
+	padding-left: 0px;
+}
+
+.instalacao-lat {
+	padding-left: 25px;
+}
+
+.instalacao-long {
+	padding-left: 40px;
+}
+

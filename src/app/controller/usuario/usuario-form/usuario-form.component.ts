@@ -60,11 +60,14 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
     }
 
     addPerfil( value ) {
-        let perfil: Perfil = this.perfis.find(p => {
-            return p.getId() == value;
-        });
-    
-        this.usuario.getPerfis().push(perfil);
+        if ( value != 0 ) {
+            let p: Perfil = this.usuario.getPerfis().find( p => p.getId() == value );
+        
+            if ( p == undefined ) {
+                let perfil: Perfil = this.perfis.find( p => p.getId() == value );
+                this.usuario.getPerfis().push(perfil);
+            }
+        }
     }
     
     removePerfil( index ) {

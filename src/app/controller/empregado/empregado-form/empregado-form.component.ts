@@ -248,7 +248,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
 
         this.empregadoService.getGruposMonitoramento()
             .then( res => {
-                this.gruposMonitoramento = res.json();
+                this.gruposMonitoramento = new GrupoMonitoramentoBuilder().cloneList(res.json());
             } )
             .catch( error => {
                 console.log( error );
@@ -363,8 +363,13 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     }
 
     addGrupoMonitoramento( valor: number ) {
-        let grupoMonitoramento = this.gruposMonitoramento.find( o => o["id"] == valor );
-        this.empregado.getGrupoMonitoramentos().push( new GrupoMonitoramentoBuilder().clone( grupoMonitoramento ) );
+        if ( valor != 0 ) {
+            let gM: GrupoMonitoramento = this.empregado.getGrupoMonitoramentos().find( gM => gM.getId() == valor );
+            if (gM == undefined) {
+                let grupoMonitoramento = this.gruposMonitoramento.find( gM => gM.getId() == valor );
+                this.empregado.getGrupoMonitoramentos().push( grupoMonitoramento );
+            }
+        }
     }
 
     removeGrupoMonitoramento( i: number ) {
@@ -399,11 +404,15 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     }
 
     addInstalacao( valor ) {
-        let instalacao: Instalacao = this.instalacoes.find( i => {
-            return i.getId() == valor;
-        } );
-        this.instalacoesSelecteds.push( instalacao );
-        this.empregado.setInstalacoes( this.instalacoesSelecteds );
+        if ( valor != 0 ) {
+            let i: Instalacao = this.instalacoesSelecteds.find( i=> i.getId() == valor );
+        
+            if ( i == undefined ) {
+                let instalacao: Instalacao = this.instalacoes.find( i => i.getId() == valor );
+                this.instalacoesSelecteds.push( instalacao );
+                this.empregado.setInstalacoes( this.instalacoesSelecteds );
+            }
+        }
     }
 
     removeInstalacao( i: number ) {

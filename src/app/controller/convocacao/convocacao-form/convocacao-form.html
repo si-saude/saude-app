@@ -59,7 +59,7 @@
 						</select>
 					</fieldset>
 				</div>
-				
+
 				<div class="input-field col s6" *ngIf="existProfissiograma">
 					<fieldset>
 						<legend>Profissiograma</legend>
@@ -88,58 +88,62 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row col s12">
 
-				<fieldset>
-					<legend>Gerências</legend>
-
-					<div class="collection gerencias">
-						<div class="row-item-collection"
-							*ngFor="let gerenciaConvocacao of gerenciaConvocacoes; let gC = index">
-							<div class="input-field col s12">
-								<div class="row row-collection">
-									<div class="col s5">
-										<a class="collection-item"
-											[ngClass]="choisedGerenciaConvocacao(gC)"
-											[routerLinkActive]="['active']"
-											[ngStyle]="{'cursor': 'pointer'}">
-											{{gerenciaConvocacao.gerencia.codigoCompleto}} </a>
+				<div class="collection gerencias col s7">
+					<div class="row-item-collection"
+						*ngFor="let gerenciaConvocacao of gerenciaConvocacoes; let gC = index">
+						<div class="input-field">
+							<div class="row row-collection">
+								<div class="col s7">
+									<a class="collection-item"
+										(click)="choiseGerenciaConvocacao(gC, gerenciaConvocacao)"
+										[ngClass]="choisedGerenciaConvocacao(gC, gerenciaConvocacao)"
+										[routerLinkActive]="['active']"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{gerenciaConvocacao.gerencia.codigoCompleto}} </a>
+								</div>
+								<div class="input-field col s1 checkbox">
+									<input type="checkbox"
+										id="gerenciaConvocacao.selecionado[{{gC}}]"
+										[(ngModel)]="gerenciaConvocacao.selecionado"
+										(click)="selectGerenciaConvocacao(gC, gerenciaConvocacao)"
+										name="gerenciaConvocacao.selecionado[{{gC}}]"> <label
+										for="gerenciaConvocacao.selecionado[{{gC}}]"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col s5 datas">
+					<div class="row-item-collection"
+						*ngFor="let selectedGerencia of selectedGerenciaConvocacaoCC; let gC = index">
+						<div class="row-item-collection">
+							<div>
+								<p>{{selectedGerencia}}</p>
+							</div>
+							<div class="gerenciaConvocacaoDatas">
+								<div class="row">
+									<div class="input-field col s8">
+										<label for="dataGerenciaConvocacaoInicio[{{gC}}]">Início</label>
+										<my-date-picker name="dataGerenciaConvocacaoInicio[{{gC}}]"
+											[options]="myDatePickerOptions"
+											[(ngModel)]="dataGerenciaConvocacaoInicio[selectedGerencia]"
+											placeholder="Início"> </my-date-picker>
 									</div>
-									<div class="input-field col s1 checkbox">
-										<input type="checkbox"
-											id="gerenciaConvocacao.selecionado[{{gC}}]"
-											[(ngModel)]="gerenciaConvocacao.selecionado"
-											(click)="selectGerenciaConvocacao(gC)"
-											name="gerenciaConvocacao.selecionado[{{gC}}]"> <label
-											for="gerenciaConvocacao.selecionado[{{gC}}]"></label>
-									</div>
-									<div class="input-field col s6 datas">
-										<div class="gerenciaConvocacaoDatas"
-											*ngIf="selectedGerenciaConvocacao[gC]">
-											<div class="row">
-												<div class="input-field col s6">
-													<label for="dataGerenciaConvocacaoInicio[{{gC}}]">Início</label>
-													<my-date-picker name="dataGerenciaConvocacaoInicio[{{gC}}]"
-														[options]="myDatePickerOptions"
-														[(ngModel)]="dataGerenciaConvocacaoInicio[gC]"
-														placeholder="Início"> </my-date-picker>
-												</div>
-												<div class="input-field col s6">
-													<label for="dataGerenciaConvocacaoFim[{{gC}}]">Fim</label>
-													<my-date-picker name="dataGerenciaConvocacaoFim[{{gC}}]"
-														[options]="myDatePickerOptions"
-														[(ngModel)]="dataGerenciaConvocacaoFim[gC]"
-														placeholder="Fim"> </my-date-picker>
-												</div>
-											</div>
-										</div>
+									<div class="input-field col s8">
+										<label for="dataGerenciaConvocacaoFim[{{gC}}]">Fim</label>
+										<my-date-picker name="dataGerenciaConvocacaoFim[{{gC}}]"
+											[options]="myDatePickerOptions"
+											[(ngModel)]="dataGerenciaConvocacaoFim[selectedGerencia]"
+											placeholder="Fim"> </my-date-picker>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 
-				</fieldset>
 
 			</div>
 
@@ -197,89 +201,69 @@
 
 			<div class="row">
 
-				<fieldset>
-					<legend>Empregados</legend>
-
-					<div class="">
-						<div class="row">
-							<div class="col s1">
-								<p>Chave</p>
-							</div>
-							<div class="col s4">
-								<p>Nome</p>
-							</div>
-							<div class="col s3">
-								<p>Gerência</p>
-							</div>
-							<div class="col s1">
-								<p>Selecionar</p>
-							</div>
-							<div class="col s1">
-								<p>Convocado</p>
-							</div>
-							<div class="col s1">
-								<p>Editar</p>
-							</div>
-							<div class="col s1">
-								<p>Excluir</p>
-							</div>
-						</div>
-						<div class="row-item-collection"
-							*ngFor="let empregadoConvocacao of empregadoConvocacoes; let eC = index">
-							<div class="row row-collection row-collection-empregados">
-								<div class="col s1">
-									<a class="collection-item">
-										{{empregadoConvocacao.empregado.chave}} </a>
-								</div>
-								<div class="col s4">
-									<a class="collection-item">
-										{{empregadoConvocacao.empregado.pessoa.nome}} </a>
-								</div>
-								<div class="col s3">
-									<a class="collection-item">
-										{{empregadoConvocacao.empregado.gerencia.codigoCompleto}} </a>
-								</div>
-								<div class="input-field col s1 checkbox_empregados" *ngIf="empregadoConvocacao.auditado">
-									<input type="checkbox" id="empregadoConvocacao[{{eC}}].selecionado"
+				<table class="striped">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s1">Chave</th>
+							<th class="col s4">Nome</th>
+							<th class="col s3">Gerência</th>
+							<th class="col s1">Selecionar</th>
+							<th class="col s1">Convocado</th>
+							<th class="col s1">Editar</th>
+							<th class="col s1">Excluir</th>
+						</tr>
+					</thead>
+					<div
+						*ngFor="let empregadoConvocacao of empregadoConvocacoes; let eC = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s1 chave">{{empregadoConvocacao.empregado.chave}}</td>
+								<td class="col s4 nome">{{empregadoConvocacao.empregado.pessoa.nome}}</td>
+								<td class="col s3 codigo_completo">{{empregadoConvocacao.empregado.gerencia.codigoCompleto}}</td>		
+								<td class="col s1 checkbox_selecionado" 
+									*ngIf="empregadoConvocacao.auditado">
+									<input type="checkbox"
+										id="empregadoConvocacao[{{eC}}].selecionado"
 										[(ngModel)]="empregadoConvocacao.selecionado"
 										name="empregadoConvocacao[{{eC}}].selecionado"> <label
 										for="empregadoConvocacao[{{eC}}].selecionado"></label>
-								</div>
-								<div class="input-field col s1 checkbox_empregados" *ngIf="!empregadoConvocacao.auditado">
-									<input type="checkbox" disabled id="empregadoConvocacao[{{eC}}].selecionado"
+								</td>
+								<td class="col s1 checkbox_selecionado"
+									*ngIf="!empregadoConvocacao.auditado">
+									<input type="checkbox" disabled
+										id="empregadoConvocacao[{{eC}}].selecionado"
 										[(ngModel)]="empregadoConvocacao.selecionado"
 										name="empregadoConvocacao[{{eC}}].selecionado"> <label
 										for="empregadoConvocacao[{{eC}}].selecionado"></label>
-								</div>
-								<div class="col s1 checkbox_disabled_empregados">
+								</td>
+								<td class="col s1 checkbox_convocado">
 									<input disabled type="checkbox"
 										id="empregadoConvocacao[{{eC}}].convocado"
 										[(ngModel)]="empregadoConvocacao.convocado"
 										name="empregadoConvocacao[{{eC}}].convocado"> <label
 										for="empregadoConvocacao[{{eC}}].convocado"></label>
-								</div>
-								<div class="col s1 btn_edit">
+								</td>
+								<td class="col s1 btn_edit">
 									<a (click)="showDetailEmpregado(eC)"
 										[ngStyle]="{'cursor': 'pointer'}"><i
 										class="material-icons">mode_edit</i></a>
-								</div>
-								<div class="col s1 btn_remove">
+								</td>
+								<td class="col s1 btn_remove">
 									<a (click)="removeEmpregadoToList(eC)"
 										[ngStyle]="{'cursor': 'pointer'}"><i
 										class="material-icons">delete</i></a>
-								</div>
-
-							</div>
-						</div>
-
+								</td>
+							</tr>
+						</tbody>
 					</div>
-				</fieldset>
+
+				</table>
 			</div>
-		<div class="row btn-convocar" *ngIf="ableToConvocate()">	
-			<div class="col s4">
-				<a (click)="convocar()" class="btn btn-primary">Convocar</a>
+			<div class="row btn-convocar" *ngIf="ableToConvocate()">
+				<div class="col s4">
+					<a (click)="convocar()" class="btn btn-primary">Convocar</a>
+				</div>
 			</div>
-		</div>
 
 		</div>
 
@@ -332,8 +316,7 @@
 		<div class="input-field col s4 checkbox" *ngIf="!verifyAuditado()">
 			<input type="checkbox" id="auditado" disabled
 				[(ngModel)]="empregadoDetail.auditado"
-				name="empregadoDetail.auditado"> 
-			<label for="auditado">Auditado</label>
+				name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
 		</div>
 		<div class="input-field col s4 checkbox" *ngIf="verifyAuditado()">
 			<input type="checkbox" id="auditado"
@@ -348,19 +331,25 @@
 			*ngFor="let empregadoConvocacaoExame of empregadoDetail.empregadoConvocacaoExames; let e = index">
 			<div class="row row-collection">
 				<div class="col s4">
-					<a class="collection-item"> {{empregadoConvocacaoExame.exame.codigo}} </a>
+					<a class="collection-item">
+						{{empregadoConvocacaoExame.exame.codigo}} </a>
 				</div>
 				<div class="col s4">
-					<a class="collection-item"> {{empregadoConvocacaoExame.exame.descricao}} </a>
+					<a class="collection-item">
+						{{empregadoConvocacaoExame.exame.descricao}} </a>
 				</div>
-				<div class="col s2" *ngIf="!empregadoConvocacaoExame.pendenteRelatorio">
-					<input type="checkbox" id="empregadoConvocacaoExame[{{e}}].conforme" 
-						[(ngModel)]="empregadoConvocacaoExame.conforme" name="empregadoConvocacaoExame[{{e}}].conforme">
-                	<label for="empregadoConvocacaoExame[{{e}}].conforme">Conforme</label>
+				<div class="col s2"
+					*ngIf="!empregadoConvocacaoExame.pendenteRelatorio">
+					<input type="checkbox" (click)="selectConform(e)"
+						id="empregadoConvocacaoExame[{{e}}].conforme"
+						[(ngModel)]="empregadoConvocacaoExame.conforme"
+						name="empregadoConvocacaoExame[{{e}}].conforme"> <label
+						for="empregadoConvocacaoExame[{{e}}].conforme">Conforme</label>
 				</div>
 				<div class="col s2">
 					<a (click)="removeExame(e)" [ngStyle]="{'cursor': 'pointer'}">
-					<i class="material-icons">delete</i></a>
+						<i class="material-icons">delete</i>
+					</a>
 				</div>
 			</div>
 		</div>
