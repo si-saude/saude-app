@@ -8,6 +8,7 @@ import { GlobalVariable } from './../../global';
 import { EquipeFilter } from './equipe.filter';
 import { EquipeService } from './equipe.service';
 import { GenericListComponent } from './../../generics/generic.list.component';
+import { EquipeGuard } from './../../guards/guards-child/equipe.guard';
 import { Equipe } from './../../model/equipe';
 
 @Component( {
@@ -15,11 +16,10 @@ import { Equipe } from './../../model/equipe';
     templateUrl: './equipe.component.html',
     styleUrls: ['./equipe.component.css', '../../../assets/css/list-component.css']
 } )
-export class EquipeComponent extends GenericListComponent<Equipe, EquipeFilter>  {
+export class EquipeComponent extends GenericListComponent<Equipe, EquipeFilter, EquipeGuard>  {
 
-    constructor( equipeService: EquipeService) {
-        let equipeFilter: EquipeFilter = new EquipeFilter(); 
-        super(equipeService, equipeFilter);
+    constructor( equipeService: EquipeService, equipeGuard: EquipeGuard) {
+        super(equipeService, new EquipeFilter(), equipeGuard);
     }
 
 }

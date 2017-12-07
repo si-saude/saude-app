@@ -2,28 +2,34 @@
 	margin-top: 0px;
 }
 
+.row-btns {
+    margin-top: 20px;
+}
+
 .legend-permissoes{ 
 	color: #004d40;
 	font-size: 16px;
 }
 
-.btn-add-permissoes {
+.btn-add-autocomplete {
+	margin-left: 15px;
+}
+.btn-add-fieldset {
 	margin-left: 15px;
 }
 
-.row-btns {
-    margin-top: 20px;
+.btn-add {
+	margin-top: 15px;
+}
+.btn-remove {
+	margin-top: 15px;
 }
 
-.btn-tipo-permissao {
-	margin-top: 27px;
+.btn-listar {
+	float: left;
 }
 
-.btn-remove-permission {
-	margin-top: 15px;	
-}
-
-.btn-listar-perfis {
+.btn-salvar {
 	float: right;
 }
 

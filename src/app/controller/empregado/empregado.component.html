@@ -13,8 +13,12 @@
 
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
-			<div class="col s10">
+			<div class="col s9">
 				<a [routerLinkActive]="['active']" class="collection-item">{{a.pessoa.nome}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/empregado/detalhe', a.id]"><i
+					class="material-icons">details</i></a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/empregado/editar', a.id]"><i
@@ -71,52 +75,191 @@
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
-<!-- 
-	<div class="input-field col s8">
-		<div class="modal-content">
-			<label for="nome">Nome</label> <input type="text" id="nome"
-				[(ngModel)]="filter.nome" name="nome">
-		</div>
-	</div>
 
 	<div class="row">
-		<div class="input-field col s12">
-			<div class="input-field col s4">
-				<label for="dataNascimentoInicial">Data de Nascimento Inicial</label> 
-				<my-date-picker name="dataNascimentoInicio"
-					[options]="myDatePickerOptions"
-					[(ngModel)]="filter.pessoa.dataNascimento.inicio"
-					placeholder="Data de Nascimento Inicial">
-				</my-date-picker>
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<label for="nome">Nome</label> <input type="text" id="nome"
+					[(ngModel)]="filter.pessoa.nome" name="nome">
 			</div>
+		</div>
+<!-- 
+		<div class="row">
+			<div class="input-field col s12">
+				<div class="input-field col s4">
+					<label for="dataNascimentoInicial">Data de Nascimento
+						Inicial</label>
+					<my-date-picker name="dataNascimentoInicio"
+						[options]="myDatePickerOptions"
+						[(ngModel)]="filter.pessoa.dataNascimento.inicio"
+						placeholder="Data de Nascimento Inicial"> </my-date-picker>
+				</div>
+				<div class="input-field col s4">
+					<label for="dataNascimentoFinal">Data de Nascimento Final</label>
+					<my-date-picker name="dataNascimentoFim"
+						[options]="myDatePickerOptions"
+						[(ngModel)]="filter.pessoa.dataNascimento.fim"
+						placeholder="Data de Nascimento Final"> </my-date-picker>
+				</div>
+
+				<div class="input-field col s4">
+					<fieldset>
+						<legend>Tipo do Filtro</legend>
+						<select name="tipo" class="browser-default"
+							[(ngModel)]="filter.pessoa.dataNascimento.typeFilter">
+							<option disabled selected value=0>Selecione um tipo</option>
+							<option *ngFor="let item of typeFilters()" value="{{item}}">{{item}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<label for="chave">Chave</label> <input type="text" id="chave"
+					[(ngModel)]="filter.chave" name="chave">
+			</div>
+		</div>
+
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<label for="matricula">Matricula</label> <input type="text"
+					id="matricula" [(ngModel)]="filter.matricula" name="matricula">
+			</div>
+		</div>
+
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<label for="ramal">Ramal</label> <input type="text" id="ramal"
+					[(ngModel)]="filter.ramal" name="ramal">
+			</div>
+		</div>
+
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<label for="matricula">Matricula</label> <input type="text"
+					id="matricula" [(ngModel)]="filter.matricula" name="matricula">
+			</div>
+		</div>
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Vínculo</legend>
+				<select name="vinculo" class="browser-default"
+					[(ngModel)]="filter.vinculo">
+					<option disabled selected value="">Selecione um vínculo</option>
+					<option *ngFor="let vinculo of vinculos" value="{{vinculo}}">{{vinculo}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Status</legend>
+				<select name="status" class="browser-default"
+					[(ngModel)]="filter.status">
+					<option disabled selected value="">Selecione um status</option>
+					<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Escolaridade</legend>
+				<select name="escolaridade" class="browser-default"
+					[(ngModel)]="filter.escolaridade">
+					<option disabled selected value="">Selecione uma escolaridade</option>
+					<option *ngFor="let escolaridade of escolaridades"
+						value="{{escolaridade}}">{{escolaridade}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Cargo</legend>
+				<select name="cargo" class="browser-default"
+					[(ngModel)]="filter.cargo.id">
+					<option disabled selected value=0>Selecione um cargo</option>
+					<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Função</legend>
+				<select name="funcao" class="browser-default"
+					[(ngModel)]="filter.funcao.id">
+					<option disabled selected value=0>Selecione uma função</option>
+					<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Regime</legend>
+				<select name="regime" class="browser-default"
+					[(ngModel)]="filter.regime.id">
+					<option disabled selected value=0>Selecione um regime</option>
+					<option *ngFor="let regime of regimes" value="{{regime.id}}">{{regime.nome}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Gerencia</legend>
+				<select name="gerencia" class="browser-default"
+					[(ngModel)]="filter.gerencia.id">
+					<option disabled selected value=0>Selecione uma gerencia</option>
+					<option *ngFor="let gerencia of gerencias" value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="row">
+
 			<div class="input-field col s4">
-				<label for="dataNascimentoFinal">Data de Nascimento Final</label> 
-				<my-date-picker name="dataNascimentoFim"
-					[options]="myDatePickerOptions"
-					[(ngModel)]="filter.pessoa.dataNascimento.fim"
-					placeholder="Data de Nascimento Final">
-				</my-date-picker>
+				<fieldset>
+					<legend>Base</legend>
+					<select name="base" class="browser-default"
+						[(ngModel)]="filter.base.id">
+						<option disabled selected value=0>Selecione uma base</option>
+						<option *ngFor="let base of bases" value="{{base.id}}">{{base.nome}}</option>
+					</select>
+				</fieldset>
 			</div>
 
 			<div class="input-field col s4">
 				<fieldset>
-					<legend>Tipo do Filtro</legend>
-					<select name="tipo" class="browser-default" 
-						[(ngModel)]="filter.pessoa.dataNascimento.typeFilter">
-						<option disabled selected value=0>Selecione um tipo</option>
-						<option *ngFor="let item of typeFilters()" value="{{item}}">{{item}}</option>
+					<legend>Ghe</legend>
+					<select name="ghe" class="browser-default"
+						[(ngModel)]="filter.ghe.id">
+						<option disabled selected value=0>Selecione um ghe</option>
+						<option *ngFor="let ghe of ghes" value="{{ghe.id}}">{{ghe.nome}}</option>
 					</select>
 				</fieldset>
 			</div>
-			 
+
+			<div class="input-field col s4">
+				<fieldset>
+					<legend>Ghee</legend>
+					<select name="ghee" class="browser-default"
+						[(ngModel)]="filter.ghee.id">
+						<option disabled selected value=0>Selecione um ghee</option>
+						<option *ngFor="let ghee of ghees" value="{{ghee.id}}">{{ghee.nome}}</option>
+					</select>
+				</fieldset>
+			</div>
+
 		</div>
-	</div>
--->
-	<div class="input-field col s8">
-		<div class="modal-content">
-			<label for="matricula">Matricula</label> <input type="text"
-				id="matricula" [(ngModel)]="filter.matricula" name="matricula">
-		</div>
+ -->
 	</div>
 
 	<div class="modal-footer">
@@ -131,10 +274,10 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
-	<h5 class="titleModalDelete">Confirmação para remoção</h5>
-	<p class="paragraphModalDelete">Deseja realmente excluir esse
+	<h5 class="title-modal-delete">Confirmação para remoção</h5>
+	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
 		poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">
@@ -151,30 +294,33 @@
 	[materializeParams]="modalParams" [materializeActions]="modalImport">
 
 	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">
-			
-			<h5 class="title-modal-import">Importar Arquivo</h5>
-			
-			<div class="row file-import">
-				<div class="file-field input-field col s12">
-					<div class="btn">
-						<span>File</span> <input id="arquivo" type="file" #arquivo
-							name="arquivo" accept=".xls, .xlsx">
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text">
-					</div>
+
+		<h5 class="title-modal-import">Importar Arquivo</h5>
+
+		<div class="row file-import">
+			<div class="file-field input-field col s12">
+				<div class="btn">
+					<span>File</span> <input id="arquivo" type="file" #arquivo
+						name="arquivo" accept=".xls, .xlsx">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
 				</div>
 			</div>
-			
-			<div class="modal-footer">
-				<a type="submit" class="waves-effect waves-green btn-flat" (click)="importFile()">Importar</a>
-				<a class="waves-effect waves-green btn-flat" (click)="closeModalImport()">Fechar</a>
-			</div>
-		
+		</div>
+
+		<div class="modal-footer">
+			<a type="submit" class="waves-effect waves-green btn-flat"
+				(click)="importFile()">Importar</a> <a
+				class="waves-effect waves-green btn-flat"
+				(click)="closeModalImport()">Fechar</a>
+		</div>
+
 	</form>
 
 </div>
 
 <div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
 </div>

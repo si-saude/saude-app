@@ -4,3 +4,7 @@
     margin-top: 15px;
     pointer-events: auto;
 }
+
+.btn-remove-permission {
+    margin-top: 30px;
+}

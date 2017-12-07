@@ -13,9 +13,12 @@
 
 	<div *ngFor="let perfil of array">
 		<div class="row row-collection">
-			<div class="col s10">
+			<div class="col s9">
 				<a [routerLinkActive]="['active']" class="collection-item">{{perfil.titulo}}</a>
 			</div>
+			<div class="col s1">
+				<a [routerLink]="['/perfil/detalhe', perfil.id]"><i class="material-icons">details</i></a>
+		 	</div>
 			<div class="col s1">
 				<a [routerLink]="['/perfil/editar', perfil.id]"><i class="material-icons">mode_edit</i></a>
 		 	</div>
@@ -61,13 +64,15 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 <div id="modal" class="modal" materialize="modal" 
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
-	<div class="input-field col s8">
-		<div class="modal-content">
-			<input type="text" id="titulo" [(ngModel)]="filter.titulo" name="titulo">
-			<label for="titulo">Titulo</label>
+	<div class="row">
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="titulo">Titulo</label>
+				<input type="text" id="titulo" [(ngModel)]="filter.titulo" name="titulo">
+			</div>
 		</div>
 	</div>
-
+	
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
     	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="setFilter()">Filtrar</a>
@@ -79,10 +84,10 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
-	<h5 class="titleModalDelete">Confirmação para remoção</h5>
-	<p class="paragraphModalDelete">Deseja realmente excluir esse
+	<h5 class="title-modal-delete">Confirmação para remoção</h5>
+	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
 		poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">

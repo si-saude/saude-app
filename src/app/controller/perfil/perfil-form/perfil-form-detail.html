@@ -1,0 +1,69 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row">
+	<form class="col s12" (ngSubmit)="save()" #form="ngForm">
+
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="titulo">Titulo</label> <input
+					id="titulo" type="text" disabled name="perfil.titulo"
+					[(ngModel)]="perfil.titulo">
+			</div>
+		</div>
+
+		<fieldset>
+			<legend class="legend-permissoes"> Permissões </legend>
+			<div class="form-group">
+				<div *ngFor="let permissao of perfil.permissoes;let i = index">
+
+					<div class="row">
+
+						<div class="input-field col s4">
+							<fieldset>
+								<legend>Funcionalidade</legend>
+								<select class="browser-default" name="permissao.funcionalidade{{i}}" disabled
+									[(ngModel)]="permissao.funcionalidade">
+									<option disabled selected value>Selecione uma funcionalidade</option>
+									<option *ngFor="let funcionalidade of funcionalidades"
+										value="{{funcionalidade}}">{{funcionalidade}}</option>
+								</select>
+							</fieldset>
+						</div>
+
+						<div class="col s3 permissao-valor">
+							<input name="valor{{i}}" id="valor{{i}}" type="checkbox" disabled
+								name="permissao.valor{{i}}" [(ngModel)]="permissao.valor" />
+							<label for="valor{{i}}">Valor</label>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</fieldset>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/perfil']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+		</div>
+
+	</form>
+</div>

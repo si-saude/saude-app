@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RelatorioMedicoComponent } from './relatorio-medico.component';
 import { RelatorioMedicoFormComponent } from './relatorio-medico-form/relatorio-medico-form.component';
+import { RelatorioMedicoFormDetailComponent } from './relatorio-medico-form/relatorio-medico-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const relatorioMedicoRoutes: Routes = [
@@ -11,7 +12,8 @@ const relatorioMedicoRoutes: Routes = [
     { path: 'cadastrar', component: RelatorioMedicoFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: RelatorioMedicoFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: RelatorioMedicoFormDetailComponent}
 ];
 
 @NgModule({

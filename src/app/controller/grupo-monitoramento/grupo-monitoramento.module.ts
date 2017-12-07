@@ -7,11 +7,13 @@ import { GrupoMonitoramentoService } from './grupo-monitoramento.service';
 import { GrupoMonitoramentoRoutingModule } from './grupo-monitoramento.routing.module';
 import { SharedModule } from './../shared.module';
 import { GrupoMonitoramentoFormComponent } from './grupo-monitoramento-form/grupo-monitoramento-form.component';
+import { GrupoMonitoramentoFormDetailComponent } from './grupo-monitoramento-form/grupo-monitoramento-form-detail.component';
 
 @NgModule({
     declarations: [
        GrupoMonitoramentoComponent,
-       GrupoMonitoramentoFormComponent
+       GrupoMonitoramentoFormComponent,
+       GrupoMonitoramentoFormDetailComponent 
      ],
      imports: [
         GrupoMonitoramentoRoutingModule,

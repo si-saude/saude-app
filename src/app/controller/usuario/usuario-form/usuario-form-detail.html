@@ -1,0 +1,98 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s12">
+				<label for="chave">Chave</label> 
+				<input id="chave" type="text" disabled
+					name="chave" [(ngModel)]="usuario.chave">
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<div class="input-field col s12">
+				<label for="senha">Senha</label> 
+				<input id="senha" type="password" disabled
+					name="senha" [(ngModel)]="usuario.senha">
+			</div>
+
+		</div>
+
+		<div id="perfis">
+
+			<fieldset>
+				<legend>Perfis</legend>
+				<div class="row row-curso">
+
+					<div class="input-field col s4">
+						<select class="browser-default" #perfil disabled>
+							<option disabled selected value=0>Selecione um perfil</option>
+							<option *ngFor="let perfil of perfis" value="{{perfil.id}}">{{perfil.titulo}}</option>
+
+						</select>
+					</div>
+
+					<div class="col s2">
+						<a
+							class="btn-floating waves-effect waves-light green btn-remove"> <i
+							class="material-icons center-icon">add</i>
+						</a>
+					</div>
+
+				</div>
+
+			</fieldset>
+
+			<div class="row">
+
+				<table class="striped">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s6">Titulo</th>
+						</tr>
+					</thead>
+
+					<div *ngFor="let perfil of usuario.perfis;let i = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<input type="hidden" [(ngModel)]="perfil.id"
+									value="{{perfil.id}}" name="perfil[{{i}}].id">
+								<td class="col s6 perfil-titulo">{{perfil.titulo}}</td>
+							</tr>
+						</tbody>
+
+					</div>
+
+				</table>
+
+			</div>
+
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/usuario']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

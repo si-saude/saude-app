@@ -54,14 +54,14 @@
 				name="relatorioMedico.medicoPrestador" 
 				[(ngModel)]="relatorioMedico.medicoPrestador">
 		</div>
-		
+		<!-- 
 		<div class="input-field col s12">
 			<label for="relatorioMedico.medicoPrestador">Médico Prestador</label> 
 			<textarea class="materialize-textarea" id="relatorioMedico.medicoPrestador" 
 					[(ngModel)]="relatorioMedico.medicoPrestador" 
 					name="relatorioMedico.medicoPrestador"></textarea>
 		</div>
-		
+		 -->
 		<div class="input-field col s12">
 			<label for="relatorioMedico.resumo">Resumo</label> 
 			<textarea class="materialize-textarea" id="relatorioMedico.resumo" 
@@ -89,11 +89,11 @@
 
 	<div class='row row-btns'>
 		<div class="col s6">
-			<button type="submit" class="btn btn-primary">Salvar</button>
+			<a [routerLink]="['/relatorio-medico']"
+				class="btn btn-primary btn-listar">Listar</a>
 		</div>
 		<div class="col s6">
-			<a [routerLink]="['/relatorio-medico']"
-				class="btn btn-primary btn-listar-perfis">Listar</a>
+			<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 		</div>
 	</div>
 </form>

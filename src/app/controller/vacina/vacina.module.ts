@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VacinaComponent } from './vacina.component';
 import { VacinaService } from './vacina.service';
 import { VacinaFormComponent } from './vacina-form/vacina-form.component';
+import { VacinaFormDetailComponent } from './vacina-form/vacina-form-detail.component';
 import { VacinaRoutingModule } from './vacina.routing.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        VacinaComponent,
-       VacinaFormComponent
+       VacinaFormComponent,
+       VacinaFormDetailComponent
      ],
      imports: [
         VacinaRoutingModule,

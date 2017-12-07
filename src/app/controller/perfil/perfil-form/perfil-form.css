@@ -1,7 +1,7 @@
-.permissao-leitura {
+.permissao-valor {
 	margin-top: 45px;
 }
 
-.permissao-escrita {
-	margin-top: 45px;	
+.btn-remove-permission {
+    margin-top: 35px;
 }

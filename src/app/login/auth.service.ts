@@ -34,7 +34,7 @@ export class AuthService extends GenericService {
                     if (this.usuario.getPerfis().length > 0) 
                         this.usuario.getPerfis().forEach( perf => {
                             perf.getPermissoes().forEach( perm => {
-                                localStorage.setItem( perm.getFuncionalidade(), JSON.stringify( perm ) );
+                                localStorage.setItem( perm.getFuncionalidade(), perm.getValor().toString() );
                             } );
                         } );
                     this.showMenu.emit(true);

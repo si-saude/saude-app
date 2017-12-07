@@ -8,8 +8,9 @@ import { GenericFilter } from './generic.filter';
 import { GenericComponent } from './generic.component';
 import { GenericService } from './generic.service';
 import { TypeFilter } from './type.filter';
+import { ChildGuard } from './child.guard';
 
-export abstract class GenericListComponent<T, F extends GenericFilter> extends GenericComponent implements OnInit {
+export abstract class GenericListComponent<T, F extends GenericFilter, C extends ChildGuard> extends GenericComponent implements OnInit {
     @ViewChild( 'arquivo' ) inputElArquivo: ElementRef;
     protected titulo: string;
     protected corTitulo;
@@ -28,8 +29,9 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
     protected typeFilter;
     protected canImport;
     private tempDelete;
+    protected canRemove: boolean;
 
-    constructor( protected service: GenericService, protected filter: F ) {
+    constructor( protected service: GenericService, protected filter: F, protected guard: C ) {
         super();
         this.corTitulo = GlobalVariable.COLOR_TITLE;
         this.msgError = '';
@@ -46,11 +48,17 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
             complete: function() { }
         }];
         this.canImport = false;
+        this.canRemove = false;
 
     }
 
     ngOnInit() {
         this.list();
+        
+        setTimeout(() => {
+            this.canRemove = this.guard.canRemove;
+        }, 200);
+        
     }
 
     typeFilters(): Array<string> {
@@ -177,8 +185,10 @@ export abstract class GenericListComponent<T, F extends GenericFilter> extends G
     }
 
     list() {
+        console.log(this.filter);
         this.service.list( this.filter )
             .then( res => {
+                console.log(res.json());
                 this.canImport = true;
                 this.showPreload = false;
                 this.array = JSON.parse( JSON.stringify( res.json() ) ).list;

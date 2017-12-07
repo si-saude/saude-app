@@ -1,0 +1,226 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<h5 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h5>
+<div class="row">
+
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s4"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s4"><a RouterLinkActive="active"
+						href="#curriculo">Currículo</a></li>
+					<li class="tab col s4"><a RouterLinkActive="active"
+						href="#profissionalConselho">Conselho</a></li>
+				</ul>
+			</div>
+
+			<div id="dadosGerais">
+
+				<div class="row">
+					<div class="input-field col s8">
+						<label for="empregado">Nome do Empregado</label> <input
+							type="text" disabled
+							name="profissionalSaude.empregado.pessoa.nome"
+							[(ngModel)]="profissionalSaude.empregado.pessoa.nome">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="dataAso">Data do ASO</label>
+						<my-date-picker name="dataAso" disabled
+							[options]="myDatePickerOptions" [(ngModel)]="dataAso"
+							placeholder="Data do ASO"> </my-date-picker>
+					</div>
+				</div>
+
+				<div class="row">
+				
+					<div class="input-field col s4">
+						<label for="matricula">Matricula</label> <input disabled
+							id="matricula" maxlength="10" type="text"
+							[(ngModel)]="profissionalSaude.empregado.matricula"
+							name="matricula">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="ramal" maxlength="12">Ramal</label> <input disabled
+							id="ramal" type="text"
+							[(ngModel)]="profissionalSaude.empregado.ramal" name="ramal">
+					</div>
+
+					<div class="input-field col s4">
+						<label for="chave">Chave</label> <input disabled id="chave" disabled
+							type="text" [(ngModel)]="profissionalSaude.empregado.chave"
+							maxlength="8" name="chave">
+					</div>
+				</div>
+
+				<div class="row selects">
+
+					<div class="input-field col s6">
+						<fieldset>
+							<legend>Localização</legend>
+							<select name="localizacao" class="browser-default" disabled
+								[(ngModel)]="profissionalSaude.localizacao.id">
+								<option disabled selected value=0>Selecione uma localização</option>
+								<option *ngFor="let localizacao of localizacoes"
+									value="{{localizacao.id}}">{{localizacao.nome}}</option>
+							</select>
+						</fieldset>
+					</div>
+
+					<div class="input-field col s6">
+						<fieldset>
+							<legend>Equipe</legend>
+							<select name="equipe" class="browser-default" disabled
+								[(ngModel)]="profissionalSaude.equipe.id">
+								<option selected value=0>Selecione uma equipe</option>
+								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+							</select>
+						</fieldset>
+					</div>
+					
+				</div>
+
+			</div>
+
+			<div id="curriculo">
+
+				<div class="form-group">
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="historico" maxlength="4096">Histórico</label>
+							<textarea id="historico" class="materialize-textarea" disabled
+								[(ngModel)]="profissionalSaude.curriculo.historico"
+								name="curriculo.historico"
+								date-error="É necessário informar um histórico."></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="formacao" maxlength="512">Formação</label>
+							<textarea id="formacao" class="materialize-textarea" disabled
+								[(ngModel)]="profissionalSaude.curriculo.formacao"
+								name="curriculo.formacao"></textarea>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="atuacao" maxlength="512">Atuação</label>
+							<textarea id="atuacao" class="materialize-textarea" disabled
+								[(ngModel)]="profissionalSaude.curriculo.atuacao"
+								name="curriculo.atuacao"></textarea>
+						</div>
+					</div>
+
+					<fieldset>
+						<legend class="legend">
+							Cursos 
+						</legend>
+						<div class="form-group">
+							<div
+								*ngFor="let curriculoCurso of profissionalSaude.curriculo.curriculoCursos;let i = index">
+
+								<div class="row">
+									<div class="input-field col s6">
+										<fieldset>
+											<legend>Curso</legend>
+											<select class="browser-default" disabled
+												name="profissionalSaude.curriculo.curriculoCursos[{{i}}].curso.id"
+												[(ngModel)]="profissionalSaude.curriculo.curriculoCursos[i].curso.id">
+												<option selected disabled value=0>Selecione uma curso</option>
+												<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}
+											</option>
+											</select>
+										</fieldset>
+									</div>
+
+									<div class="input-field col s4">
+										<label for="dataCurriculoCurso">Data</label>
+										<my-date-picker name="data" [options]="myDatePickerOptions" disabled
+											name="profissionalSaude.curriculo.curriculoCursos[{{i}}].data"
+											[(ngModel)]="dataCurriculoCursos[i]" placeholder="Data">
+										</my-date-picker>
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</fieldset>
+
+				</div>
+
+			</div>
+
+			<div id="profissionalConselho">
+
+				<div class="form-group">
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="conselho" maxlength="200">Conselho</label> <input
+								id="conselho" type="text" disabled
+								name="profissionalSaude.profissionalConselho.conselho"
+								name="profissionalConselho.conselho"
+								[(ngModel)]="profissionalSaude.profissionalConselho.conselho">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s4">
+							<label for="numero" maxlength="26">Numero</label> <input
+								id="numero" type="text" disabled
+								name="profissionalSaude.profissionalConselho.numero"
+								[(ngModel)]="profissionalSaude.profissionalConselho.numero">
+						</div>
+
+						<div class="input-field col s4">
+							<label for="uf" maxlength="2">UF</label> <input id="uf" disabled
+								type="text" name="profissionalSaude.profissionalConselho.uf"
+								[(ngModel)]="profissionalSaude.profissionalConselho.uf">
+						</div>
+
+						<div class="input-field col s4">
+							<label for="vencimento" maxlength="2">Vencimento</label>
+							<my-date-picker name="vencimentoProfissionalConselho" disabled
+								[options]="myDatePickerOptions"
+								[(ngModel)]="vencimentoProfissionalConselho"
+								placeholder="Vencimento"></my-date-picker>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/profissional-saude']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+		</div>
+
+	</form>
+</div>

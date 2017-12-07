@@ -10,11 +10,13 @@ import { EmpregadoService } from './empregado.service';
 import { EmpregadoRoutingModule } from './empregado.routing.module';
 import { SharedModule } from './../shared.module';
 import { EmpregadoFormComponent } from './empregado-form/empregado-form.component';
+import { EmpregadoFormDetailComponent } from './empregado-form/empregado-form-detail.component';
 
 @NgModule({
     declarations: [
        EmpregadoComponent,
-       EmpregadoFormComponent
+       EmpregadoFormComponent,
+       EmpregadoFormDetailComponent
      ],
      imports: [
         EmpregadoRoutingModule,

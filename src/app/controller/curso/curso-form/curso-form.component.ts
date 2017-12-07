@@ -45,7 +45,6 @@ export class CursoFormComponent extends GenericFormComponent implements OnInit {
     
     save() {
         super.save(new CursoBuilder().clone(this.curso));
-    }   
-    
+    }
     
 }

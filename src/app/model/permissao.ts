@@ -3,8 +3,7 @@ import { Perfil } from './perfil';
 export class Permissao {
     private id: number = 0;
     private funcionalidade: string = "";
-    private leitura: boolean;
-    private escrita: boolean;
+    private valor: boolean;
     private perfil: Perfil;
     private version: number;
 
@@ -24,20 +23,12 @@ export class Permissao {
         this.funcionalidade = funcionalidade;
     }
     
-    getLeitura() {
-        return this.leitura;
+    getValor() {
+        return this.valor;
     }
     
-    setLeitura(leitura: boolean) {
-        this.leitura = leitura;
-    }
-    
-    getEscrita() {
-        return this.escrita;
-    }
-    
-    setEscrita(escrita: boolean) {
-        this.escrita = escrita;
+    setValor(valor: boolean) {
+        this.valor = valor;
     }
     
     getPerfil() {

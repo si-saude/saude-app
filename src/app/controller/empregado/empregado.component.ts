@@ -4,6 +4,7 @@ import { GlobalVariable } from './../../global';
 import { Empregado } from './../../model/empregado';
 import { EmpregadoService } from './empregado.service';
 import { EmpregadoFilter } from './empregado.filter';
+import { EmpregadoGuard } from './../../guards/guards-child/empregado.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -11,11 +12,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './empregado.component.html',
   styleUrls: ['./empregado.component.css', '../../../assets/css/list-component.css']
 })
-export class EmpregadoComponent extends GenericListComponent<Empregado, EmpregadoFilter> {
+export class EmpregadoComponent extends GenericListComponent<Empregado, EmpregadoFilter, EmpregadoGuard> {
     
-    constructor(empregadoService: EmpregadoService) {
-        let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-        super(empregadoService, empregadoFilter);   
+    constructor(empregadoService: EmpregadoService, empregadoGuard: EmpregadoGuard) {
+        super(empregadoService, new EmpregadoFilter(), empregadoGuard);
     }
     
     initializeFilterDate() {

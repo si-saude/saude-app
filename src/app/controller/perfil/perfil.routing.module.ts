@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PerfilComponent } from './perfil.component';
 import { PerfilFormComponent } from './perfil-form/perfil-form.component';
+import { PerfilFormDetailComponent } from './perfil-form/perfil-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const perfilRoutes: Routes = [
@@ -11,7 +12,8 @@ const perfilRoutes: Routes = [
     { path: 'cadastrar', component: PerfilFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: PerfilFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: PerfilFormDetailComponent}
 ];
 
 @NgModule({

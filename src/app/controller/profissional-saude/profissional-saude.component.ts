@@ -5,6 +5,7 @@ import { Profissional } from './../../model/profissional';
 import { ProfissionalSaudeService } from './profissional-saude.service';
 import { ProfissionalSaudeFilter } from './profissional-saude.filter';
 import { GenericListComponent } from './../../generics/generic.list.component';
+import { ProfissionalSaudeGuard } from './../../guards/guards-child/profissional-saude.guard';
 import { TypeFilter } from './../../generics/type.filter';
 
 @Component({
@@ -12,11 +13,10 @@ import { TypeFilter } from './../../generics/type.filter';
   templateUrl: './profissional-saude.component.html',
   styleUrls: ['./profissional-saude.component.css', '../../../assets/css/list-component.css']
 })
-export class ProfissionalSaudeComponent extends GenericListComponent<Profissional, ProfissionalSaudeFilter> {
+export class ProfissionalSaudeComponent extends GenericListComponent<Profissional, ProfissionalSaudeFilter, ProfissionalSaudeGuard> {
     
-    constructor(profissionalSaudeService: ProfissionalSaudeService) {
-        let profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-        super(profissionalSaudeService, profissionalSaudeFilter);
+    constructor(profissionalSaudeService: ProfissionalSaudeService, profissionalSaudeGuard: ProfissionalSaudeGuard) {
+        super(profissionalSaudeService, new ProfissionalSaudeFilter(), profissionalSaudeGuard);
     }
     
     initializeFilterDate() {

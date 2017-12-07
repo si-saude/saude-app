@@ -1,4 +1,3 @@
-
 export class BooleanFilter{
     private value: number;
 

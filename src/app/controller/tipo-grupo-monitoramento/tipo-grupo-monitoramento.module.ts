@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TipoGrupoMonitoramentoComponent } from './tipo-grupo-monitoramento.component';
 import { TipoGrupoMonitoramentoService } from './tipo-grupo-monitoramento.service';
 import { TipoGrupoMonitoramentoFormComponent } from './tipo-grupo-monitoramento-form/tipo-grupo-monitoramento-form.component';
+import { TipoGrupoMonitoramentoFormDetailComponent } from './tipo-grupo-monitoramento-form/tipo-grupo-monitoramento-form-detail.component';
 import { TipoGrupoMonitoramentoRoutingModule } from './tipo-grupo-monitoramento.routing.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        TipoGrupoMonitoramentoComponent,
-       TipoGrupoMonitoramentoFormComponent
+       TipoGrupoMonitoramentoFormComponent,
+       TipoGrupoMonitoramentoFormDetailComponent
      ],
      imports: [
         TipoGrupoMonitoramentoRoutingModule,

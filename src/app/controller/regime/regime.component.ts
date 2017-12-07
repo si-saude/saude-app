@@ -4,17 +4,17 @@ import { Regime } from './../../model/regime';
 import { RegimeService } from './regime.service';
 import { RegimeFilter } from './regime.filter';
 import { GenericListComponent } from './../../generics/generic.list.component';
+import { RegimeGuard } from './../../guards/guards-child/regime.guard';
 
 @Component({
   selector: 'app-regime',
   templateUrl: './regime.component.html',
   styleUrls: ['./regime.component.css', '../../../assets/css/list-component.css']
 })
-export class RegimeComponent extends GenericListComponent<Regime, RegimeFilter> {
+export class RegimeComponent extends GenericListComponent<Regime, RegimeFilter, RegimeGuard> {
 
-  constructor(service: RegimeService) {
-      let regimeFilter: RegimeFilter = new RegimeFilter();
-      super(service, regimeFilter);
+  constructor(service: RegimeService, regimeGuard: RegimeGuard) {
+      super(service, new RegimeFilter(), regimeGuard);
   }
   
 }

@@ -8,6 +8,7 @@ import { GlobalVariable } from './../../global';
 import { Gerencia } from './../../model/gerencia';
 import { GerenciaService } from './gerencia.service';
 import { GerenciaFilter } from './gerencia.filter';
+import { GerenciaGuard } from './../../guards/guards-child/gerencia.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -15,11 +16,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './gerencia.component.html',
   styleUrls: ['./gerencia.component.css', '../../../assets/css/list-component.css']
 })
-export class GerenciaComponent  extends GenericListComponent<Gerencia, GerenciaFilter> {
+export class GerenciaComponent  extends GenericListComponent<Gerencia, GerenciaFilter, GerenciaGuard> {
 
-  constructor( gerenciaService: GerenciaService) {
-      let gerenciaFilter: GerenciaFilter = new GerenciaFilter(); 
-      super(gerenciaService, gerenciaFilter);
+  constructor( gerenciaService: GerenciaService, gerenciaGuard: GerenciaGuard) {
+      super(gerenciaService, new GerenciaFilter(), gerenciaGuard);
   }
     
 }

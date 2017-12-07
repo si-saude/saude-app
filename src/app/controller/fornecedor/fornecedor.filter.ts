@@ -4,7 +4,7 @@ import { EnderecoFilter } from './../endereco/endereco.filter';
 
 export class FornecedorFilter extends GenericFilter {
     private razaoSocial: string;
-    private tipoPessoa: string;
+    private tipoPessoa: string = "";
     private cpfCnpj: string;
     private codigoSap: string;
     private email: string;

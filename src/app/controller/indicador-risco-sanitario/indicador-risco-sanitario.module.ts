@@ -7,11 +7,13 @@ import { IndicadorRiscoSanitarioService } from './indicador-risco-sanitario.serv
 import { IndicadorRiscoSanitarioRoutingModule } from './indicador-risco-sanitario.routing.module';
 import { SharedModule } from './../shared.module';
 import { IndicadorRiscoSanitarioFormComponent } from './indicador-risco-sanitario-form/indicador-risco-sanitario-form.component';
+import { IndicadorRiscoSanitarioFormDetailComponent } from './indicador-risco-sanitario-form/indicador-risco-sanitario-form-detail.component';
 
 @NgModule({
     declarations: [
        IndicadorRiscoSanitarioComponent,
-       IndicadorRiscoSanitarioFormComponent
+       IndicadorRiscoSanitarioFormComponent,
+       IndicadorRiscoSanitarioFormDetailComponent
      ],
      imports: [
         IndicadorRiscoSanitarioRoutingModule,

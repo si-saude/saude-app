@@ -46,13 +46,12 @@
 							<select class="browser-default" #curso>
 								<option disabled selected value=0>Selecione um curso</option>
 								<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}</option>
-
 							</select>
 						</div>
 
 						<div class="col s2">
 							<a
-								class="btn-floating waves-effect waves-light green btn-remove-permission"
+								class="btn-floating waves-effect waves-light green btn-add"
 								(click)="addCurso(curso.value)"> <i
 								class="material-icons center-icon">add</i>
 							</a>
@@ -110,11 +109,11 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary">Salvar</button>
+				<a [routerLink]="['/cargo']"
+					class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/cargo']"
-					class="btn btn-primary btn-listar-perfis">Listar</a>
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 	</form>

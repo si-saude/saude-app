@@ -13,9 +13,12 @@
 
 	<div *ngFor="let gerencia of array">
 		<div class="row row-collection">
-			<div class="col s10">
+			<div class="col s9">
 				<a [routerLinkActive]="['active']" class="collection-item">{{gerencia.codigoCompleto}}</a>
 			</div>
+			<div class="col s1">
+				<a [routerLink]="['/gerencia/detalhe', gerencia.id]"><i class="material-icons">details</i></a>
+		 	</div>
 			<div class="col s1">
 				<a [routerLink]="['/gerencia/editar', gerencia.id]"><i class="material-icons">mode_edit</i></a>
 		 	</div>
@@ -71,25 +74,39 @@
 
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<input type="text" id="codigo" [(ngModel)]="filter.codigo" name="codigo">
 			<label for="codigo">Codigo</label>
+			<input type="text" id="codigo" [(ngModel)]="filter.codigo" name="codigo">
 		</div>
 	</div>
 	
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<input type="text" id="codigoCompleto" [(ngModel)]="filter.codigoCompleto" name="codigoCompleto">
-			<label for="codigoCompleto">Codigo completo</label>
+			<label for="descricao">Descrição</label>
+			<input type="text" id="descricao" [(ngModel)]="filter.descricao" name="descricao">
 		</div>
 	</div>
-
+<!-- 
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<input type="text" id="descricao" [(ngModel)]="filter.descricao" name="descricao">
-			<label for="descricao">Descricao</label>
+			<label for="gerente.nome">Gerente (nome)</label>
+			<input type="text" id="filter.gerente.nome" [(ngModel)]="filter.gerente.nome" name="gerente.nome">
 		</div>
 	</div>
-
+	
+	<div class="input-field col s8">
+		<div class="modal-content">
+			<label for="secretario1.nome">Secretário (nome)</label>
+			<input type="text" id="filter.secretario1.nome" [(ngModel)]="filter.secretario1.nome" name="secretario1.nome">
+		</div>
+	</div>
+	
+	<div class="input-field col s8">
+		<div class="modal-content">
+			<label for="secretario2.nome">Secretário (nome)</label>
+			<input type="text" id="filter.secretario2.nome" [(ngModel)]="filter.secretario2.nome" name="secretario2.nome">
+		</div>
+	</div>
+ -->
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
     	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="setFilter()">Filtrar</a>
@@ -101,10 +118,10 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
-	<h5 class="titleModalDelete">Confirmação para remoção</h5>
-	<p class="paragraphModalDelete">Deseja realmente excluir esse
+	<h5 class="title-modal-delete">Confirmação para remoção</h5>
+	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
 		poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">

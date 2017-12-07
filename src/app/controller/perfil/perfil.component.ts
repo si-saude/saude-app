@@ -8,6 +8,7 @@ import { GlobalVariable } from './../../global';
 import { Perfil } from './../../model/perfil';
 import { PerfilService } from './perfil.service';
 import { PerfilFilter } from './perfil.filter';
+import { PerfilGuard } from './../../guards/guards-child/perfil.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -15,11 +16,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css', '../../../assets/css/list-component.css']
 })
-export class PerfilComponent  extends GenericListComponent<Perfil, PerfilFilter>{
+export class PerfilComponent  extends GenericListComponent<Perfil, PerfilFilter, PerfilGuard>{
     
-  constructor( perfilService: PerfilService) {
-      let perfilFilter: PerfilFilter = new PerfilFilter();
-      super(perfilService, perfilFilter);
+  constructor( perfilService: PerfilService, perfilGuard: PerfilGuard) {
+      super(perfilService, new PerfilFilter(), perfilGuard);
   }
     
 }

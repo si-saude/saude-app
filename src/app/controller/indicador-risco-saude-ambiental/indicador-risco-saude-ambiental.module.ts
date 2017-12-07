@@ -7,11 +7,13 @@ import { IndicadorRiscoSaudeAmbientalService } from './indicador-risco-saude-amb
 import { IndicadorRiscoSaudeAmbientalRoutingModule } from './indicador-risco-saude-ambiental.routing.module';
 import { SharedModule } from './../shared.module';
 import { IndicadorRiscoSaudeAmbientalFormComponent } from './indicador-risco-saude-ambiental-form/indicador-risco-saude-ambiental-form.component';
+import { IndicadorRiscoSaudeAmbientalFormDetailComponent } from './indicador-risco-saude-ambiental-form/indicador-risco-saude-ambiental-form-detail.component';
 
 @NgModule({
     declarations: [
        IndicadorRiscoSaudeAmbientalComponent,
-       IndicadorRiscoSaudeAmbientalFormComponent
+       IndicadorRiscoSaudeAmbientalFormComponent,
+       IndicadorRiscoSaudeAmbientalFormDetailComponent
      ],
      imports: [
         IndicadorRiscoSaudeAmbientalRoutingModule,

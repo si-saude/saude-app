@@ -10,11 +10,13 @@ import { ProfissionalSaudeService } from './profissional-saude.service';
 import { ProfissionalSaudeRoutingModule } from './profissional-saude.routing.module';
 import { SharedModule } from './../shared.module';
 import { ProfissionalSaudeFormComponent } from './profissional-saude-form/profissional-saude-form.component';
+import { ProfissionalSaudeFormDetailComponent } from './profissional-saude-form/profissional-saude-form-detail.component';
 
 @NgModule({
     declarations: [
        ProfissionalSaudeComponent,
-       ProfissionalSaudeFormComponent
+       ProfissionalSaudeFormComponent,
+       ProfissionalSaudeFormDetailComponent
      ],
      imports: [
         ProfissionalSaudeRoutingModule,

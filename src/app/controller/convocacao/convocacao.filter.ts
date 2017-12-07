@@ -3,8 +3,13 @@ import { ProfissiogramaFilter } from './../profissiograma/profissiograma.filter'
 
 export class ConvocacaoFilter extends GenericFilter {
     private titulo: string;
-    private tipo: string;
+    private tipo: string = "";
     private profissiograma: ProfissiogramaFilter;
+
+    constructor() {
+        super();    
+        this.profissiograma = new ProfissiogramaFilter();
+    }
     
     public getTitulo() {
         return this.titulo;

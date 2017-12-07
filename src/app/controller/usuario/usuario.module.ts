@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioComponent } from './usuario.component';
 import { UsuarioService } from './usuario.service';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
+import { UsuarioFormDetailComponent } from './usuario-form/usuario-form-detail.component';
 import { UsuarioRoutingModule } from './usuario.routing.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        UsuarioComponent,
-       UsuarioFormComponent
+       UsuarioFormComponent,
+       UsuarioFormDetailComponent
      ],
      imports: [
         UsuarioRoutingModule,

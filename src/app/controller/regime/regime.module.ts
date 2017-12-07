@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegimeComponent } from './regime.component';
 import { RegimeService } from './regime.service';
 import { RegimeFormComponent } from './regime-form/regime-form.component';
+import { RegimeFormDetailComponent } from './regime-form/regime-form-detail.component';
 import { RegimeRoutingModule } from './regime.routing.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        RegimeComponent,
-       RegimeFormComponent
+       RegimeFormComponent,
+       RegimeFormDetailComponent
      ],
      imports: [
         RegimeRoutingModule,

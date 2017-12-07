@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IndicadorRiscoErgonomicoComponent } from './indicador-risco-ergonomico.component';
 import { IndicadorRiscoErgonomicoFormComponent } from './indicador-risco-ergonomico-form/indicador-risco-ergonomico-form.component';
+import { IndicadorRiscoErgonomicoFormDetailComponent } from './indicador-risco-ergonomico-form/indicador-risco-ergonomico-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const indicadorRiscoErgonomicoRoutes: Routes = [
@@ -11,7 +12,8 @@ const indicadorRiscoErgonomicoRoutes: Routes = [
     { path: 'cadastrar', component: IndicadorRiscoErgonomicoFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: IndicadorRiscoErgonomicoFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: IndicadorRiscoErgonomicoFormDetailComponent}
 ];
 
 @NgModule({

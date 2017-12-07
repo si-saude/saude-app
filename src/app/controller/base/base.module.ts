@@ -6,22 +6,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BaseComponent } from './base.component';
 import { BaseService } from './base.service';
 import { BaseFormComponent } from './base-form/base-form.component';
+import { BaseFormDetailComponent } from './base-form/base-form-detail.component';
 import { BaseRoutingModule } from './base.routing.module';
 import { SharedModule } from './../shared.module';
-import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 @NgModule({
     declarations: [
        BaseComponent,
-       BaseFormComponent
+       BaseFormComponent,
+       BaseFormDetailComponent
      ],
      imports: [
         BaseRoutingModule,
         SharedModule
      ],
      providers: [
-        BaseService,
-        CanDeactivateGuard
+        BaseService
      ]
 })
 export class BaseModule{}

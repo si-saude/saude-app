@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { GrupoMonitoramentoComponent } from './grupo-monitoramento.component';
 import { GrupoMonitoramentoFormComponent } from './grupo-monitoramento-form/grupo-monitoramento-form.component';
+import { GrupoMonitoramentoFormDetailComponent } from './grupo-monitoramento-form/grupo-monitoramento-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const grupoMonitoramentoRoutes: Routes = [
@@ -11,7 +12,8 @@ const grupoMonitoramentoRoutes: Routes = [
     { path: 'cadastrar', component: GrupoMonitoramentoFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: GrupoMonitoramentoFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: GrupoMonitoramentoFormDetailComponent}
 ];
 
 @NgModule({

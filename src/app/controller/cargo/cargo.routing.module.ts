@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CargoComponent } from './cargo.component';
 import { CargoFormComponent } from './cargo-form/cargo-form.component';
+import { CargoFormDetailComponent } from './cargo-form/cargo-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
     
 const cargoRoutes: Routes = [
@@ -11,7 +12,8 @@ const cargoRoutes: Routes = [
     { path: 'cadastrar', component: CargoFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: CargoFormComponent,
-        canDeactivate: [CanDeactivateGuard] }
+        canDeactivate: [CanDeactivateGuard] },
+    { path: 'detalhe/:id', component: CargoFormDetailComponent }
 ];
 
 @NgModule({

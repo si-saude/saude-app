@@ -4,6 +4,7 @@ import { GlobalVariable } from './../../global';
 import { Profissiograma } from './../../model/profissiograma';
 import { ProfissiogramaService } from './profissiograma.service';
 import { ProfissiogramaFilter } from './profissiograma.filter';
+import { ProfissiogramaGuard } from './../../guards/guards-child/profissiograma.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -11,11 +12,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './profissiograma.component.html',
   styleUrls: ['./profissiograma.component.css', '../../../assets/css/list-component.css']
 })
-export class ProfissiogramaComponent extends GenericListComponent<Profissiograma, ProfissiogramaFilter> {
+export class ProfissiogramaComponent extends GenericListComponent<Profissiograma, ProfissiogramaFilter, ProfissiogramaGuard> {
     
-    constructor(profissiogramaService: ProfissiogramaService) {
-        let profissiogramaFilter: ProfissiogramaFilter = new ProfissiogramaFilter();
-        super(profissiogramaService, profissiogramaFilter);   
+    constructor(profissiogramaService: ProfissiogramaService, profissiogramaGuard: ProfissiogramaGuard) {
+        super(profissiogramaService, new ProfissiogramaFilter(), profissiogramaGuard);   
     }
     
 }

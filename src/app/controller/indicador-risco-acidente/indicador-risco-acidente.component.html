@@ -13,8 +13,12 @@
 
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
-			<div class="col s10">
+			<div class="col s9">
 				<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/indicador-risco-acidente/detalhe', a.id]"><i
+					class="material-icons">details</i></a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/indicador-risco-acidente/editar', a.id]"><i
@@ -82,10 +86,10 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
-	<h5 class="titleModalDelete">Confirmação para remoção</h5>
-	<p class="paragraphModalDelete">Deseja realmente excluir esse
+	<h5 class="title-modal-delete">Confirmação para remoção</h5>
+	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
 		poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">

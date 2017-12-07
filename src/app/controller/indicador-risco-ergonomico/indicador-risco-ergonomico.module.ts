@@ -7,11 +7,13 @@ import { IndicadorRiscoErgonomicoService } from './indicador-risco-ergonomico.se
 import { IndicadorRiscoErgonomicoRoutingModule } from './indicador-risco-ergonomico.routing.module';
 import { SharedModule } from './../shared.module';
 import { IndicadorRiscoErgonomicoFormComponent } from './indicador-risco-ergonomico-form/indicador-risco-ergonomico-form.component';
+import { IndicadorRiscoErgonomicoFormDetailComponent } from './indicador-risco-ergonomico-form/indicador-risco-ergonomico-form-detail.component';
 
 @NgModule({
     declarations: [
        IndicadorRiscoErgonomicoComponent,
-       IndicadorRiscoErgonomicoFormComponent
+       IndicadorRiscoErgonomicoFormComponent,
+       IndicadorRiscoErgonomicoFormDetailComponent
      ],
      imports: [
         IndicadorRiscoErgonomicoRoutingModule,

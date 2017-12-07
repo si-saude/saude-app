@@ -25,7 +25,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 @Component( {
     selector: 'app-instalacao-form',
     templateUrl: './instalacao-form.html',
-    styleUrls: ['./instalacao-form.css', './../../../../assets/css/form-component.css']
+    styleUrls: ['./../../../../assets/css/form-component.css', './instalacao-form.css']
 } )
 export class InstalacaoFormComponent extends GenericFormComponent implements OnInit {
     instalacao: Instalacao;

@@ -28,7 +28,7 @@ import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
 @Component( {
     selector: 'app-profissional-saude-form',
     templateUrl: './profissional-saude-form.html',
-    styleUrls: ['./profissional-saude-form.css', './../../../../assets/css/form-component.css']
+    styleUrls: ['./../../../../assets/css/form-component.css', './profissional-saude-form.css']
 } )
 export class ProfissionalSaudeFormComponent extends GenericFormComponent implements OnInit {
     
@@ -104,65 +104,14 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
             
     }
     
-//    loadAssinatura(){
-//        let inputEl: HTMLInputElement = this.inputEl.nativeElement;
-//        
-//        if(inputEl.files.length > 0){
-//            let reader = new FileReader();
-//            this.assinaturaSrcStyle = { 'width': '500px', 'heigth': '500px' };
-//            let component = this;
-//            
-//            reader.onload = function () {
-//                if ( reader.result.toString().substring(0,40).indexOf("stream") !== -1 ) {
-//                    component.assinaturaSrc = reader.result.toString().replace('data:application/octet-stream;base64','data:image/png;base64');
-//                } else {
-//                    component.assinaturaSrc = reader.result.toString().replace('data:;base64','data:image/png;base64');
-//                }
-//            };
-//            reader.readAsDataURL(new Blob([inputEl.files[0]]));
-//        } else {
-//            this.assinaturaSrcStyle = { 'width': '0px', 'heigth': '0px' };
-//        }
-//    }
-//    
-//    save() {
-//        this.verifyAndSetDates();
-//        
-//        let inputEl: HTMLInputElement = this.inputEl.nativeElement;          
-//                
-//        if(inputEl.files.length > 0){
-//            let reader = new FileReader();
-//            let array : Uint8Array;
-//            let component = this;
-//            
-//            reader.onload = function () {
-//                let arrayBuffer:ArrayBuffer = reader.result;
-//                array = new Uint8Array( arrayBuffer );
-//                let profissional:Profissional = new ProfissionalSaudeBuilder().clone(component.profissionalSaude); 
-//                profissional.setAssinatura(array);
-//                component.salvar(profissional);
-//            };
-//            
-//            reader.readAsArrayBuffer(new Blob([inputEl.files[0]]));
-//        }else{
-//            super.save(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
-//        }
-//    }
-    
     save(){
         this.verifyAndSetDates();
-        if ( this.verifyIfPessoaExist() )
-            super.save(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
-        else
-            this.toastParams = ['Por favor, selecione corretamente um empregado', 4000];
-            this.globalActions.emit('toast');
+        this.verifyIfPessoaExist();
+        super.save(new ProfissionalSaudeBuilder().clone(this.profissionalSaude));
     }
     
     verifyIfPessoaExist() {
-        let empregado = this.empregados.find(e => {
-            return JSON.stringify(this.profissionalSaude.getEmpregado()) === JSON.stringify(e);
-        })
-        if ( empregado != undefined )
+        if ( this.profissionalSaude.getEmpregado().getId() > 0 )
             return true;
         
         return false;

@@ -10,11 +10,13 @@ import { ProfissiogramaService } from './profissiograma.service';
 import { ProfissiogramaRoutingModule } from './profissiograma.routing.module';
 import { SharedModule } from './../shared.module';
 import { ProfissiogramaFormComponent } from './profissiograma-form/profissiograma-form.component';
+import { ProfissiogramaFormDetailComponent } from './profissiograma-form/profissiograma-form-detail.component';
 
 @NgModule({
     declarations: [
        ProfissiogramaComponent,
-       ProfissiogramaFormComponent
+       ProfissiogramaFormComponent,
+       ProfissiogramaFormDetailComponent
      ],
      imports: [
         ProfissiogramaRoutingModule,

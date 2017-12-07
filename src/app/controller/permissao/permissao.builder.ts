@@ -39,10 +39,8 @@ export class PermissaoBuilder extends GenericBuilder {
         clonePermissao.setFuncionalidade(funcionalidade);
         
         clonePermissao.setId(this.getValue(permissao,"getId"));
+        clonePermissao.setValor(this.getValue(permissao,"getValor"));
         clonePermissao.setVersion(this.getValue(permissao,"getVersion"));
-        clonePermissao.setEscrita(this.getValue(permissao,"getEscrita"));
-        clonePermissao.setFuncionalidade(this.getValue(permissao,"getFuncionalidade"));
-        clonePermissao.setLeitura(this.getValue(permissao,"getLeitura"));
         clonePermissao.setPerfil(new Perfil());
         
         return clonePermissao;

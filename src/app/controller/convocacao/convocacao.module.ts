@@ -8,13 +8,15 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { ConvocacaoComponent } from './convocacao.component';
 import { ConvocacaoService } from './convocacao.service';
 import { ConvocacaoFormComponent } from './convocacao-form/convocacao-form.component';
+import { ConvocacaoFormDetailComponent } from './convocacao-form/convocacao-form-detail.component';
 import { ConvocacaoRoutingModule } from './convocacao.routing.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        ConvocacaoComponent,
-       ConvocacaoFormComponent
+       ConvocacaoFormComponent,
+       ConvocacaoFormDetailComponent
      ],
      imports: [
         ConvocacaoRoutingModule,
