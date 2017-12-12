@@ -4,6 +4,7 @@ import { GlobalVariable } from './../../global';
 import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
 import { EmpregadoConvocacaoService } from './empregado-convocacao.service';
 import { EmpregadoConvocacaoFilter } from './empregado-convocacao.filter';
+import { EmpregadoConvocacaoGuard } from './../../guards/guards-child/empregado-convocacao.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -13,9 +14,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 
 export class EmpregadoConvocacaoComponent 
-    extends GenericListComponent<EmpregadoConvocacao, EmpregadoConvocacaoFilter> {
+    extends GenericListComponent<EmpregadoConvocacao, EmpregadoConvocacaoFilter, EmpregadoConvocacaoGuard> {
     
-    constructor(empregadoConvocacaoService: EmpregadoConvocacaoService) {
-        super(empregadoConvocacaoService, new EmpregadoConvocacaoFilter());
+    constructor(empregadoConvocacaoService: EmpregadoConvocacaoService,
+                empregadoConvocacaoGuard: EmpregadoConvocacaoGuard) {
+        super(empregadoConvocacaoService, new EmpregadoConvocacaoFilter(), empregadoConvocacaoGuard);
     }   
 }

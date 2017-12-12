@@ -39,7 +39,11 @@
 			<div id="cursos">
 
 				<fieldset>
-					<legend>Cursos</legend>
+					<legend>Cursos <a
+								class="btn-floating waves-effect waves-light green btn-add"
+								(click)="getCursos()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
 					<div class="row row-curso">
 
 						<div class="input-field col s4">
@@ -48,7 +52,6 @@
 								<option *ngFor="let curso of cursos" value="{{curso.id}}">{{curso.nome}}</option>
 							</select>
 						</div>
-
 						<div class="col s2">
 							<a
 								class="btn-floating waves-effect waves-light green btn-add"
