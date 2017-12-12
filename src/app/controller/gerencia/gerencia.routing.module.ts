@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { GerenciaComponent } from './gerencia.component';
 import { GerenciaFormComponent } from './gerencia-form/gerencia-form.component';
+import { GerenciaFormDetailComponent } from './gerencia-form/gerencia-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
   
 const gerenciaRoutes: Routes = [
@@ -11,7 +12,8 @@ const gerenciaRoutes: Routes = [
     { path: 'cadastrar', component: GerenciaFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: GerenciaFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: GerenciaFormDetailComponent}
 ];
 
 @NgModule({

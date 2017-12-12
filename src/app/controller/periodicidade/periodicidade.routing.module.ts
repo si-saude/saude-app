@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PeriodicidadeComponent } from './periodicidade.component';
 import { PeriodicidadeFormComponent } from './periodicidade-form/periodicidade-form.component';
+import { PeriodicidadeFormDetailComponent } from './periodicidade-form/periodicidade-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
  
 const profissionalSaudeRoutes: Routes = [
@@ -11,7 +12,8 @@ const profissionalSaudeRoutes: Routes = [
     { path: 'cadastrar', component: PeriodicidadeFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: PeriodicidadeFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: PeriodicidadeFormDetailComponent}
 ];
 
 @NgModule({

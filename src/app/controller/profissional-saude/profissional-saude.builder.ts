@@ -50,7 +50,7 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
     }
     
    clone(profissionalSaude: Profissional): Profissional {        
-        let cloneProfissionalSaude = new Profissional();
+        let cloneProfissionalSaude = this.initialize(new Profissional());
         
         if (profissionalSaude === null || profissionalSaude === undefined)
             profissionalSaude = new Profissional();
@@ -91,18 +91,23 @@ export class ProfissionalSaudeBuilder extends GenericBuilder{
             cloneProfissionalSaude.setCurriculo(new CurriculoBuilder().initialize(null));
         }
         
+        console.log(profissionalSaude);
+        
         if(this.getValue(profissionalSaude, "getProfissionalConselho") !== undefined){
-//            console.log(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length);
-            console.log(profissionalSaude.getProfissionalConselho().getVencimento());
-            if(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length === 2 && 
-                    profissionalSaude.getProfissionalConselho().getVencimento() === null)
+            if(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length === 2 &&
+                    this.getValue(this.getValue(profissionalSaude,"getProfissionalConselho"), "getVencimento") === null)
                 cloneProfissionalSaude.setProfissionalConselho(undefined);
-            else 
-                cloneProfissionalSaude.setProfissionalConselho(
+            else cloneProfissionalSaude.setProfissionalConselho(
                         new ProfissionalConselhoBuilder().clone(this.getValue(profissionalSaude, "getProfissionalConselho")));
+            if ( this.getValue(this.getValue(profissionalSaude,"getProfissionalConselho"), "getConselho") == "" ) {
+                cloneProfissionalSaude.getProfissionalConselho().setConselho(undefined);
+            }
+            if ( this.getValue(this.getValue(profissionalSaude,"getProfissionalConselho"), "getNumero") == "" )
+                cloneProfissionalSaude.getProfissionalConselho().setNumero(undefined);
         } else {
             cloneProfissionalSaude.setProfissionalConselho(new ProfissionalConselhoBuilder().initialize(null));
         }
+        console.log(cloneProfissionalSaude);
         
         cloneProfissionalSaude.setProfissionalVacinas(
                 new ProfissionalVacinaBuilder().cloneList(this.getValue(profissionalSaude, "getProfissionalVacinas")));

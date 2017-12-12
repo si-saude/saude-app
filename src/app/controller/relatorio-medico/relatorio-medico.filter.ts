@@ -5,7 +5,7 @@ export class RelatorioMedicoFilter extends GenericFilter {
     private medicoPrestador: string;
     private resumo: string;
     private questionamentos: string;
-    private finalizado: BooleanFilter;
+    private finalizado: BooleanFilter = new BooleanFilter();
     
     getMedicoPrestador() {
         return this.medicoPrestador;

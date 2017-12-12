@@ -45,7 +45,7 @@
 
 						<div class="col s2">
 							<a
-								class="btn-floating waves-effect waves-light green btn-remove-permission"
+								class="btn-floating waves-effect waves-light green btn-add"
 								(click)="addGrupoMonitoramento(grupoMonitoramento.value)"> <i
 								class="material-icons center-icon">add</i>
 							</a>
@@ -89,7 +89,7 @@
 
 						<div class="col s2">
 							<a
-								class="btn-floating waves-effect waves-light green btn-remove-permission"
+								class="btn-floating waves-effect waves-light green btn-add"
 								(click)="addExame(exame.value)"> <i
 								class="material-icons center-icon">add</i>
 							</a>
@@ -144,7 +144,7 @@
 
 						<div class="col s2">
 							<a
-								class="btn-floating waves-effect waves-light green btn-remove-permission"
+								class="btn-floating waves-effect waves-light green btn-add"
 								(click)="addCriterio(criterio.value)"> <i
 								class="material-icons center-icon">add</i>
 							</a>
@@ -182,11 +182,11 @@
 
 	<div class='row row-btns'>
 		<div class="col s6">
-			<button type="submit" class="btn btn-primary">Salvar</button>
+			<a [routerLink]="['/profissiograma']"
+				class="btn btn-primary btn-listar">Listar</a>
 		</div>
 		<div class="col s6">
-			<a [routerLink]="['/profissiograma']"
-				class="btn btn-primary btn-listar-perfis">Listar</a>
+			<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 		</div>
 	</div>
 

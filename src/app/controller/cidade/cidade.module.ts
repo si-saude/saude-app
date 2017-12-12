@@ -9,12 +9,14 @@ import { CidadeComponent } from './cidade.component';
 import { CidadeService } from './cidade.service';
 import { CidadeRoutingModule } from './cidade.routing.module';
 import { CidadeFormComponent } from './cidade-form/cidade-form.component';
+import { CidadeFormDetailComponent } from './cidade-form/cidade-form-detail.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        CidadeComponent,
-       CidadeFormComponent
+       CidadeFormComponent,
+       CidadeFormDetailComponent
      ],
      imports: [
         CidadeRoutingModule,

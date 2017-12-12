@@ -7,11 +7,13 @@ import { IndicadorRiscoAmbientalService } from './indicador-risco-ambiental.serv
 import { IndicadorRiscoAmbientalRoutingModule } from './indicador-risco-ambiental.routing.module';
 import { SharedModule } from './../shared.module';
 import { IndicadorRiscoAmbientalFormComponent } from './indicador-risco-ambiental-form/indicador-risco-ambiental-form.component';
+import { IndicadorRiscoAmbientalFormDetailComponent } from './indicador-risco-ambiental-form/indicador-risco-ambiental-form-detail.component';
 
 @NgModule({
     declarations: [
        IndicadorRiscoAmbientalComponent,
-       IndicadorRiscoAmbientalFormComponent
+       IndicadorRiscoAmbientalFormComponent,
+       IndicadorRiscoAmbientalFormDetailComponent
      ],
      imports: [
         IndicadorRiscoAmbientalRoutingModule,

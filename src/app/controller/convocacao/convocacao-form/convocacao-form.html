@@ -162,7 +162,7 @@
 				</div>
 				<div class="input-field col s2" style="margin-top: 30px;">
 					<a
-						class="btn-floating waves-effect waves-light green btn-add-permissoes"
+						class="btn-floating waves-effect waves-light green btn-add-autocomplete"
 						(click)="addEmpregado()"> <i
 						class="material-icons center-icon">add</i>
 					</a>
@@ -279,11 +279,11 @@
 
 	<div class='row row-btns'>
 		<div class="col s6">
-			<button type="submit" class="btn btn-primary">Salvar</button>
+			<a [routerLink]="['/convocacao']"
+				class="btn btn-primary btn-listar">Listar</a>
 		</div>
 		<div class="col s6">
-			<a [routerLink]="['/convocacao']"
-				class="btn btn-primary btn-listar-perfis">Listar</a>
+			<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 		</div>
 	</div>
 
@@ -308,7 +308,7 @@
 		</div>
 		<div class="input-field col s2">
 			<a
-				class="btn-floating waves-effect waves-light green btn-add-permissoes"
+				class="btn-floating waves-effect waves-light green btn-add"
 				(click)="addExame(exame.value)"> <i
 				class="material-icons center-icon">add</i>
 			</a>

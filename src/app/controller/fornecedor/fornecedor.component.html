@@ -12,8 +12,12 @@
 
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
-			<div class="col s10">
+			<div class="col s9">
 				<a [routerLinkActive]="['active']" class="collection-item">{{a.razaoSocial}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/fornecedor/detalhe', a.id]"><i
+					class="material-icons">details</i></a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/fornecedor/editar', a.id]"><i
@@ -62,13 +66,50 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
-	<div class="input-field col s8">
-		<div class="modal-content">
-			<label for="nome">Nome</label> <input type="text" id="nome"
-				[(ngModel)]="filter.nome" name="nome">
+	<div class="row">
+		
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<label for="nome">Razão Social</label> <input type="text" id="razaoSocial"
+					[(ngModel)]="filter.razaoSocial" name="razaoSocial">
+			</div>
 		</div>
+		
+		<div class="input-field col s4">
+			<fieldset>
+				<legend>Tipo Pessoa</legend>
+				<select name="filter.tipoPessoa" class="browser-default"
+					[(ngModel)]="filter.tipoPessoa">
+					<option disabled selected value="">Selecione um tipo de pessoa</option>
+					<option *ngFor="let tipoPessoa of tiposPessoa"
+						value="{{tipoPessoa}}">{{tipoPessoa}}</option>
+				</select>
+			</fieldset>
+		</div>
+		
+		<div class="input-field col s6">
+			<div class="modal-content">
+				<label for="cpfCnpj">CPF/CNPF</label> <input type="text" id="cpfCnpj"
+					[(ngModel)]="filter.cpfCnpj" name="cpfCnpj">
+			</div>
+		</div>
+		
+		<div class="input-field col s6">
+			<div class="modal-content">
+				<label for="codigoSap">Código SAP</label> <input type="text" id="codigoSap"
+					[(ngModel)]="filter.codigoSap" name="codigoSap">
+			</div>
+		</div>
+		
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="email">Email</label> <input type="text" id="email"
+					[(ngModel)]="filter.email" name="email">
+			</div>
+		</div>
+	
 	</div>
-
+	
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
@@ -81,10 +122,10 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
-	<h5 class="titleModalDelete">Confirmação para remoção</h5>
-	<p class="paragraphModalDelete">Deseja realmente excluir esse
+	<h5 class="title-modal-delete">Confirmação para remoção</h5>
+	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
 		poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">

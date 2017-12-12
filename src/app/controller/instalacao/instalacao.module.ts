@@ -9,11 +9,13 @@ import { InstalacaoService } from './instalacao.service';
 import { InstalacaoRoutingModule } from './instalacao.routing.module';
 import { SharedModule } from './../shared.module'; 
 import { InstalacaoFormComponent } from './instalacao-form/instalacao-form.component';
+import { InstalacaoFormDetailComponent } from './instalacao-form/instalacao-form-detail.component';
 
 @NgModule({
     declarations: [
        InstalacaoComponent,
-       InstalacaoFormComponent
+       InstalacaoFormComponent,
+       InstalacaoFormDetailComponent
      ],
      imports: [
         InstalacaoRoutingModule,

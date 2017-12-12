@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IndicadorRiscoAcidenteComponent } from './indicador-risco-acidente.component';
 import { IndicadorRiscoAcidenteFormComponent } from './indicador-risco-acidente-form/indicador-risco-acidente-form.component';
+import { IndicadorRiscoAcidenteFormDetailComponent } from './indicador-risco-acidente-form/indicador-risco-acidente-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
  
 const indicadorRiscoAcidenteRoutes: Routes = [
@@ -11,7 +12,8 @@ const indicadorRiscoAcidenteRoutes: Routes = [
     { path: 'cadastrar', component: IndicadorRiscoAcidenteFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: IndicadorRiscoAcidenteFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: IndicadorRiscoAcidenteFormDetailComponent}
 ];
 
 @NgModule({

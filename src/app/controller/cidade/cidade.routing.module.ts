@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { CidadeComponent } from './cidade.component';
 import { CidadeFormComponent } from './cidade-form/cidade-form.component';
+import { CidadeFormDetailComponent } from './cidade-form/cidade-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const cidadeRoutes: Routes = [
@@ -11,7 +12,8 @@ const cidadeRoutes: Routes = [
     { path: 'cadastrar', component: CidadeFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: CidadeFormComponent,
-        canDeactivate: [CanDeactivateGuard] }
+        canDeactivate: [CanDeactivateGuard] },
+    { path: 'detalhe/:id', component: CidadeFormDetailComponent}
 ];
 
 @NgModule({

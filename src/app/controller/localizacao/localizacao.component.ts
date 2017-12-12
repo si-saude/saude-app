@@ -8,6 +8,7 @@ import { GlobalVariable } from './../../global';
 import { LocalizacaoFilter } from './localizacao.filter';
 import { LocalizacaoService } from './localizacao.service';
 import { Localizacao } from './../../model/localizacao';
+import { LocalizacaoGuard } from './../../guards/guards-child/localizacao.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -15,11 +16,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './localizacao.component.html',
   styleUrls: ['./localizacao.component.css', '../../../assets/css/list-component.css']
 })
-export class LocalizacaoComponent extends GenericListComponent<Localizacao, LocalizacaoFilter> {
+export class LocalizacaoComponent extends GenericListComponent<Localizacao, LocalizacaoFilter, LocalizacaoGuard> {
 
-  constructor(localizacaoService: LocalizacaoService) {
-      let localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter(); 
-      super(localizacaoService, localizacaoFilter);
+  constructor(localizacaoService: LocalizacaoService, localizacaoGuard: LocalizacaoGuard) {
+      super(localizacaoService, new LocalizacaoFilter(), localizacaoGuard);
   }
   
 }

@@ -3,7 +3,7 @@ import { GenericFilter } from './../../generics/generic.filter';
 export class CriterioFilter extends GenericFilter {
     private nome: string;
     private operador: string;
-    private tipo: string;
+    private tipo: string = "";
     private valor: string;
 
     getNome(): string {

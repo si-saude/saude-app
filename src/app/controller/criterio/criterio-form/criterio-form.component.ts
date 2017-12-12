@@ -34,6 +34,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         this.goTo = "criterio";
         
         this.cargos = new Array<Cargo>();
+        this.tipos = new Array<string>();
         this.funcoes = new Array<Funcao>();
         this.sexos = new Array<string>();
         this.operadores = new Array<string>();

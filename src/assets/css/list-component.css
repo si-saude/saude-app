@@ -39,20 +39,20 @@
     margin-top: 20px;
 }
 
-.titleModalDelete {
+.title-modal-delete {
 	color: #26a69a;
     text-align: center;
     margin-top: 20px;
+}
+
+.paragraph-modal-delete {
+	margin-left: 10px;
 }
 
 .title-modal-import {
 	color: #26a69a;
     text-align: center;
     margin-top: 0px;
-}
-
-.paragraphModalDelete {
-	margin-left: 10px;
 }
 
 .btn-importar {

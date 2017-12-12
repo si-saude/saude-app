@@ -16,41 +16,42 @@ import { AuthService } from './login/auth.service';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PermissaoComponent } from './controller/permissao/permissao.component';
-//import { PerfilModule } from './controller/perfil/perfil.module';
-//import { LocalizacaoModule } from './controller/localizacao/localizacao.module';
-//import { EquipeModule } from './controller/equipe/equipe.module';
-//import { GerenciaModule } from './controller/gerencia/gerencia.module';
-//import { ProfissionalSaudeModule } from './controller/profissional-saude/profissional-saude.module';
-//import { CargoModule } from './controller/cargo/cargo.module';
-//import { CursoModule } from './controller/curso/curso.module';
-//import { CidadeModule } from './controller/cidade/cidade.module';
-//import { VacinaModule } from './controller/vacina/vacina.module';
-//import { GheModule } from './controller/ghe/ghe.module';
-//import { PeriodicidadeModule } from './controller/periodicidade/periodicidade.module';
-//import { IndicadorRiscoAcidenteModule } from './controller/indicador-risco-acidente/indicador-risco-acidente.module';
-//import { IndicadorRiscoAmbientalModule } from './controller/indicador-risco-ambiental/indicador-risco-ambiental.module';
-//import { IndicadorRiscoErgonomicoModule } from './controller/indicador-risco-ergonomico/indicador-risco-ergonomico.module';
-//import { IndicadorRiscoSanitarioModule } from './controller/indicador-risco-sanitario/indicador-risco-sanitario.module';
-//import { IndicadorRiscoSaudeAmbientalModule } from './controller/indicador-risco-saude-ambiental/indicador-risco-saude-ambiental.module';
-//import { InstalacaoModule } from './controller/instalacao/instalacao.module';
-//import { FuncaoModule } from './controller/funcao/funcao.module';
-//import { RegimeModule } from './controller/regime/regime.module';
-//import { BaseModule } from './controller/base/base.module';
-//import { GheeModule } from './controller/ghee/ghee.module';
-//import { EmpregadoModule } from './controller/empregado/empregado.module';
-//import { TipoGrupoMonitoramentoModule } from './controller/tipo-grupo-monitoramento/tipo-grupo-monitoramento.module';
-//import { CriterioModule } from './controller/criterio/criterio.module';
-//import { ExameModule } from './controller/exame/exame.module';
-//import { GrupoMonitoramentoModule } from './controller/grupo-monitoramento/grupo-monitoramento.module';
-//import { ProfissiogramaModule } from './controller/profissiograma/profissiograma.module';
-//import { FornecedorModule } from './controller/fornecedor/fornecedor.module';
-//import { ConvocacaoModule } from './controller/convocacao/convocacao.module';
-//import { EmpregadoConvocacaoModule } from './controller/empregado-convocacao/empregado-convocacao.module';
 import { MenuComponent } from './includes/menu/menu.component';
 import { SidenavComponent } from './includes/sidenav/sidenav.component';
 import { SharedModule } from './controller/shared.module';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { BaseGuard } from './guards/guards-child/base.guard';
+import { CargoGuard } from './guards/guards-child/cargo.guard';
+import { CidadeGuard } from './guards/guards-child/cidade.guard';
+import { ConvocacaoGuard } from './guards/guards-child/convocacao.guard';
+import { CriterioGuard } from './guards/guards-child/criterio.guard';
+import { CursoGuard } from './guards/guards-child/curso.guard';
+import { EmpregadoGuard } from './guards/guards-child/empregado.guard';
+import { EquipeGuard } from './guards/guards-child/equipe.guard';
+import { ExameGuard } from './guards/guards-child/exame.guard';
+import { FornecedorGuard } from './guards/guards-child/fornecedor.guard';
+import { FuncaoGuard } from './guards/guards-child/funcao.guard';
+import { GerenciaGuard } from './guards/guards-child/gerencia.guard';
+import { GheGuard } from './guards/guards-child/ghe.guard';
+import { GheeGuard } from './guards/guards-child/ghee.guard';
+import { GrupoMonitoramentoGuard } from './guards/guards-child/grupo-monitoramento.guard';
+import { IndicadorRiscoAcidenteGuard } from './guards/guards-child/indicador-risco-acidente.guard';
+import { IndicadorRiscoAmbientalGuard } from './guards/guards-child/indicador-risco-ambiental.guard';
+import { IndicadorRiscoErgonomicoGuard } from './guards/guards-child/indicador-risco-ergonomico.guard';
+import { IndicadorRiscoSanitarioGuard } from './guards/guards-child/indicador-risco-sanitario.guard';
+import { IndicadorRiscoSaudeAmbientalGuard } from './guards/guards-child/indicador-risco-saude-ambiental.guard';
+import { InstalacaoGuard } from './guards/guards-child/instalacao.guard';
+import { LocalizacaoGuard } from './guards/guards-child/localizacao.guard';
+import { PerfilGuard } from './guards/guards-child/perfil.guard';
+import { PeriodicidadeGuard } from './guards/guards-child/periodicidade.guard';
+import { ProfissiogramaGuard } from './guards/guards-child/profissiograma.guard';
+import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude.guard';
+import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
+import { RegimeGuard } from './guards/guards-child/regime.guard';
+import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
+import { UsuarioGuard } from './guards/guards-child/usuario.guard';
+import { VacinaGuard } from './guards/guards-child/vacina.guard';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,38 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     AuthService,
     CanDeactivateGuard,
-    AuthGuard
+    AuthGuard,
+    BaseGuard,
+    CargoGuard,
+    CidadeGuard,
+    ConvocacaoGuard,
+    CriterioGuard,
+    CursoGuard,
+    EmpregadoGuard,
+    EquipeGuard,
+    ExameGuard,
+    FornecedorGuard,
+    FuncaoGuard,
+    GerenciaGuard,
+    GheGuard,
+    GheeGuard,
+    GrupoMonitoramentoGuard,
+    IndicadorRiscoAcidenteGuard,
+    IndicadorRiscoAmbientalGuard,
+    IndicadorRiscoErgonomicoGuard,
+    IndicadorRiscoSanitarioGuard,
+    IndicadorRiscoSaudeAmbientalGuard,
+    InstalacaoGuard,
+    LocalizacaoGuard,
+    PerfilGuard,
+    PeriodicidadeGuard,
+    ProfissiogramaGuard,
+    ProfissionalSaudeGuard,
+    RegimeGuard,
+    RelatorioMedicoGuard,
+    TipoGrupoMonitoramentoGuard,
+    UsuarioGuard,
+    VacinaGuard
   ],
   bootstrap: [ 
     AppComponent

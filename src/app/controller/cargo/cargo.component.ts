@@ -8,6 +8,7 @@ import { GlobalVariable } from './../../global';
 import { Cargo } from './../../model/cargo';
 import { CargoService } from './cargo.service';
 import { CargoFilter } from './cargo.filter';
+import { CargoGuard } from './../../guards/guards-child/cargo.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -15,11 +16,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './cargo.component.html',
   styleUrls: ['./cargo.component.css', '../../../assets/css/list-component.css']
 })
-export class CargoComponent extends GenericListComponent<Cargo, CargoFilter> {
-
-    constructor(service: CargoService) {
-      let cargoFilter: CargoFilter = new CargoFilter();
-      super(service, cargoFilter);
-  }
+export class CargoComponent extends GenericListComponent<Cargo, CargoFilter, CargoGuard> {
+    
+    constructor(service: CargoService, cargoGuard: CargoGuard) {
+      super(service, new CargoFilter(), cargoGuard);
+    }
     
 }

@@ -1,0 +1,129 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save> 
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s10">
+				<label for="nome">Nome</label>
+				<input id="nome" type="text" disabled
+				[(ngModel)]="indicadorRiscoAcidente.nome" name="indicadorRiscoAcidente.nome">
+			</div>
+			
+			<div class="input-field col s2 checkbox-critico">
+				<input type="checkbox" id="critico" disabled 
+					[(ngModel)]="indicadorRiscoAcidente.critico" name="indicadorRiscoAcidente.critico">
+                <label for="critico">Crítico</label>
+			</div>
+	
+		</div>
+		
+		<div class="row">
+			
+			<div class="input-field col s6">
+				<fieldset>
+					<legend>Periodicidade</legend>
+					<select name="indicadorRiscoAcidente.periodicidade" class="browser-default" disabled
+						[(ngModel)]="indicadorRiscoAcidente.periodicidade.id">
+						<option disabled selected value=0>Selecione uma periodicidade</option>
+						<option *ngFor="let periodicidade of periodicidades"
+							value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
+					</select>
+				</fieldset>
+			</div>
+			
+			<div class="input-field col s6">
+				<fieldset>
+					<legend>Requisito</legend>
+					<select name="indicadorRiscoAcidente.requisito" class="browser-default" disabled
+						[(ngModel)]="indicadorRiscoAcidente.requisito">
+						<option disabled selected value="">Selecione um requisito</option>
+						<option *ngFor="let requisito of requisitos"
+							value="{{requisito}}">{{requisito}}</option>
+					</select>
+				</fieldset>
+			</div>
+			
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice0">Indice 0</label>
+				<textarea class="materialize-textarea" id="indice0" disabled
+					[(ngModel)]="indicadorRiscoAcidente.indice0" name="indicadorRiscoAcidente.indice0"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice1">Indice 1</label>
+				<textarea class="materialize-textarea" id="indice1" disabled
+					[(ngModel)]="indicadorRiscoAcidente.indice1" name="indicadorRiscoAcidente.indice1"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice2">Indice 2</label>
+				<textarea class="materialize-textarea" id="indice2" disabled
+					[(ngModel)]="indicadorRiscoAcidente.indice2" name="indicadorRiscoAcidente.indice2"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice3">Indice 3</label>
+				<textarea class="materialize-textarea" id="indice3" disabled
+					[(ngModel)]="indicadorRiscoAcidente.indice3" name="indicadorRiscoAcidente.indice3"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice4">Indice 4</label>
+				<textarea class="materialize-textarea" id="indice4" disabled 
+					[(ngModel)]="indicadorRiscoAcidente.indice4" name="indicadorRiscoAcidente.indice4"></textarea>
+			</div>
+
+		</div>
+		
+		<div class="row">
+		
+			<div class="input-field col s12">
+				<label for="indice5">Indice 5</label>
+				<textarea class="materialize-textarea" id="indice5" disabled 
+					[(ngModel)]="indicadorRiscoAcidente.indice5" name="indicadorRiscoAcidente.indice5"></textarea>
+			</div>
+
+		</div>
+	
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/indicador-risco-acidente']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

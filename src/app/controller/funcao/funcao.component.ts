@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Funcao } from './../../model/funcao';
 import { FuncaoService } from './funcao.service';
 import { FuncaoFilter } from './funcao.filter';
+import { FuncaoGuard } from './../../guards/guards-child/funcao.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
 @Component({
@@ -10,11 +11,10 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   templateUrl: './funcao.component.html',
   styleUrls: ['./funcao.component.css', '../../../assets/css/list-component.css']
 })
-export class FuncaoComponent extends GenericListComponent<Funcao, FuncaoFilter> {
+export class FuncaoComponent extends GenericListComponent<Funcao, FuncaoFilter, FuncaoGuard> {
 
-  constructor(service: FuncaoService) {
-      let funcaoFilter: FuncaoFilter = new FuncaoFilter();
-      super(service, funcaoFilter);
+  constructor(service: FuncaoService, funcaoGuard: FuncaoGuard) {
+      super(service, new FuncaoFilter(), funcaoGuard);
   }
   
 }

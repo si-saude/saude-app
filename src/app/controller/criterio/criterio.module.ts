@@ -6,13 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CriterioComponent } from './criterio.component';
 import { CriterioService } from './criterio.service';
 import { CriterioFormComponent } from './criterio-form/criterio-form.component';
+import { CriterioFormDetailComponent } from './criterio-form/criterio-form-detail.component';
 import { CriterioRoutingModule } from './criterio.routing.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        CriterioComponent,
-       CriterioFormComponent
+       CriterioFormComponent,
+       CriterioFormDetailComponent
      ],
      imports: [
         CriterioRoutingModule,

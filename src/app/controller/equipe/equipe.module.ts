@@ -10,11 +10,13 @@ import { EquipeService } from './equipe.service';
 import { EquipeRoutingModule } from './equipe.routing.module';
 import { SharedModule } from './../shared.module';
 import { EquipeFormComponent } from './equipe-form/equipe-form.component';
+import { EquipeFormDetailComponent } from './equipe-form/equipe-form-detail.component';
 
 @NgModule({
     declarations: [
        EquipeComponent,
-       EquipeFormComponent
+       EquipeFormComponent,
+       EquipeFormDetailComponent
      ],
      imports: [
         SharedModule,

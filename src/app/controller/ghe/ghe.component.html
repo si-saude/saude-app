@@ -13,8 +13,12 @@
 
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
-			<div class="col s10">
+			<div class="col s9">
 				<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/ghe/detalhe', a.id]"><i
+					class="material-icons">details</i></a>
 			</div>
 			<div class="col s1">
 				<a [routerLink]="['/ghe/editar', a.id]"><i
@@ -63,17 +67,123 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
-	<div class="input-field col s8">
-		<div class="modal-content">
-			<label for="nome">Nome</label> <input type="text" id="nome"
-				[(ngModel)]="filter.nome" name="nome">
-		</div>
-	</div>
+	<div class="row">
 
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="nome">Nome</label> <input type="text" id="nome"
+					[(ngModel)]="filtro.nome" name="nome">
+			</div>
+		</div>
+
+		<div class="input-field col s8">
+			<div class="modal-content">
+				<label for="codigo">Código</label> <input type="text" id="codigo"
+					[(ngModel)]="filtro.codigo" name="codigo">
+			</div>
+		</div>
+
+		<div class="input-field col s4">
+			<div class="modal-content">
+				<label for="duracaoJornada">Duração da Jornada</label> <input
+					id="duracaoJornada" type="number"
+					[(ngModel)]="filtro.duracaoJornada" name="duracaoJornada">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<div class="input-field col s4">
+					<label for="dataCriacaoInicial">Data de Criação Inicial</label>
+					<my-date-picker name="dataCriacaoInicio"
+						[options]="myDatePickerOptions"
+						[(ngModel)]="filtro.dataCriacao.inicio"
+						placeholder="Data de Criação Inicial"> </my-date-picker>
+				</div>
+				<div class="input-field col s4">
+					<label for="dataCriacaoFinal">Data de Criação Final</label>
+					<my-date-picker name="dataCriacaoFinal"
+						[options]="myDatePickerOptions"
+						[(ngModel)]="filtro.dataCriacao.fim"
+						placeholder="Data de Criação Final"> </my-date-picker>
+				</div>
+
+				<div class="input-field col s4">
+					<fieldset>
+						<legend>Tipo do Filtro</legend>
+						<select name="tipo" class="browser-default"
+							[(ngModel)]="filtro.dataCriacao.typeFilter">
+							<option disabled selected value=0>Selecione um tipo</option>
+							<option *ngFor="let item of typeFilters()" value="{{item}}">{{item}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="input-field col s12">
+				<div class="input-field col s4">
+					<label for="dataDesativacaoInicial">Data de Desativação
+						Inicial</label>
+					<my-date-picker name="dataDesativacaoInicio"
+						[options]="myDatePickerOptions"
+						[(ngModel)]="filtro.dataDesativacao.inicio"
+						placeholder="Data de Desativação Inicial"> </my-date-picker>
+				</div>
+				<div class="input-field col s4">
+					<label for="dataCriacaoFinal">Data de Desativação Final</label>
+					<my-date-picker name="dataDesativacaoFinal"
+						[options]="myDatePickerOptions"
+						[(ngModel)]="filtro.dataDesativacao.fim"
+						placeholder="Data de Desativação Final"> </my-date-picker>
+				</div>
+
+				<div class="input-field col s4">
+					<fieldset>
+						<legend>Tipo do Filtro</legend>
+						<select name="tipo" class="browser-default"
+							[(ngModel)]="filtro.dataDesativacao.typeFilter">
+							<option disabled selected value=0>Selecione um tipo</option>
+							<option *ngFor="let item of typeFilters()" value="{{item}}">{{item}}</option>
+						</select>
+					</fieldset>
+				</div>
+
+			</div>
+		</div>
+ 
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="descricao">Descrição</label> 
+				<textarea id="descricao" class="materialize-textarea"
+					[(ngModel)]="filtro.descricao" name="descricao"></textarea>
+			</div>
+		</div>
+		
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="descricaoAmbiente">Descrição do Ambiente</label> 
+				<textarea id="descricaoAmbiente" class="materialize-textarea"
+					[(ngModel)]="filtro.descricaoAmbiente" name="descricaoAmbiente"></textarea>
+			</div>
+		</div>
+		
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="descricaoTarefa">Descrição do Tarefa</label> 
+				<textarea id="descricaoTarefa" class="materialize-textarea"
+					[(ngModel)]="filtro.descricaoTarefa" name="descricaoTarefa"></textarea>
+			</div>
+		</div>
+
+	</div>
+	
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
-			(click)="setFilter()">Filtrar</a>
+			(click)="filtrar()">Filtrar</a>
 	</div>
 
 </div>
@@ -82,10 +192,10 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
-	<h5 class="titleModalDelete">Confirmação para remoção</h5>
-	<p class="paragraphModalDelete">Deseja realmente excluir esse
+	<h5 class="title-modal-delete">Confirmação para remoção</h5>
+	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
 		poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">
@@ -98,5 +208,6 @@
 </div>
 
 <div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
 </div>

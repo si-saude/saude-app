@@ -26,7 +26,7 @@
 
 		<fieldset>
 			<legend class="legend-permissoes"> Permissões 
-				<a class="btn-floating waves-effect waves-light green btn-add-permissoes"
+				<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
 					(click)="addPermissao()"> 
 					<i class="material-icons center-icon">add</i>
 				</a>
@@ -48,21 +48,15 @@
 							</fieldset>
 						</div>
 
-						<div class="col s3 permissao-leitura">
-							<input name="leitura{{i}}" id="leitura{{i}}" type="checkbox"
-								name="permissao.leitura{{i}}" [(ngModel)]="permissao.leitura" />
-							<label for="leitura{{i}}">Leitura</label>
-						</div>
-
-						<div class="col s3 permissao-escrita">
-							<input name="escrita{{i}}" id="escrita{{i}}" type="checkbox"
-								name="permissao.escrita{{i}}" [(ngModel)]="permissao.escrita" />
-							<label for="escrita{{i}}">Escrita</label>
+						<div class="col s3 permissao-valor">
+							<input name="valor{{i}}" id="valor{{i}}" type="checkbox"
+								name="permissao.valor{{i}}" [(ngModel)]="permissao.valor" />
+							<label for="valor{{i}}">Valor</label>
 						</div>
 
 						<div class="col s2">
 							<a
-								class="btn-floating waves-effect waves-light red btn-remove-permission"
+								class="btn-floating waves-effect waves-light red btn-remove"
 								(click)="removePermissao(i)"> <i
 								class="material-icons center-icon">delete</i>
 							</a>
@@ -88,11 +82,11 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary">Salvar</button>
+				<a [routerLink]="['/perfil']"
+					class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/perfil']"
-					class="btn btn-primary btn-listar-perfis">Listar</a>
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 

@@ -199,11 +199,11 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary">Salvar</button>
+				<a [routerLink]="['/fornecedor']"
+					class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/fornecedor']"
-					class="btn btn-primary btn-listar-perfis">Listar</a>
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 	</form>

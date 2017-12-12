@@ -9,12 +9,14 @@ import { GerenciaComponent } from './gerencia.component';
 import { GerenciaService } from './gerencia.service';
 import { GerenciaRoutingModule } from './gerencia.routing.module';
 import { GerenciaFormComponent } from './gerencia-form/gerencia-form.component';
+import { GerenciaFormDetailComponent } from './gerencia-form/gerencia-form-detail.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
        GerenciaComponent,
-       GerenciaFormComponent
+       GerenciaFormComponent,
+       GerenciaFormDetailComponent
      ],
      imports: [
         GerenciaRoutingModule,

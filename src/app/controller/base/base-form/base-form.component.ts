@@ -16,7 +16,7 @@ export class BaseFormComponent extends GenericFormComponent implements OnInit {
     base: Base;
 
     constructor( private route: ActivatedRoute,
-        private baseService: BaseService ) {
+        private baseService: BaseService) {
         super( baseService );
 
         this.goTo = "base";
@@ -49,5 +49,4 @@ export class BaseFormComponent extends GenericFormComponent implements OnInit {
     save() {
         super.save( new BaseBuilder().clone( this.base ) );
     }
-
 }

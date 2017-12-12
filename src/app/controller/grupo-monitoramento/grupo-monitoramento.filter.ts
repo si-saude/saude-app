@@ -5,8 +5,8 @@ import { TipoGrupoMonitoramentoFilter } from './../tipo-grupo-monitoramento/tipo
 export class GrupoMonitoramentoFilter extends GenericFilter {
     private nome: string;
     private tipoGrupoMonitoramento: TipoGrupoMonitoramentoFilter;
-    private recorrente: BooleanFilter;
-    private relatorio: BooleanFilter;
+    private recorrente: BooleanFilter = new BooleanFilter();
+    private relatorio: BooleanFilter = new BooleanFilter();
     
     getNome() {
         return this.nome;

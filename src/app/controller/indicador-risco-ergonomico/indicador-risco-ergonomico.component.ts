@@ -4,6 +4,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 import { IndicadorRiscoErgonomico } from './../../model/indicador-risco-ergonomico';
 import { IndicadorRiscoErgonomicoFilter } from './indicador-risco-ergonomico.filter';
 import { IndicadorRiscoErgonomicoService } from './indicador-risco-ergonomico.service';
+import { IndicadorRiscoErgonomicoGuard } from './../../guards/guards-child/indicador-risco-ergonomico.guard';
 
 
 @Component({
@@ -11,11 +12,10 @@ import { IndicadorRiscoErgonomicoService } from './indicador-risco-ergonomico.se
   templateUrl: './indicador-risco-ergonomico.component.html',
   styleUrls: ['./indicador-risco-ergonomico.component.css', '../../../assets/css/list-component.css']
 })
-export class IndicadorRiscoErgonomicoComponent extends GenericListComponent<IndicadorRiscoErgonomico, IndicadorRiscoErgonomicoFilter> {
+export class IndicadorRiscoErgonomicoComponent extends GenericListComponent<IndicadorRiscoErgonomico, IndicadorRiscoErgonomicoFilter, IndicadorRiscoErgonomicoGuard> {
 
-    constructor(indicadorRiscoErgonomicoService: IndicadorRiscoErgonomicoService) {
-        let indicadorRiscoErgonomicoFilter: IndicadorRiscoErgonomicoFilter = new IndicadorRiscoErgonomicoFilter();
-        super(indicadorRiscoErgonomicoService, indicadorRiscoErgonomicoFilter);
+    constructor(indicadorRiscoErgonomicoService: IndicadorRiscoErgonomicoService, indicadorRiscoErgonomicoGuard: IndicadorRiscoErgonomicoGuard) {
+        super(indicadorRiscoErgonomicoService, new IndicadorRiscoErgonomicoFilter(), indicadorRiscoErgonomicoGuard);
     }
 
 }

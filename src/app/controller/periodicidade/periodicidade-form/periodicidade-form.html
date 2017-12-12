@@ -21,7 +21,7 @@
 		
 			<div class="input-field col s4">
 				<label for="meses">Meses</label>
-				<input id="uf" type="text" name="periodicidade.meses"
+				<input id="uf" type="number" name="periodicidade.meses"
 				[(ngModel)]="periodicidade.meses">
 			</div>
 	
@@ -36,11 +36,11 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary">Salvar</button>
+				<a [routerLink]="['/periodicidade']"
+					class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/periodicidade']"
-					class="btn btn-primary btn-listar-perfis">Listar</a>
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 	</form>

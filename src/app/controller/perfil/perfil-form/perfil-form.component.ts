@@ -13,7 +13,7 @@ import { PermissaoBuilder } from './../../permissao/permissao.builder';
 @Component( {
     selector: 'app-perfil-form',
     templateUrl: './perfil-form.html',
-    styleUrls: ['./perfil-form.css', './../../../../assets/css/form-component.css']
+    styleUrls: ['./../../../../assets/css/form-component.css', './perfil-form.css']
 } )
 export class PerfilFormComponent extends GenericFormComponent implements OnInit {
     perfil: Perfil;

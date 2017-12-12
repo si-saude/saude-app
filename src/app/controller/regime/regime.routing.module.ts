@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RegimeComponent } from './regime.component';
 import { RegimeFormComponent } from './regime-form/regime-form.component';
+import { RegimeFormDetailComponent } from './regime-form/regime-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const regimeRoutes: Routes = [
@@ -11,7 +12,8 @@ const regimeRoutes: Routes = [
     { path: 'cadastrar', component: RegimeFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: RegimeFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: RegimeFormDetailComponent}
 ];
 
 @NgModule({

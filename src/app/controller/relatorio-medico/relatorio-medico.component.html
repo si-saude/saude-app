@@ -17,9 +17,12 @@
 			<div class="col s5">
 				<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.empregado.pessoa.nome}}</a>
 			</div>
-			<div class="col s5">
+			<div class="col s4">
 				<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.exame.descricao}}</a>
 			</div>
+			<div class="col s1">
+				<a [routerLink]="['/relatorio-medico/detalhe', a.id]"><i class="material-icons">details</i></a>
+		 	</div>
 			<div class="col s1">
 				<a [routerLink]="['/relatorio-medico/editar', a.id]"><i class="material-icons">mode_edit</i></a>
 		 	</div>
@@ -63,18 +66,39 @@
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="row">
-	
-		<div class="input-field col s8">
+		
+		<div class="row">
+			<div class="input-field col s9">
+				<div class="modal-content">
+					<label for="medicoPrestador">Médico Prestador</label> 
+					<input id="medicoPrestador" type="text"
+						name="medicoPrestador" 
+						[(ngModel)]="filtro.medicoPrestador">
+				</div>
+			</div>
+		
+			<div class="input-field col s2 checkbox">
+				<input type="checkbox" id="finalizado" 
+					[(ngModel)]="finalizado" name="finalizado">
+	            <label for="finalizado">Finalizado</label>
+	        </div>
+		</div>
+		
+		<div class="input-field col s12">
 			<div class="modal-content">
-				<input type="text" id="nome" [(ngModel)]="filter.nome" name="nome">
-				<label for="nome">Nome</label>
+				<label for="resumo">Resumo</label> 
+				<textarea class="materialize-textarea" id="resumo" 
+						[(ngModel)]="filtro.resumo" 
+						name="resumo"></textarea>
 			</div>
 		</div>
 		
-		<div class="input-field col s4">
+		<div class="input-field col s12">
 			<div class="modal-content">
-				<input type="text" id="uf" [(ngModel)]="filter.uf" name="uf">
-				<label for="uf">UF</label>
+				<label for="questionamentos">Questionamentos</label> 
+				<textarea class="materialize-textarea" id="questionamentos" 
+						[(ngModel)]="filtro.questionamentos" 
+						name="questionamentos"></textarea>
 			</div>
 		</div>
 		
@@ -82,7 +106,7 @@
 	
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
-    	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="setFilter()">Filtrar</a>
+    	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="filtrar()">Filtrar</a>
   	</div>
 
 </div>
@@ -91,10 +115,10 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalDelete">
 
-	<h5 class="titleModalDelete">Confirmação para remoção</h5>
-	<p class="paragraphModalDelete">Deseja realmente excluir esse
+	<h5 class="title-modal-delete">Confirmação para remoção</h5>
+	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraphModalDelete">Se desejar excluir, esse campo não
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
 		poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">

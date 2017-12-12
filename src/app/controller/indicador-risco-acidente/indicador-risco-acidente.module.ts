@@ -7,11 +7,13 @@ import { IndicadorRiscoAcidenteService } from './indicador-risco-acidente.servic
 import { IndicadorRiscoAcidenteRoutingModule } from './indicador-risco-acidente.routing.module';
 import { SharedModule } from './../shared.module';
 import { IndicadorRiscoAcidenteFormComponent } from './indicador-risco-acidente-form/indicador-risco-acidente-form.component';
+import { IndicadorRiscoAcidenteFormDetailComponent } from './indicador-risco-acidente-form/indicador-risco-acidente-form-detail.component';
 
 @NgModule({
     declarations: [
        IndicadorRiscoAcidenteComponent,
-       IndicadorRiscoAcidenteFormComponent
+       IndicadorRiscoAcidenteFormComponent,
+       IndicadorRiscoAcidenteFormDetailComponent
      ],
      imports: [
         IndicadorRiscoAcidenteRoutingModule,

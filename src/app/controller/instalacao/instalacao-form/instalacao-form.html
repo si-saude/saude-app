@@ -62,7 +62,7 @@
 
 					<legend class="legend">
 						Indicadores Risco de Acidente Instalação <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
 							(click)="addIndicadoresRiscoAcidenteInstalacao()"> <i
 							class="material-icons center-icon">add</i>
 						</a>
@@ -105,7 +105,7 @@
 							</div>
 							
 							<div class="col s2">
-								<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+								<a class="btn-floating waves-effect waves-light red btn-remove"
 									(click)="removeIndicadoresRiscoAcidenteInstalacao(i)"> 
 									<i class="material-icons center-icon">delete</i>
 								</a>
@@ -130,7 +130,7 @@
 
 					<legend class="legend">
 						Indicadores Risco Ambiental Instalação <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
 							(click)="addIndicadoresRiscoAmbientalInstalacao()"> <i
 							class="material-icons center-icon">add</i>
 						</a>
@@ -172,7 +172,7 @@
 							</div>
 							
 							<div class="col s2">
-								<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+								<a class="btn-floating waves-effect waves-light red btn-remove"
 									(click)="removeIndicadoresRiscoAmbientalInstalacao(i)"> 
 									<i class="material-icons center-icon">delete</i>
 								</a>
@@ -198,7 +198,7 @@
 
 					<legend class="legend">
 						Indicadores Risco Ergonomico Instalação <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
 							(click)="addIndicadoresRiscoErgonomicoInstalacao()"> <i
 							class="material-icons center-icon">add</i>
 						</a>
@@ -240,7 +240,7 @@
 							</div>
 							
 							<div class="col s2">
-								<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+								<a class="btn-floating waves-effect waves-light red btn-remove"
 									(click)="removeIndicadoresRiscoErgonomicoInstalacao(i)"> 
 									<i class="material-icons center-icon">delete</i>
 								</a>
@@ -265,7 +265,7 @@
 
 					<legend class="legend">
 						Indicadores Risco Sanitário Instalação <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
 							(click)="addIndicadoresRiscoSanitarioInstalacao()"> <i
 							class="material-icons center-icon">add</i>
 						</a>
@@ -307,7 +307,7 @@
 							</div>
 							
 							<div class="col s2">
-								<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+								<a class="btn-floating waves-effect waves-light red btn-remove"
 									(click)="removeIndicadoresRiscoSanitarioInstalacao(i)"> 
 									<i class="material-icons center-icon">delete</i>
 								</a>
@@ -332,7 +332,7 @@
 
 					<legend class="legend">
 						Indicadores Risco Saúde Ambiental Instalação <a
-							class="btn-floating waves-effect waves-light green btn-add-permissoes"
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
 							(click)="addIndicadoresRiscoSaudeAmbientalInstalacao()"> <i
 							class="material-icons center-icon">add</i>
 						</a>
@@ -374,7 +374,7 @@
 							</div>
 							
 							<div class="col s2">
-								<a class="btn-floating waves-effect waves-light red btn-remove-permission"
+								<a class="btn-floating waves-effect waves-light red btn-remove"
 									(click)="removeIndicadoresRiscoSaudeAmbientalInstalacao(i)"> 
 									<i class="material-icons center-icon">delete</i>
 								</a>
@@ -403,11 +403,11 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<button type="submit" class="btn btn-primary">Salvar</button>
+				<a [routerLink]="['/instalacao']"
+					class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
-				<a [routerLink]="['/instalacao']"
-					class="btn btn-primary btn-listar-perfis">Listar</a>
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 

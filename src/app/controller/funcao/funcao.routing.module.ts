@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FuncaoComponent } from './funcao.component';
 import { FuncaoFormComponent } from './funcao-form/funcao-form.component';
+import { FuncaoFormDetailComponent } from './funcao-form/funcao-form-detail.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
   
 const funcaoRoutes: Routes = [
@@ -11,7 +12,8 @@ const funcaoRoutes: Routes = [
     { path: 'cadastrar', component: FuncaoFormComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'editar/:id', component: FuncaoFormComponent,
-        canDeactivate: [CanDeactivateGuard]}
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'detalhe/:id', component: FuncaoFormDetailComponent}    
 ];
 
 @NgModule({

@@ -7,11 +7,13 @@ import { FornecedorService } from './fornecedor.service';
 import { FornecedorRoutingModule } from './fornecedor.routing.module';
 import { SharedModule } from './../shared.module';
 import { FornecedorFormComponent } from './fornecedor-form/fornecedor-form.component';
+import { FornecedorFormDetailComponent } from './fornecedor-form/fornecedor-form-detail.component';
 
 @NgModule({
     declarations: [
        FornecedorComponent,
-       FornecedorFormComponent
+       FornecedorFormComponent,
+       FornecedorFormDetailComponent
      ],
      imports: [
         FornecedorRoutingModule,

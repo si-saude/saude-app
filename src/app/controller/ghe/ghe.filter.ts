@@ -5,8 +5,8 @@ export class GheFilter extends GenericFilter {
  
     private nome: string;
     private codigo: string;
-    private dataCriacao: DateFilter;
-    private dataDesativacao: DateFilter;
+    private dataCriacao: DateFilter = new DateFilter();
+    private dataDesativacao: DateFilter  = new DateFilter() ;
     private descricao: string;
     private descricaoAmbiente: string;
     private descricaoTarefas: string;
