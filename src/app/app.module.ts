@@ -45,6 +45,7 @@ import { PermissaoComponent } from './controller/permissao/permissao.component';
 //import { ProfissiogramaModule } from './controller/profissiograma/profissiograma.module';
 //import { FornecedorModule } from './controller/fornecedor/fornecedor.module';
 //import { ConvocacaoModule } from './controller/convocacao/convocacao.module';
+//import { EmpregadoConvocacaoModule } from './controller/empregado-convocacao/empregado-convocacao.module';
 import { MenuComponent } from './includes/menu/menu.component';
 import { SidenavComponent } from './includes/sidenav/sidenav.component';
 import { SharedModule } from './controller/shared.module';
@@ -98,6 +99,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 //    ProfissiogramaModule,
 //    FornecedorModule,
 //    ConvocacaoModule,
+//    EmpregadoConvocacaoModule,
     SharedModule,
     AppRoutingModule
   ],
