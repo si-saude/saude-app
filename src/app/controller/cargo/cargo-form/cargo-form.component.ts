@@ -47,19 +47,23 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
                 }
             } );
         
-        this.cargoService.getCursos()
-            .then(res => {
-                this.cursos = new CursoBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        this.getCursos();
         
     }
     
     save() {
         super.save(new CargoBuilder().clone(this.cargo));
-    }   
+    }
+    
+    getCursos(){
+        this.cargoService.getCursos()
+        .then(res => {
+            this.cursos = new CursoBuilder().cloneList(res.json());
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
     
     addCurso(valor: number) {
         if ( valor != 0 ) {
