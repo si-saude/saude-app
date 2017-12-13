@@ -48,6 +48,7 @@ import { PeriodicidadeGuard } from './guards/guards-child/periodicidade.guard';
 import { ProfissiogramaGuard } from './guards/guards-child/profissiograma.guard';
 import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude.guard';
 import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
+import { ResultadoExameGuard } from './guards/guards-child/resultado-exame.guard';
 import { RegimeGuard } from './guards/guards-child/regime.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
 import { UsuarioGuard } from './guards/guards-child/usuario.guard';
@@ -109,6 +110,7 @@ import { VacinaGuard } from './guards/guards-child/vacina.guard';
     RelatorioMedicoGuard,
     TipoGrupoMonitoramentoGuard,
     UsuarioGuard,
+    ResultadoExameGuard,
     VacinaGuard
   ],
   bootstrap: [ 

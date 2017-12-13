@@ -185,7 +185,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     }
 
     list() {
-        console.log(this.filter);
         this.service.list( this.filter )
             .then( res => {
                 console.log(res.json());

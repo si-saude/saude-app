@@ -77,10 +77,17 @@
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="row">
-		<div class="input-field col s8">
+		<div class="input-field col s12">
 			<div class="modal-content">
 				<label for="nome">Nome</label> <input type="text" id="nome"
 					[(ngModel)]="filter.pessoa.nome" name="nome">
+			</div>
+		</div>
+		
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="matricula">Matricula</label> <input type="text" id="matricula"
+					[(ngModel)]="filter.matricula" name="matricula">
 			</div>
 		</div>
 <!-- 

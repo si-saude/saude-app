@@ -39,6 +39,7 @@ import { TipoGrupoMonitoramentoService } from './tipo-grupo-monitoramento/tipo-g
 import { VacinaService } from './vacina/vacina.service';
 import { UsuarioService } from './usuario/usuario.service';
 import { RelatorioMedicoService } from './relatorio-medico/relatorio-medico.service';
+import { ResultadoExameService } from './resultado-exame/resultado-exame.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 
 @NgModule({
@@ -95,6 +96,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     VacinaService,
     UsuarioService,
     RelatorioMedicoService,
+    ResultadoExameService,
     CanDeactivateGuard
   ]
 })

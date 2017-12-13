@@ -13,9 +13,22 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   styleUrls: ['./profissiograma.component.css', '../../../assets/css/list-component.css']
 })
 export class ProfissiogramaComponent extends GenericListComponent<Profissiograma, ProfissiogramaFilter, ProfissiogramaGuard> {
-    
+    filtro: ProfissiogramaFilter;
+    concluido: boolean;
+
     constructor(profissiogramaService: ProfissiogramaService, profissiogramaGuard: ProfissiogramaGuard) {
         super(profissiogramaService, new ProfissiogramaFilter(), profissiogramaGuard);   
+        
+        this.filtro = new ProfissiogramaFilter();
+    }
+    
+    filtrar() {
+        if ( this.concluido == true )
+            this.filtro.getConcluido().setValue(1);
+        else this.filtro.getConcluido().setValue(2);
+        
+        this.filter = this.filtro;
+        this.setFilter();
     }
     
 }
