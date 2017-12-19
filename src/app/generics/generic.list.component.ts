@@ -187,7 +187,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     list() {
         this.service.list( this.filter )
             .then( res => {
-                console.log(res.json());
                 this.canImport = true;
                 this.showPreload = false;
                 this.array = JSON.parse( JSON.stringify( res.json() ) ).list;

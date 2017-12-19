@@ -101,26 +101,18 @@ tbody{
 	border-bottom: 1px solid #c0c0c0;	
 }
 
-.checkbox_selecionado {
-	margin-top: 1px;
-	padding-left: 40px;
-}
-
-.checkbox_convocado {
-	padding-left: 45px;
-}
-
 .btn_edit {
 	margin-top: 2px;
     padding-left: 25px;
 }
 
-.btn_remove {
-	padding-left: 35px;
+.btn-remover {
+	margin-top: 3px;
+    padding-left: 32px;
 }
 
 .codigo_completo { 
-	padding-left: 0px;
+	padding-left: 12px;
 }
 
 .nome {
@@ -128,5 +120,19 @@ tbody{
 }
 
 .chave {
-	padding-left: 3px;
+	padding-left: 15px;
+}
+
+.checkbox_selecionado {
+	margin-top: 1px;
+    padding-left: 45px;
+}
+
+.checkbox_convocado {
+	padding-left: 50px;
+}
+
+.contaniner-empregado-convocacao {
+	max-height: 400px;
+    overflow-y: auto;
 }

@@ -1,5 +1,6 @@
 import { Empregado } from './../../model/empregado';
 import { Convocacao } from './../../model/convocacao';
+import { ConvocacaoBuilder } from './../convocacao/convocacao.builder';
 import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { EmpregadoConvocacaoExameBuilder } from './../empregado-convocacao-exame/empregado-convocacao-exame.builder';
@@ -45,7 +46,7 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         cloneEmpregadoConvocacao.setDivergente(this.getValue(empregadoConvocacao, "getDivergente"));
         cloneEmpregadoConvocacao.setSelecionado(this.getValue(empregadoConvocacao, "getSelecionado"));
         
-        cloneEmpregadoConvocacao.setConvocacao(new Convocacao());
+        cloneEmpregadoConvocacao.setConvocacao(new ConvocacaoBuilder().clone(this.getValue(empregadoConvocacao, "getConvocacao")));
         
         cloneEmpregadoConvocacao.setEmpregado(new EmpregadoBuilder().clone(this.getValue(empregadoConvocacao, "getEmpregado")));
         

@@ -39,6 +39,7 @@ import { RegimeGuard } from './guards/guards-child/regime.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
 import { UsuarioGuard } from './guards/guards-child/usuario.guard';
 import { VacinaGuard } from './guards/guards-child/vacina.guard';
+import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convocacao.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

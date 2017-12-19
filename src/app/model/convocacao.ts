@@ -9,6 +9,8 @@ export class Convocacao {
     private profissiograma: Profissiograma;
     private gerenciaConvocacoes: Array<GerenciaConvocacao>;
     private empregadoConvocacoes: Array<EmpregadoConvocacao>;
+    private inicio: Date;
+    private fim: Date;
     private version: number;
 
     getId() {
@@ -57,6 +59,22 @@ export class Convocacao {
     
     setEmpregadoConvocacoes(empregadoConvocacoes: Array<EmpregadoConvocacao>) {
         this.empregadoConvocacoes = empregadoConvocacoes;
+    }
+    
+    getInicio() {
+        return this.inicio;
+    }
+    
+    setInicio(inicio: Date) {
+        this.inicio = inicio;
+    }
+    
+    getFim() {
+        return this.fim;
+    }
+    
+    setFim(fim: Date) {
+        this.fim = fim;
     }
     
     getVersion() {

@@ -83,14 +83,7 @@
 					[(ngModel)]="filter.pessoa.nome" name="nome">
 			</div>
 		</div>
-		
-		<div class="input-field col s12">
-			<div class="modal-content">
-				<label for="matricula">Matricula</label> <input type="text" id="matricula"
-					[(ngModel)]="filter.matricula" name="matricula">
-			</div>
-		</div>
-<!-- 
+
 		<div class="row">
 			<div class="input-field col s12">
 				<div class="input-field col s4">
@@ -123,31 +116,24 @@
 			</div>
 		</div>
 
-		<div class="input-field col s8">
+		<div class="input-field col s12">
 			<div class="modal-content">
 				<label for="chave">Chave</label> <input type="text" id="chave"
 					[(ngModel)]="filter.chave" name="chave">
 			</div>
 		</div>
 
-		<div class="input-field col s8">
+		<div class="input-field col s12">
 			<div class="modal-content">
 				<label for="matricula">Matricula</label> <input type="text"
 					id="matricula" [(ngModel)]="filter.matricula" name="matricula">
 			</div>
 		</div>
 
-		<div class="input-field col s8">
+		<div class="input-field col s12">
 			<div class="modal-content">
 				<label for="ramal">Ramal</label> <input type="text" id="ramal"
 					[(ngModel)]="filter.ramal" name="ramal">
-			</div>
-		</div>
-
-		<div class="input-field col s8">
-			<div class="modal-content">
-				<label for="matricula">Matricula</label> <input type="text"
-					id="matricula" [(ngModel)]="filter.matricula" name="matricula">
 			</div>
 		</div>
 
@@ -184,14 +170,14 @@
 				</select>
 			</fieldset>
 		</div>
-
+<!--
 		<div class="input-field col s12">
 			<fieldset>
 				<legend>Cargo</legend>
 				<select name="cargo" class="browser-default"
-					[(ngModel)]="filter.cargo.id">
-					<option disabled selected value=0>Selecione um cargo</option>
-					<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
+					[(ngModel)]="filter.cargo.nome">
+					<option disabled selected value="">Selecione um cargo</option>
+					<option *ngFor="let cargo of cargos" value="{{cargo.nome}}">{{cargo.nome}}</option>
 				</select>
 			</fieldset>
 		</div>
@@ -200,21 +186,20 @@
 			<fieldset>
 				<legend>Função</legend>
 				<select name="funcao" class="browser-default"
-					[(ngModel)]="filter.funcao.id">
-					<option disabled selected value=0>Selecione uma função</option>
-					<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
+					[(ngModel)]="filter.funcao.nome">
+					<option disabled selected value="">Selecione uma função</option>
+					<option *ngFor="let funcao of funcoes" value="{{funcao.nome}}">{{funcao.nome}}</option>
 				</select>
 			</fieldset>
 		</div>
-
 
 		<div class="input-field col s12">
 			<fieldset>
 				<legend>Regime</legend>
 				<select name="regime" class="browser-default"
-					[(ngModel)]="filter.regime.id">
-					<option disabled selected value=0>Selecione um regime</option>
-					<option *ngFor="let regime of regimes" value="{{regime.id}}">{{regime.nome}}</option>
+					[(ngModel)]="filter.regime.nome">
+					<option disabled selected value="">Selecione um regime</option>
+					<option *ngFor="let regime of regimes" value="{{regime.nome}}">{{regime.nome}}</option>
 				</select>
 			</fieldset>
 		</div>
@@ -223,50 +208,47 @@
 			<fieldset>
 				<legend>Gerencia</legend>
 				<select name="gerencia" class="browser-default"
-					[(ngModel)]="filter.gerencia.id">
-					<option disabled selected value=0>Selecione uma gerencia</option>
-					<option *ngFor="let gerencia of gerencias" value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
+					[(ngModel)]="filter.gerencia.codigoCompleto">
+					<option disabled selected value="">Selecione uma gerencia</option>
+					<option *ngFor="let gerencia of gerencias"
+						value="{{gerencia.codigoCompleto}}">{{gerencia.codigoCompleto}}</option>
 				</select>
 			</fieldset>
 		</div>
 
-		<div class="row">
-
-			<div class="input-field col s4">
-				<fieldset>
-					<legend>Base</legend>
-					<select name="base" class="browser-default"
-						[(ngModel)]="filter.base.id">
-						<option disabled selected value=0>Selecione uma base</option>
-						<option *ngFor="let base of bases" value="{{base.id}}">{{base.nome}}</option>
-					</select>
-				</fieldset>
-			</div>
-
-			<div class="input-field col s4">
-				<fieldset>
-					<legend>Ghe</legend>
-					<select name="ghe" class="browser-default"
-						[(ngModel)]="filter.ghe.id">
-						<option disabled selected value=0>Selecione um ghe</option>
-						<option *ngFor="let ghe of ghes" value="{{ghe.id}}">{{ghe.nome}}</option>
-					</select>
-				</fieldset>
-			</div>
-
-			<div class="input-field col s4">
-				<fieldset>
-					<legend>Ghee</legend>
-					<select name="ghee" class="browser-default"
-						[(ngModel)]="filter.ghee.id">
-						<option disabled selected value=0>Selecione um ghee</option>
-						<option *ngFor="let ghee of ghees" value="{{ghee.id}}">{{ghee.nome}}</option>
-					</select>
-				</fieldset>
-			</div>
-
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Base</legend>
+				<select name="base" class="browser-default"
+					[(ngModel)]="filter.base.nome">
+					<option disabled selected value="">Selecione uma base</option>
+					<option *ngFor="let base of bases" value="{{base.nome}}">{{base.nome}}</option>
+				</select>
+			</fieldset>
 		</div>
- -->
+  
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Ghe</legend>
+				<select name="ghe" class="browser-default"
+					[(ngModel)]="filter.ghe.nome">
+					<option disabled selected value=0>Selecione um ghe</option>
+					<option *ngFor="let ghe of ghes" value="{{ghe.nome}}">{{ghe.nome}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="input-field col s12">
+			<fieldset>
+				<legend>Ghee</legend>
+				<select name="ghee" class="browser-default"
+					[(ngModel)]="filter.ghee.nome">
+					<option disabled selected value=0>Selecione um ghee</option>
+					<option *ngFor="let ghee of ghees" value="{{ghee.nome}}">{{ghee.nome}}</option>
+				</select>
+			</fieldset>
+		</div>
+-->
 	</div>
 
 	<div class="modal-footer">
@@ -284,8 +266,8 @@
 	<h5 class="title-modal-delete">Confirmação para remoção</h5>
 	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
-		poderá mais ser resgatado.</p>
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo
+		não poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"

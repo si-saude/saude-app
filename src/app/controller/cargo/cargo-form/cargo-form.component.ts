@@ -12,7 +12,7 @@ import { CargoService } from './../cargo.service';
 @Component( {
     selector: 'app-cargo-form',
     templateUrl: './cargo-form.html',
-    styleUrls: ['./cargo-form.css', './../../../../assets/css/form-component.css']
+    styleUrls: ['./../../../../assets/css/form-component.css', './cargo-form.css']
 } )
 export class CargoFormComponent extends GenericFormComponent implements OnInit { 
     cargo: Cargo;

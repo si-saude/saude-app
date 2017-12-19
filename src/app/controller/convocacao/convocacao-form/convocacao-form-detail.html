@@ -16,11 +16,10 @@
 			<ul class="tabs" materialize="tabs">
 				<li class="tab col s4"><a RouterLinkActive="active"
 					href="#dadosGerais">Dados Gerais</a></li>
-				<li class="tab col s4"><a
-					RouterLinkActive="active" href="#cronogramaGerencias">Cronograma
-						das Gerências</a></li>
-				<li class="tab col s4"><a
-					RouterLinkActive="active" href="#empregados">Empregados</a></li>
+				<li class="tab col s4"><a RouterLinkActive="active"
+					href="#cronogramaGerencias">Cronograma das Gerências</a></li>
+				<li class="tab col s4"><a RouterLinkActive="active"
+					href="#empregados">Empregados</a></li>
 			</ul>
 		</div>
 
@@ -28,9 +27,9 @@
 
 			<div class="row">
 				<div class="input-field col s12">
-					<label for="titulo">Titulo</label>
-					<input id="nome" type="text" disabled maxlength="400"
-						[(ngModel)]="convocacao.titulo" name="titulo">
+					<label for="titulo">Titulo</label> <input id="nome" type="text"
+						disabled maxlength="400" [(ngModel)]="convocacao.titulo"
+						name="titulo">
 				</div>
 			</div>
 
@@ -39,8 +38,8 @@
 				<div class="input-field col s6">
 					<fieldset>
 						<legend>Tipo</legend>
-						<select name="convocacao.tipo" class="browser-default"
-							disabled [(ngModel)]="convocacao.tipo">
+						<select name="convocacao.tipo" class="browser-default" disabled
+							[(ngModel)]="convocacao.tipo">
 							<option disabled selected value="">Selecione um tipo</option>
 							<option *ngFor="let tipo of tipos" value="{{tipo}}">{{tipo}}</option>
 						</select>
@@ -60,6 +59,23 @@
 				</div>
 
 			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="inicio">Início</label>
+					<my-date-picker name="inicio" disabled
+						[options]="myDatePickerOptions"
+						[(ngModel)]="inicio"
+						placeholder="Início"> </my-date-picker>
+				</div>
+				<div class="input-field col s6">
+					<label for="fim">Fim</label>
+					<my-date-picker name="fim" disabled
+						[options]="myDatePickerOptions"
+						[(ngModel)]="fim"
+						placeholder="Fim"> </my-date-picker>
+				</div>
+			</div>
 
 		</div>
 
@@ -77,12 +93,12 @@
 
 			<div class="row col s12">
 
-				<div class="collection gerencias col s7">
+				<div class="collection gerencias col s12">
 					<div class="row-item-collection"
 						*ngFor="let gerenciaConvocacao of gerenciaConvocacoes; let gC = index">
 						<div class="input-field">
 							<div class="row row-collection">
-								<div class="col s7">
+								<div class="col s11">
 									<a class="collection-item"
 										(click)="choiseGerenciaConvocacao(gC, gerenciaConvocacao)"
 										[ngClass]="choisedGerenciaConvocacao(gC, gerenciaConvocacao)"
@@ -92,7 +108,7 @@
 								</div>
 								<div class="input-field col s1 checkbox">
 									<input type="checkbox" disabled
-										id="gerenciaConvocacao.selecionado[{{gC}}]" 
+										id="gerenciaConvocacao.selecionado[{{gC}}]"
 										[(ngModel)]="gerenciaConvocacao.selecionado"
 										(click)="selectGerenciaConvocacao(gC, gerenciaConvocacao)"
 										name="gerenciaConvocacao.selecionado[{{gC}}]"> <label
@@ -102,6 +118,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- 
 				<div class="col s5 datas">
 					<div class="row-item-collection"
 						*ngFor="let selectedGerencia of selectedGerenciaConvocacaoCC; let gC = index">
@@ -113,14 +130,16 @@
 								<div class="row">
 									<div class="input-field col s8">
 										<label for="dataGerenciaConvocacaoInicio[{{gC}}]">Início</label>
-										<my-date-picker disabled name="dataGerenciaConvocacaoInicio[{{gC}}]"
+										<my-date-picker disabled
+											name="dataGerenciaConvocacaoInicio[{{gC}}]"
 											[options]="myDatePickerOptions"
 											[(ngModel)]="dataGerenciaConvocacaoInicio[selectedGerencia]"
 											placeholder="Início"> </my-date-picker>
 									</div>
 									<div class="input-field col s8">
 										<label for="dataGerenciaConvocacaoFim[{{gC}}]">Fim</label>
-										<my-date-picker disabled name="dataGerenciaConvocacaoFim[{{gC}}]"
+										<my-date-picker disabled
+											name="dataGerenciaConvocacaoFim[{{gC}}]"
 											[options]="myDatePickerOptions"
 											[(ngModel)]="dataGerenciaConvocacaoFim[selectedGerencia]"
 											placeholder="Fim"> </my-date-picker>
@@ -130,14 +149,13 @@
 						</div>
 					</div>
 				</div>
-
-
+				 -->
 			</div>
 
 		</div>
 
 		<div id="empregados">
-			
+
 			<div class="row">
 				<div class="input-field col s2">
 					<label for="filterEmpregadoByChave">Chave</label> <input
@@ -172,32 +190,30 @@
 							<th class="col s1">Convocado</th>
 						</tr>
 					</thead>
-					<div
-						*ngFor="let empregadoConvocacao of empregadoConvocacoes; let eC = index">
-						<tbody class="col s12">
-							<tr class="col s12">
-								<td class="col s1 chave">{{empregadoConvocacao.empregado.chave}}</td>
-								<td class="col s4 nome">{{empregadoConvocacao.empregado.pessoa.nome}}</td>
-								<td class="col s3 codigo_completo">{{empregadoConvocacao.empregado.gerencia.codigoCompleto}}</td>		
-								<td class="col s1 checkbox_selecionado">
-									<input type="checkbox" disabled
+					<div class="contaniner-empregado-convocacao">
+						<div
+							*ngFor="let empregadoConvocacao of empregadoConvocacoes; let eC = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<td class="col s1 chave">{{empregadoConvocacao.empregado.chave}}</td>
+									<td class="col s4 nome">{{empregadoConvocacao.empregado.pessoa.nome}}</td>
+									<td class="col s3 codigo_completo">{{empregadoConvocacao.empregado.gerencia.codigoCompleto}}</td>
+									<td class="col s1 checkbox_selecionado"><input
+										type="checkbox" disabled
 										id="empregadoConvocacao[{{eC}}].selecionado"
 										[(ngModel)]="empregadoConvocacao.selecionado"
 										name="empregadoConvocacao[{{eC}}].selecionado"> <label
-										for="empregadoConvocacao[{{eC}}].selecionado"></label>
-								</td>
-								<td class="col s1 checkbox_convocado">
-									<input disabled type="checkbox"
-										id="empregadoConvocacao[{{eC}}].convocado"
+										for="empregadoConvocacao[{{eC}}].selecionado"></label></td>
+									<td class="col s1 checkbox_convocado"><input disabled
+										type="checkbox" id="empregadoConvocacao[{{eC}}].convocado"
 										[(ngModel)]="empregadoConvocacao.convocado"
 										name="empregadoConvocacao[{{eC}}].convocado"> <label
-										for="empregadoConvocacao[{{eC}}].convocado"></label>
-								</td>
-								
-							</tr>
-						</tbody>
-					</div>
+										for="empregadoConvocacao[{{eC}}].convocado"></label></td>
 
+								</tr>
+							</tbody>
+						</div>
+					</div>
 				</table>
 			</div>
 
@@ -212,8 +228,7 @@
 
 	<div class='row row-btns'>
 		<div class="col s6">
-			<a [routerLink]="['/convocacao']"
-				class="btn btn-primary btn-listar">Listar</a>
+			<a [routerLink]="['/convocacao']" class="btn btn-primary btn-listar">Listar</a>
 		</div>
 	</div>
 

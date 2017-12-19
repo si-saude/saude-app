@@ -6,7 +6,7 @@ import { DebugElement } from '@angular/core';
 import { CargoComponent } from './cargo.component';
 
 describe('CargoComponent', () => {
-  let component: FuncaoComponent;
+  let component: CargoComponent;
   let fixture: ComponentFixture<CargoComponent>;
 
   beforeEach(async(() => {

@@ -30,6 +30,8 @@ export class ConvocacaoBuilder extends GenericBuilder {
             cloneConvocacao.setTipo(this.getValue(convocacao, "getTipo"));
         
         cloneConvocacao.setId(this.getValue(convocacao,"getId"));
+        cloneConvocacao.setInicio(this.getValue(convocacao, "getInicio"));
+        cloneConvocacao.setFim(this.getValue(convocacao, "getFim"));
         cloneConvocacao.setVersion(this.getValue(convocacao,"getVersion"));
         cloneConvocacao.setTitulo(this.getValue(convocacao,"getTitulo"));
         

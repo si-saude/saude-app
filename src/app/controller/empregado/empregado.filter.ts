@@ -24,18 +24,6 @@ export class EmpregadoFilter extends GenericFilter {
     private ghe: GheFilter;
     private ghee: GheeFilter;
 
-//    constructor() {
-//        super();
-//        this.pessoa = new PessoaFilter();
-//        this.cargo = new CargoFilter();
-//        this.funcao = new FuncaoFilter();
-//        this.regime = new RegimeFilter();
-//        this.gerencia = new GerenciaFilter();
-//        this.base = new BaseFilter();
-//        this.ghe = new GheFilter();
-//        this.ghee = new GheeFilter();
-//    }
-    
     getChave(): string{
         return this.chave;
     }
