@@ -1,9 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import {MaterializeDirective,MaterializeAction} from "angular2-materialize";
+import { MaterializeDirective, MaterializeAction } from "angular2-materialize";
 
-import { GlobalVariable } from './../../../global'; 
+import { GlobalVariable } from './../../../global';
 import { Profissiograma } from './../../../model/profissiograma';
 import { ProfissiogramaService } from './../profissiograma.service';
 import { ProfissiogramaFilter } from './../profissiograma.filter';
@@ -16,7 +16,7 @@ import { Criterio } from './../../../model/criterio';
 import { CriterioBuilder } from './../../criterio/criterio.builder';
 import { Periodicidade } from './../../../model/periodicidade';
 import { PeriodicidadeBuilder } from './../../periodicidade/periodicidade.builder';
-import { GenericFormComponent } from './../../../generics/generic.form.component'; 
+import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ProfissiogramaBuilder } from './../profissiograma.builder';
 import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-monitoramento.builder';
 
@@ -38,161 +38,174 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     selectedExm = null;
 
     profissiogramaFilter: ProfissiogramaFilter = new ProfissiogramaFilter();
-    
+
     constructor( private route: ActivatedRoute,
-        private profissiogramaService: ProfissiogramaService) {
-        super(profissiogramaService);
+        private profissiogramaService: ProfissiogramaService ) {
+        super( profissiogramaService );
         this.goTo = "profissiograma";
-        
-        this.profissiograma = new ProfissiogramaBuilder().initialize(this.profissiograma);
-        
+
+        this.profissiograma = new ProfissiogramaBuilder().initialize( this.profissiograma );
+
         this.gruposMonitoramentoExame = new Array<GrupoMonitoramentoExame>();
         this.arrayCriterio = new Array<Criterio>();
-        this.periodicidades = new PeriodicidadeBuilder().initializeList(this.periodicidades);
+        this.periodicidades = new PeriodicidadeBuilder().initializeList( this.periodicidades );
     }
 
     ngOnInit() {
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
-                if( params['id'] !== undefined ) {
+                if ( params['id'] !== undefined ) {
                     let id = params['id'];
                     this.showPreload = true;
-                    
+
                     this.profissiogramaService.get( id )
                         .then( res => {
                             this.showPreload = false;
-                            this.profissiograma = new ProfissiogramaBuilder().clone(res.json());
+                            this.profissiograma = new ProfissiogramaBuilder().clone( res.json() );
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
                         } )
                 }
             } );
-            
-          this.profissiogramaService.getGruposMonitoramento()
-              .then(res => {
-                  this.gruposMonitoramento = res.json();
-              })
-              .catch(error => {
-                  console.log(error);
-              })
-          
-          this.profissiogramaService.getExames()
-              .then(res => {
-                  this.exames = res.json();
-              })
-              .catch(error => {
-                  console.log(error);
-              })
-          
-          this.profissiogramaService.getCriterios()
-              .then(res => {
-                  this.criterios = res.json();
-              })
-              .catch(error => {
-                  console.log(error);
-              })
-          
-          this.profissiogramaService.getPeriodicidade()
-              .then(res => {
-                  this.periodicidades = res.json();
-              })
-              .catch(error => {
-                  console.log(error);
-              })
-      }
-        
-    save() {
-        super.save(new ProfissiogramaBuilder().clone(this.profissiograma));
-    }
-    
-    addGrupoMonitoramento(valor: number) {
-        if ( valor == 0 ) {
-            this.toastParams = ['Por favor, selecione um grupo monitoramento', 4000];
-            this.globalActions.emit('toast');
-        } else {
-            this.profissiogramaService.getGrupoMonitoramentoById(valor)
-                .then(res => {
-                    let grupoMonitoramento = res.json();
-                    this.profissiograma.getGrupoMonitoramentos().push(new GrupoMonitoramentoBuilder().clone(grupoMonitoramento));
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-        }
-    }
-    
 
-    removeGrupoMonitoramento(i: number) {
-        this.profissiograma.getGrupoMonitoramentos().splice(i, 1);
-    }
-    
-    selectGrupoMonitoramento(index: number) {
-        this.selectedGM = this.gruposMonitoramento[index];
-        this.gruposMonitoramentoExame = this.profissiograma.getGrupoMonitoramentos()[index].getGrupoMonitoramentoExames();
-        this.arrayCriterio = new Array<Criterio>();
-        this.selectedExm = null;
-    }
-  
-    addExame(valor: number) {
-        if ( this.selectedGM === null ) { 
-            this.toastParams = ['Por favor, escolha um grupo monitoramento', 4000];
-            this.globalActions.emit('toast');
-        } else {
-            let exame = this.exames.find(o => o["id"] == valor);
-            let grupoMonitoramentoExame = new GrupoMonitoramentoExameBuilder().initialize(new GrupoMonitoramentoExame());
-            grupoMonitoramentoExame.setExame(new ExameBuilder().clone(exame));
-            grupoMonitoramentoExame.setCriterios(new CriterioBuilder().initializeList(new Array<Criterio>()));
-            
-            this.gruposMonitoramentoExame.push(grupoMonitoramentoExame);
-        }
+        this.getGruposMonitoramento();
+        this.getExames();
+        this.getCriterios();
+        this.getPeriodicidades();
     }
 
-    removeExame(i: number) {
-        this.gruposMonitoramentoExame.splice(i, 1);
+    getGruposMonitoramento() {
+        this.profissiogramaService.getGruposMonitoramento()
+            .then( res => {
+                this.gruposMonitoramento = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
     }
 
-    selectExame(index: number) {
-        this.selectedExm = this.gruposMonitoramentoExame[index].getExame();
-        this.arrayCriterio = this.gruposMonitoramentoExame[index].getCriterios();
+    getExames() {
+        this.profissiogramaService.getExames()
+            .then( res => {
+                this.exames = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
     }
     
-    addCriterio(valor: number) {
-        if ( this.selectedExm === null ) { 
-            this.toastParams = ['Por favor, escolha um exame', 4000];
-            this.globalActions.emit('toast');
-        } else {
-            let criterio = this.criterios.find(o => o["id"] == valor);
-            this.arrayCriterio.push(criterio);
-        }
+    getCriterios() {
+        this.profissiogramaService.getCriterios()
+            .then( res => {
+                this.criterios = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
+    getPeriodicidades() {
+        this.profissiogramaService.getPeriodicidade()
+            .then( res => {
+                this.periodicidades = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
     }
 
-    removeCriterio(i: number) {
-        this.arrayCriterio.splice(i, 1);
+save() {
+    super.save( new ProfissiogramaBuilder().clone( this.profissiograma ) );
+}
+
+addGrupoMonitoramento( valor: number ) {
+    if ( valor == 0 ) {
+        this.toastParams = ['Por favor, selecione um grupo monitoramento', 4000];
+        this.globalActions.emit( 'toast' );
+    } else {
+        this.profissiogramaService.getGrupoMonitoramentoById( valor )
+            .then( res => {
+                let grupoMonitoramento = res.json();
+                this.profissiograma.getGrupoMonitoramentos().push( new GrupoMonitoramentoBuilder().clone( grupoMonitoramento ) );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
     }
-    
-    selectedGrupoMonitoramento(gM: number) {
-        if ( this.gruposMonitoramento != undefined ) {
+}
+
+
+removeGrupoMonitoramento( i: number ) {
+    this.profissiograma.getGrupoMonitoramentos().splice( i, 1 );
+}
+
+selectGrupoMonitoramento( index: number ) {
+    this.selectedGM = this.gruposMonitoramento[index];
+    this.gruposMonitoramentoExame = this.profissiograma.getGrupoMonitoramentos()[index].getGrupoMonitoramentoExames();
+    this.arrayCriterio = new Array<Criterio>();
+    this.selectedExm = null;
+}
+
+addExame( valor: number ) {
+    if ( this.selectedGM === null ) {
+        this.toastParams = ['Por favor, escolha um grupo monitoramento', 4000];
+        this.globalActions.emit( 'toast' );
+    } else {
+        let exame = this.exames.find( o => o["id"] == valor );
+        let grupoMonitoramentoExame = new GrupoMonitoramentoExameBuilder().initialize( new GrupoMonitoramentoExame() );
+        grupoMonitoramentoExame.setExame( new ExameBuilder().clone( exame ) );
+        grupoMonitoramentoExame.setCriterios( new CriterioBuilder().initializeList( new Array<Criterio>() ) );
+
+        this.gruposMonitoramentoExame.push( grupoMonitoramentoExame );
+    }
+}
+
+removeExame( i: number ) {
+    this.gruposMonitoramentoExame.splice( i, 1 );
+}
+
+selectExame( index: number ) {
+    this.selectedExm = this.gruposMonitoramentoExame[index].getExame();
+    this.arrayCriterio = this.gruposMonitoramentoExame[index].getCriterios();
+}
+
+addCriterio( valor: number ) {
+    if ( this.selectedExm === null ) {
+        this.toastParams = ['Por favor, escolha um exame', 4000];
+        this.globalActions.emit( 'toast' );
+    } else {
+        let criterio = this.criterios.find( o => o["id"] == valor );
+        this.arrayCriterio.push( criterio );
+    }
+}
+
+removeCriterio( i: number ) {
+    this.arrayCriterio.splice( i, 1 );
+}
+
+selectedGrupoMonitoramento( gM: number ) {
+    if ( this.gruposMonitoramento != undefined ) {
+        if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
+            return "active";
+        } else return "";
+    } else {
+        setTimeout(() => {
             if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
                 return "active";
             } else return "";
-        } else {
-            setTimeout(() => {
-                if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
-                    return "active";
-                } else return "";
-            }, 500);
-        }
+        }, 500 );
     }
-    
-    selectedExame(e: number) {
-        if ( this.gruposMonitoramentoExame[e].getExame() === this.selectedExm ) {
-            return "active";
-        } else return "";
-    }
-    
-    onDestroy() {
-        this.inscricao.unsubscribe();
-    }
-    
+}
+
+selectedExame( e: number ) {
+    if ( this.gruposMonitoramentoExame[e].getExame() === this.selectedExm ) {
+        return "active";
+    } else return "";
+}
+
+onDestroy() {
+    this.inscricao.unsubscribe();
+}
+
 }

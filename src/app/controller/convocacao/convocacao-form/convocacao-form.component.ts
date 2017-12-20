@@ -130,6 +130,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 }
             } );
 
+        this.getTipos();
+        this.getProfissiogramas();
+        
+    }
+    
+    getTipos() {
         this.convocacaoService.getTipos()
             .then( res => {
                 this.tipos = Object.keys( res.json() );
@@ -137,7 +143,9 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getProfissiogramas() {
         this.convocacaoService.getProfissiogramas()
             .then( res => {
                 this.profissiogramas = new ProfissiogramaBuilder().cloneList( res.json() );
@@ -145,16 +153,8 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             .catch( error => {
                 console.log( error );
             } )
-
-        this.convocacaoService.getExames()
-            .then( res => {
-                this.exames = new ExameBuilder().cloneList( res.json() );
-            } )
-            .catch( error => {
-                console.log( error );
-            } )
     }
-
+    
     save() {
         this.setSelectedsGerencias();
         this.verifyAndSetDates();
@@ -262,8 +262,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                         }
                         emps.forEach(e => this.empregados.push(e));
                     }
-                    
-                    console.log(this.empregados);
                     this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
                 } )
                 .catch( error => {
@@ -562,10 +560,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     }
     
     ableToConvocate() {
-        if ( this.convocacao.getGerenciaConvocacoes().length > 0 &&
-            this.convocacao.getEmpregadoConvocacoes().length > 0 )
-            return true;
-        else return false;
+        if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
+            let eC = this.empregadoConvocacoes.find(eC => eC.getSelecionado() == true);
+            if ( eC != undefined )
+                return true;
+        }
+        return false;
     }
     
     selectedsGerenciaConvocacoes() {

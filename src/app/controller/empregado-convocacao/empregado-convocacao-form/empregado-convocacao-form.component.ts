@@ -31,7 +31,7 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService ) {
         super( empregadoConvocacaoService );
-        this.goTo = "empregado-convocacao";
+        this.goTo = "auditoria-exame";
         
         this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().initialize( this.empregadoConvocacao );
         this.exames = new ExameBuilder().initializeList(this.exames);
@@ -61,7 +61,12 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
                             } )
                     }
                 } );
-        
+
+        this.getExames();
+    
+    }
+                
+    getExames() {
         this.empregadoConvocacaoService.getExames()
             .then(res => {
                 this.exames = new ExameBuilder().cloneList(res.json());

@@ -38,7 +38,11 @@
 
 				<div class="input-field col s6">
 					<fieldset>
-						<legend>Tipo</legend>
+						<legend>Tipo <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getTipos()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
 						<select name="convocacao.tipo" class="browser-default"
 							[(ngModel)]="convocacao.tipo">
 							<option disabled selected value="">Selecione um tipo</option>
@@ -49,7 +53,11 @@
 
 				<div class="input-field col s6" *ngIf="!existProfissiograma">
 					<fieldset>
-						<legend>Profissiograma</legend>
+						<legend>Profissiograma <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getProfissiogramas()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
 						<select name="profissiograma" class="browser-default"
 							[(ngModel)]="convocacao.profissiograma.id"
 							(ngModelChange)="openModalConfirmProfissiograma()">
@@ -62,7 +70,11 @@
 
 				<div class="input-field col s6" *ngIf="existProfissiograma">
 					<fieldset>
-						<legend>Profissiograma</legend>
+						<legend>Profissiograma <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getProfissiogramas()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
 						<select disabled name="profissiograma" class="browser-default"
 							[(ngModel)]="convocacao.profissiograma.id">
 							<option disabled selected value=0>Selecione um profissiograma</option>
@@ -294,79 +306,6 @@
 	</div>
 
 </form>
-
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams"
-	[materializeActions]="modalEditEmpregado">
-
-	<h5 class="titleModal">Exames - Empregado</h5>
-
-	<div class="row">
-		<div class="input-field col s6">
-			<fieldset>
-				<legend>Exames</legend>
-				<select name="exames" class="browser-default" #exame>
-					<option disabled selected value=0>Selecione um exame</option>
-					<option *ngFor="let exame of exames" value="{{exame.id}}">{{exame.codigo}} - {{exame.descricao}}</option>
-				</select>
-			</fieldset>
-		</div>
-		<div class="input-field col s2">
-			<a class="btn-floating waves-effect waves-light green btn-add"
-				(click)="addExame(exame.value)"> <i
-				class="material-icons center-icon">add</i>
-			</a>
-		</div>
-		<div class="input-field col s4 checkbox" *ngIf="!verifyAuditado()">
-			<input type="checkbox" id="auditado" disabled
-				[(ngModel)]="empregadoDetail.auditado"
-				name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
-		</div>
-		<div class="input-field col s4 checkbox" *ngIf="verifyAuditado()">
-			<input type="checkbox" id="auditado"
-				[(ngModel)]="empregadoDetail.auditado"
-				name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
-		</div>
-	</div>
-
-	<div class="collection">
-
-		<div class="row"
-			*ngFor="let empregadoConvocacaoExame of empregadoDetail.empregadoConvocacaoExames; let e = index">
-			<div class="row row-collection">
-				<div class="col s4">
-					<a class="collection-item">
-						{{empregadoConvocacaoExame.exame.codigo}} </a>
-				</div>
-				<div class="col s4">
-					<a class="collection-item">
-						{{empregadoConvocacaoExame.exame.descricao}} </a>
-				</div>
-				<div class="col s2"
-					*ngIf="!empregadoConvocacaoExame.pendenteRelatorio">
-					<input type="checkbox" (click)="selectConform(e)"
-						id="empregadoConvocacaoExame[{{e}}].conforme"
-						[(ngModel)]="empregadoConvocacaoExame.conforme"
-						name="empregadoConvocacaoExame[{{e}}].conforme"> <label
-						for="empregadoConvocacaoExame[{{e}}].conforme">Conforme</label>
-				</div>
-				<div class="col s2">
-					<a (click)="removeExame(e)" [ngStyle]="{'cursor': 'pointer'}">
-						<i class="material-icons">delete</i>
-					</a>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-	<div class="modal-footer">
-		<a class="waves-effect waves-green btn-flat"
-			(click)="closeModalEditEmpregado()">Fechar</a>
-	</div>
-
-</div>
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"

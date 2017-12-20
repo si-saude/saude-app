@@ -41,24 +41,24 @@
 							name="profissionalSaude.empregado.pessoa.id"
 							[(ngModel)]="profissionalSaude.empregado.pessoa.id">
 					</div>
-					
+
 					<div class="input-field col s4">
 						<label for="dataAso">Data do ASO</label>
-						<my-date-picker name="dataAso"
-							[options]="myDatePickerOptions" [(ngModel)]="dataAso"
-							placeholder="Data do ASO"> </my-date-picker>
+						<my-date-picker name="dataAso" [options]="myDatePickerOptions"
+							[(ngModel)]="dataAso" placeholder="Data do ASO">
+						</my-date-picker>
 					</div>
 				</div>
 
 				<div class="row">
-				
+
 					<div class="input-field col s4">
 						<label for="matricula">Matricula</label> <input disabled
 							id="matricula" maxlength="10" type="text"
 							[(ngModel)]="profissionalSaude.empregado.matricula"
 							name="matricula">
 					</div>
-					
+
 					<div class="input-field col s4">
 						<label for="ramal" maxlength="12">Ramal</label> <input disabled
 							id="ramal" type="text"
@@ -76,7 +76,13 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Localização</legend>
+							<legend>
+								Localização <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getLocalizacoes()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="localizacao" class="browser-default"
 								[(ngModel)]="profissionalSaude.localizacao.id">
 								<option disabled selected value=0>Selecione uma localização</option>
@@ -88,7 +94,13 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Equipe</legend>
+							<legend>
+								Equipe <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getEquipes()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="equipe" class="browser-default"
 								[(ngModel)]="profissionalSaude.equipe.id">
 								<option selected value=0>Selecione uma equipe</option>
@@ -96,12 +108,14 @@
 							</select>
 						</fieldset>
 					</div>
-					
+
 				</div>
 
-				<input id="id" name="profissionalSaude.empregado.pessoa.id{{i}}" type="hidden"
-					[(ngModel)]="profissionalSaude.empregado.pessoa.id"> <input
-					id="version" name="profissionalSaude.empregado.pessoa.version{{i}}" type="hidden"
+				<input id="id" name="profissionalSaude.empregado.pessoa.id{{i}}"
+					type="hidden" [(ngModel)]="profissionalSaude.empregado.pessoa.id">
+				<input id="version"
+					name="profissionalSaude.empregado.pessoa.version{{i}}"
+					type="hidden"
 					[(ngModel)]="profissionalSaude.empregado.pessoa.version">
 
 			</div>
@@ -152,7 +166,12 @@
 								<div class="row">
 									<div class="input-field col s6">
 										<fieldset>
-											<legend>Curso</legend>
+											<legend>Curso <a
+													class="btn-floating waves-effect waves-light green btn-add-fieldset"
+													(click)="getCursos()"> <i
+													class="material-icons center-icon">cached</i>
+												</a>
+											</legend>
 											<select class="browser-default"
 												name="profissionalSaude.curriculo.curriculoCursos[{{i}}].curso.id"
 												[(ngModel)]="profissionalSaude.curriculo.curriculoCursos[i].curso.id">
@@ -260,7 +279,7 @@
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
-		
+
 		<div materialize [materializeParams]="toastParams"
 			[materializeActions]="globalActions"></div>
 

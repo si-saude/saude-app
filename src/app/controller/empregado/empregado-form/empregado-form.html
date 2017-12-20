@@ -38,7 +38,13 @@
 					</div>
 					<div class="input-field col s4">
 						<fieldset>
-							<legend>Vínculo</legend>
+							<legend>
+								Vínculo <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getVinculos()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="vinculo" class="browser-default"
 								[(ngModel)]="empregado.vinculo">
 								<option disabled selected value="">Selecione um vínculo</option>
@@ -91,7 +97,12 @@
 				<div class="row">
 					<div class="input-field col s4">
 						<fieldset>
-							<legend>Sexo</legend>
+							<legend>
+								Sexo <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getSexos()"> <i class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="sexo" class="browser-default"
 								[(ngModel)]="empregado.pessoa.sexo">
 								<option disabled selected value="">Selecione um sexo</option>
@@ -102,7 +113,13 @@
 
 					<div class="input-field col s4">
 						<fieldset>
-							<legend>Status</legend>
+							<legend>
+								Status <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getStatuses()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="status" class="browser-default"
 								[(ngModel)]="empregado.status">
 								<option disabled selected value="">Selecione um status</option>
@@ -113,7 +130,13 @@
 
 					<div class="input-field col s4">
 						<fieldset>
-							<legend>Estado Civil</legend>
+							<legend>
+								Estado Civil <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getEstadosCivies()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="estadoCivil" class="browser-default"
 								[(ngModel)]="empregado.estadoCivil">
 								<option disabled selected value="">Selecione um estado civil</option>
@@ -127,7 +150,13 @@
 				<div class="row">
 					<div class="input-field col s12">
 						<fieldset>
-							<legend>Escolaridade</legend>
+							<legend>
+								Escolaridade <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getEscolaridades()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="escolaridade" class="browser-default"
 								[(ngModel)]="empregado.escolaridade">
 								<option disabled selected value="">Selecione uma escolaridade</option>
@@ -143,7 +172,13 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Cargo</legend>
+							<legend>
+								Cargo <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getCargos()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="cargo" class="browser-default"
 								[(ngModel)]="empregado.cargo.id">
 								<option disabled selected value=0>Selecione um cargo</option>
@@ -154,7 +189,13 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Função</legend>
+							<legend>
+								Função <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getFuncoes()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="funcao" class="browser-default"
 								[(ngModel)]="empregado.funcao.id">
 								<option disabled selected value=0>Selecione uma função</option>
@@ -169,7 +210,13 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Regime</legend>
+							<legend>
+								Regime <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getRegimes()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="regime" class="browser-default"
 								[(ngModel)]="empregado.regime.id">
 								<option disabled selected value=0>Selecione um regime</option>
@@ -180,7 +227,13 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Gerencia</legend>
+							<legend>
+								Gerencia <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getGerencias()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="gerencia" class="browser-default"
 								[(ngModel)]="empregado.gerencia.id">
 								<option disabled selected value=0>Selecione uma gerencia</option>
@@ -196,7 +249,12 @@
 
 					<div class="input-field col s4">
 						<fieldset>
-							<legend>Base</legend>
+							<legend>
+								Base <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getBases()"> <i class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="base" class="browser-default"
 								[(ngModel)]="empregado.base.id">
 								<option disabled selected value=0>Selecione uma base</option>
@@ -207,7 +265,12 @@
 
 					<div class="input-field col s4">
 						<fieldset>
-							<legend>Ghe</legend>
+							<legend>
+								Ghe <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getGhes()"> <i class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="ghe" class="browser-default"
 								[(ngModel)]="empregado.ghe.id">
 								<option disabled selected value=0>Selecione um ghe</option>
@@ -218,7 +281,12 @@
 
 					<div class="input-field col s4">
 						<fieldset>
-							<legend>Ghee</legend>
+							<legend>
+								Ghee <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getGhees()"> <i class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
 							<select name="ghee" class="browser-default"
 								[(ngModel)]="empregado.ghee.id">
 								<option disabled selected value=0>Selecione um ghee</option>
@@ -277,7 +345,13 @@
 			<div id="grupoMonitoramento">
 
 				<fieldset>
-					<legend>Grupos Monitoramento</legend>
+					<legend>
+						Grupos Monitoramento <a
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
+							(click)="getGruposMonitoramento()"> <i
+							class="material-icons center-icon">cached</i>
+						</a>
+					</legend>
 					<div class="row row-curso">
 
 						<div class="input-field col s4">
@@ -289,8 +363,7 @@
 						</div>
 
 						<div class="col s2">
-							<a
-								class="btn-floating waves-effect waves-light green btn-add"
+							<a class="btn-floating waves-effect waves-light green btn-add"
 								(click)="addGrupoMonitoramento(grupoMonitoramento.value)"> <i
 								class="material-icons center-icon">add</i>
 							</a>
@@ -408,7 +481,13 @@
 							<div class="row">
 								<div class="input-field col s6">
 									<fieldset>
-										<legend>Cidade</legend>
+										<legend>
+											Cidade <a
+												class="btn-floating waves-effect waves-light green btn-add-fieldset"
+												(click)="getCidades()"> <i
+												class="material-icons center-icon">cached</i>
+											</a>
+										</legend>
 										<select class="browser-default" name="cidade"
 											[(ngModel)]="empregado.pessoa.endereco.cidade.id">
 											<option selected value=0>Selecione uma cidade</option>
@@ -461,7 +540,13 @@
 								<div class="row">
 									<div class="input-field col s8">
 										<fieldset>
-											<legend>Vacina</legend>
+											<legend>
+												Vacina <a
+													class="btn-floating waves-effect waves-light green btn-add-fieldset"
+													(click)="geVacinas()"> <i
+													class="material-icons center-icon">cached</i>
+												</a>
+											</legend>
 											<select name="empregado.empregadoVacinas[{{i}}].vacina.id"
 												class="browser-default"
 												[(ngModel)]="empregado.empregadoVacinas[i].vacina.id">
@@ -571,71 +656,76 @@
 				<div class="input-field col s12">
 
 					<fieldset>
-						<legend> Instalações </legend>
+						<legend>
+							Instalações <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getInstalacoes()"> <i
+								class="material-icons center-icon">cached</i>
+							</a>
+						</legend>
 
-							<div class="row row-curso">
+						<div class="row row-curso">
 
-								<div class="input-field col s4">
-									<select class="browser-default" #instalacao>
-										<option disabled selected value=0>Selecione uma instalação</option>
-										<option *ngFor="let instalacao of instalacoes"
-											value="{{instalacao.id}}">{{instalacao.nome}}</option>
+							<div class="input-field col s4">
+								<select class="browser-default" #instalacao>
+									<option disabled selected value=0>Selecione uma instalação</option>
+									<option *ngFor="let instalacao of instalacoes"
+										value="{{instalacao.id}}">{{instalacao.nome}}</option>
 
-									</select>
-								</div>
-
-								<div class="col s2">
-									<a
-										class="btn-floating waves-effect waves-light green btn-add"
-										(click)="addInstalacao(instalacao.value)"> <i
-										class="material-icons center-icon">add</i>
-									</a>
-								</div>
-
+								</select>
 							</div>
 
-							<div class="row">
+							<div class="col s2">
+								<a class="btn-floating waves-effect waves-light green btn-add"
+									(click)="addInstalacao(instalacao.value)"> <i
+									class="material-icons center-icon">add</i>
+								</a>
+							</div>
 
-								<table class="striped">
-									<thead>
-										<tr class="row col s12">
-											<th class="col s3">Nome</th>
-											<th class="col s3">Latitude</th>
-											<th class="col s3">Longitude</th>
-											<th class="col s3">Remover</th>
+						</div>
+
+						<div class="row">
+
+							<table class="striped">
+								<thead>
+									<tr class="row col s12">
+										<th class="col s3">Nome</th>
+										<th class="col s3">Latitude</th>
+										<th class="col s3">Longitude</th>
+										<th class="col s3">Remover</th>
+									</tr>
+								</thead>
+
+								<div
+									*ngFor="let instalacao of empregado.instalacoes;let i = index">
+									<tbody class="col s12">
+										<tr class="col s12">
+											<input type="hidden" [(ngModel)]="instalacao.nome"
+												value="{{instalacao.nome}}" name="instalacao[{{i}}].nome">
+											<input type="hidden" [(ngModel)]="instalacao.latitude"
+												value="{{instalacao.latitude}}"
+												name="instalacao[{{i}}].latitude">
+											<input type="hidden" [(ngModel)]="instalacao.longitude"
+												value="{{instalacao.longitude}}"
+												name="instalacao[{{i}}].longitude">
+											<input type="hidden" [(ngModel)]="instalacao.id"
+												value="{{instalacao.id}}" name="instalacao[{{i}}].id">
+											<td class="col s3 instalacao-nome">{{instalacao.nome}}</td>
+											<td class="col s3 instalacao-lat">{{instalacao.latitude}}</td>
+											<td class="col s3 instalacao-long">{{instalacao.longitude}}</td>
+											<td class="col s3 botao-remover"><a
+												class="btn-floating waves-effect waves-light red btn-remove"
+												(click)="removeInstalacao(i)"> <i
+													class="material-icons center-icon">delete</i>
+											</a></td>
 										</tr>
-									</thead>
+									</tbody>
 
-									<div
-										*ngFor="let instalacao of empregado.instalacoes;let i = index">
-										<tbody class="col s12">
-											<tr class="col s12">
-												<input type="hidden" [(ngModel)]="instalacao.nome"
-													value="{{instalacao.nome}}" name="instalacao[{{i}}].nome">
-												<input type="hidden" [(ngModel)]="instalacao.latitude"
-													value="{{instalacao.latitude}}"
-													name="instalacao[{{i}}].latitude">
-												<input type="hidden" [(ngModel)]="instalacao.longitude"
-													value="{{instalacao.longitude}}"
-													name="instalacao[{{i}}].longitude">
-												<input type="hidden" [(ngModel)]="instalacao.id"
-													value="{{instalacao.id}}" name="instalacao[{{i}}].id">
-												<td class="col s3 instalacao-nome">{{instalacao.nome}}</td>
-												<td class="col s3 instalacao-lat">{{instalacao.latitude}}</td>
-												<td class="col s3 instalacao-long">{{instalacao.longitude}}</td>
-												<td class="col s3 botao-remover"><a
-													class="btn-floating waves-effect waves-light red btn-remove"
-													(click)="removeInstalacao(i)"> <i
-														class="material-icons center-icon">delete</i>
-												</a></td>
-											</tr>
-										</tbody>
+								</div>
 
-									</div>
+							</table>
 
-								</table>
-
-							</div>
+						</div>
 
 					</fieldset>
 
@@ -655,8 +745,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/empregado']"
-					class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/empregado']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>

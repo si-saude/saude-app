@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { GlobalVariable } from './../../global';
 import { Profissiograma } from './../../model/profissiograma';
@@ -13,21 +13,37 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   styleUrls: ['./profissiograma.component.css', '../../../assets/css/list-component.css']
 })
 export class ProfissiogramaComponent extends GenericListComponent<Profissiograma, ProfissiogramaFilter, ProfissiogramaGuard> {
-    filtro: ProfissiogramaFilter;
-    concluido: boolean;
+    flagConcluido: number = 0;
+    concluido: HTMLInputElement;
+    @ViewChild("conc") c: ElementRef;
 
     constructor(profissiogramaService: ProfissiogramaService, profissiogramaGuard: ProfissiogramaGuard) {
-        super(profissiogramaService, new ProfissiogramaFilter(), profissiogramaGuard);   
-        
-        this.filtro = new ProfissiogramaFilter();
+        super(profissiogramaService, new ProfissiogramaFilter(), profissiogramaGuard);
+    }
+    
+    ngAfterViewInit() {
+        this.concluido = this.c.nativeElement;
+        this.concluido.indeterminate = true;
+    }
+    
+    changeStateConcluido() {
+        if ( this.concluido.checked == false ) {
+            this.flagConcluido++;
+        }
+        if ( this.flagConcluido % 2 == 0 ) {
+            this.concluido.indeterminate = true;
+            this.concluido.checked = true;
+            this.flagConcluido = 0;
+        }
     }
     
     filtrar() {
-        if ( this.concluido == true )
-            this.filtro.getConcluido().setValue(1);
-        else this.filtro.getConcluido().setValue(2);
+        if ( this.concluido.indeterminate == true )
+            this.filter.getConcluido().setValue(0);
+        else if ( this.concluido.checked == true )
+            this.filter.getConcluido().setValue(1);
+        else this.filter.getConcluido().setValue(2);
         
-        this.filter = this.filtro;
         this.setFilter();
     }
     

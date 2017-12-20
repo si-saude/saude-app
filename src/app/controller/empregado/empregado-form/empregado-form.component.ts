@@ -126,6 +126,26 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 }
             } );
 
+        this.getStatuses();
+        this.getSexos();
+        this.getEstadosCivies();
+        this.getEscolaridades();
+        this.getVinculos();
+        this.getCargos();
+        this.getCargos();
+        this.getFuncoes();
+        this.getRegimes();
+        this.getGerencias();
+        this.getBases();
+        this.getGhes();
+        this.getGhees();
+        this.getCidades();
+        this.getVacinas();
+        this.getInstalacoes();
+        this.getGruposMonitoramento();
+    }
+    
+    getStatuses() {
         this.empregadoService.getStatuses()
             .then( res => {
                 this.statuses = Object.keys( res.json() );
@@ -133,7 +153,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    getSexos() {
         this.empregadoService.getSexos()
             .then( res => {
                 this.sexos = Object.keys( res.json() );
@@ -141,7 +162,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getEstadosCivies() {
         this.empregadoService.getEstadosCivies()
             .then( res => {
                 this.estadosCivies = Object.keys( res.json() );
@@ -149,7 +172,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getEscolaridades() {
         this.empregadoService.getEscolaridades()
             .then( res => {
                 this.escolaridades = Object.keys( res.json() );
@@ -157,7 +182,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-        
+    }
+    
+    getVinculos() {
         this.empregadoService.getVinculos()
             .then( res => {
                 this.vinculos = Object.keys( res.json() );
@@ -165,7 +192,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
+    }
 
+    getCargos() {
         this.empregadoService.getCargos()
             .then( res => {
                 this.cargos = res.json();
@@ -173,7 +202,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+        }
+    
+    getFuncoes() {
         this.empregadoService.getFuncoes()
             .then( res => {
                 this.funcoes = res.json();
@@ -181,7 +212,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+        }
+    
+    getRegimes() {
         this.empregadoService.getRegimes()
             .then( res => {
                 this.regimes = res.json();
@@ -189,7 +222,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
+    }
 
+    getGerencias() {
         this.empregadoService.getGerencias()
             .then( res => {
                 this.gerencias = res.json();
@@ -197,7 +232,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getBases() {
         this.empregadoService.getBases()
             .then( res => {
                 this.bases = res.json();
@@ -205,7 +242,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getGhes() {
         this.empregadoService.getGhes()
             .then( res => {
                 this.ghes = res.json();
@@ -213,7 +252,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getGhees() {
         this.empregadoService.getGhees()
             .then( res => {
                 this.ghees = res.json();
@@ -221,7 +262,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getCidades() {
         this.empregadoService.getCidades()
             .then( res => {
                 this.cidades = res.json();
@@ -229,7 +272,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getVacinas() {
         this.empregadoService.getVacinas()
             .then( res => {
                 this.vacinas = res.json();
@@ -237,7 +282,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getInstalacoes() {
         this.empregadoService.getInstalacoes()
             .then( res => {
                 this.instalacoes = new InstalacaoBuilder().cloneList( res.json() );
@@ -245,7 +292,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
+    }
+    
+    getGruposMonitoramento() {
         this.empregadoService.getGruposMonitoramento()
             .then( res => {
                 this.gruposMonitoramento = new GrupoMonitoramentoBuilder().cloneList(res.json());
@@ -253,7 +302,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-
     }
 
     loadAssinatura() {

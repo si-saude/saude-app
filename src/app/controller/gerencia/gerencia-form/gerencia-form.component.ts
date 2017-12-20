@@ -65,29 +65,27 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
                             if ( this.gerencia.getSecretario2().getId() > 0 )
                                 this.secretarios2.push( new EmpregadoBuilder().clone( this.gerencia.getSecretario2() ) );
 
-                            this.gerenciaService.getGerenciasWithFilterId( this.gerencia.getId() )
-                                .then( res => {
-                                    this.gerencias = res.json();
-                                } )
-                                .catch( error => {
-                                    console.log( error );
-                                } )
+                            this.getGerencias();
 
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
                         } )
                 } else {
-                    this.gerenciaService.getGerenciasWithFilterId( this.gerencia.getId() )
-                        .then( res => {
-                            this.gerencias = res.json();
-                        } )
-                        .catch( error => {
-                            console.log( error );
-                        } )
+                    this.getGerencias();
                 }
             } );
 
+    }
+    
+    getGerencias() {
+        this.gerenciaService.getGerenciasWithFilterId( this.gerencia.getId() )
+            .then( res => {
+                this.gerencias = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
     }
 
     save() {

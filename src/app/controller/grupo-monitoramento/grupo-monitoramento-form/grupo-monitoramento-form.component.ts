@@ -66,6 +66,13 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
                 }
             } );
         
+        this.getExames();
+        this.getCriterios();
+        this.getTiposGrupoMonitoramento();
+        this.getPeriodicidades();
+    }
+    
+    getExames() {
         this.grupoMonitoramentoService.getExames()
             .then(res => {
                 this.exames = res.json();
@@ -73,7 +80,9 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             .catch(error => {
                 console.log(error);
             })
-        
+    }
+    
+    getCriterios() {
         this.grupoMonitoramentoService.getCriterios()
             .then(res => {
                 this.criterios = res.json();
@@ -81,7 +90,9 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             .catch(error => {
                 console.log(error);
             })
-        
+    }
+    
+    getTiposGrupoMonitoramento() {
         this.grupoMonitoramentoService.getTiposGrupoMonitoramento() 
             .then(res => {
                 this.tiposGrupoMonitoramento = res.json();
@@ -89,7 +100,9 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             .catch(error => {
                 console.log(error);
             })
-        
+    }
+    
+    getPeriodicidades() {
         this.grupoMonitoramentoService.getPeriodicidades()
             .then(res => {
                 this.periodicidades = res.json();

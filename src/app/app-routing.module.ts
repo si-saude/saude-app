@@ -80,7 +80,7 @@ const routes: Routes = [
   { path: 'vacina', loadChildren: 'app/controller/vacina/vacina.module#VacinaModule'},
   { path: 'fornecedor', loadChildren: 'app/controller/fornecedor/fornecedor.module#FornecedorModule'},
   { path: 'convocacao', loadChildren: 'app/controller/convocacao/convocacao.module#ConvocacaoModule'},
-  { path: 'empregado-convocacao', loadChildren: 'app/controller/empregado-convocacao/empregado-convocacao.module#EmpregadoConvocacaoModule'},
+  { path: 'auditoria-exame', loadChildren: 'app/controller/empregado-convocacao/empregado-convocacao.module#EmpregadoConvocacaoModule'},
   { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule'},
   { path: 'relatorio-medico', loadChildren: 'app/controller/relatorio-medico/relatorio-medico.module#RelatorioMedicoModule' },
   { path: 'resultado-exame', loadChildren: 'app/controller/resultado-exame/resultado-exame.module#ResultadoExameModule' },

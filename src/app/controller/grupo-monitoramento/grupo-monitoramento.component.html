@@ -88,15 +88,15 @@
 			</div>
 			
 			<div class="input-field col s3 checkbox">
-				<input type="checkbox" id="recorrente"
-					[(ngModel)]="recorrente"
+				<input type="checkbox" id="recorrente" #rec
+					(click)="changeStateRecorrente()"
 					name="recorrente"> <label
 					for="recorrente">Recorrente</label>
 			</div>
 			
 			<div class="input-field col s3 checkbox">
-				<input type="checkbox" id="relatorio"
-					[(ngModel)]="relatorio"
+				<input type="checkbox" id="relatorio" #rel
+					(click)="changeStateRelatorio()"
 					name="relatorio"> <label
 					for="relatorio">Relatório</label>
 			</div>

@@ -21,7 +21,11 @@
 
 			<div class="input-field col s4">
 				<fieldset>
-					<legend>Gerência</legend>
+					<legend>Gerência <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getGerencias()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
 					<select class="browser-default" name="gerencia.gerencia"
 						[(ngModel)]="gerencia.gerencia.id">
 						<option selected value=0>Selecione uma gerência</option>

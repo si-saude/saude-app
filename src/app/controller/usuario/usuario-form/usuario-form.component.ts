@@ -45,6 +45,10 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
                 }
             } );
         
+        this.getPerfis();
+    }
+    
+    getPerfis() {
         this.usuarioService.getPerfis()
             .then(res => {
                 this.perfis = new PerfilBuilder().cloneList(res.json());
@@ -52,7 +56,6 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
             .catch(error => {
                 console.log(error);
             })
-        
     }
     
     save() {

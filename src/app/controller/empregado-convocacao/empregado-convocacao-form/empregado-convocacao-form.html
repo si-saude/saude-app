@@ -41,7 +41,11 @@
 		<div class="row">
 			<div class="input-field col s6">
 				<fieldset>
-					<legend>Exames</legend>
+					<legend>Exames <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getExames()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
 					<select name="exames" class="browser-default" #exame>
 						<option disabled selected value=0>Selecione um exame</option>
 						<option *ngFor="let exame of exames" value="{{exame.id}}">{{exame.codigo}} - {{exame.descricao}}</option>

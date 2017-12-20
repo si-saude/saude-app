@@ -47,6 +47,11 @@ export class FuncaoFormComponent extends GenericFormComponent implements OnInit 
                 }
             } );
         
+        this.getVacinas();
+    }
+    
+    
+    getVacinas() {
         this.funcaoService.getVacinas()
             .then(res => {
                 this.vacinas = new VacinaBuilder().cloneList(res.json());
@@ -54,7 +59,6 @@ export class FuncaoFormComponent extends GenericFormComponent implements OnInit 
             .catch(error => {
                 console.log(error);
             })
-        
     }
     
     save() {

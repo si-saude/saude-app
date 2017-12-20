@@ -52,7 +52,13 @@
 					<div class="row">
 						<div class="input-field col s6">
 							<fieldset>
-								<legend>Tipo Grupo Monitoramento</legend>
+								<legend>
+									Tipo Grupo Monitoramento <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getTiposGrupoMonitoramento()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
 								<select name="grupoMonitoramento.tipoGrupoMonitoramento"
 									class="browser-default"
 									[(ngModel)]="grupoMonitoramento.tipoGrupoMonitoramento.id">
@@ -76,7 +82,13 @@
 						<div class="collection">
 
 							<fieldset>
-								<legend>Exames</legend>
+								<legend>
+									Exames <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getExames()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
 								<div class="row select">
 
 									<div class="input-field col s4">
@@ -87,8 +99,7 @@
 									</div>
 
 									<div class="col s2">
-										<a
-											class="btn-floating waves-effect waves-light green btn-add"
+										<a class="btn-floating waves-effect waves-light green btn-add"
 											(click)="addExame(exame.value)"> <i
 											class="material-icons center-icon">add</i>
 										</a>
@@ -107,7 +118,8 @@
 											{{grupoMonitoramentoExame.exame.descricao}} </a>
 									</div>
 									<div class="col s5">
-										<select class="browser-default" name="grupoMonitoramentoExame[{{gME}}].periodicidade"
+										<select class="browser-default"
+											name="grupoMonitoramentoExame[{{gME}}].periodicidade"
 											[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
 											<option selected value=0>Selecione uma periodicidade</option>
 											<option *ngFor="let periodicidade of periodicidades"
@@ -129,7 +141,13 @@
 						<div class="collection">
 
 							<fieldset>
-								<legend>Critérios</legend>
+								<legend>
+									Critérios <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getCriterios()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
 								<div class="row select">
 
 									<div class="input-field col s4">
@@ -141,8 +159,7 @@
 									</div>
 
 									<div class="col s2">
-										<a
-											class="btn-floating waves-effect waves-light green btn-add"
+										<a class="btn-floating waves-effect waves-light green btn-add"
 											(click)="addCriterio(criterio.value)"> <i
 											class="material-icons center-icon">add</i>
 										</a>
