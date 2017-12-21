@@ -54,6 +54,7 @@ import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-mo
 import { UsuarioGuard } from './guards/guards-child/usuario.guard';
 import { VacinaGuard } from './guards/guards-child/vacina.guard';
 import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convocacao.guard';
+import { FeriadoGuard } from './guards/guards-child/feriado.guard';
 
 @NgModule({
   declarations: [
@@ -73,36 +74,6 @@ import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convoc
     HttpModule,
     LoginModule,
     ContatoModule,
-//    PerfilModule,
-//    LocalizacaoModule,
-//    EquipeModule,
-//    GerenciaModule,
-//    ProfissionalSaudeModule,
-//    CargoModule,
-//    CursoModule,
-//    CidadeModule,
-//    VacinaModule,
-//    GheModule,
-//    PeriodicidadeModule,
-//    IndicadorRiscoAcidenteModule,
-//    IndicadorRiscoAmbientalModule,
-//    IndicadorRiscoErgonomicoModule,
-//    IndicadorRiscoSanitarioModule,
-//    IndicadorRiscoSaudeAmbientalModule,
-//    InstalacaoModule,
-//    FuncaoModule,
-//    RegimeModule,
-//    BaseModule,
-//    GheeModule,
-//    EmpregadoModule,
-//    TipoGrupoMonitoramentoModule,
-//    CriterioModule,
-//    ExameModule,
-//    GrupoMonitoramentoModule,
-//    ProfissiogramaModule,
-//    FornecedorModule,
-//    ConvocacaoModule,
-//    EmpregadoConvocacaoModule,
     SharedModule,
     AppRoutingModule
   ],
@@ -143,7 +114,8 @@ import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convoc
     UsuarioGuard,
     ResultadoExameGuard,
     VacinaGuard,
-    EmpregadoConvocacaoGuard
+    EmpregadoConvocacaoGuard,
+    FeriadoGuard
   ],
   bootstrap: [ 
     AppComponent

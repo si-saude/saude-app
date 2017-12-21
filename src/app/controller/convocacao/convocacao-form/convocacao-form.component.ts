@@ -109,7 +109,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.existProfissiograma = true;
                             this.convocacao = new ConvocacaoBuilder().clone( res.json() );
                             this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
-                            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
+                            this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(this.convocacao.getEmpregadoConvocacoes());
                             this.selectedsGerenciaConvocacoes();
                             this.parseAndSetDates();
                         } )
@@ -122,7 +122,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                         this.convocacao = new ConvocacaoBuilder().clone( res.json() );
                         this.convocacao.setProfissiograma( new ProfissiogramaBuilder().initialize( new Profissiograma() ) );
                         this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
-                        this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
+                        this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(this.convocacao.getEmpregadoConvocacoes());
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -158,7 +158,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     save() {
         this.setSelectedsGerencias();
         this.verifyAndSetDates();
-//        console.log(new ConvocacaoBuilder().clone( this.convocacao ));
         super.save( new ConvocacaoBuilder().clone( this.convocacao ) );
     }
 
@@ -229,7 +228,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     getEmpregado( evento ) {
         if ( this.empregadoToAdd !== undefined ) {
             
-            let empregado = this.empregados.find( e => {
+            let empregado: Empregado = this.empregados.find( e => {
                 if ( e.getChave() == undefined || 
                         e.getChave() == null ||
                         e.getChave() == '' ) {
@@ -241,7 +240,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             } );
             
             if ( empregado !== undefined ) {
-                this.empregadoToAdd = empregado;
+                this.empregadoToAdd = new EmpregadoBuilder().clone(empregado);
             } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
         } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
     }
@@ -257,10 +256,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     if (this.empregados.length == 0)
                         emps.forEach(e => this.empregados.push(e));
                     else {
-                        for (let i=0; i<this.empregados.length; i++) {
-                            emps = emps.filter ( e => this.empregados[i].getId() != e.getId() ); 
-                        }
-                        emps.forEach(e => this.empregados.push(e));
+                        emps.forEach(eps => {
+                            let e: Empregado = this.empregados.find( es => es.getId() == eps.getId() );
+                            if ( e == undefined ) this.empregados.push(eps); 
+                        })
                     }
                     this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
                 } )
@@ -275,7 +274,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     selectEmpregado( evento: string ) {
         if ( this.oldNomeEmpregado != evento ) {
             this.oldNomeEmpregado = evento;
-            console.log(this.empregadoToAdd.getPessoa().getNome());
             if ( evento.length > 3 ) {
                 this.empregadoService.getEmpregadoByName( evento )
                     .then( res => {
@@ -283,10 +281,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                         if (this.empregados.length == 0)
                             emps.forEach(e => this.empregados.push(e));
                         else {
-                            for (let i=0; i<this.empregados.length; i++) {
-                                emps = emps.filter ( e => this.empregados[i].getId() != e.getId() ); 
-                            }
-                            emps.forEach(e => this.empregados.push(e));
+                            emps.forEach(eps => {
+                                let e: Empregado = this.empregados.find( es => es.getId() == eps.getId() );
+                                if ( e == undefined ) this.empregados.push(eps); 
+                            })
                         }
                         this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
                     } )
@@ -300,24 +298,25 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     addEmpregado() {
         if ( this.empregadoToAdd.getPessoa().getNome() != undefined ) {
 
-            let empregado = this.empregados.find( e => e.getPessoa().getNome() == this.empregadoToAdd.getPessoa().getNome() );
+            let empregado = this.empregados.find( e => e.getPessoa().getId() == this.empregadoToAdd.getPessoa().getId() );
             
             if ( empregado != undefined ) {
-                let empregado2 = this.empregadoConvocacoes.find( eC => eC.getEmpregado().getId() === empregado.getId() );
-
-                //verifica se o empregado não está inserido na lista
+                let empregado2 = this.convocacao.getEmpregadoConvocacoes().find( eC => 
+                                        eC.getEmpregado().getId() === empregado.getId() );
 
                 if ( empregado2 == undefined ) {
                     let eC = new EmpregadoConvocacaoBuilder().initialize( new EmpregadoConvocacao() );
                     let convocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
-                    eC.setEmpregado( this.empregadoToAdd )
+                    eC.setEmpregado( new EmpregadoBuilder().clone(this.empregadoToAdd) );
                     convocacao.setProfissiograma( this.convocacao.getProfissiograma() );
                     convocacao.getEmpregadoConvocacoes().push( eC );
 
                     this.convocacaoService.getEmpregadoConvocacao( convocacao )
                         .then( res => {
                             convocacao = new ConvocacaoBuilder().clone( res.json() );
-                            this.empregadoConvocacoes.push( convocacao.getEmpregadoConvocacoes()[0] );
+                            let eC = new EmpregadoConvocacaoBuilder().clone(convocacao.getEmpregadoConvocacoes()[0]);
+                            this.empregadoConvocacoes.push( eC );
+                            this.convocacao.getEmpregadoConvocacoes().push( eC );
                         } )
                         .catch( error => {
                             console.log( error );
@@ -339,31 +338,35 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
     filterEmpregadoByChave( evento ) {
         if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
-            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
-                evento = evento.toLowerCase();
+            evento = evento.toLowerCase();
+            let eCs = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
                 let lowerCaseC = eC.getEmpregado().getChave().toLowerCase();
                 return lowerCaseC.includes( evento );
             } )
+            this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(eCs);
         }
+        console.log(this.empregadoConvocacoes);
     }
 
     filterEmpregadoByNome( evento ) {
         if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
-            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
-                evento = evento.toLowerCase();
+            evento = evento.toLowerCase();
+            let eCs = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
                 let lowerCaseN = eC.getEmpregado().getPessoa().getNome().toLowerCase();
                 return lowerCaseN.includes( evento );
             } )
+            this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(eCs);
         }
     }
 
     filterEmpregadoByGerencia( evento ) {
         if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
-            this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
-                evento = evento.toLowerCase();
+            evento = evento.toLowerCase();
+            let eCs = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
                 let lowerCaseCC = eC.getEmpregado().getGerencia().getCodigoCompleto().toLowerCase();
                 return lowerCaseCC.includes( evento );
             } )
+            this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(eCs);
         }
     }
 
