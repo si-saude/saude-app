@@ -173,6 +173,8 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
     selectGerenciaConvocacao( index: number, gerenciaConvocacao: GerenciaConvocacao ) {
         this.selectedGC = this.gerenciaConvocacoes[index];
+        let empsConvs: Array<EmpregadoConvocacao> = new EmpregadoConvocacaoBuilder().initializeList(new Array<EmpregadoConvocacao>());
+        
         setTimeout(() => {
             if ( this.gerenciaConvocacoes[index].getSelecionado() == true ) {
                 
@@ -192,9 +194,16 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
                 this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
                     .then( res => {
-                        let eCs = new EmpregadoConvocacaoBuilder().cloneList( res.json().empregadoConvocacoes );
-                        this.empregadoConvocacoes = this.empregadoConvocacoes.concat( eCs );
-                        this.convocacao.setEmpregadoConvocacoes( this.empregadoConvocacoes );
+                        let c: Convocacao = new ConvocacaoBuilder().clone( res.json() );
+                        let eCs = c.getEmpregadoConvocacoes();
+                        eCs.forEach( e => {
+                            let e1 = this.convocacao.getEmpregadoConvocacoes().find( e2 => e.getEmpregado().getId() == e2.getEmpregado().getId());
+                            if ( e1 == undefined ) {
+                                this.empregadoConvocacoes.push(e);
+                                this.convocacao.getEmpregadoConvocacoes().push(e);
+                            }
+                        })
+                        
                     } )
                     .catch( error => {
                         console.log( error );
@@ -204,12 +213,13 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 if (i >= 0)
                     this.selectedGerenciaConvocacaoCC.splice(i, 1);
                 
-                let empregadoConvocacoes: Array<EmpregadoConvocacao> = this.empregadoConvocacoes.filter( eC => {
+                let empregadoConvocacoes: Array<EmpregadoConvocacao> = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
                     return eC.getEmpregado().getGerencia().getId() == this.gerenciaConvocacoes[index].getGerencia().getId();
                 } );
 
                 empregadoConvocacoes.forEach( eC1 => {
                     this.empregadoConvocacoes.splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
+                    this.convocacao.getEmpregadoConvocacoes().splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
                 } )                
             }
         }, 50 );
@@ -334,6 +344,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
     removeEmpregadoToList( index: number ) {
         this.empregadoConvocacoes.splice( index, 1 );
+        this.convocacao.getEmpregadoConvocacoes().splice( index, 1 );
     }
 
     filterEmpregadoByChave( evento ) {
