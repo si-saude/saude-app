@@ -356,7 +356,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             } )
             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(eCs);
         }
-        console.log(this.empregadoConvocacoes);
     }
 
     filterEmpregadoByNome( evento ) {
@@ -398,7 +397,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         let eC = this.convocacao.getEmpregadoConvocacoes().find(eC => {
             return this.empregadoDetail.getId() == eC.getId();
         })
-        console.log(eC.getEmpregadoConvocacaoExames());
         eC.getEmpregadoConvocacaoExames().push(empregadoConvocacaoExame);
         
         eC.setAuditado(false);
@@ -437,7 +435,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             this.fim != null )
             this.convocacao.setFim(
                 this.parseDatePickerToDate( this.fim ) );
-        console.log(this.convocacao);
     }
 
     parseAndSetDates() {            

@@ -9,50 +9,13 @@
 			[materializeActions]="sidenavActions3" data-activates="slide-out3"
 			(click)="closeSidenav1()">Cadastro
 		</a>
-	</li>
-		
-</ul>
-
-<ul id="slide-out2" class="side-nav">
-	<li>
 		<a materialize="sideNav"
-			[materializeParams]="sidenavParams"
-			[materializeActions]="sidenavActions2" data-activates="slide-out1"
-			(click)="closeSidenav2()"><i class="material-icons">chevron_left</i>
+			[materializeParams]="[{closeOnClick: true}]"
+			[materializeActions]="sidenavActionsProcesso" data-activates="slide-out-processo"
+			(click)="closeSidenavProcesso()">Processo
 		</a>
-		<a [routerLink]="['/base/cadastrar']">Base</a>
-		<a [routerLink]="['/cargo/cadastrar']">Cargo</a>
-		<a [routerLink]="['/cidade/cadastrar']">Cidade</a>
-		<a [routerLink]="['/criterio/cadastrar']">Critério</a>
-		<a [routerLink]="['/convocacao/cadastrar']">Convocação</a>
-		<a [routerLink]="['/curso/cadastrar']">Curso</a>
-		<a [routerLink]="['/empregado/cadastrar']">Empregado</a>
-		<a [routerLink]="['/equipe/cadastrar']">Equipe</a>
-		<a [routerLink]="['/exame/cadastrar']">Exame</a>
-		<a [routerLink]="['/funcao/cadastrar']">Função</a>
-		<a [routerLink]="['/gerencia/cadastrar']">Gerência</a>
-		<a [routerLink]="['/ghe/cadastrar']">GHE</a>
-		<a [routerLink]="['/ghee/cadastrar']">GHEE</a>
-		<a [routerLink]="['/grupo-monitoramento/cadastrar']">Grupo Monitoramento</a>
-		<a [routerLink]="['/indicador-risco-acidente/cadastrar']">Indicador de Risco Acidente</a>
-		<a [routerLink]="['/indicador-risco-ambiental/cadastrar']">Indicador de Risco Ambiental</a>
-		<a [routerLink]="['/indicador-risco-ergonomico/cadastrar']">Indicador de Risco Ergonômico</a>
-		<a [routerLink]="['/indicador-risco-sanitario/cadastrar']">Indicador de Risco Sanitário</a>
-		<a [routerLink]="['/indicador-risco-saude-ambiental/cadastrar']">Indicador de Risco Saúde Ambiental</a>
-		<a [routerLink]="['/instalacao/cadastrar']">Instalação</a>
-		<a [routerLink]="['/localizacao/cadastrar']">Localização</a>
-		<a [routerLink]="['/perfil/cadastrar']">Perfil</a>
-		<a [routerLink]="['/periodicidade/cadastrar']">Periodicidade</a>
-		<a [routerLink]="['/profissiograma/cadastrar']">Profissiograma</a>
-		<a [routerLink]="['/profissional-saude/cadastrar']">Profissional de Saúde</a>
-		<a [routerLink]="['/regime/cadastrar']">Regime</a>
-		<a [routerLink]="['/relatorio-medico/cadastrar']">Relatorio Médico</a>
-		<a [routerLink]="['/resultado-exame/cadastrar']">Resultado Exame</a>
-		<a [routerLink]="['/vacina/cadastrar']">Vacina</a>
-		<a [routerLink]="['/fornecedor/cadastrar']">Fornecedor</a>
-		<a [routerLink]="['/tipo-grupo-monitoramento/cadastrar']">Tipo Grupo Monitoramento</a> 
-		
 	</li>
+		
 </ul>
 
 <ul id="slide-out3" class="side-nav">
@@ -62,11 +25,9 @@
 			[materializeActions]="sidenavActions3" data-activates="slide-out1"
 			(click)="closeSidenav3()"><i class="material-icons">chevron_left</i>
 		</a>
-		<a [routerLink]="['/auditoria-exame']">Auditoria De Guia de Exame</a>
 		<a [routerLink]="['/base']">Base</a>
 		<a [routerLink]="['/cargo']">Cargo</a>
 		<a [routerLink]="['/cidade']">Cidade</a>
-		<a [routerLink]="['/convocacao']">Convocação</a>
 		<a [routerLink]="['/criterio']">Critério</a>
 		<a [routerLink]="['/curso']">Curso</a>
 		<a [routerLink]="['/empregado']">Empregado</a>
@@ -96,6 +57,18 @@
 		<a [routerLink]="['/usuario']">Usuário</a> 
 		<a [routerLink]="['/vacina']">Vacina</a>
 		
+	</li>
+</ul>
+
+<ul id="slide-out-processo" class="side-nav">
+	<li>
+		<a materialize="sideNav"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActions3" data-activates="slide-out1"
+			(click)="closeSidenavProcesso()"><i class="material-icons">chevron_left</i>
+		</a>
+		<a [routerLink]="['/auditoria-exame']">Auditoria De Guia de Exame</a>
+		<a [routerLink]="['/convocacao']">Convocação</a>
 	</li>
 </ul>
 

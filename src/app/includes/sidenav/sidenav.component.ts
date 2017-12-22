@@ -11,6 +11,7 @@ export class SidenavComponent implements OnInit {
     sidenavActions1 = new EventEmitter<any|MaterializeAction>();
     sidenavActions2 = new EventEmitter<any|MaterializeAction>();
     sidenavActions3 = new EventEmitter<any|MaterializeAction>();
+    sidenavActionsProcesso = new EventEmitter<any|MaterializeAction>();
     sidenavParams = [];
     
     constructor() { }
@@ -42,4 +43,11 @@ export class SidenavComponent implements OnInit {
         this.sidenavActions3.emit( { action: "sideNav", params: ['hide'] } );
     }
     
+    openSidenavProcesso() {
+        this.sidenavActionsProcesso.emit( { action: "sideNav", params: ['show'] } );
+    }
+    
+    closeSidenavProcesso() {
+        this.sidenavActionsProcesso.emit( { action: "sideNav", params: ['hide'] } );
+    }
 }
