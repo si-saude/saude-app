@@ -13,9 +13,14 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
-			<div class="input-field col s12">
+			<div class="input-field col s9">
 				<label for="chave">Chave</label> <input id="chave" type="text"
 					name="chave" [(ngModel)]="usuario.chave">
+			</div>
+
+			<div class="input-field col s3 checkbox">
+				<input type="checkbox" id="gestorCss" [(ngModel)]="usuario.gestorCss"
+					name="usuario.gestorCss"> <label for="gestorCss">Gestor Css</label>
 			</div>
 		</div>
 
@@ -30,8 +35,7 @@
 			<div class="input-field col s12">
 				<label for="pessoa">Pessoa</label> <input type="text"
 					materialize="autocomplete" name="addPessoa"
-					(blur)="getPessoa($event)"
-					[(ngModel)]="usuario.pessoa.nome"
+					(blur)="getPessoa($event)" [(ngModel)]="usuario.pessoa.nome"
 					(ngModelChange)="selectPessoa($event)"
 					[materializeParams]="autocompletePessoa">
 			</div>

@@ -8,6 +8,7 @@ export class Usuario {
     private token: string;
     private perfis: Array<Perfil>;
     private pessoa: Pessoa;
+    private gestorCss: boolean;
     private version: number;
 
     getId() {
@@ -42,14 +43,6 @@ export class Usuario {
         this.token = token;
     }
     
-    getVersion() {
-        return this.version;
-    }
-    
-    setVersion(version: number) {
-        this.version = version;
-    }
-    
     getPerfis() {
         return this.perfis;
     }
@@ -64,5 +57,21 @@ export class Usuario {
     
     setPessoa(pessoa: Pessoa) {
         this.pessoa = pessoa;
+    }
+    
+    getGestorCss() {
+        return this.gestorCss;
+    }
+    
+    setGestorCss(gestorCss: boolean) {
+        this.gestorCss = gestorCss;
+    }
+    
+    getVersion() {
+        return this.version;
+    }
+    
+    setVersion(version: number) {
+        this.version = version;
     }
 }

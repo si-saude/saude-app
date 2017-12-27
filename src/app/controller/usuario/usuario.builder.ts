@@ -24,6 +24,7 @@ export class UsuarioBuilder extends GenericBuilder {
         cloneUsuario.setVersion(this.getValue(usuario, "getVersion"));
         cloneUsuario.setChave(this.getValue(usuario, "getChave"));
         cloneUsuario.setSenha(this.getValue(usuario, "getSenha"));
+        cloneUsuario.setGestorCss(this.getValue(usuario, "getGestorCss"));
         cloneUsuario.setToken(this.getValue(usuario, "getToken"));
         
         cloneUsuario.setPerfis(new PerfilBuilder().cloneList(this.getValue(usuario, "getPerfis")));

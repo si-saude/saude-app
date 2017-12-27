@@ -41,6 +41,7 @@ import { UsuarioGuard } from './guards/guards-child/usuario.guard';
 import { VacinaGuard } from './guards/guards-child/vacina.guard';
 import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convocacao.guard';
 import { FeriadoGuard } from './guards/guards-child/feriado.guard';
+import { ServicoGuard } from './guards/guards-child/servico.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -86,7 +87,8 @@ const routes: Routes = [
   { path: 'relatorio-medico', loadChildren: 'app/controller/relatorio-medico/relatorio-medico.module#RelatorioMedicoModule' },
   { path: 'resultado-exame', loadChildren: 'app/controller/resultado-exame/resultado-exame.module#ResultadoExameModule' },
   { path: 'feriado', loadChildren: 'app/controller/feriado/feriado.module#FeriadoModule' },
-  { path: '', pathMatch: 'full', redirectTo: '/feriado'},
+  { path: 'servico', loadChildren: 'app/controller/servico/servico.module#ServicoModule' },
+  { path: '', pathMatch: 'full', redirectTo: '/servico'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }
 ];

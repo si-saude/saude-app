@@ -28,17 +28,22 @@ tbody{
 	border-bottom: 1px solid #c0c0c0;	
 }
 
-.btn-remover {
+.btn-remove {
 	margin-top: -5px;
     margin-bottom: 3px;
 	width: 30px;
     height: 30px;
 }
 
-.perfil-titulo {
+.nome-equipe {
 	padding-left: 0px;
 }
 
+.tempo-medio {
+	padding-left: 40px;
+}
+
 .botao-remover {
-	padding-left: 25px;
+	margin-top: -20px;
+    padding-left: 30px;
 }

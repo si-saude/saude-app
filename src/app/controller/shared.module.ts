@@ -42,6 +42,7 @@ import { RelatorioMedicoService } from './relatorio-medico/relatorio-medico.serv
 import { ResultadoExameService } from './resultado-exame/resultado-exame.service';
 import { FeriadoService } from './feriado/feriado.service';
 import { PessoaService } from './pessoa/pessoa.service';
+import { ServicoService } from './servico/servico.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 
 @NgModule({
@@ -101,6 +102,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     ResultadoExameService,
     FeriadoService,
     PessoaService,
+    ServicoService,
     CanDeactivateGuard
   ]
 })
