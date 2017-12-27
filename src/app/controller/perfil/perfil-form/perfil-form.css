@@ -1,7 +1,52 @@
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked  {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}
+
+.checkbox {
+	margin-top: 0px;
+	padding-left: 35px;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody {
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.funcionalidade {
+	padding-left: 0px;
+}
+
+.checkbox-valor {
+	padding-left: 40px;
+}
+
 .permissao-valor {
 	margin-top: 45px;
 }
 
 .btn-remove-permission {
     margin-top: 35px;
+}
+
+.container-permissoes {
+	max-height: 400px;
+    overflow-y: auto;
+	position: relative;
 }

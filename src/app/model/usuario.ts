@@ -1,4 +1,5 @@
 import { Perfil } from './perfil';
+import { Pessoa } from './pessoa';
 
 export class Usuario {
     private id: number = 0;
@@ -6,6 +7,7 @@ export class Usuario {
     private senha: string;
     private token: string;
     private perfis: Array<Perfil>;
+    private pessoa: Pessoa;
     private version: number;
 
     getId() {
@@ -54,5 +56,13 @@ export class Usuario {
     
     setPerfis(perfis: Array<Perfil>) {
         this.perfis = perfis;
+    }
+    
+    getPessoa() {
+        return this.pessoa;
+    }
+    
+    setPessoa(pessoa: Pessoa) {
+        this.pessoa = pessoa;
     }
 }

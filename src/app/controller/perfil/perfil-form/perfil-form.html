@@ -24,7 +24,34 @@
 			[(ngModel)]="perfil.id"> <input id="version" name="version"
 			type="hidden" name="perfil.version" [(ngModel)]="perfil.version">
 
-		<fieldset>
+
+		<div class="table-permissoes">
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s10">Funcionalidade</th>
+						<th class="col s2">Valor</th>
+					</tr>
+				</thead>
+				<div class="container-permissoes">
+					<div
+						*ngFor="let permissao of perfil.permissoes; let f = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s10 funcionalidade">{{permissao.funcionalidade}}</td>
+								<td class="col s2 checkbox-valor">
+									<input type="checkbox" id="valor[{{f}}]" [(ngModel)]="permissao.valor" name="valor[{{f}}]"> 
+									<label for="valor[{{f}}]"></label>
+								</td>
+							</tr>
+						</tbody>
+					</div>
+				</div>
+			</table>
+		</div>
+
+
+		<!--  <fieldset>
 			<legend class="legend-permissoes">
 				Permissões <a
 					class="btn-floating waves-effect waves-light green btn-add-fieldset"
@@ -80,6 +107,7 @@
 			</div>
 
 		</fieldset>
+-->
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"

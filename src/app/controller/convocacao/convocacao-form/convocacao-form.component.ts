@@ -110,6 +110,8 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.convocacao = new ConvocacaoBuilder().clone( res.json() );
                             this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
                             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(this.convocacao.getEmpregadoConvocacoes());
+                            for (let i = 0; i< 100; i++ ) 
+                                this.empregadoConvocacoes.push(this.convocacao.getEmpregadoConvocacoes()[0]);
                             this.selectedsGerenciaConvocacoes();
                             this.parseAndSetDates();
                         } )
@@ -138,7 +140,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     getTipos() {
         this.convocacaoService.getTipos()
             .then( res => {
-                this.tipos = Object.keys( res.json() );
+                this.tipos = Object.keys( res.json() ).sort();
             } )
             .catch( error => {
                 console.log( error );
@@ -354,6 +356,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 let lowerCaseC = eC.getEmpregado().getChave().toLowerCase();
                 return lowerCaseC.includes( evento );
             } )
+            console.log(eCs);
             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(eCs);
         }
     }
@@ -379,7 +382,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(eCs);
         }
     }
-
+    
     showDetailEmpregado( index: number ) {
         this.empregadoDetail = this.empregadoConvocacoes[index];
 

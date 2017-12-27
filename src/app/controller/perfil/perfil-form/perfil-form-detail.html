@@ -20,38 +20,31 @@
 			</div>
 		</div>
 
-		<fieldset>
-			<legend class="legend-permissoes"> Permissões </legend>
-			<div class="form-group">
-				<div *ngFor="let permissao of perfil.permissoes;let i = index">
-
-					<div class="row">
-
-						<div class="input-field col s4">
-							<fieldset>
-								<legend>Funcionalidade</legend>
-								<select class="browser-default" name="permissao.funcionalidade{{i}}" disabled
-									[(ngModel)]="permissao.funcionalidade">
-									<option disabled selected value>Selecione uma funcionalidade</option>
-									<option *ngFor="let funcionalidade of funcionalidades"
-										value="{{funcionalidade}}">{{funcionalidade}}</option>
-								</select>
-							</fieldset>
-						</div>
-
-						<div class="col s3 permissao-valor">
-							<input name="valor{{i}}" id="valor{{i}}" type="checkbox" disabled
-								name="permissao.valor{{i}}" [(ngModel)]="permissao.valor" />
-							<label for="valor{{i}}">Valor</label>
-						</div>
-
+		<div class="table-permissoes">
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s10">Funcionalidade</th>
+						<th class="col s2">Valor</th>
+					</tr>
+				</thead>
+				<div class="container-permissoes">
+					<div
+						*ngFor="let permissao of perfil.permissoes; let f = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s10 funcionalidade">{{permissao.funcionalidade}}</td>
+								<td class="col s2 checkbox-valor">
+									<input type="checkbox" id="valor[{{f}}]" disabled 
+									[(ngModel)]="permissao.valor" name="valor[{{f}}]"> 
+									<label for="valor[{{f}}]"></label>
+								</td>
+							</tr>
+						</tbody>
 					</div>
-
 				</div>
-
-			</div>
-
-		</fieldset>
+			</table>
+		</div>
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"

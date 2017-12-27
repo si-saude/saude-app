@@ -57,4 +57,11 @@ export abstract class GenericService {
             .post( urlSendFile, file, { headers: this.headers } )
             .toPromise();
     }
+    
+    sendFileAsObject( file ) {
+        let urlSendFile = this.URL + "/import";
+        return this.http
+            .post( urlSendFile, file, { headers: this.headers } )
+            .toPromise();
+    }
 }

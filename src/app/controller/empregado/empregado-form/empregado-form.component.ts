@@ -148,7 +148,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     getStatuses() {
         this.empregadoService.getStatuses()
             .then( res => {
-                this.statuses = Object.keys( res.json() );
+                this.statuses = Object.keys( res.json() ).sort();
             } )
             .catch( error => {
                 console.log( error );
@@ -157,7 +157,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     getSexos() {
         this.empregadoService.getSexos()
             .then( res => {
-                this.sexos = Object.keys( res.json() );
+                this.sexos = Object.keys( res.json() ).sort();
             } )
             .catch( error => {
                 console.log( error );
@@ -167,7 +167,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     getEstadosCivies() {
         this.empregadoService.getEstadosCivies()
             .then( res => {
-                this.estadosCivies = Object.keys( res.json() );
+                this.estadosCivies = Object.keys( res.json() ).sort();
             } )
             .catch( error => {
                 console.log( error );
@@ -177,7 +177,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     getEscolaridades() {
         this.empregadoService.getEscolaridades()
             .then( res => {
-                this.escolaridades = Object.keys( res.json() );
+                this.escolaridades = Object.keys( res.json() ).sort();
             } )
             .catch( error => {
                 console.log( error );
@@ -187,7 +187,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     getVinculos() {
         this.empregadoService.getVinculos()
             .then( res => {
-                this.vinculos = Object.keys( res.json() );
+                this.vinculos = Object.keys( res.json() ).sort();
             } )
             .catch( error => {
                 console.log( error );

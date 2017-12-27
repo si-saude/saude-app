@@ -30,7 +30,7 @@
 }
 
 .gerencias {
-	height: 400px;
+	max-height: 400px;
     overflow: scroll;
 }
 
@@ -108,7 +108,7 @@ tbody{
 
 .btn-remover {
 	margin-top: 3px;
-    padding-left: 32px;
+    padding-left: 3rem;
 }
 
 .codigo_completo { 
@@ -120,19 +120,21 @@ tbody{
 }
 
 .chave {
-	padding-left: 15px;
+	padding-left: 3px;
 }
 
 .checkbox_selecionado {
 	margin-top: 1px;
-    padding-left: 45px;
+    padding-left: 4rem;
 }
 
 .checkbox_convocado {
-	padding-left: 50px;
+	padding-left: 4rem;
 }
 
-.contaniner-empregado-convocacao {
+.container-empregado-convocacao {
 	max-height: 400px;
     overflow-y: auto;
+    position: relative;
 }
+

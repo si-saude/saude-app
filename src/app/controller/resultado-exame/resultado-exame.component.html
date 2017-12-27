@@ -55,7 +55,7 @@
 </ul>
 
 <div class="row">
-	<div class="col s4 button-import">
+	<div class="col s12 button-import">
 		<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
 	</div>
 </div>
@@ -72,7 +72,7 @@
 				<div class="file-field input-field col s12">
 					<div class="btn">
 						<span>File</span> <input id="arquivo" type="file" #arquivo
-							name="arquivo" accept=".xls, .xlsx">
+							name="arquivo" accept=".xlsx">
 					</div>
 					<div class="file-path-wrapper">
 						<input class="file-path validate" type="text">
@@ -80,12 +80,45 @@
 				</div>
 			</div>
 			
+			<div class="row col s12" style="margin-left: 150px;">
+			
+				<div class="input-field col s4">
+					<label for="inicio">Inicio</label>
+					<my-date-picker name="inicio"
+						[options]="myDatePickerOptions" [(ngModel)]="inicio"
+						placeholder="Inicio"> </my-date-picker>
+				</div>
+				
+				<div class="input-field col s4">
+					<label for="fim">Fim</label>
+					<my-date-picker name="fim"
+						[options]="myDatePickerOptions" [(ngModel)]="fim"
+						placeholder="Fim"> </my-date-picker>
+				</div>
+				
+			</div>
+			
 			<div class="modal-footer">
-				<a type="submit" class="waves-effect waves-green btn-flat" (click)="importFile()">Importar</a>
+				<a type="submit" class="waves-effect waves-green btn-flat" (click)="importar()">Importar</a>
 				<a class="waves-effect waves-green btn-flat" (click)="closeModalImport()">Fechar</a>
 			</div>
 		
 	</form>
+
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams" [materializeActions]="modalConfirmImport">
+
+	<h5 class="title-modal-delete">Confirmação de importação</h5>
+	<p class="paragraph-modal-delete">{{msnConfirmImport}}</p>
+	
+	<div class="modal-footer">
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="confirmImport()">Confirmar</a>
+	</div>
 
 </div>
 

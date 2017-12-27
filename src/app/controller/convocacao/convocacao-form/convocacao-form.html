@@ -38,11 +38,12 @@
 
 				<div class="input-field col s6">
 					<fieldset>
-						<legend>Tipo <a
+						<legend>
+							Tipo <a
 								class="btn-floating waves-effect waves-light green btn-add-fieldset"
-								(click)="getTipos()"> <i
-								class="material-icons center-icon">cached</i>
-							</a></legend>
+								(click)="getTipos()"> <i class="material-icons center-icon">cached</i>
+							</a>
+						</legend>
 						<select name="convocacao.tipo" class="browser-default"
 							[(ngModel)]="convocacao.tipo">
 							<option disabled selected value="">Selecione um tipo</option>
@@ -53,11 +54,13 @@
 
 				<div class="input-field col s6" *ngIf="!existProfissiograma">
 					<fieldset>
-						<legend>Profissiograma <a
+						<legend>
+							Profissiograma <a
 								class="btn-floating waves-effect waves-light green btn-add-fieldset"
 								(click)="getProfissiogramas()"> <i
 								class="material-icons center-icon">cached</i>
-							</a></legend>
+							</a>
+						</legend>
 						<select name="profissiograma" class="browser-default"
 							[(ngModel)]="convocacao.profissiograma.id"
 							(ngModelChange)="openModalConfirmProfissiograma()">
@@ -70,11 +73,13 @@
 
 				<div class="input-field col s6" *ngIf="existProfissiograma">
 					<fieldset>
-						<legend>Profissiograma <a
+						<legend>
+							Profissiograma <a
 								class="btn-floating waves-effect waves-light green btn-add-fieldset"
 								(click)="getProfissiogramas()"> <i
 								class="material-icons center-icon">cached</i>
-							</a></legend>
+							</a>
+						</legend>
 						<select disabled name="profissiograma" class="browser-default"
 							[(ngModel)]="convocacao.profissiograma.id">
 							<option disabled selected value=0>Selecione um profissiograma</option>
@@ -85,21 +90,17 @@
 				</div>
 
 			</div>
-			
+
 			<div class="row">
 				<div class="input-field col s6">
 					<label for="inicio">Início</label>
-					<my-date-picker name="inicio"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="inicio"
-						placeholder="Início"> </my-date-picker>
+					<my-date-picker name="inicio" [options]="myDatePickerOptions"
+						[(ngModel)]="inicio" placeholder="Início"> </my-date-picker>
 				</div>
 				<div class="input-field col s6">
 					<label for="fim">Fim</label>
-					<my-date-picker name="fim"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="fim"
-						placeholder="Fim"> </my-date-picker>
+					<my-date-picker name="fim" [options]="myDatePickerOptions"
+						[(ngModel)]="fim" placeholder="Fim"> </my-date-picker>
 				</div>
 			</div>
 
@@ -229,8 +230,7 @@
 				</div>
 			</div>
 
-			<div class="row">
-
+			<div class="table-empregados ">
 				<table class="striped">
 					<thead>
 						<tr class="row col s12">
@@ -242,7 +242,7 @@
 							<th class="col s1">Excluir</th>
 						</tr>
 					</thead>
-					<div class="contaniner-empregado-convocacao">
+					<div class="container-empregado-convocacao">
 						<div
 							*ngFor="let empregadoConvocacao of empregadoConvocacoes; let eC = index">
 							<tbody class="col s12">

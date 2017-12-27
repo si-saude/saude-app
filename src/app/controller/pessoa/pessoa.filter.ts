@@ -1,6 +1,7 @@
 import { DateFilter } from './../../generics/date.filter';
+import { GenericFilter } from './../../generics/generic.filter';
 
-export class PessoaFilter {
+export class PessoaFilter extends GenericFilter {
     private nome:string;
     private cpf:string;
     private dataNascimento: DateFilter = new DateFilter();

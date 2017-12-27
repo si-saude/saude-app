@@ -17,6 +17,7 @@ import { PermissaoBuilder } from './../../permissao/permissao.builder';
 } )
 export class PerfilFormComponent extends GenericFormComponent implements OnInit {
     perfil: Perfil;
+    perfilGet: Perfil;
     funcionalidades: Array<string>;
 
     perfilFilter: PerfilFilter = new PerfilFilter();
@@ -36,25 +37,39 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
                 if ( params['id'] !== undefined ) {
                     let id = params['id'];
                     this.showPreload = true;
-
                     this.perfilService.get( id )
                         .then( res => {
+                            this.getFuncionalidades();
+                            this.perfilGet = new PerfilBuilder().clone( res.json() );
+                            this.perfil.setVersion(this.perfilGet.getVersion());
+                            this.perfil.setId(this.perfilGet.getId());
+                            setTimeout(() => {
+                                this.initializeFuncionalidades();
+                                this.perfil.getPermissoes().forEach(p => {
+                                    if ( this.perfilGet.getPermissoes().
+                                            find( pGet => p.getFuncionalidade() == pGet.getFuncionalidade() ) != undefined )
+                                        p.setValor(true);
+                                })
+                            }, 200);
+                            this.perfil.setTitulo( this.perfilGet.getTitulo() );
                             this.showPreload = false;
-                            this.perfil = new PerfilBuilder().clone( res.json() );
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
                         } )
+                } else {
+                    this.getFuncionalidades();
+                    setTimeout(() => {
+                        this.initializeFuncionalidades();
+                    }, 100);
                 }
             } );
-
-        this.getFuncionalidades();
     }
 
     getFuncionalidades() {
         this.perfilService.getFuncionalidades()
             .then( res => {
-                this.funcionalidades = Object.keys( res.json() );
+                this.funcionalidades = Object.keys( res.json() ).sort();
             } )
             .catch( error => {
                 console.log( error.text() );
@@ -62,15 +77,30 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
     }
 
     save() {
-        super.save( new PerfilBuilder().clone( this.perfil ) );
+        let perfilSave: Perfil = new PerfilBuilder().initialize(new Perfil());
+        this.perfil.getPermissoes().forEach(p => {
+            if ( p.getValor() == true ) {
+                perfilSave.getPermissoes().push(p);
+            }
+        })
+        perfilSave.setTitulo(this.perfil.getTitulo());
+        perfilSave.setId(this.perfil.getId());
+        perfilSave.setVersion(this.perfil.getVersion());
+        console.log(perfilSave);
+        super.save( new PerfilBuilder().clone( perfilSave ) );
     }
 
-    addPermissao() {
-        this.perfil.getPermissoes().push( new PermissaoBuilder().initialize( new Permissao() ) );
+    initializeFuncionalidades() {
+        this.funcionalidades.forEach(f => {
+            let permissao: Permissao = new Permissao();
+            permissao.setFuncionalidade(f);
+            permissao.setValor(false);
+            this.perfil.getPermissoes().push(permissao);
+        })
     }
-
-    removePermissao( i: number ) {
-        this.perfil.getPermissoes().splice( i, 1 );
+    
+    editFuncionalidades() {
+        this.initializeFuncionalidades();
     }
 
     onDestroy() {

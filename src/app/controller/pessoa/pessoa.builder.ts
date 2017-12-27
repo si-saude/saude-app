@@ -14,6 +14,20 @@ export class PessoaBuilder extends GenericBuilder {
         return pessoa;
     }
     
+    initializeList(pessoas: Array<Pessoa>) {
+        
+        let array:Array<Pessoa> = new Array<Pessoa>();
+        
+        if(pessoas === null || pessoas === undefined)
+            pessoas = new Array<Pessoa>();
+        
+        for (let pessoa of pessoas) {
+            array.push(this.initialize(pessoa));
+        }
+        
+        return array;
+    }
+    
     clone(pessoa: Pessoa): Pessoa {
         let clonePessoa = new Pessoa();
         
@@ -50,5 +64,18 @@ export class PessoaBuilder extends GenericBuilder {
 
         return clonePessoa;
     }
+    
+    cloneList(pessoas: Array<Pessoa>): Array<Pessoa> {
+        let array:Array<Pessoa> = new Array<Pessoa>();
+    
+        if (pessoas !== null && pessoas !== undefined) { 
+            for (let pessoa of pessoas) {
+                array.push(this.clone(pessoa));
+            }
+        }
+        
+        return array;
+    }
+    
     
 }
