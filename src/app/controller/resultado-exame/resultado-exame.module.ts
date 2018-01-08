@@ -8,11 +8,13 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { ResultadoExameComponent } from './resultado-exame.component';
 import { ResultadoExameService } from './resultado-exame.service';
 import { ResultadoExameRoutingModule } from './resultado-exame.routing.module';
+import { ResultadoExameFormDetailComponent } from './resultado-exame-form/resultado-exame-form-detail.component';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
-       ResultadoExameComponent
+       ResultadoExameComponent,
+       ResultadoExameFormDetailComponent
      ],
      imports: [
         ResultadoExameRoutingModule,

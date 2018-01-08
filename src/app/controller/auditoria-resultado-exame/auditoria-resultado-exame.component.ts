@@ -2,34 +2,38 @@ import { Component, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 
 import { MaterializeAction } from "angular2-materialize";
 
-import { ResultadoExame } from './../../model/resultado-exame';
-import { ResultadoExameService } from './resultado-exame.service';
-import { ResultadoExameFilter } from './resultado-exame.filter';
-import { GenericListComponent } from './../../generics/generic.list.component';
-import { ResultadoExameGuard } from './../../guards/guards-child/resultado-exame.guard';
+import { GlobalVariable } from './../../global';
+import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
+import { EmpregadoConvocacaoService } from './../empregado-convocacao/empregado-convocacao.service';
+import { EmpregadoConvocacaoFilter } from './../empregado-convocacao/empregado-convocacao.filter';
+import { AuditoriaResultadoExameGuard } from './../../guards/guards-child/auditoria-resultado-exame.guard';
+import { ResultadoExameService } from './../resultado-exame/resultado-exame.service';
 import { ResultadoExameImport } from './../../imports/resultado-exame.import';
+import { GenericListComponent } from './../../generics/generic.list.component';
 
-@Component( {
-    selector: 'app-resultado-exame',
-    templateUrl: './resultado-exame.component.html',
-    styleUrls: ['./resultado-exame.component.css', '../../../assets/css/list-component.css']
-} )
-export class ResultadoExameComponent extends GenericListComponent<ResultadoExame, ResultadoExameFilter, ResultadoExameGuard> {
+@Component({
+  selector: 'app-auditoria-resultado-exame',
+  templateUrl: './auditoria-resultado-exame.component.html',
+  styleUrls: ['./auditoria-resultado-exame.component.css', '../../../assets/css/list-component.css']
+})
+
+export class AuditoriaResultadoExameComponent 
+    extends GenericListComponent<EmpregadoConvocacao, EmpregadoConvocacaoFilter, AuditoriaResultadoExameGuard> {
     @ViewChild( 'arquivo' ) inputElArquivo: ElementRef;
     @ViewChild( 'arquivoTxt' ) inputElArquivoTxt: ElementRef;
     inicio: any;
     fim: any;
-    resultadoExameService: any;
     modalConfirmImport;
     msnConfirmImport;
-
-    constructor( service: ResultadoExameService, resultadoExameGuard: ResultadoExameGuard ) {
-        super( service, new ResultadoExameFilter(), resultadoExameGuard );
-        this.resultadoExameService = service;
+    
+    constructor(private resultadoExameService: ResultadoExameService, 
+                auditoriaResultadoExameService: EmpregadoConvocacaoService,
+                auditoriaResultadoExameGuard: AuditoriaResultadoExameGuard) {
+        super(auditoriaResultadoExameService, new EmpregadoConvocacaoFilter(), auditoriaResultadoExameGuard);
         this.modalConfirmImport = new EventEmitter<string | MaterializeAction>();
         this.msnConfirmImport = "";
-    }
-
+    }   
+    
     importar() {
         let dateInicio = null;
         let dateFim = null;
@@ -59,7 +63,7 @@ export class ResultadoExameComponent extends GenericListComponent<ResultadoExame
                 resultadoExameImport.setFim( dateFim );
                 component.showPreload = true;
 
-                component.service.sendFileAsObject( resultadoExameImport )
+                component.resultadoExameService.sendFileAsObject( resultadoExameImport )
                     .then( res => {
                         component.showPreload = false;
                         component.openModalConfirmImport();
@@ -84,7 +88,7 @@ export class ResultadoExameComponent extends GenericListComponent<ResultadoExame
         if ( this.inputElArquivoTxt.nativeElement.files.length > 0 ) {
             arquivoTxt = this.inputElArquivoTxt.nativeElement.files[0];
             this.showPreload = true;
-            this.service.sendFileWithPath( arquivoTxt, "import-txt" )
+            this.resultadoExameService.sendFileWithPath( arquivoTxt, "import-txt" )
                 .then( res => {
                     this.showPreload = false;
                     location.reload();
@@ -107,5 +111,4 @@ export class ResultadoExameComponent extends GenericListComponent<ResultadoExame
     closeModalConfirmImport() {
         this.modalConfirmImport.emit( { action: "modal", params: ['close'] } );
     }
-
 }

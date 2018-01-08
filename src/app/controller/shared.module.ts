@@ -94,6 +94,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     LocalizacaoService,
     PeriodicidadeService,
     ProfissiogramaService,
+    ProfissionalSaudeService,
     RegimeService,
     TipoGrupoMonitoramentoService,
     VacinaService,

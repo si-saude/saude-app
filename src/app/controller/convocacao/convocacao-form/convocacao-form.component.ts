@@ -110,8 +110,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.convocacao = new ConvocacaoBuilder().clone( res.json() );
                             this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
                             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(this.convocacao.getEmpregadoConvocacoes());
-                            for (let i = 0; i< 100; i++ ) 
-                                this.empregadoConvocacoes.push(this.convocacao.getEmpregadoConvocacoes()[0]);
                             this.selectedsGerenciaConvocacoes();
                             this.parseAndSetDates();
                         } )

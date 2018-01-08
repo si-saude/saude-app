@@ -3,45 +3,137 @@
 </head>
 
 <!-- Preload -->
-<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload> 
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save> 
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 
-			<div class="input-field col s12">
-				<label for="codigo">Código</label>
-				<input id="codigo" type="text" 
-				[(ngModel)]="exame.codigo" name="exame.codigo">
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#campos">Campos</a></li>
+				</ul>
 			</div>
-			
-		</div>
-		
-		<div class="row">
-		
-			<div class="input-field col s12">
-				<label for="descricao">Descrição</label>
-				<textarea class="materialize-textarea" id="descricao" 
-					[(ngModel)]="exame.descricao" name="exame.descricao"></textarea>
+
+			<div id="dadosGerais">
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="codigo">Código</label> <input id="codigo" type="text"
+							[(ngModel)]="exame.codigo" name="exame.codigo">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="descricao">Descrição</label>
+						<textarea class="materialize-textarea" id="descricao"
+							[(ngModel)]="exame.descricao" name="exame.descricao"></textarea>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="campos">
+
+				<fieldset>
+					<legend> Campos </legend>
+					<div class="row row-campos">
+
+						<div class="input-field col s3">
+							<label for="codigoCampo[indexCampoExame]">Código</label> 
+							<input id="codigoCampo[indexCampoExame]" type="text"
+								[(ngModel)]="codigoCampo[indexCampoExame]" name="codigoCampo[indexCampoExame]">
+						</div>
+						
+						<div class="input-field col s4">
+							<label for="tituloCampo[indexCampoExame]">Título</label> 
+							<input id="tituloCampo[indexCampoExame]" type="text"
+								[(ngModel)]="tituloCampo[indexCampoExame]" name="tituloCampo[indexCampoExame]">
+						</div>
+						
+						<div class="input-field col s3">
+							<label for="numeroLinhasCampo[indexCampoExame]">Número de linhas</label> 
+							<input id="numeroLinhasCampo[indexCampoExame]" type="text" maxlength="2"
+								[(ngModel)]="numeroLinhasCampo[indexCampoExame]" name="numeroLinhasCampo[indexCampoExame]">
+						</div>
+						
+						<div class="col s2">
+							<a class="btn-floating waves-effect waves-light green btn-add"
+								(click)="addCampo()"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+
+					</div>
+
+				</fieldset>
+
+				<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s3">Código</th>
+								<th class="col s3">Título</th>
+								<th class="col s3">Número de Linhas</th>
+								<th class="col s3">Remover</th>
+							</tr>
+						</thead>
+						<div *ngFor="let campo of exame.campoExames;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<input type="hidden" [(ngModel)]="campo.codigo"
+										value="{{campo.codigo}}" name="campo[{{i}}].codigo">
+									<input type="hidden" [(ngModel)]="campo.titulo"
+										value="{{campo.titulo}}" name="campo[{{i}}].titulo">
+									<input type="hidden" [(ngModel)]="campo.numeroLinhas"
+										value="{{campo.numeroLinhas}}" name="campo[{{i}}].numeroLinhas">
+									<input type="hidden" [(ngModel)]="campo.id"
+										value="{{campo.id}}" name="campo[{{i}}].id">
+									<td class="col s3 codigo">{{campo.codigo}}</td>
+									<td class="col s4 titulo">{{campo.titulo}}</td>
+									<td class="col s3 numero-linhas">{{campo.numeroLinhas}}</td>
+									<td class="col s2 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeCampo(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>
+
 			</div>
 
 		</div>
-		
-		<input id="id" name="id" type="hidden" [(ngModel)]="exame.id"> 
-		<input id="version" name="version" type="hidden" [(ngModel)]="exame.version">
-		
+		<input id="id" name="id" type="hidden" [(ngModel)]="exame.id">
+		<input id="version" name="version" type="hidden"
+			[(ngModel)]="exame.version">
+
 		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
 		</div>
-		
+
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/exame']"
-					class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/exame']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>

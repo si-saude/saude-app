@@ -19,101 +19,109 @@ import { Telefone } from './../../model/telefone';
 import { TelefoneBuilder } from './../telefone/telefone.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
-export class ProfissionalSaudeBuilder extends GenericBuilder{
-    
-    initialize(profissionalSaude: Profissional):Profissional {
+export class ProfissionalSaudeBuilder extends GenericBuilder {
+
+    initialize( profissionalSaude: Profissional ): Profissional {
         profissionalSaude = new Profissional();
-        
-        profissionalSaude.setEmpregado(new EmpregadoBuilder().initialize(profissionalSaude.getEmpregado()));
-        profissionalSaude.setEquipe(new EquipeBuilder().initialize(profissionalSaude.getEquipe()));
-        profissionalSaude.setLocalizacao(new LocalizacaoBuilder().initialize(profissionalSaude.getLocalizacao()));
+
+        profissionalSaude.setEmpregado( new EmpregadoBuilder().initialize( profissionalSaude.getEmpregado() ) );
+        profissionalSaude.setEquipe( new EquipeBuilder().initialize( profissionalSaude.getEquipe() ) );
+        profissionalSaude.setLocalizacao( new LocalizacaoBuilder().initialize( profissionalSaude.getLocalizacao() ) );
         profissionalSaude.setProfissionalConselho(
-                new ProfissionalConselhoBuilder().initialize(profissionalSaude.getProfissionalConselho()));
-        profissionalSaude.setCurriculo(new CurriculoBuilder().initialize(profissionalSaude.getCurriculo()));
+            new ProfissionalConselhoBuilder().initialize( profissionalSaude.getProfissionalConselho() ) );
+        profissionalSaude.setCurriculo( new CurriculoBuilder().initialize( profissionalSaude.getCurriculo() ) );
         profissionalSaude.setProfissionalVacinas(
-                new ProfissionalVacinaBuilder().initializeList(profissionalSaude.getProfissionalVacinas()));
-        
+            new ProfissionalVacinaBuilder().initializeList( profissionalSaude.getProfissionalVacinas() ) );
+
         return profissionalSaude;
     }
-    
-    initializeList(profissionaisSaude: Array<Profissional>) {
-        let array:Array<Profissional> = new Array<Profissional>();
-    
-        if(profissionaisSaude === null || profissionaisSaude === undefined)
+
+    initializeList( profissionaisSaude: Array<Profissional> ) {
+        let array: Array<Profissional> = new Array<Profissional>();
+
+        if ( profissionaisSaude === null || profissionaisSaude === undefined )
             profissionaisSaude = new Array<Profissional>();
-        
-        for (let profissionalSaude of profissionaisSaude) {
-            array.push(this.initialize(profissionalSaude));
+
+        for ( let profissionalSaude of profissionaisSaude ) {
+            array.push( this.initialize( profissionalSaude ) );
         }
-        
+
         return array;
     }
-    
-   clone(profissionalSaude: Profissional): Profissional {        
-        let cloneProfissionalSaude = this.initialize(new Profissional());
-        
-        if (profissionalSaude === null || profissionalSaude === undefined)
+
+    clone( profissionalSaude: Profissional ): Profissional {
+        let cloneProfissionalSaude = this.initialize( new Profissional() );
+
+        if ( profissionalSaude === null || profissionalSaude === undefined )
             profissionalSaude = new Profissional();
-        cloneProfissionalSaude.setId(this.getValue(profissionalSaude, "getId"));
-        cloneProfissionalSaude.setMi(this.getValue(profissionalSaude, "getMi"));
-        cloneProfissionalSaude.setDataAso(this.getValue(profissionalSaude, "getDataAso"));
-        cloneProfissionalSaude.setVersion(this.getValue(profissionalSaude, "getVersion"));
-        
+        cloneProfissionalSaude.setId( this.getValue( profissionalSaude, "getId" ) );
+        cloneProfissionalSaude.setMi( this.getValue( profissionalSaude, "getMi" ) );
+        cloneProfissionalSaude.setDataAso( this.getValue( profissionalSaude, "getDataAso" ) );
+        cloneProfissionalSaude.setVersion( this.getValue( profissionalSaude, "getVersion" ) );
+
         cloneProfissionalSaude.setEmpregado(
-                new EmpregadoBuilder().clone(this.getValue(profissionalSaude, "getEmpregado")));
-        
-        if (this.getValue(profissionalSaude, "getEquipe") !== undefined) { 
+            new EmpregadoBuilder().clone( this.getValue( profissionalSaude, "getEmpregado" ) ) );
+
+        if ( this.getValue( profissionalSaude, "getEquipe" ) !== undefined ) {
             cloneProfissionalSaude.setEquipe(
-                    new EquipeBuilder().clone(this.getValue(profissionalSaude,"getEquipe")));
-            if(!this.idGtZero(cloneProfissionalSaude.getEquipe()))
-                cloneProfissionalSaude.setEquipe(undefined);
+                new EquipeBuilder().clone( this.getValue( profissionalSaude, "getEquipe" ) ) );
+            if ( !this.idGtZero( cloneProfissionalSaude.getEquipe() ) )
+                cloneProfissionalSaude.setEquipe( undefined );
         } else {
-            cloneProfissionalSaude.setEquipe(new EquipeBuilder().initialize(null));
+            cloneProfissionalSaude.setEquipe( new EquipeBuilder().initialize( null ) );
         }
-        
-        if (this.getValue(profissionalSaude, "getLocalizacao") !== undefined) {
+
+        if ( this.getValue( profissionalSaude, "getLocalizacao" ) !== undefined ) {
             cloneProfissionalSaude.setLocalizacao(
-                    new LocalizacaoBuilder().clone(this.getValue(profissionalSaude, "getLocalizacao")));
-            if(!this.idGtZero(cloneProfissionalSaude.getLocalizacao()))
-                cloneProfissionalSaude.setLocalizacao(undefined);
+                new LocalizacaoBuilder().clone( this.getValue( profissionalSaude, "getLocalizacao" ) ) );
+            if ( !this.idGtZero( cloneProfissionalSaude.getLocalizacao() ) )
+                cloneProfissionalSaude.setLocalizacao( undefined );
         } else {
-            cloneProfissionalSaude.setLocalizacao(new LocalizacaoBuilder().initialize(null));
+            cloneProfissionalSaude.setLocalizacao( new LocalizacaoBuilder().initialize( null ) );
         }
-        
-        if(this.getValue(profissionalSaude, "getCurriculo") !== undefined) {
-            if(Object.keys(this.getValue(profissionalSaude,"getCurriculo")).length === 2 && 
-                    profissionalSaude.getCurriculo().getCurriculoCursos().length === 0)
-                cloneProfissionalSaude.setCurriculo(undefined);
+
+        if ( this.getValue( profissionalSaude, "getCurriculo" ) !== undefined ) {
+            if ( Object.keys( this.getValue( profissionalSaude, "getCurriculo" ) ).length === 2 &&
+                profissionalSaude.getCurriculo().getCurriculoCursos().length === 0 )
+                cloneProfissionalSaude.setCurriculo( undefined );
             else
-                cloneProfissionalSaude.setCurriculo( 
-                        new CurriculoBuilder().clone(this.getValue(profissionalSaude, "getCurriculo")));
+                cloneProfissionalSaude.setCurriculo(
+                    new CurriculoBuilder().clone( this.getValue( profissionalSaude, "getCurriculo" ) ) );
         } else {
-            cloneProfissionalSaude.setCurriculo(new CurriculoBuilder().initialize(null));
+            cloneProfissionalSaude.setCurriculo( new CurriculoBuilder().initialize( null ) );
         }
-        
-        console.log(profissionalSaude);
-        
-        if(this.getValue(profissionalSaude, "getProfissionalConselho") !== undefined){
-            if(Object.keys(this.getValue(profissionalSaude,"getProfissionalConselho")).length === 2 &&
-                    this.getValue(this.getValue(profissionalSaude,"getProfissionalConselho"), "getVencimento") === null)
-                cloneProfissionalSaude.setProfissionalConselho(undefined);
+
+        if ( this.getValue( profissionalSaude, "getProfissionalConselho" ) !== undefined ) {
+            if ( Object.keys( this.getValue( profissionalSaude, "getProfissionalConselho" ) ).length === 2 &&
+                this.getValue( this.getValue( profissionalSaude, "getProfissionalConselho" ), "getVencimento" ) === null )
+                cloneProfissionalSaude.setProfissionalConselho( undefined );
             else cloneProfissionalSaude.setProfissionalConselho(
-                        new ProfissionalConselhoBuilder().clone(this.getValue(profissionalSaude, "getProfissionalConselho")));
-            if ( this.getValue(this.getValue(profissionalSaude,"getProfissionalConselho"), "getConselho") == "" ) {
-                cloneProfissionalSaude.getProfissionalConselho().setConselho(undefined);
+                new ProfissionalConselhoBuilder().clone( this.getValue( profissionalSaude, "getProfissionalConselho" ) ) );
+            if ( this.getValue( this.getValue( profissionalSaude, "getProfissionalConselho" ), "getConselho" ) == "" ) {
+                cloneProfissionalSaude.getProfissionalConselho().setConselho( undefined );
             }
-            if ( this.getValue(this.getValue(profissionalSaude,"getProfissionalConselho"), "getNumero") == "" )
-                cloneProfissionalSaude.getProfissionalConselho().setNumero(undefined);
+            if ( this.getValue( this.getValue( profissionalSaude, "getProfissionalConselho" ), "getNumero" ) == "" )
+                cloneProfissionalSaude.getProfissionalConselho().setNumero( undefined );
         } else {
-            cloneProfissionalSaude.setProfissionalConselho(new ProfissionalConselhoBuilder().initialize(null));
+            cloneProfissionalSaude.setProfissionalConselho( new ProfissionalConselhoBuilder().initialize( null ) );
         }
-        console.log(cloneProfissionalSaude);
-        
+
         cloneProfissionalSaude.setProfissionalVacinas(
-                new ProfissionalVacinaBuilder().cloneList(this.getValue(profissionalSaude, "getProfissionalVacinas")));
-        
+            new ProfissionalVacinaBuilder().cloneList( this.getValue( profissionalSaude, "getProfissionalVacinas" ) ) );
+
         return cloneProfissionalSaude;
-    } 
-    
-    
+    }
+
+    cloneList( profissionals: Array<Profissional> ): Array<Profissional> {
+        let array: Array<Profissional> = new Array<Profissional>();
+
+        if ( profissionals !== null && profissionals !== undefined ) {
+            for ( let profissional of profissionals ) {
+                array.push( this.clone( profissional ) );
+            }
+        }
+
+        return array;
+    }
+
 }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Exame } from './../../../model/exame';
+import { CampoExame } from './../../../model/campo-exame';
 import { ExameService } from './../exame.service';
 import { ExameFilter } from './../exame.filter';
 import { ExameBuilder } from './../exame.builder';
@@ -15,6 +16,10 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 } )
 export class ExameFormComponent extends GenericFormComponent implements OnInit {
     exame: Exame;
+    indexCampoExame: number;
+    codigoCampo: Array<string>;
+    tituloCampo: Array<string>;
+    numeroLinhasCampo: Array<string>;
     
     exameFilter: ExameFilter = new ExameFilter();
     
@@ -23,6 +28,10 @@ export class ExameFormComponent extends GenericFormComponent implements OnInit {
         super(exameService);
         this.goTo = "exame";
         
+        this.indexCampoExame = 0;
+        this.codigoCampo = [];
+        this.tituloCampo = [];
+        this.numeroLinhasCampo = [];
         this.exame = new ExameBuilder().initialize(this.exame);
     }
 
@@ -47,10 +56,30 @@ export class ExameFormComponent extends GenericFormComponent implements OnInit {
             
     }
     
-    
     save() {
         super.save(new ExameBuilder().clone(this.exame));
-    }   
+    }
+    
+    addCampo() {
+        if ( this.codigoCampo[this.indexCampoExame] == undefined ||
+                this.codigoCampo[this.indexCampoExame].trim() == "" ||
+                this.tituloCampo[this.indexCampoExame] == undefined ||
+                this.tituloCampo[this.indexCampoExame].trim() == "" ||
+                this.numeroLinhasCampo[this.indexCampoExame] == undefined || 
+                this.numeroLinhasCampo[this.indexCampoExame].trim() == "" )
+            return;
+         
+        let campoExame: CampoExame = new CampoExame();
+        campoExame.setCodigo(this.codigoCampo[this.indexCampoExame]);
+        campoExame.setTitulo(this.tituloCampo[this.indexCampoExame]);
+        campoExame.setNumeroLinhas( parseInt(this.numeroLinhasCampo[this.indexCampoExame]));
+        this.exame.getCampoExames().push(campoExame);
+        this.indexCampoExame++;
+    }
+    
+    removeCampo(index: number) {
+        this.exame.getCampoExames().splice(index, 1);
+    }
 
     onDestroy() {
         this.inscricao.unsubscribe();

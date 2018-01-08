@@ -1,14 +1,16 @@
 import { EmpregadoConvocacao } from './empregado-convocacao';
+import { ItemResultadoExame } from './item-resultado-exame';
 import { Exame } from './exame';
 
 export class ResultadoExame {
     private id: number;
     private empregadoConvocacao: EmpregadoConvocacao;
     private exame: Exame;
+    private itemResultadoExames: Array<ItemResultadoExame>;
     private data: Date;
     private conforme: boolean;
-    private tipo: string;
-    private acao: string;
+    private tipo: string = "";
+    private acao: string = "";
     private local: string;
     private version: number;
 
@@ -28,7 +30,7 @@ export class ResultadoExame {
         this.empregadoConvocacao = empregadoConvocacao;
     }
 
-    isConforme() {
+    getConforme() {
         return this.conforme;
     }
 
@@ -51,7 +53,14 @@ export class ResultadoExame {
     setExame(exame: Exame) {
         this.exame = exame;
     }
-    
+
+    getItemResultadoExames() {
+        return this.itemResultadoExames;
+    }
+
+    setItemResultadoExames(itemResultadoExames: Array<ItemResultadoExame>) {
+        this.itemResultadoExames = itemResultadoExames;
+    }
 
     getTipo() {
         return this.tipo;

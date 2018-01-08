@@ -9,7 +9,7 @@ import { ProfissionalConselhoFilter } from './../profissional-conselho/profissio
 import { EnderecoFilter } from './../endereco/endereco.filter';
 
 export class ProfissionalSaudeFilter extends GenericFilter {
-    private empregado: EmpregadoFilter;
+    private empregado: EmpregadoFilter = new EmpregadoFilter();
     private dataAso: DateFilter;
     private localizacao: LocalizacaoFilter;
     private equipe: EquipeFilter;

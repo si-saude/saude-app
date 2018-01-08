@@ -3,9 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Equipe } from './../../../model/equipe';
+import { Profissional } from './../../../model/profissional';
+import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { EquipeBuilder } from './../equipe.builder';
 import { EquipeService } from './../equipe.service';
+import { ProfissionalSaudeService } from './../../profissional-saude/profissional-saude.service';
 
 @Component( {
     selector: 'app-equipe-form',
@@ -14,13 +17,18 @@ import { EquipeService } from './../equipe.service';
 } )
 export class EquipeFormComponent extends GenericFormComponent implements OnInit { 
     equipe: Equipe;
+    autocompleteCoordenador;
+    coordenadores: Array<Profissional>;
     
     constructor( private route: ActivatedRoute,
-            private equipeService: EquipeService) { 
+            private equipeService: EquipeService, 
+            private profissionalService: ProfissionalSaudeService) { 
             super(equipeService);
             
             this.goTo = "equipe";
             this.equipe = new EquipeBuilder().initialize(this.equipe);
+            this.autocompleteCoordenador = [];
+            this.coordenadores = new ProfissionalSaudeBuilder().initializeList(new Array<Profissional>());
         }
     
     ngOnInit() {
@@ -44,8 +52,50 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
     }
     
     save() {
+//        console.log(new EquipeBuilder().clone(this.equipe));
         super.save(new EquipeBuilder().clone(this.equipe));
     }   
     
+    getCoordenador() {
+        if ( this.equipe.getCoordenador().getEmpregado().getPessoa().getNome() !== undefined ) {
+
+            let coordenador = this.coordenadores.find( e =>
+                e.getEmpregado().getPessoa().getNome() == this.equipe.getCoordenador().getEmpregado().getPessoa().getNome()
+            );
+
+            if ( coordenador !== undefined ) {
+                this.equipe.setCoordenador( coordenador );
+            } else this.equipe.setCoordenador( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
+        } else this.equipe.setCoordenador( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
+    }
+    
+    private oldNomeCoordenador: string;
+    selectCoordenador( evento ) {
+        if ( this.oldNomeCoordenador != evento ) {
+            this.oldNomeCoordenador = evento;
+            if ( evento.length > 3 ) {
+                this.profissionalService.getProfissionalByName( evento )
+                    .then( res => {
+                        this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
+                        this.autocompleteCoordenador = [this.buildAutocompleteCoordenador( this.coordenadores )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
+        }
+    }
+    
+    buildAutocompleteCoordenador( coordenadores: Array<Profissional> ) {
+        let data = {};
+        coordenadores.forEach( item => {
+            data[item.getEmpregado().getPessoa().getNome()] = null;
+        } );
+
+        let array = {};
+        array["data"] = data;
+
+        return array;
+    }
     
 }

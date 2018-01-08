@@ -1,4 +1,4 @@
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked  {
     position: absolute;
     opacity: 0;
     margin-top: 15px;
@@ -15,10 +15,6 @@ thead > tr {
 	border-bottom: 1px solid;
 }
 
-.btn-floating i {
-	font-size: 1.3rem;
-}
-
 td > a > i {
 	margin-top: -5px;
 }
@@ -29,21 +25,25 @@ tbody{
 }
 
 .btn-remove {
-	margin-top: -10px !important;
-	margin-left: -23px !important;
+	margin-top: -5px;
     margin-bottom: 3px;
 	width: 30px;
     height: 30px;
 }
 
-.numero-linhas {
-	margin-left: -35px !important;
+.botao-remover {
+	padding-left: 30px;
 }
 
-.titulo {
-	
+.resultado {
+	margin-top: -15px;
 }
 
-.codigo {
-	padding-left: 0px;
+.btn-add1 {
+	margin-top: 0px;
+}
+
+.content-resultado-exame {
+	max-height: 600px;
+    overflow: auto;	
 }

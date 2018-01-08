@@ -58,6 +58,14 @@ export abstract class GenericService {
             .toPromise();
     }
     
+    sendFileWithPath( file, path ) {
+        let urlSendFile = this.URL + "/" + path;
+        this.headers = new Headers( { 'Content-Type': 'multipart/form-data' } );
+        return this.http
+            .post( urlSendFile, file, { headers: this.headers } )
+            .toPromise();
+    }
+    
     sendFileAsObject( file ) {
         let urlSendFile = this.URL + "/import";
         return this.http

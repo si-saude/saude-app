@@ -1,8 +1,10 @@
 import { GenericFilter } from './../../generics/generic.filter';
+import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
 
 export class EquipeFilter extends GenericFilter {
     private nome: string;
     private abreviacao: string;
+    private coordenador: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
 
     public getNome() {
         return this.nome;
@@ -18,6 +20,14 @@ export class EquipeFilter extends GenericFilter {
     
     public setAbreviacao(abreviacao: string) {
         this.abreviacao = abreviacao;
+    }
+    
+    getCoordenador() {
+        return this.coordenador;
+    }
+    
+    setCoordenador(coordenador: ProfissionalSaudeFilter) {
+        this.coordenador = coordenador;
     }
     
 }

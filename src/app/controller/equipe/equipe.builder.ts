@@ -1,10 +1,18 @@
 import { Equipe } from './../../model/equipe';
+import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
+import { Profissional } from './../../model/profissional';
+import { EmpregadoBuilder } from './../empregado/empregado.builder';
+import { Empregado } from './../../model/empregado';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class EquipeBuilder extends GenericBuilder {
 
     initialize( equipe: Equipe ) {
         equipe = new Equipe();
+        
+        equipe.setCoordenador(new Profissional());
+        equipe.getCoordenador().setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
+        
         return equipe;
     }
 
@@ -33,6 +41,13 @@ export class EquipeBuilder extends GenericBuilder {
         cloneEquipe.setAbreviacao( this.getValue( equipe, "getAbreviacao" ) );
         cloneEquipe.setVersion( this.getValue( equipe, "getVersion" ) );
 
+        if ( this.getValue( equipe, "getCoordenador" ) !== undefined ) {
+            cloneEquipe.setCoordenador(
+                new ProfissionalSaudeBuilder().clone( this.getValue( equipe, "getCoordenador" ) ) );
+        } else {
+            cloneEquipe.setCoordenador( new ProfissionalSaudeBuilder().initialize( null ) );
+        }
+        
         return cloneEquipe;
     }
 

@@ -8,6 +8,7 @@ export class EmpregadoConvocacaoFilter extends GenericFilter {
     private convocacao:ConvocacaoFilter = new ConvocacaoFilter();
     private convocado:BooleanFilter = new BooleanFilter();
     private auditado:BooleanFilter = new BooleanFilter();
+    private resultadoAuditado:BooleanFilter = new BooleanFilter();
     
     public getEmpregado():EmpregadoFilter{
         return this.empregado;
@@ -39,5 +40,13 @@ export class EmpregadoConvocacaoFilter extends GenericFilter {
     
     public setAuditado(auditado:BooleanFilter){
         this.auditado = auditado;
+    }
+    
+    public getResultadoAuditado():BooleanFilter{
+        return this.resultadoAuditado;
+    }
+    
+    public setResultadoAuditado(resultadoAuditado:BooleanFilter){
+        this.resultadoAuditado = resultadoAuditado;
     }
 }

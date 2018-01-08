@@ -29,6 +29,12 @@ export class ProfissionalSaudeService extends GenericService {
             private empregadoService: EmpregadoService) { 
         super(http, router, "profissional");
     }
+    
+    getProfissionalByName(nome: string) {
+        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+        profissionalFilter.getEmpregado().getPessoa().setNome(nome);
+        return this.selectList( profissionalFilter );
+    }
 
     getEmpregadoByName(nome: string) {
         return this.empregadoService.getEmpregadoByName(nome);
@@ -61,5 +67,5 @@ export class ProfissionalSaudeService extends GenericService {
     getVacinas() {
         return this.vacinaService.getVacinas();
     }
-    
+
 }

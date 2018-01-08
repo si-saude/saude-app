@@ -1,10 +1,14 @@
-import { Exame } from './../../model/exame'; 
+import { Exame } from './../../model/exame';
+import { CampoExame } from './../../model/campo-exame';
+import { CampoExameBuilder } from './../campo-exame/campo-exame.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class ExameBuilder extends GenericBuilder{
     
     initialize(exame: Exame): Exame {
         exame = new Exame();
+        
+        exame.setCampoExames(new CampoExameBuilder().initializeList(new Array<CampoExame>()));
         
         return exame;
     }
@@ -33,6 +37,8 @@ export class ExameBuilder extends GenericBuilder{
         cloneExame.setVersion(this.getValue(exame, "getVersion"));
         cloneExame.setCodigo(this.getValue(exame, "getCodigo"));
         cloneExame.setDescricao(this.getValue(exame, "getDescricao"));
+         
+        cloneExame.setCampoExames(new CampoExameBuilder().cloneList(this.getValue(exame, "getCampoExames")));
                 
         return cloneExame;
     } 

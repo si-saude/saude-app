@@ -1,13 +1,16 @@
 import { Empregado } from './empregado';
 import { Convocacao } from './convocacao';
 import { EmpregadoConvocacaoExame } from './empregado-convocacao-exame';
+import { ResultadoExame } from './resultado-exame';
 
 export class EmpregadoConvocacao {
     private id: number;
     private empregado: Empregado;
     private convocacao: Convocacao;
     private empregadoConvocacaoExames: Array<EmpregadoConvocacaoExame>;
+    private resultadoExames: Array<ResultadoExame>;
     private auditado: boolean;
+    private resultadoAuditado: boolean;
     private convocado: boolean;
     private selecionado: boolean;
     private divergente: boolean;
@@ -45,12 +48,28 @@ export class EmpregadoConvocacao {
         this.empregadoConvocacaoExames = empregadoConvocacaoExames;
     }
     
+    getResultadoExames() {
+        return this.resultadoExames;
+    }
+    
+    setResultadoExames(resultadoExames: Array<ResultadoExame>) {
+        this.resultadoExames = resultadoExames;
+    }
+    
     getAuditado() {
         return this.auditado;
     }
     
     setAuditado(auditado: boolean) {
         this.auditado = auditado;
+    }
+    
+    getResultadoAuditado() {
+        return this.resultadoAuditado;
+    }
+    
+    setResultadoAuditado(resultadoAuditado: boolean) {
+        this.resultadoAuditado = resultadoAuditado;
     }
     
     getConvocado() {

@@ -6,7 +6,8 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row">
 
@@ -14,18 +15,33 @@
 
 		<div class="row">
 			<div class="input-field col s8">
-				<label for="nome" data-error="Campo obrigatório.">Nome</label>
-				<input id="nome" type="text" required name="equipe.nome" [(ngModel)]="equipe.nome">
+				<label for="nome" data-error="Campo obrigatório.">Nome</label> <input
+					id="nome" type="text" required name="equipe.nome"
+					[(ngModel)]="equipe.nome">
 			</div>
-			
+
 			<div class="input-field col s4">
-				<label for="abreviacao">Abreviação</label>
-				<input id="abreviacao" type="text" name="equipe.abreviacao" [(ngModel)]="equipe.abreviacao">
+				<label for="abreviacao">Abreviação</label> <input id="abreviacao"
+					type="text" name="equipe.abreviacao"
+					[(ngModel)]="equipe.abreviacao">
 			</div>
 		</div>
 
-		<input id="id" name="id" type="hidden" [(ngModel)]="equipe.id"> 
-		<input id="version" name="version" type="hidden" [(ngModel)]="equipe.version">
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="coordenador">Coordenador</label> 
+				<input type="text"
+					materialize="autocomplete" name="equipe.coordenador.empregado.pessoa.nome"
+					[(ngModel)]="equipe.coordenador.empregado.pessoa.nome"
+					(blur)="getCoordenador($event)"
+					(ngModelChange)="selectCoordenador($event)"
+					[materializeParams]="autocompleteCoordenador">
+			</div>
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="equipe.id">
+		<input id="version" name="version" type="hidden"
+			[(ngModel)]="equipe.version">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
@@ -34,8 +50,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/equipe']"
-					class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/equipe']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>

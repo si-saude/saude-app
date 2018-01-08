@@ -1,0 +1,260 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row">
+
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+		<!-- 
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+				
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+						 
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#resultadoExames">Resultado Exames</a></li>
+				</ul>
+			</div>
+-->
+		<!-- 
+			<div id="dadosGerais">
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="empregadoConvocacao">Convocação/Empregado</label> <input type="text"
+							materialize="autocomplete" name="empregadoConvocacao"
+							[(ngModel)]="empConv"
+							(blur)="getEmpregadoConvocacao($event)"
+							(ngModelChange)="selectEmpregado($event); selectConvocacao($event);"
+							[materializeParams]="autocompleteEmpregadoConvocacao"> 
+							<input id="empregadoConvocacao.id" type="hidden" name="empregadoConvocacao.id"
+								[(ngModel)]="empregadoConvocacao.id">
+					</div>
+
+				</div>
+				
+			</div>
+
+			<div id="resultadoExames">
+-->
+		<div class="input-field col s12">
+
+			<fieldset>
+				<legend class="legend">
+					Resultados dos Exames <a
+						class="btn-floating waves-effect waves-light green btn-add-fieldset"
+						(click)="addResultadoExame()"> <i
+						class="material-icons center-icon">add</i>
+					</a>
+				</legend>
+
+				<div class="content-resultado-exame">
+
+					<div
+						*ngFor="let rEx of empregadoConvocacao.resultadoExames;let iREx = index">
+
+						<fieldset>
+							<legend class="legend">
+								Resultado Exame <a
+									class="btn-floating waves-effect waves-light red btn-add-fieldset"
+									(click)="removeResultadoExame(iREx)"> <i
+									class="material-icons center-icon">delete</i>
+								</a>
+							</legend>
+
+							<div class="row">
+								<div class="input-field col s8">
+									<fieldset>
+										<legend>
+											Exame <a
+												class="btn-floating waves-effect waves-light green btn-add-fieldset"
+												(click)="getExames()"> <i
+												class="material-icons center-icon">cached</i>
+											</a>
+										</legend>
+										<select
+											name="empregadoConvocacao.resultadoExames[{{iREx}}].exame.id"
+											class="browser-default" #exame
+											(blur)="selectExame(iREx, exame.value)"
+											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.id">
+											<option disabled selected value=0>Selecione uma exame</option>
+											<option *ngFor="let exame of exames" value="{{exame.id}}">
+													{{exame.codigo}} - {{exame.descricao}} 
+												</option>
+										</select>
+									</fieldset>
+								</div>
+
+								<div class="input-field col s4">
+									<label for="data">Data</label>
+									<my-date-picker name="resultadoExame[{{iREx}}].data"
+										[options]="myDatePickerOptions"
+										name="resultadExame[iREx].data"
+										[(ngModel)]="dataResultadoExames[iREx]" placeholder="Data">
+									</my-date-picker>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="input-field col s4">
+									<fieldset>
+										<legend>Ação</legend>
+										<select
+											name="empregadoConvocacao.resultadoExames[{{iREx}}].acao"
+											class="browser-default"
+											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].acao">
+											<option disabled selected value="">Selecione uma ação</option>
+											<option *ngFor="let acao of acoes" value="{{acao}}">
+												{{acao}} 
+											</option>
+										</select>
+									</fieldset>
+								</div>
+
+								<div class="input-field col s4">
+									<fieldset>
+										<legend>Tipo</legend>
+										<select
+											name="empregadoConvocacao.resultadoExames[{{iREx}}].tipo"
+											class="browser-default"
+											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].tipo">
+											<option disabled selected value="">Selecione um tipo</option>
+											<option *ngFor="let tipo of tipos" value="{{tipo}}">
+												{{tipo}} 
+											</option>
+										</select>
+									</fieldset>
+								</div>
+
+								<div class="input-field col s4">
+									<label for="local">Local</label> <input id="local" type="text"
+										name="empregadoConvocacao.resultadoExames[{{iREx}}].local"
+										[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].local">
+								</div>
+
+							</div>
+
+							<div class="row col s12">
+								<fieldset>
+									<legend>Campo do Exame</legend>
+
+									<div class="col s4">
+										<select
+											name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
+											class="browser-default" #campo>
+											<option disabled selected value=0>Selecione um item</option>
+											<option *ngFor="let campo of campoExames"
+												value="{{campo.id}}">
+												{{campo.codigo}} - {{campo.titulo}} 
+											</option>
+										</select>
+									</div>
+
+									<div class="col s2">
+										<a
+											class="btn-floating waves-effect waves-light green btn-add1"
+											(click)="addItemResultadoExame(iREx, campo.value)"> <i
+											class="material-icons center-icon">add</i>
+										</a>
+									</div>
+								</fieldset>
+
+
+							</div>
+
+							<div class="row">
+
+								<table class="striped">
+									<thead>
+										<tr class="row col s12">
+											<th class="col s3">Código</th>
+											<th class="col s3">Título</th>
+											<th class="col s3">Resultado</th>
+											<th class="col s3">Remover</th>
+										</tr>
+									</thead>
+									<div
+										*ngFor="let itemResultadoExame of rEx.itemResultadoExames;let i = index">
+										<tbody class="col s12">
+											<tr class="col s12">
+												<input type="hidden" [(ngModel)]="itemResultadoExame.codigo"
+													value="{{itemResultadoExame.codigo}}"
+													name="itemResultadoExame[{{i}}].codigo">
+												<input type="hidden" [(ngModel)]="itemResultadoExame.titulo"
+													value="{{itemResultadoExame.titulo}}"
+													name="itemResultadoExame[{{i}}].titulo">
+												<input type="hidden"
+													[(ngModel)]="itemResultadoExame.resultado"
+													value="{{itemResultadoExame.resultado}}"
+													name="itemResultadoExame[{{i}}].resultado">
+												<input type="hidden" [(ngModel)]="itemResultadoExame.id"
+													value="{{itemResultadoExame.id}}"
+													name="itemResultadoExame[{{i}}].id">
+												<td class="col s3 codigo">{{itemResultadoExame.codigo}}</td>
+												<td class="col s3 titulo">{{itemResultadoExame.titulo}}</td>
+												<td class="col s3 resultado"><input id="resultado"
+													type="text" name="itemResultadoExame[{{i}}].resultado"
+													[(ngModel)]="itemResultadoExame.resultado"></td>
+												<td class="col s3 botao-remover"><a
+													class="btn-floating waves-effect waves-light red btn-remove"
+													(click)="removeItemResultadoExame(iREx, i)"> <i
+														class="material-icons center-icon">delete</i>
+												</a></td>
+											</tr>
+										</tbody>
+									</div>
+
+								</table>
+
+							</div>
+
+							<input id="id"
+								name="empregadoConvocacao.resultadoExames[{{iREx}}].id"
+								type="hidden"
+								[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].id">
+							<input id="version"
+								name="empregadoConvocacao.resultadoExames[{{iREx}}].version"
+								type="hidden"
+								[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].version">
+
+						</fieldset>
+					</div>
+				</div>
+			</fieldset>
+
+		</div>
+		<!-- 
+			</div>
+ 
+		</div>
+-->
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/auditoria-resultado-exame']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

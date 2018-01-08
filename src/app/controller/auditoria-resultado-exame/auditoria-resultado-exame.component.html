@@ -1,39 +1,35 @@
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
-<!-- --> 
-<app-mensagem-form  *ngIf="verifyEmptyPaginas" 
- [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
-</app-mensagem-form>
-
-<!-- Preload  -->
-<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
- 
-<div class="collection">
-
-	<div *ngFor="let a of array">
-		<div class="row row-collection">
-			
-		</div>
-	</div>
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
 	
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="collection">
 	<div *ngFor="let a of array">
 		<div class="row row-collection">
-			<div class="col s6">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacao.empregado.pessoa.nome}}</a>
+			<div class="col s5">
+				<a [routerLinkActive]="['active']" class="collection-item">
+					{{a.convocacao.titulo}}</a>
 			</div>
-			<div class="col s3">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.exame.codigo}}</a>
+			<div class="col s5">
+				<a [routerLinkActive]="['active']" class="collection-item">
+					{{a.empregado.pessoa.nome}}</a>
 			</div>
 			<div class="col s1">
-				<a [routerLink]="['/resultado-exame/detalhe', a.id]"><i class="material-icons">details</i></a>
-		 	</div>
+				<a [routerLink]="['/auditoria-resultado-exame/detalhe', a.id]"><i
+					class="material-icons">details</i></a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/auditoria-resultado-exame/editar', a.id]"><i
+					class="material-icons">mode_edit</i></a>
+			</div>
 		</div>
 	</div>
-	
 </div>
- 
+
 <!-- Paginação -->
 <ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
 
@@ -61,8 +57,35 @@
 </ul>
 
 <div class="row">
-	<div class="col s12 button-import">
+	<div class="col s4">
+		<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	</div>
+	<div class="col s4 button-import">
 		<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
+	</div>
+</div>
+
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+	
+	<div class="input-field col s8">
+		<div class="modal-content">
+			<label for="matricula">Matricula</label> <input type="text"
+				id="matricula" [(ngModel)]="filter.empregado.matricula" name="matricula">
+		</div>
+	</div>
+	
+	<div class="input-field col s8">
+		<div class="modal-content">
+			<label for="chave">Chave</label> <input type="text"
+				id="chave" [(ngModel)]="filter.empregado.chave" name="chave">
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="setFilter()">Filtrar</a>
 	</div>
 </div>
 
@@ -136,7 +159,6 @@
 
 </div>
 
-
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modalParams" [materializeActions]="modalConfirmImport">
@@ -154,4 +176,4 @@
 <div class="mensagem">
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
 </div>
- 
+

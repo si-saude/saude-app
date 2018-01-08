@@ -1,6 +1,7 @@
 import { Empregado } from './../../model/empregado';
 import { Convocacao } from './../../model/convocacao';
 import { ConvocacaoBuilder } from './../convocacao/convocacao.builder';
+import { ResultadoExameBuilder } from './../resultado-exame/resultado-exame.builder';
 import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { EmpregadoConvocacaoExameBuilder } from './../empregado-convocacao-exame/empregado-convocacao-exame.builder';
@@ -15,6 +16,7 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         empregadoConvocacao.setEmpregadoConvocacaoExames(
                 new EmpregadoConvocacaoExameBuilder().initializeList(empregadoConvocacao.getEmpregadoConvocacaoExames()));
         empregadoConvocacao.setConvocacao(new Convocacao());
+        empregadoConvocacao.setResultadoExames(new ResultadoExameBuilder().initializeList(empregadoConvocacao.getResultadoExames()));
         
         return empregadoConvocacao;
     }
@@ -42,6 +44,7 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         cloneEmpregadoConvocacao.setId(this.getValue(empregadoConvocacao, "getId"));
         cloneEmpregadoConvocacao.setVersion(this.getValue(empregadoConvocacao, "getVersion"));
         cloneEmpregadoConvocacao.setAuditado(this.getValue(empregadoConvocacao, "getAuditado"));
+        cloneEmpregadoConvocacao.setResultadoAuditado(this.getValue(empregadoConvocacao, "getResultadoAuditado"));
         cloneEmpregadoConvocacao.setConvocado(this.getValue(empregadoConvocacao, "getConvocado"));
         cloneEmpregadoConvocacao.setDivergente(this.getValue(empregadoConvocacao, "getDivergente"));
         cloneEmpregadoConvocacao.setSelecionado(this.getValue(empregadoConvocacao, "getSelecionado"));
@@ -52,6 +55,9 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         
         cloneEmpregadoConvocacao.setEmpregadoConvocacaoExames(
                     new EmpregadoConvocacaoExameBuilder().cloneList(this.getValue(empregadoConvocacao,"getEmpregadoConvocacaoExames")));
+        
+        cloneEmpregadoConvocacao.setResultadoExames(
+                new ResultadoExameBuilder().cloneList(this.getValue(empregadoConvocacao, "getResultadoExames")));
 
         return cloneEmpregadoConvocacao;
     }

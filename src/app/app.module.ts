@@ -56,6 +56,7 @@ import { VacinaGuard } from './guards/guards-child/vacina.guard';
 import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convocacao.guard';
 import { FeriadoGuard } from './guards/guards-child/feriado.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
+import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { ServicoGuard } from './guards/guards-child/servico.guard';
     VacinaGuard,
     EmpregadoConvocacaoGuard,
     FeriadoGuard,
+    AuditoriaResultadoExameGuard,
     ServicoGuard
   ],
   bootstrap: [ 

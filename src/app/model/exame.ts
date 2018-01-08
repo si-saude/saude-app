@@ -1,9 +1,11 @@
+import { CampoExame } from './campo-exame';
 
 export class Exame{
     private id: number = 0;
     private version: number;
     private codigo: string;
     private descricao: string;
+    private campoExames: Array<CampoExame>;
 
     getId(): number {
         return this.id;
@@ -35,5 +37,13 @@ export class Exame{
     
     setDescricao(descricao:string){
         this.descricao = descricao;
+    }
+    
+    getCampoExames(): Array<CampoExame>{
+        return this.campoExames;
+    }
+    
+    setCampoExames(campoExames: Array<CampoExame>){
+        this.campoExames = campoExames;
     }
 }

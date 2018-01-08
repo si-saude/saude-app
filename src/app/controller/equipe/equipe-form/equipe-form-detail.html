@@ -25,6 +25,13 @@
 					name="equipe.abreviacao" [(ngModel)]="equipe.abreviacao">
 			</div>
 		</div>
+		
+		<div class="row">
+			<label for="coordenador">Coordenador</label>
+			<input id="coordenador" type="text" disabled 
+				name="equipe.coordenador.empregado.pessoa.nome" 
+				[(ngModel)]="equipe.coordenador.empregado.pessoa.nome">
+		</div>
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
