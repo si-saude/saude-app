@@ -47,6 +47,7 @@ export class GrupoMonitoramentoBuilder extends GenericBuilder{
         cloneGrupoMonitoramento.setNome(this.getValue(grupoMonitoramento, "getNome"));
         cloneGrupoMonitoramento.setRecorrente(this.getValue(grupoMonitoramento, "getRecorrente"));
         cloneGrupoMonitoramento.setRelatorio(this.getValue(grupoMonitoramento, "getRelatorio"));
+        cloneGrupoMonitoramento.setAuditoriaAso(this.getValue(grupoMonitoramento, "getAuditoriaAso"));
         
         if ( this.getValue(grupoMonitoramento, "getTipoGrupoMonitoramento") !== undefined ) {
             cloneGrupoMonitoramento.setTipoGrupoMonitoramento(

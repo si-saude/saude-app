@@ -13,6 +13,7 @@ export class GrupoMonitoramento {
     private empregados: Array<Empregado>;
     private recorrente: boolean;
     private relatorio: boolean;
+    private auditoriaAso: boolean;
     private version: number;
 
     getId() {
@@ -77,6 +78,14 @@ export class GrupoMonitoramento {
     
     setRelatorio(relatorio: boolean) {
         this.relatorio = relatorio;
+    }
+    
+    getAuditoriaAso():boolean{
+        return this.auditoriaAso;
+    }
+    
+    setAuditoriaAso(auditoriaAso:boolean){
+        this.auditoriaAso = auditoriaAso;
     }
     
     getVersion() {

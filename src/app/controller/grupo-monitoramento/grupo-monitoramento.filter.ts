@@ -7,6 +7,7 @@ export class GrupoMonitoramentoFilter extends GenericFilter {
     private tipoGrupoMonitoramento: TipoGrupoMonitoramentoFilter;
     private recorrente: BooleanFilter = new BooleanFilter();
     private relatorio: BooleanFilter = new BooleanFilter();
+    private auditoriaAso: BooleanFilter = new BooleanFilter();
     
     getNome() {
         return this.nome;
@@ -39,5 +40,12 @@ export class GrupoMonitoramentoFilter extends GenericFilter {
     setRelatorio(relatorio: BooleanFilter) {
         this.relatorio = relatorio;
     }
-       
+    
+    getAuditoriaAso():BooleanFilter{
+        return this.auditoriaAso;
+    }
+    
+    setAuditoriaAso(auditoriaAso: BooleanFilter){
+        this.auditoriaAso = auditoriaAso;
+    }
 }
