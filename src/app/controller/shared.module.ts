@@ -44,12 +44,16 @@ import { FeriadoService } from './feriado/feriado.service';
 import { PessoaService } from './pessoa/pessoa.service';
 import { ServicoService } from './servico/servico.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
+import { RequisitoAsoComponent } from './requisito-aso/requisito-aso.component';
+import { RequisitoAsoFormComponent } from './requisito-aso/requisito-aso-form/requisito-aso-form.component';
 
 @NgModule({
   declarations: [
     MensagemFormComponent,
     PreloadComponent,
-    ConfirmSaveComponent
+    ConfirmSaveComponent,
+    RequisitoAsoComponent,
+    RequisitoAsoFormComponent
   ],
   imports: [ 
     CommonModule,
