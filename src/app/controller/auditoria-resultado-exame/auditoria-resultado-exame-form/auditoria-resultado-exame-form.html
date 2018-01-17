@@ -59,7 +59,29 @@
 				</legend>
 
 				<div class="content-resultado-exame">
+					<div class="row" style="margin-left: 50px">
+						<div class="input-field col s4 checkbox">
+							<input type="checkbox" id="selecionarTodos"
+								[(ngModel)]="selecionarTodos" (click)="selectAll()"
+								name="selecionarTodos"> <label for="selecionarTodos"></label>
+							<label>Selecionar/deselecionar todos</label>
+						</div>
 
+						<div class="input-field col s4 checkbox" *ngIf="!verifyAuditado()">
+							<input type="checkbox" disabled
+								id="empregadoConvocacao.resultadoAuditado"
+								[(ngModel)]="empregadoConvocacao.resultadoAuditado"
+								name="empregadoConvocacao.resultadoAuditado"> <label
+								for="empregadoConvocacao.resultadoAuditado"></label> <label>Auditado</label>
+						</div>
+
+						<div class="input-field col s4 checkbox" *ngIf="verifyAuditado()">
+							<input type="checkbox" id="empregadoConvocacao.resultadoAuditado"
+								[(ngModel)]="empregadoConvocacao.resultadoAuditado"
+								name="empregadoConvocacao.resultadoAuditado"> <label
+								for="empregadoConvocacao.resultadoAuditado"></label> <label>Auditado</label>
+						</div>
+					</div>
 					<div
 						*ngFor="let rEx of empregadoConvocacao.resultadoExames;let iREx = index">
 
@@ -73,7 +95,7 @@
 							</legend>
 
 							<div class="row">
-								<div class="input-field col s8">
+								<div class="input-field col s4">
 									<fieldset>
 										<legend>
 											Exame <a
@@ -96,12 +118,19 @@
 								</div>
 
 								<div class="input-field col s4">
-									<label for="data">Data</label>
+									<label for="data">Data de Realização</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].data"
 										[options]="myDatePickerOptions"
 										name="resultadExame[iREx].data"
 										[(ngModel)]="dataResultadoExames[iREx]" placeholder="Data">
 									</my-date-picker>
+								</div>
+
+								<div class="input-field col s4 checkbox conforme">
+									<input type="checkbox" id="resultadoExame[{{iREx}}].conforme"
+										[(ngModel)]="rEx.conforme" (click)="selectConform(iREx)"
+										name="resultadoExame[{{iREx}}].conforme"> <label
+										for="resultadoExame[{{iREx}}].conforme"></label> <label>Conforme</label>
 								</div>
 
 							</div>
@@ -144,35 +173,44 @@
 								</div>
 
 							</div>
+							<div class="row">
+								<div class="col s6">
+									<fieldset>
+										<legend>Campo do Exame</legend>
 
-							<div class="row col s12">
-								<fieldset>
-									<legend>Campo do Exame</legend>
-
-									<div class="col s4">
-										<select
-											name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
-											class="browser-default" #campo>
-											<option disabled selected value=0>Selecione um item</option>
-											<option *ngFor="let campo of campoExames"
-												value="{{campo.id}}">
+										<div class="col s10">
+											<select
+												name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
+												class="browser-default" #campo>
+												<option disabled selected value=0>Selecione um item</option>
+												<option *ngFor="let campo of campoExames"
+													value="{{campo.id}}">
 												{{campo.codigo}} - {{campo.titulo}} 
 											</option>
-										</select>
-									</div>
+											</select>
+										</div>
 
-									<div class="col s2">
-										<a
-											class="btn-floating waves-effect waves-light green btn-add1"
-											(click)="addItemResultadoExame(iREx, campo.value)"> <i
-											class="material-icons center-icon">add</i>
-										</a>
-									</div>
-								</fieldset>
+										<div class="col s2">
+											<a
+												class="btn-floating waves-effect waves-light green btn-add1"
+												(click)="addItemResultadoExame(iREx, campo.value)"> <i
+												class="material-icons center-icon">add</i>
+											</a>
+										</div>
+									</fieldset>
 
+								</div>
 
+								<div class="col s4">
+									<label for="data">Data de Recebimento</label>
+									<my-date-picker name="resultadoExame[{{iREx}}].dataRecebimento"
+										[options]="myDatePickerOptions"
+										name="resultadExame[iREx].dataRecebimento"
+										[(ngModel)]="dataRecebimentoExames[iREx]" placeholder="Data Recebimento">
+									</my-date-picker>
+								</div>
 							</div>
-
+							
 							<div class="row">
 
 								<table class="striped">

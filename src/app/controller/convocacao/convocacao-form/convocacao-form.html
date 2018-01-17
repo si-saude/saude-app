@@ -186,7 +186,7 @@
 				<div class="input-field col s10">
 					<label for="empregado">Empregado</label> <input type="text"
 						materialize="autocomplete" name="addEmpregado"
-						(blur)="getEmpregado($event)"
+						(blur)="getEmpregado($event)" autocomplete="off"
 						[(ngModel)]="empregadoToAdd.pessoa.nome"
 						(ngModelChange)="selectEmpregadoByChave($event);selectEmpregado($event);"
 						[materializeParams]="autocompleteEmpregado">

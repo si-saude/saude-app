@@ -6,6 +6,7 @@ import { ExameFilter } from './../exame/exame.filter';
 export class ResultadoExameFilter extends GenericFilter {
     private exame: ExameFilter;
     private data: DateFilter;
+    private dataRecebimento: DateFilter;
     private tipo: string;
     private acao: string;
     private local: string;
@@ -22,6 +23,12 @@ export class ResultadoExameFilter extends GenericFilter {
     }
     setData(data: DateFilter) {
         this.data = data;
+    }
+    getDataRecebimento() {
+        return this.dataRecebimento;
+    }
+    setDataRecebimento(dataRecebimento: DateFilter) {
+        this.dataRecebimento = dataRecebimento;
     }
     getTipo() {
         return this.tipo;

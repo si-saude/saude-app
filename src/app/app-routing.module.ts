@@ -42,6 +42,7 @@ import { VacinaGuard } from './guards/guards-child/vacina.guard';
 import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convocacao.guard';
 import { FeriadoGuard } from './guards/guards-child/feriado.guard';
 import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
+import { RegraAtendimentoGuard } from './guards/guards-child/regra-atendimento.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
 
 const routes: Routes = [
@@ -91,6 +92,14 @@ const routes: Routes = [
   { path: 'servico', loadChildren: 'app/controller/servico/servico.module#ServicoModule' },
   { path: 'auditoria-resultado-exame', 
       loadChildren: 'app/controller/auditoria-resultado-exame/auditoria-resultado-exame.module#AuditoriaResultadoExameModule' },
+  { path: 'regra-atendimento',
+      loadChildren: 'app/controller/regra-atendimento/regra-atendimento.module#RegraAtendimentoModule' },
+  { path: 'solicitacao-servico',
+      loadChildren: 'app/solicitacao-servico/solicitacao-servico.module#SolicitacaoServicoModule' },
+  { path: 'fila-espera-ocupacional',
+      loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule' },
+  { path: 'atendimento',
+      loadChildren: 'app/controller/atendimento/atendimento.module#AtendimentoModule' },
   { path: '', pathMatch: 'full', redirectTo: '/servico'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

@@ -154,6 +154,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
+    
     getSexos() {
         this.empregadoService.getSexos()
             .then( res => {

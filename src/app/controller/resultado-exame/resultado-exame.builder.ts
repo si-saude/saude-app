@@ -3,6 +3,7 @@ import { ItemResultadoExameBuilder } from './../item-resultado-exame/item-result
 import { ItemResultadoExame } from './../../model/item-resultado-exame';
 import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
 import { ResultadoExame } from './../../model/resultado-exame';
+import { Exame } from './../../model/exame';
 import { ExameBuilder } from './../exame/exame.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
@@ -13,7 +14,7 @@ export class ResultadoExameBuilder extends GenericBuilder {
 
         resultadoExame.setEmpregadoConvocacao(new EmpregadoConvocacao());
         
-        resultadoExame.setExame(new ExameBuilder().initialize(resultadoExame.getExame()));
+        resultadoExame.setExame(new ExameBuilder().initialize(new Exame()));
         
         resultadoExame.setItemResultadoExames(new ItemResultadoExameBuilder().initializeList(new Array<ItemResultadoExame>()));
         
@@ -42,8 +43,9 @@ export class ResultadoExameBuilder extends GenericBuilder {
 
         cloneResultadoExame.setId( this.getValue( resultadoExame, "getId" ) );
         cloneResultadoExame.setVersion( this.getValue( resultadoExame, "getVersion" ) );
-        cloneResultadoExame.setConforme(this.getValue( resultadoExame, "isConforme" ) );
+        cloneResultadoExame.setConforme(this.getValue( resultadoExame, "getConforme" ) );
         cloneResultadoExame.setData(this.getValue( resultadoExame, "getData" ) );
+        cloneResultadoExame.setDataRecebimento(this.getValue( resultadoExame, "getDataRecebimento" ) );
         cloneResultadoExame.setLocal(this.getValue( resultadoExame, "getLocal" ) );
         
         if(this.getValue(resultadoExame, "getTipo") == "")

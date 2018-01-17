@@ -1,0 +1,46 @@
+.content-buttons-fila {
+	text-align: center;
+}
+
+.btn-fila {
+	margin-left: 30px;	
+}
+
+.input-field-empregado {
+	margin: 0 auto;
+}
+
+.row-empregado {
+	margin: 0 auto;
+}
+
+.input-empregado {
+	height: 30px !important;
+}
+
+.btn-atendimento {
+	margin-left: 70px;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}

@@ -4,7 +4,7 @@ import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-sa
 export class EquipeFilter extends GenericFilter {
     private nome: string;
     private abreviacao: string;
-    private coordenador: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+    private coordenador: ProfissionalSaudeFilter;
 
     public getNome() {
         return this.nome;

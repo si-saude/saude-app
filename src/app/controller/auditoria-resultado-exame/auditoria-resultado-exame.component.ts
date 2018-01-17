@@ -84,17 +84,22 @@ export class AuditoriaResultadoExameComponent
         let arquivoTxt = undefined;
 
         let readerArquivo = new FileReader();
-
+        let component = this;
+        
         if ( this.inputElArquivoTxt.nativeElement.files.length > 0 ) {
             arquivoTxt = this.inputElArquivoTxt.nativeElement.files[0];
             this.showPreload = true;
+            
             this.resultadoExameService.sendFileWithPath( arquivoTxt, "import-txt" )
                 .then( res => {
-                    this.showPreload = false;
-                    location.reload();
+                    component.showPreload = false;
+                    component.openModalConfirmImport();
+                    component.msnConfirmImport = res.text();
                 } )
                 .catch( error => {
-                    this.catchConfiguration( error );
+                    component.showPreload = false;
+                    component.openModalConfirmImport();
+                    component.msnConfirmImport = error;
                 } )
         }
 

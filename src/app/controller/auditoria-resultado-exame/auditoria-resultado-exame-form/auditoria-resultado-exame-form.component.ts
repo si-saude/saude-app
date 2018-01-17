@@ -38,9 +38,11 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     selecionarTodos: boolean;
     canAuditar: boolean;
     empConv: string;
+    examesAdded: Array<Exame>;
     autocompleteEmpregadoConvocacao;
 
     dataResultadoExames: Array<any>;
+    dataRecebimentoExames: Array<any>;
 
     selectedExm = null;
     
@@ -54,8 +56,10 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         this.exames = new ExameBuilder().initializeList(this.exames);
         this.itemResultadoExames = new ItemResultadoExameBuilder().initializeList(this.itemResultadoExames);
         this.conformList = new Array<boolean>();
+        this.examesAdded = new Array<Exame>();
         this.canAuditar = false;
         this.dataResultadoExames = new Array<any>();
+        this.dataRecebimentoExames = new Array<any>();
         this.campoExames = new CampoExameBuilder().initializeList( this.campoExames );
         this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
         this.autocompleteEmpregadoConvocacao = [];
@@ -126,14 +130,13 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     
     save() {
         this.verifyAndSetDates();
-        console.log(new EmpregadoConvocacaoBuilder().clone(this.empregadoConvocacao));
         super.save(new EmpregadoConvocacaoBuilder().clone(this.empregadoConvocacao));
     }
     
     addResultadoExame( ) {
-        let rE = new ResultadoExameBuilder().initialize(new ResultadoExame());
+        let re = new ResultadoExameBuilder().initialize(new ResultadoExame());
         
-        this.empregadoConvocacao.getResultadoExames().push(rE);
+        this.empregadoConvocacao.getResultadoExames().push(re);
         
         this.empregadoConvocacao.setResultadoAuditado(false);
         this.conformList[this.empregadoConvocacao.getResultadoExames().length-1] = false;
@@ -174,7 +177,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     
     selectConform( value ) {
         setTimeout(() => {
-            this.conformList[value] = this.empregadoConvocacao.getEmpregadoConvocacaoExames()[value].getConforme();
+            this.conformList[value] = this.empregadoConvocacao.getResultadoExames()[value].getConforme();
         }, 100);
     }
 
@@ -182,22 +185,22 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         let ret: boolean = this.conformList.find( cL => cL == false );
         if ( ret == undefined ) return true;
         else {
-            this.empregadoConvocacao.setAuditado( false );
+            this.empregadoConvocacao.setResultadoAuditado(false);
             return false;
         }
     }
     
     selectExame( iREx, exameId ) {
-        let exame = this.exames.find(e => e.getId() == exameId);
+        if ( exameId == 0 ) return;
         
-        let rE = this.empregadoConvocacao.getResultadoExames().find(rE => rE.getExame().getId() == exame.getId());
+        let exame = this.exames.find( e => e.getId() == exameId );
         
-        if ( rE != undefined ) {
-            this.toastParams = ['Exame adicionado anteriormente', 4000];
-            this.globalActions.emit( 'toast' );
-            this.empregadoConvocacao.getResultadoExames()[iREx].getExame().setId(0);
-            return;
-        }
+//        if ( eA != undefined ) {
+//            this.toastParams = ['Exame adicionado anteriormente', 4000];
+//            this.globalActions.emit( 'toast' );
+//            this.empregadoConvocacao.getResultadoExames()[iREx].getExame().setId(0);
+//            return;
+//        }
         
         this.campoExames = exame.getCampoExames();
     }
@@ -225,6 +228,9 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
                     this.empregadoConvocacao.getResultadoExames()[i].setData(
                     this.parseDatePickerToDate( this.dataResultadoExames[i] ) );
+                    
+                    this.empregadoConvocacao.getResultadoExames()[i].setDataRecebimento(
+                    this.parseDatePickerToDate( this.dataRecebimentoExames[i] ) );
             }
         }
     }
@@ -236,6 +242,10 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
                 this.dataResultadoExames[i] =
                     this.parseDataToObjectDatePicker(
                     this.empregadoConvocacao.getResultadoExames()[i].getData() );
+                    
+                this.dataRecebimentoExames[i] =
+                    this.parseDataToObjectDatePicker(
+                    this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
             }
         }
     }

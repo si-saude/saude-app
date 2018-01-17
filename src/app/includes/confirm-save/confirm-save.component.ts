@@ -12,6 +12,7 @@ export class ConfirmSaveComponent implements OnInit {
   @Input() goTo: string;  
   @Input() msg: string;
   @Input() show: boolean;
+  @Input() reload: boolean;
   modalConfirmSave;
   modelParams;
   
@@ -23,7 +24,7 @@ export class ConfirmSaveComponent implements OnInit {
       }];
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   
   ngOnChanges(changes: SimpleChanges) {
       if (changes["show"].currentValue === true)
@@ -36,6 +37,10 @@ export class ConfirmSaveComponent implements OnInit {
   }
   
   confirmSave() {
+      if ( this.reload ) {
+          window.location.reload();
+          return;
+      }
       this.router.navigate(['/'+this.goTo]);
   }
   

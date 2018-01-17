@@ -1,0 +1,83 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="content-request" *ngIf="!wasRequested">
+
+	<form class="col s12"
+		(ngSubmit)="startFila(localizacao.value, regraAtendimento.value)">
+
+		<fieldset>
+			<legend>Dados da Fila de Espera</legend>
+
+			<div class="row">
+
+				<fieldset class="fldst">
+					<legend>Localizacao</legend>
+					<div class="input-field col s12">
+						<select class="browser-default" #localizacao>
+							<option disabled selected value=0>Selecione uma localização</option>
+							<option *ngFor="let localizacao of localizacoes"
+								value="{{localizacao.id}}">{{localizacao.nome}}</option>
+						</select>
+					</div>
+				</fieldset>
+
+			</div>
+
+			<div class="row">
+				<fieldset class="fldst">
+					<legend>Regra de Atendimento</legend>
+					<div class="input-field col s12">
+						<select class="browser-default" #regraAtendimento>
+							<option disabled selected value=0>Selecione um regra de atendimento</option>
+							<option *ngFor="let regraAtendimento of regraAtendimentos"
+								value="{{regraAtendimento.id}}">{{regraAtendimento.nome}}</option>
+						</select>
+					</div>
+				</fieldset>
+
+			</div>
+
+		</fieldset>
+
+		<div class='row row-btns'>
+			<div class="col s12 btn-fila">
+				<button type="submit" class="btn btn-primary btn-salvar">Iniciar</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div *ngIf="wasRequested">
+
+	<div class="row">
+
+		<table class="striped">
+			<thead>
+				<tr class="row col s12">
+					<th class="col s4">Nome</th>
+					<th class="col s3">Atendimento</th>
+					<th class="col s3">Equipe</th>
+					<th class="col s2">Status</th>
+				</tr>
+			</thead>
+			<div *ngFor="let atendimento of atendimentos;let i = index">
+				<tbody class="col s12">
+					<tr class="col s12">
+						<td class="col s4 empregado">{{atendimento.filaEsperaOcupacional.empregado.pessoa.nome}}</td>
+						<td class="col s3 atendimento">{{atendimento.servico.nome}}</td>
+						<td class="col s3 equipe">{{atendimento.tarefa.equipe.nome}}</td>
+						<td class="col s2 status">{{atendimento.filaEsperaOcupacional.status}}</td>
+					</tr>
+				</tbody>
+			</div>
+
+		</table>
+
+	</div>
+
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

@@ -48,10 +48,9 @@ export class PessoaBuilder extends GenericBuilder {
         clonePessoa.setDataNascimento(this.getValue(pessoa, "getDataNascimento"));
         clonePessoa.setRg(this.getValue(pessoa, "getRg"));
         
-        if(this.getValue(pessoa, "getEndereco") !== undefined){
-            if(Object.keys(this.getValue(pessoa, "getEndereco")).length === 2 && 
-                    pessoa.getEndereco().getCidade().getId() === 0)
-                clonePessoa.setEndereco(undefined);
+        if( this.getValue(pessoa, "getEndereco") !== undefined ) {
+            if( Object.keys(this.getValue(pessoa, "getEndereco")).length == 2 )
+                clonePessoa.setEndereco(undefined);            
             else
                 clonePessoa.setEndereco(
                         new EnderecoBuilder().clone(this.getValue(pessoa, "getEndereco")));

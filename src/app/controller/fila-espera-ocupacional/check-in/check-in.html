@@ -1,0 +1,82 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[reload]="reload"></app-confirm-save>
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="checkIn( localizacao.value )">
+
+		<div class="content-dados">
+
+			<fieldset class="fldst">
+				<legend>Dados do Empregado</legend>
+				
+				<fieldset class="fldst">
+					<legend>Localizacao</legend>
+					<div class="input-field col s12">
+						<select class="browser-default" #localizacao>
+							<option disabled selected value=0>Selecione uma localização</option>
+							<option *ngFor="let localizacao of localizacoes"
+								value="{{localizacao.id}}">{{localizacao.nome}}</option>
+						</select>
+					</div>
+				</fieldset>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="cpf">CPF</label> <input id="cpf" type="text"
+							name="cpf" [(ngModel)]="cpf">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="matricula">Matricula</label> <input id="matricula"
+							type="text" name="matricula" [(ngModel)]="matricula">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="chave">Chave</label> <input id="chave" type="text"
+							name="chave" [(ngModel)]="chave">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s8">
+						<label for="dataNascimento">Data de Nascimento</label>
+						<my-date-picker name="dataNascimento"
+							[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
+							placeholder="Data de Nascimento"> </my-date-picker>
+					</div>
+
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s12 btn-checkin">
+				<button type="submit" class="btn btn-primary btn-salvar">Check-In</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

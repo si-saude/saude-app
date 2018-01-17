@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
+import { GlobalVariable } from './../../global';
 import { Servico } from './../../model/servico';
 import { ServicoFilter } from './servico.filter';
 import { EquipeService } from './../equipe/equipe.service';
@@ -21,6 +22,13 @@ export class ServicoService extends GenericService {
     
     getEquipes() {
         return this.equipeService.getEquipes();
+    }
+    
+    getGrupos() {
+        let urlGrupo = GlobalVariable.BASE_API_URL + "/generic/grupo-servico";
+        return this.http
+            .get( urlGrupo + "?filter=", { headers: this.headers } )
+            .toPromise();
     }
     
 }
