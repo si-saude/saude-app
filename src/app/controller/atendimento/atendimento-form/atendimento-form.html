@@ -1,0 +1,208 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="row">
+
+	<div class="col s12">
+		<ul class="tabs" materialize="tabs">
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#filaAtendimento">Fila de Atendimento</a></li>
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#atendimento">Atendimento</a></li>
+		</ul>
+	</div>
+
+	<div id="filaAtendimento">
+
+		<div class="row">
+			<fieldset>
+				<legend>
+					Localizacao <a
+						class="btn-floating waves-effect waves-light green btn-add-fieldset"
+						(click)="getLocalizacoes()"> <i
+						class="material-icons center-icon">cached</i>
+					</a>
+				</legend>
+				<select name="localizacao" class="browser-default" #localizacao
+					(ngModelChange)="setLocalizacao(localizacao.value)"
+					*ngIf="!selectedLocalizacao" [(ngModel)]="localizacaoId">
+					<option disabled selected value=0>Selecione uma localização</option>
+					<option *ngFor="let localizacao of localizacoes"
+						value="{{localizacao.id}}">{{localizacao.nome}}</option>
+				</select> <select name="localizacao" class="browser-default" #localizacao
+					*ngIf="selectedLocalizacao"
+					(ngModelChange)="setLocalizacao(localizacao.value)" disabled
+					[(ngModel)]="localizacaoId">
+					<option disabled selected value=0>Selecione uma localização</option>
+					<option *ngFor="let localizacao of localizacoes"
+						value="{{localizacao.id}}">{{localizacao.nome}}</option>
+				</select>
+			</fieldset>
+		</div>
+
+		<div class="content-buttons-fila">
+
+			<div class="row">
+				<button (click)="entrar()" style="margin-left: -5px"
+					class="btn btn-primary btn-fila">Entrar</button>
+				<button (click)="pausar()" class="btn btn-primary btn-fila">Pausar</button>
+				<button (click)="almoco()" class="btn btn-primary btn-fila">Almoço</button>
+				<button (click)="voltar()" class="btn btn-primary btn-fila">Voltar</button>
+				<button (click)="encerrar()" class="btn btn-primary btn-fila">Encerrar</button>
+				<button (click)="atualizar()" class="btn btn-primary btn-fila">Atualizar</button>
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s5">Profissional</th>
+						<th class="col s2">Status</th>
+						<th class="col s5">Empregado</th>
+					</tr>
+				</thead>
+
+				<div *ngFor="let atendimento of atendimentos;let i = index">
+					<tbody class="col s12">
+						<tr class="col s12">
+							<td class="col s3 instalacao-nome">
+								{{atendimento.filaAtendimentoOcupacional.profissional.empregado.pessoa.nome}}
+							</td>
+							<td class="col s3 instalacao-lat">{{atendimento.filaAtendimentoOcupacional.status}}</td>
+							<td class="col s3 instalacao-long">
+								{{atendimento.filaEsperaOcupacional.empregado.pessoa.nome}}</td>
+						</tr>
+					</tbody>
+
+				</div>
+
+			</table>
+
+		</div>
+
+	</div>
+
+	<div id="atendimento">
+
+		<div class="row">
+			<fieldset>
+				<legend>Empregado</legend>
+
+				<div class="row-empregado row">
+
+					<div class="input-field-empregado input-field col s4">
+						<label for="nomeServico">Serviço</label> <input id="nomeServico"
+							type="text" disabled class="input-empregado"
+							[(ngModel)]="atendimento.tarefa.servico.nome" name="nomeServico">
+					</div>
+
+					<div class="input-field-empregado input-field col s8">
+						<label for="profissional">Profissional Responsável</label> <input
+							id="profissional" type="text" name="profissional" disabled
+							class="input-empregado"
+							[(ngModel)]="atendimento.filaAtendimentoOcupacional.profissional.empregado.pessoa.nome">
+					</div>
+
+				</div>
+
+				<div class="row-empregado row">
+
+					<div class="input-field-empregado input-field col s2">
+						<label for="chave">Chave</label> <input id="chave" type="text"
+							disabled class="input-empregado"
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.chave"
+							name="chave">
+					</div>
+
+					<div class="input-field-empregado input-field col s2">
+						<label for="matricula">Matrícula</label> <input id="matricula"
+							type="text" disabled class="input-empregado"
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.matricula"
+							name="matricula">
+					</div>
+
+					<div class="input-field-empregado input-field col s8">
+						<label for="nomeEmpregado">Nome</label> <input id="nomeEmpregado"
+							type="text" disabled class="input-empregado"
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.nome"
+							name="nomeEmpregado">
+					</div>
+
+				</div>
+
+				<div class="row-empregado row">
+
+					<div class="input-field-empregado input-field col s3">
+						<label for="dataNascimento">Nascimento</label>
+						<my-date-picker name="dataNascimento" disabled
+							[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
+							placeholder="Data de Nascimento"> </my-date-picker>
+					</div>
+
+					<div class="input-field-empregado input-field col s3">
+						<label for="idade">Idade</label> <input id="idade" type="text"
+							disabled [(ngModel)]="idade" name="idade" class="input-empregado">
+					</div>
+
+					<div class="input-field-empregado input-field col s3">
+						<label for="sexo">Sexo</label> <input
+							id="sexo"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.sexo" 
+							name="sexo" class="input-empregado">
+					</div>
+
+					<div class="input-field-empregado input-field col s3">
+						<label for="base">Base</label> <input
+							id="base.nome"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.base.nome" 
+							name="base" class="input-empregado">
+					</div>
+
+				</div>
+
+				<div class="row-empregado row">
+
+					<div class="input-field-empregado input-field col s6">
+						<label for="cargo">Cargo</label> <input
+							id="cargo.nome"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
+							name="cargo" class="input-empregado">
+					</div>
+
+					<div class="input-field-empregado input-field col s6">
+						<label for="gerencia">Gerência</label> <input
+							id="gerencia.codigoCompleto"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto" 
+							name="gerencia" class="input-empregado">
+					</div>
+
+				</div>
+
+			</fieldset>
+		</div>
+		
+		<div class="content-quiz"></div>
+
+		<div class="content-buttons-atendimento">
+
+			<div class="row">
+				<button (click)="registrarAusencia()"
+					class="btn btn-primary btn-atendimento">Registrar Ausência</button>
+				<button (click)="iniciar()" class="btn btn-primary btn-atendimento">Iniciar</button>
+				<button (click)="liberar()" class="btn btn-primary btn-atendimento">Liberar</button>
+				<button (click)="finalizar()"
+					class="btn btn-primary btn-atendimento">Finalizar</button>
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

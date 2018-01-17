@@ -3,7 +3,7 @@ import { TypeFilter } from './type.filter';
 export class DateFilter {
     inicio: Date;
     fim: Date;
-    typeFilter: TypeFilter;
+    typeFilter: string;
 
     getInicio(): Date {
         return this.inicio;
@@ -20,10 +20,10 @@ export class DateFilter {
     setFim(fim: Date) {
         this.fim = fim;
     }
-    getTypeFilter(): TypeFilter {
+    getTypeFilter(): string {
         return this.typeFilter;
     }
-    setTypeFilter(typeFilter: TypeFilter) {
+    setTypeFilter(typeFilter: string) {
         this.typeFilter = typeFilter;
     }
 }

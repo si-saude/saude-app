@@ -4,7 +4,7 @@ export class Servico {
     private id: number;
     private nome: string;
     private codigo: string;
-    private grupo: string;
+    private grupo: string = "";
     private url: string;
     private publico: boolean;
     private atividades: Array<Atividade>;

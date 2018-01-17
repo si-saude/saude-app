@@ -1,0 +1,58 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="next()">
+
+		<div class="row cabecalho">
+			<h5>Serviço: {{tarefa.servico.nome}}</h5>
+			<h5>Cliente: {{tarefa.cliente.pessoa.nome}}</h5>
+		</div>
+
+		<div class="content-dados">
+
+			<fieldset>
+				<legend>Dados do Atendimento Ocupacional</legend>
+
+				<div class="row col s12">
+
+					<div class="input-field col s4">
+						<label for="inicio">Data</label>
+						<my-date-picker name="dataInicio" [options]="myDatePickerOptions"
+							[(ngModel)]="dataInicio" placeholder="Data de Início">
+						</my-date-picker>
+					</div>
+
+				</div>
+
+			</fieldset>
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+
+		<div class='row row-btns'>
+		
+			<div class="col s6 botao-voltar">
+				<button (click)="back()" class="btn btn-primary btn-salvar">Voltar</button>
+			</div>
+			
+			<div class="col s6 btn-avancar">
+				<button type="submit" class="btn btn-primary btn-salvar right">Avançar</button>
+			</div>
+			
+		</div>
+
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

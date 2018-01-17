@@ -43,6 +43,9 @@ import { ResultadoExameService } from './resultado-exame/resultado-exame.service
 import { FeriadoService } from './feriado/feriado.service';
 import { PessoaService } from './pessoa/pessoa.service';
 import { ServicoService } from './servico/servico.service';
+import { RegraAtendimentoService } from './regra-atendimento/regra-atendimento.service';
+import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional/fila-espera-ocupacional.service';
+import { AtendimentoService } from './atendimento/atendimento.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 import { RequisitoAsoComponent } from './requisito-aso/requisito-aso.component';
 import { RequisitoAsoFormComponent } from './requisito-aso/requisito-aso-form/requisito-aso-form.component';
@@ -108,6 +111,9 @@ import { RequisitoAsoFormComponent } from './requisito-aso/requisito-aso-form/re
     FeriadoService,
     PessoaService,
     ServicoService,
+    RegraAtendimentoService,
+    FilaEsperaOcupacionalService,
+    AtendimentoService,
     CanDeactivateGuard
   ]
 })

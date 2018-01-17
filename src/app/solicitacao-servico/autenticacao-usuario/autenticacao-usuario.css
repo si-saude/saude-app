@@ -1,0 +1,16 @@
+.content-dados {
+	width: 50%;
+    margin: 0 auto;
+}
+
+.row-btns {
+	margin-top: 50px;
+}
+
+.btn-avancar {
+	float: right;
+}
+
+.btn-salvar {
+	float: right;
+}

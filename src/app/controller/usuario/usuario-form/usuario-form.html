@@ -34,7 +34,7 @@
 		<div class="row">
 			<div class="input-field col s12">
 				<label for="pessoa">Pessoa</label> <input type="text"
-					materialize="autocomplete" name="addPessoa"
+					materialize="autocomplete" name="addPessoa" autocomplete="off"
 					(blur)="getPessoa($event)" [(ngModel)]="usuario.pessoa.nome"
 					(ngModelChange)="selectPessoa($event)"
 					[materializeParams]="autocompletePessoa">

@@ -52,7 +52,6 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
     }
     
     save() {
-//        console.log(new EquipeBuilder().clone(this.equipe));
         super.save(new EquipeBuilder().clone(this.equipe));
     }   
     

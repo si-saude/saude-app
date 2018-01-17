@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import {MaterializeDirective,MaterializeAction} from "angular2-materialize";
+import { MaterializeDirective,MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
 import { GrupoMonitoramento } from './../../../model/grupo-monitoramento';

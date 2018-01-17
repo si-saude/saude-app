@@ -79,10 +79,10 @@ export class ProfissionalSaudeBuilder extends GenericBuilder {
         } else {
             cloneProfissionalSaude.setLocalizacao( new LocalizacaoBuilder().initialize( null ) );
         }
-
+        
         if ( this.getValue( profissionalSaude, "getCurriculo" ) !== undefined ) {
             if ( Object.keys( this.getValue( profissionalSaude, "getCurriculo" ) ).length === 2 &&
-                profissionalSaude.getCurriculo().getCurriculoCursos().length === 0 )
+                    this.getValue(this.getValue( profissionalSaude, "getCurriculo" ), "getCurriculoCursos").length === 0 )
                 cloneProfissionalSaude.setCurriculo( undefined );
             else
                 cloneProfissionalSaude.setCurriculo(

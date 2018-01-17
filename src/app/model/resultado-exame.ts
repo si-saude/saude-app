@@ -8,6 +8,7 @@ export class ResultadoExame {
     private exame: Exame;
     private itemResultadoExames: Array<ItemResultadoExame>;
     private data: Date;
+    private dataRecebimento: Date;
     private conforme: boolean;
     private tipo: string = "";
     private acao: string = "";
@@ -44,6 +45,14 @@ export class ResultadoExame {
 
     setData(data: Date) {
         this.data = data;
+    }
+    
+    getDataRecebimento() {
+        return this.dataRecebimento;
+    }
+
+    setDataRecebimento(dataRecebimento: Date) {
+        this.dataRecebimento = dataRecebimento;
     }
     
     getExame() {

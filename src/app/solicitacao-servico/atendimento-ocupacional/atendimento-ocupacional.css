@@ -1,0 +1,25 @@
+.cabecalho > h5 {
+	color: #26a69a;
+}
+
+.btn-avancar { 
+	margin-top: 50px;
+    float: right;
+}
+
+.botao-voltar {
+	margin-top: 50px;
+    float: left;
+}
+
+.btn-back {
+	
+}
+
+.row-btns {
+	
+}
+
+.right {
+	float: right;
+}

@@ -1,0 +1,67 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="next()">
+
+		<div class="content-dados">
+
+			<fieldset>
+				<legend>Dados do Empregado</legend>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="cpf">CPF</label> <input id="cpf" type="text"
+							name="cpf" [(ngModel)]="cpf">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="matricula">Matricula</label> <input id="matricula"
+							type="text" name="matricula" [(ngModel)]="matricula">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="chave">Chave</label> <input id="chave" type="text"
+							name="chave" [(ngModel)]="chave">
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s8">
+						<label for="inicio">Data de Nascimento</label>
+						<my-date-picker name="dataNascimento"
+							[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
+							placeholder="Data de Nascimento"> </my-date-picker>
+					</div>
+
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6 btn-avancar">
+				<button type="submit" class="btn btn-primary btn-salvar">Avançar</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

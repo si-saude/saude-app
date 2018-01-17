@@ -57,6 +57,9 @@ import { VacinaGuard } from './guards/guards-child/vacina.guard';
 import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convocacao.guard';
 import { FeriadoGuard } from './guards/guards-child/feriado.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
+import { RegraAtendimentoGuard } from './guards/guards-child/regra-atendimento.guard';
+import { SolicitacaoServicoService } from './solicitacao-servico/solicitacao-servico.service';
+import { TransferDataService } from './solicitacao-servico/transfer-data.service';
 import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
 
 @NgModule({
@@ -121,6 +124,7 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
     EmpregadoConvocacaoGuard,
     FeriadoGuard,
     AuditoriaResultadoExameGuard,
+    RegraAtendimentoGuard,
     ServicoGuard
   ],
   bootstrap: [ 

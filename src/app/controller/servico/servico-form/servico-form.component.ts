@@ -22,6 +22,7 @@ export class ServicoFormComponent extends GenericFormComponent implements OnInit
     servico: Servico;
     equipes: Array<Equipe>;
     tempoMedio: string;
+    grupos: Array<string>;
     
     globalActions = new EventEmitter<string|MaterializeAction>();
     toastParams = ['', 4000];
@@ -53,6 +54,7 @@ export class ServicoFormComponent extends GenericFormComponent implements OnInit
             } );
         
         this.getEquipes();
+        this.getGrupos();
     }
     
     getEquipes() {
@@ -63,6 +65,16 @@ export class ServicoFormComponent extends GenericFormComponent implements OnInit
             .catch(error => {
                 console.log(error);
             })
+    }
+    
+    getGrupos() {
+        this.servicoService.getGrupos()
+            .then(res => {
+                this.grupos = Object.keys( res.json() ).sort();
+            })
+            .catch( error => {
+                console.log( error );
+            } )
     }
     
     save() {

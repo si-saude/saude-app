@@ -1,0 +1,57 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="next(servico.value)">
+
+		<div class="row content-screen">
+			<div class="row col s12">
+
+				<fieldset>
+					<legend>
+						Serviço <a
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
+							(click)="getServicos()"> <i
+							class="material-icons center-icon">cached</i>
+						</a>
+					</legend>
+					<div class="input-field col s12 select-servico">
+						<select class="browser-default" #servico>
+							<option disabled selected value=0>Selecione um servico</option>
+							<option *ngFor="let servico of servicos" value="{{servico.id}}">{{servico.nome}}</option>
+						</select>
+					</div>
+				</fieldset>
+
+			</div>
+
+			<div class="row" *ngIf="canChangeEmpregado">
+				<div class="input-field col s12">
+					<label for="empregado">Empregado</label> <input type="text"
+						materialize="autocomplete" name="addEmpregado" autocomplete="off"
+						(blur)="getEmpregado($event)"
+						[(ngModel)]="empregadoToChange.pessoa.nome"
+						(ngModelChange)="selectEmpregado($event)"
+						[materializeParams]="autocompleteEmpregado">
+				</div>
+			</div>
+
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6 btn-avancar">
+				<button type="submit" class="btn btn-primary btn-salvar">Avançar</button>
+			</div>
+		</div>
+
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

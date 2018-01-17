@@ -47,13 +47,19 @@
 					</div>
 
 					<div class="input-field col s4">
-						<label for="grupo">Grupo</label> <input id="grupo" type="text"
-							name="grupo" [(ngModel)]="servico.grupo">
-					</div>
-
-					<div class="input-field col s4">
 						<label for="url">URL</label> <input id="url" type="text"
 							name="url" [(ngModel)]="servico.url">
+					</div>
+					
+					<div class="input-field col s4">
+						<fieldset>
+							<legend> Grupo </legend>
+							<select name="grupo" class="browser-default"
+								[(ngModel)]="servico.grupo">
+								<option disabled selected value="">Selecione um grupo</option>
+								<option *ngFor="let grupo of grupos" value="{{grupo}}">{{grupo}}</option>
+							</select>
+						</fieldset>
 					</div>
 
 				</div>

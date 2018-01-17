@@ -30,10 +30,10 @@
 		<div class="row">
 			<div class="input-field col s12">
 				<label for="coordenador">Coordenador</label> 
-				<input type="text"
+				<input type="text" autocomplete="off" 
 					materialize="autocomplete" name="equipe.coordenador.empregado.pessoa.nome"
 					[(ngModel)]="equipe.coordenador.empregado.pessoa.nome"
-					(blur)="getCoordenador($event)"
+					(blur)="getCoordenador($event)" 
 					(ngModelChange)="selectCoordenador($event)"
 					[materializeParams]="autocompleteCoordenador">
 			</div>
