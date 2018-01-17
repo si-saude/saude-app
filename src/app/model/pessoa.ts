@@ -11,6 +11,7 @@ export class Pessoa {
     private telefones: Array<Telefone>;
     private endereco: Endereco;
     private version: number;
+    private idade: number;
 
     getId(): number {
         return this.id;
@@ -26,6 +27,14 @@ export class Pessoa {
     
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    getIdade(): number {
+        return this.idade;
+    }
+    
+    setIdade(idade: number) {
+        this.idade = idade;
     }
     
     getNome():string{

@@ -47,6 +47,7 @@ export class PessoaBuilder extends GenericBuilder {
         clonePessoa.setCpf(this.getValue(pessoa, "getCpf"));
         clonePessoa.setDataNascimento(this.getValue(pessoa, "getDataNascimento"));
         clonePessoa.setRg(this.getValue(pessoa, "getRg"));
+        clonePessoa.setIdade(this.getValue(pessoa, "getIdade"));
         
         if(this.getValue(pessoa, "getEndereco") !== undefined){
             if(Object.keys(this.getValue(pessoa, "getEndereco")).length === 2 && 
