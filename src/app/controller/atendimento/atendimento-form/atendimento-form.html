@@ -18,8 +18,8 @@
 
 	<div id="filaAtendimento">
 
-		<div class="row">
-			<fieldset>
+		<div class="row col s12 row-localizacao">
+			<fieldset class="select-localizacao">
 				<legend>
 					Localizacao <a
 						class="btn-floating waves-effect waves-light green btn-add-fieldset"
@@ -29,12 +29,12 @@
 				</legend>
 				<select name="localizacao" class="browser-default" #localizacao
 					(ngModelChange)="setLocalizacao(localizacao.value)"
-					*ngIf="!selectedLocalizacao" [(ngModel)]="localizacaoId">
+					*ngIf="!verifyLocalizacaoExist()" [(ngModel)]="localizacaoId">
 					<option disabled selected value=0>Selecione uma localização</option>
 					<option *ngFor="let localizacao of localizacoes"
 						value="{{localizacao.id}}">{{localizacao.nome}}</option>
 				</select> <select name="localizacao" class="browser-default" #localizacao
-					*ngIf="selectedLocalizacao"
+					*ngIf="verifyLocalizacaoExist()"
 					(ngModelChange)="setLocalizacao(localizacao.value)" disabled
 					[(ngModel)]="localizacaoId">
 					<option disabled selected value=0>Selecione uma localização</option>
@@ -44,7 +44,7 @@
 			</fieldset>
 		</div>
 
-		<div class="content-buttons-fila">
+		<div class="row content-buttons-fila col s12">
 
 			<div class="row">
 				<button (click)="entrar()" style="margin-left: -5px"
@@ -206,3 +206,6 @@
 	</div>
 
 </div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

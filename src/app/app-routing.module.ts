@@ -98,6 +98,8 @@ const routes: Routes = [
       loadChildren: 'app/solicitacao-servico/solicitacao-servico.module#SolicitacaoServicoModule' },
   { path: 'fila-espera-ocupacional',
       loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule' },
+  { path: 'requisito-aso',
+      loadChildren: 'app/controller/requisito-aso/requisito-aso.module#RequisitoAsoModule' },
   { path: 'atendimento',
       loadChildren: 'app/controller/atendimento/atendimento.module#AtendimentoModule' },
   { path: '', pathMatch: 'full', redirectTo: '/servico'},

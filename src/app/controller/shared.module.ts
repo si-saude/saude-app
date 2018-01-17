@@ -46,17 +46,14 @@ import { ServicoService } from './servico/servico.service';
 import { RegraAtendimentoService } from './regra-atendimento/regra-atendimento.service';
 import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional/fila-espera-ocupacional.service';
 import { AtendimentoService } from './atendimento/atendimento.service';
+import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
-import { RequisitoAsoComponent } from './requisito-aso/requisito-aso.component';
-import { RequisitoAsoFormComponent } from './requisito-aso/requisito-aso-form/requisito-aso-form.component';
 
 @NgModule({
   declarations: [
     MensagemFormComponent,
     PreloadComponent,
-    ConfirmSaveComponent,
-    RequisitoAsoComponent,
-    RequisitoAsoFormComponent
+    ConfirmSaveComponent
   ],
   imports: [ 
     CommonModule,
@@ -114,6 +111,7 @@ import { RequisitoAsoFormComponent } from './requisito-aso/requisito-aso-form/re
     RegraAtendimentoService,
     FilaEsperaOcupacionalService,
     AtendimentoService,
+    RequisitoAsoService,
     CanDeactivateGuard
   ]
 })

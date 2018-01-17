@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { MaterializeAction } from "angular2-materialize";
 import { Subscription } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { TimerObservable } from "rxjs/observable/TimerObservable";
@@ -37,7 +38,6 @@ export class AtendimentoFormComponent {
     private profissional: Profissional;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
-    private selectedLocalizacao: boolean;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private alive: boolean;
@@ -45,6 +45,8 @@ export class AtendimentoFormComponent {
     private idade: number;
     private myDatePickerOptions: IMyDpOptions;
     private localizacaoId: number;
+    private globalActions;
+    private toastParams;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -57,6 +59,8 @@ export class AtendimentoFormComponent {
         this.myDatePickerOptions = {
             dateFormat: 'dd/mm/yyyy'
         };
+        this.globalActions = new EventEmitter<string | MaterializeAction>();
+        this.toastParams = ['', 4000];
         this.localizacaoId = 0;
     }
 
@@ -87,8 +91,6 @@ export class AtendimentoFormComponent {
                                             this.atualizarLista();
                                         } );
                                 } else {
-                                    console.log( "Profissional nao é medico." );
-                                    //ENVIAR CONFIRM BOX INFOMANDO O USUARIO DEPOIS ENVIA-LO PARA TELA DE INICIO
                                     this.router.navigate( ["/home"] );
                                     return;
                                 }
@@ -103,11 +105,9 @@ export class AtendimentoFormComponent {
                 } )
                 .catch( error => {
                     console.log( "Erro no servidor ao buscar o usuario." );
-                    //ENVIAR CONFIRM BOX DE ERRO - NAVEGA PARA TELA INICIAL
                 } )
         } else {
             console.log( "Usuario nao logada." );
-            // ENVIAR CONFIRM BOX PARA USUARIO INFORMANDO E DEPOIS ENVIA-LO PARA TELA DE LOGIN
             this.router.navigate( ["/login"] );
         }
 
@@ -127,10 +127,17 @@ export class AtendimentoFormComponent {
 
     setLocalizacao( localizacaoId ) {
         this.localizacao = this.localizacoes.find( l => l.getId() == localizacaoId );
-        this.selectedLocalizacao = true;
         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
+    }
+    
+    verifyLocalizacaoExist() {
+        if ( this.atendimento != undefined &&
+                this.atendimento.getFilaEsperaOcupacional() != undefined && 
+                this.atendimento.getFilaAtendimentoOcupacional().getId() > 0 )
+            return true;
+        return false;
     }
 
     primeiraAtualizacao() {
@@ -145,20 +152,32 @@ export class AtendimentoFormComponent {
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
                         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
                         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
-                        this.selectedLocalizacao = true;
                     } else {
                         this.filaAtendimentoOcupacional = undefined;
-                        console.log( this.atendimento );
                     }
                 } )
                 .catch( error => {
                     this.filaAtendimentoOcupacional = undefined;
-                    this.selectedLocalizacao = false;
                     console.log( "Erro ao atualizar primeira vez: " + error.text() );
                 } )
         } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
             console.log( "Profissional nao setado." )
+        }
+    }
+    
+    atualizar() {
+        if ( this.filaAtendimentoOcupacional != undefined ) {
+            this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
+                .then( res => {
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    if ( this.atendimento.getId() == 0 )
+                        this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
+                } )
+                .catch( error => {
+                    console.log( "Erro ao atualizar: " + error.text() );
+                } )
+        } else {
+            console.log( "Fila de atendimento nao preenchida." )
         }
     }
 
@@ -172,22 +191,6 @@ export class AtendimentoFormComponent {
                     console.log( "Erro ao atualizar lista: " + error.text() );
                 } )
         } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
-            console.log( "Fila de atendimento nao preenchida." )
-        }
-    }
-
-    atualizar() {
-        if ( this.filaAtendimentoOcupacional != undefined ) {
-            this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
-                .then( res => {
-                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                } )
-                .catch( error => {
-                    console.log( "Erro ao atualizar: " + error.text() );
-                } )
-        } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
             console.log( "Fila de atendimento nao preenchida." )
         }
     }
@@ -199,10 +202,10 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao entrar:" + error.text() );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
             console.log( "Fila de atendimento nao preenchida." )
         }
     }
@@ -212,13 +215,12 @@ export class AtendimentoFormComponent {
             this.atendimentoService.pausar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
-                    console.log( this.atendimentos );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao pausar." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
             console.log( "Fila de atendimento nao preenchida." )
         }
     }
@@ -230,10 +232,10 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao registrar almoco." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
             console.log( "Fila de atendimento nao preenchida." )
         }
     }
@@ -246,13 +248,12 @@ export class AtendimentoFormComponent {
             this.atendimentoService.encerrar( filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
-                    this.alive = false;
                 } )
                 .catch( error => {
-                    console.log( "Erro ao encerrar." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
             console.log( "Fila de atendimento nao preenchida." )
         }
     }
@@ -267,10 +268,10 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao encerrar." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         } else {
-            //ENVIAR MSN DE ERRO AO USUARIO
             console.log( "Fila de atendimento nao preenchida." )
         }
     }
@@ -282,7 +283,8 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao iniciar." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         }
     }
@@ -294,7 +296,8 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao registrar ausencia." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         }
     }
@@ -306,7 +309,8 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao liberar." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         }
     }
@@ -318,7 +322,8 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao finalizar." );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
         }
     }

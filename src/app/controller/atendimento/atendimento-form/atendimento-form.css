@@ -44,3 +44,21 @@ tbody{
 	margin-top: 10px;
 	border-bottom: 1px solid #c0c0c0;	
 }
+
+.btn-add-fieldset {
+	margin-left: 15px;
+}
+
+.center-icon {
+	margin-top: 0px;
+}
+
+.select-localizacao {
+	width: 50% !important;
+	margin: 0 auto !important;
+}
+
+.row-localizacao {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
