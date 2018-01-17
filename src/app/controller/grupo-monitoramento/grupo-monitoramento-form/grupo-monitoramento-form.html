@@ -35,17 +35,23 @@
 								name="grupoMonitoramento.nome">
 						</div>
 
-						<div class="input-field col s3 checkbox">
+						<div class="input-field col s2 checkbox">
 							<input type="checkbox" id="recorrente"
 								[(ngModel)]="grupoMonitoramento.recorrente"
 								name="grupoMonitoramento.recorrente"> <label
 								for="recorrente">Recorrente</label>
 						</div>
-						<div class="input-field col s3 checkbox">
+						<div class="input-field col s2 checkbox">
 							<input type="checkbox" id="relatorio"
 								[(ngModel)]="grupoMonitoramento.relatorio"
 								name="grupoMonitoramento.relatorio"> <label
 								for="relatorio">Relatório</label>
+						</div>
+						<div class="input-field col s2 checkbox">
+							<input type="checkbox" id="auditoriaAso"
+								[(ngModel)]="grupoMonitoramento.auditoriaAso"
+								name="grupoMonitoramento.auditoriaAso"> <label
+								for="auditoriaAso">Auditoria do ASO</label>
 						</div>
 					</div>
 

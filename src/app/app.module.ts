@@ -50,6 +50,7 @@ import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude
 import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
 import { ResultadoExameGuard } from './guards/guards-child/resultado-exame.guard';
 import { RegimeGuard } from './guards/guards-child/regime.guard';
+import { RequisitoAsoGuard } from './guards/guards-child/requisito-aso.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
 import { UsuarioGuard } from './guards/guards-child/usuario.guard';
 import { VacinaGuard } from './guards/guards-child/vacina.guard';
@@ -114,6 +115,7 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
     ProfissiogramaGuard,
     ProfissionalSaudeGuard,
     RegimeGuard,
+    RequisitoAsoGuard,
     RelatorioMedicoGuard,
     TipoGrupoMonitoramentoGuard,
     UsuarioGuard,
