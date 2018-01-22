@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
 import { MyDatePickerModule } from 'mydatepicker';
+import { IMyDpOptions } from 'mydatepicker';
 
 import { Empregado } from './../../model/empregado/';
 import { EmpregadoFilter } from './../../controller/empregado/empregado.filter';
@@ -34,11 +35,15 @@ export class AutenticacaoUsuarioComponent {
     usuario: Usuario;
     pessoa: Pessoa;
     empregado: Empregado;
+    myDatePickerOptions: IMyDpOptions;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private solicitacaoServicoService: SolicitacaoServicoService ) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
+        this.myDatePickerOptions = {
+                dateFormat: 'dd/mm/yyyy'
+            };
     }
 
     ngOnInit() {
@@ -48,36 +53,29 @@ export class AutenticacaoUsuarioComponent {
             this.solicitacaoServicoService.getUsuario( Number( localStorage.getItem( 'usuario-id' ) ) )
                 .then( res => {
                     this.usuario = new UsuarioBuilder().clone( res.json() );
+                    localStorage.setItem("usuario", JSON.stringify( this.usuario ));
+                    
                     if ( this.usuario.getId() > 0 ) {
-                        localStorage.setItem( "usuario", JSON.stringify( this.usuario ) );
+                        let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+                        empregadoFilter.getPessoa().setCpf( this.usuario.getPessoa().getCpf() );
+
+                        this.solicitacaoServicoService.getEmpregado( empregadoFilter )
+                            .then( res => {
+                                if ( res.json().list[0] != undefined ) {
+                                    this.empregado = new EmpregadoBuilder().clone( res.json().list[0] );
+                                    localStorage.setItem( "empregado", JSON.stringify( this.empregado ) );
+                                    this.router.navigate( ["/solicitacao-servico/selecao-servico"] );
+                                }
+                            } )
+                            .catch( error => {
+                                console.log( "Erro no servidor ao buscar o empregado." );
+                            } )
                     }
                 } )
                 .catch( error => {
                     console.log( "Erro no servidor ao buscar o usuario." );
                 } )
         }
-        setTimeout(() => {
-            if ( localStorage.getItem( "usuario" ) != undefined ) {
-                this.usuario = new UsuarioBuilder().clone( JSON.parse( localStorage.getItem( "usuario" ) ) );
-
-                let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-                empregadoFilter.getPessoa().setCpf( this.usuario.getPessoa().getCpf() );
-
-
-                this.solicitacaoServicoService.getEmpregado( empregadoFilter )
-                    .then( res => {
-                        if ( res.json().list[0] != undefined ) {
-                            this.empregado = new EmpregadoBuilder().clone( res.json().list[0] );
-                            localStorage.setItem( "empregado", JSON.stringify( this.empregado ) );
-                            this.router.navigate( ["/solicitacao-servico/selecao-servico"] );
-                        } else localStorage.removeItem( "usuario" );
-                    } )
-                    .catch( error => {
-                        localStorage.removeItem( "usuario" );
-                        console.log( "Erro no servidor ao buscar o empregado." );
-                    } )
-            }
-        }, 300 );
 
     }
 

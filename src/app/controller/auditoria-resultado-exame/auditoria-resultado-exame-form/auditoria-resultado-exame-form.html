@@ -205,7 +205,6 @@
 									<label for="data">Data de Recebimento</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].dataRecebimento"
 										[options]="myDatePickerOptions"
-										name="resultadExame[iREx].dataRecebimento"
 										[(ngModel)]="dataRecebimentoExames[iREx]" placeholder="Data Recebimento">
 									</my-date-picker>
 								</div>
@@ -216,10 +215,10 @@
 								<table class="striped">
 									<thead>
 										<tr class="row col s12">
-											<th class="col s3">Código</th>
+											<th class="col s1">Código</th>
 											<th class="col s3">Título</th>
-											<th class="col s3">Resultado</th>
-											<th class="col s3">Remover</th>
+											<th class="col s7">Resultado</th>
+											<th class="col s1">Remover</th>
 										</tr>
 									</thead>
 									<div
@@ -239,12 +238,24 @@
 												<input type="hidden" [(ngModel)]="itemResultadoExame.id"
 													value="{{itemResultadoExame.id}}"
 													name="itemResultadoExame[{{i}}].id">
-												<td class="col s3 codigo">{{itemResultadoExame.codigo}}</td>
+												<td class="col s1 codigo">{{itemResultadoExame.codigo}}</td>
 												<td class="col s3 titulo">{{itemResultadoExame.titulo}}</td>
-												<td class="col s3 resultado"><input id="resultado"
-													type="text" name="itemResultadoExame[{{i}}].resultado"
-													[(ngModel)]="itemResultadoExame.resultado"></td>
-												<td class="col s3 botao-remover"><a
+												<div [ngSwitch]="itemResultadoExame.codigo">
+													<div *ngSwitchCase="'010'">
+														<td class="col s7 resultado">
+															<my-date-picker name="data"
+																[options]="myDatePickerOptions"
+																[(ngModel)]="data" placeholder="Data">
+															</my-date-picker>
+														</td>
+													</div>
+													<div *ngSwitchDefault>
+														<td class="col s7 resultado"><input id="resultado"
+															type="text" name="itemResultadoExame[{{i}}].resultado"
+															[(ngModel)]="itemResultadoExame.resultado"></td>
+													</div>
+												</div>
+												<td class="col s1 botao-remover"><a
 													class="btn-floating waves-effect waves-light red btn-remove"
 													(click)="removeItemResultadoExame(iREx, i)"> <i
 														class="material-icons center-icon">delete</i>

@@ -36,6 +36,7 @@ export class AtendimentoFormComponent {
     private atendimentos: Array<Atendimento>;
     private usuario: Usuario;
     private profissional: Profissional;
+    private nomeProfissional: String;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
@@ -47,9 +48,11 @@ export class AtendimentoFormComponent {
     private localizacaoId: number;
     private globalActions;
     private toastParams;
+    private tabsActions;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
+        this.nomeProfissional = "";
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
@@ -61,6 +64,7 @@ export class AtendimentoFormComponent {
         };
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
+        this.tabsActions = new EventEmitter<string | MaterializeAction>();
         this.localizacaoId = 0;
     }
 
@@ -81,6 +85,7 @@ export class AtendimentoFormComponent {
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
+                                    this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
 
                                     this.primeiraAtualizacao();
 
@@ -133,9 +138,7 @@ export class AtendimentoFormComponent {
     }
     
     verifyLocalizacaoExist() {
-        if ( this.atendimento != undefined &&
-                this.atendimento.getFilaEsperaOcupacional() != undefined && 
-                this.atendimento.getFilaAtendimentoOcupacional().getId() > 0 )
+        if ( this.localizacao != undefined )
             return true;
         return false;
     }
@@ -146,12 +149,14 @@ export class AtendimentoFormComponent {
             this.filaAtendimentoOcupacional.setProfissional( this.profissional );
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
+                    console.log(res.json());
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
                         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
                         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
+                        this.localizacaoId = this.localizacao.getId();
                     } else {
                         this.filaAtendimentoOcupacional = undefined;
                     }
@@ -170,14 +175,20 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    if ( this.atendimento.getId() == 0 )
+                    if ( this.atendimento.getId() == 0 ) {
                         this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
+                    } else {
+                        this.setDataNascimento();
+                        this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+                    }
                 } )
                 .catch( error => {
                     console.log( "Erro ao atualizar: " + error.text() );
+                    this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
                 } )
         } else {
-            console.log( "Fila de atendimento nao preenchida." )
+            this.primeiraAtualizacao();
+            console.log( "Fila de atendimento nao preenchida." );
         }
     }
 
@@ -199,6 +210,8 @@ export class AtendimentoFormComponent {
         if ( this.filaAtendimentoOcupacional != undefined ) {
             this.atendimentoService.entrar( this.filaAtendimentoOcupacional )
                 .then( res => {
+                    this.toastParams = ["Profissional inserido na fila de atendimento", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
@@ -214,6 +227,8 @@ export class AtendimentoFormComponent {
         if ( this.filaAtendimentoOcupacional != undefined ) {
             this.atendimentoService.pausar( this.filaAtendimentoOcupacional )
                 .then( res => {
+                    this.toastParams = ["Fila de atendimento pausada", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
@@ -229,6 +244,8 @@ export class AtendimentoFormComponent {
         if ( this.filaAtendimentoOcupacional != undefined ) {
             this.atendimentoService.almoco( this.filaAtendimentoOcupacional )
                 .then( res => {
+                    this.toastParams = ["Fila de atendimento pausada", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
@@ -247,6 +264,8 @@ export class AtendimentoFormComponent {
             filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
             this.atendimentoService.encerrar( filaAtendimentoOcupacional )
                 .then( res => {
+                    this.toastParams = ["Fila de atendimento encerrada", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
@@ -265,6 +284,8 @@ export class AtendimentoFormComponent {
             filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
             this.atendimentoService.voltar( filaAtendimentoOcupacional )
                 .then( res => {
+                    this.toastParams = ["Profissional retornou para a fila de atendimento", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
@@ -281,6 +302,8 @@ export class AtendimentoFormComponent {
             this.atendimentoService.iniciar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.toastParams = ["Atendimento iniciado.", 4000];
+                    this.globalActions.emit( 'toast' );
                 } )
                 .catch( error => {
                     this.toastParams = [error.text(), 4000];
@@ -293,6 +316,8 @@ export class AtendimentoFormComponent {
         if ( this.atendimento.getId() > 0 ) {
             this.atendimentoService.registrarAusencia( this.atendimento )
                 .then( res => {
+                    this.toastParams = ["Ausencia registrada", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
@@ -306,6 +331,8 @@ export class AtendimentoFormComponent {
         if ( this.atendimento.getId() > 0 ) {
             this.atendimentoService.liberar( this.atendimento )
                 .then( res => {
+                    this.toastParams = ["Empregado liberado", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
@@ -319,6 +346,8 @@ export class AtendimentoFormComponent {
         if ( this.atendimento.getId() > 0 ) {
             this.atendimentoService.finalizar( this.atendimento )
                 .then( res => {
+                    this.toastParams = ["Atendimento finalizado", 4000];
+                    this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
@@ -339,14 +368,9 @@ export class AtendimentoFormComponent {
         return Math.abs( ageDate.getUTCFullYear() - 1970 );
     }
     
-    setIdadeAndDataNascimento() {
+    setDataNascimento() {
         if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() != undefined ) {
-            let data: Date = this.parseDateJavaToDateJS( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() );
-            this.idade = this.calculateAge( data );
             this.dataNascimento = this.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() );
-        } else {
-            this.idade = 0;
-            this.dataNascimento = null;
         }
     }
 

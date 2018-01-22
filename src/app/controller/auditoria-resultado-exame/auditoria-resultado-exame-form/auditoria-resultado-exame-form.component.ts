@@ -40,6 +40,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     empConv: string;
     examesAdded: Array<Exame>;
     autocompleteEmpregadoConvocacao;
+    data: any;
 
     dataResultadoExames: Array<any>;
     dataRecebimentoExames: Array<any>;

@@ -78,7 +78,7 @@ export class SolicitacaoServicoService {
     }
     
     getEmpregado( empregadoFilter ) {
-        let urlEmpregado = this.URL + "/empregado/list";
+        let urlEmpregado = this.URL + "/empregado/list-eq";
         return this.http
             .post( urlEmpregado, empregadoFilter, { headers: this.headers } )
             .toPromise();

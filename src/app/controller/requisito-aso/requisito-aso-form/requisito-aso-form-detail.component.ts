@@ -12,7 +12,7 @@ import { RequisitoAsoService } from './../requisito-aso.service';
   templateUrl: './requisito-aso-form-detail.html',
   styleUrls: ['./requisito-aso-form.css']
 })
-export class RequisitoAsoFormDetailComponent implements OnInit {
+export class RequisitoAsoFormDetailComponent extends GenericFormComponent implements OnInit {
     requisito: RequisitoAso;
 
     constructor(private route: ActivatedRoute,

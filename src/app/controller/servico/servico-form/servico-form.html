@@ -137,12 +137,12 @@
 										value="{{atividade.tempoMedio}}"
 										name="atividade[{{i}}].tempoMedio">
 									<input type="hidden" [(ngModel)]="atividade.id"
-										value="{{atividade.id}}" name="atividade[{{i}}].id">
+										value="{{atividade.id}}" name="atividade[{{d}}].id">
 									<td class="col s6 nome-equipe">{{atividade.equipe.nome}}</td>
 									<td class="col s3 tempo-medio">{{atividade.tempoMedio}}</td>
 									<td class="col s3 botao-remover"><a
 										class="btn-floating waves-effect waves-light red btn-remove"
-										(click)="removeAtividade(i)"> <i
+										(click)="removeAtividade(d)"> <i
 											class="material-icons center-icon">delete</i>
 									</a></td>
 								</tr>

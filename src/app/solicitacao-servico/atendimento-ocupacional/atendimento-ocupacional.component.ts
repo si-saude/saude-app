@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
 import { MyDatePickerModule } from 'mydatepicker';
+import { IMyDpOptions } from 'mydatepicker';
 
 import { Atendimento } from './../../model/atendimento';
 import { AtendimentoBuilder } from './../../controller/atendimento/atendimento.builder';
@@ -24,6 +25,7 @@ export class AtendimentoOcupacionalComponent {
     showConfirmSave: boolean;
     msgConfirmSave: string;
     goTo: string;
+    myDatePickerOptions: IMyDpOptions;
     
     constructor( private route: ActivatedRoute, private router: Router,
             private solicitacaoServicoService: SolicitacaoServicoService) {
@@ -31,6 +33,9 @@ export class AtendimentoOcupacionalComponent {
         this.toastParams = ['', 4000];
         this.atendimento = new AtendimentoBuilder().initialize(this.atendimento);
         this.tarefa = new TarefaBuilder().initialize(this.tarefa);
+        this.myDatePickerOptions = {
+                dateFormat: 'dd/mm/yyyy'
+            };
     }
 
     ngOnInit() {

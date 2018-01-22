@@ -32,10 +32,12 @@ fieldset {
 	margin-top: 50px;
 }
 
-.btn-avancar {
-	float: right;
+.btn-avancar { 
+	margin-top: 50px;
+    float: right;
 }
 
-.btn-salvar {
-	float: right;
+.botao-voltar {
+	margin-top: 50px;
+    float: left;
 }

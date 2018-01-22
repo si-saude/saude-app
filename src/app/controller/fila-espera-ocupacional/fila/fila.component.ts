@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
@@ -42,7 +42,6 @@ export class FilaComponent {
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService ) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
         this.regraAtendimento = new RegraAtendimentoBuilder().initialize( this.regraAtendimento );
         this.regraAtendimentos = new RegraAtendimentoBuilder().initializeList( this.regraAtendimentos );
@@ -53,31 +52,8 @@ export class FilaComponent {
     }
 
     ngOnInit() {
-        if ( localStorage.getItem( "atendimento" ) == undefined ) {
-            this.wasRequested = false;
-            this.getLocalizacoes();
-            this.getRegraAtendimentos();
-        } else {
-            
-            this.wasRequested = true;
-
-            this.atendimento = new AtendimentoBuilder().clone( JSON.parse( localStorage.getItem( "atendimento" ) ) );
-            
-            this.inscricao = TimerObservable.create(0, 5000)
-                .takeWhile(() => this.alive)
-                .subscribe(() => {
-                    this.filaEsperaOcupacionalService.refresh( this.atendimento )
-                        .then( res => {
-                            console.log( res.json() );
-                            this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
-                        } )
-                        .catch( error => {
-                            console.log("Erro no refresh: " + error.text());
-//                            this.wasRequested = false;
-                        } )
-                } );
-
-        }
+        this.getLocalizacoes();
+        this.getRegraAtendimentos();
     }
 
     startFila( localizacaoId, regraAtendimentoId ) {
@@ -86,32 +62,30 @@ export class FilaComponent {
             this.globalActions.emit( 'toast' );
             this.wasRequested = false;
             return;
+        } else {
+            this.regraAtendimento.setId( regraAtendimentoId );
+            this.localizacao.setId( localizacaoId );
+            this.filaEsperaOcupacional.setLocalizacao( this.localizacao );
+            
+            this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
+    
+            this.atendimento.setRegra( this.regraAtendimento );
+            this.atendimento.setFilaEsperaOcupacional( this.filaEsperaOcupacional );
+            this.inscricao = TimerObservable.create(0, 5000)
+                .takeWhile(() => this.alive )
+                .subscribe(() => {
+                    this.filaEsperaOcupacionalService.refresh( this.atendimento )
+                        .then( res => {
+                            this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
+                            console.log("refresh");
+                            this.wasRequested = true;
+                        } )
+                        .catch( error => {
+                            console.log(error.text());
+                        } )
+                } );
         }
 
-        this.regraAtendimento.setId( regraAtendimentoId );
-        this.localizacao.setId( localizacaoId );
-        this.filaEsperaOcupacional.setLocalizacao( this.localizacao );
-
-        this.atendimento.setRegra( this.regraAtendimento );
-        this.atendimento.setFilaEsperaOcupacional( this.filaEsperaOcupacional );
-
-        this.inscricao = TimerObservable.create(0, 5000)
-            .takeWhile(() => this.alive )
-            .subscribe(() => {
-                console.log("refresh");
-                this.filaEsperaOcupacionalService.refresh( this.atendimento )
-                    .then( res => {
-                        localStorage.setItem( "atendimento", JSON.stringify( this.atendimento ) );
-                        this.wasRequested = true;
-                    } )
-                    .catch( error => {
-                        console.log(error.text());
-                    } )
-            } );
-    }
-
-    choiseAnotherFila() {
-        localStorage.removeItem( "atendimento" );
     }
 
     getLocalizacoes() {
@@ -136,12 +110,6 @@ export class FilaComponent {
 
     ngOnDestroy() {
         this.inscricao.unsubscribe();
-    }
-        
-    @HostListener('window:beforeunload', ['$event'])
-    beforeunloadHandler(event) {
-        console.log("unload");
-//        localStorage.removeItem("atendimento");
     }
     
 }

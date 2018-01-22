@@ -50,14 +50,19 @@ export class SelecaoServicoComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        console.log(localStorage.getItem( "empregado" ));
         if ( localStorage.getItem( "empregado" ) == undefined )
             this.router.navigate( ["/solicitacao-servico/autenticacao-usuario"] );
-
-        let booleanFilter: BooleanFilter = new BooleanFilter();
-        booleanFilter.setValue( 1 );
+        else {
+            this.empregado = new EmpregadoBuilder().clone( JSON.parse( localStorage.getItem( "empregado" ) ) );
+            localStorage.removeItem( "empregado" );
+        }
+        
+        this.tarefa.setCliente( this.empregado );
 
         let servicoFilter: ServicoFilter = new ServicoFilter();
+        let booleanFilter: BooleanFilter = new BooleanFilter();
+        booleanFilter.setValue( 1 );
         servicoFilter.setPublico( booleanFilter );
 
         this.getServicos(servicoFilter);
@@ -65,60 +70,54 @@ export class SelecaoServicoComponent implements OnInit {
         if ( localStorage.getItem( "usuario" ) != undefined ) {
             this.usuario = new UsuarioBuilder().clone( JSON.parse( localStorage.getItem( "usuario" ) ) );
             localStorage.removeItem( "usuario" );
+            
+            let gerenciaFilter: GerenciaFilter = new GerenciaFilter();
+            gerenciaFilter.setSecretario1(new EmpregadoFilter());
+            gerenciaFilter.getSecretario1().setMatricula( this.empregado.getMatricula() );
+            
+            this.solicitacaoServicoService.getGerencia( gerenciaFilter )
+                .then( res => {
+                    if ( res.json().list[0] != undefined )
+                        this.canChangeEmpregado = true;
+                    else {
+                        gerenciaFilter = new GerenciaFilter();
+                        gerenciaFilter.setSecretario2(new EmpregadoFilter());
+                        gerenciaFilter.getSecretario2().setMatricula( this.empregado.getMatricula() );
+    
+                        this.solicitacaoServicoService.getGerencia( gerenciaFilter )
+                            .then( res => {
+                                if ( res.json().list[0] != undefined )
+                                    this.canChangeEmpregado = true;
+                                else {
+                                    gerenciaFilter = new GerenciaFilter();
+                                    gerenciaFilter.setGerente(new EmpregadoFilter());
+                                    gerenciaFilter.getGerente().setMatricula( this.empregado.getMatricula() );
+    
+                                    this.solicitacaoServicoService.getGerencia( gerenciaFilter )
+                                        .then( res => {
+                                            if ( res.json().list[0] != undefined )
+                                                this.canChangeEmpregado = true;
+                                        } )
+                                        .catch( error => {
+                                            console.log( "Erro no servidor ao buscar gerencia" );
+                                        } )
+                                }
+                            } )
+                            .catch( error => {
+                                console.log( "Erro no servidor ao buscar secretario 2" );
+                            } )
+                    }
+                } )
+                .catch( error => {
+                    console.log( "Erro no servidor ao buscar secretario 1" );
+                } )
 
             if ( this.usuario.getGestorCss() == true ) {
 
                 this.getServicos( new ServicoFilter() );
+                this.canChangeEmpregado = true;
             }
         }
-
-        this.empregado = new EmpregadoBuilder().clone( JSON.parse( localStorage.getItem( "empregado" ) ) );
-        localStorage.removeItem( "empregado" );
-
-        this.tarefa.setCliente( this.empregado );
-
-        let gerenciaFilter: GerenciaFilter = new GerenciaFilter();
-        gerenciaFilter.setSecretario1(new EmpregadoFilter());
-        gerenciaFilter.getSecretario1().setMatricula( this.empregado.getMatricula() );
-
-        this.solicitacaoServicoService.getGerencia( gerenciaFilter )
-            .then( res => {
-                if ( res.json().list[0] != undefined )
-                    this.canChangeEmpregado = true;
-                else {
-                    gerenciaFilter = new GerenciaFilter();
-                    gerenciaFilter.setSecretario2(new EmpregadoFilter());
-                    gerenciaFilter.getSecretario2().setMatricula( this.empregado.getMatricula() );
-
-                    this.solicitacaoServicoService.getGerencia( gerenciaFilter )
-                        .then( res => {
-                            if ( res.json().list[0] != undefined )
-                                this.canChangeEmpregado = true;
-                            else {
-                                gerenciaFilter = new GerenciaFilter();
-                                gerenciaFilter.setGerente(new EmpregadoFilter());
-                                gerenciaFilter.getGerente().setMatricula( this.empregado.getMatricula() );
-
-                                this.solicitacaoServicoService.getGerencia( gerenciaFilter )
-                                    .then( res => {
-                                        if ( res.json().list[0] != undefined )
-                                            this.canChangeEmpregado = true;
-                                        else this.canChangeEmpregado = false;
-                                    } )
-                                    .catch( error => {
-                                        console.log( "Erro no servidor ao buscar gerencia" );
-                                    } )
-                            }
-                        } )
-                        .catch( error => {
-                            console.log( "Erro no servidor ao buscar secretario 2" );
-                        } )
-                }
-            } )
-            .catch( error => {
-                console.log( "Erro no servidor ao buscar secretario 1" );
-            } )
-        
     }
     
     getServicos( servicoFilter ) {
@@ -152,10 +151,12 @@ export class SelecaoServicoComponent implements OnInit {
             this.oldNomeEmpregado = evento;
             if ( evento.length > 3 ) {
                 let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-                empregadoFilter.setGerencia(new GerenciaFilter());
-                
                 empregadoFilter.getPessoa().setNome(evento);
-                empregadoFilter.getGerencia().setCodigoCompleto( this.empregado.getGerencia().getCodigoCompleto() )
+                
+                if ( !this.usuario.getGestorCss() ) {
+                    empregadoFilter.setGerencia(new GerenciaFilter());
+                    empregadoFilter.getGerencia().setCodigoCompleto( this.empregado.getGerencia().getCodigoCompleto() )
+                }
                 
                 this.solicitacaoServicoService.getEmpregado( empregadoFilter )
                     .then( res => {
@@ -204,7 +205,7 @@ export class SelecaoServicoComponent implements OnInit {
                     return;
                 }
             }
-            
+            console.log(this.tarefa);
             let servico: Servico = this.servicos.find( f => f.getId() == id );
             this.tarefa.setServico(servico);
             localStorage.setItem("tarefa", JSON.stringify(this.tarefa));

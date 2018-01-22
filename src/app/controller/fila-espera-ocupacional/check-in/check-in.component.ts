@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
 import { MyDatePickerModule } from 'mydatepicker';
+import { IMyDpOptions } from 'mydatepicker';
 
 import { GlobalVariable } from './../../../global';
 import { Empregado } from './../../../model/empregado';
@@ -33,7 +34,8 @@ export class CheckInComponent {
     showConfirmSave: boolean;
     msgConfirmSave: string;
     reload: boolean;
-    
+    myDatePickerOptions: IMyDpOptions;
+
     constructor( private route: ActivatedRoute,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
@@ -41,6 +43,9 @@ export class CheckInComponent {
         this.filaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().initialize(this.filaEsperaOcupacional);
         this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
         this.localizacoes = new LocalizacaoBuilder().initializeList(this.localizacoes);
+        this.myDatePickerOptions = {
+                dateFormat: 'dd/mm/yyyy'
+            };
     }
 
     ngOnInit() {

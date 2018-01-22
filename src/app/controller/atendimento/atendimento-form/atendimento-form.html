@@ -6,12 +6,16 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <div class="row">
+	<h5>Profissional: {{nomeProfissional}}</h5>
+</div>
+
+<div class="row">
 
 	<div class="col s12">
-		<ul class="tabs" materialize="tabs">
-			<li class="tab col s6"><a RouterLinkActive="active"
+		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs" materialize="tabs">
+			<li class="tab col s6"><a
 				href="#filaAtendimento">Fila de Atendimento</a></li>
-			<li class="tab col s6"><a RouterLinkActive="active"
+			<li class="tab col s6"><a
 				href="#atendimento">Atendimento</a></li>
 		</ul>
 	</div>
@@ -33,6 +37,7 @@
 					<option disabled selected value=0>Selecione uma localização</option>
 					<option *ngFor="let localizacao of localizacoes"
 						value="{{localizacao.id}}">{{localizacao.nome}}</option>
+						
 				</select> <select name="localizacao" class="browser-default" #localizacao
 					*ngIf="verifyLocalizacaoExist()"
 					(ngModelChange)="setLocalizacao(localizacao.value)" disabled
@@ -72,11 +77,11 @@
 				<div *ngFor="let atendimento of atendimentos;let i = index">
 					<tbody class="col s12">
 						<tr class="col s12">
-							<td class="col s3 instalacao-nome">
+							<td class="col s5 profissional-nome">
 								{{atendimento.filaAtendimentoOcupacional.profissional.empregado.pessoa.nome}}
 							</td>
-							<td class="col s3 instalacao-lat">{{atendimento.filaAtendimentoOcupacional.status}}</td>
-							<td class="col s3 instalacao-long">
+							<td class="col s2 profissional-status">{{atendimento.filaAtendimentoOcupacional.status}}</td>
+							<td class="col s5 empregado-nome">
 								{{atendimento.filaEsperaOcupacional.empregado.pessoa.nome}}</td>
 						</tr>
 					</tbody>
@@ -148,7 +153,8 @@
 
 					<div class="input-field-empregado input-field col s3">
 						<label for="idade">Idade</label> <input id="idade" type="text"
-							disabled [(ngModel)]="idade" name="idade" class="input-empregado">
+							disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.idade"
+							name="idade" class="input-empregado">
 					</div>
 
 					<div class="input-field-empregado input-field col s3">
