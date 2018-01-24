@@ -15,6 +15,15 @@ export class SidenavComponent implements OnInit {
     sidenavParams = [];
     
     constructor() { }
+    
+    checkPermissao(path:string):boolean{
+        if ( window.localStorage.getItem(path) !== undefined &&
+                window.localStorage.getItem(path) !== null &&
+                window.localStorage.getItem(path) !== '' &&
+                window.localStorage.getItem(path) == "true" )
+            return true;
+        return false;
+    }
 
     ngOnInit() {
     }

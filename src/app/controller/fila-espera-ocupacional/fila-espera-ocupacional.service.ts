@@ -6,6 +6,7 @@ import { GenericService } from './../../generics/generic.service';
 import { GlobalVariable } from './../../global';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { LocalizacaoService } from './../localizacao/localizacao.service';
+import { AtendimentoService } from './../atendimento/atendimento.service';
 import { RegraAtendimentoFilter } from './../regra-atendimento/regra-atendimento.filter';
 import { RegraAtendimentoService } from './../regra-atendimento/regra-atendimento.service';
 
@@ -14,7 +15,8 @@ export class FilaEsperaOcupacionalService extends GenericService {
 
     constructor( http: Http, router: Router,
             private localizacaoService: LocalizacaoService,
-            private regraAtendimentoService: RegraAtendimentoService ) { 
+            private regraAtendimentoService: RegraAtendimentoService,
+            private atendimentoService: AtendimentoService) { 
         super(http,router,"fila-espera-ocupacional");
     }
     
@@ -32,6 +34,10 @@ export class FilaEsperaOcupacionalService extends GenericService {
         return this.http
             .post( urlRefresh, atendimento, { headers: this.headers } )
             .toPromise();
+    }
+    
+    atualizarLista( filaAtendimentoOcupacional ) {
+        return this.atendimentoService.atualizarLista( filaAtendimentoOcupacional );
     }
     
     getLocalizacoes() {

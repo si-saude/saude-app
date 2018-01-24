@@ -20,4 +20,8 @@ export class EquipeService extends GenericService{
       return this.selectList(new EquipeFilter());
   }
   
+  getEquipesWithFilter( equipeFilter ) {
+      return this.selectList( equipeFilter );
+  }
+  
 }

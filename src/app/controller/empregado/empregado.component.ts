@@ -30,89 +30,124 @@ export class EmpregadoComponent extends GenericListComponent<Empregado, Empregad
     ghes: Array<Ghe>;
     ghees: Array<Ghee>;
 
-    constructor( empregadoService: EmpregadoService, empregadoGuard: EmpregadoGuard ) {
+    constructor( private empregadoService: EmpregadoService, empregadoGuard: EmpregadoGuard ) {
         super( empregadoService, new EmpregadoFilter(), empregadoGuard );
+    }
 
-        empregadoService.getStatuses()
+    openModal() {
+        this.getStatuses();
+        this.getEscolaridades();
+        this.getVinculos();
+        this.getCargos();        
+        this.getFuncoes();
+        this.getRegimes();
+        this.getGerencias();
+        this.getBases();
+        this.getGhes(); 
+        this.getGhees();
+        super.openModal();
+    }
+    
+    getStatuses() {
+        this.empregadoService.getStatuses()
             .then( res => {
                 this.statuses = Object.keys( res.json() );
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getEscolaridades()
+    getEscolaridades() {
+        this.empregadoService.getEscolaridades()
             .then( res => {
                 this.escolaridades = Object.keys( res.json() );
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getVinculos()
+    
+    getVinculos() {
+        this.empregadoService.getVinculos()
             .then( res => {
                 this.vinculos = Object.keys( res.json() );
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getCargos()
+    getCargos() {
+        this.empregadoService.getCargos()
             .then( res => {
                 this.cargos = res.json();
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getFuncoes()
+    
+    getFuncoes() {
+        this.empregadoService.getFuncoes()
             .then( res => {
                 this.funcoes = res.json();
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getRegimes()
+    getRegimes() {
+        this.empregadoService.getRegimes()
             .then( res => {
                 this.regimes = res.json();
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getGerencias()
+    getGerencias() {
+        this.empregadoService.getGerencias()
             .then( res => {
                 this.gerencias = res.json();
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getBases()
+    getBases() {
+        this.empregadoService.getBases()
             .then( res => {
                 this.bases = res.json();
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getGhes()
+    getGhes() {
+        this.empregadoService.getGhes()
             .then( res => {
                 this.ghes = res.json();
             } )
             .catch( error => {
                 console.log( error );
-            } )
+            } )        
+    }
 
-        empregadoService.getGhees()
+    getGhees() {
+        this.empregadoService.getGhees()
             .then( res => {
                 this.ghees = res.json();
             } )
             .catch( error => {
                 console.log( error );
-            } )
-
+            } )        
     }
 
     initializeFilterDate() {

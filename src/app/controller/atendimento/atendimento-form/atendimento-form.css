@@ -74,3 +74,18 @@ tbody{
 .empregado-nome {
 	
 }
+
+.infos-profissional {
+	color: #26a69a;
+    display: inline-flex;
+}
+
+.nome-profissional {
+	margin-bottom: 0px;
+}
+
+.status-profissional {
+	margin-left: 10px;
+    border-left: 1px solid;
+    padding-left: 10px;
+}

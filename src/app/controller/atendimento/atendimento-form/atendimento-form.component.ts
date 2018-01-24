@@ -37,6 +37,7 @@ export class AtendimentoFormComponent {
     private usuario: Usuario;
     private profissional: Profissional;
     private nomeProfissional: String;
+    private statusProfissional: String;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
@@ -53,6 +54,7 @@ export class AtendimentoFormComponent {
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
+        this.statusProfissional = "";
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
@@ -149,8 +151,8 @@ export class AtendimentoFormComponent {
             this.filaAtendimentoOcupacional.setProfissional( this.profissional );
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
-                    console.log(res.json());
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
@@ -175,6 +177,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() == 0 ) {
                         this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
                     } else {
@@ -207,6 +210,11 @@ export class AtendimentoFormComponent {
     }
 
     entrar() {
+        if ( this.localizacao == undefined ) {
+            this.toastParams = ["Por favor, seleciona um local", 4000];
+            this.globalActions.emit( 'toast' );   
+            return;
+        }
         if ( this.filaAtendimentoOcupacional != undefined ) {
             this.atendimentoService.entrar( this.filaAtendimentoOcupacional )
                 .then( res => {

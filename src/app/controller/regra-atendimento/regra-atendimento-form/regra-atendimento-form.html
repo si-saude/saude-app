@@ -106,8 +106,8 @@
 									<div class="input-field col s4">
 										<select class="browser-default" #requisito>
 											<option disabled selected value=0>Selecione um requisito</option>
-											<option *ngFor="let equipe of equipes"
-												value="{{equipe.id}}">{{equipe.nome}}</option>
+											<option *ngFor="let rqst of requisitos"
+												value="{{rqst.id}}">{{rqst.nome}}</option>
 										</select>
 									</div>
 

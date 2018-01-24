@@ -13,8 +13,4 @@ export class RequisitoAsoService extends GenericService {
         super(http,router,"requisito-aso");
     }
     
-    getRequisitos() {
-        return this.selectList(new RequisitoAsoFilter());
-    }
-    
 }

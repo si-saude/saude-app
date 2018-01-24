@@ -25,37 +25,37 @@
 			[materializeActions]="sidenavActions3" data-activates="slide-out1"
 			(click)="closeSidenav3()"><i class="material-icons">chevron_left</i>
 		</a>
-		<a [routerLink]="['/base']">Base</a>
-		<a [routerLink]="['/cargo']">Cargo</a>
-		<a [routerLink]="['/cidade']">Cidade</a>
-		<a [routerLink]="['/criterio']">Critério</a>
-		<a [routerLink]="['/curso']">Curso</a>
-		<a [routerLink]="['/empregado']">Empregado</a>
-		<a [routerLink]="['/equipe']">Equipe</a>
-		<a [routerLink]="['/exame']">Exame</a>
-		<a [routerLink]="['/funcao']">Função</a>
-		<a [routerLink]="['/fornecedor']">Fornecedor</a>
-		<a [routerLink]="['/gerencia']">Gerência</a>
-		<a [routerLink]="['/ghe']">GHE</a>
-		<a [routerLink]="['/ghee']">GHEE</a>
-		<a [routerLink]="['/grupo-monitoramento']">Grupo Monitoramento</a>
-		<a [routerLink]="['/indicador-risco-acidente']">Indicador de Risco Acidente</a>
-		<a [routerLink]="['/indicador-risco-ambiental']">Indicador de Risco Ambiental</a>
-		<a [routerLink]="['/indicador-risco-ergonomico']">Indicador de Risco Ergonômico</a>
-		<a [routerLink]="['/indicador-risco-sanitario']">Indicador de Risco Sanitário</a>
-		<a [routerLink]="['/indicador-risco-saude-ambiental']">Indicador de Risco Saúde Ambiental</a>
-		<a [routerLink]="['/instalacao']">Instalação</a>
-		<a [routerLink]="['/localizacao']">Localização</a>
-		<a [routerLink]="['/perfil']">Perfil</a>
-		<a [routerLink]="['/periodicidade']">Periodicidade</a>
-		<a [routerLink]="['/profissiograma']">Profissiograma</a>
-		<a [routerLink]="['/profissional-saude']">Profissional de Saúde</a>
-		<a [routerLink]="['/regime']">Regime</a>
-		<a [routerLink]="['/relatorio-medico']">Relatorio Médico</a>
-		<a [routerLink]="['/resultado-exame']">Resultado Exame</a>
-		<a [routerLink]="['/tipo-grupo-monitoramento']">Tipo Grupo Monitoramento</a>
-		<a [routerLink]="['/usuario']">Usuário</a> 
-		<a [routerLink]="['/vacina']">Vacina</a>
+		<a [routerLink]="['/base']" *ngIf="checkPermissao('*')">Base</a>
+		<a [routerLink]="['/cargo']" *ngIf="checkPermissao('*')">Cargo</a>
+		<a [routerLink]="['/cidade']" *ngIf="checkPermissao('*')">Cidade</a>
+		<a [routerLink]="['/criterio']" *ngIf="checkPermissao('*')">Critério</a>
+		<a [routerLink]="['/curso']" *ngIf="checkPermissao('*')">Curso</a>
+		<a [routerLink]="['/empregado']" *ngIf="checkPermissao('EMPREGADO_LISTAR')">Empregado</a>
+		<a [routerLink]="['/equipe']" *ngIf="checkPermissao('*')">Equipe</a>
+		<a [routerLink]="['/exame']" *ngIf="checkPermissao('EXAME_LISTAR')">Exame</a>
+		<a [routerLink]="['/funcao']" *ngIf="checkPermissao('*')">Função</a>
+		<a [routerLink]="['/fornecedor']" *ngIf="checkPermissao('*')">Fornecedor</a>
+		<a [routerLink]="['/gerencia']" *ngIf="checkPermissao('*')">Gerência</a>
+		<a [routerLink]="['/ghe']" *ngIf="checkPermissao('*')">GHE</a>
+		<a [routerLink]="['/ghee']" *ngIf="checkPermissao('*')">GHEE</a>
+		<a [routerLink]="['/grupo-monitoramento']" *ngIf="checkPermissao('*')">Grupo Monitoramento</a>
+		<a [routerLink]="['/indicador-risco-acidente']" *ngIf="checkPermissao('*')">Indicador de Risco Acidente</a>
+		<a [routerLink]="['/indicador-risco-ambiental']" *ngIf="checkPermissao('*')">Indicador de Risco Ambiental</a>
+		<a [routerLink]="['/indicador-risco-ergonomico']" *ngIf="checkPermissao('*')">Indicador de Risco Ergonômico</a>
+		<a [routerLink]="['/indicador-risco-sanitario']" *ngIf="checkPermissao('*')">Indicador de Risco Sanitário</a>
+		<a [routerLink]="['/indicador-risco-saude-ambiental']" *ngIf="checkPermissao('*')">Indicador de Risco Saúde Ambiental</a>
+		<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('*')">Instalação</a>
+		<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('*')">Localização</a>
+		<a [routerLink]="['/perfil']" *ngIf="checkPermissao('PERFIL_LISTAR')">Perfil</a>
+		<a [routerLink]="['/periodicidade']" *ngIf="checkPermissao('*')">Periodicidade</a>
+		<a [routerLink]="['/profissiograma']" *ngIf="checkPermissao('*')">Profissiograma</a>
+		<a [routerLink]="['/profissional-saude']" *ngIf="checkPermissao('*')">Profissional de Saúde</a>
+		<a [routerLink]="['/regime']" *ngIf="checkPermissao('*')">Regime</a>
+		<a [routerLink]="['/relatorio-medico']" *ngIf="checkPermissao('*')">Relatorio Médico</a>
+		<a [routerLink]="['/resultado-exame']" *ngIf="checkPermissao('*')">Resultado Exame</a>
+		<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('*')">Tipo Grupo Monitoramento</a>
+		<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')">Usuário</a> 
+		<a [routerLink]="['/vacina']" *ngIf="checkPermissao('*')">Vacina</a>
 		
 	</li>
 </ul>
@@ -67,8 +67,12 @@
 			[materializeActions]="sidenavActions3" data-activates="slide-out1"
 			(click)="closeSidenavProcesso()"><i class="material-icons">chevron_left</i>
 		</a>
-		<a [routerLink]="['/auditoria-exame']">Auditoria De Guia de Exame</a>
-		<a [routerLink]="['/convocacao']">Convocação</a>
+		<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Guia de Exame</a>
+		<a [routerLink]="['/auditoria-resultado-exame']" *ngIf="checkPermissao('AUDITORIA-RESULTADO-EXAME_LISTAR')">Auditoria De Resultados de Exames</a>
+		<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
+		<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
+		<a [routerLink]="['/fila-espera-ocupacional']">Fila de Espera</a>
+		<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO_LISTAR')">Atendimento</a>
 	</li>
 </ul>
 

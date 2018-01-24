@@ -48,7 +48,6 @@ import { PeriodicidadeGuard } from './guards/guards-child/periodicidade.guard';
 import { ProfissiogramaGuard } from './guards/guards-child/profissiograma.guard';
 import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude.guard';
 import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
-import { ResultadoExameGuard } from './guards/guards-child/resultado-exame.guard';
 import { RegimeGuard } from './guards/guards-child/regime.guard';
 import { RequisitoAsoGuard } from './guards/guards-child/requisito-aso.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
@@ -58,6 +57,7 @@ import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convoc
 import { FeriadoGuard } from './guards/guards-child/feriado.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
 import { RegraAtendimentoGuard } from './guards/guards-child/regra-atendimento.guard';
+import { AuditoriaAsoGuard } from './guards/guards-child/auditoria-aso.guard';
 import { SolicitacaoServicoService } from './solicitacao-servico/solicitacao-servico.service';
 import { TransferDataService } from './solicitacao-servico/transfer-data.service';
 import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
@@ -119,13 +119,13 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
     RelatorioMedicoGuard,
     TipoGrupoMonitoramentoGuard,
     UsuarioGuard,
-    ResultadoExameGuard,
     VacinaGuard,
     EmpregadoConvocacaoGuard,
     FeriadoGuard,
     AuditoriaResultadoExameGuard,
     RegraAtendimentoGuard,
-    ServicoGuard
+    ServicoGuard,
+    AuditoriaAsoGuard
   ],
   bootstrap: [ 
     AppComponent

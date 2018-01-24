@@ -36,7 +36,6 @@ select{
 
 table {
 	border: 1px solid #c0c0c0;
-    margin-top: 25px;
 }
 
 thead > tr {
@@ -55,4 +54,36 @@ td > a > i {
 tbody{
 	margin-top: 10px;
 	border-bottom: 1px solid #c0c0c0;	
+}
+
+.table-fila-espera {
+	font-size: 25px;	
+}
+
+.fila-espera {
+	font-size: 30px;
+}
+
+.fila-atendimento {
+	font-size: 30px;
+}
+
+.fieldset-fila-atendimento {
+	margin-top: 100px;
+}
+
+.empregado { 
+	padding-left: 0px;
+}
+
+.equipe {
+    padding-left: 15px;
+}
+
+.status {
+    padding-left: 20px;
+}
+
+.profissional-nome {
+	padding-left: 0px;
 }

@@ -46,7 +46,6 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
                         .then( res => {
                             this.showPreload = false;
                             this.usuario = new UsuarioBuilder().clone( res.json() );
-                            console.log(this.usuario)
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );

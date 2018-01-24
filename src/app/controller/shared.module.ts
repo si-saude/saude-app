@@ -47,6 +47,7 @@ import { RegraAtendimentoService } from './regra-atendimento/regra-atendimento.s
 import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional/fila-espera-ocupacional.service';
 import { AtendimentoService } from './atendimento/atendimento.service';
 import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
+import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 
 @NgModule({
@@ -112,6 +113,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     FilaEsperaOcupacionalService,
     AtendimentoService,
     RequisitoAsoService,
+    AuditoriaAsoService,
     CanDeactivateGuard
   ]
 })

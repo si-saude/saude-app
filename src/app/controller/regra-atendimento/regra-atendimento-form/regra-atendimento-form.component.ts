@@ -7,6 +7,7 @@ import { GlobalVariable } from './../../../global';
 import { RegraAtendimento } from './../../../model/regra-atendimento';
 import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
+import { EquipeFilter } from './../../equipe/equipe.filter';
 import { RegraAtendimentoEquipe } from './../../../model/regra-atendimento-equipe';
 import { RegraAtendimentoEquipeBuilder } from './../../regra-atendimento-equipe/regra-atendimento-equipe.builder';
 import { RegraAtendimentoEquipeRequisito } from './../../../model/regra-atendimento-equipe-requisito';
@@ -23,7 +24,7 @@ import { RegraAtendimentoService } from './../regra-atendimento.service';
 export class RegraAtendimentoFormComponent extends GenericFormComponent implements OnInit {
     regraAtendimento: RegraAtendimento;
     equipes: Array<Equipe>;
-    requisitos: Array<RegraAtendimentoEquipeRequisito>;
+    requisitos: Array<Equipe>;
     arrayRequisito: Array<RegraAtendimentoEquipeRequisito>;
     regraAtendimentoEquipes: Array<RegraAtendimentoEquipe>;
     
@@ -38,7 +39,7 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
             this.goTo = "regra-atendimento";
             
             this.arrayRequisito = new Array<RegraAtendimentoEquipeRequisito>();
-            this.requisitos = new Array<RegraAtendimentoEquipeRequisito>();
+            this.requisitos = new Array<Equipe>();
             this.regraAtendimentoEquipes = new Array<RegraAtendimentoEquipe>();
             this.regraAtendimento = new RegraAtendimentoBuilder().initialize(this.regraAtendimento);
         }
@@ -84,6 +85,16 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
             this.globalActions.emit('toast');
         } else {
             let equipe = this.equipes.find(e => e.getId() == valor);
+            let equipeFilter: EquipeFilter = new EquipeFilter();
+            equipeFilter.setId(equipe.getId());
+            
+            this.regraAtendimentoService.getEquipesWithFilter(equipeFilter)
+                .then(res => {
+                    this.requisitos = new EquipeBuilder().cloneList(res.json());
+                })
+                .catch(error => {
+                    console.log("Erro ao retornar os requisitos.");
+                })
             
             let rAEs: RegraAtendimentoEquipe = this.regraAtendimento.getRegraAtendimentoEquipes().
                 find(rAE => rAE.getEquipe().getId() == valor);

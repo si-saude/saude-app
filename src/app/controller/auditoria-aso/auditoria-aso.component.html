@@ -1,0 +1,114 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="collection">
+
+	<div *ngFor="let a of array">
+		<div class="row row-collection">
+			<div class="col s4">
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.empregado.pessoa.nome}}</a>
+			</div>
+			<div class="col s4">
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.atendimento.tarefa.servico.nome}}</a>
+			</div>
+			<div class="col s3">
+				<a [routerLinkActive]="['active']" class="collection-item">{{a.status}}</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/auditoria-aso/editar', a.id]"><i
+					class="material-icons">mode_edit</i></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Paginação -->
+<ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
+
+	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
+			<i class="material-icons arrow-pagination">first_page</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}"
+		(click)="goToPage(filter.getPageNumber()-1)"> <i
+			class="material-icons arrow-pagination">chevron_left</i>
+	</a></li>
+
+	<li [ngClass]="activePage(paginaAtual)" class="waves-effect"
+		*ngFor="let paginaAtual of paginasAtuais; let i = index"><a
+		(click)="goToPage(paginaAtual)">{{paginaAtual}} </a></li>
+
+	<li><a [ngStyle]="{'cursor': 'pointer'}"
+		(click)="goToPage(filter.getPageNumber()+1)"> <i
+			class="material-icons arrow-pagination">chevron_right</i>
+	</a></li>
+	<li><a [ngStyle]="{'cursor': 'pointer'}"
+		(click)="goToPage(paginas.length)"> <i
+			class="material-icons arrow-pagination">last_page</i>
+	</a></li>
+
+</ul>
+
+<div class="row">
+	<div class="col s4">
+		<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	</div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+
+	<div class="row">
+	
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="nome">Nome do Empregado</label>
+				<input type="text" id="nome" [(ngModel)]="filter.empregado.pessoa.nome" name="nome">
+			</div>
+		</div>
+		
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="chave">Chave do Empregado</label>
+				<input type="text" id="chave" [(ngModel)]="filter.empregado.chave" name="chave">
+			</div>
+		</div>
+		
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="matricula">Matricula do Empregado</label>
+				<input type="text" id="matricula" [(ngModel)]="filter.empregado.matricula" name="matricula">
+			</div>
+		</div>
+		
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="status">Status</label>
+				<input type="text" id="status" [(ngModel)]="filter.status" name="status">
+			</div>
+		</div>
+
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="servico">Nome do Serviço</label>
+				<input type="text" id="servico" [(ngModel)]="filter.atendimento.tarefa.servico.nome" name="servico">
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="setFilter()">Filtrar</a>
+	</div>
+
+</div>

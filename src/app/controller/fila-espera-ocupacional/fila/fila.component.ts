@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
@@ -13,6 +13,8 @@ import { Atendimento } from './../../../model/atendimento';
 import { AtendimentoBuilder } from './../../atendimento/atendimento.builder';
 import { RegraAtendimento } from './../../../model/regra-atendimento';
 import { RegraAtendimentoBuilder } from './../../regra-atendimento/regra-atendimento.builder';
+import { FilaAtendimentoOcupacional } from './../../../model/fila-atendimento-ocupacional';
+import { FilaAtendimentoOcupacionalBuilder } from './../../fila-atendimento-ocupacional/fila-atendimento-ocupacional.builder';
 import { Localizacao } from './../../../model/localizacao';
 import { LocalizacaoBuilder } from './../../localizacao/localizacao.builder';
 import { FilaEsperaOcupacional } from './../../../model/fila-espera-ocupacional';
@@ -27,8 +29,10 @@ import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional.build
 export class FilaComponent {
     atendimento: Atendimento;
     atendimentos: Array<Atendimento>;
+    atendimentosProfissionais: Array<Atendimento>;
     regraAtendimento: RegraAtendimento;
     regraAtendimentos: Array<RegraAtendimento>;
+    filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     localizacao: Localizacao;
     localizacoes: Array<Localizacao>;
     filaEsperaOcupacional: FilaEsperaOcupacional;
@@ -37,23 +41,33 @@ export class FilaComponent {
     toastParams;
     inscricao: Subscription;
     alive: boolean;
+    audio: any;
+    showNothing: boolean;
 
     constructor( private route: ActivatedRoute,
-        private filaEsperaOcupacionalService: FilaEsperaOcupacionalService ) {
+        private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
+        this.atendimentosProfissionais = new AtendimentoBuilder().initializeList( this.atendimentos );
         this.regraAtendimento = new RegraAtendimentoBuilder().initialize( this.regraAtendimento );
         this.regraAtendimentos = new RegraAtendimentoBuilder().initializeList( this.regraAtendimentos );
         this.localizacao = new LocalizacaoBuilder().initialize( this.localizacao );
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.filaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().initialize( this.filaEsperaOcupacional );
         this.alive = true;
+        this.audio = new Audio();
+        this.showNothing = true;
     }
 
     ngOnInit() {
         this.getLocalizacoes();
         this.getRegraAtendimentos();
+        this.audio.src = "./../../../../assets/audio/beep.mp3";
+    }
+    
+    ngAfterViewInit() {
+        document.getElementsByClassName("conteudo")[0]["style"].width = "100%";   
     }
 
     startFila( localizacaoId, regraAtendimentoId ) {
@@ -66,26 +80,52 @@ export class FilaComponent {
             this.regraAtendimento.setId( regraAtendimentoId );
             this.localizacao.setId( localizacaoId );
             this.filaEsperaOcupacional.setLocalizacao( this.localizacao );
-            
+            this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize(new FilaAtendimentoOcupacional());
+            this.filaAtendimentoOcupacional.setLocalizacao(this.localizacao);
+
             this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
-    
+
             this.atendimento.setRegra( this.regraAtendimento );
             this.atendimento.setFilaEsperaOcupacional( this.filaEsperaOcupacional );
-            this.inscricao = TimerObservable.create(0, 5000)
+            this.inscricao = TimerObservable.create(0, 20000)
                 .takeWhile(() => this.alive )
                 .subscribe(() => {
-                    this.filaEsperaOcupacionalService.refresh( this.atendimento )
-                        .then( res => {
-                            this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
-                            console.log("refresh");
-                            this.wasRequested = true;
-                        } )
-                        .catch( error => {
-                            console.log(error.text());
-                        } )
+                    this.refresh();
+                    this.atualizarLista();
                 } );
         }
 
+    }
+    
+    refresh() {
+        if ( this.atendimento != undefined ) {
+            this.filaEsperaOcupacionalService.refresh( this.atendimento )
+                .then( res => {
+                    this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
+                    if ( this.atendimentos.length > 0 ) {
+                        this.audio.load();
+                        this.audio.play();
+                    }
+                    this.wasRequested = true;
+                } )
+                .catch( error => {
+                    console.log(error.text());
+                } )            
+        }
+    }
+    
+    atualizarLista() {
+        if ( this.filaAtendimentoOcupacional != undefined ) {
+            this.filaEsperaOcupacionalService.atualizarLista( this.filaAtendimentoOcupacional )
+                .then( res => {
+                    this.atendimentosProfissionais = new AtendimentoBuilder().cloneList( res.json() );
+                } )
+                .catch( error => {
+                    console.log( "Erro ao atualizar lista: " + error.text() );
+                } )
+        } else {
+            console.log( "Fila de atendimento nao preenchida." )
+        }
     }
 
     getLocalizacoes() {

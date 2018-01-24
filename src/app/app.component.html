@@ -2,11 +2,15 @@
   <meta charset="utf-8">
 </head>
 
-<app-navbar *ngIf="!showMenu"></app-navbar>
-<app-navbar-principal *ngIf="showMenu"></app-navbar-principal>
-
-<div class="container conteudo" >
-	<router-outlet></router-outlet>
+<div class="cabecalho" *ngIf="!show">
+	<app-navbar *ngIf="!showMenu"></app-navbar>
+	<app-navbar-principal *ngIf="showMenu"></app-navbar-principal>
 </div>
 
-<app-footer></app-footer>
+<div class="container conteudo" >
+	<router-outlet (activate)="onActivate($event)"></router-outlet>
+</div>
+
+<div class="rodape" *ngIf="!show">
+	<app-footer></app-footer>
+</div>

@@ -10,9 +10,15 @@ import { AuthService } from './login/auth.service';
 export class AppComponent {
   title = 'app';
   showMenu: boolean;
+  show: boolean;
   
   constructor(private authService: AuthService) {
       this.showMenu = false;
+  }
+  
+  onActivate(component) {
+      if ( component.showNothing != undefined )
+          this.show = component.showNothing;
   }
   
   ngOnInit() {

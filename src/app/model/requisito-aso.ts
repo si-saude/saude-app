@@ -1,6 +1,7 @@
 export class RequisitoAso {
     private id: number = 0;
     private conteudo: string;
+    private conforme: boolean;
     private version: number;
 
     getId() {
@@ -17,6 +18,14 @@ export class RequisitoAso {
     
     setConteudo(conteudo: string) {
         this.conteudo = conteudo;
+    }
+    
+    getConforme() {
+        return this.conforme;
+    }
+    
+    setConforme( conforme: boolean ) {
+        this.conforme = conforme;
     }
     
     getVersion() {

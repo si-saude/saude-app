@@ -8,7 +8,7 @@
 		(ngSubmit)="startFila(localizacao.value, regraAtendimento.value)">
 
 		<fieldset>
-			<legend>Dados da Fila de Espera</legend>
+			<legend>Fila de Espera</legend>
 
 			<div class="row">
 
@@ -51,31 +51,70 @@
 
 <div *ngIf="wasRequested">
 
-	<div class="row">
 
-		<table class="striped">
-			<thead>
-				<tr class="row col s12">
-					<th class="col s4">Nome</th>
-					<th class="col s3">Atendimento</th>
-					<th class="col s3">Equipe</th>
-					<th class="col s2">Status</th>
-				</tr>
-			</thead>
-			<div *ngFor="let atendimento of atendimentos;let i = index">
-				<tbody class="col s12">
-					<tr class="col s12">
-						<td class="col s4 empregado">{{atendimento.filaEsperaOcupacional.empregado.pessoa.nome}}</td>
-						<td class="col s3 atendimento">{{atendimento.filaEsperaOcupacional.servico.nome}}</td>
-						<td class="col s3 equipe">{{atendimento.tarefa.equipe.nome}}</td>
-						<td class="col s2 status">{{atendimento.filaAtendimentoOcupacional.status}}</td>
+	<fieldset>
+	<legend class="fila-espera">Chamadas</legend>
+		<div class="row">
+
+			<table class="striped">
+				<thead>
+					<tr class="row col s12 table-fila-espera">
+						<th class="col s4">Nome</th>
+						<th class="col s3">Atendimento</th>
+						<th class="col s3">Equipe</th>
+						<th class="col s2">Status</th>
 					</tr>
-				</tbody>
-			</div>
+				</thead>
+				<div *ngFor="let atendimento of atendimentos;let i = index">
+					<tbody class="col s12">
+						<tr class="col s12">
+							<td class="col s4 empregado">{{atendimento.filaEsperaOcupacional.empregado.pessoa.nome}}</td>
+							<td class="col s3 atendimento">{{atendimento.filaEsperaOcupacional.servico.nome}}</td>
+							<td class="col s3 equipe">{{atendimento.tarefa.equipe.nome}}</td>
+							<td class="col s2 status">{{atendimento.filaAtendimentoOcupacional.status}}</td>
+						</tr>
+					</tbody>
+				</div>
 
-		</table>
+			</table>
 
-	</div>
+		</div>
+	</fieldset>
+
+	<fieldset class="fieldset-fila-atendimento">
+		<legend class="fila-atendimento">Atendimentos</legend>
+
+		<div class="row">
+
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s5">Profissional</th>
+						<th class="col s2">Status</th>
+						<th class="col s5">Empregado</th>
+					</tr>
+				</thead>
+
+				<div
+					*ngFor="let atendimentoProfissional of atendimentosProfissionais;let i = index">
+					<tbody class="col s12">
+						<tr class="col s12">
+							<td class="col s5 profissional-nome">
+								{{atendimentoProfissional.filaAtendimentoOcupacional.profissional.empregado.pessoa.nome}}
+							</td>
+							<td class="col s2 profissional-status">{{atendimentoProfissional.filaAtendimentoOcupacional.status}}</td>
+							<td class="col s5 empregado-nome">
+								{{atendimentoProfissional.filaEsperaOcupacional.empregado.pessoa.nome}}</td>
+						</tr>
+					</tbody>
+
+				</div>
+
+			</table>
+
+		</div>
+
+	</fieldset>
 
 </div>
 

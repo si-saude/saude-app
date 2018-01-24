@@ -5,7 +5,7 @@ import { PessoaFilter } from './../pessoa/pessoa.filter';
 export class UsuarioFilter extends GenericFilter {
     private chave: string;
     private senha: string;
-    private pessoa: PessoaFilter = new PessoaFilter();
+    private pessoa: PessoaFilter;
     private gestorCss: BooleanFilter = new BooleanFilter();
 
     getChave() {

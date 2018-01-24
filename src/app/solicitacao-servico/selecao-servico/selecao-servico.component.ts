@@ -50,7 +50,6 @@ export class SelecaoServicoComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(localStorage.getItem( "empregado" ));
         if ( localStorage.getItem( "empregado" ) == undefined )
             this.router.navigate( ["/solicitacao-servico/autenticacao-usuario"] );
         else {

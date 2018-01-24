@@ -18,4 +18,8 @@ export class RegraAtendimentoService extends GenericService {
     getEquipes() {
         return this.equipeService.getEquipes();
     }
+    
+    getEquipesWithFilter( equipeFilter ) {
+        return this.equipeService.getEquipesWithFilter( equipeFilter );
+    }
 }

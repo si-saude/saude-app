@@ -10,7 +10,7 @@ import { RequisitoAsoService } from './../requisito-aso.service';
 @Component({
   selector: 'app-requisito-aso-form-detail',
   templateUrl: './requisito-aso-form-detail.html',
-  styleUrls: ['./requisito-aso-form.css']
+  styleUrls: ['./requisito-aso-form.css', './../../../../assets/css/form-component.css']
 })
 export class RequisitoAsoFormDetailComponent extends GenericFormComponent implements OnInit {
     requisito: RequisitoAso;
