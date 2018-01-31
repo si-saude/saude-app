@@ -55,7 +55,7 @@ export class AutenticacaoUsuarioComponent {
                     this.usuario = new UsuarioBuilder().clone( res.json() );
                     localStorage.setItem("usuario", JSON.stringify( this.usuario ));
                     
-                    if ( this.usuario.getId() > 0 ) {
+                    if ( this.usuario.getId() > 0  && this.usuario.getPessoa().getId() > 0 ) {
                         let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
                         empregadoFilter.getPessoa().setCpf( this.usuario.getPessoa().getCpf() );
 

@@ -53,6 +53,7 @@ export abstract class GenericService {
     sendFile( file ) {
         let urlSendFile = this.URL + "/import";
         this.headers = new Headers( { 'Content-Type': 'multipart/form-data' } );
+        this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
         return this.http
             .post( urlSendFile, file, { headers: this.headers } )
             .toPromise();
@@ -61,6 +62,7 @@ export abstract class GenericService {
     sendFileWithPath( file, path ) {
         let urlSendFile = this.URL + "/" + path;
         this.headers = new Headers( { 'Content-Type': 'multipart/form-data' } );
+        this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
         return this.http
             .post( urlSendFile, file, { headers: this.headers } )
             .toPromise();

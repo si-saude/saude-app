@@ -30,6 +30,13 @@ export class GrupoMonitoramentoComponent extends GenericListComponent<GrupoMonit
         this.recorrente = this.rec.nativeElement;
         this.relatorio = this.rel.nativeElement;
         this.auditoriaAso = this.audit.nativeElement;
+        
+        this.recorrente.indeterminate = true;
+        this.relatorio.indeterminate = true;
+        this.auditoriaAso.indeterminate = true;
+        this.recorrente.checked = true;
+        this.relatorio.checked = true;
+        this.auditoriaAso.checked = true;
     }
     
     changeStateRecorrente() {

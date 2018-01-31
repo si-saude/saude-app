@@ -537,7 +537,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         )
     }
 
-    convocar() {
+    convocar() {        
         if ( this.convocacao.getGerenciaConvocacoes().length != 0 ) {
             if ( this.convocacao.getEmpregadoConvocacoes().length != 0 ) {
                 if ( this.convocacao.getTitulo() !== undefined ||
@@ -548,9 +548,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     this.verifyAndSetDates();
                     this.showPreload = true;
                     
-                    this.convocacaoService.getConvocacao( this.convocacao )
+                    let convocacaoAux:Convocacao = new ConvocacaoBuilder().clone(this.convocacao);
+                    convocacaoAux.setEmpregadoConvocacoes(this.empregadoConvocacoes);
+                    
+                    this.convocacaoService.getConvocacao( convocacaoAux )
                         .then( res => {
-                            this.downloadFile( res, this.convocacao.getTitulo()+".zip" )
+                            this.downloadFile( res, convocacaoAux.getTitulo()+".zip" )
                             this.showPreload = false;
                         } )
                         .catch( error => {

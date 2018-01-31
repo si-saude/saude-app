@@ -21,6 +21,9 @@ export class AuditoriaResultadoExameComponent
     extends GenericListComponent<EmpregadoConvocacao, EmpregadoConvocacaoFilter, AuditoriaResultadoExameGuard> {
     @ViewChild( 'arquivo' ) inputElArquivo: ElementRef;
     @ViewChild( 'arquivoTxt' ) inputElArquivoTxt: ElementRef;
+    @ViewChild("rAuditado") rAuditado: ElementRef;
+    resultadoAuditado: HTMLInputElement;
+    flagResultadoAuditado: number = 0;
     inicio: any;
     fim: any;
     modalConfirmImport;
@@ -32,7 +35,35 @@ export class AuditoriaResultadoExameComponent
         super(auditoriaResultadoExameService, new EmpregadoConvocacaoFilter(), auditoriaResultadoExameGuard);
         this.modalConfirmImport = new EventEmitter<string | MaterializeAction>();
         this.msnConfirmImport = "";
-    }   
+    }
+    
+    ngAfterViewInit() {
+        this.resultadoAuditado = this.rAuditado.nativeElement;
+        
+        this.resultadoAuditado.indeterminate = true;
+        this.resultadoAuditado.checked = true;
+    }
+    
+    changeStateResultadoAuditado() {
+        if ( !this.resultadoAuditado.checked ) {
+            this.flagResultadoAuditado++;
+        }
+        if ( this.flagResultadoAuditado % 2 == 0 ) {
+            this.resultadoAuditado.indeterminate = true;
+            this.resultadoAuditado.checked = true;
+            this.flagResultadoAuditado = 0;
+        }
+    }
+    
+    filtrar() {
+        if ( this.resultadoAuditado.indeterminate )
+            this.filter.getResultadoAuditado().setValue(0);
+        else if ( this.resultadoAuditado.checked )
+            this.filter.getResultadoAuditado().setValue(1);
+        else this.filter.getResultadoAuditado().setValue(2);
+        
+        this.setFilter();
+    }
     
     importar() {
         let dateInicio = null;
@@ -78,6 +109,31 @@ export class AuditoriaResultadoExameComponent
 
             readerArquivo.readAsArrayBuffer( new Blob( [arquivo] ) );
         }
+    }
+    
+    validarTxt() {
+        let arquivoTxt = undefined;
+
+        let readerArquivo = new FileReader();
+        let component = this;
+        
+        if ( this.inputElArquivoTxt.nativeElement.files.length > 0 ) {
+            arquivoTxt = this.inputElArquivoTxt.nativeElement.files[0];
+            this.showPreload = true;
+            
+            this.resultadoExameService.sendFileWithPath( arquivoTxt, "valid-txt" )
+                .then( res => {
+                    component.showPreload = false;
+                    component.openModalConfirmImport();
+                    component.msnConfirmImport = res.text();
+                } )
+                .catch( error => {
+                    component.showPreload = false;
+                    component.openModalConfirmImport();
+                    component.msnConfirmImport = error;
+                } )
+        }
+
     }
 
     importarTxt() {

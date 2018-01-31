@@ -3,8 +3,9 @@ import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { DateFilter } from './../../generics/date.filter';
+import { GenericFilter } from './../../generics/generic.filter';
 
-export class TarefaFilter {
+export class TarefaFilter extends GenericFilter {
     private inicio: DateFilter;
     private fim: DateFilter;
     private horario: DateFilter;

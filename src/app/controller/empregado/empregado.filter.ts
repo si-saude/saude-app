@@ -19,7 +19,7 @@ export class EmpregadoFilter extends GenericFilter {
     private cargo: CargoFilter;
     private funcao: FuncaoFilter;
     private regime: RegimeFilter;
-    private gerencia: GerenciaFilter;
+    private gerencia: GerenciaFilter = new GerenciaFilter();
     private base: BaseFilter;
     private ghe: GheFilter;
     private ghee: GheeFilter;
