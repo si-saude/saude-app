@@ -34,8 +34,6 @@ export class LoginComponent extends GenericComponent {
         this.showPreload = true;
         this.authService.login( this.usuario )
             .then( res => {
-                this.authService.logged.emit(true);
-                console.log(this.authService.logged);
                 this.usuario = new UsuarioBuilder().clone(res.json());
                 localStorage.setItem( 'token', this.usuario.getToken() );
                 localStorage.setItem( 'usuario-id', this.usuario.getId().toString() );
@@ -51,7 +49,6 @@ export class LoginComponent extends GenericComponent {
                 }, 100);
             } )
             .catch( error => {
-                this.authService.logged.emit(false);
                 this.catchConfiguration(error);
                 this.showPreload = false;
             } )

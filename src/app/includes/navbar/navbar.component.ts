@@ -10,29 +10,31 @@ import { GlobalVariable } from './../../global';
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
 } )
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
     private theme: string = GlobalVariable.THEME_API;
     private route: string;
     private logged: boolean;
 
     constructor( private router: Router, private location: Location,
-            private authService: AuthService) { 
+            private authService: AuthService) {
         this.logged = false;
     }
 
     ngOnInit() {
-        
         this.router.events.subscribe( val => {
             this.route = this.location.prepareExternalUrl(this.location.path());
         } )
-        
-        this.authService.logged.subscribe(logado => { 
-            this.logged = logado
-        });
+    }
+    
+    ngDoCheck() {
+        if ( localStorage.getItem("token") != undefined && 
+                localStorage.getItem("token") != null &&
+                localStorage.getItem("token") != '' ) {
+            this.logged = true;
+        } else this.logged = false;
     }
     
     logoff() {
-        this.authService.logged.emit(false);
         localStorage.clear();
         this.router.navigate(['login']);
     }
