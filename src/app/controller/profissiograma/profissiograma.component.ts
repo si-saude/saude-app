@@ -25,6 +25,7 @@ export class ProfissiogramaComponent extends GenericListComponent<Profissiograma
     ngAfterViewInit() {
         this.concluido = this.c.nativeElement;
         this.concluido.indeterminate = true;
+        this.concluido.checked = true;
     }
     
     changeStateConcluido() {

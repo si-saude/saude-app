@@ -18,7 +18,6 @@ export class AuthService extends GenericService {
         super(http,router,"usuario");
         
         this.usuario = new UsuarioBuilder().initialize(this.usuario);
-        this.logged = new EventEmitter<boolean>();
     }
     
     login( usuario: Usuario ) {
