@@ -23,6 +23,8 @@ export class UsuarioComponent extends GenericListComponent<Usuario, UsuarioFilte
 
     ngAfterViewInit() {
         this.gestorCss = this.gCss.nativeElement;
+        this.gestorCss.indeterminate = true;
+        this.gestorCss.checked = true;
     }
 
     changeStateGestorCss() {

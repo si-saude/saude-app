@@ -23,6 +23,8 @@ export class ServicoComponent extends GenericListComponent<Servico, ServicoFilte
     
     ngAfterViewInit() {
         this.publico = this.pub.nativeElement;
+        this.publico.indeterminate = true;
+        this.publico.checked = true;
     }
     
     changeStatePublico() {

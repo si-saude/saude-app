@@ -73,13 +73,13 @@
 					<label for="medicoPrestador">Médico Prestador</label> 
 					<input id="medicoPrestador" type="text"
 						name="medicoPrestador" 
-						[(ngModel)]="filtro.medicoPrestador">
+						[(ngModel)]="filter.medicoPrestador">
 				</div>
 			</div>
 		
 			<div class="input-field col s2 checkbox">
-				<input type="checkbox" id="finalizado" 
-					[(ngModel)]="finalizado" name="finalizado">
+				<input type="checkbox" id="finalizado" #fin
+					(click)="changeStateFinalizado()" name="finalizado">
 	            <label for="finalizado">Finalizado</label>
 	        </div>
 		</div>
@@ -88,7 +88,7 @@
 			<div class="modal-content">
 				<label for="resumo">Resumo</label> 
 				<textarea class="materialize-textarea" id="resumo" 
-						[(ngModel)]="filtro.resumo" 
+						[(ngModel)]="filter.resumo" 
 						name="resumo"></textarea>
 			</div>
 		</div>
@@ -97,7 +97,7 @@
 			<div class="modal-content">
 				<label for="questionamentos">Questionamentos</label> 
 				<textarea class="materialize-textarea" id="questionamentos" 
-						[(ngModel)]="filtro.questionamentos" 
+						[(ngModel)]="filter.questionamentos" 
 						name="questionamentos"></textarea>
 			</div>
 		</div>
