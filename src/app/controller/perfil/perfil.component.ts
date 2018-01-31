@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import {MaterializeDirective,MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
@@ -18,8 +18,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class PerfilComponent  extends GenericListComponent<Perfil, PerfilFilter, PerfilGuard>{
     
-  constructor( perfilService: PerfilService, perfilGuard: PerfilGuard) {
-      super(perfilService, new PerfilFilter(), perfilGuard);
+  constructor( perfilService: PerfilService, perfilGuard: PerfilGuard, router: Router) {
+      super(perfilService, new PerfilFilter(), perfilGuard, router);
   }
     
 }

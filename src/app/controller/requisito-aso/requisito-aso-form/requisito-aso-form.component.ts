@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { RequisitoAso } from './../../../model/requisito-aso';
@@ -16,8 +17,9 @@ export class RequisitoAsoFormComponent extends GenericFormComponent implements O
     requisito: RequisitoAso;
 
     constructor(private route: ActivatedRoute,
-        private requisitoService: RequisitoAsoService) { 
-        super(requisitoService);
+        private requisitoService: RequisitoAsoService,
+        router: Router) { 
+        super(requisitoService, router);
         this.goTo = "requisito-aso";
           
         this.requisito = new RequisitoAsoBuilder().initialize(this.requisito);

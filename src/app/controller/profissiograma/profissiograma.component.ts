@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../global';
 import { Profissiograma } from './../../model/profissiograma';
@@ -17,8 +18,8 @@ export class ProfissiogramaComponent extends GenericListComponent<Profissiograma
     concluido: HTMLInputElement;
     @ViewChild("conc") c: ElementRef;
 
-    constructor(profissiogramaService: ProfissiogramaService, profissiogramaGuard: ProfissiogramaGuard) {
-        super(profissiogramaService, new ProfissiogramaFilter(), profissiogramaGuard);
+    constructor(profissiogramaService: ProfissiogramaService, profissiogramaGuard: ProfissiogramaGuard, router: Router) {
+        super(profissiogramaService, new ProfissiogramaFilter(), profissiogramaGuard, router);
     }
     
     ngAfterViewInit() {

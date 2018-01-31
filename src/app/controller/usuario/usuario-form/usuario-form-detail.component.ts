@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Usuario } from './../../../model/usuario';
@@ -19,8 +20,9 @@ export class UsuarioFormDetailComponent extends GenericFormComponent implements 
     perfis: Array<Perfil>;
     
     constructor( private route: ActivatedRoute,
-            private usuarioService: UsuarioService) { 
-            super(usuarioService);
+            private usuarioService: UsuarioService,
+            router: Router) { 
+            super(usuarioService, router);
             this.goTo = "usuario";
             
             this.perfis = new PerfilBuilder().initializeList(this.perfis);

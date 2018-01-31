@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker'; 
 
@@ -25,8 +26,9 @@ export class GheeFormDetailComponent extends GenericFormComponent implements OnI
     gheeFilter: GheeFilter = new GheeFilter();
     
     constructor( private route: ActivatedRoute,
-        private gheeService: GheeService) { 
-        super(gheeService);
+        private gheeService: GheeService,
+        router: Router) { 
+        super(gheeService, router);
         this.goTo = "ghee";
 
         this.ghee = new GheeBuilder().initialize(this.ghee);

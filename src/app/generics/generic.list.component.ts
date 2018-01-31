@@ -1,4 +1,5 @@
-import { EventEmitter, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { EventEmitter, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
 
@@ -10,7 +11,7 @@ import { GenericService } from './generic.service';
 import { TypeFilter } from './type.filter';
 import { ChildGuard } from './child.guard';
 
-export abstract class GenericListComponent<T, F extends GenericFilter, C extends ChildGuard> extends GenericComponent implements OnInit {
+export abstract class GenericListComponent<T, F extends GenericFilter, C extends ChildGuard> extends GenericComponent implements OnInit, OnDestroy {
     @ViewChild( 'arquivo' ) inputElArquivo: ElementRef;
     protected titulo: string;
     protected corTitulo;
@@ -30,9 +31,10 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     protected canImport;
     private tempDelete;
     protected canRemove: boolean;
-
-    constructor( protected service: GenericService, protected filter: F, protected guard: C ) {
-        super();
+    private listComponent: any;
+    
+    constructor( protected service: GenericService, protected filter: F, protected guard: C, router: Router ) {
+        super(router);
         this.corTitulo = GlobalVariable.COLOR_TITLE;
         this.msgError = '';
         this.verifyError = false;
@@ -49,7 +51,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         }];
         this.canImport = false;
         this.canRemove = false;
-
+        this.listComponent = this;
     }
 
     ngOnInit() {
@@ -199,7 +201,9 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
                 }
             } )
             .catch( error => {
+                this.showPreload = false;
                 this.canImport = false;
+                console.log(this.showPreload);
                 this.catchConfiguration( error );
             } )
     }
@@ -221,5 +225,11 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         } else {
             console.log('falta selecionar arquivo');
         }
+    }
+    
+    ngOnDestroy() {
+        this.closeModal();
+        this.closeModalDelete();
+        this.closeModalImport();
     }
 }

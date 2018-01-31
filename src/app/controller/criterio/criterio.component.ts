@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Criterio } from './../../model/criterio';
 import { CriterioService } from './criterio.service';
@@ -14,8 +15,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 export class CriterioComponent extends GenericListComponent<Criterio, CriterioFilter, CriterioGuard> {
     tipos: Array<string>;
 
-    constructor( service: CriterioService, criterioGuard: CriterioGuard ) {
-        super( service, new CriterioFilter(), criterioGuard );
+    constructor( service: CriterioService, criterioGuard: CriterioGuard, router: Router ) {
+        super( service, new CriterioFilter(), criterioGuard, router );
         
         this.tipos = new Array<string>();
         

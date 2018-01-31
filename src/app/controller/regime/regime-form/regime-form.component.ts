@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Regime } from './../../../model/regime';
@@ -16,8 +17,9 @@ export class RegimeFormComponent extends GenericFormComponent implements OnInit 
     regime: Regime;
     
     constructor( private route: ActivatedRoute,
-            private regimeService: RegimeService) { 
-            super(regimeService);
+            private regimeService: RegimeService,
+            router: Router) { 
+            super(regimeService, router);
             this.goTo = "regime";
             
             this.regime = new RegimeBuilder().initialize(this.regime);

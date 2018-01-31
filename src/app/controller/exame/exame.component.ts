@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { Exame } from './../../model/exame';
@@ -14,8 +15,8 @@ import { ExameService } from './exame.service';
 })
 export class ExameComponent extends GenericListComponent<Exame, ExameFilter, ExameGuard> {
 
-    constructor(exameService: ExameService, exameGuard: ExameGuard) {
-        super(exameService, new ExameFilter(), exameGuard);
+    constructor(exameService: ExameService, exameGuard: ExameGuard, router: Router) {
+        super(exameService, new ExameFilter(), exameGuard, router);
     }
 
 }

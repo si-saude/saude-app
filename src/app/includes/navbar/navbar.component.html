@@ -8,7 +8,9 @@
       <div class="nav-wrapper">
         <a href="#" class="brand-logo">INTEGRA SAÚDE</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <app-sidenav></app-sidenav>
+	        <li><app-sidenav></app-sidenav></li>
+	        <li *ngIf="logged"><a (click)="logoff()"><i class="material-icons icone-logoff">lock_outline</i></a>
+	        <li *ngIf="!logged"><a (click)="login()"><i class="material-icons icone-logoff">lock_open</i></a>
         </ul>
         <div class="router">
         	{{route}}

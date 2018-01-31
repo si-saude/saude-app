@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Servico } from './../../model/servico';
 import { ServicoService } from './servico.service';
@@ -16,8 +17,8 @@ export class ServicoComponent extends GenericListComponent<Servico, ServicoFilte
     publico: HTMLInputElement;
     flagPublico: number = 0;
 
-    constructor( service: ServicoService, servicoGuard: ServicoGuard ) {
-        super( service, new ServicoFilter(), servicoGuard );
+    constructor( service: ServicoService, servicoGuard: ServicoGuard, router: Router ) {
+        super( service, new ServicoFilter(), servicoGuard, router );
     }
     
     ngAfterViewInit() {

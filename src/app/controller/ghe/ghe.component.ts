@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Ghe } from './../../model/ghe';
 import { GheFilter } from './ghe.filter';
@@ -14,8 +15,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 export class GheComponent extends GenericListComponent<Ghe, GheFilter, GheGuard> implements OnInit {
     filtro: GheFilter;
 
-    constructor(service: GheService, gheGuard: GheGuard) {
-        super(service, new GheFilter(), gheGuard);
+    constructor(service: GheService, gheGuard: GheGuard, router: Router) {
+        super(service, new GheFilter(), gheGuard, router);
         
         this.filtro = new GheFilter();
     }

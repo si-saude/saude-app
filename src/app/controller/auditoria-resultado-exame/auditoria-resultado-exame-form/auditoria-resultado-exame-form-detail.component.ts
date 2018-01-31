@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
 
@@ -45,8 +45,9 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
     selectedExm = null;
     
     constructor( private route: ActivatedRoute,
-        private empregadoConvocacaoService: EmpregadoConvocacaoService ) {
-        super( empregadoConvocacaoService );
+        private empregadoConvocacaoService: EmpregadoConvocacaoService,
+        router: Router) {
+        super( empregadoConvocacaoService, router );
         this.goTo = "auditoria-resultado-exame";
         
         this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().initialize( this.empregadoConvocacao );

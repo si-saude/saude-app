@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Gerencia } from './../../../model/gerencia';
@@ -28,8 +29,9 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
 
     constructor( private route: ActivatedRoute,
         private gerenciaService: GerenciaService,
-        private empregadoService: EmpregadoService ) {
-        super( gerenciaService );
+        private empregadoService: EmpregadoService,
+        router: Router) {
+        super( gerenciaService, router );
         this.goTo = "gerencia";
 
         this.gerentes = new Array<Empregado>();
@@ -66,6 +68,9 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
                                 this.secretarios2.push( new EmpregadoBuilder().clone( this.gerencia.getSecretario2() ) );
 
                             this.getGerencias();
+                            this.saveArrayGerentes();
+                            this.saveArraySecretario1();
+                            this.saveArraySecretario2();
 
                         } )
                         .catch( error => {
@@ -166,7 +171,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
             if ( evento.length > 3 ) {
                 this.empregadoService.getEmpregadoByName( evento )
                     .then( res => {
-                        this.mountEmpregados(res.json(), this.gerentes);
+                        this.gerentes = new EmpregadoBuilder().cloneList(res.json());
                         this.autocompleteGerente = [this.buildAutocompleteEmpregado( this.gerentes )];
                     } )
                     .catch( error => {
@@ -182,7 +187,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
             this.oldChaveGerente = evento;
             this.empregadoService.getEmpregadoByChave( evento )
                 .then( res => {
-                    this.mountEmpregados(res.json(), this.gerentes);
+                    this.gerentes = new EmpregadoBuilder().cloneList(res.json());
                     this.autocompleteGerente = [this.buildAutocompleteEmpregado( this.gerentes )];
                 } )
                 .catch( error => {
@@ -199,7 +204,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
 
                 this.empregadoService.getEmpregadoByName( evento )
                     .then( res => {
-                        this.mountEmpregados(res.json(), this.secretarios1);
+                        this.secretarios1 = new EmpregadoBuilder().cloneList(res.json());
                         this.autocompleteSecretario1 = [this.buildAutocompleteEmpregado( this.secretarios1 )];
                     } )
                     .catch( error => {
@@ -215,7 +220,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
             this.oldChaveSecretario1 = evento;
             this.empregadoService.getEmpregadoByChave( evento )
                 .then( res => {
-                    this.mountEmpregados(res.json(), this.secretarios1);
+                    this.secretarios1 = new EmpregadoBuilder().cloneList(res.json());
                     this.autocompleteSecretario1 = [this.buildAutocompleteEmpregado( this.secretarios1 )];
                 } )
                 .catch( error => {
@@ -232,7 +237,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
 
                 this.empregadoService.getEmpregadoByName( evento )
                     .then( res => {
-                        this.mountEmpregados(res.json(), this.secretarios2);
+                        this.secretarios2 = new EmpregadoBuilder().cloneList(res.json());
                         this.autocompleteSecretario2 = [this.buildAutocompleteEmpregado( this.secretarios2 )];
                     } )
                     .catch( error => {
@@ -248,7 +253,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
             this.oldChaveSecretario2 = evento;
             this.empregadoService.getEmpregadoByChave( evento )
                 .then( res => {
-                    this.mountEmpregados( res.json(), this.secretarios2 );
+                    this.secretarios2 = new EmpregadoBuilder().cloneList(res.json());
                     this.autocompleteSecretario2 = [this.buildAutocompleteEmpregado( this.secretarios2 )];
                 } )
                 .catch( error => {
@@ -257,18 +262,6 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
         }
     }
     
-    mountEmpregados( res, list: Array<Empregado> ) {
-        let emps = new EmpregadoBuilder().cloneList( res );
-        if ( list.length == 0 )
-            emps.forEach(e => list.push(e));
-        else {
-            emps.forEach(eps => {
-                let e: Empregado = list.find( es => es.getId() == eps.getId() );
-                if ( e == undefined ) list.push(eps); 
-            })
-        }        
-    }
-
     buildAutocompleteEmpregado( empregados ) {
         let data = {};
         empregados.forEach( item => {
@@ -280,6 +273,20 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
 
         return array;
     }
-
+    
+    saveArrayGerentes() {
+        if ( this.gerencia.getGerente().getId() > 0 )
+            this.gerentes.push(this.gerencia.getGerente());
+    }
+    
+    saveArraySecretario1() {
+        if ( this.gerencia.getSecretario1().getId() > 0 )
+            this.gerentes.push(this.gerencia.getGerente());    
+    }
+    
+    saveArraySecretario2() {
+        if ( this.gerencia.getSecretario2().getId() > 0 )
+            this.gerentes.push(this.gerencia.getGerente());
+    }
 
 }

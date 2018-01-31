@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Usuario } from './../../model/usuario';
 import { UsuarioService } from './usuario.service';
@@ -16,8 +17,8 @@ export class UsuarioComponent extends GenericListComponent<Usuario, UsuarioFilte
     gestorCss: HTMLInputElement;
     flagGestorCss: number = 0;
     
-    constructor( service: UsuarioService, usuarioGuard: UsuarioGuard ) {
-        super( service, new UsuarioFilter(), usuarioGuard );
+    constructor( service: UsuarioService, usuarioGuard: UsuarioGuard, router: Router ) {
+        super( service, new UsuarioFilter(), usuarioGuard, router );
     }
 
     ngAfterViewInit() {

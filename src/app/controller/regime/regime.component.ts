@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Regime } from './../../model/regime';
 import { RegimeService } from './regime.service';
@@ -13,8 +14,8 @@ import { RegimeGuard } from './../../guards/guards-child/regime.guard';
 })
 export class RegimeComponent extends GenericListComponent<Regime, RegimeFilter, RegimeGuard> {
 
-  constructor(service: RegimeService, regimeGuard: RegimeGuard) {
-      super(service, new RegimeFilter(), regimeGuard);
+  constructor(service: RegimeService, regimeGuard: RegimeGuard, router: Router) {
+      super(service, new RegimeFilter(), regimeGuard, router);
   }
   
 }

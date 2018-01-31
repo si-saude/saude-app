@@ -68,10 +68,6 @@
 											type="text" disabled
 											name="empregadoConvocacao.resultadoExames[{{iREx}}].exame.codigo"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.codigo">
-										<input
-											id="exame[{{iREx}}]" type="hidden"
-											name="exame[{{iREx}}]"
-											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.id">
 										<input class="col s9"
 											type="text" materialize="autocomplete" autocomplete="off"
 											name="exame[{{iREx}}]"
@@ -192,9 +188,11 @@
 											<tr class="col s12">
 												<td class="col s1 codigo">{{itemResultadoExame.codigo}}</td>
 												<td class="col s3 titulo">{{itemResultadoExame.titulo}}</td>
-												<td class="col s7 resultado"><input id="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
-													type="text" name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
-													[(ngModel)]="itemResultadoExame.resultado"></td>
+												<td class="col s7 resultado">
+													<textarea id="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+														name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+														[(ngModel)]="itemResultadoExame.resultado"></textarea>
+												</td>
 												<td class="col s1 botao-remover"><a
 													class="btn-floating waves-effect waves-light red btn-remove"
 													(click)="removeItemResultadoExame(iREx, i)"> <i

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../global';
 import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
@@ -17,7 +18,8 @@ export class EmpregadoConvocacaoComponent
     extends GenericListComponent<EmpregadoConvocacao, EmpregadoConvocacaoFilter, EmpregadoConvocacaoGuard> {
     
     constructor(empregadoConvocacaoService: EmpregadoConvocacaoService,
-                empregadoConvocacaoGuard: EmpregadoConvocacaoGuard) {
-        super(empregadoConvocacaoService, new EmpregadoConvocacaoFilter(), empregadoConvocacaoGuard);
+                empregadoConvocacaoGuard: EmpregadoConvocacaoGuard,
+                router: Router) {
+        super(empregadoConvocacaoService, new EmpregadoConvocacaoFilter(), empregadoConvocacaoGuard, router);
     }   
 }

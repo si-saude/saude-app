@@ -29,7 +29,7 @@ export class PreloadComponent implements OnInit {
       else setTimeout(() => this.modalPreload.emit({action: "modal", params: ["close"]}), 1);
   }
   
-  onDestroy() {
+  ngOnDestroy() {
       this.modalPreload.emit({action: "modal", params: ["close"]});
   }
   

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Cargo } from './../../../model/cargo';
@@ -20,8 +21,9 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
     cursosSelecteds: Array<Curso>;
     
     constructor( private route: ActivatedRoute,
-            private cargoService: CargoService) { 
-            super(cargoService);
+            private cargoService: CargoService,
+            router: Router) { 
+            super(cargoService, router);
             
             this.goTo = "cargo";
             this.cargo = new CargoBuilder().initialize(this.cargo);

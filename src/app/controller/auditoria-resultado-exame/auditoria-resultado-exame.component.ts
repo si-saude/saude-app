@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
 
@@ -31,8 +32,9 @@ export class AuditoriaResultadoExameComponent
     
     constructor(private resultadoExameService: ResultadoExameService, 
                 auditoriaResultadoExameService: EmpregadoConvocacaoService,
-                auditoriaResultadoExameGuard: AuditoriaResultadoExameGuard) {
-        super(auditoriaResultadoExameService, new EmpregadoConvocacaoFilter(), auditoriaResultadoExameGuard);
+                auditoriaResultadoExameGuard: AuditoriaResultadoExameGuard,
+                router: Router) {
+        super(auditoriaResultadoExameService, new EmpregadoConvocacaoFilter(), auditoriaResultadoExameGuard, router);
         this.modalConfirmImport = new EventEmitter<string | MaterializeAction>();
         this.msnConfirmImport = "";
     }

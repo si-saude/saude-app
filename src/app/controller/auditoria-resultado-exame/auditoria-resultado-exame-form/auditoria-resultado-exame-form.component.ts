@@ -50,8 +50,9 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     selectedExm = null;
 
     constructor( private route: ActivatedRoute,
-        private empregadoConvocacaoService: EmpregadoConvocacaoService ) {
-        super( empregadoConvocacaoService );
+        private empregadoConvocacaoService: EmpregadoConvocacaoService,
+        router: Router ) {
+        super( empregadoConvocacaoService, router );
         this.goTo = "auditoria-resultado-exame";
 
         this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().initialize( this.empregadoConvocacao );
@@ -259,12 +260,13 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         if ( this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() !== undefined ) {
 
             let exame = this.arrayExames.find( ex => {
-                if ( (ex.getCodigo() + " - " + ex.getDescricao()) ==
-                    this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() ||
-                    ex.getDescricao() == this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao())
+                if ( ( ex.getCodigo() + " - " + ex.getDescricao() ==
+                    this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() ) ||
+                    ( ex.getDescricao() == 
+                        this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() ) )
                     return true;
                 else return false;
-            });
+            } );
             if ( exame !== undefined ) {
                 this.empregadoConvocacao.getResultadoExames()[indexREx].setExame(exame);
             } else this.empregadoConvocacao.getResultadoExames()[indexREx].setExame( new ExameBuilder().initialize( new Exame() ) );
@@ -324,13 +326,15 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             
         }
     }
-    
+
     saveArrayExames() {
         if ( this.empregadoConvocacao.getResultadoExames().length > 0 ) {
-            this.empregadoConvocacao.getResultadoExames().forEach(rEx => {
-                this.arrayExames.push( rEx.getExame() );
+            this.empregadoConvocacao.getResultadoExames().forEach(rE => {
+                this.arrayExames.push( rE.getExame() );
             })
-        }
+        } 
+            
+        
     }
 
 }

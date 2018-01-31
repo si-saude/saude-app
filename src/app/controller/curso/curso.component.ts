@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { MaterializeDirective, MaterializeAction } from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
@@ -19,8 +19,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 export class CursoComponent extends GenericListComponent<Curso, CursoFilter, CursoGuard> {
     filtro: CursoFilter;
 
-    constructor( cursoService: CursoService, cursoGuard: CursoGuard ) {
-        super( cursoService, new CursoFilter(), cursoGuard );
+    constructor( cursoService: CursoService, cursoGuard: CursoGuard, router: Router ) {
+        super( cursoService, new CursoFilter(), cursoGuard, router );
         
         this.filtro = new CursoFilter();
     }

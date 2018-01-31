@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Curso } from './../../../model/curso';
@@ -16,8 +17,9 @@ export class CursoFormComponent extends GenericFormComponent implements OnInit {
     curso: Curso;
     
     constructor( private route: ActivatedRoute,
-            private cursoService: CursoService) { 
-            super(cursoService);
+            private cursoService: CursoService,
+            router: Router) { 
+            super(cursoService, router);
             
             this.goTo = "curso";
             this.curso = new CursoBuilder().initialize(this.curso);

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { MaterializeDirective, MaterializeAction } from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
@@ -18,8 +18,8 @@ import { Equipe } from './../../model/equipe';
 } )
 export class EquipeComponent extends GenericListComponent<Equipe, EquipeFilter, EquipeGuard>  {
 
-    constructor( equipeService: EquipeService, equipeGuard: EquipeGuard) {
-        super(equipeService, new EquipeFilter(), equipeGuard);
+    constructor( equipeService: EquipeService, equipeGuard: EquipeGuard, router: Router) {
+        super(equipeService, new EquipeFilter(), equipeGuard, router);
     }
 
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { IndicadorRiscoErgonomico } from './../../model/indicador-risco-ergonomico';
@@ -14,8 +15,8 @@ import { IndicadorRiscoErgonomicoGuard } from './../../guards/guards-child/indic
 })
 export class IndicadorRiscoErgonomicoComponent extends GenericListComponent<IndicadorRiscoErgonomico, IndicadorRiscoErgonomicoFilter, IndicadorRiscoErgonomicoGuard> {
 
-    constructor(indicadorRiscoErgonomicoService: IndicadorRiscoErgonomicoService, indicadorRiscoErgonomicoGuard: IndicadorRiscoErgonomicoGuard) {
-        super(indicadorRiscoErgonomicoService, new IndicadorRiscoErgonomicoFilter(), indicadorRiscoErgonomicoGuard);
+    constructor(indicadorRiscoErgonomicoService: IndicadorRiscoErgonomicoService, indicadorRiscoErgonomicoGuard: IndicadorRiscoErgonomicoGuard, router: Router) {
+        super(indicadorRiscoErgonomicoService, new IndicadorRiscoErgonomicoFilter(), indicadorRiscoErgonomicoGuard, router);
     }
 
 }

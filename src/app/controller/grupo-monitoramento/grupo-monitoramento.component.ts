@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { GrupoMonitoramento } from './../../model/grupo-monitoramento';
@@ -22,8 +23,8 @@ export class GrupoMonitoramentoComponent extends GenericListComponent<GrupoMonit
     flagRelatorio: number = 0;
     flagAuditoriaAso: number = 0;
     
-    constructor(grupoMonitoramentoService: GrupoMonitoramentoService, grupoMonitoramentoGuard: GrupoMonitoramentoGuard) {
-        super(grupoMonitoramentoService, new GrupoMonitoramentoFilter(), grupoMonitoramentoGuard);
+    constructor(grupoMonitoramentoService: GrupoMonitoramentoService, grupoMonitoramentoGuard: GrupoMonitoramentoGuard, router: Router) {
+        super(grupoMonitoramentoService, new GrupoMonitoramentoFilter(), grupoMonitoramentoGuard, router);
     }
     
     ngAfterViewInit() {

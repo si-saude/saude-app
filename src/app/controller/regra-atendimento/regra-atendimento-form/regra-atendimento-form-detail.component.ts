@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MaterializeDirective,MaterializeAction } from "angular2-materialize";
 
@@ -33,8 +34,9 @@ export class RegraAtendimentoFormDetailComponent extends GenericFormComponent im
     selectedEqp = null;
     
     constructor( private route: ActivatedRoute,
-            private regraAtendimentoService: RegraAtendimentoService) { 
-            super(regraAtendimentoService);
+            private regraAtendimentoService: RegraAtendimentoService,
+            router: Router) { 
+            super(regraAtendimentoService, router);
             this.goTo = "regra-atendimento";
             
             this.arrayRequisito = new Array<RegraAtendimentoEquipeRequisito>();

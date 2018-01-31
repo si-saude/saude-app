@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Cidade } from './../../../model/cidade';
@@ -16,8 +17,9 @@ export class CidadeFormDetailComponent extends GenericFormComponent implements O
     cidade: Cidade;
 
     constructor( private route: ActivatedRoute,
-        private cidadeService: CidadeService ) {
-        super( cidadeService );
+        private cidadeService: CidadeService,
+        router: Router) {
+        super( cidadeService, router );
 
         this.goTo = "cidade";
         this.cidade = new CidadeBuilder().initialize( this.cidade );

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../global';
 import { Periodicidade } from './../../model/periodicidade';
@@ -14,8 +15,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class PeriodicidadeComponent extends GenericListComponent<Periodicidade, PeriodicidadeFilter, PeriodicidadeGuard> {
     
-    constructor(periodicidadeService: PeriodicidadeService, periodicidadeGuard: PeriodicidadeGuard) {
-        super(periodicidadeService, new PeriodicidadeFilter(), periodicidadeGuard);
+    constructor(periodicidadeService: PeriodicidadeService, periodicidadeGuard: PeriodicidadeGuard, router: Router) {
+        super(periodicidadeService, new PeriodicidadeFilter(), periodicidadeGuard, router);
     }
       
 }

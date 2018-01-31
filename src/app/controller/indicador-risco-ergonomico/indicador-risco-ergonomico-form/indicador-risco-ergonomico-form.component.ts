@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { IndicadorRiscoErgonomico } from './../../../model/indicador-risco-ergonomico';
@@ -22,8 +23,9 @@ export class IndicadorRiscoErgonomicoFormComponent extends GenericFormComponent 
     indicadorRiscoErgonomicoFilter: IndicadorRiscoErgonomicoFilter = new IndicadorRiscoErgonomicoFilter();
     
     constructor( private route: ActivatedRoute,
-        private indicadorRiscoErgonomicoService: IndicadorRiscoErgonomicoService) { 
-        super(indicadorRiscoErgonomicoService);
+        private indicadorRiscoErgonomicoService: IndicadorRiscoErgonomicoService,
+        router: Router) { 
+        super(indicadorRiscoErgonomicoService, router);
         this.goTo = "indicador-risco-ergonomico";
         
         this.indicadorRiscoErgonomico = new IndicadorRiscoErgonomicoBuilder().initialize(this.indicadorRiscoErgonomico);

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Base } from './../../../model/base';
@@ -16,8 +17,9 @@ export class BaseFormComponent extends GenericFormComponent implements OnInit {
     base: Base;
 
     constructor( private route: ActivatedRoute,
-        private baseService: BaseService) {
-        super( baseService );
+        private baseService: BaseService,
+        router: Router) {
+        super( baseService, router );
 
         this.goTo = "base";
         this.base = new BaseBuilder().initialize( this.base );

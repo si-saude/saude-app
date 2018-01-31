@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Aso } from './../../model/aso';
 import { AuditoriaAsoService } from './auditoria-aso.service';
@@ -13,8 +14,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 } )
 export class AuditoriaAsoComponent extends GenericListComponent<Aso, AsoFilter, AuditoriaAsoGuard> {
 
-    constructor( service: AuditoriaAsoService, auditoriaAsoGuard: AuditoriaAsoGuard ) {
-        super( service, new AsoFilter(), auditoriaAsoGuard );
+    constructor( service: AuditoriaAsoService, auditoriaAsoGuard: AuditoriaAsoGuard, router: Router ) {
+        super( service, new AsoFilter(), auditoriaAsoGuard, router );
     }
 
 }

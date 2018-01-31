@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
@@ -18,8 +18,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class LocalizacaoComponent extends GenericListComponent<Localizacao, LocalizacaoFilter, LocalizacaoGuard> {
 
-  constructor(localizacaoService: LocalizacaoService, localizacaoGuard: LocalizacaoGuard) {
-      super(localizacaoService, new LocalizacaoFilter(), localizacaoGuard);
+  constructor(localizacaoService: LocalizacaoService, localizacaoGuard: LocalizacaoGuard, router: Router) {
+      super(localizacaoService, new LocalizacaoFilter(), localizacaoGuard, router);
   }
   
 }

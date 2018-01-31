@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
 
@@ -45,8 +45,9 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
     instalacaoFilter: InstalacaoFilter = new InstalacaoFilter();
 
     constructor( private route: ActivatedRoute,
-        private instalacaoService: InstalacaoService ) {
-        super( instalacaoService );
+        private instalacaoService: InstalacaoService,
+        router: Router) {
+        super( instalacaoService, router );
         this.goTo = "instalacao";
 
         this.instalacao = new InstalacaoBuilder().initialize( this.instalacao );

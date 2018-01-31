@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker'; 
 
@@ -48,8 +49,9 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
     
     constructor( private route: ActivatedRoute,
-        private profissionalSaudeService: ProfissionalSaudeService) { 
-        super(profissionalSaudeService);
+        private profissionalSaudeService: ProfissionalSaudeService,
+        router: Router) { 
+        super(profissionalSaudeService, router);
         this.goTo = "profissional-saude";
         
         this.dataCurriculoCursos = new Array<any>();

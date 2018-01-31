@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Vacina } from './../../model/vacina';
 import { VacinaService } from './vacina.service';
@@ -14,8 +15,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 export class VacinaComponent extends GenericListComponent<Vacina, VacinaFilter, VacinaGuard> {
     filtro: VacinaFilter;
 
-    constructor( service: VacinaService, vacinaGuard: VacinaGuard ) {
-        super( service, new VacinaFilter(), vacinaGuard );
+    constructor( service: VacinaService, vacinaGuard: VacinaGuard, router: Router ) {
+        super( service, new VacinaFilter(), vacinaGuard, router );
         
         this.filtro = new VacinaFilter();
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { IndicadorRiscoAcidente } from './../../../model/indicador-risco-acidente';
@@ -22,8 +23,9 @@ export class IndicadorRiscoAcidenteFormComponent extends GenericFormComponent im
     indicadorRiscoAcidenteFilter: IndicadorRiscoAcidenteFilter = new IndicadorRiscoAcidenteFilter();
     
     constructor( private route: ActivatedRoute,
-        private indicadorRiscoAcidenteService: IndicadorRiscoAcidenteService) { 
-        super(indicadorRiscoAcidenteService);
+        private indicadorRiscoAcidenteService: IndicadorRiscoAcidenteService,
+        router: Router) { 
+        super(indicadorRiscoAcidenteService, router);
         this.goTo = "indicador-risco-acidente";
         
         this.indicadorRiscoAcidente = new IndicadorRiscoAcidenteBuilder().initialize(this.indicadorRiscoAcidente);

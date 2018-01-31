@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { RelatorioMedico } from './../../../model/relatorio-medico';
@@ -16,8 +17,9 @@ export class RelatorioMedicoFormDetailComponent extends GenericFormComponent imp
     relatorioMedico: RelatorioMedico;
     
     constructor( private route: ActivatedRoute,
-            private relatorioMedicoService: RelatorioMedicoService) { 
-            super(relatorioMedicoService);
+            private relatorioMedicoService: RelatorioMedicoService,
+            router: Router) { 
+            super(relatorioMedicoService, router);
             this.goTo = "relatorio-medico";
             
             this.relatorioMedico = new RelatorioMedicoBuilder().initialize(this.relatorioMedico);

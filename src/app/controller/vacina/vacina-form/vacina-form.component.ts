@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Vacina } from './../../../model/vacina';
@@ -16,8 +17,9 @@ export class VacinaFormComponent extends GenericFormComponent implements OnInit 
     vacina: Vacina;
     
     constructor( private route: ActivatedRoute,
-            private vacinaService: VacinaService) { 
-            super(vacinaService);
+            private vacinaService: VacinaService,
+            router: Router) { 
+            super(vacinaService, router);
             this.goTo = "vacina";
             
             this.vacina = new VacinaBuilder().initialize(this.vacina);

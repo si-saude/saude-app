@@ -87,7 +87,7 @@ export class FilaComponent {
 
             this.atendimento.setRegra( this.regraAtendimento );
             this.atendimento.setFilaEsperaOcupacional( this.filaEsperaOcupacional );
-            this.inscricao = TimerObservable.create(0, 20000)
+            this.inscricao = TimerObservable.create(0, 15000)
                 .takeWhile(() => this.alive )
                 .subscribe(() => {
                     this.refresh();
