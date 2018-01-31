@@ -53,20 +53,16 @@ const routes: Routes = [
   { path: 'contato', component: ContatoComponent },
   { path: 'permissao', component: PermissaoComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'perfil', loadChildren: 'app/controller/perfil/perfil.module#PerfilModule'
-//      ,canActivateChild: [PerfilGuard]
-  },
-  { path: 'localizacao', loadChildren: 'app/controller/localizacao/localizacao.module#LocalizacaoModule'
-//      ,canActivateChild: [LocalizacaoGuard]
-      },
+  { path: 'perfil', loadChildren: 'app/controller/perfil/perfil.module#PerfilModule',
+      canActivateChild: [PerfilGuard]},
+  { path: 'localizacao', loadChildren: 'app/controller/localizacao/localizacao.module#LocalizacaoModule',
+          canActivateChild: [LocalizacaoGuard]},
   { path: 'equipe', loadChildren: 'app/controller/equipe/equipe.module#EquipeModule',
       canActivateChild: [EquipeGuard]},
-  { path: 'gerencia', loadChildren: 'app/controller/gerencia/gerencia.module#GerenciaModule'
-//      ,canActivateChild: [GerenciaGuard]
-      },
-  { path: 'profissional-saude', loadChildren: 'app/controller/profissional-saude/profissional-saude.module#ProfissionalSaudeModule'
-//      ,canActivateChild: [ProfissionalSaudeGuard]
-      },
+  { path: 'gerencia', loadChildren: 'app/controller/gerencia/gerencia.module#GerenciaModule',
+          canActivateChild: [GerenciaGuard]},
+  { path: 'profissional-saude', loadChildren: 'app/controller/profissional-saude/profissional-saude.module#ProfissionalSaudeModule',
+              canActivateChild: [ProfissionalSaudeGuard]},
   { path: 'cargo', loadChildren: 'app/controller/cargo/cargo.module#CargoModule',
       canActivateChild: [CargoGuard]},
   { path: 'curso', loadChildren: 'app/controller/curso/curso.module#CursoModule',
@@ -92,16 +88,14 @@ const routes: Routes = [
   { path: 'indicador-risco-saude-ambiental', 
       loadChildren: 'app/controller/indicador-risco-saude-ambiental/indicador-risco-saude-ambiental.module#IndicadorRiscoSaudeAmbientalModule',
       canActivateChild: [IndicadorRiscoSaudeAmbientalGuard]},
-  { path: 'instalacao', loadChildren: 'app/controller/instalacao/instalacao.module#InstalacaoModule'
-//      ,canActivateChild: [InstalacaoGuard]
-      },
+  { path: 'instalacao', loadChildren: 'app/controller/instalacao/instalacao.module#InstalacaoModule',
+          canActivateChild: [InstalacaoGuard]},
   { path: 'funcao', loadChildren: 'app/controller/funcao/funcao.module#FuncaoModule',
       canActivateChild: [FuncaoGuard]},
   { path: 'regime', loadChildren: 'app/controller/regime/regime.module#RegimeModule', 
       canActivateChild: [RegimeGuard]},
-  { path: 'base', loadChildren: 'app/controller/base/base.module#BaseModule'
-//      ,canActivateChild: [BaseGuard]
-      },
+  { path: 'base', loadChildren: 'app/controller/base/base.module#BaseModule',
+          canActivateChild: [BaseGuard]},
   { path: 'ghee', loadChildren: 'app/controller/ghee/ghee.module#GheeModule',
       canActivateChild: [GheeGuard]},
   { path: 'empregado', loadChildren: 'app/controller/empregado/empregado.module#EmpregadoModule',
@@ -124,9 +118,8 @@ const routes: Routes = [
       canActivateChild: [ConvocacaoGuard]},
   { path: 'auditoria-exame', loadChildren: 'app/controller/empregado-convocacao/empregado-convocacao.module#EmpregadoConvocacaoModule',
       canActivateChild: [EmpregadoConvocacaoGuard]},
-  { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule'
-//      ,canActivateChild: [UsuarioGuard]
-      },
+  { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule',
+          canActivateChild: [UsuarioGuard]},
   { path: 'relatorio-medico', loadChildren: 'app/controller/relatorio-medico/relatorio-medico.module#RelatorioMedicoModule' ,
       canActivateChild: [RelatorioMedicoGuard]},
   { path: 'feriado', loadChildren: 'app/controller/feriado/feriado.module#FeriadoModule',
