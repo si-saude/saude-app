@@ -70,4 +70,18 @@ export class EmpregadoConvocacaoService extends GenericService {
         return this.selectList(empregadoConvocacaoFilter);
     }
     
+    getExameByDescricao( descricao: string ) {
+        let exameFilter: ExameFilter = new ExameFilter();
+        exameFilter.setDescricao(descricao)
+        
+        return this.exameService.selectList( exameFilter );
+    }
+    
+    getExameByCodigo( codigo: string ) {
+        let exameFilter: ExameFilter = new ExameFilter();
+        exameFilter.setCodigo( codigo );
+        
+        return this.exameService.selectList( exameFilter );
+    }
+    
 }

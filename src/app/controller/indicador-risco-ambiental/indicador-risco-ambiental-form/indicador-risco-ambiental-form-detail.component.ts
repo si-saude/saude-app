@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { IndicadorRiscoAmbiental } from './../../../model/indicador-risco-ambiental';
@@ -22,8 +23,9 @@ export class IndicadorRiscoAmbientalFormDetailComponent extends GenericFormCompo
     indicadorRiscoAmbientalFilter: IndicadorRiscoAmbientalFilter = new IndicadorRiscoAmbientalFilter();
     
     constructor( private route: ActivatedRoute,
-        private indicadorRiscoAmbientalService: IndicadorRiscoAmbientalService) { 
-        super(indicadorRiscoAmbientalService);
+        private indicadorRiscoAmbientalService: IndicadorRiscoAmbientalService,
+        router: Router) { 
+        super(indicadorRiscoAmbientalService, router);
         this.goTo = "indicador-risco-ambiental";
         
         this.indicadorRiscoAmbiental = new IndicadorRiscoAmbientalBuilder().initialize(this.indicadorRiscoAmbiental);

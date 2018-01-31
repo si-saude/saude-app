@@ -14,8 +14,8 @@ export abstract class GenericComponent {
     protected msgError: string;
     protected verifyError: boolean = false;
     protected myDatePickerOptions: IMyDpOptions;
-
-    constructor() {
+    
+    constructor( private router: Router ) {
         this.showPreload = true;
         this.showConfirmSave = false;
         this.msgConfirmSave = "Salvo com sucesso! Ao confirmar, você será redirecionado para a tela de listagem.";
@@ -32,8 +32,8 @@ export abstract class GenericComponent {
         
         switch ( error.status ) {
             case 401:
-                localStorage.setItem( 'token', '' );
-                this.msgError = "Usuário ou senha inválidos.";
+                localStorage.clear();
+                this.router.navigate(["login"]);
                 break;
             case 500:
                 this.msgError = "Erro interno do servidor. Por favor, entre em contado com o administrador do sistema.";
@@ -82,7 +82,6 @@ export abstract class GenericComponent {
         }
         let s = data.split( "T" );
         let datas = s[0].split( "-" );
-
 
         return datas[2] + "/" + datas[1] + "/" + datas[0];
     }

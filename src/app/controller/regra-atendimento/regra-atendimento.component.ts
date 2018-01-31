@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { RegraAtendimento } from './../../model/regra-atendimento';
 import { RegraAtendimentoService } from './regra-atendimento.service';
@@ -13,8 +14,8 @@ import { RegraAtendimentoGuard } from './../../guards/guards-child/regra-atendim
 })
 export class RegraAtendimentoComponent extends GenericListComponent<RegraAtendimento, RegraAtendimentoFilter, RegraAtendimentoGuard> {
 
-  constructor(service: RegraAtendimentoService, regraAtendimentoGuard: RegraAtendimentoGuard) {
-      super(service, new RegraAtendimentoFilter(), regraAtendimentoGuard);
+  constructor(service: RegraAtendimentoService, regraAtendimentoGuard: RegraAtendimentoGuard, router: Router) {
+      super(service, new RegraAtendimentoFilter(), regraAtendimentoGuard, router);
   }
   
 }

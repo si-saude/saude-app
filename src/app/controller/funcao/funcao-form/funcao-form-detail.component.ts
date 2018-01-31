@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Funcao } from './../../../model/funcao';
@@ -20,8 +21,9 @@ export class FuncaoFormDetailComponent extends GenericFormComponent implements O
     vacinasSelecteds: Array<Vacina>;
     
     constructor( private route: ActivatedRoute,
-            private funcaoService: FuncaoService) { 
-            super(funcaoService);
+            private funcaoService: FuncaoService,
+            router: Router) { 
+            super(funcaoService, router);
             this.goTo = "funcao";
             
             this.funcao = new FuncaoBuilder().initialize(this.funcao);

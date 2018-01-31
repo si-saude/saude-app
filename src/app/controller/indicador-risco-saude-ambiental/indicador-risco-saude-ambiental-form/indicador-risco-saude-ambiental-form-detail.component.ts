@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { IndicadorRiscoSaudeAmbiental } from './../../../model/indicador-risco-saude-ambiental';
@@ -22,8 +23,9 @@ export class IndicadorRiscoSaudeAmbientalFormDetailComponent extends GenericForm
     indicadorRiscoSaudeAmbientalFilter: IndicadorRiscoSaudeAmbientalFilter = new IndicadorRiscoSaudeAmbientalFilter();
     
     constructor( private route: ActivatedRoute,
-        private indicadorRiscoSaudeAmbientalService: IndicadorRiscoSaudeAmbientalService) { 
-        super(indicadorRiscoSaudeAmbientalService);
+        private indicadorRiscoSaudeAmbientalService: IndicadorRiscoSaudeAmbientalService,
+        router: Router) { 
+        super(indicadorRiscoSaudeAmbientalService, router);
         this.goTo = "indicador-risco-saude-ambiental";
         
         this.indicadorRiscoSaudeAmbiental = new IndicadorRiscoSaudeAmbientalBuilder().initialize(this.indicadorRiscoSaudeAmbiental);

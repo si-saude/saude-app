@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { IndicadorRiscoAcidente } from './../../model/indicador-risco-acidente';
@@ -14,8 +15,8 @@ import { IndicadorRiscoAcidenteService } from './indicador-risco-acidente.servic
 })
 export class IndicadorRiscoAcidenteComponent extends GenericListComponent<IndicadorRiscoAcidente, IndicadorRiscoAcidenteFilter, IndicadorRiscoAcidenteGuard> {
 
-    constructor(indicadorRiscoAcidenteService: IndicadorRiscoAcidenteService, indicadorRiscoAcidenteGuard: IndicadorRiscoAcidenteGuard) {
-        super(indicadorRiscoAcidenteService, new IndicadorRiscoAcidenteFilter(), indicadorRiscoAcidenteGuard);
+    constructor(indicadorRiscoAcidenteService: IndicadorRiscoAcidenteService, indicadorRiscoAcidenteGuard: IndicadorRiscoAcidenteGuard, router: Router) {
+        super(indicadorRiscoAcidenteService, new IndicadorRiscoAcidenteFilter(), indicadorRiscoAcidenteGuard, router);
     }
 
 }

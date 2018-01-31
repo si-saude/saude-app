@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Criterio } from './../../../model/criterio';
@@ -29,8 +30,9 @@ export class CriterioFormDetailComponent extends GenericFormComponent implements
     selectedRelatorioMedico: boolean;
 
     constructor( private route: ActivatedRoute,
-        private criterioService: CriterioService ) {
-        super( criterioService );
+        private criterioService: CriterioService,
+        router: Router) {
+        super( criterioService, router );
         this.goTo = "criterio";
 
         this.cargos = new Array<Cargo>();

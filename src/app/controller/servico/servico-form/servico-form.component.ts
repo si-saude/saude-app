@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import {MaterializeDirective,MaterializeAction} from "angular2-materialize";
 
@@ -28,8 +29,9 @@ export class ServicoFormComponent extends GenericFormComponent implements OnInit
     toastParams = ['', 4000];
 
     constructor( private route: ActivatedRoute,
-            private servicoService: ServicoService) { 
-            super(servicoService);
+            private servicoService: ServicoService,
+            router: Router) { 
+            super(servicoService, router);
             this.goTo = "servico";
             
             this.servico = new ServicoBuilder().initialize(this.servico);

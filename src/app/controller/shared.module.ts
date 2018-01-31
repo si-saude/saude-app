@@ -8,6 +8,7 @@ import { MaterializeModule } from 'angular2-materialize';
 import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
 import { PreloadComponent } from './../includes/preload/preload.component';
 import { ConfirmSaveComponent } from './../includes/confirm-save/confirm-save.component';
+import { PaginacaoComponent } from './../includes/paginacao/paginacao.component';
 import { PerfilService } from './perfil/perfil.service';
 import { BaseService } from './base/base.service';
 import { CargoService } from './cargo/cargo.service';
@@ -54,7 +55,8 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
   declarations: [
     MensagemFormComponent,
     PreloadComponent,
-    ConfirmSaveComponent
+    ConfirmSaveComponent,
+    PaginacaoComponent
   ],
   imports: [ 
     CommonModule,
@@ -71,7 +73,8 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     ReactiveFormsModule,
     MensagemFormComponent,
     PreloadComponent,
-    ConfirmSaveComponent
+    ConfirmSaveComponent,
+    PaginacaoComponent
   ],
   providers: [
     PerfilService,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core'; 
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component'; 
 import { Instalacao } from './../../model/instalacao';
@@ -13,8 +14,8 @@ import { InstalacaoGuard } from './../../guards/guards-child/instalacao.guard';
 })
 export class InstalacaoComponent extends GenericListComponent<Instalacao, InstalacaoFilter, InstalacaoGuard> {
 
-    constructor(instalacaoService: InstalacaoService, instalacaoGuard: InstalacaoGuard) {
-        super(instalacaoService, new InstalacaoFilter(), instalacaoGuard);
+    constructor(instalacaoService: InstalacaoService, instalacaoGuard: InstalacaoGuard, router: Router) {
+        super(instalacaoService, new InstalacaoFilter(), instalacaoGuard, router);
     }
 
 }

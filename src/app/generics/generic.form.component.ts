@@ -21,8 +21,8 @@ export abstract class GenericFormComponent extends GenericComponent {
     toastParams;
     canDeactivate: boolean;
 
-    constructor( protected service: GenericService ) {
-        super();
+    constructor( protected service: GenericService, router: Router ) {
+        super(router);
         this.showPreload = false;
         this.showConfirmSave = false;
         this.modalDeactivate = new EventEmitter<string | MaterializeAction>();

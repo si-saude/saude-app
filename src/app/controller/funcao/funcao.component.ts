@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Funcao } from './../../model/funcao';
 import { FuncaoService } from './funcao.service';
@@ -13,8 +14,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class FuncaoComponent extends GenericListComponent<Funcao, FuncaoFilter, FuncaoGuard> {
 
-  constructor(service: FuncaoService, funcaoGuard: FuncaoGuard) {
-      super(service, new FuncaoFilter(), funcaoGuard);
+  constructor(service: FuncaoService, funcaoGuard: FuncaoGuard, router: Router ) {
+      super(service, new FuncaoFilter(), funcaoGuard, router );
   }
   
 }

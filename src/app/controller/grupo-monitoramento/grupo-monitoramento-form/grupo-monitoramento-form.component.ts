@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MaterializeDirective,MaterializeAction } from "angular2-materialize";
 
@@ -38,8 +39,9 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
     selectedExm = null;
     
     constructor( private route: ActivatedRoute,
-            private grupoMonitoramentoService: GrupoMonitoramentoService) { 
-            super(grupoMonitoramentoService);
+            private grupoMonitoramentoService: GrupoMonitoramentoService,
+            router: Router) { 
+            super(grupoMonitoramentoService, router);
             this.goTo = "grupo-monitoramento";
             
             this.arrayCriterio = new Array<Criterio>();

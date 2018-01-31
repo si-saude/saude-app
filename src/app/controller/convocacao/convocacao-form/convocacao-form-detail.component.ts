@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
 import { MaterializeAction } from "angular2-materialize";
@@ -65,8 +66,9 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
 
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
-        private empregadoService: EmpregadoService ) {
-        super( convocacaoService );
+        private empregadoService: EmpregadoService,
+        router: Router) {
+        super( convocacaoService, router );
 
         this.tipos = new Array<string>();
         this.goTo = "convocacao";

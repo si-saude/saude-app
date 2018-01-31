@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { IndicadorRiscoSaudeAmbiental } from './../../model/indicador-risco-saude-ambiental';
@@ -13,8 +14,8 @@ import { IndicadorRiscoSaudeAmbientalGuard } from './../../guards/guards-child/i
 })
 export class IndicadorRiscoSaudeAmbientalComponent extends GenericListComponent<IndicadorRiscoSaudeAmbiental, IndicadorRiscoSaudeAmbientalFilter, IndicadorRiscoSaudeAmbientalGuard> {
 
-    constructor(indicadorRiscoSaudeAmbientalService: IndicadorRiscoSaudeAmbientalService, indicadorRiscoSaudeAmbientalGuard: IndicadorRiscoSaudeAmbientalGuard) {
-        super(indicadorRiscoSaudeAmbientalService, new IndicadorRiscoSaudeAmbientalFilter(), indicadorRiscoSaudeAmbientalGuard);
+    constructor(indicadorRiscoSaudeAmbientalService: IndicadorRiscoSaudeAmbientalService, indicadorRiscoSaudeAmbientalGuard: IndicadorRiscoSaudeAmbientalGuard, router: Router) {
+        super(indicadorRiscoSaudeAmbientalService, new IndicadorRiscoSaudeAmbientalFilter(), indicadorRiscoSaudeAmbientalGuard, router);
     }
 
 }

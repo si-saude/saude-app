@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
 
@@ -48,8 +49,9 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
 
     constructor( private route: ActivatedRoute,
-        private profissionalSaudeService: ProfissionalSaudeService ) {
-        super( profissionalSaudeService );
+        private profissionalSaudeService: ProfissionalSaudeService,
+        router: Router) {
+        super( profissionalSaudeService, router );
         this.goTo = "profissional-saude";
 
         this.dataCurriculoCursos = new Array<any>();
@@ -70,6 +72,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                         .then( res => {
                             this.showPreload = false;
                             this.profissionalSaude = new ProfissionalSaudeBuilder().clone( res.json() );
+                            this.saveArrayEmpregado();
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
@@ -129,10 +132,13 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
 
     getEmpregado() {
         if ( this.profissionalSaude.getEmpregado().getPessoa().getNome() !== undefined ) {
-
+            
             let empregado = this.empregados.find( e => {
-                return e.getChave() + " - " + e.getPessoa().getNome() ==
-                    this.profissionalSaude.getEmpregado().getPessoa().getNome();
+                if ( (e.getChave() + " - " + e.getPessoa().getNome()) ==
+                    this.profissionalSaude.getEmpregado().getPessoa().getNome() || 
+                    e.getPessoa().getNome() == this.profissionalSaude.getEmpregado().getPessoa().getNome() )
+                    return true;
+                else return false;
             } );
             if ( empregado !== undefined ) {
                 this.profissionalSaude.setEmpregado( empregado );
@@ -147,7 +153,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
             if ( evento.length > 3 ) {
                 this.profissionalSaudeService.getEmpregadoByName( evento )
                     .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList( res.json() );
+                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
                         this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
                     } )
                     .catch( error => {
@@ -163,7 +169,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
             this.oldNomeByChave = evento;
             this.profissionalSaudeService.getEmpregadoByChave( this.profissionalSaude.getEmpregado().getPessoa().getNome() )
                 .then( res => {
-                    this.empregados = new EmpregadoBuilder().cloneList( res.json() );
+                    this.empregados = new EmpregadoBuilder().cloneList(res.json());
                     this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
                 } )
                 .catch( error => {
@@ -171,7 +177,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                 } )
         }
     }
-
+    
     buildAutocompleteEmpregado( empregados ) {
         let data = {};
         empregados.forEach( item => {
@@ -182,6 +188,11 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         array["data"] = data;
 
         return array;
+    }
+    
+    saveArrayEmpregado() {
+        if ( this.profissionalSaude.getEmpregado().getId() > 0 )
+            this.empregados.push(this.profissionalSaude.getEmpregado());
     }
 
     addCurriculoCurso() {

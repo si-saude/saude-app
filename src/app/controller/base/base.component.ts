@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Base } from './../../model/base';
 import { BaseService } from './base.service';
@@ -13,8 +14,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 } )
 export class BaseComponent extends GenericListComponent<Base, BaseFilter, BaseGuard> {
 
-    constructor( service: BaseService, baseGuard: BaseGuard ) {
-        super( service, new BaseFilter(), baseGuard );
+    constructor( service: BaseService, baseGuard: BaseGuard, router: Router ) {
+        super( service, new BaseFilter(), baseGuard, router );
     }
-
+    
 }

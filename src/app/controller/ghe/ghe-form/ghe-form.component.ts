@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker'; 
 
@@ -25,8 +26,9 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
     gheFilter: GheFilter = new GheFilter();
     
     constructor( private route: ActivatedRoute,
-        private gheService: GheService) { 
-        super(gheService);
+        private gheService: GheService,
+        router: Router) { 
+        super(gheService, router);
         this.goTo = "ghe";
 
         this.ghe = new GheBuilder().initialize(this.ghe);

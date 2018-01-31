@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
@@ -22,8 +22,8 @@ export class ConvocacaoComponent extends GenericListComponent<Convocacao, Convoc
     tipos: Array<string>;
     profissiogramas: Array<Profissiograma>;
 
-    constructor(service: ConvocacaoService, convocacaoGuard: ConvocacaoGuard) {
-      super(service, new ConvocacaoFilter(), convocacaoGuard);
+    constructor(service: ConvocacaoService, convocacaoGuard: ConvocacaoGuard, router: Router) {
+      super(service, new ConvocacaoFilter(), convocacaoGuard, router);
       
       this.tipos = new Array<string>(); 
       this.profissiogramas = new ProfissiogramaBuilder().initializeList( Array<Profissiograma>() );

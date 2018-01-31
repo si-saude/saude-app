@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Feriado } from './../../../model/feriado';
@@ -20,8 +21,9 @@ export class FeriadoFormDetailComponent extends GenericFormComponent implements 
     feriadoFilter: FeriadoFilter = new FeriadoFilter();
     
     constructor( private route: ActivatedRoute,
-        private feriadoService: FeriadoService) { 
-        super(feriadoService);
+        private feriadoService: FeriadoService,
+        router: Router) { 
+        super(feriadoService, router);
         this.goTo = "feriado";
         
         this.feriado = new FeriadoBuilder().initialize(this.feriado);

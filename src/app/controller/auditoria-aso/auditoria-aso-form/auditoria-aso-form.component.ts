@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { RequisitoAso } from './../../../model/requisito-aso';
 import { RequisitoAsoBuilder } from './../../requisito-aso/requisito-aso.builder'; 
@@ -21,8 +22,9 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
     requisitosAso: Array<RequisitoAso>;
 
     constructor( private route: ActivatedRoute,
-        private auditoriaAsoService: AuditoriaAsoService) {
-        super( auditoriaAsoService );
+        private auditoriaAsoService: AuditoriaAsoService,
+        router: Router) {
+        super( auditoriaAsoService, router );
 
         this.goTo = "auditoria-aso";
         this.aso = new AsoBuilder().initialize( this.aso );

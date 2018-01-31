@@ -61,29 +61,23 @@
 							</legend>
 
 							<div class="row">
-								<div class="input-field col s4">
-									<fieldset>
-										<legend>
-											Exame <a
-												class="btn-floating waves-effect waves-light green btn-add-fieldset"
-												(click)="getExames()"> <i
-												class="material-icons center-icon">cached</i>
-											</a>
-										</legend>
-										<select
-											name="empregadoConvocacao.resultadoExames[{{iREx}}].exame.id"
-											class="browser-default" #exame
-											(blur)="selectExame(iREx, exame.value)"
+								<div class="input-field col s6">
+								
+									<label for="empregado">Exame</label>
+										<input
+											id="exame[{{iREx}}]" type="hidden"
+											name="exame[{{iREx}}]"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.id">
-											<option disabled selected value=0>Selecione uma exame</option>
-											<option *ngFor="let exame of exames" value="{{exame.id}}">
-													{{exame.codigo}} - {{exame.descricao}} 
-												</option>
-										</select>
-									</fieldset>
+										<input
+											type="text" materialize="autocomplete" autocomplete="off"
+											name="exame[{{iREx}}]"
+											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.descricao"
+											(blur)="getExame($event, iREx)"
+											(ngModelChange)="selectExameByCodigo($event, iREx); selectExameByDescricao($event, iREx);"
+											[materializeParams]="autocompleteExame">
 								</div>
 
-								<div class="input-field col s4">
+								<div class="input-field col s3">
 									<label for="data">Data de Realização</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].data"
 										[options]="myDatePickerOptions"
@@ -92,7 +86,7 @@
 									</my-date-picker>
 								</div>
 
-								<div class="input-field col s4 checkbox conforme">
+								<div class="input-field col s3 checkbox conforme">
 									<input type="checkbox" id="resultadoExame[{{iREx}}].conforme"
 										[(ngModel)]="rEx.conforme" (click)="selectConform(iREx)"
 										name="resultadoExame[{{iREx}}].conforme"> <label
@@ -145,7 +139,7 @@
 										<legend>Campo do Exame</legend>
 
 										<div class="col s10">
-											<select
+											<select (click)="choiseCampoExame(iREx)"
 												name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
 												class="browser-default" #campo>
 												<option disabled selected value=0>Selecione um item</option>
@@ -207,9 +201,9 @@
 												<td class="col s1 codigo">{{itemResultadoExame.codigo}}</td>
 												<td class="col s3 titulo">{{itemResultadoExame.titulo}}</td>
 												<td class="col s7 resultado">
-													<input id="resultado" type="text" 
-														name="itemResultadoExame[{{i}}].resultado"
-														[(ngModel)]="itemResultadoExame.resultado">
+													<textarea id="resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado" 
+														name="resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+														[(ngModel)]="itemResultadoExame.resultado"></textarea>
 												</td>
 												<td class="col s1 botao-remover"><a
 													class="btn-floating waves-effect waves-light red btn-remove"

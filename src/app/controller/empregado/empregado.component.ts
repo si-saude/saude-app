@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../global';
 import { Empregado } from './../../model/empregado';
@@ -30,8 +31,8 @@ export class EmpregadoComponent extends GenericListComponent<Empregado, Empregad
     ghes: Array<Ghe>;
     ghees: Array<Ghee>;
 
-    constructor( private empregadoService: EmpregadoService, empregadoGuard: EmpregadoGuard ) {
-        super( empregadoService, new EmpregadoFilter(), empregadoGuard );
+    constructor( private empregadoService: EmpregadoService, empregadoGuard: EmpregadoGuard, router: Router ) {
+        super( empregadoService, new EmpregadoFilter(), empregadoGuard, router );
     }
 
     openModal() {

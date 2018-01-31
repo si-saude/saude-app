@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
@@ -18,8 +18,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class CargoComponent extends GenericListComponent<Cargo, CargoFilter, CargoGuard> {
     
-    constructor(service: CargoService, cargoGuard: CargoGuard) {
-      super(service, new CargoFilter(), cargoGuard);
+    constructor(service: CargoService, cargoGuard: CargoGuard, router: Router) {
+      super(service, new CargoFilter(), cargoGuard, router);
     }
     
 }

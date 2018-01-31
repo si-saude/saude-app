@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
@@ -40,6 +40,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     assinaturaSrcStyle: any;
     fotoSrcStyle: any;
 
+    cpf: string;
     empregado: Empregado;
     statuses: Array<string>;
     sexos: Array<string>;
@@ -71,8 +72,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
 
     constructor( private route: ActivatedRoute,
-        private empregadoService: EmpregadoService ) {
-        super( empregadoService );
+        private empregadoService: EmpregadoService,
+        router: Router ) {
+        super( empregadoService, router );
         this.goTo = "empregado";
 
         this.assinaturaSrcStyle = { 'width': '0px', 'heigth': '0px' };
@@ -114,11 +116,11 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                                 this.fotoSrcStyle = { 'width': '500px', 'heigth': '500px' };
                             }
 
-                            if ( this.empregado.getAssinaturaBase64() !== undefined ){
+                            if ( this.empregado.getAssinaturaBase64() !== undefined ) {
                                 this.assinaturaSrc = "data:image/png;base64," + this.empregado.getAssinaturaBase64();
                                 this.assinaturaSrcStyle = { 'width': '500px', 'heigth': '500px' };
                             }
-                            
+
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -144,7 +146,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.getInstalacoes();
         this.getGruposMonitoramento();
     }
-    
+
     getStatuses() {
         this.empregadoService.getStatuses()
             .then( res => {
@@ -154,7 +156,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getSexos() {
         this.empregadoService.getSexos()
             .then( res => {
@@ -164,7 +166,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getEstadosCivies() {
         this.empregadoService.getEstadosCivies()
             .then( res => {
@@ -174,7 +176,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getEscolaridades() {
         this.empregadoService.getEscolaridades()
             .then( res => {
@@ -184,7 +186,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getVinculos() {
         this.empregadoService.getVinculos()
             .then( res => {
@@ -203,8 +205,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-        }
-    
+    }
+
     getFuncoes() {
         this.empregadoService.getFuncoes()
             .then( res => {
@@ -213,8 +215,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             .catch( error => {
                 console.log( error );
             } )
-        }
-    
+    }
+
     getRegimes() {
         this.empregadoService.getRegimes()
             .then( res => {
@@ -234,7 +236,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getBases() {
         this.empregadoService.getBases()
             .then( res => {
@@ -244,7 +246,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getGhes() {
         this.empregadoService.getGhes()
             .then( res => {
@@ -254,7 +256,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getGhees() {
         this.empregadoService.getGhees()
             .then( res => {
@@ -264,7 +266,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getCidades() {
         this.empregadoService.getCidades()
             .then( res => {
@@ -274,7 +276,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getVacinas() {
         this.empregadoService.getVacinas()
             .then( res => {
@@ -284,7 +286,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getInstalacoes() {
         this.empregadoService.getInstalacoes()
             .then( res => {
@@ -294,11 +296,11 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                 console.log( error );
             } )
     }
-    
+
     getGruposMonitoramento() {
         this.empregadoService.getGruposMonitoramento()
             .then( res => {
-                this.gruposMonitoramento = new GrupoMonitoramentoBuilder().cloneList(res.json());
+                this.gruposMonitoramento = new GrupoMonitoramentoBuilder().cloneList( res.json() );
             } )
             .catch( error => {
                 console.log( error );
@@ -347,62 +349,62 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             this.fotoSrcStyle = { 'width': '0px', 'heigth': '0px' };
         }
     }
-    
-    callSave(i:number, total:number, empregado:Empregado){
-        if(i == total){
-            this.salvar(empregado);
+
+    callSave( i: number, total: number, empregado: Empregado ) {
+        if ( i == total ) {
+            this.salvar( empregado );
         }
     }
 
     save() {
         this.verifyAndSetDates();
-        
-        let i:number = 0;
-        let total:number = 0;
+
+        let i: number = 0;
+        let total: number = 0;
         let assinatura = undefined;
         let foto = undefined;
-        
-        if(this.inputElAssinatura.nativeElement.files.length > 0){
+
+        if ( this.inputElAssinatura.nativeElement.files.length > 0 ) {
             assinatura = this.inputElAssinatura.nativeElement.files[0];
             total++;
         }
-        
-        if(this.inputElFoto.nativeElement.files[0]){
+
+        if ( this.inputElFoto.nativeElement.files[0] ) {
             foto = this.inputElFoto.nativeElement.files[0];
             total++;
         }
-        
-        if(total > 0){
+
+        if ( total > 0 ) {
             let component = this;
             let empregado: Empregado = new EmpregadoBuilder().clone( component.empregado );
-            
-            if(assinatura != undefined){
+
+            if ( assinatura != undefined ) {
                 let readerAssinatura = new FileReader();
-                
+
                 readerAssinatura.onload = function() {
                     let arrayBuffer: ArrayBuffer = readerAssinatura.result;
                     let array = new Uint8Array( arrayBuffer );
                     empregado.setAssinatura( array );
-                    component.callSave(++i, total, empregado);
+                    component.callSave( ++i, total, empregado );
                 }
-                
-                readerAssinatura.readAsArrayBuffer( new Blob([assinatura]) );
+
+                readerAssinatura.readAsArrayBuffer( new Blob( [assinatura] ) );
             }
-            
-            if(foto != undefined){
+
+            if ( foto != undefined ) {
                 let readerFoto = new FileReader();
-                
+
                 readerFoto.onload = function() {
                     let arrayBuffer: ArrayBuffer = readerFoto.result;
                     let array = new Uint8Array( arrayBuffer );
                     empregado.setFoto( array );
-                    component.callSave(++i, total, empregado);
+                    component.callSave( ++i, total, empregado );
                 }
-                
-                readerFoto.readAsArrayBuffer( new Blob([foto]) );
+
+                readerFoto.readAsArrayBuffer( new Blob( [foto] ) );
             }
-            
-        }else {
+
+        } else {
             super.save( new EmpregadoBuilder().clone( this.empregado ) );
         }
     }
@@ -414,7 +416,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     addGrupoMonitoramento( valor: number ) {
         if ( valor != 0 ) {
             let gM: GrupoMonitoramento = this.empregado.getGrupoMonitoramentos().find( gM => gM.getId() == valor );
-            if (gM == undefined) {
+            if ( gM == undefined ) {
                 let grupoMonitoramento = this.gruposMonitoramento.find( gM => gM.getId() == valor );
                 this.empregado.getGrupoMonitoramentos().push( grupoMonitoramento );
             }
@@ -454,8 +456,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
 
     addInstalacao( valor ) {
         if ( valor != 0 ) {
-            let i: Instalacao = this.instalacoesSelecteds.find( i=> i.getId() == valor );
-        
+            let i: Instalacao = this.instalacoesSelecteds.find( i => i.getId() == valor );
+
             if ( i == undefined ) {
                 let instalacao: Instalacao = this.instalacoes.find( i => i.getId() == valor );
                 this.instalacoesSelecteds.push( instalacao );

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import {MaterializeDirective, MaterializeAction} from "angular2-materialize";
 import 'rxjs/add/operator/toPromise';
@@ -18,8 +18,8 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class GerenciaComponent  extends GenericListComponent<Gerencia, GerenciaFilter, GerenciaGuard> {
 
-  constructor( gerenciaService: GerenciaService, gerenciaGuard: GerenciaGuard) {
-      super(gerenciaService, new GerenciaFilter(), gerenciaGuard);
+  constructor( gerenciaService: GerenciaService, gerenciaGuard: GerenciaGuard, router: Router) {
+      super(gerenciaService, new GerenciaFilter(), gerenciaGuard, router);
   }
     
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
@@ -71,8 +71,9 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
 
     constructor( private route: ActivatedRoute,
-        private empregadoService: EmpregadoService ) {
-        super( empregadoService );
+        private empregadoService: EmpregadoService,
+        router: Router) {
+        super( empregadoService, router );
         this.goTo = "empregado";
 
         this.assinaturaSrcStyle = { 'width': '0px', 'heigth': '0px' };

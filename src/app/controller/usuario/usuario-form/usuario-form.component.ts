@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Usuario } from './../../../model/usuario';
@@ -24,8 +25,9 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
     pessoas: Array<Pessoa>;
 
     constructor( private route: ActivatedRoute,
-        private usuarioService: UsuarioService ) {
-        super( usuarioService );
+        private usuarioService: UsuarioService,
+        router: Router) {
+        super( usuarioService, router );
         this.goTo = "usuario";
 
         this.perfis = new PerfilBuilder().initializeList( this.perfis );
@@ -46,6 +48,7 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
                         .then( res => {
                             this.showPreload = false;
                             this.usuario = new UsuarioBuilder().clone( res.json() );
+                            this.saveArrayPessoa();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -131,6 +134,11 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
         array["data"] = data;
 
         return array;
+    }
+    
+    saveArrayPessoa() {
+        if ( this.usuario.getPessoa().getId() > 0 )
+            this.pessoas.push( this.usuario.getPessoa() );
     }
 
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { RequisitoAso } from './../../model/requisito-aso';
 import { RequisitoAsoService } from './requisito-aso.service';
@@ -14,8 +15,8 @@ import { RequisitoAsoGuard } from './../../guards/guards-child/requisito-aso.gua
 export class RequisitoAsoComponent 
     extends GenericListComponent<RequisitoAso, RequisitoAsoFilter, RequisitoAsoGuard> {
 
-  constructor(service: RequisitoAsoService, requisitoGuard: RequisitoAsoGuard) {
-      super(service, new RequisitoAsoFilter(), requisitoGuard);
+  constructor(service: RequisitoAsoService, requisitoGuard: RequisitoAsoGuard, router: Router) {
+      super(service, new RequisitoAsoFilter(), requisitoGuard, router);
   }
   
 }

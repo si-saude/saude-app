@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { TipoGrupoMonitoramento } from './../../model/tipo-grupo-monitoramento';
 import { TipoGrupoMonitoramentoService } from './tipo-grupo-monitoramento.service';
@@ -13,8 +14,8 @@ import { TipoGrupoMonitoramentoGuard } from './../../guards/guards-child/tipo-gr
 })
 export class TipoGrupoMonitoramentoComponent extends GenericListComponent<TipoGrupoMonitoramento, TipoGrupoMonitoramentoFilter, TipoGrupoMonitoramentoGuard> {
 
-  constructor(service: TipoGrupoMonitoramentoService, tipoGrupoMonitoramentoGuard: TipoGrupoMonitoramentoGuard) {
-      super(service, new TipoGrupoMonitoramentoFilter(), tipoGrupoMonitoramentoGuard);
+  constructor(service: TipoGrupoMonitoramentoService, tipoGrupoMonitoramentoGuard: TipoGrupoMonitoramentoGuard, router: Router) {
+      super(service, new TipoGrupoMonitoramentoFilter(), tipoGrupoMonitoramentoGuard, router);
   }
   
 }

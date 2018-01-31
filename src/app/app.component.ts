@@ -9,21 +9,13 @@ import { AuthService } from './login/auth.service';
 })
 export class AppComponent {
   title = 'app';
-  showMenu: boolean;
   show: boolean;
   
-  constructor(private authService: AuthService) {
-      this.showMenu = false;
-  }
+  constructor() {}
   
   onActivate(component) {
       if ( component.showNothing != undefined )
           this.show = component.showNothing;
-  }
-  
-  ngOnInit() {
-      this.authService.showMenu.subscribe(
-          mostrar => this.showMenu = mostrar);
   }
   
 }

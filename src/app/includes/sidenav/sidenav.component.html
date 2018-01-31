@@ -25,37 +25,41 @@
 			[materializeActions]="sidenavActions3" data-activates="slide-out1"
 			(click)="closeSidenav3()"><i class="material-icons">chevron_left</i>
 		</a>
-		<a [routerLink]="['/base']" *ngIf="checkPermissao('*')">Base</a>
-		<a [routerLink]="['/cargo']" *ngIf="checkPermissao('*')">Cargo</a>
-		<a [routerLink]="['/cidade']" *ngIf="checkPermissao('*')">Cidade</a>
-		<a [routerLink]="['/criterio']" *ngIf="checkPermissao('*')">Critério</a>
-		<a [routerLink]="['/curso']" *ngIf="checkPermissao('*')">Curso</a>
+		<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
+		<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
+		<a [routerLink]="['/cidade']" *ngIf="checkPermissao('CIDADE_LISTAR')">Cidade</a>
+		<a [routerLink]="['/criterio']" *ngIf="checkPermissao('CRITERIO_LISTAR')">Critério</a>
+		<a [routerLink]="['/curso']" *ngIf="checkPermissao('CURSO_LISTAR')">Curso</a>
 		<a [routerLink]="['/empregado']" *ngIf="checkPermissao('EMPREGADO_LISTAR')">Empregado</a>
-		<a [routerLink]="['/equipe']" *ngIf="checkPermissao('*')">Equipe</a>
+		<a [routerLink]="['/equipe']" *ngIf="checkPermissao('EQUIPE_LISTAR')">Equipe</a>
 		<a [routerLink]="['/exame']" *ngIf="checkPermissao('EXAME_LISTAR')">Exame</a>
-		<a [routerLink]="['/funcao']" *ngIf="checkPermissao('*')">Função</a>
-		<a [routerLink]="['/fornecedor']" *ngIf="checkPermissao('*')">Fornecedor</a>
-		<a [routerLink]="['/gerencia']" *ngIf="checkPermissao('*')">Gerência</a>
-		<a [routerLink]="['/ghe']" *ngIf="checkPermissao('*')">GHE</a>
-		<a [routerLink]="['/ghee']" *ngIf="checkPermissao('*')">GHEE</a>
-		<a [routerLink]="['/grupo-monitoramento']" *ngIf="checkPermissao('*')">Grupo Monitoramento</a>
-		<a [routerLink]="['/indicador-risco-acidente']" *ngIf="checkPermissao('*')">Indicador de Risco Acidente</a>
-		<a [routerLink]="['/indicador-risco-ambiental']" *ngIf="checkPermissao('*')">Indicador de Risco Ambiental</a>
-		<a [routerLink]="['/indicador-risco-ergonomico']" *ngIf="checkPermissao('*')">Indicador de Risco Ergonômico</a>
-		<a [routerLink]="['/indicador-risco-sanitario']" *ngIf="checkPermissao('*')">Indicador de Risco Sanitário</a>
-		<a [routerLink]="['/indicador-risco-saude-ambiental']" *ngIf="checkPermissao('*')">Indicador de Risco Saúde Ambiental</a>
-		<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('*')">Instalação</a>
-		<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('*')">Localização</a>
+		<a [routerLink]="['/feriado']" *ngIf="checkPermissao('FERIADO_LISTAR')">Feriado</a>
+		<a [routerLink]="['/funcao']" *ngIf="checkPermissao('FUNCAO_LISTAR')">Função</a>
+		<a [routerLink]="['/fornecedor']" *ngIf="checkPermissao('FORNECEDOR_LISTAR')">Fornecedor</a>
+		<a [routerLink]="['/gerencia']" *ngIf="checkPermissao('GERENCIA_LISTAR')">Gerência</a>
+		<a [routerLink]="['/ghe']" *ngIf="checkPermissao('GHE_LISTAR')">GHE</a>
+		<a [routerLink]="['/ghee']" *ngIf="checkPermissao('GHEE_LISTAR')">GHEE</a>
+		<a [routerLink]="['/grupo-monitoramento']" *ngIf="checkPermissao('GRUPO-MONITORAMENTO_LISTAR')">Grupo Monitoramento</a>
+		<a [routerLink]="['/indicador-risco-acidente']" *ngIf="checkPermissao('INDICADOR-RISCO-ACIDENTE_LISTAR')">Indicador de Risco Acidente</a>
+		<a [routerLink]="['/indicador-risco-ambiental']" *ngIf="checkPermissao('INDICADOR-RISCO-AMBIENTAL_LISTAR')">Indicador de Risco Ambiental</a>
+		<a [routerLink]="['/indicador-risco-ergonomico']" *ngIf="checkPermissao('INDICADOR-RISCO-ERGONOMICO_LISTAR')">Indicador de Risco Ergonômico</a>
+		<a [routerLink]="['/indicador-risco-sanitario']" *ngIf="checkPermissao('INDICADOR-RISCO-SANITARIO_LISTAR')">Indicador de Risco Sanitário</a>
+		<a [routerLink]="['/indicador-risco-saude-ambiental']" *ngIf="checkPermissao('INDICADOR-RISCO-SAUDE-AMBIENTAL_LISTAR')">Indicador de Risco Saúde Ambiental</a>
+		<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
+		<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
 		<a [routerLink]="['/perfil']" *ngIf="checkPermissao('PERFIL_LISTAR')">Perfil</a>
-		<a [routerLink]="['/periodicidade']" *ngIf="checkPermissao('*')">Periodicidade</a>
-		<a [routerLink]="['/profissiograma']" *ngIf="checkPermissao('*')">Profissiograma</a>
-		<a [routerLink]="['/profissional-saude']" *ngIf="checkPermissao('*')">Profissional de Saúde</a>
-		<a [routerLink]="['/regime']" *ngIf="checkPermissao('*')">Regime</a>
-		<a [routerLink]="['/relatorio-medico']" *ngIf="checkPermissao('*')">Relatorio Médico</a>
-		<a [routerLink]="['/resultado-exame']" *ngIf="checkPermissao('*')">Resultado Exame</a>
-		<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('*')">Tipo Grupo Monitoramento</a>
+		<a [routerLink]="['/periodicidade']" *ngIf="checkPermissao('PERIODICIDADE_LISTAR')">Periodicidade</a>
+		<a [routerLink]="['/profissiograma']" *ngIf="checkPermissao('PROFISSIOGRAMA_LISTAR')">Profissiograma</a>
+		<a [routerLink]="['/profissional-saude']" *ngIf="checkPermissao('PROFISSIONAL-SAUDE_LISTAR')">Profissional de Saúde</a>
+		<a [routerLink]="['/regime']" *ngIf="checkPermissao('REGIME_LISTAR')">Regime</a>
+		<a [routerLink]="['/regra-atendimento']" *ngIf="checkPermissao('REGRA-ATENDIMENTO_LISTAR')">Regra de Atendimento</a>
+		<a [routerLink]="['/relatorio-medico']" *ngIf="checkPermissao('RELATORIO-MEDICO_LISTAR')">Relatorio Médico</a>
+		<a [routerLink]="['/requisito-aso']" *ngIf="checkPermissao('REQUISITO-ASO_LISTAR')">Requisito Aso</a>
+		<a [routerLink]="['/resultado-exame']" *ngIf="checkPermissao('RESULTADO-EXAME_LISTAR')">Resultado Exame</a>
+		<a [routerLink]="['/servico']" *ngIf="checkPermissao('SERVICO_LISTAR')">Serviço</a>
+		<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('TIPO-GRUPO-MONITORAMENTO_LISTAR')">Tipo Grupo Monitoramento</a>
 		<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')">Usuário</a> 
-		<a [routerLink]="['/vacina']" *ngIf="checkPermissao('*')">Vacina</a>
+		<a [routerLink]="['/vacina']" *ngIf="checkPermissao('VACINA_LISTAR')">Vacina</a>
 		
 	</li>
 </ul>
@@ -68,11 +72,29 @@
 			(click)="closeSidenavProcesso()"><i class="material-icons">chevron_left</i>
 		</a>
 		<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Guia de Exame</a>
+		<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
 		<a [routerLink]="['/auditoria-resultado-exame']" *ngIf="checkPermissao('AUDITORIA-RESULTADO-EXAME_LISTAR')">Auditoria De Resultados de Exames</a>
 		<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
+		<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA_ASO_LISTAR')">Auditoria de Aso</a>
 		<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
-		<a [routerLink]="['/fila-espera-ocupacional']">Fila de Espera</a>
+		<a materialize="sideNav"
+			[materializeParams]="[{closeOnClick: true}]"
+			[materializeActions]="sidenavActionsFilaEspera" data-activates="slide-out-fila-espera"
+			(click)="closeSidenavFilaEspera()">Fila de Espera
+		</a>
 		<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO_LISTAR')">Atendimento</a>
+	</li>
+</ul>
+
+<ul id="slide-out-fila-espera" class="side-nav">
+	<li>
+		<a materialize="sideNav"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActionsFilaEspera" data-activates="slide-out-processo"
+			(click)="closeSidenavFilaEspera()"><i class="material-icons">chevron_left</i>
+		</a>
+		<a [routerLink]="['/fila-espera-ocupacional/check-in']">Check-in</a>
+		<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
 	</li>
 </ul>
 

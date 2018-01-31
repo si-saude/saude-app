@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Periodicidade } from './../../../model/periodicidade';
@@ -19,8 +20,9 @@ export class PeriodicidadeFormComponent extends GenericFormComponent implements 
     periodicidadeFilter: PeriodicidadeFilter = new PeriodicidadeFilter();
     
     constructor( private route: ActivatedRoute,
-        private periodicidadeService: PeriodicidadeService) { 
-        super(periodicidadeService);
+        private periodicidadeService: PeriodicidadeService,
+        router: Router) { 
+        super(periodicidadeService, router);
         this.goTo = "periodicidade";
         
         this.periodicidade = new PeriodicidadeBuilder().initialize(this.periodicidade);

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../global';
 import { Profissional } from './../../model/profissional';
@@ -15,8 +16,8 @@ import { TypeFilter } from './../../generics/type.filter';
 })
 export class ProfissionalSaudeComponent extends GenericListComponent<Profissional, ProfissionalSaudeFilter, ProfissionalSaudeGuard> {
     
-    constructor(profissionalSaudeService: ProfissionalSaudeService, profissionalSaudeGuard: ProfissionalSaudeGuard) {
-        super(profissionalSaudeService, new ProfissionalSaudeFilter(), profissionalSaudeGuard);
+    constructor(profissionalSaudeService: ProfissionalSaudeService, profissionalSaudeGuard: ProfissionalSaudeGuard, router: Router) {
+        super(profissionalSaudeService, new ProfissionalSaudeFilter(), profissionalSaudeGuard, router);
     }
     
     initializeFilterDate() {

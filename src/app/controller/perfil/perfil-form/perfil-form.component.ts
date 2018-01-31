@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Perfil } from './../../../model/perfil';
@@ -23,8 +24,9 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
     perfilFilter: PerfilFilter = new PerfilFilter();
 
     constructor( private route: ActivatedRoute,
-        private perfilService: PerfilService ) {
-        super( perfilService );
+        private perfilService: PerfilService,
+        router: Router) {
+        super( perfilService, router );
         this.goTo = "perfil";
 
         this.funcionalidades = new Array<string>();

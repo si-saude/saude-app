@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { TipoGrupoMonitoramento } from './../../../model/tipo-grupo-monitoramento';
@@ -16,8 +17,9 @@ export class TipoGrupoMonitoramentoFormDetailComponent extends GenericFormCompon
     tipoGrupoMonitoramento: TipoGrupoMonitoramento;
     
     constructor( private route: ActivatedRoute,
-            private tipoGrupoMonitoramentoService: TipoGrupoMonitoramentoService) { 
-            super(tipoGrupoMonitoramentoService);
+            private tipoGrupoMonitoramentoService: TipoGrupoMonitoramentoService,
+            router: Router) { 
+            super(tipoGrupoMonitoramentoService, router);
             this.goTo = "tipo-grupo-monitoramento";
             
             this.tipoGrupoMonitoramento = new TipoGrupoMonitoramentoBuilder().initialize(this.tipoGrupoMonitoramento);

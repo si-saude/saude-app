@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { Fornecedor } from './../../model/fornecedor';
@@ -15,8 +16,8 @@ import { FornecedorService } from './fornecedor.service';
 export class FornecedorComponent extends GenericListComponent<Fornecedor, FornecedorFilter, FornecedorGuard> {
     tiposPessoa: Array<string>;
     
-    constructor(fornecedorService: FornecedorService, fornecedorGuard: FornecedorGuard) {
-        super(fornecedorService, new FornecedorFilter(), fornecedorGuard);
+    constructor(fornecedorService: FornecedorService, fornecedorGuard: FornecedorGuard, router: Router) {
+        super(fornecedorService, new FornecedorFilter(), fornecedorGuard, router);
         
         this.tiposPessoa = new Array<string>();
         

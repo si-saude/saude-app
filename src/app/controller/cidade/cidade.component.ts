@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Cidade } from './../../model/cidade';
 import { CidadeService } from './cidade.service';
@@ -13,9 +14,9 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 })
 export class CidadeComponent extends GenericListComponent<Cidade, CidadeFilter, CidadeGuard> {
 
-  constructor(service: CidadeService, cidadeGuard: CidadeGuard) {
+  constructor(service: CidadeService, cidadeGuard: CidadeGuard, router: Router) {
       let cidadeFilter: CidadeFilter = new CidadeFilter();
-      super(service, cidadeFilter, cidadeGuard);
+      super(service, cidadeFilter, cidadeGuard, router);
   }
   
 }

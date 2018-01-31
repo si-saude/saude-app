@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Exame } from './../../../model/exame';
@@ -19,8 +20,9 @@ export class ExameFormDetailComponent extends GenericFormComponent implements On
     exameFilter: ExameFilter = new ExameFilter();
     
     constructor( private route: ActivatedRoute,
-        private exameService: ExameService) { 
-        super(exameService);
+        private exameService: ExameService,
+        router: Router) { 
+        super(exameService, router);
         this.goTo = "exame";
         
         this.exame = new ExameBuilder().initialize(this.exame);

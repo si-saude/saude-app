@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Equipe } from './../../../model/equipe';
@@ -16,8 +17,9 @@ export class EquipeFormDetailComponent extends GenericFormComponent implements O
     equipe: Equipe;
     
     constructor( private route: ActivatedRoute,
-            private equipeService: EquipeService) { 
-            super(equipeService);
+            private equipeService: EquipeService,
+            router: Router) { 
+            super(equipeService, router);
             
             this.goTo = "equipe";
             this.equipe = new EquipeBuilder().initialize(this.equipe);

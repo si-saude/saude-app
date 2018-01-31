@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
@@ -29,8 +29,9 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     canAuditar: boolean;
     
     constructor( private route: ActivatedRoute,
-        private empregadoConvocacaoService: EmpregadoConvocacaoService ) {
-        super( empregadoConvocacaoService );
+        private empregadoConvocacaoService: EmpregadoConvocacaoService,
+        router: Router) {
+        super( empregadoConvocacaoService, router );
         this.goTo = "auditoria-exame";
         
         this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().initialize( this.empregadoConvocacao );

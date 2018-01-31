@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Localizacao } from './../../../model/localizacao';
@@ -19,8 +20,9 @@ export class LocalizacaoFormDetailComponent extends GenericFormComponent impleme
     localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter();
     
     constructor( private route: ActivatedRoute,
-        private localizacaoService: LocalizacaoService) { 
-        super(localizacaoService);
+        private localizacaoService: LocalizacaoService,
+        router: Router) { 
+        super(localizacaoService, router);
         this.goTo = "localizacao";
         
         this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);

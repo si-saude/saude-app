@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { Feriado } from './../../model/feriado';
@@ -14,8 +15,8 @@ import { FeriadoService } from './feriado.service';
 })
 export class FeriadoComponent extends GenericListComponent<Feriado, FeriadoFilter, FeriadoGuard> {
 
-    constructor(feriadoService: FeriadoService, feriadoGuard: FeriadoGuard) {
-        super(feriadoService, new FeriadoFilter(), feriadoGuard);
+    constructor(feriadoService: FeriadoService, feriadoGuard: FeriadoGuard, router: Router) {
+        super(feriadoService, new FeriadoFilter(), feriadoGuard, router);
     }
     
     initializeFilterDate() {

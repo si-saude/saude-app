@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Gerencia } from './../../../model/gerencia';
@@ -28,8 +29,9 @@ export class GerenciaFormDetailComponent extends GenericFormComponent implements
 
     constructor( private route: ActivatedRoute,
         private gerenciaService: GerenciaService,
-        private empregadoService: EmpregadoService ) {
-        super( gerenciaService );
+        private empregadoService: EmpregadoService,
+        router: Router) {
+        super( gerenciaService, router );
         this.goTo = "gerencia";
 
         this.gerentes = new Array<Empregado>();

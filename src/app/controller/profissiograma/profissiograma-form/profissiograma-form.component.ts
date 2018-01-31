@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MaterializeDirective, MaterializeAction } from "angular2-materialize";
 
@@ -40,8 +41,9 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     profissiogramaFilter: ProfissiogramaFilter = new ProfissiogramaFilter();
 
     constructor( private route: ActivatedRoute,
-        private profissiogramaService: ProfissiogramaService ) {
-        super( profissiogramaService );
+        private profissiogramaService: ProfissiogramaService,
+        router: Router) {
+        super( profissiogramaService, router );
         this.goTo = "profissiograma";
 
         this.profissiograma = new ProfissiogramaBuilder().initialize( this.profissiograma );

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { RelatorioMedico } from './../../model/relatorio-medico';
 import { RelatorioMedicoService } from './relatorio-medico.service';
@@ -15,8 +16,8 @@ export class RelatorioMedicoComponent extends GenericListComponent<RelatorioMedi
     filtro: RelatorioMedicoFilter;
     finalizado: boolean;
 
-    constructor(service: RelatorioMedicoService, relatorioMedicoGuard: RelatorioMedicoGuard) {
-        super(service, new RelatorioMedicoFilter(), relatorioMedicoGuard);
+    constructor(service: RelatorioMedicoService, relatorioMedicoGuard: RelatorioMedicoGuard, router: Router) {
+        super(service, new RelatorioMedicoFilter(), relatorioMedicoGuard, router);
         
         this.filtro = new RelatorioMedicoFilter();
     }

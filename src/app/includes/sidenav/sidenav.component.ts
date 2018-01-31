@@ -12,6 +12,7 @@ export class SidenavComponent implements OnInit {
     sidenavActions2 = new EventEmitter<any|MaterializeAction>();
     sidenavActions3 = new EventEmitter<any|MaterializeAction>();
     sidenavActionsProcesso = new EventEmitter<any|MaterializeAction>();
+    sidenavActionsFilaEspera = new EventEmitter<any|MaterializeAction>();
     sidenavParams = [];
     
     constructor() { }
@@ -25,9 +26,8 @@ export class SidenavComponent implements OnInit {
         return false;
     }
 
-    ngOnInit() {
-    }
-
+    ngOnInit() {}
+    
     openSidenav1() {
         this.sidenavActions1.emit( { action: "sideNav", params: ['show'] } );
     }
@@ -58,5 +58,13 @@ export class SidenavComponent implements OnInit {
     
     closeSidenavProcesso() {
         this.sidenavActionsProcesso.emit( { action: "sideNav", params: ['hide'] } );
+    }
+    
+    openSidenavFilaEspera() {
+        this.sidenavActionsFilaEspera.emit( { action: "sideNav", params: ['show'] } );
+    }
+    
+    closeSidenavFilaEspera() {
+        this.sidenavActionsFilaEspera.emit( { action: "sideNav", params: ['hide'] } );
     }
 }

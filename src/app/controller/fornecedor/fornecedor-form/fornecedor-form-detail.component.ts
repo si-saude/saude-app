@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Fornecedor } from './../../../model/fornecedor';
@@ -24,8 +25,9 @@ export class FornecedorFormDetailComponent extends GenericFormComponent implemen
     fornecedorFilter: FornecedorFilter = new FornecedorFilter();
     
     constructor( private route: ActivatedRoute,
-        private fornecedorService: FornecedorService) { 
-        super(fornecedorService);
+        private fornecedorService: FornecedorService,
+        router: Router) { 
+        super(fornecedorService, router);
         this.goTo = "fornecedor";
         
         this.fornecedor = new FornecedorBuilder().initialize(this.fornecedor);
