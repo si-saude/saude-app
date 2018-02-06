@@ -1,3 +1,7 @@
+.form-container {
+	margin-bottom: 100px;
+}
+
 .content-dados {
 	width: 50%;
     margin: 0 auto;
@@ -5,6 +9,7 @@
 
 .row-btns {
 	margin-top: 50px;
+	float: right;
 }
 
 .btn-avancar {
@@ -12,7 +17,7 @@
 }
 
 .btn-salvar {
-	float: right;
+	width: 150px;
 }
 
 .btn-checkin {

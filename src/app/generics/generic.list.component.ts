@@ -26,7 +26,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     protected modalActions;
     protected modalDelete;
     protected modalImport;
-    protected modalParams;
     protected typeFilter;
     protected canImport;
     private tempDelete;
@@ -45,10 +44,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         this.modalActions = new EventEmitter<string | MaterializeAction>();
         this.modalDelete = new EventEmitter<string | MaterializeAction>();
         this.modalImport = new EventEmitter<string | MaterializeAction>();
-        this.modalParams = [{
-            dismissible: false,
-            complete: function() { }
-        }];
         this.canImport = false;
         this.canRemove = false;
         this.listComponent = this;

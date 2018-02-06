@@ -1,21 +1,21 @@
-import { ViewChild, EventEmitter, Injector } from '@angular/core';
+import { ViewChild, EventEmitter, Injector, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { MaterializeAction } from "angular2-materialize";
+import * as $ from 'jquery';
 
 import { GenericService } from './generic.service';
 import { GenericComponent } from './generic.component';
 import { GlobalVariable } from './../global';
 
-export abstract class GenericFormComponent extends GenericComponent {
+export abstract class GenericFormComponent extends GenericComponent implements OnInit {
     titulo: string;
     corTitulo: string = GlobalVariable.COLOR_TITLE;
     inscricao: Subscription;
     protected showPreload: boolean;
     @ViewChild( "form" ) formulario;
-    protected modelParams;
     protected modalDeactivate;
     globalActions;
     toastParams;
@@ -28,11 +28,14 @@ export abstract class GenericFormComponent extends GenericComponent {
         this.modalDeactivate = new EventEmitter<string | MaterializeAction>();
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.modelParams = [{
-            dismissible: false,
-            complete: function() { }
-        }];
         this.canDeactivate = false;
+        $(document).keypress(function(event){
+            if (event.charCode == 13) return false; 
+        });
+    }
+    
+    ngOnInit() {
+        console.log('teste');
     }
 
     isValid() {

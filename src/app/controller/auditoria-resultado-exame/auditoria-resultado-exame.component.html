@@ -4,33 +4,39 @@
 
 <app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
 	[color]="colorEmptyPaginas"> </app-mensagem-form>
-	
+
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
-<div class="collection">
-	<div *ngFor="let a of array">
-		<div class="row row-collection">
-			<div class="col s5">
-				<a [routerLinkActive]="['active']" class="collection-item">
-					{{a.convocacao.titulo}}</a>
-			</div>
-			<div class="col s5">
-				<a [routerLinkActive]="['active']" class="collection-item">
-					{{a.empregado.pessoa.nome}}</a>
-			</div>
-			<div class="col s1">
-				<a [routerLink]="['/auditoria-resultado-exame/detalhe', a.id]"><i
-					class="material-icons">details</i></a>
-			</div>
-			<div class="col s1">
-				<a [routerLink]="['/auditoria-resultado-exame/editar', a.id]"><i
-					class="material-icons">mode_edit</i></a>
+<div class="list-container">
+	<div class="collection">
+		<div *ngFor="let a of array">
+			<div class="row row-collection">
+				<div class="col s5">
+					<a [routerLinkActive]="['active']" class="collection-item">
+						{{a.convocacao.titulo}}</a>
+				</div>
+				<div class="col s5">
+					<a [routerLinkActive]="['active']" class="collection-item">
+						{{a.empregado.pessoa.nome}}</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/auditoria-resultado-exame/detalhe', a.id]"><i
+						class="material-icons">details</i></a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/auditoria-resultado-exame/editar', a.id]"><i
+						class="material-icons">mode_edit</i></a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
-<!-- Paginação -->
+	<!-- Paginação -->
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+
+	<!-- Paginação 
 <ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
 
 	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
@@ -54,55 +60,60 @@
 			class="material-icons arrow-pagination">last_page</i>
 	</a></li>
 
-</ul>
+</ul>-->
 
-<div class="row">
-	<div class="col s4">
-		<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	<div class="row">
+		<div class="col s4">
+			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+		</div>
+		<div class="col s4 button-import">
+			<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
+		</div>
 	</div>
-	<div class="col s4 button-import">
-		<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
-	</div>
+
 </div>
 
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
-	
+
 	<div class="row">
 		<div class="input-field col s8">
 			<div class="modal-content">
-				<label for="convocacao">Título da Convocação</label> <input type="text"
-					id="convocacao" [(ngModel)]="filter.convocacao.titulo" name="convocacao">
+				<label for="convocacao">Título da Convocação</label> <input
+					type="text" id="convocacao" [(ngModel)]="filter.convocacao.titulo"
+					name="convocacao">
 			</div>
-		</div>		
+		</div>
 		<div class="input-field col s4 checkbox">
 			<input type="checkbox" id="resultadoAuditado" #rAuditado
-				(click)="changeStateResultadoAuditado()"
-				name="resultadoAuditado"> <label
-				for="resultadoAuditado">Resultado Auditado</label>
+				(click)="changeStateResultadoAuditado()" name="resultadoAuditado">
+			<label for="resultadoAuditado">Resultado Auditado</label>
 		</div>
 	</div>
-	
-	
-	
+
+
+
 	<div class="input-field col s8">
 		<div class="modal-content">
 			<label for="convocacao">Gerência</label> <input type="text"
-				id="convocacao" [(ngModel)]="filter.empregado.gerencia.codigoCompleto" name="gerencia">
+				id="convocacao"
+				[(ngModel)]="filter.empregado.gerencia.codigoCompleto"
+				name="gerencia">
 		</div>
 	</div>
-	
+
 	<div class="input-field col s8">
 		<div class="modal-content">
 			<label for="matricula">Matricula</label> <input type="text"
-				id="matricula" [(ngModel)]="filter.empregado.matricula" name="matricula">
+				id="matricula" [(ngModel)]="filter.empregado.matricula"
+				name="matricula">
 		</div>
 	</div>
-	
+
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<label for="chave">Chave</label> <input type="text"
-				id="chave" [(ngModel)]="filter.empregado.chave" name="chave">
+			<label for="chave">Chave</label> <input type="text" id="chave"
+				[(ngModel)]="filter.empregado.chave" name="chave">
 		</div>
 	</div>
 
@@ -118,79 +129,82 @@
 	[materializeParams]="modalParams" [materializeActions]="modalImport">
 
 	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">
-			
-			<h5 class="title-modal-import">Importar Arquivo</h5>
-			
-			<div class="row file-import">
-				<div class="file-field input-field col s12">
-					<div class="btn">
-						<span>File</span> <input id="arquivo" type="file" #arquivo
-							name="arquivo" accept=".xlsx">
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text">
-					</div>
+
+		<h5 class="title-modal-import">Importar Arquivo</h5>
+
+		<div class="row file-import">
+			<div class="file-field input-field col s12">
+				<div class="btn">
+					<span>File</span> <input id="arquivo" type="file" #arquivo
+						name="arquivo" accept=".xlsx">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
 				</div>
 			</div>
-			
-			<div class="row col s12" style="margin-left: 150px;">
-			
-				<div class="input-field col s4">
-					<label for="inicio">Inicio</label>
-					<my-date-picker name="inicio"
-						[options]="myDatePickerOptions" [(ngModel)]="inicio"
-						placeholder="Inicio"> </my-date-picker>
-				</div>
-				
-				<div class="input-field col s4">
-					<label for="fim">Fim</label>
-					<my-date-picker name="fim"
-						[options]="myDatePickerOptions" [(ngModel)]="fim"
-						placeholder="Fim"> </my-date-picker>
-				</div>
-				
+		</div>
+
+		<div class="row col s12" style="margin-left: 150px;">
+
+			<div class="input-field col s4">
+				<label for="inicio">Inicio</label>
+				<my-date-picker name="inicio" [options]="myDatePickerOptions"
+					[(ngModel)]="inicio" placeholder="Inicio"> </my-date-picker>
 			</div>
-			
-			<div class="modal-footer">
-				<a type="submit" class="waves-effect waves-green btn-flat" (click)="importar()">Importar</a>
-				<a class="waves-effect waves-green btn-flat" (click)="closeModalImport()">Fechar</a>
+
+			<div class="input-field col s4">
+				<label for="fim">Fim</label>
+				<my-date-picker name="fim" [options]="myDatePickerOptions"
+					[(ngModel)]="fim" placeholder="Fim"> </my-date-picker>
 			</div>
-		
+
+		</div>
+
+		<div class="modal-footer">
+			<a type="submit" class="waves-effect waves-green btn-flat"
+				(click)="importar()">Importar</a> <a
+				class="waves-effect waves-green btn-flat"
+				(click)="closeModalImport()">Fechar</a>
+		</div>
+
 	</form>
-	
+
 	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">
-			
-			<h5 class="title-modal-import">Importar Arquivo Txt</h5>
-			
-			<div class="row file-import">
-				<div class="file-field input-field col s12">
-					<div class="btn">
-						<span>File</span> <input id="arquivo" type="file" #arquivoTxt
-							name="arquivo" accept=".txt">
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text">
-					</div>
+
+		<h5 class="title-modal-import">Importar Arquivo Txt</h5>
+
+		<div class="row file-import">
+			<div class="file-field input-field col s12">
+				<div class="btn">
+					<span>File</span> <input id="arquivo" type="file" #arquivoTxt
+						name="arquivo" accept=".txt">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
 				</div>
 			</div>
-			
-			<div class="modal-footer">
-				<a type="submit" class="waves-effect waves-green btn-flat" (click)="validarTxt()">Validar Arquivo</a>
-				<a type="submit" class="waves-effect waves-green btn-flat" (click)="importarTxt()">Importar</a>
-				<a class="waves-effect waves-green btn-flat" (click)="closeModalImport()">Fechar</a>
-			</div>
-		
+		</div>
+
+		<div class="modal-footer">
+			<a type="submit" class="waves-effect waves-green btn-flat"
+				(click)="validarTxt()">Validar Arquivo</a> <a type="submit"
+				class="waves-effect waves-green btn-flat" (click)="importarTxt()">Importar</a>
+			<a class="waves-effect waves-green btn-flat"
+				(click)="closeModalImport()">Fechar</a>
+		</div>
+
 	</form>
 
 </div>
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams" [materializeActions]="modalConfirmImport">
+	[materializeParams]="modalParams"
+	[materializeActions]="modalConfirmImport">
 
 	<h5 class="title-modal-delete">Confirmação de importação</h5>
 	<p class="paragraph-modal-delete">{{msnConfirmImport}}</p>
-	
+
 	<div class="modal-footer">
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
 			(click)="confirmImport()">Confirmar</a>
@@ -199,6 +213,7 @@
 </div>
 
 <div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
 </div>
 

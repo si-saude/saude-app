@@ -10,7 +10,7 @@
 	<p class="status-profissional"><b>Status: {{statusProfissional}}</b></p>
 </div>
 
-<div class="row">
+<div class="row form-container">
 
 	<div class="col s12">
 		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs" materialize="tabs">
@@ -32,17 +32,9 @@
 						class="material-icons center-icon">cached</i>
 					</a>
 				</legend>
-				<select name="localizacao" class="browser-default" #localizacao
-					(ngModelChange)="setLocalizacao(localizacao.value)"
-					*ngIf="!verifyLocalizacaoExist()" [(ngModel)]="localizacaoId">
-					<option disabled selected value=0>Selecione uma localização</option>
-					<option *ngFor="let localizacao of localizacoes"
-						value="{{localizacao.id}}">{{localizacao.nome}}</option>
-						
-				</select> <select name="localizacao" class="browser-default" #localizacao
-					*ngIf="verifyLocalizacaoExist()"
-					(ngModelChange)="setLocalizacao(localizacao.value)" disabled
-					[(ngModel)]="localizacaoId">
+				<select name="localizacao" class="browser-default"
+					[disabled]="existLocalizacao" [(ngModel)]="localizacao.id"
+					(ngModelChange)="openModalConfirmLocalizacao()">
 					<option disabled selected value=0>Selecione uma localização</option>
 					<option *ngFor="let localizacao of localizacoes"
 						value="{{localizacao.id}}">{{localizacao.nome}}</option>
@@ -210,6 +202,28 @@
 
 		</div>
 
+	</div>
+
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams"
+	[materializeActions]="modalConfirmLocalizacao">
+
+	<h5 class="title-modal">Confirmação</h5>
+
+	<p class="paragraph-modal">Tem certeza que deseja selecionar esta
+		localização?</p>
+	<p class="paragraph-modal">Se sim, ele não poderá ser alterado 
+		até você encerrar o atendimento do dia.</p>
+
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat"
+			(click)="confirmarLocalizacao()">Confirmar</a> <a
+			class="waves-effect waves-green btn-flat"
+			(click)="cancelarLocalizacao()">Cancelar</a>
 	</div>
 
 </div>

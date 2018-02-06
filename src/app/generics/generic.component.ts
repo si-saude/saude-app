@@ -14,6 +14,7 @@ export abstract class GenericComponent {
     protected msgError: string;
     protected verifyError: boolean = false;
     protected myDatePickerOptions: IMyDpOptions;
+    protected modalParams;
     
     constructor( private router: Router ) {
         this.showPreload = true;
@@ -23,6 +24,10 @@ export abstract class GenericComponent {
         this.myDatePickerOptions = {
                 dateFormat: 'dd/mm/yyyy'
             };
+        this.modalParams = [{
+            dismissible: false,
+            complete: function() { }
+        }];
     }
 
     catchConfiguration( error ) {

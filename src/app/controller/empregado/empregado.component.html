@@ -9,31 +9,38 @@
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
-<div class="collection">
+<div class="list-container">
 
-	<div *ngFor="let a of array">
-		<div class="row row-collection">
-			<div class="col s9">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.pessoa.nome}}</a>
+	<div class="collection">
+
+		<div *ngFor="let a of array">
+			<div class="row row-collection">
+				<div class="col s9">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.pessoa.nome}}</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/empregado/detalhe', a.id]"><i
+						class="material-icons">details</i></a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/empregado/editar', a.id]"><i
+						class="material-icons">mode_edit</i></a>
+				</div>
+				<div class="col s1">
+					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
+						class="material-icons">delete</i></a>
+				</div>
 			</div>
-			<div class="col s1">
-				<a [routerLink]="['/empregado/detalhe', a.id]"><i
-					class="material-icons">details</i></a>
-			</div>
-			<div class="col s1">
-				<a [routerLink]="['/empregado/editar', a.id]"><i
-					class="material-icons">mode_edit</i></a>
-			</div>
-			<div class="col s1">
-				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
-					class="material-icons">delete</i></a>
-			</div>
+
 		</div>
-
 	</div>
-</div>
 
-<!-- Paginação -->
+	<!-- Paginação -->
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+
+	<!-- Paginação
 <ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
 
 	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
@@ -57,19 +64,21 @@
 			class="material-icons arrow-pagination">last_page</i>
 	</a></li>
 
-</ul>
+</ul> -->
 
-<div class="row">
-	<div class="col s4">
-		<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	<div class="row">
+		<div class="col s4">
+			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+		</div>
+		<div class="col s4  button-import">
+			<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
+		</div>
+		<div class="col s4">
+			<a [routerLink]="['/empregado/cadastrar']"
+				class="waves-effect waves-light btn button-add">Adicionar</a>
+		</div>
 	</div>
-	<div class="col s4  button-import">
-		<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
-	</div>
-	<div class="col s4">
-		<a [routerLink]="['/empregado/cadastrar']"
-			class="waves-effect waves-light btn button-add">Adicionar</a>
-	</div>
+
 </div>
 
 <!-- Modal Structure -->
@@ -170,7 +179,7 @@
 				</select>
 			</fieldset>
 		</div>
-<!--
+		<!--
 		<div class="input-field col s12">
 			<fieldset>
 				<legend>Cargo</legend>

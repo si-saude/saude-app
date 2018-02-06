@@ -9,8 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<h5 [ngStyle]="{'color': corTitulo}" class="center-align">{{titulo}}</h5>
-<div class="row">
+<div class="row form-container">
 
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
@@ -30,7 +29,7 @@
 
 				<div class="row">
 					<div class="input-field col s8">
-						<label for="empregado">Nome do Empregado</label> <input
+						<label for="empregado">Nome do Empregado</label> <input required
 							type="text" materialize="autocomplete" autocomplete="off"
 							name="profissionalSaude.empregado.pessoa.nome"
 							[(ngModel)]="profissionalSaude.empregado.pessoa.nome"

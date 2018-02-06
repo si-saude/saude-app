@@ -20,8 +20,11 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     gerencia: Gerencia;
     gerencias: Array<Gerencia>;
     gerentes: Array<Empregado>;
+    validGerente: string;
     secretarios1: Array<Empregado>;
+    validSecretario1: string;
     secretarios2: Array<Empregado>;
+    validSecretario2: string;
     autocompleteGerente;
     autocompleteSecretario1;
     autocompleteSecretario2;
@@ -125,20 +128,25 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     }
 
     getGerente() {
+        if ( this.validGerente == this.gerencia.getGerente().getPessoa().getNome() ) return;
         if ( this.gerencia.getGerente().getPessoa().getNome() !== undefined ) {
 
             let gerente = this.gerentes.find( e => {
-                return e.getChave() + " - " + e.getPessoa().getNome() ==
-                    this.gerencia.getGerente().getPessoa().getNome();
+                if ( e.getChave() + " - " + e.getPessoa().getNome() == this.gerencia.getGerente().getPessoa().getNome() || 
+                    e.getPessoa().getNome() == this.gerencia.getGerente().getPessoa().getNome() )
+                    return true;
+                else return false;
             } );
 
             if ( gerente !== undefined ) {
                 this.gerencia.setGerente( gerente );
+                this.validGerente = this.gerencia.getGerente().getPessoa().getNome();
             } else this.gerencia.setGerente( new EmpregadoBuilder().initialize( new Empregado() ) );
         } else this.gerencia.setGerente( new EmpregadoBuilder().initialize( new Empregado() ) );
     }
 
     getSecretario1() {
+        if ( this.validSecretario1 == this.gerencia.getSecretario1().getPessoa().getNome() ) return;
         if ( this.gerencia.getSecretario1().getPessoa().getNome() !== undefined ) {
             let secretario1 = this.secretarios1.find( e => { 
                 return e.getChave() + " - " + e.getPessoa().getNome() ==
@@ -147,11 +155,13 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
 
             if ( secretario1 !== undefined ) {
                 this.gerencia.setSecretario1( secretario1 );
+                this.validSecretario1 = this.gerencia.getSecretario1().getPessoa().getNome(); 
             } else this.gerencia.setSecretario1( new EmpregadoBuilder().initialize( new Empregado() ) );
         } else this.gerencia.setSecretario1( new EmpregadoBuilder().initialize( new Empregado() ) );
     }
 
     getSecretario2() {
+        if ( this.validSecretario2 == this.gerencia.getSecretario2().getPessoa().getNome() ) return;
         if ( this.gerencia.getSecretario2().getPessoa().getNome() !== undefined ) {
             let secretario2 = this.secretarios2.find( e => { 
                 return e.getChave() + " - " + e.getPessoa().getNome() ==
@@ -160,6 +170,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
 
             if ( secretario2 !== undefined ) {
                 this.gerencia.setSecretario2( secretario2 );
+                this.validSecretario2 = this.gerencia.getSecretario2().getPessoa().getNome();
             } else this.gerencia.setSecretario2( new EmpregadoBuilder().initialize( new Empregado() ) );
         } else this.gerencia.setSecretario2( new EmpregadoBuilder().initialize( new Empregado() ) );
     }

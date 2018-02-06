@@ -1,5 +1,5 @@
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
 <!-- -->
@@ -8,28 +8,38 @@
 
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
- 
-<div class="collection">
 
-	<div *ngFor="let a of array">
-		<div class="row row-collection">
-			<div class="col s9">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.titulo}}</a>
+<div class="list-container">
+
+	<div class="collection">
+
+		<div *ngFor="let a of array">
+			<div class="row row-collection">
+				<div class="col s9">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.titulo}}</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/convocacao/detalhe', a.id]"><i
+						class="material-icons">details</i></a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/convocacao/editar', a.id]"><i
+						class="material-icons">mode_edit</i></a>
+				</div>
+				<div class="col s1">
+					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
+						class="material-icons">delete</i></a>
+				</div>
 			</div>
-			<div class="col s1">
-				<a [routerLink]="['/convocacao/detalhe', a.id]"><i class="material-icons">details</i></a>
-		 	</div>
-			<div class="col s1">
-				<a [routerLink]="['/convocacao/editar', a.id]"><i class="material-icons">mode_edit</i></a>
-		 	</div>
-		 	<div class="col s1">
-				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i class="material-icons">delete</i></a>
-		 	</div>
 		</div>
 	</div>
-</div>
- 
-<!-- Paginação -->
+
+	<!-- Paginação -->
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+
+	<!-- Paginação
 <ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
 
 	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
@@ -53,20 +63,22 @@
 			class="material-icons arrow-pagination">last_page</i>
 	</a></li>
 
-</ul>
+</ul> -->
 
-<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
-<a [routerLink]="['/convocacao/cadastrar']" 
-class="waves-effect waves-light btn button-add">Adicionar</a>
+	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	<a [routerLink]="['/convocacao/cadastrar']"
+		class="waves-effect waves-light btn button-add">Adicionar</a>
+
+</div>
 
 <!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal" 
+<div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<label for="titulo">Titulo</label>
-			<input type="text" id="titulo" [(ngModel)]="filter.titulo" name="titulo">
+			<label for="titulo">Titulo</label> <input type="text" id="titulo"
+				[(ngModel)]="filter.titulo" name="titulo">
 		</div>
 	</div>
 
@@ -80,7 +92,7 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 			</select>
 		</fieldset>
 	</div>
-	 
+
 	<div class="input-field col s6">
 		<fieldset>
 			<legend>Profissiograma</legend>
@@ -92,11 +104,12 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 			</select>
 		</fieldset>
 	</div>
- 
+
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
-    	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="setFilter()">Filtrar</a>
-  	</div>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="setFilter()">Filtrar</a>
+	</div>
 
 </div>
 
@@ -107,8 +120,8 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 	<h5 class="title-modal-delete">Confirmação para remoção</h5>
 	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
-		poderá mais ser resgatado.</p>
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo
+		não poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
@@ -120,5 +133,6 @@ class="waves-effect waves-light btn button-add">Adicionar</a>
 </div>
 
 <div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
-</div> 
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
+</div>

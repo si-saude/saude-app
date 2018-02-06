@@ -32,8 +32,8 @@ import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
     styleUrls: ['./../../../../assets/css/form-component.css', './profissional-saude-form.css']
 } )
 export class ProfissionalSaudeFormComponent extends GenericFormComponent implements OnInit {
-
     empregados: Array<Empregado>;
+    validEmpregado: string;
     profissionalSaude: Profissional;
     localizacoes: Array<Localizacao>;
     equipes: Array<Equipe>;
@@ -56,6 +56,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
 
         this.dataCurriculoCursos = new Array<any>();
         this.empregados = new Array<Empregado>();
+        this.validEmpregado = "";
         this.profissionalSaude = new ProfissionalSaudeBuilder().initialize( this.profissionalSaude );
         this.autocompleteEmpregado = [];
     }
@@ -72,6 +73,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                         .then( res => {
                             this.showPreload = false;
                             this.profissionalSaude = new ProfissionalSaudeBuilder().clone( res.json() );
+                            this.validEmpregado = this.profissionalSaude.getEmpregado().getPessoa().getNome();
                             this.saveArrayEmpregado();
                             this.parseAndSetDates();
                         } )
@@ -131,8 +133,8 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     }
 
     getEmpregado() {
+        if ( this.validEmpregado == this.profissionalSaude.getEmpregado().getPessoa().getNome() ) return;
         if ( this.profissionalSaude.getEmpregado().getPessoa().getNome() !== undefined ) {
-            
             let empregado = this.empregados.find( e => {
                 if ( (e.getChave() + " - " + e.getPessoa().getNome()) ==
                     this.profissionalSaude.getEmpregado().getPessoa().getNome() || 
@@ -140,8 +142,10 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                     return true;
                 else return false;
             } );
+            
             if ( empregado !== undefined ) {
                 this.profissionalSaude.setEmpregado( empregado );
+                this.validEmpregado = this.profissionalSaude.getEmpregado().getPessoa().getNome();
             } else this.profissionalSaude.setEmpregado( new EmpregadoBuilder().initialize( new Empregado() ) );
         } else this.profissionalSaude.setEmpregado( new EmpregadoBuilder().initialize( new Empregado() ) );
     }
@@ -177,6 +181,21 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                 } )
         }
     }
+
+//    constructArrayEmpregado(es: Array<Empregado>) {
+//        if ( this.empregados.length > 0 ) {
+//            let e: Empregado = this.empregados.find( e => this.profissionalSaude.getEmpregado().getId() == e.getId() );
+//            this.empregados.splice(this.empregados.indexOf(e), 1);
+//        }
+//        es.forEach( e => {
+//            if ( this.empregados.length == 0 ) {
+//                this.empregados.push(e)
+//            } else {
+//                let e1: Empregado = this.empregados.find( e2 => e.getId() == e2.getId() );
+//                if ( e1 == undefined ) this.empregados.push(e); 
+//            }
+//        } );
+//    }
     
     buildAutocompleteEmpregado( empregados ) {
         let data = {};

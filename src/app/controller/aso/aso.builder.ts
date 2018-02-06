@@ -50,9 +50,12 @@ export class AsoBuilder extends GenericBuilder {
         cloneAso.setValidade(this.getValue(aso,"getValidade"));
         
         let atendimento: Atendimento = new Atendimento();
-        atendimento.setId(this.getValue(aso,"getAtendimento")["id"]);
         
-        cloneAso.setAtendimento(atendimento);
+        if ( this.getValue(aso,"getAtendimento") != undefined ) {
+            atendimento.setId(this.getValue(aso,"getAtendimento")["id"]);
+            cloneAso.setAtendimento(atendimento);
+        } else cloneAso.setAtendimento(new Atendimento());
+        
         cloneAso.setEmpregado(new EmpregadoBuilder().clone(this.getValue(aso,"getEmpregado")));
         cloneAso.setAsoAlteracoes(new AsoAlteracaoBuilder().cloneList(this.getValue(aso,"getAsoAlteracoes")));
         cloneAso.setUsuario(new UsuarioBuilder().clone(this.getValue(aso,"getUsuario")));

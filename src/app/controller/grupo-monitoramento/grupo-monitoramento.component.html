@@ -9,31 +9,38 @@
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
-<div class="collection">
+<div class="list-container">
 
-	<div *ngFor="let a of array">
-		<div class="row row-collection">
-			<div class="col s9">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+	<div class="collection">
+
+		<div *ngFor="let a of array">
+			<div class="row row-collection">
+				<div class="col s9">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/grupo-monitoramento/detalhe', a.id]"><i
+						class="material-icons">details</i></a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/grupo-monitoramento/editar', a.id]"><i
+						class="material-icons">mode_edit</i></a>
+				</div>
+				<div class="col s1">
+					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
+						class="material-icons">delete</i></a>
+				</div>
 			</div>
-			<div class="col s1">
-				<a [routerLink]="['/grupo-monitoramento/detalhe', a.id]"><i
-					class="material-icons">details</i></a>
-			</div>
-			<div class="col s1">
-				<a [routerLink]="['/grupo-monitoramento/editar', a.id]"><i
-					class="material-icons">mode_edit</i></a>
-			</div>
-			<div class="col s1">
-				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
-					class="material-icons">delete</i></a>
-			</div>
+
 		</div>
-
 	</div>
-</div>
 
-<!-- Paginação -->
+	<!-- Paginação -->
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+
+	<!-- Paginação 
 <ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
 
 	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
@@ -57,19 +64,21 @@
 			class="material-icons arrow-pagination">last_page</i>
 	</a></li>
 
-</ul>
+</ul> -->
 
-<div class="row">
-	<div class="col s4">
-		<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	<div class="row">
+		<div class="col s4">
+			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+		</div>
+		<div class="col s4  button-import">
+			<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
+		</div>
+		<div class="col s4">
+			<a [routerLink]="['/grupo-monitoramento/cadastrar']"
+				class="waves-effect waves-light btn button-add">Adicionar</a>
+		</div>
 	</div>
-	<div class="col s4  button-import">
-		<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
-	</div>
-	<div class="col s4">
-		<a [routerLink]="['/grupo-monitoramento/cadastrar']"
-			class="waves-effect waves-light btn button-add">Adicionar</a>
-	</div>
+
 </div>
 
 <!-- Modal Structure -->
@@ -77,37 +86,34 @@
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="row">
-	
+
 		<div class="row">
-		
+
 			<div class="input-field col s6">
 				<div class="modal-content">
 					<label for="nome">Nome</label> <input type="text" id="nome"
 						[(ngModel)]="filter.nome" name="nome">
 				</div>
 			</div>
-			
+
 			<div class="input-field col s3 checkbox">
 				<input type="checkbox" id="recorrente" #rec
-					(click)="changeStateRecorrente()"
-					name="recorrente"> <label
+					(click)="changeStateRecorrente()" name="recorrente"> <label
 					for="recorrente">Recorrente</label>
 			</div>
-			
+
 			<div class="input-field col s3 checkbox">
 				<input type="checkbox" id="relatorio" #rel
-					(click)="changeStateRelatorio()"
-					name="relatorio"> <label
+					(click)="changeStateRelatorio()" name="relatorio"> <label
 					for="relatorio">Relatório</label>
 			</div>
-			
+
 			<div class="input-field col s3 checkbox">
 				<input type="checkbox" id="auditoriaAso" #audit
-					(click)="changeStateAuditoriaAso()"
-					name="auditoriaAso"> <label
+					(click)="changeStateAuditoriaAso()" name="auditoriaAso"> <label
 					for="auditoriaAso">Auditoria do ASO</label>
 			</div>
-			
+
 		</div>
 	</div>
 
@@ -126,8 +132,8 @@
 	<h5 class="title-modal-delete">Confirmação para remoção</h5>
 	<p class="paragraph-modal-delete">Deseja realmente excluir esse
 		campo?</p>
-	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
-		poderá mais ser resgatado.</p>
+	<p class="paragraph-modal-delete">Se desejar excluir, esse campo
+		não poderá mais ser resgatado.</p>
 
 	<div class="modal-footer">
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
@@ -143,30 +149,33 @@
 	[materializeParams]="modalParams" [materializeActions]="modalImport">
 
 	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">
-			
-			<h5 class="title-modal-import">Importar Arquivo</h5>
-			
-			<div class="row file-import">
-				<div class="file-field input-field col s12">
-					<div class="btn">
-						<span>File</span> <input id="arquivo" type="file" #arquivo
-							name="arquivo" accept=".xls, .xlsx">
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate" type="text">
-					</div>
+
+		<h5 class="title-modal-import">Importar Arquivo</h5>
+
+		<div class="row file-import">
+			<div class="file-field input-field col s12">
+				<div class="btn">
+					<span>File</span> <input id="arquivo" type="file" #arquivo
+						name="arquivo" accept=".xls, .xlsx">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
 				</div>
 			</div>
-			
-			<div class="modal-footer">
-				<a type="submit" class="waves-effect waves-green btn-flat" (click)="importFile()">Importar</a>
-				<a class="waves-effect waves-green btn-flat" (click)="closeModalImport()">Fechar</a>
-			</div>
-		
+		</div>
+
+		<div class="modal-footer">
+			<a type="submit" class="waves-effect waves-green btn-flat"
+				(click)="importFile()">Importar</a> <a
+				class="waves-effect waves-green btn-flat"
+				(click)="closeModalImport()">Fechar</a>
+		</div>
+
 	</form>
 
 </div>
 
 <div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
 </div>

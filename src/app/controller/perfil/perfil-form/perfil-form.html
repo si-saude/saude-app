@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<div class="row">
+<div class="row form-container">
 	<form class="col s12" (ngSubmit)="save()" #form="ngForm">
 
 		<div class="row">
@@ -23,7 +23,10 @@
 		<input id="id" name="id" type="hidden" name="perfil.id"
 			[(ngModel)]="perfil.id"> <input id="version" name="version"
 			type="hidden" name="perfil.version" [(ngModel)]="perfil.version">
-
+			
+		<input class="checkbox-select-all" id="select" type="checkbox" 
+			[(ngModel)]="select" (click)="selectAll()" name="select"> 
+		<label for="select">Selecionar/deselecionar todos</label>
 
 		<div class="table-permissoes">
 			<table class="striped">

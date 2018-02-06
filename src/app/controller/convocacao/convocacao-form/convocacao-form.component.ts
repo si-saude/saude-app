@@ -50,6 +50,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     filterNomeEmpregado: any;
     filterGerenciaEmpregado: any;
     empregadoToAdd: Empregado;
+    validEmpregadoToAdd: string;
     empregadoDetail: EmpregadoConvocacao;
     checkEmpregados: boolean;
     pendenteRelatorio: boolean;
@@ -238,6 +239,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     }
 
     getEmpregado( evento ) {
+        if ( this.validEmpregadoToAdd == this.empregadoToAdd.getPessoa().getNome() ) return;
         if ( this.empregadoToAdd !== undefined ) {
             
             let empregado: Empregado = this.empregados.find( e => {
@@ -253,6 +255,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             
             if ( empregado !== undefined ) {
                 this.empregadoToAdd = new EmpregadoBuilder().clone(empregado);
+                this.validEmpregadoToAdd = this.empregadoToAdd.getPessoa().getNome();
             } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
         } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
     }
