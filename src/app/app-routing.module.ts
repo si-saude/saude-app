@@ -47,6 +47,7 @@ import { RequisitoAsoGuard } from './guards/guards-child/requisito-aso.guard';
 import { AuditoriaAsoGuard } from './guards/guards-child/auditoria-aso.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
+import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
@@ -56,7 +57,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent,
       canActivate: [AuthGuard]},
   { path: 'agenda', loadChildren: 'app/agenda/agenda.module#AgendaModule',
-      canActivate: [AuthGuard]},
+      canActivateChild: [AgendaGuard]},
   { path: 'perfil', loadChildren: 'app/controller/perfil/perfil.module#PerfilModule',
       canActivateChild: [PerfilGuard]},
   { path: 'localizacao', loadChildren: 'app/controller/localizacao/localizacao.module#LocalizacaoModule',

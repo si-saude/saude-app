@@ -4,7 +4,6 @@ import { HttpModule } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
 import { MaterializeModule } from 'angular2-materialize';
-import { Ng2InputMaskModule } from 'ng2-input-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { LoginModule } from './login/login.module';
@@ -63,6 +62,7 @@ import { SolicitacaoServicoService } from './solicitacao-servico/solicitacao-ser
 import { TransferDataService } from './solicitacao-servico/transfer-data.service';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
+import { AgendaGuard } from './guards/guards-child/agenda.guard';
 
 @NgModule({
   declarations: [
@@ -79,7 +79,6 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
   imports: [
     BrowserModule,
     MaterializeModule,
-    Ng2InputMaskModule,
     HttpModule,
     LoginModule,
     ContatoModule,
@@ -129,7 +128,8 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
     RegraAtendimentoGuard,
     ServicoGuard,
     AtendimentoGuard,
-    AuditoriaAsoGuard
+    AuditoriaAsoGuard,
+    AgendaGuard
   ],
   bootstrap: [ 
     AppComponent

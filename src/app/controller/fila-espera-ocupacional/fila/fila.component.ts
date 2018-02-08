@@ -71,7 +71,7 @@ export class FilaComponent {
     }
 
     startFila( localizacaoId, regraAtendimentoId ) {
-        if ( ( localizacaoId && regraAtendimentoId ) == 0 ) {
+        if ( localizacaoId == 0 || regraAtendimentoId == 0 ) {
             this.toastParams = ['Por favor, preencha todos os campos', 4000];
             this.globalActions.emit( 'toast' );
             this.wasRequested = false;

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 
 import { MyDatePickerModule } from 'mydatepicker';
-import { Ng2InputMaskModule } from 'ng2-input-mask';
 
 import { CheckInComponent } from './check-in/check-in.component';
 import { CheckOutComponent } from './check-out/check-out.component';
@@ -21,7 +20,6 @@ import { SharedModule } from './../shared.module';
      imports: [
         FilaEsperaOcupacionalRoutingModule,
         MyDatePickerModule,
-        Ng2InputMaskModule,
         SharedModule
      ],
      providers: [

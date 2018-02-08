@@ -7,12 +7,14 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 import { AtendimentoService } from './atendimento.service';
 import { AtendimentoFormComponent } from './atendimento-form/atendimento-form.component';
+import { AtendimentoComponent } from './atendimento.component';
 import { AtendimentoRoutingModule } from './atendimento.routing.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
     declarations: [
-       AtendimentoFormComponent
+       AtendimentoFormComponent,
+       AtendimentoComponent
      ],
      imports: [
         AtendimentoRoutingModule,

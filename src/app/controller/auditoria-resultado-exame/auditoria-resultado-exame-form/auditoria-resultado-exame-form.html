@@ -75,7 +75,7 @@
 											type="text" materialize="autocomplete" autocomplete="off"
 											name="exame[{{iREx}}]"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.descricao"
-											(blur)="getExame($event, iREx)"
+											(blur)="getExame($event, iREx); choiseCampoExame(iREx)"
 											(ngModelChange)="selectExameByCodigo($event, iREx); selectExameByDescricao($event, iREx);"
 											[materializeParams]="autocompleteExame">
 									</div>	
@@ -143,8 +143,7 @@
 										<legend>Campo do Exame</legend>
 
 										<div class="col s10">
-											<select (click)="choiseCampoExame(iREx)"
-												name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
+											<select name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
 												class="browser-default" #campo>
 												<option disabled selected value=0>Selecione um item</option>
 												<option *ngFor="let campo of campoExames"

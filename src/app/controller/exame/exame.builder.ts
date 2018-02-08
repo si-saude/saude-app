@@ -37,6 +37,7 @@ export class ExameBuilder extends GenericBuilder{
         cloneExame.setVersion(this.getValue(exame, "getVersion"));
         cloneExame.setCodigo(this.getValue(exame, "getCodigo"));
         cloneExame.setDescricao(this.getValue(exame, "getDescricao"));
+        cloneExame.setOrdem(this.getValue(exame, "getOrdem"));
          
         cloneExame.setCampoExames(new CampoExameBuilder().cloneList(this.getValue(exame, "getCampoExames")));
                 

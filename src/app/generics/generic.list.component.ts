@@ -198,7 +198,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
             .catch( error => {
                 this.showPreload = false;
                 this.canImport = false;
-                console.log(this.showPreload);
                 this.catchConfiguration( error );
             } )
     }

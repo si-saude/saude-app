@@ -1,4 +1,5 @@
 import { Atividade } from './atividade';
+import { RegraAtendimento } from './regra-atendimento';
 
 export class Servico {
     private id: number;
@@ -10,6 +11,7 @@ export class Servico {
     private atividades: Array<Atividade>;
     private intervalo: number;
     private quantidadeSolicitacaoIntervalo: number;
+    private regraAtendimento: RegraAtendimento;
     private version: number;
 
     public getId() {
@@ -82,6 +84,14 @@ export class Servico {
     
     setQuantidadeSolicitacaoIntervalo(quantidadeSolicitacaoIntervalo: number) {
         this.quantidadeSolicitacaoIntervalo = quantidadeSolicitacaoIntervalo;
+    }
+    
+    getRegraAtendimento() {
+        return this.regraAtendimento;
+    }
+    
+    setRegraAtendimento(regraAtendimento: RegraAtendimento) {
+        this.regraAtendimento = regraAtendimento;
     }
     
     getVersion() {

@@ -15,6 +15,10 @@ export class RegraAtendimentoService extends GenericService {
         super( http, router, "regra-atendimento" );
     }
     
+    getRegras() {
+        return this.selectList(new RegraAtendimentoFilter());
+    }
+    
     getEquipes() {
         return this.equipeService.getEquipes();
     }

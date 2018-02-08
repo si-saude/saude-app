@@ -4,13 +4,25 @@ import { Http } from '@angular/http';
 
 //import { Tarefa } from './../model/tarefa';
 //import { TarefaFilter } from './../controller/tarefa.filter';
+import { UsuarioService } from './../controller/usuario/usuario.service';
+import { ProfissionalSaudeService } from './../controller/profissional-saude/profissional-saude.service';
 import { GenericService } from './../generics/generic.service';
 
 @Injectable()
 export class AgendaService extends GenericService {
 
-    constructor( http: Http, router: Router ) { 
+    constructor( http: Http, router: Router,
+            private usuarioService: UsuarioService,
+            private profissionalSaudeService: ProfissionalSaudeService) { 
         super( http, router, "tarefa" );
+    }
+    
+    getUsuario(id) {
+        return this.usuarioService.get(id);
+    }
+    
+    getProfissional( profissionalFilter ) {
+        return this.profissionalSaudeService.list( profissionalFilter );
     }
     
 }

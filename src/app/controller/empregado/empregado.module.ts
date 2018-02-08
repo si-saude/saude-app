@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { Ng2InputMaskModule } from 'ng2-input-mask';
 import { MyDatePickerModule } from 'mydatepicker';
 
 import { EmpregadoComponent } from './empregado.component';
@@ -23,7 +22,6 @@ import { CpfPipe } from './../../pipes/cpf.pipe';
      ],
      imports: [
         EmpregadoRoutingModule,
-        Ng2InputMaskModule,
         MyDatePickerModule,
         SharedModule
      ],

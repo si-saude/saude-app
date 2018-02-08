@@ -318,6 +318,16 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     }
     
     choiseCampoExame( indexREx ) {
+        if ( this.empregadoConvocacao.getResultadoExames()[indexREx].getId() == undefined ) {
+
+            let exame = this.exames.find( e => e.getId() == 
+                this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getId() );
+                this.campoExames = exame.getCampoExames();
+                this.campoExames.forEach(cE => {
+                    this.addItemResultadoExame(indexREx, cE.getId());
+                    
+            })
+        }
         if ( this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getId() > 0 ) {
             let exame = this.exames.find( e => e.getId() == 
                 this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getId() );

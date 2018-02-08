@@ -1,7 +1,7 @@
 import { RegraAtendimentoEquipe } from './regra-atendimento-equipe';
 
 export class RegraAtendimento {
-    private id: number;
+    private id: number = 0;
     private nome: string;
     private regraAtendimentoEquipes: Array<RegraAtendimentoEquipe>;
     private version: number;
