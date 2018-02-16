@@ -54,7 +54,7 @@ export class CheckOutComponent {
         this.getLocalizacoes();
     }
     
-    checkIn( localizacaoId ) {
+    checkOut( localizacaoId ) {
         if ( ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == undefined ||
             ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == "" ||
             localizacaoId == 0 ) {

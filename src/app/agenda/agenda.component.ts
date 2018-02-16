@@ -16,7 +16,11 @@ import { TarefaBuilder } from './../controller/tarefa/tarefa.builder';
 import { Profissional } from './../model/profissional';
 import { ProfissionalSaudeFilter } from './../controller/profissional-saude/profissional-saude.filter';
 import { ProfissionalSaudeBuilder } from './../controller/profissional-saude/profissional-saude.builder';
+import { Empregado } from './../model/empregado';
 import { EmpregadoFilter } from './../controller/empregado/empregado.filter';
+import { EmpregadoBuilder } from './../controller/empregado/empregado.builder';
+import { Equipe } from './../model/equipe';
+import { EquipeBuilder } from './../controller/equipe/equipe.builder';
 import { EquipeFilter } from './../controller/equipe/equipe.filter';
 import { DateFilter } from './../generics/date.filter';
 
@@ -34,9 +38,14 @@ export class AgendaComponent implements OnInit {
     usuario: Usuario;
     tarefaFilter: TarefaFilter;
     showNothing: boolean;
+    coordenador: Empregado;
+    activeEditTarefa: boolean;
+    firtTime: boolean;
 
     constructor( router: Router, private agendaService: AgendaService ) {
         let component = this;
+        this.firtTime = false;
+        this.activeEditTarefa = false;
         this.tarefaFilter = new TarefaFilter();
         this.toastParams = ['', 4000];
         this.globalActions = new EventEmitter<string | MaterializeAction>();
@@ -47,7 +56,7 @@ export class AgendaComponent implements OnInit {
             defaultDate: Date.now(),
             locale: 'pt-br',
             eventMouseover: function( event, jsEvent, view ) {
-                component.openTooltip(event);
+                component.openTooltip( event );
             },
             eventMouseout: function( event, jsEvent, view ) {
                 component.closeTooltip( event );
@@ -58,21 +67,26 @@ export class AgendaComponent implements OnInit {
                 $( 'angular2-fullcalendar' ).fullCalendar( 'gotoDate', date );
             },
             eventClick: function(calEvent, jsEvent, view) {
-                
+                setTimeout(() => {
+                    if ( component.activeEditTarefa ) {
+                        localStorage.setItem("tarefa-id", calEvent["id"]);
+                        window.open("/tarefa");                        
+                    }
+                }, 200);
             },
             customButtons: {
                 proximo: {
                     text: '>',
                     click: function() {
                         $("angular2-fullcalendar").fullCalendar('next');
-                        component.moveDate();
+//                        component.moveDate();
                     }
                 },
                 anterior: {
                     text: '<',
                     click: function() {
                         $("angular2-fullcalendar").fullCalendar('prev');
-                        component.moveDate();
+//                        component.moveDate();
                     }
                 }
             },
@@ -86,34 +100,33 @@ export class AgendaComponent implements OnInit {
             eventLimit: true, // allow "more" link when too many events
             events: function(start, end, timezone, callback) {
                 if ( localStorage.getItem( 'usuario-id' ) != undefined ) {
-                    
                     component.agendaService.getUsuario( Number( localStorage.getItem( 'usuario-id' ) ) )
                         .then( res => {
                             component.usuario = new UsuarioBuilder().clone( res.json() );
-                            
-                            let dataInicial: Date = new Date(start["_d"]);
-                            let dataFinal: Date = new Date(end["_d"]);
+                            let mInicial: Date = moment(start).toDate();
+                            let mFinal: Date = moment(end).toDate();
+                            let dataInicial: Date = new Date(mInicial.getFullYear(), mInicial.getMonth(), mInicial.getDate(), 0,0,0);
+                            let dataFinal: Date = new Date(mFinal.getFullYear(), mFinal.getMonth(), mFinal.getDate(), 0,0,0);
                             component.tarefaFilter.setInicio(new DateFilter());
                             component.tarefaFilter.getInicio().setInicio(dataInicial);
                             component.tarefaFilter.getInicio().setFim(dataFinal);
                             component.tarefaFilter.getInicio().setTypeFilter("ENTRE");
                             if ( component.usuario.getGestorCss() ) {
+                                component.activeEditTarefa = true;
                                 component.agendaService.list( component.tarefaFilter )
                                     .then( res => {
                                         callback(component.buildEvents(res.json()));
                                     } )
                                     .catch( error => {
-                                        console.log( "Erro ao retornar tarefas."+ error);
+                                        console.log( "Erro ao retornar tarefas: "+ error);
                                         callback([]);
                                     } )
                                 return;
-                            }
-//                            
-                            if ( component.usuario.getId() > 0  && component.usuario.getPessoa().getId() > 0 ) {
+                            } else if ( component.usuario.getId() > 0  && component.usuario.getPessoa().getId() > 0 ) {
                                 let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
                                 let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
                                 empregadoFilter.getPessoa().setCpf( component.usuario.getPessoa().getCpf() );
-                                profissionalFilter.setEmpregado(empregadoFilter);
+                                profissionalFilter.setEmpregado( empregadoFilter );
 //
                                 component.agendaService.getProfissional( profissionalFilter )
                                     .then( res => {
@@ -127,12 +140,24 @@ export class AgendaComponent implements OnInit {
                                         }
                                         
                                         let equipeFilter: EquipeFilter = new EquipeFilter();
-                                        equipeFilter.setNome( component.profissional.getEquipe().getNome() );
+                                        equipeFilter.setId( component.profissional.getEquipe().getId() );
                                         component.tarefaFilter.setEquipe( equipeFilter );
+                                        
+                                        component.agendaService.getEquipe( component.profissional.getEquipe().getId() )
+                                            .then(res => {
+                                                let e: Equipe = new EquipeBuilder().clone( res.json() );
+                                                if ( e.getCoordenador().getId() == component.profissional.getId() )
+                                                    component.activeEditTarefa = true;
+                                                else component.activeEditTarefa = false;
+                                            })
+                                            .catch(error => {
+                                                console.log("Erro ao retornar equipe: "+error);
+                                            })
                                         
                                         if ( res.json().list[0] != undefined ) {
                                             component.agendaService.list( component.tarefaFilter )
                                                 .then( res => {
+                                                    $('angular2-fullcalendar').fullCalendar( 'removeEvents' );
                                                     callback(component.buildEvents(res.json()));
                                                 } )
                                                 .catch( error => {
@@ -162,31 +187,32 @@ export class AgendaComponent implements OnInit {
 
     }
 
-    ngOnInit() {
-        
-        
-    }
+    ngOnInit() { }
     
     moveDate() {
-        if ( this.showNothing ) return;
-        
-        $('angular2-fullcalendar').fullCalendar( 'removeEvents' );
-        $('angular2-fullcalendar').fullCalendar( 'rerenderEvents' );
+//        $('angular2-fullcalendar').fullCalendar( 'removeEvents' );
+//        $('angular2-fullcalendar').fullCalendar( 'rerenderEvents' );
         let dataInicial: Date = new Date();
         let dataFinal: Date = new Date();
         let m = moment($("angular2-fullcalendar").fullCalendar('getDate'));
         let view = $("angular2-fullcalendar").fullCalendar('getView');
         if ( view["name"] == "month" ) {
-            dataInicial = new Date(m["_d"]);
-            dataFinal = new Date(m.add(1, "months")["_d"]);
+            let mDate: Date = m.toDate();
+            dataInicial = new Date(mDate.getFullYear(), mDate.getMonth(), mDate.getDate(), 0,0,0);
+            mDate = m.add(1, "months").add(1, "days").toDate();
+            dataFinal = new Date(mDate.getFullYear(), mDate.getMonth(), mDate.getDate(), 0,0,0);
         }
         if ( view["name"] == "agendaWeek" ) {
-            dataInicial = new Date(m["_d"]);
-            dataFinal = new Date(m.add(1, "weeks")["_d"]);
+            let mDate: Date = m.toDate();
+            dataInicial = new Date(mDate.getFullYear(), mDate.getMonth(), mDate.getDate(), 0,0,0);
+            mDate = m.add(1, "weeks").add(1, "days").toDate();
+            dataFinal = new Date(mDate.getFullYear(), mDate.getMonth(), mDate.getDate(), 0,0,0);
         }
         if ( view["name"] == "agendaDay" ) {
-            dataInicial = new Date(m["_d"]);
-            dataFinal = new Date(m.add(1, "days")["_d"]);
+            let mDate: Date = m.toDate();
+            dataInicial = new Date(mDate.getFullYear(), mDate.getMonth(), mDate.getDate(), 0,0,0);
+            mDate = m.add(1, "days").add(1, "days").toDate();
+            dataFinal = new Date(mDate.getFullYear(), mDate.getMonth(), mDate.getDate(), 0,0,0);
         }
         this.tarefaFilter.setInicio(new DateFilter());
         this.tarefaFilter.getInicio().setInicio(dataInicial);
@@ -202,42 +228,36 @@ export class AgendaComponent implements OnInit {
         this.callListTarefasService( this.tarefaFilter );
     }
     
-    buildEvents(lista) {
-        let o: Array<Object> = new Array<Object>();
-        let trfs: Array<Tarefa> = new TarefaBuilder().cloneList(lista["list"]);
-        trfs.forEach( t => {
-            let obj: Object = {};
-            obj["id"] = t.getId();
-            obj["title"] = "Cliente: " + t.getCliente().getPessoa().getNome() + " <br> " + 
-                            "Equipe: " + t.getEquipe().getNome() + " <br> " +
-                            "Servico: " + t.getServico().getNome();
-            obj["start"] = this.buildDateTime(t.getInicio());
-            obj["end"] = this.buildDateTime(t.getFim());
-            o.push(obj);
-        })
-//        o.push( {
-//            id: 1,
-//            title: 'Evento com mais de uma linha...<br> muito grande mesmo',
-//            start: '2018-02-01'
-//        } );
-//        o.push( {
-//            id: 2,
-//            title: 'All Day Event',
-//            start: '2018-02-01'
-//        } );
-        return o;
-    }
-    
     callListTarefasService( tarefaFilter ) {
         this.agendaService.list( tarefaFilter )
             .then( res => {
-                $('angular2-fullcalendar').fullCalendar( 'addEventSource', this.buildEvents(res.json()) );
-                $('angular2-fullcalendar').fullCalendar( 'rerenderEvents' );
+                $('angular2-fullcalendar').fullCalendar( 'removeEvents' ); 
+                $('angular2-fullcalendar').fullCalendar( 'addEventSource', this.buildEvents(res.json()));
             } )
             .catch( error => {
                 console.log( "Erro ao retornar tarefas."+ error);
                 return([]);
             } )
+    }
+    
+    buildEvents(lista) {
+        if ( this.showNothing ) return [{}];
+        let o: Array<Object> = new Array<Object>();
+        let trfs: Array<Tarefa> = new TarefaBuilder().cloneList(lista["list"]);
+        trfs.forEach( t => {
+            let obj: Object = {};
+            obj["id"] = t.getId();
+            obj["title"] = "Servico: " + t.getServico().getNome() + " - " +
+                           "Cliente: " + t.getCliente().getPessoa().getNome() + " - " + 
+                           "Equipe: " + t.getEquipe().getNome();
+            obj["servico"] = t.getServico().getNome();
+            obj["cliente"] = t.getCliente().getPessoa().getNome();
+            obj["equipe"] = t.getEquipe().getNome();
+            obj["start"] = this.buildDateTime(t.getInicio());
+            obj["end"] = this.buildDateTime(t.getFim());
+            o.push(obj);
+        })
+        return o;
     }
     
     buildEvents2() {
@@ -262,7 +282,10 @@ export class AgendaComponent implements OnInit {
     }
     
     openTooltip( evento ) {
-        this.toastParams = [evento.title, 60000];
+        let txt = "Servico: " + evento["servico"] + "<br>" +
+                  "Cliente: " + evento["cliente"] + " <br> " + 
+                  "Equipe: " + evento["equipe"];
+        this.toastParams = [txt, 60000];
         this.globalActions.emit( 'toast' );
     }
     

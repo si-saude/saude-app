@@ -25,18 +25,8 @@ export class AtendimentoComponent extends GenericListComponent<Atendimento, Aten
     
     constructor( service: AtendimentoService, atendimentoGuard: AtendimentoGuard, router: Router ) {
         let atendimentoFilter: AtendimentoFilter = new AtendimentoFilter();
-        let filaAtendimentoOcupacionalFilter: FilaAtendimentoOcupacionalFilter = new FilaAtendimentoOcupacionalFilter();
-        let inicio = new Date();
-        let fim = new Date();
         
-        inicio.setHours(0,0,0,0);
-        fim.setHours(23,59,59,999);
-        
-        filaAtendimentoOcupacionalFilter.setInicio(new DateFilter);
-        filaAtendimentoOcupacionalFilter.getInicio().setInicio(inicio);
-        filaAtendimentoOcupacionalFilter.getInicio().setFim(fim);
-        filaAtendimentoOcupacionalFilter.getInicio().setTypeFilter("ENTRE");
-        atendimentoFilter.setFilaAtendimentoOcupacional( filaAtendimentoOcupacionalFilter );
+        atendimentoFilter.getTarefa().setStatus("EXECUCAO");
         
         super( service, atendimentoFilter, atendimentoGuard, router );
         this.atendimentoService = service;

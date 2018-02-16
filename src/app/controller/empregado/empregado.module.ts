@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';
+import { Ng2InputMaskModule } from 'ng2-input-mask';
 
 import { EmpregadoComponent } from './empregado.component';
 import { EmpregadoService } from './empregado.service';
@@ -23,6 +24,7 @@ import { CpfPipe } from './../../pipes/cpf.pipe';
      imports: [
         EmpregadoRoutingModule,
         MyDatePickerModule,
+        Ng2InputMaskModule,
         SharedModule
      ],
      providers: [

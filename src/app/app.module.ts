@@ -63,6 +63,7 @@ import { TransferDataService } from './solicitacao-servico/transfer-data.service
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
+import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 
 @NgModule({
   declarations: [
@@ -129,7 +130,8 @@ import { AgendaGuard } from './guards/guards-child/agenda.guard';
     ServicoGuard,
     AtendimentoGuard,
     AuditoriaAsoGuard,
-    AgendaGuard
+    AgendaGuard,
+    FilaEsperaOcupacionalRecepcaoGuard
   ],
   bootstrap: [ 
     AppComponent

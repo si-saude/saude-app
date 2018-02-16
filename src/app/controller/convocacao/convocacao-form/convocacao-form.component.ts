@@ -15,7 +15,6 @@ import { ExameBuilder } from './../../exame/exame.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { ConvocacaoBuilder } from './../convocacao.builder';
 import { ConvocacaoService } from './../convocacao.service';
-import { EmpregadoService } from './../../empregado/empregado.service';
 import { GerenciaConvocacao } from './../../../model/gerencia-convocacao';
 import { EmpregadoConvocacao } from './../../../model/empregado-convocacao';
 import { EmpregadoConvocacaoBuilder } from './../../empregado-convocacao/empregado-convocacao.builder';
@@ -69,7 +68,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
-        private empregadoService: EmpregadoService,
         router: Router) {
         super( convocacaoService, router );
 
@@ -246,10 +244,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 if ( e.getChave() == undefined || 
                         e.getChave() == null ||
                         e.getChave() == '' ) {
-                    return "- " + e.getPessoa().getNome() == this.empregadoToAdd.getPessoa().getNome();
+                    return ( "- " + e.getPessoa().getNome() ).trim() == this.empregadoToAdd.getPessoa().getNome().trim();
                 } else {
-                    return e.getChave() + " - " + e.getPessoa().getNome() ==
-                        this.empregadoToAdd.getPessoa().getNome();
+                    return ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
+                        this.empregadoToAdd.getPessoa().getNome().trim();
                 }
             } );
             
@@ -265,7 +263,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         if ( this.oldChaveEmpregado != evento ) {
             this.oldChaveEmpregado = evento;
             
-            this.empregadoService.getEmpregadoByChave( evento )
+            this.convocacaoService.getEmpregadoByChave( evento )
                 .then( res => {
                     let emps = new EmpregadoBuilder().cloneList( res.json() );
                     if (this.empregados.length == 0)
@@ -290,7 +288,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         if ( this.oldNomeEmpregado != evento ) {
             this.oldNomeEmpregado = evento;
             if ( evento.length > 3 ) {
-                this.empregadoService.getEmpregadoByName( evento )
+                this.convocacaoService.getEmpregadoByName( evento )
                     .then( res => {
                         let emps = new EmpregadoBuilder().cloneList( res.json() );
                         if (this.empregados.length == 0)

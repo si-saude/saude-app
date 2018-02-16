@@ -1,0 +1,47 @@
+.form-container {
+	margin-bottom: 100px;
+}
+
+.content-dados {
+	width: 50%;
+    margin: 0 auto;
+}
+
+.row-btns {
+	margin-top: 50px;
+	float: right;
+}
+
+.btn-avancar {
+	float: right;
+}
+
+.btn-salvar {
+	width: 150px;
+}
+
+.btn-checkin {
+    width: 50% !important;
+    margin-left: 80px !important;	
+}
+
+select{
+	display:inline;
+}
+
+.fldst {
+	padding-bottom: 60px;
+}
+
+.input-field > select {
+    display: block;
+    position: absolute;
+    width: 250px;
+    pointer-events: all;
+    height: 50px;
+    top: 0;
+    left: 20px;
+    opacity: 10;
+    margin-top: -8px;
+    margin-left: -15px;
+}

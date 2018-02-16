@@ -102,24 +102,8 @@
 
 </div>
 
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams" [materializeActions]="modalDelete">
-
-	<h5 class="title-modal-delete">Confirmação para remoção</h5>
-	<p class="paragraph-modal-delete">Deseja realmente excluir esse
-		campo?</p>
-	<p class="paragraph-modal-delete">Se desejar excluir, esse campo
-		não poderá mais ser resgatado.</p>
-
-	<div class="modal-footer">
-		<a class="modal-action modal-close waves-effect waves-green btn-flat"
-			(click)="confirmDelete()">Confirmar</a> <a
-			class="waves-effect waves-green btn-flat"
-			(click)="closeModalDelete()">Cancelar</a>
-	</div>
-
-</div>
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" 
+	[show]="openModalDelete"></app-confirm-delete>
 
 <div class="mensagem">
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError"

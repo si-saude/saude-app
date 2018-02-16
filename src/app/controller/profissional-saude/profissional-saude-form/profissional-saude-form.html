@@ -16,11 +16,13 @@
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs" materialize="tabs">
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#dadosGerais">Dados Gerais</a></li>
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s3"><a RouterLinkActive="active"
+						href="#servicos">Serviços</a></li>
+					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#curriculo">Currículo</a></li>
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#profissionalConselho">Conselho</a></li>
 				</ul>
 			</div>
@@ -119,6 +121,74 @@
 
 			</div>
 
+			<div id="servicos">
+
+				<fieldset>
+					<legend>Serviço <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getServicos()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
+					<div class="row row-servico">
+
+						<div class="input-field col s4">
+							<select class="browser-default" #servico>
+								<option disabled selected value=0>Selecione um servico</option>
+								<option *ngFor="let servico of servicos" value="{{servico.id}}">{{servico.nome}}</option>
+							</select>
+						</div>
+						<div class="col s2">
+							<a
+								class="btn-floating waves-effect waves-light green btn-add"
+								(click)="addServico(servico.value)"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+
+					</div>
+
+				</fieldset>
+
+				<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s3">Código</th>
+								<th class="col s3">Nome</th>
+								<th class="col s3">Grupo</th>
+								<th class="col s3">Remover</th>
+							</tr>
+						</thead>
+						<div *ngFor="let servico of profissionalSaude.servicos;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<input type="hidden" [(ngModel)]="servico.codigo"
+										value="{{servico.codigo}}" name="servico[{{i}}].codigo">
+									<input type="hidden" [(ngModel)]="servico.nome"
+										value="{{servico.nome}}" name="servico[{{i}}].nome">
+									<input type="hidden" [(ngModel)]="servico.grupo"
+										value="{{servico.grupo}}" name="servico[{{i}}].grupo">
+									<input type="hidden" [(ngModel)]="servico.id"
+										value="{{servico.id}}" name="servico[{{i}}].id">
+									<td class="col s3 codigo">{{servico.codigo}}</td>
+									<td class="col s3 nome">{{servico.nome}}</td>
+									<td class="col s3 grupo">{{servico.grupo}}</td>
+									<td class="col s3 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeServico(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>
+
+			</div>
+
 			<div id="curriculo">
 
 				<div class="form-group">
@@ -165,7 +235,8 @@
 								<div class="row">
 									<div class="input-field col s6">
 										<fieldset>
-											<legend>Curso <a
+											<legend>
+												Curso <a
 													class="btn-floating waves-effect waves-light green btn-add-fieldset"
 													(click)="getCursos()"> <i
 													class="material-icons center-icon">cached</i>

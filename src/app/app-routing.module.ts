@@ -48,6 +48,7 @@ import { AuditoriaAsoGuard } from './guards/guards-child/auditoria-aso.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
+import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
@@ -141,6 +142,9 @@ const routes: Routes = [
       loadChildren: 'app/solicitacao-servico/solicitacao-servico.module#SolicitacaoServicoModule'},
   { path: 'fila-espera-ocupacional',
       loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule' },
+  { path: 'fila-espera-ocupacional-recepcao',
+      loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional-recepcao.module#FilaEsperaOcupacionalRecepcaoModule',
+      canActivateChild: [FilaEsperaOcupacionalRecepcaoGuard]},
   { path: 'requisito-aso',
       loadChildren: 'app/controller/requisito-aso/requisito-aso.module#RequisitoAsoModule',
       canActivateChild: [RequisitoAsoGuard]},
@@ -150,6 +154,8 @@ const routes: Routes = [
   { path: 'auditoria-aso',
       loadChildren: 'app/controller/auditoria-aso/auditoria-aso.module#AuditoriaAsoModule',
       canActivateChild: [AuditoriaAsoGuard]},
+  { path: 'tarefa',
+      loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: '', pathMatch: 'full', redirectTo: '/servico'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

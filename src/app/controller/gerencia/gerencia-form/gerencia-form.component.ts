@@ -6,10 +6,10 @@ import { GlobalVariable } from './../../../global';
 import { Gerencia } from './../../../model/gerencia';
 import { Empregado } from './../../../model/empregado';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
+import { EmpregadoService } from './../../empregado/empregado.service';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { GerenciaBuilder } from './../gerencia.builder';
 import { GerenciaService } from './../gerencia.service';
-import { EmpregadoService } from './../../empregado/empregado.service';
 
 @Component( {
     selector: 'app-gerencia-form',
@@ -132,8 +132,8 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
         if ( this.gerencia.getGerente().getPessoa().getNome() !== undefined ) {
 
             let gerente = this.gerentes.find( e => {
-                if ( e.getChave() + " - " + e.getPessoa().getNome() == this.gerencia.getGerente().getPessoa().getNome() || 
-                    e.getPessoa().getNome() == this.gerencia.getGerente().getPessoa().getNome() )
+                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() == this.gerencia.getGerente().getPessoa().getNome().trim() || 
+                    e.getPessoa().getNome().trim() == this.gerencia.getGerente().getPessoa().getNome().trim() )
                     return true;
                 else return false;
             } );
@@ -149,8 +149,10 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
         if ( this.validSecretario1 == this.gerencia.getSecretario1().getPessoa().getNome() ) return;
         if ( this.gerencia.getSecretario1().getPessoa().getNome() !== undefined ) {
             let secretario1 = this.secretarios1.find( e => { 
-                return e.getChave() + " - " + e.getPessoa().getNome() ==
-                    this.gerencia.getSecretario1().getPessoa().getNome(); 
+                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() == this.gerencia.getSecretario1().getPessoa().getNome().trim() || 
+                        e.getPessoa().getNome().trim() == this.gerencia.getSecretario1().getPessoa().getNome().trim() )
+                        return true;
+                    else return false;
             });
 
             if ( secretario1 !== undefined ) {
@@ -164,8 +166,10 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
         if ( this.validSecretario2 == this.gerencia.getSecretario2().getPessoa().getNome() ) return;
         if ( this.gerencia.getSecretario2().getPessoa().getNome() !== undefined ) {
             let secretario2 = this.secretarios2.find( e => { 
-                return e.getChave() + " - " + e.getPessoa().getNome() ==
-                    this.gerencia.getSecretario2().getPessoa().getNome(); 
+                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() == this.gerencia.getSecretario2().getPessoa().getNome().trim() || 
+                        e.getPessoa().getNome().trim() == this.gerencia.getSecretario2().getPessoa().getNome().trim() )
+                        return true;
+                    else return false; 
             });
 
             if ( secretario2 !== undefined ) {

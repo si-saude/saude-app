@@ -12,7 +12,7 @@ import { GenericService } from './../../generics/generic.service';
 @Injectable()
 export class GerenciaService extends GenericService {
     
-    constructor( http: Http, router: Router) {
+    constructor(http: Http, router: Router) {
         super(http, router, "gerencia");
     }
 
@@ -25,4 +25,5 @@ export class GerenciaService extends GenericService {
         gerenciaFilter.setId(id);
         return this.selectList(gerenciaFilter);
     }
+    
 }

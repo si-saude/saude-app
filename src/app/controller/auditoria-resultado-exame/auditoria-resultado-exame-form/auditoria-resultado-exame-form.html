@@ -75,7 +75,7 @@
 											type="text" materialize="autocomplete" autocomplete="off"
 											name="exame[{{iREx}}]"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.descricao"
-											(blur)="getExame($event, iREx); choiseCampoExame(iREx)"
+											(blur)="getExame($event, iREx);"
 											(ngModelChange)="selectExameByCodigo($event, iREx); selectExameByDescricao($event, iREx);"
 											[materializeParams]="autocompleteExame">
 									</div>	

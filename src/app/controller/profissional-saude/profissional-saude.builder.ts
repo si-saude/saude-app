@@ -17,6 +17,7 @@ import { ProfissionalVacina } from './../../model/profissional-vacina';
 import { ProfissionalVacinaBuilder } from './../profissional-vacina/profissional-vacina.builder';
 import { Telefone } from './../../model/telefone';
 import { TelefoneBuilder } from './../telefone/telefone.builder';
+import { ServicoBuilder } from './../servico/servico.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class ProfissionalSaudeBuilder extends GenericBuilder {
@@ -32,6 +33,7 @@ export class ProfissionalSaudeBuilder extends GenericBuilder {
         profissionalSaude.setCurriculo( new CurriculoBuilder().initialize( profissionalSaude.getCurriculo() ) );
         profissionalSaude.setProfissionalVacinas(
             new ProfissionalVacinaBuilder().initializeList( profissionalSaude.getProfissionalVacinas() ) );
+        profissionalSaude.setServicos(new ServicoBuilder().initializeList(profissionalSaude.getServicos()));
 
         return profissionalSaude;
     }
@@ -109,6 +111,9 @@ export class ProfissionalSaudeBuilder extends GenericBuilder {
         cloneProfissionalSaude.setProfissionalVacinas(
             new ProfissionalVacinaBuilder().cloneList( this.getValue( profissionalSaude, "getProfissionalVacinas" ) ) );
 
+        cloneProfissionalSaude.setServicos(
+                new ServicoBuilder().cloneList( this.getValue( profissionalSaude, "getServicos" ) ) );
+        
         return cloneProfissionalSaude;
     }
 

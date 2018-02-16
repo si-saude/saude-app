@@ -47,7 +47,6 @@ export class TarefaBuilder extends GenericBuilder {
         cloneTarefa.setAtualizacao( this.getValue( tarefa, "getAtualizacao" ) );
         cloneTarefa.setInicio( this.getValue( tarefa, "getInicio" ) );
         cloneTarefa.setFim( this.getValue( tarefa, "getFim" ) );
-        cloneTarefa.setHorario( this.getValue( tarefa, "getHorario" ) );
 
         if ( this.getValue( tarefa, "getStatus" ) == "" )
             cloneTarefa.setStatus( undefined );

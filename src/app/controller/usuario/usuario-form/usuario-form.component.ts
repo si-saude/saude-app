@@ -93,7 +93,7 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
         if ( this.validPessoa == this.usuario.getPessoa().getNome() ) return;
         if ( this.usuario.getPessoa() !== undefined ) {
 
-            let pessoa: Pessoa = this.pessoas.find( p => p.getNome() == this.usuario.getPessoa().getNome() );
+            let pessoa: Pessoa = this.pessoas.find( p => p.getNome().trim() == this.usuario.getPessoa().getNome().trim() );
 
             if ( pessoa !== undefined ) {
                 this.usuario.setPessoa( new PessoaBuilder().clone( pessoa ) );
