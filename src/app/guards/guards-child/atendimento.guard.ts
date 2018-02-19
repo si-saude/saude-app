@@ -7,7 +7,12 @@ import { ChildGuard } from './../../generics/child.guard';
 import { AuthService } from './../../login/auth.service';
 
 @Injectable()
-export class AtendimentoGuard implements CanActivateChild {
+export class AtendimentoGuard extends ChildGuard implements CanActivateChild {
+    r: Router;
+    constructor(router: Router) {
+        super(router);
+        this.r = router;
+    }
     
     canActivateChild(
         route: ActivatedRouteSnapshot,
@@ -18,10 +23,25 @@ export class AtendimentoGuard implements CanActivateChild {
                     window.localStorage.getItem("ATENDIMENTO") !== null &&
                     window.localStorage.getItem("ATENDIMENTO") !== '' &&
                     window.localStorage.getItem("ATENDIMENTO") == "true" ) {
+                if ( state.url.includes( "gerenciar" ) ) {
+                    if ( window.localStorage.getItem( "ATENDIMENTO_GERENCIAR" ) !== undefined &&
+                        window.localStorage.getItem( "ATENDIMENTO_GERENCIAR" ) !== null &&
+                        window.localStorage.getItem( "ATENDIMENTO_GERENCIAR" ) !== '' &&
+                        window.localStorage.getItem( "ATENDIMENTO_GERENCIAR" ) == "true" )
+                        return true;
+                    else {
+                        this.r.navigate(["login"]);
+                        return false;
+                    }
+                }
                 return true;
-            } else return false;
+            } else {
+                this.r.navigate(["login"]);
+                return false;
+            }
+            
         }
         
-        return true;
+        return false;
     }
 }

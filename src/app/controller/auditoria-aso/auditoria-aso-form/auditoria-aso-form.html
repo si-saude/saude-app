@@ -10,6 +10,10 @@
 	[goTo]="goTo"></app-confirm-save>
 
 <div class="row form-container">
+
+	<div>
+		<h6>Nome do Empregado: <b>{{aso.empregado.pessoa.nome}}</b></h6>
+	</div>
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">

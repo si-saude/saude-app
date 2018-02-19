@@ -26,10 +26,10 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     protected modalActions;
     protected modalDelete;
     protected modalImport;
-    protected modalParams;
     protected typeFilter;
     protected canImport;
     private tempDelete;
+    private openModalDelete: boolean;
     protected canRemove: boolean;
     private listComponent: any;
     
@@ -45,12 +45,9 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         this.modalActions = new EventEmitter<string | MaterializeAction>();
         this.modalDelete = new EventEmitter<string | MaterializeAction>();
         this.modalImport = new EventEmitter<string | MaterializeAction>();
-        this.modalParams = [{
-            dismissible: false,
-            complete: function() { }
-        }];
         this.canImport = false;
         this.canRemove = false;
+        this.openModalDelete = false;
         this.listComponent = this;
     }
 
@@ -129,6 +126,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     delete( id ) {
         this.modalDelete.emit( { action: "modal", params: ['open'] } );
         this.tempDelete = id;
+        this.openModalDelete = true;
     }
 
     closeModalDelete() {
@@ -203,7 +201,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
             .catch( error => {
                 this.showPreload = false;
                 this.canImport = false;
-                console.log(this.showPreload);
                 this.catchConfiguration( error );
             } )
     }

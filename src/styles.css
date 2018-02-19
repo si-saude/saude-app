@@ -1,5 +1,6 @@
 html {
-  height: 100%;
+	position: relative;
+  	min-height: 100%;
 }
 
 body {
@@ -19,7 +20,6 @@ footer {
 }
 
 .conteudo { 
-	min-height: 436px;
 	margin-top: 35px;
 }  
 

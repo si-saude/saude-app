@@ -3,9 +3,11 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AtendimentoFormComponent } from './atendimento-form/atendimento-form.component';
+import { AtendimentoComponent } from './atendimento.component';
 
 const atendimentoRoutes: Routes = [
-    { path: '', component: AtendimentoFormComponent }
+    { path: '', component: AtendimentoFormComponent },
+    { path: 'gerenciar', component: AtendimentoComponent }
 ];
 
 @NgModule({

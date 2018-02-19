@@ -5,6 +5,7 @@ import { Equipe } from './equipe';
 import { ProfissionalConselho } from './profissional-conselho';
 import { ProfissionalVacina } from './profissional-vacina';
 import { Curriculo } from './curriculo';
+import { Servico } from './servico';
 
 export class Profissional {
     private id: number = 0;
@@ -15,8 +16,9 @@ export class Profissional {
     private mi: string;
     private curriculo: Curriculo;
     private profissionalConselho: ProfissionalConselho;
-    private profissionalVacinas: Array<ProfissionalVacina> ;
-    private version: number;    
+    private profissionalVacinas: Array<ProfissionalVacina>;
+    private servicos: Array<Servico>;
+    private version: number;
 
     getId() {
         return this.id;
@@ -96,6 +98,14 @@ export class Profissional {
     
     setProfissionalVacinas(profissionalVacinas: Array<ProfissionalVacina>) {
         this.profissionalVacinas = profissionalVacinas;
+    }
+    
+    getServicos() {
+        return this.servicos;
+    }
+    
+    setServicos(servicos: Array<Servico>) {
+        this.servicos = servicos;
     }
 
 }

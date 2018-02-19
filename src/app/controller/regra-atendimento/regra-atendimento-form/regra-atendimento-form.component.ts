@@ -86,8 +86,6 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
             this.toastParams = ['Por favor, selecione um equipe', 4000];
             this.globalActions.emit('toast');
         } else {
-            let equipe = this.equipes.find(e => e.getId() == valor);
-            
             let rAEs: RegraAtendimentoEquipe = this.regraAtendimento.getRegraAtendimentoEquipes().
                 find(rAE => rAE.getEquipe().getId() == valor);
             
@@ -96,6 +94,8 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
                 this.globalActions.emit('toast');
                 return;
             }
+            
+            let equipe = this.equipes.find(e => e.getId() == valor);
             
             let regraAtendimentoEquipe = new RegraAtendimentoEquipeBuilder().initialize(new RegraAtendimentoEquipe());
             regraAtendimentoEquipe.setEquipe(new EquipeBuilder().clone( equipe ));

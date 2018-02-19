@@ -20,6 +20,7 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
     perfil: Perfil;
     perfilGet: Perfil;
     funcionalidades: Array<string>;
+    select: boolean;
 
     perfilFilter: PerfilFilter = new PerfilFilter();
 
@@ -31,6 +32,7 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
 
         this.funcionalidades = new Array<string>();
         this.perfil = new PerfilBuilder().initialize( this.perfil );
+        this.select = false;
     }
 
     ngOnInit() {
@@ -103,6 +105,14 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
     
     editFuncionalidades() {
         this.initializeFuncionalidades();
+    }
+    
+    selectAll() {
+        setTimeout(() => {
+            if ( this.select == true ) { 
+                this.perfil.getPermissoes().forEach( p => p.setValor(true));
+            } else this.perfil.getPermissoes().forEach( p => p.setValor(false));
+        }, 100);
     }
 
     onDestroy() {

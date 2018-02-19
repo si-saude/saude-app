@@ -40,22 +40,24 @@ export class AtendimentoFormComponent {
     private statusProfissional: String;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
+    private existLocalizacao: boolean;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private alive: boolean;
     private dataNascimento: any;
     private idade: number;
     private myDatePickerOptions: IMyDpOptions;
-    private localizacaoId: number;
     private globalActions;
     private toastParams;
     private tabsActions;
+    private modalConfirmLocalizacao;
     audio: any;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
         this.statusProfissional = "";
+        this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
@@ -68,17 +70,23 @@ export class AtendimentoFormComponent {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
-        this.localizacaoId = 0;
+        this.modalConfirmLocalizacao = new EventEmitter<string | MaterializeAction>();
+        this.existLocalizacao = false;
         this.audio = new Audio();
     }
 
     ngOnInit() {
         this.audio.src = "./../../../../assets/audio/beep.mp3";
+        
+        $(document).keypress(function(event){
+            if (event.charCode == 13) return false; 
+        });
+        
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
             this.atendimentoService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
                     this.usuario = new UsuarioBuilder().clone( res.json() );
-                    if ( this.usuario.getId() > 0 ) {
+                    if ( this.usuario.getId() > 0 && this.usuario.getPessoa() != undefined ) {
                         let pessoaFilter: PessoaFilter = new PessoaFilter();
                         pessoaFilter.setCpf( this.usuario.getPessoa().getCpf() );
                         let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
@@ -134,18 +142,21 @@ export class AtendimentoFormComponent {
                 console.log( "Erro ao retornar as localizações." );
             } )
     }
-
-    setLocalizacao( localizacaoId ) {
-        this.localizacao = this.localizacoes.find( l => l.getId() == localizacaoId );
+    
+    confirmarLocalizacao() {
+        console.log(this.localizacao);
+        //verifico no openModalConfirmLocalizacao() se o id da localizacao eh maior que zero
         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
+        this.existLocalizacao = true;
+        this.closeModalConfirmLocalizacao();
     }
     
-    verifyLocalizacaoExist() {
-        if ( this.localizacao != undefined )
-            return true;
-        return false;
+    cancelarLocalizacao() {
+        this.existLocalizacao = false;
+        this.localizacao.setId( 0 );
+        this.closeModalConfirmLocalizacao();
     }
 
     primeiraAtualizacao() {
@@ -162,12 +173,13 @@ export class AtendimentoFormComponent {
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
                         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
                         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
-                        this.localizacaoId = this.localizacao.getId();
+                        this.existLocalizacao = true;
                     } else {
                         this.filaAtendimentoOcupacional = undefined;
                     }
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.filaAtendimentoOcupacional = undefined;
                     console.log( "Erro ao atualizar primeira vez: " + error );
                 } )
@@ -183,6 +195,7 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() == 0 ) {
+                    	this.statusProfissional = "";
                         this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
                     } else {
                         this.setDataNascimento();
@@ -196,6 +209,7 @@ export class AtendimentoFormComponent {
                     }
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     console.log( "Erro ao atualizar: " + error );
                     this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
                 } )
@@ -212,6 +226,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     console.log( "Erro ao atualizar lista: " + error );
                 } )
         } else {
@@ -220,7 +235,7 @@ export class AtendimentoFormComponent {
     }
 
     entrar() {
-        if ( this.localizacao == undefined ) {
+        if ( this.localizacao == undefined || this.localizacao.getId() <= 0 ) {
             this.toastParams = ["Por favor, seleciona um local", 4000];
             this.globalActions.emit( 'toast' );   
             return;
@@ -233,11 +248,12 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
         } else {
-            console.log( "Fila de atendimento nao preenchida." )
+            console.log( "Fila de atendimento nao preenchida." );
         }
     }
 
@@ -250,6 +266,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -267,6 +284,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -287,6 +305,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -307,6 +326,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -324,6 +344,7 @@ export class AtendimentoFormComponent {
                     this.globalActions.emit( 'toast' );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -339,6 +360,7 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -354,6 +376,7 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -369,6 +392,7 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -384,6 +408,7 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
+                    this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -399,21 +424,31 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
+                	this.catchConfiguration(error);
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
         }
     }
+    
+    openModalConfirmLocalizacao() {
+        if ( this.localizacao.getId() > 0 ) {
+            this.modalConfirmLocalizacao.emit( { action: "modal", params: ['open'] } );            
+        } else {
+            this.toastParams = ["Por favor, selecione um local.", 4000];
+            this.globalActions.emit( 'toast' );
+            this.existLocalizacao = false;
+            this.closeModalConfirmLocalizacao();
+        }
+    }
+
+    closeModalConfirmLocalizacao() {
+        this.modalConfirmLocalizacao.emit( { action: "modal", params: ['close'] } );
+    }
 
     ngOnDestroy() {
         this.alive = false;
         this.inscricao.unsubscribe();
-    }
-
-    calculateAge( birthday: Date ) {
-        var ageDifMs = Date.now() - birthday.getTime();
-        var ageDate = new Date( ageDifMs );
-        return Math.abs( ageDate.getUTCFullYear() - 1970 );
     }
     
     setDataNascimento() {
@@ -446,6 +481,15 @@ export class AtendimentoFormComponent {
         s = s[0].split( "-" );
         let d: Date = new Date( s[0] + "-" + s[1] + "-" + s[2] );
         return d;
+    }
+    
+    catchConfiguration( error ) {
+        switch ( error.status ) {
+            case 401:
+                localStorage.clear();
+                this.router.navigate(["login"]);
+                break;
+            }
     }
 
 }

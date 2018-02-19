@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<div class="row">
+<div class="row form-container">
 
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
@@ -57,8 +57,9 @@
 				<div class="row">
 					<div class="input-field col s6">
 						<label for="cpf">CPF</label> 
-						<input id="cpf" type="text"
-							maxlength="14" [(ngModel)]="empregado.pessoa.cpf" name="cpf">
+						<input id="cpf" type="text" [mask]="'cpf'" 
+							(ngModelChange)="empregado.pessoa.cpf=$event"
+							maxlength="14" [ngModel]="empregado.pessoa.cpf | cpfMask" name="cpf">
 					</div>
 
 					<div class="input-field col s4">
@@ -229,7 +230,7 @@
 					<div class="input-field col s6">
 						<fieldset>
 							<legend>
-								Gerencia <a
+								Gerência <a
 									class="btn-floating waves-effect waves-light green btn-add-fieldset"
 									(click)="getGerencias()"> <i
 									class="material-icons center-icon">cached</i>
@@ -267,7 +268,7 @@
 					<div class="input-field col s4">
 						<fieldset>
 							<legend>
-								Ghe <a
+								GHE <a
 									class="btn-floating waves-effect waves-light green btn-add-fieldset"
 									(click)="getGhes()"> <i class="material-icons center-icon">cached</i>
 								</a>
@@ -283,7 +284,7 @@
 					<div class="input-field col s4">
 						<fieldset>
 							<legend>
-								Ghee <a
+								GHEE <a
 									class="btn-floating waves-effect waves-light green btn-add-fieldset"
 									(click)="getGhees()"> <i class="material-icons center-icon">cached</i>
 								</a>

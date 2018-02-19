@@ -9,6 +9,7 @@ import { Convocacao } from './../../model/convocacao';
 import { ConvocacaoFilter } from './convocacao.filter';
 import { ProfissiogramaService } from './../profissiograma/profissiograma.service';
 import { ExameService } from './../exame/exame.service';
+import { EmpregadoService } from './../empregado/empregado.service';
 import { GlobalVariable } from './../../global';
 
 @Injectable()
@@ -16,7 +17,8 @@ export class ConvocacaoService extends GenericService{
 
     constructor( http: Http, router: Router,
             private profissiogramaService: ProfissiogramaService,
-            private exameService: ExameService) { 
+            private exameService: ExameService,
+            private empregadoService: EmpregadoService) { 
         super(http, router, "convocacao");
     }
     
@@ -39,6 +41,14 @@ export class ConvocacaoService extends GenericService{
         return this.http
             .post( urlGetEmpregadoConvocacao, convocacao, { headers: this.headers } )
             .toPromise();
+    }
+    
+    getEmpregadoByChave( chave ) {
+        return this.empregadoService.getEmpregadoByChave(chave);
+    }
+    
+    getEmpregadoByName( nome ) {
+        return this.empregadoService.getEmpregadoByName( nome );
     }
     
     getConvocacao(convocacao: Convocacao) {

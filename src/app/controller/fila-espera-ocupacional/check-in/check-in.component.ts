@@ -67,7 +67,7 @@ export class CheckInComponent {
 
         this.localizacao.setId(localizacaoId);
         this.empregado.getPessoa().setDataNascimento(data);
-        this.empregado.getPessoa().setCpf(this.cpf);
+        this.empregado.getPessoa().setCpf(this.treatCpf(this.cpf));
         this.empregado.setChave(this.chave);
         this.empregado.setMatricula(this.matricula);
                 
@@ -111,6 +111,23 @@ export class CheckInComponent {
         }
         let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
         return d;
+    }
+    
+    treatCpf( cpf: string ) {
+        let s: string;
+    
+        if ( cpf != undefined ) {
+            if ( cpf.length > 11 ) { 
+                s = cpf.substring(0, 3);
+                s += cpf.substring(4, 7);
+                s += cpf.substring(8, 11);
+                s += cpf.substring(12, 14);
+                return s;
+            } else if ( cpf.length > 0 && cpf.length < 14 ) {
+                return cpf;
+            }
+        } return undefined;
+        
     }
 
 }

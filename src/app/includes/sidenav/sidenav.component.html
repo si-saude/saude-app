@@ -73,6 +73,7 @@
 		</a>
 		<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Guia de Exame</a>
 		<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
+		<a [routerLink]="['/atendimento/gerenciar']" *ngIf="checkPermissao('ATENDIMENTO_GERENCIAR')">Gerenciar Atendimentos</a>
 		<a [routerLink]="['/auditoria-resultado-exame']" *ngIf="checkPermissao('AUDITORIA-RESULTADO-EXAME_LISTAR')">Auditoria De Resultados de Exames</a>
 		<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
 		<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria de Aso</a>
@@ -95,6 +96,10 @@
 		</a>
 		<a [routerLink]="['/fila-espera-ocupacional/check-in']">Check-in</a>
 		<a [routerLink]="['/fila-espera-ocupacional/check-out']">Check-out</a>
+		<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-in']" 
+			*ngIf="checkPermissao('FILA-ESPERA-OCUPACIONAL-RECEPCAO')">Check-in (Recepção)</a>
+		<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-out']" 
+			*ngIf="checkPermissao('FILA-ESPERA-OCUPACIONAL-RECEPCAO')">Check-out (Recepção)</a>
 		<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
 	</li>
 </ul>

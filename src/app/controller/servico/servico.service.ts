@@ -6,13 +6,15 @@ import { GlobalVariable } from './../../global';
 import { Servico } from './../../model/servico';
 import { ServicoFilter } from './servico.filter';
 import { EquipeService } from './../equipe/equipe.service';
+import { RegraAtendimentoService } from './../regra-atendimento/regra-atendimento.service';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
 export class ServicoService extends GenericService {
 
     constructor( http: Http, router: Router,
-            private equipeService: EquipeService) { 
+            private equipeService: EquipeService, 
+            private regraAtendimentoService: RegraAtendimentoService) { 
         super(http,router,"servico");
     }
     
@@ -29,6 +31,10 @@ export class ServicoService extends GenericService {
         return this.http
             .get( urlGrupo + "?filter=", { headers: this.headers } )
             .toPromise();
+    }
+    
+    getRegras() {
+        return this.regraAtendimentoService.getRegras();
     }
     
 }

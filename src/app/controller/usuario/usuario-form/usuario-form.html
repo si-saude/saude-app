@@ -76,8 +76,8 @@
 				<table class="striped">
 					<thead>
 						<tr class="row col s12">
-							<th class="col s6">Titulo</th>
-							<th class="col s6">Remoção</th>
+							<th class="col s10">Titulo</th>
+							<th class="col s2">Remoção</th>
 						</tr>
 					</thead>
 
@@ -86,8 +86,8 @@
 							<tr class="col s12">
 								<input type="hidden" [(ngModel)]="perfil.id"
 									value="{{perfil.id}}" name="perfil[{{i}}].id">
-								<td class="col s6 perfil-titulo">{{perfil.titulo}}</td>
-								<td class="col s3 botao-remover"><a
+								<td class="col s10 perfil-titulo">{{perfil.titulo}}</td>
+								<td class="col s2 botao-remover"><a
 									class="btn-floating waves-effect waves-light red btn-remover"
 									(click)="removePerfil(i)"> <i
 										class="material-icons center-icon">delete</i>

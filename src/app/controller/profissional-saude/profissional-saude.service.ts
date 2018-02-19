@@ -14,6 +14,7 @@ import { CursoService } from './../curso/curso.service';
 import { CidadeService } from './../cidade/cidade.service';
 import { VacinaService } from './../vacina/vacina.service';
 import { EmpregadoService } from './../empregado/empregado.service';
+import { ServicoService } from './../servico/servico.service';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
@@ -26,7 +27,8 @@ export class ProfissionalSaudeService extends GenericService {
             private cursoService: CursoService,
             private cidadeService: CidadeService,
             private vacinaService: VacinaService,
-            private empregadoService: EmpregadoService) { 
+            private empregadoService: EmpregadoService,
+            private servicoService: ServicoService) { 
         super(http, router, "profissional");
     }
     
@@ -42,6 +44,10 @@ export class ProfissionalSaudeService extends GenericService {
     
     getEmpregadoByChave(chave: string) {
         return this.empregadoService.getEmpregadoByChave(chave);
+    }
+    
+    getServicos() {
+        return this.servicoService.getServicos();
     }
     
     getLocalizacoes() {

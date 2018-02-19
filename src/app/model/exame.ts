@@ -5,6 +5,7 @@ export class Exame{
     private version: number;
     private codigo: string;
     private descricao: string;
+    private ordem: number;
     private campoExames: Array<CampoExame>;
 
     getId(): number {
@@ -37,6 +38,14 @@ export class Exame{
     
     setDescricao(descricao:string){
         this.descricao = descricao;
+    }
+    
+    getOrdem():number{
+        return this.ordem;
+    }
+    
+    setOrdem(ordem:number){
+        this.ordem = ordem;
     }
     
     getCampoExames(): Array<CampoExame>{

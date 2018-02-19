@@ -58,12 +58,12 @@ export class AtendimentoOcupacionalComponent {
             .then(res => {
                 this.showConfirmSave = true;
                 this.msgConfirmSave = res.text();
-                this.goTo = "home";
+                this.goTo = "solicitacao-servico/autenticacao-usuario";
             })
             .catch(error => {
                 this.showConfirmSave = true;
                 this.msgConfirmSave = error.text();
-                this.goTo = "home";
+                this.goTo = "solicitacao-servico/autenticacao-usuario";
             })
     }
     

@@ -14,6 +14,7 @@ export abstract class GenericComponent {
     protected msgError: string;
     protected verifyError: boolean = false;
     protected myDatePickerOptions: IMyDpOptions;
+    protected modalParams;
     
     constructor( private router: Router ) {
         this.showPreload = true;
@@ -23,6 +24,28 @@ export abstract class GenericComponent {
         this.myDatePickerOptions = {
                 dateFormat: 'dd/mm/yyyy'
             };
+        this.modalParams = [{
+            dismissible: false,
+            complete: function() { }
+        }];
+    }
+    
+    // verifica se servidor está ligado
+    // ainda nao esta funcionando corretamente
+    verifyConnection() {
+        console.log('verify connection');
+        let xhttp = new XMLHttpRequest();
+        let component = this;
+        try {
+            xhttp.onreadystatechange = function() {
+                if ( xhttp.readyState == 4 && xhttp.status == 0 ) {
+                    localStorage.clear();
+                    component.router.navigate(["login"]);
+                }
+            }
+        } catch(e) {
+            console.log("catch: ", e);
+        }
     }
 
     catchConfiguration( error ) {

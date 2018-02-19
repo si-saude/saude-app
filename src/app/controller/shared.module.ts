@@ -8,6 +8,7 @@ import { MaterializeModule } from 'angular2-materialize';
 import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
 import { PreloadComponent } from './../includes/preload/preload.component';
 import { ConfirmSaveComponent } from './../includes/confirm-save/confirm-save.component';
+import { ConfirmDeleteComponent } from './../includes/confirm-delete/confirm-delete.component';
 import { PaginacaoComponent } from './../includes/paginacao/paginacao.component';
 import { PerfilService } from './perfil/perfil.service';
 import { BaseService } from './base/base.service';
@@ -49,14 +50,18 @@ import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional/fila-esp
 import { AtendimentoService } from './atendimento/atendimento.service';
 import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
 import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
+import { AgendaService } from './../agenda/agenda.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
+import { TarefaComponent } from './tarefa/tarefa.component';
 
 @NgModule({
   declarations: [
     MensagemFormComponent,
     PreloadComponent,
     ConfirmSaveComponent,
-    PaginacaoComponent
+    ConfirmDeleteComponent,
+    PaginacaoComponent,
+    TarefaComponent
   ],
   imports: [ 
     CommonModule,
@@ -74,6 +79,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     MensagemFormComponent,
     PreloadComponent,
     ConfirmSaveComponent,
+    ConfirmDeleteComponent,
     PaginacaoComponent
   ],
   providers: [
@@ -117,6 +123,7 @@ import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
     AtendimentoService,
     RequisitoAsoService,
     AuditoriaAsoService,
+    AgendaService,
     CanDeactivateGuard
   ]
 })

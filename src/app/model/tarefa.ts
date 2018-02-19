@@ -7,7 +7,6 @@ export class Tarefa {
     private id: number;
     private inicio: Date;
     private fim: Date;
-    private horario: Date;
     private atualizacao: Date;
     private servico: Servico;
     private cliente: Empregado;
@@ -22,14 +21,6 @@ export class Tarefa {
 
     setId(id: number) {
         this.id = id;
-    }
-
-    getHorario() {
-        return this.horario;
-    }
-
-    setHorario(horario: Date) {
-        this.horario = horario;
     }
 
     getAtualizacao() {

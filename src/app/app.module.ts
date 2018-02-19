@@ -61,7 +61,10 @@ import { RegraAtendimentoGuard } from './guards/guards-child/regra-atendimento.g
 import { AuditoriaAsoGuard } from './guards/guards-child/auditoria-aso.guard';
 import { SolicitacaoServicoService } from './solicitacao-servico/solicitacao-servico.service';
 import { TransferDataService } from './solicitacao-servico/transfer-data.service';
+import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
+import { AgendaGuard } from './guards/guards-child/agenda.guard';
+import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 
 @NgModule({
   declarations: [
@@ -127,7 +130,10 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
     AuditoriaResultadoExameGuard,
     RegraAtendimentoGuard,
     ServicoGuard,
-    AuditoriaAsoGuard
+    AtendimentoGuard,
+    AuditoriaAsoGuard,
+    AgendaGuard,
+    FilaEsperaOcupacionalRecepcaoGuard
   ],
   bootstrap: [ 
     AppComponent

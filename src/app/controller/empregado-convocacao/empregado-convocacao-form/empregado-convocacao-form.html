@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<div class="row">
+<div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
@@ -17,13 +17,8 @@
 				<label for="nome">Nome</label> <input id="nome" type="text" disabled
 					[(ngModel)]="empregadoConvocacao.empregado.pessoa.nome" name="nome">
 			</div>
-			<div class="input-field col s2 checkbox" *ngIf="!verifyAuditado()">
-				<input type="checkbox" id="auditado" disabled
-					[(ngModel)]="empregadoConvocacao.auditado"
-					name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
-			</div>
-			<div class="input-field col s2 checkbox" *ngIf="verifyAuditado()">
-				<input type="checkbox" id="auditado"
+			<div class="input-field col s2 checkbox">
+				<input type="checkbox" id="auditado" [disabled]="!verifyAuditado()"
 					[(ngModel)]="empregadoConvocacao.auditado"
 					name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
 			</div>
@@ -84,19 +79,13 @@
 							<tr class="col s12">
 								<td class="col s3 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
 								<td class="col s3 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
-								<td class="col s3 checkbox-conforme"
-									(click)="selectConform(eCE)"
-									*ngIf="!empregadoConvocacaoExame.pendenteRelatorio"><input
+								<td class="col s3 checkbox-conforme">
+									<input [disabled]="empregadoConvocacaoExame.pendenteRelatorio"
 									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].conforme"
 									[(ngModel)]="empregadoConvocacaoExame.conforme"
-									name="empregadoConvocacaoExame[{{eCE}}].conforme"> <label
-									for="empregadoConvocacaoExame[{{eCE}}].conforme"></label></td>
-								<td class="col s3 checkbox-conforme" disabled
-									*ngIf="empregadoConvocacaoExame.pendenteRelatorio"><input
-									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].conforme"
-									[(ngModel)]="empregadoConvocacaoExame.conforme"
-									name="empregadoConvocacaoExame[{{eCE}}].conforme"> <label
-									for="empregadoConvocacaoExame[{{eCE}}].conforme"></label></td>
+									name="empregadoConvocacaoExame[{{eCE}}].conforme"> 
+									<label for="empregadoConvocacaoExame[{{eCE}}].conforme"></label>
+								</td>
 								<td class="col s3 btn-remover"><a
 									(click)="removeExame(eCE)" [ngStyle]="{'cursor': 'pointer'}"><i
 										class="material-icons">delete</i></a></td>

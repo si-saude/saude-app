@@ -1,9 +1,13 @@
+.form-container {
+	margin-bottom: 100px;
+}
+
 .center-icon {
 	margin-top: 0px;
 }
 
 .row-btns {
-    margin-top: 20px;
+	margin-top: 20px;
 }
 
 .btn-add-autocomplete {
@@ -17,6 +21,7 @@
 .btn-add {
 	margin-top: 15px;
 }
+
 .btn-remove {
 	margin-top: 15px;
 }
@@ -29,19 +34,19 @@
 	float: right;
 }
 
-select{
-	display:inline;
+select {
+	display: inline;
 }
 
-.input-field > select {
-    display: block;
-    position: absolute;
-    width: 250px;
-    pointer-events: all;
-    height: 50px;
-    top: 0;
-    left: 20px;
-    opacity: 10;
+.input-field>select {
+	display: block;
+	position: absolute;
+	width: 250px;
+	pointer-events: all;
+	height: 50px;
+	top: 0;
+	left: 20px;
+	opacity: 10;
 }
 
 .tabs {

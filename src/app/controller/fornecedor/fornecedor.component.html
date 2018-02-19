@@ -8,31 +8,37 @@
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
-<div class="collection">
+<div class="list-container">
 
-	<div *ngFor="let a of array">
-		<div class="row row-collection">
-			<div class="col s9">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.razaoSocial}}</a>
+	<div class="collection">
+
+		<div *ngFor="let a of array">
+			<div class="row row-collection">
+				<div class="col s9">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.razaoSocial}}</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/fornecedor/detalhe', a.id]"><i
+						class="material-icons">details</i></a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/fornecedor/editar', a.id]"><i
+						class="material-icons">mode_edit</i></a>
+				</div>
+				<div class="col s1">
+					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
+						class="material-icons">delete</i></a>
+				</div>
 			</div>
-			<div class="col s1">
-				<a [routerLink]="['/fornecedor/detalhe', a.id]"><i
-					class="material-icons">details</i></a>
-			</div>
-			<div class="col s1">
-				<a [routerLink]="['/fornecedor/editar', a.id]"><i
-					class="material-icons">mode_edit</i></a>
-			</div>
-			<div class="col s1">
-				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
-					class="material-icons">delete</i></a>
-			</div>
+
 		</div>
-
 	</div>
-</div>
 
-<!-- Paginação -->
+	<!-- Paginação -->
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+	<!-- Paginação 
 <ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
 
 	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
@@ -56,25 +62,28 @@
 			class="material-icons arrow-pagination">last_page</i>
 	</a></li>
 
-</ul>
+</ul> -->
 
-<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
-<a [routerLink]="['/fornecedor/cadastrar']"
-	class="waves-effect waves-light btn button-add">Adicionar</a>
+	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	<a [routerLink]="['/fornecedor/cadastrar']"
+		class="waves-effect waves-light btn button-add">Adicionar</a>
+
+</div>
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="row">
-		
+
 		<div class="input-field col s8">
 			<div class="modal-content">
-				<label for="nome">Razão Social</label> <input type="text" id="razaoSocial"
-					[(ngModel)]="filter.razaoSocial" name="razaoSocial">
+				<label for="nome">Razão Social</label> <input type="text"
+					id="razaoSocial" [(ngModel)]="filter.razaoSocial"
+					name="razaoSocial">
 			</div>
 		</div>
-		
+
 		<div class="input-field col s4">
 			<fieldset>
 				<legend>Tipo Pessoa</legend>
@@ -86,30 +95,30 @@
 				</select>
 			</fieldset>
 		</div>
-		
+
 		<div class="input-field col s6">
 			<div class="modal-content">
-				<label for="cpfCnpj">CPF/CNPF</label> <input type="text" id="cpfCnpj"
-					[(ngModel)]="filter.cpfCnpj" name="cpfCnpj">
+				<label for="cpfCnpj">CPF/CNPF</label> <input type="text"
+					id="cpfCnpj" [(ngModel)]="filter.cpfCnpj" name="cpfCnpj">
 			</div>
 		</div>
-		
+
 		<div class="input-field col s6">
 			<div class="modal-content">
-				<label for="codigoSap">Código SAP</label> <input type="text" id="codigoSap"
-					[(ngModel)]="filter.codigoSap" name="codigoSap">
+				<label for="codigoSap">Código SAP</label> <input type="text"
+					id="codigoSap" [(ngModel)]="filter.codigoSap" name="codigoSap">
 			</div>
 		</div>
-		
+
 		<div class="input-field col s12">
 			<div class="modal-content">
 				<label for="email">Email</label> <input type="text" id="email"
 					[(ngModel)]="filter.email" name="email">
 			</div>
 		</div>
-	
+
 	</div>
-	
+
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
@@ -118,25 +127,10 @@
 
 </div>
 
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams" [materializeActions]="modalDelete">
-
-	<h5 class="title-modal-delete">Confirmação para remoção</h5>
-	<p class="paragraph-modal-delete">Deseja realmente excluir esse
-		campo?</p>
-	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
-		poderá mais ser resgatado.</p>
-
-	<div class="modal-footer">
-		<a class="modal-action modal-close waves-effect waves-green btn-flat"
-			(click)="confirmDelete()">Confirmar</a> <a
-			class="waves-effect waves-green btn-flat"
-			(click)="closeModalDelete()">Cancelar</a>
-	</div>
-
-</div>
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" 
+	[show]="openModalDelete"></app-confirm-delete>
 
 <div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
 </div>

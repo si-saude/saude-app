@@ -9,6 +9,8 @@ import { Servico } from './../../../model/servico';
 import { Equipe } from './../../../model/equipe';
 import { Atividade } from './../../../model/atividade';
 import { AtividadeBuilder } from './../../atividade/atividade.builder';
+import { RegraAtendimento } from './../../../model/regra-atendimento';
+import { RegraAtendimentoBuilder } from './../../regra-atendimento/regra-atendimento.builder';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ServicoBuilder } from './../servico.builder';
@@ -22,6 +24,7 @@ import { ServicoService } from './../servico.service';
 export class ServicoFormComponent extends GenericFormComponent implements OnInit {
     servico: Servico;
     equipes: Array<Equipe>;
+    regras: Array<RegraAtendimento>;
     tempoMedio: string;
     grupos: Array<string>;
     
@@ -34,6 +37,8 @@ export class ServicoFormComponent extends GenericFormComponent implements OnInit
             super(servicoService, router);
             this.goTo = "servico";
             
+            this.equipes = new EquipeBuilder().initializeList(this.equipes);
+            this.regras = new RegraAtendimentoBuilder().initializeList(this.regras);
             this.servico = new ServicoBuilder().initialize(this.servico);
         }
     
@@ -57,6 +62,7 @@ export class ServicoFormComponent extends GenericFormComponent implements OnInit
         
         this.getEquipes();
         this.getGrupos();
+        this.getRegras();
     }
     
     getEquipes() {
@@ -67,6 +73,16 @@ export class ServicoFormComponent extends GenericFormComponent implements OnInit
             .catch(error => {
                 console.log(error);
             })
+    }
+    
+    getRegras() {
+        this.servicoService.getRegras()
+            .then(res => {
+                this.regras = new RegraAtendimentoBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log(error);
+            })       
     }
     
     getGrupos() {

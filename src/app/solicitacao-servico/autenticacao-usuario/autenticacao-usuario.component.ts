@@ -94,7 +94,7 @@ export class AutenticacaoUsuarioComponent {
 
         let data: Date = this.parseDatePickerToDate( this.dataNascimento );
 
-        pessoaFilter.setCpf( this.cpf );
+        pessoaFilter.setCpf( this.treatCpf(this.cpf) );
         dateFilter.setInicio( data );
         dateFilter.setTypeFilter( "IGUAL" );
         pessoaFilter.setDataNascimento( dateFilter );
@@ -102,7 +102,6 @@ export class AutenticacaoUsuarioComponent {
         empregadoFilter.setPessoa( pessoaFilter );
         empregadoFilter.setChave( this.chave )
         empregadoFilter.setMatricula( this.matricula );
-
         this.solicitacaoServicoService.getEmpregado( empregadoFilter )
             .then( res => {
                 if ( res.json().list[0] != undefined ) {
@@ -114,7 +113,7 @@ export class AutenticacaoUsuarioComponent {
                 }
             } )
             .catch( error => {
-                console.log( "Erro no servidor." );
+                console.log( "Erro no servidor." + error );
             } )
     }
 
@@ -126,5 +125,22 @@ export class AutenticacaoUsuarioComponent {
         }
         let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
         return d;
+    }
+    
+    treatCpf( cpf: string ) {
+        let s: string;
+    
+        if ( cpf != undefined ) {
+            if ( cpf.length > 11 ) { 
+                s = cpf.substring(0, 3);
+                s += cpf.substring(4, 7);
+                s += cpf.substring(8, 11);
+                s += cpf.substring(12, 14);
+                return s;
+            } else if ( cpf.length > 0 && cpf.length < 14 ) {
+                return cpf;
+            }
+        } return undefined;
+        
     }
 }

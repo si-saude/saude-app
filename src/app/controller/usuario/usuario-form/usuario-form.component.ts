@@ -23,6 +23,7 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
     autocompletePessoa;
     pessoaToAdd: Pessoa;
     pessoas: Array<Pessoa>;
+    validPessoa: string;
 
     constructor( private route: ActivatedRoute,
         private usuarioService: UsuarioService,
@@ -89,12 +90,14 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
     }
 
     getPessoa( evento ) {
+        if ( this.validPessoa == this.usuario.getPessoa().getNome() ) return;
         if ( this.usuario.getPessoa() !== undefined ) {
 
-            let pessoa: Pessoa = this.pessoas.find( p => p.getNome() == this.usuario.getPessoa().getNome() );
+            let pessoa: Pessoa = this.pessoas.find( p => p.getNome().trim() == this.usuario.getPessoa().getNome().trim() );
 
             if ( pessoa !== undefined ) {
                 this.usuario.setPessoa( new PessoaBuilder().clone( pessoa ) );
+                this.validPessoa = this.usuario.getPessoa().getNome();
             } else this.usuario.setPessoa( new PessoaBuilder().initialize( this.usuario.getPessoa() ) );
         } else this.usuario.setPessoa( new PessoaBuilder().initialize( this.usuario.getPessoa() ) );
     }
@@ -106,15 +109,7 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
             if ( evento.length > 3 ) {
                 this.usuarioService.getPessoasByNome( evento )
                     .then( res => {
-                        let pess = new PessoaBuilder().cloneList( res.json() );
-                        if ( this.pessoas.length == 0 )
-                            pess.forEach( p => this.pessoas.push( p ) );
-                        else {
-                            pess.forEach( ps => {
-                                let p: Pessoa = this.pessoas.find( p2 => p2.getId() == ps.getId() );
-                                if ( p == undefined ) this.pessoas.push( ps );
-                            } )
-                        }
+                        this.pessoas = new PessoaBuilder().cloneList(res.json());
                         this.autocompletePessoa = [this.buildAutocompletePessoa( this.pessoas )];
                     } )
                     .catch( error => {

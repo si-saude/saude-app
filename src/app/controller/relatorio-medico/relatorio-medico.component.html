@@ -1,39 +1,48 @@
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
-<!-- --> 
-<app-mensagem-form  *ngIf="verifyEmptyPaginas" 
- [msg]="msgEmptyPaginas" [color]="colorEmptyPaginas">
-</app-mensagem-form>
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
 
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
- 
-<div class="collection">
 
-	<div *ngFor="let a of array">
-		<div class="row row-collection">
-			<div class="col s5">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.empregado.pessoa.nome}}</a>
+<div class="list-container">
+
+	<div class="collection">
+
+		<div *ngFor="let a of array">
+			<div class="row row-collection">
+				<div class="col s5">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.empregado.pessoa.nome}}</a>
+				</div>
+				<div class="col s4">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.exame.descricao}}</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/relatorio-medico/detalhe', a.id]"><i
+						class="material-icons">details</i></a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/relatorio-medico/editar', a.id]"><i
+						class="material-icons">mode_edit</i></a>
+				</div>
+				<div class="col s1">
+					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
+						class="material-icons">delete</i></a>
+				</div>
 			</div>
-			<div class="col s4">
-				<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.exame.descricao}}</a>
-			</div>
-			<div class="col s1">
-				<a [routerLink]="['/relatorio-medico/detalhe', a.id]"><i class="material-icons">details</i></a>
-		 	</div>
-			<div class="col s1">
-				<a [routerLink]="['/relatorio-medico/editar', a.id]"><i class="material-icons">mode_edit</i></a>
-		 	</div>
-		 	<div class="col s1">
-				<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i class="material-icons">delete</i></a>
-		 	</div>
 		</div>
 	</div>
-</div>
- 
-<!-- Paginação -->
+
+	<!-- Paginação -->
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+
+	<!-- Paginação
 <ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
 
 	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
@@ -57,80 +66,64 @@
 			class="material-icons arrow-pagination">last_page</i>
 	</a></li>
 
-</ul>
+</ul>-->
 
-<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
-
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal" 
-	[materializeParams]="modelParams" [materializeActions]="modalActions">
-
-	<div class="row">
-		
-		<div class="row">
-			<div class="input-field col s9">
-				<div class="modal-content">
-					<label for="medicoPrestador">Médico Prestador</label> 
-					<input id="medicoPrestador" type="text"
-						name="medicoPrestador" 
-						[(ngModel)]="filter.medicoPrestador">
-				</div>
-			</div>
-		
-			<div class="input-field col s2 checkbox">
-				<input type="checkbox" id="finalizado" #fin
-					(click)="changeStateFinalizado()" name="finalizado">
-	            <label for="finalizado">Finalizado</label>
-	        </div>
-		</div>
-		
-		<div class="input-field col s12">
-			<div class="modal-content">
-				<label for="resumo">Resumo</label> 
-				<textarea class="materialize-textarea" id="resumo" 
-						[(ngModel)]="filter.resumo" 
-						name="resumo"></textarea>
-			</div>
-		</div>
-		
-		<div class="input-field col s12">
-			<div class="modal-content">
-				<label for="questionamentos">Questionamentos</label> 
-				<textarea class="materialize-textarea" id="questionamentos" 
-						[(ngModel)]="filter.questionamentos" 
-						name="questionamentos"></textarea>
-			</div>
-		</div>
-		
-	</div>
-	
-	<div class="modal-footer">
-		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
-    	<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="filtrar()">Filtrar</a>
-  	</div>
+	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
 
 </div>
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams" [materializeActions]="modalDelete">
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
-	<h5 class="title-modal-delete">Confirmação para remoção</h5>
-	<p class="paragraph-modal-delete">Deseja realmente excluir esse
-		campo?</p>
-	<p class="paragraph-modal-delete">Se desejar excluir, esse campo não
-		poderá mais ser resgatado.</p>
+	<div class="row">
+
+		<div class="row">
+			<div class="input-field col s9">
+				<div class="modal-content">
+					<label for="medicoPrestador">Médico Prestador</label> <input
+						id="medicoPrestador" type="text" name="medicoPrestador"
+						[(ngModel)]="filter.medicoPrestador">
+				</div>
+			</div>
+
+			<div class="input-field col s2 checkbox">
+				<input type="checkbox" id="finalizado" #fin
+					(click)="changeStateFinalizado()" name="finalizado"> <label
+					for="finalizado">Finalizado</label>
+			</div>
+		</div>
+
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="resumo">Resumo</label>
+				<textarea class="materialize-textarea" id="resumo"
+					[(ngModel)]="filter.resumo" name="resumo"></textarea>
+			</div>
+		</div>
+
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="questionamentos">Questionamentos</label>
+				<textarea class="materialize-textarea" id="questionamentos"
+					[(ngModel)]="filter.questionamentos" name="questionamentos"></textarea>
+			</div>
+		</div>
+
+	</div>
 
 	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
-			(click)="confirmDelete()">Confirmar</a> <a
-			class="waves-effect waves-green btn-flat"
-			(click)="closeModalDelete()">Cancelar</a>
+			(click)="filtrar()">Filtrar</a>
 	</div>
 
 </div>
 
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" 
+	[show]="openModalDelete"></app-confirm-delete>
+
 <div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
 </div>
- 

@@ -57,6 +57,6 @@ export class ChildGuard {
             }
         }
 
-        return true;
+        return false;
     }
 }

@@ -47,6 +47,9 @@ import { RequisitoAsoGuard } from './guards/guards-child/requisito-aso.guard';
 import { AuditoriaAsoGuard } from './guards/guards-child/auditoria-aso.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
+import { AgendaGuard } from './guards/guards-child/agenda.guard';
+import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
+import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -54,16 +57,18 @@ const routes: Routes = [
   { path: 'permissao', component: PermissaoComponent },
   { path: 'home', component: HomeComponent,
       canActivate: [AuthGuard]},
+  { path: 'agenda', loadChildren: 'app/agenda/agenda.module#AgendaModule',
+      canActivateChild: [AgendaGuard]},
   { path: 'perfil', loadChildren: 'app/controller/perfil/perfil.module#PerfilModule',
       canActivateChild: [PerfilGuard]},
   { path: 'localizacao', loadChildren: 'app/controller/localizacao/localizacao.module#LocalizacaoModule',
-          canActivateChild: [LocalizacaoGuard]},
+      canActivateChild: [LocalizacaoGuard]},
   { path: 'equipe', loadChildren: 'app/controller/equipe/equipe.module#EquipeModule',
       canActivateChild: [EquipeGuard]},
   { path: 'gerencia', loadChildren: 'app/controller/gerencia/gerencia.module#GerenciaModule',
-          canActivateChild: [GerenciaGuard]},
+      canActivateChild: [GerenciaGuard]},
   { path: 'profissional-saude', loadChildren: 'app/controller/profissional-saude/profissional-saude.module#ProfissionalSaudeModule',
-              canActivateChild: [ProfissionalSaudeGuard]},
+      canActivateChild: [ProfissionalSaudeGuard]},
   { path: 'cargo', loadChildren: 'app/controller/cargo/cargo.module#CargoModule',
       canActivateChild: [CargoGuard]},
   { path: 'curso', loadChildren: 'app/controller/curso/curso.module#CursoModule',
@@ -90,13 +95,13 @@ const routes: Routes = [
       loadChildren: 'app/controller/indicador-risco-saude-ambiental/indicador-risco-saude-ambiental.module#IndicadorRiscoSaudeAmbientalModule',
       canActivateChild: [IndicadorRiscoSaudeAmbientalGuard]},
   { path: 'instalacao', loadChildren: 'app/controller/instalacao/instalacao.module#InstalacaoModule',
-          canActivateChild: [InstalacaoGuard]},
+      canActivateChild: [InstalacaoGuard]},
   { path: 'funcao', loadChildren: 'app/controller/funcao/funcao.module#FuncaoModule',
       canActivateChild: [FuncaoGuard]},
   { path: 'regime', loadChildren: 'app/controller/regime/regime.module#RegimeModule', 
       canActivateChild: [RegimeGuard]},
   { path: 'base', loadChildren: 'app/controller/base/base.module#BaseModule',
-          canActivateChild: [BaseGuard]},
+      canActivateChild: [BaseGuard]},
   { path: 'ghee', loadChildren: 'app/controller/ghee/ghee.module#GheeModule',
       canActivateChild: [GheeGuard]},
   { path: 'empregado', loadChildren: 'app/controller/empregado/empregado.module#EmpregadoModule',
@@ -120,7 +125,7 @@ const routes: Routes = [
   { path: 'auditoria-exame', loadChildren: 'app/controller/empregado-convocacao/empregado-convocacao.module#EmpregadoConvocacaoModule',
       canActivateChild: [EmpregadoConvocacaoGuard]},
   { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule',
-          canActivateChild: [UsuarioGuard]},
+      canActivateChild: [UsuarioGuard]},
   { path: 'relatorio-medico', loadChildren: 'app/controller/relatorio-medico/relatorio-medico.module#RelatorioMedicoModule' ,
       canActivateChild: [RelatorioMedicoGuard]},
   { path: 'feriado', loadChildren: 'app/controller/feriado/feriado.module#FeriadoModule',
@@ -137,6 +142,9 @@ const routes: Routes = [
       loadChildren: 'app/solicitacao-servico/solicitacao-servico.module#SolicitacaoServicoModule'},
   { path: 'fila-espera-ocupacional',
       loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule' },
+  { path: 'fila-espera-ocupacional-recepcao',
+      loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional-recepcao.module#FilaEsperaOcupacionalRecepcaoModule',
+      canActivateChild: [FilaEsperaOcupacionalRecepcaoGuard]},
   { path: 'requisito-aso',
       loadChildren: 'app/controller/requisito-aso/requisito-aso.module#RequisitoAsoModule',
       canActivateChild: [RequisitoAsoGuard]},
@@ -146,6 +154,8 @@ const routes: Routes = [
   { path: 'auditoria-aso',
       loadChildren: 'app/controller/auditoria-aso/auditoria-aso.module#AuditoriaAsoModule',
       canActivateChild: [AuditoriaAsoGuard]},
+  { path: 'tarefa',
+      loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: '', pathMatch: 'full', redirectTo: '/servico'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

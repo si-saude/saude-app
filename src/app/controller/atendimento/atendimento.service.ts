@@ -7,19 +7,16 @@ import { UsuarioService } from './../usuario/usuario.service';
 import { LocalizacaoService } from './../localizacao/localizacao.service';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
+import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
-export class AtendimentoService {
-    private headers: Headers;
-    private URL: string;
+export class AtendimentoService extends GenericService {
     
-    constructor( private http: Http,
+    constructor( http: Http, router: Router,
             private usuarioService: UsuarioService,
             private profissionalService: ProfissionalSaudeService,
-            private localizacaoService: LocalizacaoService ) { 
-        this.headers = new Headers( { 'Content-Type': 'application/json' } );
-        this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
-        this.URL = GlobalVariable.BASE_API_URL + "/atendimento";
+            private localizacaoService: LocalizacaoService ) {
+        super(http,router,"atendimento");
     }
     
     getUsuario( id: number ) {
