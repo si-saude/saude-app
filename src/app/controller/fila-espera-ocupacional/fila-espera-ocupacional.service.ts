@@ -28,6 +28,14 @@ export class FilaEsperaOcupacionalService extends GenericService {
             .toPromise();
     }
     
+    checkOut( filaEsperaOcupacional ) {
+        let urlCheckOut = this.URL + "/check-out";
+        
+        return this.http
+            .post( urlCheckOut, filaEsperaOcupacional, { headers: this.headers } )
+            .toPromise();
+    }
+    
     refresh( atendimento ) {
         let urlRefresh = this.URL + "/refresh";
         

@@ -18,6 +18,13 @@ export class AuditoriaAsoService extends GenericService {
         super(http,router,"aso");
     }
     
+    getListExame( aso: Aso) {
+        let urlList = this.URL + "/list-requisito-exame";
+        return this.http
+            .post( urlList, aso, { headers: this.headers } )
+            .toPromise();
+    }
+    
     getRequisitos() {
         return this.requisitoAsoService.selectList( new RequisitoAsoFilter() );
     }

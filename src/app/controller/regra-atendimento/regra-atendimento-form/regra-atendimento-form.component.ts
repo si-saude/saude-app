@@ -87,16 +87,6 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
             this.globalActions.emit('toast');
         } else {
             let equipe = this.equipes.find(e => e.getId() == valor);
-            let equipeFilter: EquipeFilter = new EquipeFilter();
-            equipeFilter.setId(equipe.getId());
-            
-            this.regraAtendimentoService.getEquipesWithFilter(equipeFilter)
-                .then(res => {
-                    this.requisitos = new EquipeBuilder().cloneList(res.json());
-                })
-                .catch(error => {
-                    console.log("Erro ao retornar os requisitos.");
-                })
             
             let rAEs: RegraAtendimentoEquipe = this.regraAtendimento.getRegraAtendimentoEquipes().
                 find(rAE => rAE.getEquipe().getId() == valor);
@@ -123,6 +113,17 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
     selectEquipe(index: number) {
         this.selectedEqp = this.regraAtendimento.getRegraAtendimentoEquipes()[index].getEquipe();
         this.arrayRequisito = this.regraAtendimento.getRegraAtendimentoEquipes()[index].getRegraAtendimentoEquipeRequisitos();
+        
+        let equipeFilter: EquipeFilter = new EquipeFilter();
+        equipeFilter.setId(this.regraAtendimento.getRegraAtendimentoEquipes()[index].getEquipe().getId());
+        
+        this.regraAtendimentoService.getEquipesWithFilter(equipeFilter)
+            .then(res => {
+                this.requisitos = new EquipeBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log("Erro ao retornar os requisitos.");
+            })
     }
     
     selectedEquipe(e: number) {

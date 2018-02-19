@@ -111,4 +111,18 @@ export class AtendimentoService {
             .toPromise();
     }
     
+    devolverPraFila( atendimento ) {
+        let urlFinalizar = this.URL + "/devolver-pra-fila";
+        return this.http
+            .post( urlFinalizar, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    finalizarPausar( atendimento ) {
+        let urlFinalizar = this.URL + "/finalizar-pausar";
+        return this.http
+            .post( urlFinalizar, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

@@ -75,7 +75,7 @@
 		<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
 		<a [routerLink]="['/auditoria-resultado-exame']" *ngIf="checkPermissao('AUDITORIA-RESULTADO-EXAME_LISTAR')">Auditoria De Resultados de Exames</a>
 		<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
-		<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA_ASO_LISTAR')">Auditoria de Aso</a>
+		<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria de Aso</a>
 		<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		<a materialize="sideNav"
 			[materializeParams]="[{closeOnClick: true}]"
@@ -94,6 +94,7 @@
 			(click)="closeSidenavFilaEspera()"><i class="material-icons">chevron_left</i>
 		</a>
 		<a [routerLink]="['/fila-espera-ocupacional/check-in']">Check-in</a>
+		<a [routerLink]="['/fila-espera-ocupacional/check-out']">Check-out</a>
 		<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
 	</li>
 </ul>

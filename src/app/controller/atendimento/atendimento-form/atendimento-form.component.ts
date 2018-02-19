@@ -50,6 +50,7 @@ export class AtendimentoFormComponent {
     private globalActions;
     private toastParams;
     private tabsActions;
+    audio: any;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -68,9 +69,11 @@ export class AtendimentoFormComponent {
         this.toastParams = ['', 4000];
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
         this.localizacaoId = 0;
+        this.audio = new Audio();
     }
 
     ngOnInit() {
+        this.audio.src = "./../../../../assets/audio/beep.mp3";
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
             this.atendimentoService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
@@ -152,6 +155,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    console.log(this.atendimento);
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
@@ -165,7 +169,7 @@ export class AtendimentoFormComponent {
                 } )
                 .catch( error => {
                     this.filaAtendimentoOcupacional = undefined;
-                    console.log( "Erro ao atualizar primeira vez: " + error.text() );
+                    console.log( "Erro ao atualizar primeira vez: " + error );
                 } )
         } else {
             console.log( "Profissional nao setado." )
@@ -183,10 +187,16 @@ export class AtendimentoFormComponent {
                     } else {
                         this.setDataNascimento();
                         this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+                        
+                        if(this.atendimento.getFilaAtendimentoOcupacional().getStatus().length
+                                == 20){
+                            this.audio.load();
+                            this.audio.play();
+                        }
                     }
                 } )
                 .catch( error => {
-                    console.log( "Erro ao atualizar: " + error.text() );
+                    console.log( "Erro ao atualizar: " + error );
                     this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
                 } )
         } else {
@@ -202,7 +212,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    console.log( "Erro ao atualizar lista: " + error.text() );
+                    console.log( "Erro ao atualizar lista: " + error );
                 } )
         } else {
             console.log( "Fila de atendimento nao preenchida." )
@@ -353,6 +363,36 @@ export class AtendimentoFormComponent {
     finalizar() {
         if ( this.atendimento.getId() > 0 ) {
             this.atendimentoService.finalizar( this.atendimento )
+                .then( res => {
+                    this.toastParams = ["Atendimento finalizado", 4000];
+                    this.globalActions.emit( 'toast' );
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                } )
+                .catch( error => {
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
+                } )
+        }
+    }
+    
+    devolverPraFila() {
+        if ( this.atendimento.getId() > 0 ) {
+            this.atendimentoService.devolverPraFila( this.atendimento )
+                .then( res => {
+                    this.toastParams = ["Empregado devolvido pra fila", 4000];
+                    this.globalActions.emit( 'toast' );
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                } )
+                .catch( error => {
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
+                } )
+        }
+    }
+    
+    finalizarPausar() {
+        if ( this.atendimento.getId() > 0 ) {
+            this.atendimentoService.finalizarPausar( this.atendimento )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
                     this.globalActions.emit( 'toast' );
