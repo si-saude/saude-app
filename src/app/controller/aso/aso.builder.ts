@@ -49,7 +49,6 @@ export class AsoBuilder extends GenericBuilder {
         cloneAso.setNaoConformidades(this.getValue(aso,"getNaoConformidades"));
         cloneAso.setValidade(this.getValue(aso,"getValidade"));
         
-<<<<<<< HEAD
         if(this.getValue(aso,"getAtendimento") != undefined){
             let atendimento: Atendimento = new Atendimento();
             atendimento.setId(this.getValue(aso,"getAtendimento")["id"]);
@@ -57,18 +56,13 @@ export class AsoBuilder extends GenericBuilder {
             cloneAso.setAtendimento(atendimento);            
         }else
             cloneAso.setAtendimento(new Atendimento());
-=======
         let atendimento: Atendimento = new Atendimento();
->>>>>>> branch 'master' of https://github.com/si-saude/saude-app.git
-        
-<<<<<<< HEAD
-=======
+
         if ( this.getValue(aso,"getAtendimento") != undefined ) {
             atendimento.setId(this.getValue(aso,"getAtendimento")["id"]);
             cloneAso.setAtendimento(atendimento);
         } else cloneAso.setAtendimento(new Atendimento());
         
->>>>>>> branch 'master' of https://github.com/si-saude/saude-app.git
         cloneAso.setEmpregado(new EmpregadoBuilder().clone(this.getValue(aso,"getEmpregado")));
         cloneAso.setAsoAlteracoes(new AsoAlteracaoBuilder().cloneList(this.getValue(aso,"getAsoAlteracoes")));
         cloneAso.setUsuario(new UsuarioBuilder().clone(this.getValue(aso,"getUsuario")));
