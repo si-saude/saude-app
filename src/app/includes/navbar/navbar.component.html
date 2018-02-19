@@ -1,21 +1,27 @@
 <head>
-  <meta charset="utf-8">
+<meta charset="utf-8">
 </head>
 
-<nav [ngClass]="theme">
-  <div class="container">
-    <div class="col l6 s12">
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo">INTEGRA SAÚDE</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <li><app-sidenav></app-sidenav></li>
-	        <li *ngIf="logged"><a (click)="logoff()"><i class="material-icons icone-logoff">lock_outline</i></a>
-	        <li *ngIf="!logged"><a (click)="login()"><i class="material-icons icone-logoff">lock_open</i></a>
-        </ul>
-        <div class="router">
-        	{{route}}
-        </div>
-      </div>
-    </div>
-  </div>
+<nav [ngClass]="theme" class="cabecalho">
+	<div class="row">
+		<div class="nav-wrapper">
+			<div class="col s0">
+				<a href="#"><i class="material-icons icone">cloud</i></a>
+			</div>
+			<a class="col s2 name-logo">INTEGRA SAÚDE</a> 
+			<a class="router-logo"> {{route}} </a>
+			<ul id="col s6 nav-mobile" class="right hide-on-med-and-down">
+				<li class="col s3 icone"><app-sidenav></app-sidenav></li>
+				<li class="col s9" *ngIf="logged">	
+					<a class="col s4" (click)="logoff()"><i class="material-icons icone">lock_outline</i></a>
+					<div class="col s8 user">
+						<p class="col s8 chave-user"><b>{{usuario.chave}}</b></p>
+						<a class="col s4 person"><i class="material-icons icone-pin">person</i></a>
+					</div>
+				</li>
+				<li *ngIf="!logged" style="margin-left: 30px;"><a (click)="login()"><i
+						class="material-icons icone">lock_open</i></a></li>
+			</ul>
+		</div>
+	</div>
 </nav>

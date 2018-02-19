@@ -84,6 +84,7 @@
 			(click)="closeSidenavFilaEspera()">Fila de Espera
 		</a>
 		<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO_LISTAR')">Atendimento</a>
+		<a [routerLink]="['/agenda']" *ngIf="checkPermissao('AGENDA')">Agenda</a>
 	</li>
 </ul>
 

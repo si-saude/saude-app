@@ -1,8 +1,47 @@
 .router {
-	padding-top: 22px;
 	font-size: 17px;
 }
 
-.icone-logoff {
-	margin-top: 0px;
+.cabecalho {
+	height: 40px;
+}
+
+.icone {
+	margin: 0px;
+	height: 40px;
+    margin-top: -10px;
+}
+
+.person {
+	padding-left: 5px;
+}
+
+.user {
+	height: 40px;
+    padding-left: 0;
+}
+
+.icone-pin {
+	margin: 0px;
+	height: 40px;
+    margin-top: -10px;
+}
+
+.chave-user {
+	float: right;
+	margin-top: -10px;
+    padding-left: 0;
+}
+
+.name-logo {
+	font-size: 20px;
+	height: 40px;
+    margin-top: -20px;
+} 
+
+.router-logo {
+	font-size: 15px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -15.7%;
 }
