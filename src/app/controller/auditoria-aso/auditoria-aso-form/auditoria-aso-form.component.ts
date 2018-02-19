@@ -43,6 +43,9 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
                             this.showPreload = false;
                             this.aso = new AsoBuilder().clone( res.json() );
                             this.aso.setConforme(false);
+                            
+                            this.getAndSetUsuario();
+                            this.getRequisitos();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -50,14 +53,27 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
                 }
             } );
         
-        this.getAndSetUsuario();
-        this.getRequisitos();
     }
     
     getRequisitos() {
         this.auditoriaAsoService.getRequisitos()
             .then(res => {
                 this.requisitosAso = new RequisitoAsoBuilder().cloneList(res.json());
+                
+                this.auditoriaAsoService.getListExame(this.aso).then(res => {
+                    let requisitosAsoExame: Array<RequisitoAso>;
+                    requisitosAsoExame = new RequisitoAsoBuilder().cloneList(res.json());
+                    
+                    if(requisitosAsoExame != undefined && requisitosAsoExame != null
+                            && requisitosAsoExame.length > 0){
+//                        this.requisitosAso.push(requisitosAsoExame);
+                        
+                        requisitosAsoExame.forEach(item => this.requisitosAso.push(item));
+                    }
+                    
+                }).catch(error => {
+                    console.log("Erro ao retornar os requisitos do aso.");
+                });
             })
             .catch(error => {
                 console.log("Erro ao retornar os requisitos do aso.");

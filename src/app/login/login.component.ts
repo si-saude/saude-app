@@ -49,6 +49,7 @@ export class LoginComponent extends GenericComponent {
                 }, 100);
             } )
             .catch( error => {
+                console.log(error);
                 this.catchConfiguration(error);
                 this.showPreload = false;
             } )

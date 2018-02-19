@@ -96,7 +96,7 @@
 			(click)="closeSidenavFilaEspera()"><i class="material-icons">chevron_left</i>
 		</a>
 		<a [routerLink]="['/fila-espera-ocupacional/check-in']">Check-in</a>
-		<a [routerLink]="['/fila-espera-ocupacional/check-out']">Check-out - Almoço</a>
+		<a [routerLink]="['/fila-espera-ocupacional/check-out']">Check-out</a>
 		<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-in']" 
 			*ngIf="checkPermissao('FILA-ESPERA-OCUPACIONAL-RECEPCAO')">Check-in (Recepção)</a>
 		<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-out']" 

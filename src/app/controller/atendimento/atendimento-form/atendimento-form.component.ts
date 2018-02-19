@@ -51,6 +51,7 @@ export class AtendimentoFormComponent {
     private toastParams;
     private tabsActions;
     private modalConfirmLocalizacao;
+    audio: any;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -71,9 +72,12 @@ export class AtendimentoFormComponent {
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
         this.modalConfirmLocalizacao = new EventEmitter<string | MaterializeAction>();
         this.existLocalizacao = false;
+        this.audio = new Audio();
     }
 
     ngOnInit() {
+        this.audio.src = "./../../../../assets/audio/beep.mp3";
+        
         $(document).keypress(function(event){
             if (event.charCode == 13) return false; 
         });
@@ -138,19 +142,6 @@ export class AtendimentoFormComponent {
                 console.log( "Erro ao retornar as localizações." );
             } )
     }
-
-//    setLocalizacao( localizacaoId ) {
-//        this.localizacao = this.localizacoes.find( l => l.getId() == localizacaoId );
-//        this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
-//        console.log(this.localizacao);
-//        if ( this.localizacao != undefined ) {
-//            this.filaAtendimentoOcupacional.setProfissional( this.profissional );
-//            this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
-//        } else {
-//            this.filaAtendimentoOcupacional.setProfissional( this.profissional );
-//            this.filaAtendimentoOcupacional.setLocalizacao( new Localizacao() );
-//        }
-//    }
     
     confirmarLocalizacao() {
         console.log(this.localizacao);
@@ -175,6 +166,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    console.log(this.atendimento);
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
@@ -203,11 +195,17 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() == 0 ) {
-                        this.statusProfissional = "";
+                    	this.statusProfissional = "";
                         this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
                     } else {
                         this.setDataNascimento();
                         this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+                        
+                        if(this.atendimento.getFilaAtendimentoOcupacional().getStatus().length
+                                == 20){
+                            this.audio.load();
+                            this.audio.play();
+                        }
                     }
                 } )
                 .catch( error => {
@@ -237,7 +235,7 @@ export class AtendimentoFormComponent {
     }
 
     entrar() {
-        if ( this.localizacao.getId() <= 0 ) {
+        if ( this.localizacao == undefined || this.localizacao.getId() <= 0 ) {
             this.toastParams = ["Por favor, seleciona um local", 4000];
             this.globalActions.emit( 'toast' );   
             return;
@@ -401,6 +399,38 @@ export class AtendimentoFormComponent {
         }
     }
     
+    devolverPraFila() {
+        if ( this.atendimento.getId() > 0 ) {
+            this.atendimentoService.devolverPraFila( this.atendimento )
+                .then( res => {
+                    this.toastParams = ["Empregado devolvido pra fila", 4000];
+                    this.globalActions.emit( 'toast' );
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                } )
+                .catch( error => {
+                    this.catchConfiguration(error);
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
+                } )
+        }
+    }
+    
+    finalizarPausar() {
+        if ( this.atendimento.getId() > 0 ) {
+            this.atendimentoService.finalizarPausar( this.atendimento )
+                .then( res => {
+                    this.toastParams = ["Atendimento finalizado", 4000];
+                    this.globalActions.emit( 'toast' );
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                } )
+                .catch( error => {
+                	this.catchConfiguration(error);
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
+                } )
+        }
+    }
+    
     openModalConfirmLocalizacao() {
         if ( this.localizacao.getId() > 0 ) {
             this.modalConfirmLocalizacao.emit( { action: "modal", params: ['open'] } );            
@@ -420,12 +450,6 @@ export class AtendimentoFormComponent {
         this.alive = false;
         this.inscricao.unsubscribe();
     }
-
-//    calculateAge( birthday: Date ) {
-//        var ageDifMs = Date.now() - birthday.getTime();
-//        var ageDate = new Date( ageDifMs );
-//        return Math.abs( ageDate.getUTCFullYear() - 1970 );
-//    }
     
     setDataNascimento() {
         if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() != undefined ) {

@@ -21,6 +21,7 @@ import { SidenavComponent } from './includes/sidenav/sidenav.component';
 import { SharedModule } from './controller/shared.module';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { BaseGuard } from './guards/guards-child/base.guard';
 import { CargoGuard } from './guards/guards-child/cargo.guard';
 import { CidadeGuard } from './guards/guards-child/cidade.guard';
@@ -91,6 +92,7 @@ import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-e
     AuthService,
     CanDeactivateGuard,
     AuthGuard,
+    AtendimentoGuard,
     BaseGuard,
     CargoGuard,
     CidadeGuard,
