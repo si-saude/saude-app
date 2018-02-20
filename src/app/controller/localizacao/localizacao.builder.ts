@@ -1,10 +1,15 @@
 import { Localizacao } from './../../model/localizacao';
+import { RegraAtendimentoLocalizacao } from './../../model/regra-atendimento-localizacao';
+import { RegraAtendimentoLocalizacaoBuilder } from './../regra-atendimento-localizacao/regra-atendimento-localizacao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class LocalizacaoBuilder extends GenericBuilder {
 
     initialize( localizacao: Localizacao ) {
         localizacao = new Localizacao();
+        
+        localizacao.setRegraAtendimentoLocalizacoes(new RegraAtendimentoLocalizacaoBuilder().initializeList(new Array<RegraAtendimentoLocalizacao>()));
+        
         return localizacao;
     }
 
@@ -31,6 +36,15 @@ export class LocalizacaoBuilder extends GenericBuilder {
         cloneLocalizacao.setId( this.getValue( localizacao, "getId" ) );
         cloneLocalizacao.setVersion( this.getValue( localizacao, "getVersion" ) );
         cloneLocalizacao.setNome( this.getValue( localizacao, "getNome" ) );
+        
+        if ( this.getValue(localizacao, "getRegraAtendimentoLocalizacoes") !== undefined ) {
+            cloneLocalizacao.setRegraAtendimentoLocalizacoes(
+                    new RegraAtendimentoLocalizacaoBuilder().cloneList(
+                            this.getValue(localizacao,"getRegraAtendimentoLocalizacoes")));
+        } else {
+            cloneLocalizacao.setRegraAtendimentoLocalizacoes(
+                    new RegraAtendimentoLocalizacaoBuilder().initializeList(null));
+        }
 
         return cloneLocalizacao;
     }

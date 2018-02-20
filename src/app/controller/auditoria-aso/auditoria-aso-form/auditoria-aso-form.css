@@ -1,3 +1,8 @@
+div h6 {
+	padding-left: 10px;
+	color: #26a69a;
+}
+
 table {
 	border: 1px solid #c0c0c0;
     margin-top: 25px;
@@ -28,9 +33,9 @@ tbody{
     pointer-events: auto;
 }
 
-.checkbox {
-	margin-top: 0px;
+.checkbox-conforme {
 	padding-left: 35px;
+	margin-top: 2.3%;
 }
 
 .conforme {     

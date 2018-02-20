@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
+import * as $ from 'jquery';
 
 import { GlobalVariable } from './../../../global';
 import { Empregado } from './../../../model/empregado';
@@ -14,7 +15,9 @@ import { Regime } from './../../../model/regime';
 import { Gerencia } from './../../../model/gerencia';
 import { Base } from './../../../model/base';
 import { Ghe } from './../../../model/ghe';
+import { GheBuilder } from './../../ghe/ghe.builder';
 import { Ghee } from './../../../model/ghee';
+import { GheeBuilder } from './../../ghee/ghee.builder';
 import { Cidade } from './../../../model/cidade';
 import { Instalacao } from './../../../model/instalacao';
 import { InstalacaoBuilder } from './../../instalacao/instalacao.builder';
@@ -145,6 +148,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.getVacinas();
         this.getInstalacoes();
         this.getGruposMonitoramento();
+        
+//        this.showToastGhe();
     }
 
     getStatuses() {
@@ -250,7 +255,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     getGhes() {
         this.empregadoService.getGhes()
             .then( res => {
-                this.ghes = res.json();
+                this.ghes = new GheBuilder().cloneList(res.json());
             } )
             .catch( error => {
                 console.log( error );
@@ -260,7 +265,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     getGhees() {
         this.empregadoService.getGhees()
             .then( res => {
-                this.ghees = res.json();
+                this.ghees = new GheeBuilder().cloneList(res.json());
             } )
             .catch( error => {
                 console.log( error );
@@ -411,6 +416,28 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
 
     salvar( empregado ) {
         super.save( empregado );
+    }
+    
+    showToastGhe(evento) {
+        if ( evento == 0 ) return;
+        
+        let ghe = this.ghes.find(g => g.getId() == evento);
+        
+        this.toastParams = [ghe.getDescricao(), 60000];
+        this.globalActions.emit('toast');
+    }
+    
+    showToastGhee(evento) {
+        if ( evento == 0 ) return;
+        
+        let ghee = this.ghees.find(g => g.getId() == evento);
+        
+        this.toastParams = [ghee.getDescricao(), 60000];
+        this.globalActions.emit('toast');
+    }
+    
+    closeTooltip() {
+        $(".toast").remove();
     }
 
     addGrupoMonitoramento( valor: number ) {

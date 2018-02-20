@@ -1,0 +1,17 @@
+.collection .collection-item:last-child { 
+    cursor: pointer;
+}
+
+.row-item-collection {
+	border-top: solid 1px #a2a2a2;
+	line-height: 0;
+}
+
+.row-collection {
+	margin-bottom: 0px;
+}
+
+.btn-add {
+	margin-top: 15px;
+	margin-left: 155px;
+}

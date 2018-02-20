@@ -97,13 +97,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-
-        if ( this.verifyIfExistEmpregados() ) {
-            super.save( new GerenciaBuilder().clone( this.gerencia ) );
-        } else {
-            this.toastParams = ['Por favor, selecione corretamente um empregado', 4000];
-            this.globalActions.emit('toast');
-        }
+        super.save( new GerenciaBuilder().clone( this.gerencia ) );
     }
     
     verifyIfExistEmpregados() {

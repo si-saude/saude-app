@@ -30,9 +30,8 @@
 
 					<div class="row">
 						<div class="input-field col s6">
-							<label for="nome">Nome</label> 
-							<input id="nome" type="text" disabled
-								[(ngModel)]="grupoMonitoramento.nome"
+							<label for="nome">Nome</label> <input id="nome" type="text"
+								disabled [(ngModel)]="grupoMonitoramento.nome"
 								name="grupoMonitoramento.nome">
 						</div>
 
@@ -48,7 +47,7 @@
 								name="grupoMonitoramento.relatorio"> <label
 								for="relatorio">Relatório</label>
 						</div>
-						
+
 						<div class="input-field col s2 checkbox">
 							<input type="checkbox" id="auditoriaAso" disabled
 								[(ngModel)]="grupoMonitoramento.auditoriaAso"
@@ -61,8 +60,8 @@
 						<div class="input-field col s6">
 							<fieldset>
 								<legend>Tipo Grupo Monitoramento</legend>
-								<select name="grupoMonitoramento.tipoGrupoMonitoramento" disabled
-									class="browser-default"
+								<select name="grupoMonitoramento.tipoGrupoMonitoramento"
+									disabled class="browser-default"
 									[(ngModel)]="grupoMonitoramento.tipoGrupoMonitoramento.id">
 									<option disabled selected value=0>Selecione um tipo grupo monitoramento</option>
 									<option
@@ -82,48 +81,30 @@
 
 					<div class="input-field col s7">
 						<div class="collection">
-
 							<fieldset>
 								<legend>Exames</legend>
-								<div class="row select">
-
-									<div class="input-field col s4">
-										<select class="browser-default" #exame disabled>
-											<option disabled selected value=0>Selecione um exame</option>
-											<option *ngFor="let exame of exames" value="{{exame.id}}">{{exame.codigo}} - {{exame.descricao}}</option>
-										</select>
-									</div>
-
-									<div class="col s2">
-										<a
-											class="btn-floating waves-effect waves-light green btn-remove-permission"> <i
-											class="material-icons center-icon">add</i>
-										</a>
+								<div class="row-item-collection"
+									*ngFor="let grupoMonitoramentoExame of grupoMonitoramento.grupoMonitoramentoExames; let gME = index">
+									<div class="row row-collection">
+										<div class="col s6">
+											<a [ngClass]="selectedExame(gME)"
+												[routerLinkActive]="['active']" class="collection-item"
+												(click)="selectExame(gME)">
+												{{grupoMonitoramentoExame.exame.codigo}} -
+												{{grupoMonitoramentoExame.exame.descricao}} </a>
+										</div>
+										<div class="col s5">
+											<select class="browser-default" disabled
+												name="grupoMonitoramentoExame[{{gME}}].periodicidade"
+												[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
+												<option selected value=0>Selecione uma periodicidade</option>
+												<option *ngFor="let periodicidade of periodicidades"
+													value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
+											</select>
+										</div>
 									</div>
 								</div>
 							</fieldset>
-
-							<div class="row-item-collection"
-								*ngFor="let grupoMonitoramentoExame of grupoMonitoramento.grupoMonitoramentoExames; let gME = index">
-								<div class="row row-collection">
-									<div class="col s6">
-										<a [ngClass]="selectedExame(gME)"
-											[routerLinkActive]="['active']" class="collection-item"
-											(click)="selectExame(gME)">
-											{{grupoMonitoramentoExame.exame.codigo}} -
-											{{grupoMonitoramentoExame.exame.descricao}} </a>
-									</div>
-									<div class="col s5">
-										<select class="browser-default" disabled
-											name="grupoMonitoramentoExame[{{gME}}].periodicidade"
-											[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
-											<option selected value=0>Selecione uma periodicidade</option>
-											<option *ngFor="let periodicidade of periodicidades"
-												value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
-										</select>
-									</div>
-								</div>
-							</div>
 
 						</div>
 					</div>
@@ -133,33 +114,16 @@
 
 							<fieldset>
 								<legend>Critérios</legend>
-								<div class="row select">
-
-									<div class="input-field col s4">
-										<select class="browser-default" #criterio disabled>
-											<option disabled selected value=0>Selecione um critério</option>
-											<option *ngFor="let criterio of criterios"
-												value="{{criterio.id}}">{{criterio.nome}}</option>
-										</select>
-									</div>
-									<div class="col s2">
-										<a
-											class="btn-floating waves-effect waves-light green btn-remove-permission"> <i
-											class="material-icons center-icon">add</i>
-										</a>
+								<div class="row-item-collection"
+									*ngFor="let criterio of arrayCriterio; let c = index">
+									<div class="row row-collection">
+										<div class="col s10">
+											<a [routerLinkActive]="['active']" class="collection-item">
+												{{criterio.nome}} </a>
+										</div>
 									</div>
 								</div>
 							</fieldset>
-
-							<div class="row-item-collection"
-								*ngFor="let criterio of arrayCriterio; let c = index">
-								<div class="row row-collection">
-									<div class="col s10">
-										<a [routerLinkActive]="['active']" class="collection-item">
-											{{criterio.nome}} </a>
-									</div>
-								</div>
-							</div>
 
 						</div>
 					</div>

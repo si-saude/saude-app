@@ -65,25 +65,15 @@
 				</div>
 				
 				<div class="row">
-					<div class="input-field col s4">
+					<div class="input-field col s6">
 						<label for="intervalo">Intervalo de Solicitações</label> 
 						<input type="text" id="intervalo"
 							[(ngModel)]="servico.intervalo" name="intervalo">
 					</div>
-					<div class="input-field col s4">
+					<div class="input-field col s6">
 						<label for="quantidadeSolicitacaoIntervalo">Quantidade de Solicitações no Intervalo</label> 
 						<input type="text" id="quantidadeSolicitacaoIntervalo"
 							[(ngModel)]="servico.quantidadeSolicitacaoIntervalo" name="quantidadeSolicitacaoIntervalo">
-					</div>
-					<div class="input-field col s4">
-						<fieldset>
-							<legend> Regra de Atendimento </legend>
-							<select name="regraAtendimento" class="browser-default"
-								[(ngModel)]="servico.regraAtendimento.id">
-								<option disabled selected value=0>Selecione uma regra</option>
-								<option *ngFor="let regra of regras" value="{{regra.id}}">{{regra.nome}}</option>
-							</select>
-						</fieldset>
 					</div>
 				</div>
 				
@@ -110,7 +100,7 @@
 							</a>
 						</div>
 
-						<div class="input-field col s4">
+						<div class="input-field col s4" style="margin: 0 auto;">
 							<label for="tempoMedio">Tempo Médio</label> <input
 								id="tempoMedio" type="text" name="tempoMedio"
 								[(ngModel)]="tempoMedio">

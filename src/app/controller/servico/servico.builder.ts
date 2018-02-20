@@ -1,8 +1,6 @@
 import { Servico } from './../../model/servico';
 import { Atividade } from './../../model/atividade';
 import { AtividadeBuilder } from './../atividade/atividade.builder';
-import { RegraAtendimento } from './../../model/regra-atendimento';
-import { RegraAtendimentoBuilder } from './../regra-atendimento/regra-atendimento.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class ServicoBuilder extends GenericBuilder {
@@ -11,7 +9,6 @@ export class ServicoBuilder extends GenericBuilder {
         servico = new Servico();
         
         servico.setAtividades(new Array<Atividade>());
-        servico.setRegraAtendimento(new RegraAtendimentoBuilder().initialize(new RegraAtendimento()));
         
         return servico;
     }
@@ -51,15 +48,6 @@ export class ServicoBuilder extends GenericBuilder {
             cloneServico.setGrupo("");
         else
             cloneServico.setGrupo(this.getValue(servico, "getGrupo"));
-        
-        if (this.getValue(servico, "getRegraAtendimento") !== undefined) { 
-            cloneServico.setRegraAtendimento(
-                    new RegraAtendimentoBuilder().clone(this.getValue(servico,"getRegraAtendimento")));
-            if(!this.idGtZero(cloneServico.getRegraAtendimento()))
-                cloneServico.setRegraAtendimento(undefined);
-        } else {
-            cloneServico.setRegraAtendimento(new RegraAtendimentoBuilder().initialize(null));
-        }
         
         cloneServico.setAtividades(this.getValue(servico, "getAtividades"));
         

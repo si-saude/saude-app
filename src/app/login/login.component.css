@@ -1,3 +1,47 @@
 .form-container {
 	margin-bottom: 100px;
 }
+
+form {
+	margin-bottom: 3%;
+}
+
+legend {
+	color: #26a69a;
+}
+
+fieldset {
+	border: 1px solid #c0c0c0;
+}
+
+.centralizar {
+	margin: 0 auto;
+    width: 50%;
+}
+
+.btn-login {
+	margin-left: 5%;
+}
+
+.btn-forgot-password {
+	margin-right: 5%;
+}
+
+input {
+	width: 85% !important;
+}
+
+input[type="password"] { 
+	background: #fff !important;
+    border: 2px solid #d9d9d9 !important;
+    border-style: inset !important;
+}
+
+.icon {
+	margin-top: 6%;
+}
+
+.linha { 
+	margin-left: 1%;
+}
+

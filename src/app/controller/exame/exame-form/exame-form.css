@@ -36,6 +36,10 @@ tbody{
     height: 30px;
 }
 
+.btn-add {
+	margin-top: 32px !important;
+}
+
 .numero-linhas {
 	margin-left: -35px !important;
 }

@@ -16,7 +16,7 @@
 	</div>
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 		
-		<div class="input-field col s12">
+		<div class="row">
 
 			<fieldset>
 				<legend class="legend">
@@ -71,7 +71,7 @@
 											type="text" disabled
 											name="empregadoConvocacao.resultadoExames[{{iREx}}].exame.codigo"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.codigo">
-										<input class="col s9"
+										<input class="col s8"
 											type="text" materialize="autocomplete" autocomplete="off"
 											name="exame[{{iREx}}]"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.descricao"

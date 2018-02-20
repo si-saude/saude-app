@@ -46,8 +46,13 @@ tbody{
 .content-resultado-exame {
 	max-height: 600px;
     overflow: auto;	
+    overflow-x: hidden;
 }
 
 .conforme {
 	margin-top: 25px;
+}
+
+fieldset {
+	border: 1px solid #4fc3f7 !important;
 }

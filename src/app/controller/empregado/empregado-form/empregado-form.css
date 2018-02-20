@@ -24,6 +24,10 @@ tbody{
     height: 30px;
 }
 
+.btn-remove-item {
+	margin-top: 39px;
+}
+
 .grupo-monitoramento-nome {
 	padding-left: 0px;
 }
@@ -49,3 +53,10 @@ tbody{
 	padding-left: 40px;
 }
 
+.instalacoes { 
+	margin-bottom: 40px;
+}
+
+#grupoMonitoramento {
+	margin-top: 20px;
+}

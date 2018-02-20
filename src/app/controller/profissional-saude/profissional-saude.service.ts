@@ -37,6 +37,17 @@ export class ProfissionalSaudeService extends GenericService {
         profissionalFilter.getEmpregado().getPessoa().setNome(nome);
         return this.selectList( profissionalFilter );
     }
+    
+    getProfissionalByNameSimples(nome: string) {
+        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+        profissionalFilter.getEmpregado().getPessoa().setNome(nome);
+        profissionalFilter.setPageSize(Math.pow(2, 31)-1);
+        
+        let urlListSimples = this.URL + "/selectListSimples";
+        return this.http
+            .post( urlListSimples, profissionalFilter, { headers: this.headers } )
+            .toPromise();
+    }
 
     getEmpregadoByName(nome: string) {
         return this.empregadoService.getEmpregadoByName(nome);

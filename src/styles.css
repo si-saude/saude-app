@@ -7,6 +7,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background: #f2f2f2;
 }
 
 main {
@@ -33,9 +34,67 @@ footer {
 
 .input-field.col label {
     left: 0;
+    font-weight: bold;
 }
 
 .input-field label {
-    color: #26a69a;
+    color: #4fc3f7 ;
     position: relative;
 }
+
+input { 
+	background: #fff !important;
+    border: 2px solid #d9d9d9 !important;
+    border-style: inset !important;
+    height: 35px !important;
+}
+
+textarea {
+	background: #fff !important;
+    border: 2px solid #d9d9d9 !important;
+    border-style: inset !important;
+}
+
+select {
+	background: #fff !important;
+    border: 2px solid #d9d9d9 !important;
+    border-style: inset !important;
+}
+
+.tabs .indicator {
+	background-color: #4fc3f7 !important;
+}
+
+.tab, .tabs {
+	background-color: #f2f2f2 !important;
+	color: #4fc3f7  !important;
+}
+
+.tabs .tab a {
+    color: #4fc3f7  !important;
+    font-weight: bolder;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: transparent;
+    color: #4fc3f7 !important;
+    border-bottom: 2px solid #4fc3f7 !important;
+}
+
+fieldset {
+	border: 1px dashed #4fc3f7  !important;
+}
+
+fieldset > legend { 
+	color: #4fc3f7  !important;
+	font-weight: bold;
+}
+
+.mydp .btnclear, .mydp .btndecrease, .mydp .btnincrease, .mydp .btnpicker {
+	margin-top: 3px !important;
+}
+
+.row-collection .col .collection-item {
+	border: 1px solid #e0e0e0;
+}
+    

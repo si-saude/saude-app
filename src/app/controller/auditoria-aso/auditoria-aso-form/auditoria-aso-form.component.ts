@@ -20,6 +20,7 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
     aso: Aso;
     usuario: Usuario;
     requisitosAso: Array<RequisitoAso>;
+    selectAll: boolean;
 
     constructor( private route: ActivatedRoute,
         private auditoriaAsoService: AuditoriaAsoService,
@@ -53,6 +54,14 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
                 }
             } );
         
+    }
+    
+    selecionarTodos() {
+        setTimeout(() => {
+            if ( this.selectAll )
+                this.requisitosAso.forEach(rA => rA.setConforme(true))
+            else this.requisitosAso.forEach(rA => rA.setConforme(false));
+        }, 100);
     }
     
     getRequisitos() {

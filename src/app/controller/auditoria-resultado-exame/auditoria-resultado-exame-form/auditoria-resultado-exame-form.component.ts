@@ -252,6 +252,8 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     }
 
     getExame(evento, indexREx) {
+        console.log(this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao());
+        
         if ( this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() == "" )
             this.empregadoConvocacao.getResultadoExames()[indexREx] = new ResultadoExameBuilder().initialize(new ResultadoExame());
         
@@ -282,6 +284,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
                 this.empregadoConvocacaoService.getExameByDescricao( evento )
                     .then( res => {
                         this.arrayExames = new ExameBuilder().cloneList( res.json() );
+                        //remove os exames que ja existe nos resultados exames
                         this.empregadoConvocacao.getResultadoExames().forEach( rE => {
                             let aE = this.arrayExames.find( a => a.getCodigo() == rE.getExame().getCodigo() );
                             if ( aE != undefined)
@@ -303,6 +306,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             this.empregadoConvocacaoService.getExameByCodigo( evento )
                 .then( res => {
                     this.arrayExames = new ExameBuilder().cloneList( res.json() );
+                  //remove os exames que ja existe nos resultados exames
                     this.empregadoConvocacao.getResultadoExames().forEach( rE => {
                         let aE = this.arrayExames.find( a => a.getCodigo() == rE.getExame().getCodigo() );
                         if ( aE != undefined)

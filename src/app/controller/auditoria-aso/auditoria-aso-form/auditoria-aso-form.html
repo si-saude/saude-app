@@ -25,7 +25,7 @@
 					name="aso.naoConformidades"></textarea>
 			</div>
 			
-			<div class="input-field col s2 checkbox">
+			<div class="input-field col s2 checkbox-conforme">
 				<input type="checkbox" id="aso.conforme"
 					[(ngModel)]="aso.conforme" name="aso.conforme"> 
 					<label for="aso.conforme">Conforme</label>
@@ -42,6 +42,14 @@
 			</div>
 
 		</div>
+
+			<div class="row">
+				<div class="input-field col s4 checkbox-all">
+					<input type="checkbox" id="selectAll" (click)="selecionarTodos()"
+						[(ngModel)]="selectAll" name="selectAll"> 
+						<label for="selectAll">Selecionar/Desselecionar Todos</label>
+				</div>
+			</div>
 
 		<div class="row">
 

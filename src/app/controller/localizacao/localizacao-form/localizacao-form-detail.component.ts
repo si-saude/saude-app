@@ -8,6 +8,8 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 import { LocalizacaoBuilder } from './../localizacao.builder';
 import { LocalizacaoFilter } from './../localizacao.filter';
 import { LocalizacaoService } from './../localizacao.service';
+import { Servico } from './../../../model/servico';
+import { ServicoBuilder } from './../../servico/servico.builder';
 
 @Component( {
     selector: 'app-localizacao-form-detail',
@@ -16,7 +18,9 @@ import { LocalizacaoService } from './../localizacao.service';
 } )
 export class LocalizacaoFormDetailComponent extends GenericFormComponent implements OnInit {
     localizacao: Localizacao;
-    
+    arrayServico: Array<Servico>;
+    selectedRegraAtend = null;    
+
     localizacaoFilter: LocalizacaoFilter = new LocalizacaoFilter();
     
     constructor( private route: ActivatedRoute,
@@ -24,7 +28,8 @@ export class LocalizacaoFormDetailComponent extends GenericFormComponent impleme
         router: Router) { 
         super(localizacaoService, router);
         this.goTo = "localizacao";
-        
+        this.arrayServico = new ServicoBuilder().initializeList(new Array<Servico>());
+
         this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
     }
 
@@ -45,6 +50,17 @@ export class LocalizacaoFormDetailComponent extends GenericFormComponent impleme
                     } )
             } );
                   
+    }
+    
+    selectRegraAtendimento(index) {
+        this.selectedRegraAtend = this.localizacao.getRegraAtendimentoLocalizacoes()[index].getRegraAtendimento();
+        this.arrayServico = this.localizacao.getRegraAtendimentoLocalizacoes()[index].getServicos();
+    }
+    
+    selectedRegraAtendimento(index) {
+        if ( this.localizacao.getRegraAtendimentoLocalizacoes()[index].getRegraAtendimento() === this.selectedRegraAtend ) {
+            return "active";
+        } else return "";
     }
     
     onDestroy() {

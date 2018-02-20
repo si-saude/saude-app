@@ -32,9 +32,9 @@
 			<div id="dadosGerais">
 				<div class="row">
 					<div class="input-field col s8">
-						<label for="nome">Nome</label> 
-						<input id="nome" type="text" disabled maxlength="400"
-							[(ngModel)]="empregado.pessoa.nome" name="nome">
+						<label for="nome">Nome</label> <input id="nome" type="text"
+							disabled maxlength="400" [(ngModel)]="empregado.pessoa.nome"
+							name="nome">
 					</div>
 					<div class="input-field col s4">
 						<fieldset>
@@ -64,30 +64,28 @@
 
 				<div class="row">
 					<div class="input-field col s6">
-						<label for="chave">Chave</label> 
-						<input id="chave" type="text" disabled
-							maxlength="16" [(ngModel)]="empregado.chave" name="chave">
+						<label for="chave">Chave</label> <input id="chave" type="text"
+							disabled maxlength="16" [(ngModel)]="empregado.chave"
+							name="chave">
 					</div>
 
 					<div class="input-field col s6">
-						<label for="matricula">Matrícula</label> 
-						<input id="matricula" disabled
-							type="text" maxlength="32" [(ngModel)]="empregado.matricula"
-							name="matricula">
+						<label for="matricula">Matrícula</label> <input id="matricula"
+							disabled type="text" maxlength="32"
+							[(ngModel)]="empregado.matricula" name="matricula">
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="input-field col s6">
-						<label for="rg">RG</label> 
-						<input id="rg" type="text" disabled
+						<label for="rg">RG</label> <input id="rg" type="text" disabled
 							maxlength="32" [(ngModel)]="empregado.pessoa.rg" name="rg">
 					</div>
 
 					<div class="input-field col s6">
-						<label for="ramal">Ramal</label> 
-						<input id="ramal" type="text" disabled
-							maxlength="16" [(ngModel)]="empregado.ramal" name="ramal">
+						<label for="ramal">Ramal</label> <input id="ramal" type="text"
+							disabled maxlength="16" [(ngModel)]="empregado.ramal"
+							name="ramal">
 					</div>
 
 				</div>
@@ -236,8 +234,7 @@
 				<div class="row file-import">
 					<div class="file-field input-field col s12">
 						<div class="btn">
-							<span>Foto</span> 
-							<input id="foto" type="file" disabled 
+							<span>Foto</span> <input id="foto" type="file" disabled
 								name="foto" accept=".png" #foto>
 						</div>
 						<div class="file-path-wrapper">
@@ -255,9 +252,8 @@
 				<div class="row file-import">
 					<div class="file-field input-field col s12">
 						<div class="btn">
-							<span>Assinatura</span> 
-							<input id="assinatura" type="file" disabled
-								name="assinatura" accept=".png" #assinatura>
+							<span>Assinatura</span> <input id="assinatura" type="file"
+								disabled name="assinatura" accept=".png" #assinatura>
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate" disabled type="text">
@@ -290,43 +286,42 @@
 
 						<div class="col s2">
 							<a
-								class="btn-floating waves-effect waves-light green btn-remove-permission"> <i
-								class="material-icons center-icon">add</i>
+								class="btn-floating waves-effect waves-light green btn-remove-permission">
+								<i class="material-icons center-icon">add</i>
 							</a>
 						</div>
 					</div>
 
-				</fieldset>
+					<div class="row">
 
-				<div class="row">
-
-					<table class="striped">
-						<thead>
-							<tr class="row col s12">
-								<th class="col s10">Nome</th>
-							</tr>
-						</thead>
-						<div
-							*ngFor="let grupoMonitoramento of empregado.grupoMonitoramentos;let i = index">
-							<tbody class="col s12">
-								<tr class="col s12">
-									<input type="hidden"
-										[(ngModel)]="empregado.grupoMonitoramentos[i].nome"
-										value="{{grupoMonitoramento.nome}}"
-										name="grupoMonitoramento[{{i}}].nome">
-									<input type="hidden"
-										[(ngModel)]="empregado.grupoMonitoramentos[i].id"
-										value="{{grupoMonitoramento.id}}"
-										name="grupoMonitoramento[{{i}}].id">
-									<td class="col s10 grupo-monitoramento-nome">{{grupoMonitoramento.nome}}</td>
+						<table class="striped">
+							<thead>
+								<tr class="row col s12">
+									<th class="col s10">Nome</th>
 								</tr>
-							</tbody>
-						</div>
+							</thead>
+							<div
+								*ngFor="let grupoMonitoramento of empregado.grupoMonitoramentos;let i = index">
+								<tbody class="col s12">
+									<tr class="col s12">
+										<input type="hidden"
+											[(ngModel)]="empregado.grupoMonitoramentos[i].nome"
+											value="{{grupoMonitoramento.nome}}"
+											name="grupoMonitoramento[{{i}}].nome">
+										<input type="hidden"
+											[(ngModel)]="empregado.grupoMonitoramentos[i].id"
+											value="{{grupoMonitoramento.id}}"
+											name="grupoMonitoramento[{{i}}].id">
+										<td class="col s10 grupo-monitoramento-nome">{{grupoMonitoramento.nome}}</td>
+									</tr>
+								</tbody>
+							</div>
 
-					</table>
+						</table>
 
-				</div>
+					</div>
 
+				</fieldset>
 
 			</div>
 
@@ -363,37 +358,38 @@
 
 							<div class="row">
 								<div class="input-field col s12">
-									<label for="logradouro" maxlength="200">Logradouro</label> 
-									<input [(ngModel)]="empregado.pessoa.endereco.logradouro" disabled
+									<label for="logradouro" maxlength="200">Logradouro</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.logradouro" disabled
 										id="logradouro" type="text" name="endereco.logradouro">
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="input-field col s8">
-									<label for="bairro" maxlength="100">Bairro</label> 
-									<input [(ngModel)]="empregado.pessoa.endereco.bairro" disabled 
+									<label for="bairro" maxlength="100">Bairro</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.bairro" disabled
 										id="bairro" type="text" name="endereco.bairro">
 								</div>
 
 								<div class="input-field col s4">
-									<label for="numero" maxlength="12">Numero</label> 
-									<input [(ngModel)]="empregado.pessoa.endereco.numero" disabled 
+									<label for="numero" maxlength="12">Numero</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.numero" disabled
 										id="numero" type="text" name="endereco.numero">
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="input-field col s8">
-									<label for="complemento" maxlength="200">Complemento</label> 
-									<input [(ngModel)]="empregado.pessoa.endereco.complemento" disabled
+									<label for="complemento" maxlength="200">Complemento</label> <input
+										[(ngModel)]="empregado.pessoa.endereco.complemento" disabled
 										id="complemento" name="endereco.complemento" type="text">
 								</div>
 
 								<div class="input-field col s4">
-									<label for="cep" maxlength="9">CEP</label> 
-									<input id="cep" type="text" disabled
-									[(ngModel)]="empregado.pessoa.endereco.cep" name="endereco.cep">
+									<label for="cep" maxlength="9">CEP</label> <input id="cep"
+										type="text" disabled
+										[(ngModel)]="empregado.pessoa.endereco.cep"
+										name="endereco.cep">
 
 								</div>
 							</div>
@@ -426,8 +422,8 @@
 					<fieldset>
 						<legend class="legend">
 							Vacinas <a
-								class="btn-floating waves-effect waves-light green btn-add-permissoes"> <i
-								class="material-icons center-icon">add</i>
+								class="btn-floating waves-effect waves-light green btn-add-permissoes">
+								<i class="material-icons center-icon">add</i>
 							</a>
 						</legend>
 
@@ -437,8 +433,8 @@
 							<fieldset>
 								<legend class="legend">
 									Empregado Vacina <a
-										class="btn-floating waves-effect waves-light red btn-add-permissoes"> <i
-										class="material-icons center-icon">delete</i>
+										class="btn-floating waves-effect waves-light red btn-add-permissoes">
+										<i class="material-icons center-icon">delete</i>
 									</a>
 								</legend>
 
@@ -468,15 +464,15 @@
 
 								<div class="row">
 									<div class="input-field col s8">
-										<label for="lote" maxlength="32">Lote</label> 
-										<input id="lote" type="text" disabled 
+										<label for="lote" maxlength="32">Lote</label> <input id="lote"
+											type="text" disabled
 											name="empregado.empregadoVacinas[{{i}}].lote"
 											[(ngModel)]="empregado.empregadoVacinas[i].lote">
 									</div>
 
 									<div class="input-field col s4">
-										<label for="laboratorio" min="1">Dose</label> 
-										<input id="dose" type="number" disabled 
+										<label for="laboratorio" min="1">Dose</label> <input id="dose"
+											type="number" disabled
 											name="empregado.empregadoVacinas[{{i}}].dose"
 											[(ngModel)]="empregado.empregadoVacinas[i].dose">
 									</div>
@@ -485,8 +481,8 @@
 
 								<div class="row">
 									<div class="input-field col s8">
-										<label for="laboratorio" maxlength="128">Laboratório</label> 
-										<input id="laboratorio" type="text" disabled
+										<label for="laboratorio" maxlength="128">Laboratório</label> <input
+											id="laboratorio" type="text" disabled
 											name="empregado.empregadoVacinas[{{i}}].laboratorio"
 											[(ngModel)]="empregado.empregadoVacinas[i].laboratorio">
 									</div>
@@ -511,8 +507,8 @@
 					<fieldset>
 						<legend class="legend">
 							Telefones <a
-								class="btn-floating waves-effect waves-light green btn-add-permissoes"> <i
-								class="material-icons center-icon">add</i>
+								class="btn-floating waves-effect waves-light green btn-add-permissoes">
+								<i class="material-icons center-icon">add</i>
 							</a>
 						</legend>
 
@@ -521,15 +517,15 @@
 
 							<div class="row">
 								<div class="input-field col s10">
-									<label for="numero" maxlength="16">Numero</label> 
-									<input id="numero" name="numero{{i}}" type="text" disabled
+									<label for="numero" maxlength="16">Numero</label> <input
+										id="numero" name="numero{{i}}" type="text" disabled
 										[(ngModel)]="empregado.pessoa.telefones[i].numero">
 								</div>
 
 								<div class="col s2">
 									<a
-										class="btn-floating waves-effect waves-light red btn-remove-permission"> <i
-										class="material-icons center-icon">delete</i>
+										class="btn-floating waves-effect waves-light red btn-remove-permission">
+										<i class="material-icons center-icon">delete</i>
 									</a>
 								</div>
 
@@ -546,62 +542,62 @@
 					<fieldset>
 						<legend> Instalações </legend>
 
-							<div class="row row-curso">
+						<div class="row row-curso">
 
-								<div class="input-field col s4">
-									<select class="browser-default" #instalacao disabled>
-										<option disabled selected value=0>Selecione uma instalação</option>
-										<option *ngFor="let instalacao of instalacoes"
-											value="{{instalacao.id}}">{{instalacao.nome}}</option>
+							<div class="input-field col s4">
+								<select class="browser-default" #instalacao disabled>
+									<option disabled selected value=0>Selecione uma instalação</option>
+									<option *ngFor="let instalacao of instalacoes"
+										value="{{instalacao.id}}">{{instalacao.nome}}</option>
 
-									</select>
-								</div>
-
-								<div class="col s2">
-									<a
-										class="btn-floating waves-effect waves-light green btn-remove-permission"> <i
-										class="material-icons center-icon">add</i>
-									</a>
-								</div>
-
+								</select>
 							</div>
 
-							<div class="row">
+							<div class="col s2">
+								<a
+									class="btn-floating waves-effect waves-light green btn-remove-permission">
+									<i class="material-icons center-icon">add</i>
+								</a>
+							</div>
 
-								<table class="striped">
-									<thead>
-										<tr class="row col s12">
-											<th class="col s3">Nome</th>
-											<th class="col s3">Latitude</th>
-											<th class="col s3">Longitude</th>
+						</div>
+
+						<div class="row">
+
+							<table class="striped">
+								<thead>
+									<tr class="row col s12">
+										<th class="col s3">Nome</th>
+										<th class="col s3">Latitude</th>
+										<th class="col s3">Longitude</th>
+									</tr>
+								</thead>
+
+								<div
+									*ngFor="let instalacao of empregado.instalacoes;let i = index">
+									<tbody class="col s12">
+										<tr class="col s12">
+											<input type="hidden" [(ngModel)]="instalacao.nome"
+												value="{{instalacao.nome}}" name="instalacao[{{i}}].nome">
+											<input type="hidden" [(ngModel)]="instalacao.latitude"
+												value="{{instalacao.latitude}}"
+												name="instalacao[{{i}}].latitude">
+											<input type="hidden" [(ngModel)]="instalacao.longitude"
+												value="{{instalacao.longitude}}"
+												name="instalacao[{{i}}].longitude">
+											<input type="hidden" [(ngModel)]="instalacao.id"
+												value="{{instalacao.id}}" name="instalacao[{{i}}].id">
+											<td class="col s3 instalacao-nome">{{instalacao.nome}}</td>
+											<td class="col s3 instalacao-lat">{{instalacao.latitude}}</td>
+											<td class="col s3 instalacao-long">{{instalacao.longitude}}</td>
 										</tr>
-									</thead>
+									</tbody>
 
-									<div
-										*ngFor="let instalacao of empregado.instalacoes;let i = index">
-										<tbody class="col s12">
-											<tr class="col s12">
-												<input type="hidden" [(ngModel)]="instalacao.nome"
-													value="{{instalacao.nome}}" name="instalacao[{{i}}].nome">
-												<input type="hidden" [(ngModel)]="instalacao.latitude"
-													value="{{instalacao.latitude}}"
-													name="instalacao[{{i}}].latitude">
-												<input type="hidden" [(ngModel)]="instalacao.longitude"
-													value="{{instalacao.longitude}}"
-													name="instalacao[{{i}}].longitude">
-												<input type="hidden" [(ngModel)]="instalacao.id"
-													value="{{instalacao.id}}" name="instalacao[{{i}}].id">
-												<td class="col s3 instalacao-nome">{{instalacao.nome}}</td>
-												<td class="col s3 instalacao-lat">{{instalacao.latitude}}</td>
-												<td class="col s3 instalacao-long">{{instalacao.longitude}}</td>
-											</tr>
-										</tbody>
+								</div>
 
-									</div>
+							</table>
 
-								</table>
-
-							</div>
+						</div>
 
 					</fieldset>
 
@@ -618,8 +614,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/empregado']"
-					class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/empregado']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 		</div>
 

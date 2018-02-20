@@ -6,10 +6,10 @@ import { GlobalVariable } from './../../../global';
 import { Equipe } from './../../../model/equipe';
 import { Profissional } from './../../../model/profissional';
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
+import { ProfissionalSaudeService } from './../../profissional-saude/profissional-saude.service';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { EquipeBuilder } from './../equipe.builder';
 import { EquipeService } from './../equipe.service';
-import { ProfissionalSaudeService } from './../../profissional-saude/profissional-saude.service';
 
 @Component( {
     selector: 'app-equipe-form',
@@ -20,9 +20,10 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
     equipe: Equipe;
     autocompleteCoordenador;
     coordenadores: Array<Profissional>;
+    validCoordenador: string;
     
     constructor( private route: ActivatedRoute,
-            private equipeService: EquipeService, 
+            private equipeService: EquipeService,
             private profissionalService: ProfissionalSaudeService,
             router: Router) { 
             super(equipeService, router);
@@ -31,6 +32,7 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
             this.equipe = new EquipeBuilder().initialize(this.equipe);
             this.autocompleteCoordenador = [];
             this.coordenadores = new ProfissionalSaudeBuilder().initializeList(new Array<Profissional>());
+            this.validCoordenador = ""; 
         }
     
     ngOnInit() {
@@ -44,6 +46,7 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
                         .then( res => {
                             this.showPreload = false;
                             this.equipe = new EquipeBuilder().clone(res.json());
+                            this.saveArrayCoordenador();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -58,6 +61,7 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
     }   
     
     getCoordenador() {
+        if ( this.validCoordenador == this.equipe.getCoordenador().getEmpregado().getPessoa().getNome() ) return;
         if ( this.equipe.getCoordenador().getEmpregado().getPessoa().getNome() !== undefined ) {
 
             let coordenador = this.coordenadores.find( e =>
@@ -66,6 +70,7 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
 
             if ( coordenador !== undefined ) {
                 this.equipe.setCoordenador( coordenador );
+                this.validCoordenador = this.equipe.getCoordenador().getEmpregado().getPessoa().getNome();
             } else this.equipe.setCoordenador( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
         } else this.equipe.setCoordenador( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
     }
@@ -75,7 +80,7 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
         if ( this.oldNomeCoordenador != evento ) {
             this.oldNomeCoordenador = evento;
             if ( evento.length > 3 ) {
-                this.profissionalService.getProfissionalByName( evento )
+                this.profissionalService.getProfissionalByNameSimples( evento )
                     .then( res => {
                         this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
                         this.autocompleteCoordenador = [this.buildAutocompleteCoordenador( this.coordenadores )];
@@ -97,6 +102,11 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
         array["data"] = data;
 
         return array;
+    }
+    
+    saveArrayCoordenador() {
+        if ( this.equipe.getCoordenador() != undefined ) 
+            this.coordenadores.push(this.equipe.getCoordenador());
     }
     
 }

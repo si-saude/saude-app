@@ -102,7 +102,7 @@ export class AtendimentoFormComponent {
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 15000 )
+                                    this.inscricao = TimerObservable.create( 0, 5000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -166,7 +166,6 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento);
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
@@ -194,15 +193,12 @@ export class AtendimentoFormComponent {
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
-                    if ( this.atendimento.getId() == 0 ) {
-                    	this.statusProfissional = "";
-                        this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
-                    } else {
+                    
+                    if ( this.atendimento.getId() > 0 ) {
                         this.setDataNascimento();
                         this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
                         
-                        if(this.atendimento.getFilaAtendimentoOcupacional().getStatus().length
-                                == 20){
+                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20){
                             this.audio.load();
                             this.audio.play();
                         }

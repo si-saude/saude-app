@@ -1,7 +1,12 @@
 .side-nav li > a {
-	display: table-header-group;
+	/* display: table-header-group; */
 }
 
 .material-icons {
 	margin: 0px;
+}
+
+ul a {
+    color: #000 !important;
+    font-weight: 400;
 }

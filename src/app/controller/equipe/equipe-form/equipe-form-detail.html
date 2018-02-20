@@ -6,7 +6,8 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row">
 
@@ -14,23 +15,24 @@
 
 		<div class="row">
 			<div class="input-field col s8">
-				<label for="nome">Nome</label>
-				<input id="nome" type="text" disabled 
+				<label for="nome">Nome</label> <input id="nome" type="text" disabled
 					name="equipe.nome" [(ngModel)]="equipe.nome">
 			</div>
-			
+
 			<div class="input-field col s4">
-				<label for="abreviacao">Abreviação</label>
-				<input id="abreviacao" type="text" disabled 
-					name="equipe.abreviacao" [(ngModel)]="equipe.abreviacao">
+				<label for="abreviacao">Abreviação</label> <input id="abreviacao"
+					type="text" disabled name="equipe.abreviacao"
+					[(ngModel)]="equipe.abreviacao">
 			</div>
 		</div>
-		
+
 		<div class="row">
-			<label for="coordenador">Coordenador</label>
-			<input id="coordenador" type="text" disabled 
-				name="equipe.coordenador.empregado.pessoa.nome" 
-				[(ngModel)]="equipe.coordenador.empregado.pessoa.nome">
+			<div class="input-field col s12">
+				<label for="coordenador">Coordenador</label> <input id="coordenador"
+					type="text" disabled
+					name="equipe.coordenador.empregado.pessoa.nome"
+					[(ngModel)]="equipe.coordenador.empregado.pessoa.nome">
+			</div>
 		</div>
 
 		<div class="mensagem">
@@ -40,8 +42,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/equipe']"
-					class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/equipe']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 		</div>
 
