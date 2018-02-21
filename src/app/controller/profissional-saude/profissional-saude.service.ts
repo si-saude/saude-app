@@ -48,6 +48,17 @@ export class ProfissionalSaudeService extends GenericService {
             .post( urlListSimples, profissionalFilter, { headers: this.headers } )
             .toPromise();
     }
+    
+    getProfissionalByChaveSimples(chave: string) {
+        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+        profissionalFilter.getEmpregado().setChave( chave )
+        profissionalFilter.setPageSize(Math.pow(2, 31)-1);
+        
+        let urlListSimples = this.URL + "/selectListSimples";
+        return this.http
+            .post( urlListSimples, profissionalFilter, { headers: this.headers } )
+            .toPromise();
+    }
 
     getEmpregadoByName(nome: string) {
         return this.empregadoService.getEmpregadoByName(nome);

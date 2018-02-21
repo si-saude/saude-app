@@ -177,7 +177,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     selectGerente( evento ) {
         if ( this.oldNomeGerente != evento ) {
             this.oldNomeGerente = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
                 this.empregadoService.getEmpregadoByName( evento )
                     .then( res => {
                         this.gerentes = new EmpregadoBuilder().cloneList(res.json());
@@ -209,7 +209,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     selectSecretario1( evento ) {
         if ( this.oldNomeSecretario1 != evento ) {
             this.oldNomeSecretario1 = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
 
                 this.empregadoService.getEmpregadoByName( evento )
                     .then( res => {
@@ -242,7 +242,7 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     selectSecretario2( evento ) {
         if ( this.oldNomeSecretario2 != evento ) {
             this.oldNomeSecretario2 = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
 
                 this.empregadoService.getEmpregadoByName( evento )
                     .then( res => {

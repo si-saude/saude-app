@@ -64,9 +64,13 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
         if ( this.validCoordenador == this.equipe.getCoordenador().getEmpregado().getPessoa().getNome() ) return;
         if ( this.equipe.getCoordenador().getEmpregado().getPessoa().getNome() !== undefined ) {
 
-            let coordenador = this.coordenadores.find( e =>
-                e.getEmpregado().getPessoa().getNome() == this.equipe.getCoordenador().getEmpregado().getPessoa().getNome()
-            );
+            let coordenador = this.coordenadores.find( e => {
+                if ( ( e.getEmpregado().getChave() + " - " + e.getEmpregado().getPessoa().getNome() ).trim() ==
+                    this.equipe.getCoordenador().getEmpregado().getPessoa().getNome().trim() || 
+                    e.getEmpregado().getPessoa().getNome().trim() == this.equipe.getCoordenador().getEmpregado().getPessoa().getNome().trim() )
+                    return true;
+                else return false;
+            });
 
             if ( coordenador !== undefined ) {
                 this.equipe.setCoordenador( coordenador );
@@ -79,7 +83,7 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
     selectCoordenador( evento ) {
         if ( this.oldNomeCoordenador != evento ) {
             this.oldNomeCoordenador = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
                 this.profissionalService.getProfissionalByNameSimples( evento )
                     .then( res => {
                         this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
@@ -92,10 +96,25 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
         }
     }
     
+    private oldNomeByChave: string;
+    selectCoordenadorByChave( evento ) {
+        if ( this.oldNomeByChave != evento ) {
+            this.oldNomeByChave = evento;
+            this.profissionalService.getProfissionalByChaveSimples( evento )
+                .then( res => {
+                    this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
+                    this.autocompleteCoordenador = [this.buildAutocompleteCoordenador( this.coordenadores )];
+                } )
+                .catch( error => {
+                    console.log( error );
+                } )
+        }
+    }
+    
     buildAutocompleteCoordenador( coordenadores: Array<Profissional> ) {
         let data = {};
         coordenadores.forEach( item => {
-            data[item.getEmpregado().getPessoa().getNome()] = null;
+            data[item.getEmpregado().getChave() + " - " + item.getEmpregado().getPessoa().getNome()] = null;
         } );
 
         let array = {};

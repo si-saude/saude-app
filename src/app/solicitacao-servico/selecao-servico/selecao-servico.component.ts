@@ -36,6 +36,7 @@ export class SelecaoServicoComponent implements OnInit {
     empregadoToChange: Empregado;
     empregados: Array<Empregado>;
     autocompleteEmpregado;
+    validEmpregado;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private solicitacaoServicoService: SolicitacaoServicoService ) {
@@ -47,6 +48,7 @@ export class SelecaoServicoComponent implements OnInit {
         this.empregadoToChange = new EmpregadoBuilder().initialize(this.empregadoToChange);
         this.empregados = new Array<Empregado>();
         this.autocompleteEmpregado = [];
+        this.validEmpregado = "";
     }
 
     ngOnInit() {
@@ -134,9 +136,13 @@ export class SelecaoServicoComponent implements OnInit {
     
     getEmpregado( evento ) {
         if ( this.empregadoToChange !== undefined ) {
-            
-            let empregado: Empregado = this.empregados.
-                find( e => e.getPessoa().getNome() == this.empregadoToChange.getPessoa().getNome() );
+            let empregado: Empregado = this.empregados.find( e => {
+                    if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
+                        this.empregadoToChange.getPessoa().getNome().trim() || 
+                        e.getPessoa().getNome().trim() == this.empregadoToChange.getPessoa().getNome().trim() )
+                        return true;
+                    else return false;
+                });
             
             if ( empregado !== undefined ) {
                 this.empregadoToChange = new EmpregadoBuilder().clone(empregado);
@@ -148,7 +154,7 @@ export class SelecaoServicoComponent implements OnInit {
     selectEmpregado( evento: string ) {
         if ( this.oldNomeEmpregado != evento ) {
             this.oldNomeEmpregado = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
                 let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
                 empregadoFilter.getPessoa().setNome(evento);
                 
@@ -159,15 +165,7 @@ export class SelecaoServicoComponent implements OnInit {
                 
                 this.solicitacaoServicoService.getEmpregado( empregadoFilter )
                     .then( res => {
-                        let emps = new EmpregadoBuilder().cloneList( res.json().list );
-                        if ( this.empregados.length == 0 )
-                            emps.forEach(e => this.empregados.push(e));
-                        else {
-                            emps.forEach(eps => {
-                                let e: Empregado = this.empregados.find( es => es.getId() == eps.getId() );
-                                if ( e == undefined ) this.empregados.push(eps); 
-                            })
-                        }
+                        this.empregados = new EmpregadoBuilder().cloneList( res.json().list ); 
                         this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
                     } )
                     .catch( error => {
@@ -177,10 +175,34 @@ export class SelecaoServicoComponent implements OnInit {
         }
     }
     
-    buildAutocompleteEmpregado( empregados ) {
+    private oldNomeByChave: string;
+    selectEmpregadoByChave( evento ) {
+        if ( this.oldNomeByChave != evento ) {
+            this.oldNomeByChave = evento;
+            
+            let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+            empregadoFilter.setChave(evento);
+            
+            if ( !this.usuario.getGestorCss() ) {
+                empregadoFilter.setGerencia(new GerenciaFilter());
+                empregadoFilter.getGerencia().setCodigoCompleto( this.empregado.getGerencia().getCodigoCompleto() )
+            }
+            
+            this.solicitacaoServicoService.getEmpregadoByChave( empregadoFilter )
+                .then( res => {
+                    this.empregados = new EmpregadoBuilder().cloneList( res.json() ); 
+                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+                } )
+                .catch( error => {
+                    console.log( error );
+                } )
+        }
+    }
+    
+    buildAutocompleteEmpregado( empregados: Array<Empregado> ) {
         let data = {};
         empregados.forEach( item => {
-            data[item.getPessoa().getNome()] = null;
+            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
         } );
 
         let array = {};

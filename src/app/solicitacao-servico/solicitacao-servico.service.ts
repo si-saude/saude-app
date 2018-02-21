@@ -7,6 +7,7 @@ import { Tarefa } from './../model/tarefa';
 import { UsuarioService } from './../controller/usuario/usuario.service';
 import { ServicoService } from './../controller/servico/servico.service';
 import { GerenciaService } from './../controller/gerencia/gerencia.service';
+import { EmpregadoService } from './../controller/empregado/empregado.service';
 
 @Injectable()
 export class SolicitacaoServicoService {
@@ -16,7 +17,8 @@ export class SolicitacaoServicoService {
     constructor( protected http: Http, protected router: Router,
             private usuarioService: UsuarioService,
             private servicoService: ServicoService,
-            private gerenciaService: GerenciaService) {
+            private gerenciaService: GerenciaService,
+            private empregadoService: EmpregadoService) {
         this.headers = new Headers( { 'Content-Type': 'application/json' } );
         this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
         this.URL = GlobalVariable.BASE_API_URL;
@@ -27,6 +29,10 @@ export class SolicitacaoServicoService {
         return this.http
             .post( urlEmpregado, empregadoFilter, { headers: this.headers } )
             .toPromise();
+    }
+    
+    getEmpregadoByChave( empregadoFilter ) {
+        return this.empregadoService.selectList( empregadoFilter );
     }
     
     getServicos( servicoFilter ) {

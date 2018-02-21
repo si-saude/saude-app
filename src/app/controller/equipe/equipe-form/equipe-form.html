@@ -34,7 +34,7 @@
 					materialize="autocomplete" name="equipe.coordenador.empregado.pessoa.nome"
 					[(ngModel)]="equipe.coordenador.empregado.pessoa.nome"
 					(blur)="getCoordenador($event)" 
-					(ngModelChange)="selectCoordenador($event)"
+					(ngModelChange)="selectCoordenadorByChave($event); selectCoordenador($event);"
 					[materializeParams]="autocompleteCoordenador">
 			</div>
 		</div>

@@ -106,7 +106,7 @@ export class CheckInRecepcaoComponent {
     selectEmpregado( evento ) {
         if ( this.oldNome != evento ) {
             this.oldNome = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
                 this.filaEsperaOcupacionalService.getEmpregadoByName( evento )
                     .then( res => {
                         this.empregados = new EmpregadoBuilder().cloneList(res.json());
@@ -123,7 +123,8 @@ export class CheckInRecepcaoComponent {
     selectEmpregadoByChave( evento ) {
         if ( this.oldNomeByChave != evento ) {
             this.oldNomeByChave = evento;
-            this.filaEsperaOcupacionalService.getEmpregadoByChave( this.empregado.getPessoa().getNome() )
+            
+            this.filaEsperaOcupacionalService.getEmpregadoByChave( evento )
                 .then( res => {
                     this.empregados = new EmpregadoBuilder().cloneList(res.json());
                     this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
@@ -134,13 +135,12 @@ export class CheckInRecepcaoComponent {
         }
     }
     
-    buildAutocompleteEmpregado( empregados ) {
-        let data = {};
+    buildAutocompleteEmpregado( empregados: Array<Empregado> ) {
+        let data = {}, array = {};
         empregados.forEach( item => {
             data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
         } );
 
-        let array = {};
         array["data"] = data;
 
         return array;

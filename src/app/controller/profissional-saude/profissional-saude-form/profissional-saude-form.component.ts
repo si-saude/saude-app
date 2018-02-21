@@ -171,7 +171,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     selectEmpregado( evento ) {
         if ( this.oldNome != evento ) {
             this.oldNome = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
                 this.profissionalSaudeService.getEmpregadoByName( evento )
                     .then( res => {
                         this.empregados = new EmpregadoBuilder().cloneList(res.json());

@@ -287,7 +287,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     selectEmpregado( evento: string ) {
         if ( this.oldNomeEmpregado != evento ) {
             this.oldNomeEmpregado = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
                 this.convocacaoService.getEmpregadoByName( evento )
                     .then( res => {
                         let emps = new EmpregadoBuilder().cloneList( res.json() );
@@ -357,7 +357,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 let lowerCaseC = eC.getEmpregado().getChave().toLowerCase();
                 return lowerCaseC.includes( evento );
             } )
-            console.log(eCs);
             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(eCs);
         }
     }

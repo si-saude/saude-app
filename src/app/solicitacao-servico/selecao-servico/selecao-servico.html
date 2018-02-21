@@ -32,7 +32,7 @@
 						materialize="autocomplete" name="addEmpregado" autocomplete="off"
 						(blur)="getEmpregado($event)"
 						[(ngModel)]="empregadoToChange.pessoa.nome"
-						(ngModelChange)="selectEmpregado($event)"
+						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
 						[materializeParams]="autocompleteEmpregado">
 				</div>
 			</div>
