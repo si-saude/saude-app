@@ -10,7 +10,6 @@ export class Atendimento {
     private filaEsperaOcupacional: FilaEsperaOcupacional;
     private tarefa: Tarefa;
     private aso: Aso;
-    private regra: RegraAtendimento;
     private version: number;
 
     getId() {
@@ -51,14 +50,6 @@ export class Atendimento {
 
     setVersion(version: number) {
         this.version = version;
-    }
-
-    getRegra() {
-        return this.regra;
-    }
-
-    setRegra(regra: RegraAtendimento) {
-        this.regra = regra;
     }
 
     getAso() {

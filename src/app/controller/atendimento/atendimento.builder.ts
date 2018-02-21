@@ -3,8 +3,6 @@ import { FilaAtendimentoOcupacional } from './../../model/fila-atendimento-ocupa
 import { FilaAtendimentoOcupacionalBuilder } from './../fila-atendimento-ocupacional/fila-atendimento-ocupacional.builder';
 import { FilaEsperaOcupacional } from './../../model/fila-espera-ocupacional';
 import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional/fila-espera-ocupacional.builder';
-import { RegraAtendimento } from './../../model/regra-atendimento';
-import { RegraAtendimentoBuilder } from './../regra-atendimento/regra-atendimento.builder';
 import { Tarefa } from './../../model/tarefa';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { Aso } from './../../model/aso';
@@ -19,7 +17,6 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setAso(new AsoBuilder().initialize(new Aso()));
         atendimento.setFilaAtendimentoOcupacional(new FilaAtendimentoOcupacionalBuilder().initialize(new FilaAtendimentoOcupacional()));
         atendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().initialize(new FilaEsperaOcupacional()));
-        atendimento.setRegra(new RegraAtendimentoBuilder().initialize(new RegraAtendimento()));
         atendimento.setTarefa(new TarefaBuilder().initialize(new Tarefa()));
         
         return atendimento;
@@ -51,7 +48,6 @@ export class AtendimentoBuilder extends GenericBuilder {
                 this.getValue( atendimento, "getFilaAtendimentoOcupacional" ) ));
         cloneAtendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().clone(
                 this.getValue( atendimento, "getFilaEsperaOcupacional" ) ));
-        cloneAtendimento.setRegra(new RegraAtendimentoBuilder().clone(this.getValue( atendimento, "getRegra" ) ));
         cloneAtendimento.setTarefa(new TarefaBuilder().clone(this.getValue( atendimento, "getTarefa" ) ));
         return cloneAtendimento;
     }

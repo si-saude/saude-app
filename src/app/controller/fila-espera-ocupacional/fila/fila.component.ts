@@ -11,8 +11,6 @@ import 'rxjs/Rx';
 import { GlobalVariable } from './../../../global';
 import { Atendimento } from './../../../model/atendimento';
 import { AtendimentoBuilder } from './../../atendimento/atendimento.builder';
-import { RegraAtendimento } from './../../../model/regra-atendimento';
-import { RegraAtendimentoBuilder } from './../../regra-atendimento/regra-atendimento.builder';
 import { FilaAtendimentoOcupacional } from './../../../model/fila-atendimento-ocupacional';
 import { FilaAtendimentoOcupacionalBuilder } from './../../fila-atendimento-ocupacional/fila-atendimento-ocupacional.builder';
 import { Localizacao } from './../../../model/localizacao';
@@ -30,8 +28,6 @@ export class FilaComponent {
     atendimento: Atendimento;
     atendimentos: Array<Atendimento>;
     atendimentosProfissionais: Array<Atendimento>;
-    regraAtendimento: RegraAtendimento;
-    regraAtendimentos: Array<RegraAtendimento>;
     filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     localizacao: Localizacao;
     localizacoes: Array<Localizacao>;
@@ -50,8 +46,6 @@ export class FilaComponent {
         this.toastParams = ['', 4000];
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
         this.atendimentosProfissionais = new AtendimentoBuilder().initializeList( this.atendimentos );
-        this.regraAtendimento = new RegraAtendimentoBuilder().initialize( this.regraAtendimento );
-        this.regraAtendimentos = new RegraAtendimentoBuilder().initializeList( this.regraAtendimentos );
         this.localizacao = new LocalizacaoBuilder().initialize( this.localizacao );
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.filaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().initialize( this.filaEsperaOcupacional );
@@ -62,7 +56,6 @@ export class FilaComponent {
 
     ngOnInit() {
         this.getLocalizacoes();
-        this.getRegraAtendimentos();
         this.audio.src = "./../../../../assets/audio/beep.mp3";
     }
     
@@ -77,7 +70,6 @@ export class FilaComponent {
             this.wasRequested = false;
             return;
         } else {
-            this.regraAtendimento.setId( regraAtendimentoId );
             this.localizacao.setId( localizacaoId );
             this.filaEsperaOcupacional.setLocalizacao( this.localizacao );
             this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize(new FilaAtendimentoOcupacional());
@@ -85,7 +77,6 @@ export class FilaComponent {
 
             this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
 
-            this.atendimento.setRegra( this.regraAtendimento );
             this.atendimento.setFilaEsperaOcupacional( this.filaEsperaOcupacional );
             this.inscricao = TimerObservable.create(0, 15000)
                 .takeWhile(() => this.alive )
@@ -132,16 +123,6 @@ export class FilaComponent {
         this.filaEsperaOcupacionalService.getLocalizacoes()
             .then( res => {
                 this.localizacoes = new LocalizacaoBuilder().cloneList( res.json() );
-            } )
-            .catch( error => {
-                console.log( error.text() );
-            } )
-    }
-
-    getRegraAtendimentos() {
-        this.filaEsperaOcupacionalService.getRegraAtendimentos()
-            .then( res => {
-                this.regraAtendimentos = new RegraAtendimentoBuilder().cloneList( res.json() );
             } )
             .catch( error => {
                 console.log( error.text() );

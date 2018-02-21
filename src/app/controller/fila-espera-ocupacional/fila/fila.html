@@ -25,20 +25,6 @@
 
 			</div>
 
-			<div class="row">
-				<fieldset class="fldst">
-					<legend>Regra de Atendimento</legend>
-					<div class="input-field col s12">
-						<select class="browser-default" #regraAtendimento>
-							<option disabled selected value=0>Selecione um regra de atendimento</option>
-							<option *ngFor="let regraAtendimento of regraAtendimentos"
-								value="{{regraAtendimento.id}}">{{regraAtendimento.nome}}</option>
-						</select>
-					</div>
-				</fieldset>
-
-			</div>
-
 		</fieldset>
 
 		<div class='row row-btns'>
