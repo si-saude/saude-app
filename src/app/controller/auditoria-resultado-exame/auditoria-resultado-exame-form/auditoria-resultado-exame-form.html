@@ -85,7 +85,6 @@
 									<label for="data">Data de Realização</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].data"
 										[options]="myDatePickerOptions"
-										name="resultadExame[iREx].data"
 										[(ngModel)]="dataResultadoExames[iREx]" placeholder="Data">
 									</my-date-picker>
 								</div>
@@ -164,7 +163,7 @@
 
 								</div>
 
-								<div class="col s4">
+								<div class="input-field col s4">
 									<label for="data">Data de Recebimento</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].dataRecebimento"
 										[options]="myDatePickerOptions"
@@ -191,9 +190,19 @@
 												<td class="col s1 codigo">{{itemResultadoExame.codigo}}</td>
 												<td class="col s3 titulo">{{itemResultadoExame.titulo}}</td>
 												<td class="col s7 resultado">
-													<textarea id="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
-														name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
-														[(ngModel)]="itemResultadoExame.resultado"></textarea>
+													<div [ngSwitch]="itemResultadoExame.codigo">
+														<div *ngSwitchCase="010" class="col s5" style="padding: 0">
+															<my-date-picker name="itemResultadoExameData[{{iREx}}]"
+																[options]="myDatePickerOptions"
+																[(ngModel)]="dataItemResultadoExames[iREx]" placeholder="Data">
+															</my-date-picker>
+														</div>
+														<div *ngSwitchDefault>
+															<textarea id="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+																name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+																[(ngModel)]="itemResultadoExame.resultado"></textarea>
+														</div>
+													</div>
 												</td>
 												<td class="col s1 botao-remover"><a
 													class="btn-floating waves-effect waves-light red btn-remove"
