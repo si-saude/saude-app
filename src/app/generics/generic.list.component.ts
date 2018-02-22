@@ -28,7 +28,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     protected modalImport;
     protected typeFilter;
     protected canImport;
-    private tempDelete;
+    protected tempDelete;
     private openModalDelete: boolean;
     protected canRemove: boolean;
     private listComponent: any;
@@ -157,7 +157,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
                 window.location.reload();
             } )
             .catch( error => {
-                this.catchConfiguration(error);
+                alert("Erro ao excluir o campo: " + error.text());
             } )
     }
 
