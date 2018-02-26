@@ -60,6 +60,13 @@ export class ProfissionalSaudeService extends GenericService {
             .toPromise();
     }
 
+    getProfissionalByChave(chave: string) {
+        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+        profissionalFilter.getEmpregado().setChave(chave);
+        
+        return this.selectList(profissionalFilter);
+    }
+    
     getEmpregadoByName(nome: string) {
         return this.empregadoService.getEmpregadoByName(nome);
     }
