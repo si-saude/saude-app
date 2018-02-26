@@ -48,6 +48,7 @@
 			<a [routerLink]="['/indicador-risco-ergonomico']" *ngIf="checkPermissao('INDICADOR-RISCO-ERGONOMICO_LISTAR')">Indicador de Risco Ergonômico</a>
 			<a [routerLink]="['/indicador-risco-sanitario']" *ngIf="checkPermissao('INDICADOR-RISCO-SANITARIO_LISTAR')">Indicador de Risco Sanitário</a>
 			<a [routerLink]="['/indicador-risco-saude-ambiental']" *ngIf="checkPermissao('INDICADOR-RISCO-SAUDE-AMBIENTAL_LISTAR')">Indicador de Risco Saúde Ambiental</a>
+			<a [routerLink]="['/indicador-sast']" *ngIf="checkPermissao('INDICADOR-SAST_LISTAR')">Indicador Sast</a>
 			<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
 			<a [routerLink]="['/perfil']" *ngIf="checkPermissao('PERFIL_LISTAR')">Perfil</a>
@@ -60,7 +61,7 @@
 			<a [routerLink]="['/requisito-aso']" *ngIf="checkPermissao('REQUISITO-ASO_LISTAR')">Requisito Aso</a>
 			<a [routerLink]="['/servico']" *ngIf="checkPermissao('SERVICO_LISTAR')">Serviço</a>
 			<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('TIPO-GRUPO-MONITORAMENTO_LISTAR')">Tipo Grupo Monitoramento</a>
-			<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')">Usuário</a> 
+			<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')" (click)="closeSidenav1(); closeSidenav3();">Usuário</a> 
 			<a [routerLink]="['/vacina']" *ngIf="checkPermissao('VACINA_LISTAR')">Vacina</a>
 		</div>
 	</li>

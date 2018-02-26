@@ -2,12 +2,14 @@ import { FilaAtendimentoOcupacional } from './fila-atendimento-ocupacional';
 import { FilaEsperaOcupacional } from './fila-espera-ocupacional';
 import { Tarefa } from './tarefa';
 import { Aso } from './aso';
+import { Triagem } from './triagem';
 import { RegraAtendimento } from './regra-atendimento';
 
 export class Atendimento {
     private id: number;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private filaEsperaOcupacional: FilaEsperaOcupacional;
+    private triagens: Array<Triagem>;
     private tarefa: Tarefa;
     private aso: Aso;
     private version: number;
@@ -42,6 +44,14 @@ export class Atendimento {
 
     setTarefa(tarefa: Tarefa) {
         this.tarefa = tarefa;
+    }
+    
+    getTriagens() {
+        return this.triagens;
+    }
+    
+    setTriagens(triagens: Array<Triagem>) {
+        this.triagens = triagens;
     }
 
     getVersion() {

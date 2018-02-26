@@ -6,18 +6,23 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <div class="row infos-profissional">
-	<p class="nome-profissional"><b>Profissional: {{nomeProfissional}}</b></p>
-	<p class="status-profissional"><b>Status: {{statusProfissional}}</b></p>
+	<p class="nome-profissional">
+		<b>Profissional: {{nomeProfissional}}</b>
+	</p>
+	<p class="status-profissional">
+		<b>Status: {{statusProfissional}}</b>
+	</p>
 </div>
 
 <div class="row form-container">
 
 	<div class="col s12">
-		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs" materialize="tabs">
-			<li class="tab col s6"><a
-				href="#filaAtendimento">Fila de Atendimento</a></li>
-			<li class="tab col s6"><a
-				href="#atendimento">Atendimento</a></li>
+		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs"
+			materialize="tabs">
+			<li class="tab col s4"><a href="#filaAtendimento">Fila de
+					Atendimento</a></li>
+			<li class="tab col s4"><a href="#atendimento">Atendimento</a></li>
+			<li class="tab col s4"><a href="#triagem">Triagem</a></li>
 		</ul>
 	</div>
 
@@ -49,7 +54,7 @@
 					class="btn btn-primary btn-fila">Entrar</button>
 				<button (click)="pausar()" class="btn btn-primary btn-fila">Pausar</button>
 				<button (click)="almoco()" class="btn btn-primary btn-fila">Almoço</button>
-				</div>
+			</div>
 			<div class="row">
 				<button (click)="voltar()" style="margin-left: -5px"
 					class="btn btn-primary btn-fila">Voltar</button>
@@ -149,21 +154,22 @@
 
 					<div class="input-field-empregado input-field col s3">
 						<label for="idade">Idade</label> <input id="idade" type="text"
-							disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.idade"
+							disabled
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.idade"
 							name="idade" class="input-empregado">
 					</div>
 
 					<div class="input-field-empregado input-field col s3">
-						<label for="sexo">Sexo</label> <input
-							id="sexo"
-							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.sexo" 
+						<label for="sexo">Sexo</label> <input id="sexo" type="text"
+							disabled
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.sexo"
 							name="sexo" class="input-empregado">
 					</div>
 
 					<div class="input-field-empregado input-field col s3">
-						<label for="base">Base</label> <input
-							id="base.nome"
-							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.base.nome" 
+						<label for="base">Base</label> <input id="base.nome" type="text"
+							disabled
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.base.nome"
 							name="base" class="input-empregado">
 					</div>
 
@@ -172,16 +178,16 @@
 				<div class="row-empregado row">
 
 					<div class="input-field-empregado input-field col s6">
-						<label for="cargo">Cargo</label> <input
-							id="cargo.nome"
-							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
+						<label for="cargo">Cargo</label> <input id="cargo.nome"
+							type="text" disabled
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
 							name="cargo" class="input-empregado">
 					</div>
 
 					<div class="input-field-empregado input-field col s6">
 						<label for="gerencia">Gerência</label> <input
-							id="gerencia.codigoCompleto"
-							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto" 
+							id="gerencia.codigoCompleto" type="text" disabled
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto"
 							name="gerencia" class="input-empregado">
 					</div>
 
@@ -189,7 +195,7 @@
 
 			</fieldset>
 		</div>
-		
+
 		<div class="content-quiz"></div>
 
 		<div class="content-buttons-atendimento">
@@ -213,6 +219,55 @@
 
 	</div>
 
+	<div id="triagem">
+
+		<div class="table-triagem">
+			<table>
+				<thead>
+					<tr class="row col s12">
+						<th class="col s2">Indicador</th>
+						<th class="col s2">Índice 0</th>
+						<th class="col s2">Índice 1</th>
+						<th class="col s2">Índice 2</th>
+						<th class="col s2">Índice 3</th>
+						<th class="col s2">Índice 4</th>
+					</tr>
+				</thead>
+				<div class="container-triagem">
+					<div
+						*ngFor="let triagem of triagens; let t = index">
+						<tbody>
+							<tr class="col s12">
+								<td class="col s2 nome">{{triagem.indicadorSast.nome}}</td>
+								<td class="col s2 indice0" #tdIndice0 id="0" title="indice0_{{t}}"
+									(click)="selectTriagem(t, tdIndice0.id)">
+									{{triagem.indicadorSast.indice0}}
+								</td>
+								<td class="col s2 indice1" #tdIndice1 id="1" title="indice1_{{t}}"
+									(click)="selectTriagem(t, tdIndice1.id)">
+									{{triagem.indicadorSast.indice1}}
+								</td>
+								<td class="col s2 indice2" #tdIndice2 id="2" title="indice2_{{t}}"
+									(click)="selectTriagem(t, tdIndice2.id)">
+									{{triagem.indicadorSast.indice2}}
+								</td>
+								<td class="col s2 indice3" #tdIndice3 id="3" title="indice3_{{t}}"
+									(click)="selectTriagem(t, tdIndice3.id)">
+									{{triagem.indicadorSast.indice3}}
+								</td>
+								<td class="col s2 indice4" #tdIndice4 id="4" title="indice4_{{t}}"
+									(click)="selectTriagem(t, tdIndice4.id)">
+									{{triagem.indicadorSast.indice4}}
+								</td>
+							</tr>
+						</tbody>
+					</div>
+				</div>
+			</table>
+		</div>
+
+	</div>
+
 </div>
 
 
@@ -225,8 +280,8 @@
 
 	<p class="paragraph-modal">Tem certeza que deseja selecionar esta
 		localização?</p>
-	<p class="paragraph-modal">Se sim, ele não poderá ser alterado 
-		até você encerrar o atendimento do dia.</p>
+	<p class="paragraph-modal">Se sim, ele não poderá ser alterado até
+		você encerrar o atendimento do dia.</p>
 
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat"

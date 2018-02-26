@@ -42,7 +42,6 @@ export abstract class GenericFormComponent extends GenericComponent implements O
     }
 
     save( object ) {
-
         this.showPreload = true;
         this.canDeactivate = true;
         this.service.submit( object )

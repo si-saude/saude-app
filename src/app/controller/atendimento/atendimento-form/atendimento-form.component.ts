@@ -8,6 +8,7 @@ import { TimerObservable } from "rxjs/observable/TimerObservable";
 import 'rxjs/Rx';
 import { MyDatePickerModule } from 'mydatepicker';
 import { IMyDpOptions } from 'mydatepicker';
+import * as $ from 'jquery';
 
 import { GlobalVariable } from './../../../global';
 import { Atendimento } from './../../../model/atendimento';
@@ -23,6 +24,10 @@ import { PessoaFilter } from './../../pessoa/pessoa.filter';
 import { Profissional } from './../../../model/profissional';
 import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional-saude.filter';
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
+import { Triagem } from './../../../model/triagem';
+import { TriagemBuilder } from './../../triagem/triagem.builder';
+import { IndicadorSast } from './../../../model/indicador-sast';
+import { IndicadorSastBuilder } from './../../indicador-sast/indicador-sast.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
 
 @Component( {
@@ -40,6 +45,9 @@ export class AtendimentoFormComponent {
     private statusProfissional: String;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
+    private triagens: Array<Triagem>;
+    //contem os indices já clicados, key = index da triagem, value = numero do indice
+    private triagemIndices: Map<number, number>;
     private existLocalizacao: boolean;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
@@ -61,6 +69,8 @@ export class AtendimentoFormComponent {
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
+        this.triagens = new TriagemBuilder().initializeList( this.triagens );
+        this.triagemIndices = new Map<number, number>();
         this.filaAtendimentoOcupacionais = new FilaAtendimentoOcupacionalBuilder().
             initializeList( this.filaAtendimentoOcupacionais );
         this.alive = true;
@@ -102,7 +112,7 @@ export class AtendimentoFormComponent {
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 5000 )
+                                    this.inscricao = TimerObservable.create( 0, 60000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -115,6 +125,7 @@ export class AtendimentoFormComponent {
                             } )
                             .catch( error => {
                                 console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
+                                this.catchConfiguration(error);
                             } )
                     } else {
                         this.router.navigate( ["/login"] );
@@ -123,6 +134,7 @@ export class AtendimentoFormComponent {
                 } )
                 .catch( error => {
                     console.log( "Erro no servidor ao buscar o usuario." );
+                    this.catchConfiguration(error);
                 } )
         } else {
             console.log( "Usuario nao logada." );
@@ -131,6 +143,7 @@ export class AtendimentoFormComponent {
 
         this.getLocalizacoes();
 
+        
     }
 
     getLocalizacoes() {
@@ -166,6 +179,30 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    //armengue
+                    let triagem: Triagem = new TriagemBuilder().initialize(new Triagem());
+                    triagem.getIndicadorSast().setNome("TESTE");
+                    triagem.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
+                    triagem.getIndicadorSast().setIndice1("INDICE 1");
+                    triagem.getIndicadorSast().setIndice2("INDICE 2");
+                    triagem.getIndicadorSast().setIndice3("INDICE 3");
+                    triagem.getIndicadorSast().setIndice4("INDICE 4");
+                    
+                    let triagem2: Triagem = new TriagemBuilder().initialize(new Triagem());
+                    triagem2.getIndicadorSast().setNome("TESTE");
+                    triagem2.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
+                    triagem2.getIndicadorSast().setIndice1("INDICE 1");
+                    triagem2.getIndicadorSast().setIndice2("INDICE 2");
+                    triagem2.getIndicadorSast().setIndice3("INDICE 3");
+                    triagem2.getIndicadorSast().setIndice4("INDICE 4");
+                    
+                    this.atendimento.getTriagens().push(triagem);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.triagens = this.atendimento.getTriagens();
+                    
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
@@ -192,8 +229,31 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
+                    //armengue
+                    let triagem: Triagem = new TriagemBuilder().initialize(new Triagem());
+                    triagem.getIndicadorSast().setNome("TESTE");
+                    triagem.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
+                    triagem.getIndicadorSast().setIndice1("INDICE 1");
+                    triagem.getIndicadorSast().setIndice2("INDICE 2");
+                    triagem.getIndicadorSast().setIndice3("INDICE 3");
+                    triagem.getIndicadorSast().setIndice4("INDICE 4");
                     
+                    let triagem2: Triagem = new TriagemBuilder().initialize(new Triagem());
+                    triagem2.getIndicadorSast().setNome("TESTE");
+                    triagem2.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
+                    triagem2.getIndicadorSast().setIndice1("INDICE 1");
+                    triagem2.getIndicadorSast().setIndice2("INDICE 2");
+                    triagem2.getIndicadorSast().setIndice3("INDICE 3");
+                    triagem2.getIndicadorSast().setIndice4("INDICE 4");
+                    
+                    this.atendimento.getTriagens().push(triagem);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.atendimento.getTriagens().push(triagem2);
+                    this.triagens = this.atendimento.getTriagens();
+                    
+                    this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
                         this.setDataNascimento();
                         this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
@@ -228,6 +288,26 @@ export class AtendimentoFormComponent {
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
+    }
+    
+    selectTriagem(indexTriagem, indice) {
+        let i: string = "indice"+indice+"_"+indexTriagem.toString();
+    
+        if ( this.triagemIndices.get( indexTriagem ) != undefined ) {
+            if ( this.triagemIndices.get( indexTriagem ) == Number(indice) ) {
+                $( "td[title=" + i + "]" ).css( "background", "" );
+                this.atendimento.getTriagens()[indexTriagem].setIndice( -1 );
+                return;
+            }
+            let iAntigo: string = "indice"+this.triagemIndices.get( indexTriagem )+"_"+indexTriagem.toString();
+            $( "td[title=" + iAntigo + "]" ).css( "background", "" );
+        }
+        
+        
+        $("td[title=" + i + "]").css("background", "#D4D4D4");
+        
+        this.triagemIndices.set( indexTriagem, Number( indice ) );
+        this.atendimento.getTriagens()[indexTriagem].setIndice( Number( indice ) );
     }
 
     entrar() {
@@ -444,7 +524,8 @@ export class AtendimentoFormComponent {
 
     ngOnDestroy() {
         this.alive = false;
-        this.inscricao.unsubscribe();
+        if ( this.inscricao != undefined )
+            this.inscricao.unsubscribe();
     }
     
     setDataNascimento() {

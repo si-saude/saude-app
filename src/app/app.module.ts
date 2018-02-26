@@ -64,6 +64,7 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
+import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-e
     ServicoGuard,
     AuditoriaAsoGuard,
     AgendaGuard,
-    FilaEsperaOcupacionalRecepcaoGuard
+    FilaEsperaOcupacionalRecepcaoGuard,
+    IndicadorSastGuard
   ],
   bootstrap: [ 
     AppComponent

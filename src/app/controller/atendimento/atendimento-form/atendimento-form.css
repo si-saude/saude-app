@@ -32,7 +32,9 @@
 
 table {
 	border: 1px solid #c0c0c0;
-    margin-top: 25px;
+    display: inline-table;
+	margin-top: 40px;
+	margin-bottom: 50px;
 }
 
 thead > tr {
@@ -51,6 +53,35 @@ td > a > i {
 tbody{
 	margin-top: 10px;
 	border-bottom: 1px solid #c0c0c0;	
+}
+
+.indice0 {
+    padding-left: 15px;
+}
+
+.indice1 {
+	padding-left: 17px;
+}
+
+.indice2 {
+	padding-left: 20px;
+}
+
+.indice3 {
+	padding-left: 22px;
+}
+
+.indice4 {
+	padding-left: 24px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.container-triagem {
+	max-height: 400px;
+    overflow: auto;
 }
 
 .btn-add-fieldset {

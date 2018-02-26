@@ -53,6 +53,7 @@ import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
 import { AgendaService } from './../agenda/agenda.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 import { TarefaComponent } from './tarefa/tarefa.component';
+import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
 
 @NgModule({
   declarations: [
@@ -124,6 +125,7 @@ import { TarefaComponent } from './tarefa/tarefa.component';
     RequisitoAsoService,
     AuditoriaAsoService,
     AgendaService,
+    IndicadorSastService,
     CanDeactivateGuard
   ]
 })
