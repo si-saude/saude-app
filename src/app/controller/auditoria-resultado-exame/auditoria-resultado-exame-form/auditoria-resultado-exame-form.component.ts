@@ -303,6 +303,10 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         return d;
     }
     
+    focusExame(evento, indexREx) {
+        this.validExame = this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao();
+    }
+    
     getExame(evento, indexREx) {
         if ( this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() == "" )
             this.empregadoConvocacao.getResultadoExames()[indexREx] = new ResultadoExameBuilder().initialize(new ResultadoExame());
@@ -319,9 +323,19 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
                 else return false;
             } );
             if ( exame !== undefined ) {
+                
+                let flag = false;
+                if(this.empregadoConvocacao.getResultadoExames()[indexREx].getExame() == undefined ||
+                        this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getCodigo() != exame.getCodigo()){
+                    flag = true;
+                }
+                
                 this.empregadoConvocacao.getResultadoExames()[indexREx].setExame(exame);
                 this.validExame == this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao();
-                this.choiseCampoExame(indexREx);
+                
+                if(flag){
+                    this.choiseCampoExame(indexREx,true);                    
+                }
             } else this.empregadoConvocacao.getResultadoExames()[indexREx] = new ResultadoExameBuilder().initialize(new ResultadoExame()); 
         } else this.empregadoConvocacao.getResultadoExames()[indexREx] = new ResultadoExameBuilder().initialize(new ResultadoExame());
     }
@@ -382,15 +396,18 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         return array;
     }
     
-    choiseCampoExame( indexREx ) {
+    choiseCampoExame( indexREx, flag ) {
         let exame = this.exames.find( e => e.getCodigo() == this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getCodigo());
         
         this.campoExames = exame.getCampoExames();
-        this.empregadoConvocacao.getResultadoExames()[indexREx].setItemResultadoExames(new ItemResultadoExameBuilder().cloneList(new Array<ItemResultadoExame>()));
         
-        this.campoExames.forEach( cE => {
-            this.addItemResultadoExame(indexREx, cE.getId());
-        })
+        if(flag){
+            this.empregadoConvocacao.getResultadoExames()[indexREx].setItemResultadoExames(new ItemResultadoExameBuilder().cloneList(new Array<ItemResultadoExame>()));
+            
+            this.campoExames.forEach( cE => {
+                this.addItemResultadoExame(indexREx, cE.getId());
+            });            
+        }
     }
 
     saveArrayExames() {
