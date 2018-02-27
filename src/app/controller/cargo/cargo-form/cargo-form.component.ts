@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Cargo } from './../../../model/cargo';
+import { CargoBuilder } from './../cargo.builder';
+import { CargoService } from './../cargo.service';
 import { Curso } from './../../../model/curso';
 import { CursoBuilder } from './../../curso/curso.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { CargoBuilder } from './../cargo.builder';
-import { CargoService } from './../cargo.service';
 
 @Component( {
     selector: 'app-cargo-form',

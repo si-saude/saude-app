@@ -52,7 +52,6 @@ import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
 import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
 import { AgendaService } from './../agenda/agenda.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
-import { TarefaComponent } from './tarefa/tarefa.component';
 import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
 
 @NgModule({
@@ -61,8 +60,7 @@ import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent,
-    TarefaComponent
+    PaginacaoComponent
   ],
   imports: [ 
     CommonModule,
