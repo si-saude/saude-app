@@ -33,6 +33,8 @@
 			<a [routerLink]="['/cidade']" *ngIf="checkPermissao('CIDADE_LISTAR')">Cidade</a>
 			<a [routerLink]="['/criterio']" *ngIf="checkPermissao('CRITERIO_LISTAR')">Critério</a>
 			<a [routerLink]="['/curso']" *ngIf="checkPermissao('CURSO_LISTAR')">Curso</a>
+			<a [routerLink]="['/diagnostico']" *ngIf="checkPermissao('DIAGNOSTICO_LISTAR')">Diagnóstico</a>
+			<a [routerLink]="['/eixo']" *ngIf="checkPermissao('EIXO_LISTAR')">Eixo</a>
 			<a [routerLink]="['/empregado']" *ngIf="checkPermissao('EMPREGADO_LISTAR')">Empregado</a>
 			<a [routerLink]="['/equipe']" *ngIf="checkPermissao('EQUIPE_LISTAR')">Equipe</a>
 			<a [routerLink]="['/exame']" *ngIf="checkPermissao('EXAME_LISTAR')">Exame</a>
@@ -50,6 +52,7 @@
 			<a [routerLink]="['/indicador-risco-saude-ambiental']" *ngIf="checkPermissao('INDICADOR-RISCO-SAUDE-AMBIENTAL_LISTAR')">Indicador de Risco Saúde Ambiental</a>
 			<a [routerLink]="['/indicador-sast']" *ngIf="checkPermissao('INDICADOR-SAST_LISTAR')">Indicador Sast</a>
 			<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
+			<a [routerLink]="['/intervencao']" *ngIf="checkPermissao('INTERVENCAO_LISTAR')">Intervenção</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
 			<a [routerLink]="['/perfil']" *ngIf="checkPermissao('PERFIL_LISTAR')">Perfil</a>
 			<a [routerLink]="['/periodicidade']" *ngIf="checkPermissao('PERIODICIDADE_LISTAR')">Periodicidade</a>

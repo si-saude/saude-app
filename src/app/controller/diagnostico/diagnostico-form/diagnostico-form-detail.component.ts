@@ -11,8 +11,8 @@ import { DiagnosticoBuilder } from './../diagnostico.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 
 @Component( {
-    selector: 'app-diagnostico-form',
-    templateUrl: './diagnostico-form.html',
+    selector: 'app-diagnostico-form-detail',
+    templateUrl: './diagnostico-form-detail.html',
     styleUrls: ['./../../../../assets/css/form-component.css', './diagnostico-form.css']
 } )
 export class DiagnosticoFormDetailComponent extends GenericFormComponent implements OnInit { 

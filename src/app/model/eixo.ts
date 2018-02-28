@@ -1,7 +1,7 @@
 import { Equipe } from './equipe';
 
 export class Eixo {
-    private id: number;
+    private id: number = 0;
     private titulo: string;
     private equipe: Equipe;
     private version: number;

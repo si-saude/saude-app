@@ -53,6 +53,9 @@ import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
 import { AgendaService } from './../agenda/agenda.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
+import { EixoService } from './eixo/eixo.service';
+import { DiagnosticoService } from './diagnostico/diagnostico.service';
+import { IntervencaoService } from './intervencao/intervencao.service';
 
 @NgModule({
   declarations: [
@@ -124,6 +127,9 @@ import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
     AuditoriaAsoService,
     AgendaService,
     IndicadorSastService,
+    IntervencaoService,
+    DiagnosticoService,
+    EixoService,
     CanDeactivateGuard
   ]
 })

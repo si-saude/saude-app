@@ -24,10 +24,10 @@
 
 		<div class="row">
 		
-			<fieldset>
+			<fieldset class="col s4">
 				<legend>Equipe</legend>
-				<div class="input-field col s6">
-					<select class="browser-default" disabled>
+				<div class="input-field col s6 select-equipe">
+					<select class="browser-default" disabled [(ngModel)]="eixo.equipe.id" name="equipe">
 						<option disabled selected value=0>Selecione uma equipe</option>
 						<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
 					</select>
@@ -36,9 +36,9 @@
 			
 		</div>
 
-		<input id="id" type="hidden" name="equipe.id" [(ngModel)]="equipe.id">
-		<input id="version" type="hidden" name="equipe.version"
-			[(ngModel)]="equipe.version">
+		<input id="id" type="hidden" name="eixo.id" [(ngModel)]="eixo.id">
+		<input id="version" type="hidden" name="eixo.version"
+			[(ngModel)]="eixo.version">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
@@ -47,7 +47,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/equipe']" class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/eixo']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 		</div>
 	</form>

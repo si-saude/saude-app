@@ -65,6 +65,9 @@ import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
+import { EixoGuard } from './guards/guards-child/eixo.guard';
+import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
+import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 
 @NgModule({
   declarations: [
@@ -133,7 +136,10 @@ import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
     AuditoriaAsoGuard,
     AgendaGuard,
     FilaEsperaOcupacionalRecepcaoGuard,
-    IndicadorSastGuard
+    IndicadorSastGuard,
+    EixoGuard,
+    DiagnosticoGuard,
+    IntervencaoGuard
   ],
   bootstrap: [ 
     AppComponent

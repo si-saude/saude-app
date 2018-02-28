@@ -11,8 +11,8 @@ import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 
 @Component( {
-    selector: 'app-eixo-form',
-    templateUrl: './eixo-form.html',
+    selector: 'app-eixo-form-detail',
+    templateUrl: './eixo-form-detail.html',
     styleUrls: ['./../../../../assets/css/form-component.css', './eixo-form.css']
 } )
 export class EixoFormDetailComponent extends GenericFormComponent implements OnInit { 

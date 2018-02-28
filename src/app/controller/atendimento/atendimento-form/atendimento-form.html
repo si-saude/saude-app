@@ -238,25 +238,25 @@
 						*ngFor="let triagem of triagens; let t = index">
 						<tbody>
 							<tr class="col s12">
-								<td class="col s2 nome">{{triagem.indicadorSast.nome}}</td>
+								<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">{{triagem.indicadorSast.nome}}</td>
 								<td class="col s2 indice0" #tdIndice0 id="0" title="indice0_{{t}}"
-									(click)="selectTriagem(t, tdIndice0.id)">
+									(click)="selectTriagem(t, tdIndice0.id)" [ngStyle]="{'cursor': 'pointer'}">
 									{{triagem.indicadorSast.indice0}}
 								</td>
 								<td class="col s2 indice1" #tdIndice1 id="1" title="indice1_{{t}}"
-									(click)="selectTriagem(t, tdIndice1.id)">
+									(click)="selectTriagem(t, tdIndice1.id)" [ngStyle]="{'cursor': 'pointer'}">
 									{{triagem.indicadorSast.indice1}}
 								</td>
 								<td class="col s2 indice2" #tdIndice2 id="2" title="indice2_{{t}}"
-									(click)="selectTriagem(t, tdIndice2.id)">
+									(click)="selectTriagem(t, tdIndice2.id)" [ngStyle]="{'cursor': 'pointer'}">
 									{{triagem.indicadorSast.indice2}}
 								</td>
 								<td class="col s2 indice3" #tdIndice3 id="3" title="indice3_{{t}}"
-									(click)="selectTriagem(t, tdIndice3.id)">
+									(click)="selectTriagem(t, tdIndice3.id)" [ngStyle]="{'cursor': 'pointer'}">
 									{{triagem.indicadorSast.indice3}}
 								</td>
 								<td class="col s2 indice4" #tdIndice4 id="4" title="indice4_{{t}}"
-									(click)="selectTriagem(t, tdIndice4.id)">
+									(click)="selectTriagem(t, tdIndice4.id)" [ngStyle]="{'cursor': 'pointer'}">
 									{{triagem.indicadorSast.indice4}}
 								</td>
 							</tr>

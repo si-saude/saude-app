@@ -50,6 +50,9 @@ import { ServicoGuard } from './guards/guards-child/servico.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
+import { EixoGuard } from './guards/guards-child/eixo.guard';
+import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
+import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 
 
@@ -159,6 +162,15 @@ const routes: Routes = [
   { path: 'indicador-sast',
       loadChildren: 'app/controller/indicador-sast/indicador-sast.module#IndicadorSastModule',
       canActivateChild: [IndicadorSastGuard]},
+  { path: 'eixo',
+      loadChildren: 'app/controller/eixo/eixo.module#EixoModule',
+      canActivateChild: [EixoGuard]},
+  { path: 'diagnostico',
+      loadChildren: 'app/controller/diagnostico/diagnostico.module#DiagnosticoModule',
+      canActivateChild: [DiagnosticoGuard]},
+  { path: 'intervencao',
+      loadChildren: 'app/controller/intervencao/intervencao.module#IntervencaoModule',
+      canActivateChild: [IntervencaoGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: '', pathMatch: 'full', redirectTo: '/servico'},

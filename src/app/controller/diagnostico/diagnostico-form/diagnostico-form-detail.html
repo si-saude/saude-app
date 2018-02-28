@@ -40,14 +40,13 @@
 
 		<div class="row">
 		
-			<fieldset>
+			<fieldset class="col s4">
 				<legend>Eixo
-				<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
-					(click)="getEixos()"> <i
+				<a class="btn-floating waves-effect waves-light green btn-add-fieldset"> <i
 					class="material-icons center-icon">cached</i>
 				</a></legend>
-				<div class="input-field col s6">
-					<select class="browser-default" disabled>
+				<div class="input-field col s12 select-eixo">
+					<select class="browser-default" disabled [(ngModel)]="diagnostico.eixo.id" name="eixo">
 						<option disabled selected value=0>Selecione um eixo</option>
 						<option *ngFor="let eixo of eixos" value="{{eixo.id}}">{{eixo.titulo}}</option>
 					</select>
