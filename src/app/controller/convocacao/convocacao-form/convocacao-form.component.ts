@@ -262,24 +262,24 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     selectEmpregadoByChave( evento ) {
         if ( this.oldChaveEmpregado != evento ) {
             this.oldChaveEmpregado = evento;
-            
-            this.convocacaoService.getEmpregadoByChave( evento )
-                .then( res => {
-                    let emps = new EmpregadoBuilder().cloneList( res.json() );
-                    if (this.empregados.length == 0)
-                        emps.forEach(e => this.empregados.push(e));
-                    else {
-                        emps.forEach(eps => {
-                            let e: Empregado = this.empregados.find( es => es.getId() == eps.getId() );
-                            if ( e == undefined ) this.empregados.push(eps); 
-                        })
-                    }
-                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
-
+            if ( evento.length < 4 ) {
+                this.convocacaoService.getEmpregadoByChave( evento )
+                    .then( res => {
+                        let emps = new EmpregadoBuilder().cloneList( res.json() );
+                        if (this.empregados.length == 0)
+                            emps.forEach(e => this.empregados.push(e));
+                        else {
+                            emps.forEach(eps => {
+                                let e: Empregado = this.empregados.find( es => es.getId() == eps.getId() );
+                                if ( e == undefined ) this.empregados.push(eps); 
+                            })
+                        }
+                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
         }
     }
     
