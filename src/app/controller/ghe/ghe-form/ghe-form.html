@@ -14,13 +14,34 @@
 
 		<div class="row">
 
-			<div class="input-field col s12">
+			<div class="input-field col s7">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label> <input
 					id="nome" type="text" required [(ngModel)]="ghe.nome"
 					name="ghe.nome">
 			</div>
+			
+			<div class="input-field col s5">
+				<fieldset>
+					<legend>
+						Risco do GHE <a
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
+							(click)="getRiscoGhes()"> <i
+							class="material-icons center-icon">cached</i>
+						</a>
+					</legend>
+					<select name="ghe.risco"
+						class="browser-default"
+						[(ngModel)]="ghe.risco.id">
+						<option disabled selected value=0>Selecione um Risco de GHE</option>
+						<option
+							*ngFor="let risco of riscoGhes"
+							value="{{risco.id}}">{{risco.titulo}}</option>
+					</select>
+				</fieldset>
+			</div>
 
 		</div>
+		
 		<div class="row">
 
 			<div class="input-field col s8">

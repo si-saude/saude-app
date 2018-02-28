@@ -1,10 +1,14 @@
 import { Ghe } from './../../model/ghe';
+import { RiscoGhe } from './../../model/risco-ghe';
+import { RiscoGheBuilder } from './../risco-ghe/risco-ghe.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class GheBuilder extends GenericBuilder {
 
     initialize( ghe: Ghe ): Ghe {
         ghe = new Ghe();
+        
+        ghe.setRisco(new RiscoGhe());
 
         return ghe;
     }
@@ -39,6 +43,15 @@ export class GheBuilder extends GenericBuilder {
         cloneGhe.setDescricaoAmbiente( this.getValue( ghe, "getDescricaoAmbiente" ) );
         cloneGhe.setDescricaoTarefas( this.getValue( ghe, "getDescricaoTarefas" ) );
         cloneGhe.setDuracaoJornada( this.getValue( ghe, "getDuracaoJornada" ) );
+        
+        if ( this.getValue( ghe, "getRisco" ) !== undefined ) {
+            cloneGhe.setRisco(
+                new RiscoGheBuilder().clone( this.getValue( ghe, "getRisco" ) ) );
+            if ( !this.idGtZero( cloneGhe.getRisco() ) )
+                cloneGhe.setRisco( undefined );
+        } else {
+            cloneGhe.setRisco( new RiscoGheBuilder().initialize( null ) );
+        }
 
         return cloneGhe;
     }

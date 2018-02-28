@@ -48,6 +48,7 @@ import { AuditoriaAsoGuard } from './guards/guards-child/auditoria-aso.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
+import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 
@@ -154,9 +155,12 @@ const routes: Routes = [
   { path: 'auditoria-aso',
       loadChildren: 'app/controller/auditoria-aso/auditoria-aso.module#AuditoriaAsoModule',
       canActivateChild: [AuditoriaAsoGuard]},
+  { path: 'risco-ghe',
+      loadChildren: 'app/controller/risco-ghe/risco-ghe.module#RiscoGheModule',
+      canActivateChild: [RiscoGheGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
-  { path: '', pathMatch: 'full', redirectTo: '/servico'},
+  { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }
 ];
