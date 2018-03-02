@@ -116,7 +116,7 @@ export class AtendimentoFormComponent {
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 5000 )
+                                    this.inscricao = TimerObservable.create( 0, 60000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -221,16 +221,21 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento);
                     
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
+                        this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
+                        this.existLocalizacao = true;
                         this.setDataNascimento();
-                        this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+
+                        for( let i = 0; i < $(".tab").children().length; i++ ) {
+                            if ( $(".tab").children()[0].className == "active" )
+                                this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+                        }
                         
-                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20){
-                            this.audio.load();
-                            this.audio.play();
+                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20) {
+//                            this.audio.load();
+//                            this.audio.play();
                         }
                     }
                 } )
@@ -565,7 +570,11 @@ export class AtendimentoFormComponent {
     }
     
     contains( texto: string ) {
+        if ( texto == undefined ) return;
         if ( texto.includes("SIM") ) return "SIM";
+        else if ( texto.includes("DOUBLE") ) return "DOUBLE";
+        else if ( texto.includes("INTEIRO") ) return "INTEIRO";
+        else if ( texto.includes("TEXTO") ) return "TEXTO";
         else if ( texto.includes("EXAME F") ) return "EXAMEF";
         else if ( texto.includes("EXAME ODONTOL") ) return "EXAMEODONTOL";
         else if ( texto.includes("BITOS ALIMENTARES") ) return "BITOSALIMENTARES";
