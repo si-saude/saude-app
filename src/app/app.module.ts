@@ -69,6 +69,7 @@ import { EixoGuard } from './guards/guards-child/eixo.guard';
 import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
+import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 
 @NgModule({
   declarations: [
@@ -141,7 +142,8 @@ import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-c
     EixoGuard,
     DiagnosticoGuard,
     PerguntaFichaColetaGuard,
-    IntervencaoGuard
+    IntervencaoGuard,
+    RiscoGheGuard
   ],
   bootstrap: [ 
     AppComponent

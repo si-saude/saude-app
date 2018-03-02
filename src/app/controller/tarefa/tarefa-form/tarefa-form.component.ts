@@ -121,7 +121,7 @@ export class TarefaFormComponent extends GenericFormComponent implements OnInit 
     selectProfissional( evento ) {
         if ( this.oldNome != evento ) {
             this.oldNome = evento;
-            if ( evento.length > 3 ) {
+            if ( evento.length > 4 ) {
                 this.tarefaService.getProfissionalByName( evento )
                     .then( res => {
                         this.profissionais = new ProfissionalSaudeBuilder().cloneList( res.json() );
@@ -138,14 +138,16 @@ export class TarefaFormComponent extends GenericFormComponent implements OnInit 
     selectProfissionalByChave( evento ) {
         if ( this.oldNomeByChave != evento ) {
             this.oldNomeByChave = evento;
-            this.tarefaService.getProfissionalByChave( evento )
-                .then( res => {
-                    this.profissionais = new ProfissionalSaudeBuilder().cloneList( res.json() );
-                    this.autocompleteProfissional = [this.buildAutocompleteProfissional( this.profissionais )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
+            if ( evento.length < 4 ) {
+                this.tarefaService.getProfissionalByChave( evento )
+                    .then( res => {
+                        this.profissionais = new ProfissionalSaudeBuilder().cloneList( res.json() );
+                        this.autocompleteProfissional = [this.buildAutocompleteProfissional( this.profissionais )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
         }
     }
 

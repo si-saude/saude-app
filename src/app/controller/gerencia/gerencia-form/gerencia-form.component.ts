@@ -194,14 +194,16 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     selectGerenteByChave( evento ) {
         if ( this.oldChaveGerente != evento ) {
             this.oldChaveGerente = evento;
-            this.empregadoService.getEmpregadoByChave( evento )
-                .then( res => {
-                    this.gerentes = new EmpregadoBuilder().cloneList(res.json());
-                    this.autocompleteGerente = [this.buildAutocompleteEmpregado( this.gerentes )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
+            if ( evento.length < 4 ) {
+                this.empregadoService.getEmpregadoByChave( evento )
+                    .then( res => {
+                        this.gerentes = new EmpregadoBuilder().cloneList(res.json());
+                        this.autocompleteGerente = [this.buildAutocompleteEmpregado( this.gerentes )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
         }
     }
 
@@ -227,14 +229,16 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     selectSecretario1ByChave( evento ) {
         if ( this.oldChaveSecretario1 != evento ) {
             this.oldChaveSecretario1 = evento;
-            this.empregadoService.getEmpregadoByChave( evento )
-                .then( res => {
-                    this.secretarios1 = new EmpregadoBuilder().cloneList(res.json());
-                    this.autocompleteSecretario1 = [this.buildAutocompleteEmpregado( this.secretarios1 )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
+            if ( evento.length < 4 ) {
+                this.empregadoService.getEmpregadoByChave( evento )
+                    .then( res => {
+                        this.secretarios1 = new EmpregadoBuilder().cloneList(res.json());
+                        this.autocompleteSecretario1 = [this.buildAutocompleteEmpregado( this.secretarios1 )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
         }
     }
 
@@ -260,14 +264,16 @@ export class GerenciaFormComponent extends GenericFormComponent implements OnIni
     selectSecretario2ByChave( evento ) {
         if ( this.oldChaveSecretario2 != evento ) {
             this.oldChaveSecretario2 = evento;
-            this.empregadoService.getEmpregadoByChave( evento )
-                .then( res => {
-                    this.secretarios2 = new EmpregadoBuilder().cloneList(res.json());
-                    this.autocompleteSecretario2 = [this.buildAutocompleteEmpregado( this.secretarios2 )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
+            if ( evento.length < 4 ) {
+                this.empregadoService.getEmpregadoByChave( evento )
+                    .then( res => {
+                        this.secretarios2 = new EmpregadoBuilder().cloneList(res.json());
+                        this.autocompleteSecretario2 = [this.buildAutocompleteEmpregado( this.secretarios2 )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
         }
     }
     

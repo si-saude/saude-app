@@ -50,6 +50,7 @@ import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional/fila-esp
 import { AtendimentoService } from './atendimento/atendimento.service';
 import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
 import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
+import { RiscoGheService } from './risco-ghe/risco-ghe.service';
 import { AgendaService } from './../agenda/agenda.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
@@ -126,6 +127,7 @@ import { PerguntaFichaColetaService } from './pergunta-ficha-coleta/pergunta-fic
     AtendimentoService,
     RequisitoAsoService,
     AuditoriaAsoService,
+    RiscoGheService,
     AgendaService,
     IndicadorSastService,
     IntervencaoService,

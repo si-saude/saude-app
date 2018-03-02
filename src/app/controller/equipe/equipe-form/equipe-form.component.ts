@@ -100,14 +100,16 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
     selectCoordenadorByChave( evento ) {
         if ( this.oldNomeByChave != evento ) {
             this.oldNomeByChave = evento;
-            this.profissionalService.getProfissionalByChaveSimples( evento )
-                .then( res => {
-                    this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
-                    this.autocompleteCoordenador = [this.buildAutocompleteCoordenador( this.coordenadores )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
+            if ( evento.length < 4 ) {
+                this.profissionalService.getProfissionalByChaveSimples( evento )
+                    .then( res => {
+                        this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
+                        this.autocompleteCoordenador = [this.buildAutocompleteCoordenador( this.coordenadores )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
         }
     }
     

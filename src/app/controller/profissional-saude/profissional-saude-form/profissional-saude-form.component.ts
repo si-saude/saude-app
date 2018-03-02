@@ -188,14 +188,16 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     selectEmpregadoByChave( evento ) {
         if ( this.oldNomeByChave != evento ) {
             this.oldNomeByChave = evento;
-            this.profissionalSaudeService.getEmpregadoByChave( evento )
-                .then( res => {
-                    this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
+            if ( evento.length < 4 ) {
+                this.profissionalSaudeService.getEmpregadoByChave( evento )
+                    .then( res => {
+                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
+                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
         }
     }
 
