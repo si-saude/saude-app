@@ -39,6 +39,7 @@ export class EquipeBuilder extends GenericBuilder {
         cloneEquipe.setId( this.getValue( equipe, "getId" ) );
         cloneEquipe.setNome( this.getValue( equipe, "getNome" ) );
         cloneEquipe.setAbreviacao( this.getValue( equipe, "getAbreviacao" ) );
+        cloneEquipe.setPrioridadeSast( this.getValue( equipe, "getPrioridadeSast" ) )
         cloneEquipe.setVersion( this.getValue( equipe, "getVersion" ) );
 
         if ( this.getValue( equipe, "getCoordenador" ) !== undefined ) {

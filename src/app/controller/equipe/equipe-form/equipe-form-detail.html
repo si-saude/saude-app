@@ -19,10 +19,16 @@
 					name="equipe.nome" [(ngModel)]="equipe.nome">
 			</div>
 
-			<div class="input-field col s4">
+			<div class="input-field col s2">
 				<label for="abreviacao">Abreviação</label> <input id="abreviacao"
 					type="text" disabled name="equipe.abreviacao"
 					[(ngModel)]="equipe.abreviacao">
+			</div>
+			
+			<div class="input-field col s2">
+				<label for="abreviacao">Prioridade (SAST)</label> <input id="prioridadeSast"
+					type="number" disabled  name="equipe.prioridadeSast"
+					[(ngModel)]="equipe.prioridadeSast">
 			</div>
 		</div>
 
