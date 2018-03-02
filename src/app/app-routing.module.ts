@@ -53,6 +53,7 @@ import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
 import { EixoGuard } from './guards/guards-child/eixo.guard';
 import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
+import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 
 
@@ -171,6 +172,9 @@ const routes: Routes = [
   { path: 'intervencao',
       loadChildren: 'app/controller/intervencao/intervencao.module#IntervencaoModule',
       canActivateChild: [IntervencaoGuard]},
+  { path: 'pergunta-ficha-coleta',
+      loadChildren: 'app/controller/pergunta-ficha-coleta/pergunta-ficha-coleta.module#PerguntaFichaColetaModule',
+      canActivateChild: [PerguntaFichaColetaGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: '', pathMatch: 'full', redirectTo: '/servico'},

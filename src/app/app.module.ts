@@ -68,6 +68,7 @@ import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
 import { EixoGuard } from './guards/guards-child/eixo.guard';
 import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
+import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
     IndicadorSastGuard,
     EixoGuard,
     DiagnosticoGuard,
+    PerguntaFichaColetaGuard,
     IntervencaoGuard
   ],
   bootstrap: [ 

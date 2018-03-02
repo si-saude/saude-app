@@ -17,12 +17,13 @@
 <div class="row form-container">
 
 	<div class="col s12">
-		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs"
-			materialize="tabs">
-			<li class="tab col s4"><a href="#filaAtendimento">Fila de
+		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs">
+			<li class="tab col s3"><a href="#filaAtendimento">Fila de
 					Atendimento</a></li>
-			<li class="tab col s4"><a href="#atendimento">Atendimento</a></li>
-			<li class="tab col s4"><a href="#triagem">Triagem</a></li>
+			<li class="tab col s3"><a href="#atendimento">Atendimento</a></li>
+			<li class="tab col s3"><a href="#fichaColeta">Ficha de
+					Coleta</a></li>
+			<li class="tab col s3"><a href="#triagem">Triagem</a></li>
 		</ul>
 	</div>
 
@@ -219,6 +220,96 @@
 
 	</div>
 
+	<div id="fichaColeta">
+
+		<div *ngFor="let resposta of atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas; let r = index">
+
+			<div [ngSwitch]="contains(resposta.grupo)">
+
+				<div *ngSwitchCase="ANAMNESE">
+					<p>{{resposta.pergunta.descricao}}</p>
+
+					<div [ngSwitch]="contains(resposta.tipo)">
+
+						<div *ngSwitchCase="DOUBLE">
+							<div class="input-field col s5">
+								<input id="resposta.conteudo" type="text"
+									[(ngModel)]="resposta.conteudo">
+							</div>
+						</div>
+
+						<div *ngSwitchCase="INTEIRO">
+							<div class="input-field col s5">
+								<input id="resposta.conteudo" type="number"
+									[(ngModel)]="resposta.conteudo">
+							</div>
+						</div>
+
+						<div *ngSwitchCase="TEXTO">
+							<div class="input-field col s5">
+								<input id="resposta.conteudo" type="text"
+									[(ngModel)]="resposta.conteudo">
+							</div>
+						</div>
+						<div *ngSwitchCase="SIM">
+							<div class="input-field col s4">
+								<select name="resposta.conteudo" class="browser-default"
+									[(ngModel)]="resposta.conteudo">
+									<option selected value="">Selecione uma resposta</option>
+									<option *ngFor="let statusSimNao of statusesSimNao"
+										value="{{statusSimNao}}">{{statusSimNao}}</option>
+								</select>
+							</div>
+							<div class="col s2">
+								<a class="btn-floating waves-effect waves-light green btn-add"
+									(click)="addItemResposta(resposta.pergunta.quantidadeDeItens)"> <i
+									class="material-icons center-icon">add</i>
+								</a>
+							</div>
+ 
+							<table class="striped" *ngIf="verifyExistItemResposta(resposta.itens)">
+								<thead>
+									<tr class="row col s12">
+										<div *ngFor="let item of resposta.pergunta.itens; let i = index">
+											<th [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+												{{item.label}}</th>
+										</div>
+									</tr>
+								</thead>
+
+								<tbody class="col s12">
+									<tr class="col s12">
+										<div
+											*ngFor="let item of getArrayItensResposta(resposta.itens); let i = index">
+										<td [ngClass]="getGridItensResposta(resposta.itens)"></td>
+										<td class="col s2 botao-remover"><a
+											class="btn-floating waves-effect waves-light red btn-remove"
+											(click)="removeItemResposta(r, i)"> <i
+												class="material-icons center-icon">delete</i>
+										</a></td>
+										</div>
+									</tr>
+								</tbody>
+
+							</table>
+
+						</div>
+						
+					</div>
+
+				</div>				
+
+				<div *ngSwitchCase="EXAMEF"></div>
+				<div *ngSwitchCase="EXAMEODONTOL"></div>
+				<div *ngSwitchCase="BITOSALIMENTARES"></div>
+				<div *ngSwitchCase="TESTEDEFAGERSTR"></div>
+				<div *ngSwitchCase="VELDEESTRESSE"></div>
+			</div>
+
+		</div>
+
+	</div>
+
 	<div id="triagem">
 
 		<div class="table-triagem">
@@ -234,31 +325,30 @@
 					</tr>
 				</thead>
 				<div class="container-triagem">
-					<div
-						*ngFor="let triagem of triagens; let t = index">
+					<div *ngFor="let triagem of triagens; let t = index">
 						<tbody>
 							<tr class="col s12">
 								<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">{{triagem.indicadorSast.nome}}</td>
-								<td class="col s2 indice0" #tdIndice0 id="0" title="indice0_{{t}}"
-									(click)="selectTriagem(t, tdIndice0.id)" [ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice0}}
-								</td>
-								<td class="col s2 indice1" #tdIndice1 id="1" title="indice1_{{t}}"
-									(click)="selectTriagem(t, tdIndice1.id)" [ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice1}}
-								</td>
-								<td class="col s2 indice2" #tdIndice2 id="2" title="indice2_{{t}}"
-									(click)="selectTriagem(t, tdIndice2.id)" [ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice2}}
-								</td>
-								<td class="col s2 indice3" #tdIndice3 id="3" title="indice3_{{t}}"
-									(click)="selectTriagem(t, tdIndice3.id)" [ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice3}}
-								</td>
-								<td class="col s2 indice4" #tdIndice4 id="4" title="indice4_{{t}}"
-									(click)="selectTriagem(t, tdIndice4.id)" [ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice4}}
-								</td>
+								<td class="col s2 indice0" #tdIndice0 id="0"
+									title="indice0_{{t}}" (click)="selectTriagem(t, tdIndice0.id)"
+									[ngStyle]="{'cursor': 'pointer'}">
+									{{triagem.indicadorSast.indice0}}</td>
+								<td class="col s2 indice1" #tdIndice1 id="1"
+									title="indice1_{{t}}" (click)="selectTriagem(t, tdIndice1.id)"
+									[ngStyle]="{'cursor': 'pointer'}">
+									{{triagem.indicadorSast.indice1}}</td>
+								<td class="col s2 indice2" #tdIndice2 id="2"
+									title="indice2_{{t}}" (click)="selectTriagem(t, tdIndice2.id)"
+									[ngStyle]="{'cursor': 'pointer'}">
+									{{triagem.indicadorSast.indice2}}</td>
+								<td class="col s2 indice3" #tdIndice3 id="3"
+									title="indice3_{{t}}" (click)="selectTriagem(t, tdIndice3.id)"
+									[ngStyle]="{'cursor': 'pointer'}">
+									{{triagem.indicadorSast.indice3}}</td>
+								<td class="col s2 indice4" #tdIndice4 id="4"
+									title="indice4_{{t}}" (click)="selectTriagem(t, tdIndice4.id)"
+									[ngStyle]="{'cursor': 'pointer'}">
+									{{triagem.indicadorSast.indice4}}</td>
 							</tr>
 						</tbody>
 					</div>

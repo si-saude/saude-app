@@ -56,6 +56,7 @@ import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
 import { EixoService } from './eixo/eixo.service';
 import { DiagnosticoService } from './diagnostico/diagnostico.service';
 import { IntervencaoService } from './intervencao/intervencao.service';
+import { PerguntaFichaColetaService } from './pergunta-ficha-coleta/pergunta-ficha-coleta.service';
 
 @NgModule({
   declarations: [
@@ -130,6 +131,7 @@ import { IntervencaoService } from './intervencao/intervencao.service';
     IntervencaoService,
     DiagnosticoService,
     EixoService,
+    PerguntaFichaColetaService,
     CanDeactivateGuard
   ]
 })

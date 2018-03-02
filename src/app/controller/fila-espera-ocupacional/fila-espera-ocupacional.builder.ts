@@ -5,6 +5,8 @@ import { Localizacao } from './../../model/localizacao';
 import { LocalizacaoBuilder } from './../localizacao/localizacao.builder';
 import { Servico } from './../../model/servico';
 import { ServicoBuilder } from './../servico/servico.builder';
+import { FichaColeta } from './../../model/ficha-coleta';
+import { FichaColetaBuilder } from './../ficha-coleta/ficha-coleta.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
@@ -15,6 +17,7 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         filaEsperaOcupacional.setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
         filaEsperaOcupacional.setLocalizacao(new LocalizacaoBuilder().initialize(new Localizacao()));
         filaEsperaOcupacional.setServico(new ServicoBuilder().initialize(new Servico()));
+        filaEsperaOcupacional.setFichaColeta(new FichaColetaBuilder().initialize(new FichaColeta()));
         
         return filaEsperaOcupacional;
     }
@@ -44,6 +47,15 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         cloneFilaEsperaOcupacional.setAtualizacao(this.getValue( filaEsperaOcupacional, "getAtualizacao" ) );
         cloneFilaEsperaOcupacional.setHorarioCheckin(this.getValue( filaEsperaOcupacional, "getHorarioCheckin" ) );
         cloneFilaEsperaOcupacional.setSaida(this.getValue( filaEsperaOcupacional, "getSaida" ) );
+        
+        if (this.getValue(filaEsperaOcupacional, "getFichaColeta") !== undefined) { 
+            cloneFilaEsperaOcupacional.setFichaColeta(
+                    new FichaColetaBuilder().clone(this.getValue(filaEsperaOcupacional,"getFichaColeta")));
+            if(!this.idGtZero(cloneFilaEsperaOcupacional.getFichaColeta()))
+                cloneFilaEsperaOcupacional.setFichaColeta(undefined);
+        } else {
+            cloneFilaEsperaOcupacional.setFichaColeta(new FichaColetaBuilder().initialize(null));
+        }
         
         if(this.getValue(filaEsperaOcupacional, "getStatus") == "")
             cloneFilaEsperaOcupacional.setStatus(undefined);

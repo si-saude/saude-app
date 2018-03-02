@@ -55,6 +55,7 @@
 			<a [routerLink]="['/intervencao']" *ngIf="checkPermissao('INTERVENCAO_LISTAR')">Intervenção</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
 			<a [routerLink]="['/perfil']" *ngIf="checkPermissao('PERFIL_LISTAR')">Perfil</a>
+			<a [routerLink]="['/pergunta-ficha-coleta']" *ngIf="checkPermissao('PERGUNTA-FICHA-COLETA_LISTAR')">Pergunta Ficha de Coleta</a>
 			<a [routerLink]="['/periodicidade']" *ngIf="checkPermissao('PERIODICIDADE_LISTAR')">Periodicidade</a>
 			<a [routerLink]="['/profissiograma']" *ngIf="checkPermissao('PROFISSIOGRAMA_LISTAR')">Profissiograma</a>
 			<a [routerLink]="['/profissional-saude']" *ngIf="checkPermissao('PROFISSIONAL-SAUDE_LISTAR')">Profissional de Saúde</a>

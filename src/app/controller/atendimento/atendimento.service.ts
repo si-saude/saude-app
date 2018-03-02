@@ -31,10 +31,10 @@ export class AtendimentoService extends GenericService {
         return this.localizacaoService.selectList( new LocalizacaoFilter() );
     }
     
-    atualizar( filaAtendimentoOcupacional ) {
+    atualizar( atendimento ) {
         let urlAtualizar = this.URL + "/atualizar";
         return this.http
-            .post( urlAtualizar, filaAtendimentoOcupacional, { headers: this.headers } )
+            .post( urlAtualizar, atendimento, { headers: this.headers } )
             .toPromise();
     }
     
@@ -119,6 +119,13 @@ export class AtendimentoService extends GenericService {
         let urlFinalizar = this.URL + "/finalizar-pausar";
         return this.http
             .post( urlFinalizar, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getStatusSimNao() {
+        let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
+        return this.http
+            .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
             .toPromise();
     }
     
