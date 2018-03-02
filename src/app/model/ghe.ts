@@ -1,3 +1,5 @@
+import { RiscoGhe } from './risco-ghe';
+
 export class Ghe {
  
     private id: number = 0;
@@ -10,6 +12,7 @@ export class Ghe {
     private descricaoAmbiente: string;
     private descricaoTarefas: string;
     private duracaoJornada: number;
+    private risco: RiscoGhe;
     
     getId(): number {
         return this.id;
@@ -89,5 +92,13 @@ export class Ghe {
     
     setDuracaoJornada(dJ:number){
         this.duracaoJornada = dJ;
+    }
+    
+    getRisco():RiscoGhe{
+        return this.risco;
+    }
+    
+    setRisco(risco:RiscoGhe){
+        this.risco = risco;
     }
 }

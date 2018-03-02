@@ -70,6 +70,7 @@ export class AgendaComponent implements OnInit {
                 setTimeout(() => {
                     if ( component.activeEditTarefa ) {
                         localStorage.setItem("tarefa-id", calEvent["id"]);
+                        console.log('open');
                         window.open("/tarefa");                        
                     }
                 }, 200);
@@ -107,6 +108,7 @@ export class AgendaComponent implements OnInit {
                             let mFinal: Date = moment(end).toDate();
                             let dataInicial: Date = new Date(mInicial.getFullYear(), mInicial.getMonth(), mInicial.getDate(), 0,0,0);
                             let dataFinal: Date = new Date(mFinal.getFullYear(), mFinal.getMonth(), mFinal.getDate(), 0,0,0);
+                            component.tarefaFilter.setPageSize((2**31)-1);
                             component.tarefaFilter.setInicio(new DateFilter());
                             component.tarefaFilter.getInicio().setInicio(dataInicial);
                             component.tarefaFilter.getInicio().setFim(dataFinal);
@@ -115,6 +117,7 @@ export class AgendaComponent implements OnInit {
                                 component.activeEditTarefa = true;
                                 component.agendaService.list( component.tarefaFilter )
                                     .then( res => {
+                                        console.log(res.json());
                                         callback(component.buildEvents(res.json()));
                                     } )
                                     .catch( error => {

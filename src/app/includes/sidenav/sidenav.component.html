@@ -62,6 +62,7 @@
 			<a [routerLink]="['/regra-atendimento']" *ngIf="checkPermissao('REGRA-ATENDIMENTO_LISTAR')">Regra de Atendimento</a>
 			<a [routerLink]="['/relatorio-medico']" *ngIf="checkPermissao('RELATORIO-MEDICO_LISTAR')">Relatorio Médico</a>
 			<a [routerLink]="['/requisito-aso']" *ngIf="checkPermissao('REQUISITO-ASO_LISTAR')">Requisito Aso</a>
+			<a [routerLink]="['/risco-ghe']" *ngIf="checkPermissao('RISCO-GHE_LISTAR')">Risco do GHE</a>
 			<a [routerLink]="['/servico']" *ngIf="checkPermissao('SERVICO_LISTAR')">Serviço</a>
 			<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('TIPO-GRUPO-MONITORAMENTO_LISTAR')">Tipo Grupo Monitoramento</a>
 			<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')" (click)="closeSidenav1(); closeSidenav3();">Usuário</a> 

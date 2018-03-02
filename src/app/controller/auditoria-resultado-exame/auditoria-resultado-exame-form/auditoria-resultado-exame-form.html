@@ -76,6 +76,7 @@
 											name="exame[{{iREx}}]"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.descricao"
 											(blur)="getExame($event, iREx);"
+											(focus)="focusExame($event, iREx);"
 											(ngModelChange)="selectExameByCodigo($event, iREx); selectExameByDescricao($event, iREx);"
 											[materializeParams]="autocompleteExame">
 									</div>	
@@ -143,6 +144,7 @@
 
 										<div class="col s10">
 											<select name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
+												(click)="choiseCampoExame(iREx,false)"
 												class="browser-default" #campo>
 												<option disabled selected value=0>Selecione um item</option>
 												<option *ngFor="let campo of campoExames"

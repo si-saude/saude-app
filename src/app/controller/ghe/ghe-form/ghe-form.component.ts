@@ -6,6 +6,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 import { GlobalVariable } from './../../../global';
 import { Ghe } from './../../../model/ghe';
+import { RiscoGhe } from './../../../model/risco-ghe';
 import { GheService } from './../ghe.service';
 import { GheFilter } from './../ghe.filter';
 import { GheBuilder } from './../ghe.builder';
@@ -17,6 +18,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     styleUrls: ['./ghe-form.css', './../../../../assets/css/form-component.css']
 } )
 export class GheFormComponent extends GenericFormComponent implements OnInit {
+    riscoGhes: Array<RiscoGhe>;
     ghe: Ghe;
     
     //ngModel
@@ -52,6 +54,18 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
                         } )
                 }
             } );
+        
+        this.getRiscoGhes();
+    }
+    
+    getRiscoGhes() {
+        this.gheService.getRiscoGhes() 
+            .then(res => {
+                this.riscoGhes = res.json();
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
     
     save() {

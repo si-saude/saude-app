@@ -63,8 +63,8 @@ export class FilaComponent {
         document.getElementsByClassName("conteudo")[0]["style"].width = "100%";   
     }
 
-    startFila( localizacaoId, regraAtendimentoId ) {
-        if ( localizacaoId == 0 || regraAtendimentoId == 0 ) {
+    startFila( localizacaoId ) {
+        if ( localizacaoId == 0 ) {
             this.toastParams = ['Por favor, preencha todos os campos', 4000];
             this.globalActions.emit( 'toast' );
             this.wasRequested = false;

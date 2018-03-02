@@ -40,11 +40,11 @@ export class TarefaService extends GenericService {
     }
     
     getProfissionalByName(nome: string) {
-        return this.profissionalSaudeService.getEmpregadoByName( nome );
+        return this.profissionalSaudeService.getProfissionalByName(nome);
     }
     
     getProfissionalByChave(chave: string) {
-        return this.profissionalSaudeService.getEmpregadoByChave( chave );
+        return this.profissionalSaudeService.getProfissionalByChave(chave);
     }
     
 }
