@@ -49,6 +49,7 @@ export class IndicadorSastBuilder extends GenericBuilder {
         cloneIndicadorSast.setIndice4( this.getValue( indicadorSast, "getIndice4" ) );
         cloneIndicadorSast.setNome( this.getValue( indicadorSast, "getNome" ) );
         cloneIndicadorSast.setObrigatorio( this.getValue( indicadorSast, "getObrigatorio" ) );
+        cloneIndicadorSast.setAusenteCalculoInterdisciplinar(this.getValue( indicadorSast, "getAusenteCalculoInterdisciplinar" ))
 
         cloneIndicadorSast.setIndicadorAssociadoSasts(
             new IndicadorAssociadoSastBuilder().cloneList( this.getValue( indicadorSast, "getIndicadorAssociadoSasts" ) ));

@@ -15,6 +15,7 @@ export class IndicadorSastFilter extends GenericFilter {
     private equipe: EquipeFilter;
     private obrigatorio: BooleanFilter;
     private inativo: BooleanFilter;
+    private ausenteCalculoInterdisciplinar: BooleanFilter;
     
     getNome() {
         return this.nome;
@@ -89,4 +90,10 @@ export class IndicadorSastFilter extends GenericFilter {
         this.inativo = inativo;
     }
     
+    getAusenteCalculoInterdisciplinar() {
+        return this.ausenteCalculoInterdisciplinar;
+    }
+    setAusenteCalculoInterdisciplinar(ausenteCalculoInterdisciplinar: BooleanFilter) {
+        this.ausenteCalculoInterdisciplinar = ausenteCalculoInterdisciplinar;
+    }
 }

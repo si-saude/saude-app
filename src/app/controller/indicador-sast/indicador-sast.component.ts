@@ -7,7 +7,7 @@ import { IndicadorSastFilter } from './indicador-sast.filter';
 import { IndicadorSastGuard } from './../../guards/guards-child/indicador-sast.guard';
 import { IndicadorSastService } from './indicador-sast.service';
 
-@Component( {
+@Component( { 
     selector: 'app-indicador-sast',
     templateUrl: './indicador-sast.component.html',
     styleUrls: ['./indicador-sast.component.css', '../../../assets/css/list-component.css']
@@ -15,10 +15,13 @@ import { IndicadorSastService } from './indicador-sast.service';
 export class IndicadorSastComponent extends GenericListComponent<IndicadorSast, IndicadorSastFilter, IndicadorSastGuard> {
     @ViewChild( "obrig" ) obrig: ElementRef;
     @ViewChild( "inat" ) inat: ElementRef;
+    @ViewChild( "ausen" ) ausen: ElementRef;
     obrigatorio: HTMLInputElement;
     inativo: HTMLInputElement;
+    ausente: HTMLInputElement;
     flagObrigatorio: number = 0;
     flagInativo: number = 0;
+    flagAusente: number = 0;
 
     constructor(indicadorSastService: IndicadorSastService, indicadorSastGuard: IndicadorSastGuard, router: Router) {
         super(indicadorSastService, new IndicadorSastFilter(), indicadorSastGuard, router);
@@ -27,11 +30,14 @@ export class IndicadorSastComponent extends GenericListComponent<IndicadorSast, 
     ngAfterViewInit() {
         this.obrigatorio = this.obrig.nativeElement;
         this.inativo = this.inat.nativeElement;
+        this.ausente = this.ausen.nativeElement;
         
         this.obrigatorio.indeterminate = true;
         this.inativo.indeterminate = true;
+        this.ausente.indeterminate = true;
         this.obrigatorio.checked = true;
         this.inativo.checked = true;
+        this.ausente.checked = true;
     }
     
     changeStateObrigatorio() {
@@ -56,6 +62,17 @@ export class IndicadorSastComponent extends GenericListComponent<IndicadorSast, 
         }
     }
     
+    changeStateAusente() {
+        if ( this.ausente.checked == false ) {
+            this.flagAusente++;
+        }
+        if ( this.flagAusente% 2 == 0 ) {
+            this.ausente.indeterminate = true;
+            this.ausente.checked = true;
+            this.flagAusente = 0;
+        }
+    }
+    
     filtrar() {
         if ( this.obrigatorio.indeterminate == true )
             this.filter.getObrigatorio().setValue(0);
@@ -68,6 +85,12 @@ export class IndicadorSastComponent extends GenericListComponent<IndicadorSast, 
         else if ( this.inativo.checked == true )
             this.filter.getInativo().setValue(1);
         else this.filter.getInativo().setValue(2);
+        
+        if ( this.ausente.indeterminate == true )
+            this.filter.getAusenteCalculoInterdisciplinar().setValue(0);
+        else if ( this.ausente.checked == true )
+            this.filter.getAusenteCalculoInterdisciplinar().setValue(1);
+        else this.filter.getAusenteCalculoInterdisciplinar().setValue(2);
         
         this.setFilter();
     }

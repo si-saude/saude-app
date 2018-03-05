@@ -11,6 +11,7 @@ export class IndicadorSast {
     private indice4: string;
     private obrigatorio: boolean;
     private inativo: boolean;
+    private ausenteCalculoInterdisciplinar: boolean;
     private codigo: string;
     private codigoExcludente: string;
     private critico: number = -1;
@@ -128,6 +129,14 @@ export class IndicadorSast {
 
     setInativo(inativo: boolean) {
         this.inativo = inativo;
+    }
+    
+    getAusenteCalculoInterdisciplinar() {
+        return this.ausenteCalculoInterdisciplinar;
+    }
+
+    setAusenteCalculoInterdisciplinar(ausenteCalculoInterdisciplinar: boolean) {
+        this.ausenteCalculoInterdisciplinar = ausenteCalculoInterdisciplinar;
     }
 
     getVersion() {
