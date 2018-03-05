@@ -37,6 +37,7 @@ export class DiagnosticoBuilder extends GenericBuilder {
         cloneDiagnostico.setVersion(this.getValue(diagnostico,"getVersion"));
         cloneDiagnostico.setCodigo(this.getValue(diagnostico,"getCodigo"));
         cloneDiagnostico.setDescricao(this.getValue(diagnostico,"getDescricao"));
+        cloneDiagnostico.setInativo(this.getValue(diagnostico,"getInativo"));
         
         cloneDiagnostico.setEixo(new EixoBuilder().clone(this.getValue(diagnostico, "getEixo")));
         

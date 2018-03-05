@@ -1,3 +1,18 @@
+select {
+	display: inline;
+}
+
+.input-field>select {
+	display: block;
+	position: absolute;
+	width: 250px;
+	pointer-events: all;
+	height: 50px;
+	top: 0;
+	left: 20px;
+	opacity: 10;
+}
+
 .form-container {
 	margin-bottom: 100px;
 }

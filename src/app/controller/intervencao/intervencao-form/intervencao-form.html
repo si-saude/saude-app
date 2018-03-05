@@ -23,22 +23,23 @@
 		</div>
 
 		<div class="row">
-			
-				<fieldset class="col s4">
-					<legend>
-						Equipe <a
-							class="btn-floating waves-effect waves-light green btn-add-fieldset"
-							(click)="getEquipes()"> <i class="material-icons center-icon">cached</i>
-						</a>
-					</legend>
-					<div class="input-field col s12 select-equipe">
-						<select class="browser-default" required [(ngModel)]="intervencao.equipe.id" name="equipe">
-							<option disabled selected value=0>Selecione uma equipe</option>
-							<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
-						</select>
-					</div>
-				</fieldset>
-			
+
+			<fieldset class="col s4">
+				<legend>
+					Equipe <a
+						class="btn-floating waves-effect waves-light green btn-add-fieldset"
+						(click)="getEquipes()"> <i class="material-icons center-icon">cached</i>
+					</a>
+				</legend>
+				<div class="input-field col s12 select-equipe">
+					<select class="browser-default" required
+						[(ngModel)]="intervencao.equipe.id" name="equipe">
+						<option disabled selected value=0>Selecione uma equipe</option>
+						<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+					</select>
+				</div>
+			</fieldset>
+
 
 			<div class="input-field col s2 checkbox-inativo">
 				<input type="checkbox" id="inativo"

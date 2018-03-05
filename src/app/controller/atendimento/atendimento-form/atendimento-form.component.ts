@@ -26,6 +26,8 @@ import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { Triagem } from './../../../model/triagem';
 import { TriagemBuilder } from './../../triagem/triagem.builder';
+import { ItemRespostaFichaColeta } from './../../../model/item-resposta-ficha-coleta';
+import { ItemPerguntaFichaColeta } from './../../../model/item-pergunta-ficha-coleta';
 import { IndicadorSast } from './../../../model/indicador-sast';
 import { IndicadorSastBuilder } from './../../indicador-sast/indicador-sast.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
@@ -60,6 +62,8 @@ export class AtendimentoFormComponent {
     private tabsActions;
     private modalConfirmLocalizacao;
     audio: any;
+    
+    statusesSimNao: Array<string>;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -142,8 +146,7 @@ export class AtendimentoFormComponent {
         }
 
         this.getLocalizacoes();
-
-        
+        this.getStatusSimNao();
     }
 
     getLocalizacoes() {
@@ -156,12 +159,22 @@ export class AtendimentoFormComponent {
             } )
     }
     
+    getStatusSimNao() {
+        this.atendimentoService.getStatusSimNao()
+            .then( res => {
+                this.statusesSimNao = Object.keys( res.json() ).sort();
+            } )
+            .catch( error => {
+                console.log( "Erro ao retornar as localizações." );
+            } )
+    }
+    
     confirmarLocalizacao() {
-        console.log(this.localizacao);
         //verifico no openModalConfirmLocalizacao() se o id da localizacao eh maior que zero
         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
+        this.atendimento.setFilaAtendimentoOcupacional(this.filaAtendimentoOcupacional);
         this.existLocalizacao = true;
         this.closeModalConfirmLocalizacao();
     }
@@ -176,32 +189,11 @@ export class AtendimentoFormComponent {
         if ( this.profissional != undefined ) {
             this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
             this.filaAtendimentoOcupacional.setProfissional( this.profissional );
-            this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
+            this.atendimento.setFilaAtendimentoOcupacional(this.filaAtendimentoOcupacional);
+            this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    //armengue
-                    let triagem: Triagem = new TriagemBuilder().initialize(new Triagem());
-                    triagem.getIndicadorSast().setNome("TESTE");
-                    triagem.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
-                    triagem.getIndicadorSast().setIndice1("INDICE 1");
-                    triagem.getIndicadorSast().setIndice2("INDICE 2");
-                    triagem.getIndicadorSast().setIndice3("INDICE 3");
-                    triagem.getIndicadorSast().setIndice4("INDICE 4");
-                    
-                    let triagem2: Triagem = new TriagemBuilder().initialize(new Triagem());
-                    triagem2.getIndicadorSast().setNome("TESTE");
-                    triagem2.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
-                    triagem2.getIndicadorSast().setIndice1("INDICE 1");
-                    triagem2.getIndicadorSast().setIndice2("INDICE 2");
-                    triagem2.getIndicadorSast().setIndice3("INDICE 3");
-                    triagem2.getIndicadorSast().setIndice4("INDICE 4");
-                    
-                    this.atendimento.getTriagens().push(triagem);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.triagens = this.atendimento.getTriagens();
+                    console.log(this.atendimento);
                     
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
@@ -225,42 +217,25 @@ export class AtendimentoFormComponent {
     }
     
     atualizar() {
-        if ( this.filaAtendimentoOcupacional != undefined ) {
-            this.atendimentoService.atualizar( this.filaAtendimentoOcupacional )
+        if ( this.atendimento != undefined ) {
+            this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    //armengue
-                    let triagem: Triagem = new TriagemBuilder().initialize(new Triagem());
-                    triagem.getIndicadorSast().setNome("TESTE");
-                    triagem.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
-                    triagem.getIndicadorSast().setIndice1("INDICE 1");
-                    triagem.getIndicadorSast().setIndice2("INDICE 2");
-                    triagem.getIndicadorSast().setIndice3("INDICE 3");
-                    triagem.getIndicadorSast().setIndice4("INDICE 4");
-                    
-                    let triagem2: Triagem = new TriagemBuilder().initialize(new Triagem());
-                    triagem2.getIndicadorSast().setNome("TESTE");
-                    triagem2.getIndicadorSast().setIndice0("INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0 INDICE 0");
-                    triagem2.getIndicadorSast().setIndice1("INDICE 1");
-                    triagem2.getIndicadorSast().setIndice2("INDICE 2");
-                    triagem2.getIndicadorSast().setIndice3("INDICE 3");
-                    triagem2.getIndicadorSast().setIndice4("INDICE 4");
-                    
-                    this.atendimento.getTriagens().push(triagem);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.atendimento.getTriagens().push(triagem2);
-                    this.triagens = this.atendimento.getTriagens();
                     
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
+                        this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
+                        this.existLocalizacao = true;
                         this.setDataNascimento();
-                        this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+
+                        for( let i = 0; i < $(".tab").children().length; i++ ) {
+                            if ( $(".tab").children()[0].className == "active" )
+                                this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+                        }
                         
-                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20){
-                            this.audio.load();
-                            this.audio.play();
+                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20) {
+//                            this.audio.load();
+//                            this.audio.play();
                         }
                     }
                 } )
@@ -560,13 +535,78 @@ export class AtendimentoFormComponent {
         return d;
     }
     
+    getGridItensPergunta( itens: Array<ItemPerguntaFichaColeta> ) {
+        let s:number = Math.floor(12 / itens.length);
+        return "col s"+s.toString();
+    }
+    
+    getGridItensResposta( itens: Array<ItemRespostaFichaColeta> ) {
+        let s:number = Math.floor(10 / itens.length);
+        return "col s"+s.toString();
+    }
+    
+    getArrayItensResposta( itens: Array<ItemRespostaFichaColeta> ) {
+        let ret = [];
+        let count = 0;
+        let item: ItemRespostaFichaColeta;
+        
+        while ( item != null ) {
+            item = itens[count].getItem();
+            ret.push(item);
+            count++;
+        }
+        
+        return ret;
+    }
+    
+    removeItemResposta(respostaIndex, itemIndex) {
+        this.atendimento.getFilaEsperaOcupacional().
+            getFichaColeta().getRespostaFichaColetas()[respostaIndex].getItens().splice(itemIndex, 1);
+    }
+    
+    verifyExistItemResposta( itens ) {
+        if ( itens != null ) return false;
+        return true;
+    }
+    
+    contains( texto: string ) {
+        if ( texto == undefined ) return;
+        if ( texto.includes("SIM") ) return "SIM";
+        else if ( texto.includes("DOUBLE") ) return "DOUBLE";
+        else if ( texto.includes("INTEIRO") ) return "INTEIRO";
+        else if ( texto.includes("TEXTO") ) return "TEXTO";
+        else if ( texto.includes("EXAME F") ) return "EXAMEF";
+        else if ( texto.includes("EXAME ODONTOL") ) return "EXAMEODONTOL";
+        else if ( texto.includes("BITOS ALIMENTARES") ) return "BITOSALIMENTARES";
+        else if ( texto.includes("TESTE DE FAGERSTR") ) return "TESTEDEFAGERSTR";
+        else if ( texto.includes("VEL DE ESTRESSE") ) return "VELDEESTRESSE";
+        return "";
+    }
+    
+    addItemResposta( quantidadeItens ) {
+        let itemRespostaFichaColeta: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
+        
+        this.constructItemRespostaFichaColeta( quantidadeItens - 1, itemRespostaFichaColeta );
+    }
+    
+    constructItemRespostaFichaColeta( quantidadeItens, itemRespostaFichaColeta ) {
+        quantidadeItens--;
+        
+        if ( quantidadeItens == 0 ) return;
+        
+        let item: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
+        
+        itemRespostaFichaColeta.setItem(item);
+        this.constructItemRespostaFichaColeta(quantidadeItens, item);
+    }
+    
     catchConfiguration( error ) {
         switch ( error.status ) {
             case 401:
                 localStorage.clear();
                 this.router.navigate(["login"]);
                 break;
-            }
+        }
     }
 
 }

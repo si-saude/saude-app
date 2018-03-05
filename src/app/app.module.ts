@@ -68,6 +68,7 @@ import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
 import { EixoGuard } from './guards/guards-child/eixo.guard';
 import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
+import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 
 @NgModule({
@@ -140,6 +141,7 @@ import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
     IndicadorSastGuard,
     EixoGuard,
     DiagnosticoGuard,
+    PerguntaFichaColetaGuard,
     IntervencaoGuard,
     RiscoGheGuard
   ],

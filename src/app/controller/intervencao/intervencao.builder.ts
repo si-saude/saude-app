@@ -13,14 +13,14 @@ export class IntervencaoBuilder extends GenericBuilder{
         return intervencao;
     }
     
-    initializeList(instalacoes: Array<Intervencao>) {
+    initializeList(intervencoes: Array<Intervencao>) {
         
         let array:Array<Intervencao> = new Array<Intervencao>();
         
-        if(instalacoes === null || instalacoes === undefined)
-            instalacoes = new Array<Intervencao>();
+        if(intervencoes === null || intervencoes === undefined)
+            intervencoes = new Array<Intervencao>();
         
-        for (let intervencao of instalacoes) {
+        for (let intervencao of intervencoes) {
             array.push(this.initialize(intervencao));
         }
         
@@ -43,14 +43,14 @@ export class IntervencaoBuilder extends GenericBuilder{
         return cloneIntervencao;
     }
     
-    cloneList(instalacoes: Array<Intervencao>){
+    cloneList(intervencoes: Array<Intervencao>){
         
-        if(instalacoes === null || instalacoes === undefined)
-            instalacoes = new Array<Intervencao>();
+        if(intervencoes === null || intervencoes === undefined)
+            intervencoes = new Array<Intervencao>();
         
         let array:Array<Intervencao> = new Array<Intervencao>();
     
-        for (let intervencao of instalacoes) {
+        for (let intervencao of intervencoes) {
             array.push(this.clone(intervencao));
         }
     
