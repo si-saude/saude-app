@@ -105,8 +105,7 @@
 				<div class="row-empregado row">
 
 					<div class="input-field-empregado input-field col s4">
-						<label for="nomeServico">Serviço</label> 
-						<input id="nomeServico"
+						<label for="nomeServico">Serviço</label> <input id="nomeServico"
 							type="text" disabled class="input-empregado"
 							[(ngModel)]="atendimento.tarefa.servico.nome" name="nomeServico">
 					</div>
@@ -221,48 +220,55 @@
 
 	</div>
 
-	<div id="fichaColeta">
+	<div id="fichaColeta" disabled>
 		<div class="conteiner-ficha-coleta">
-	
+
 			<div
 				*ngFor="let resposta of atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas; let r = index">
-	
+
 				<div [ngSwitch]="contains(resposta.pergunta.grupo)">
-	
+
 					<div *ngSwitchCase="'ANAMNESE'">
-						<fieldset><legend>Pergunta {{r}}</legend>
-							<p><b>{{resposta.pergunta.descricao}}</b></p>
-		
+						<fieldset>
+							<legend>Pergunta {{r}}</legend>
+							<p>
+								<b>{{resposta.pergunta.descricao}}</b>
+							</p>
+
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
 										<div class="input-field col s5">
-											<input type="text" name="DOUBLE{{r}}" class="resposta-conteudo" 
+											<input type="text" name="DOUBLE{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'INTEIRO'">
 										<div class="input-field col s5">
-											<input type="text" name="INTEIRO{{r}}" class="resposta-conteudo" 
+											<input type="text" name="INTEIRO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'TEXTO'">
 										<div class="input-field col s5">
-											<input type="text" name="TEXTO{{r}}"  class="resposta-conteudo" 
+											<input type="text" name="TEXTO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
 									<div *ngSwitchCase="'SIM'">
 										<div class="input-field col s4 select-sim-nao">
-											<select class="browser-default" name="SIM{{r}}" class="resposta-conteudo" 
-												#statusSimNao [disabled]="verifyEquipe(resposta)"
-												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)" 
+											<select class="browser-default" name="SIM{{r}}"
+												class="resposta-conteudo" #statusSimNao
+												[disabled]="verifyEquipe(resposta)"
+												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 												<option disabled selected value="">Selecione uma resposta</option>
 												<option *ngFor="let statusSimNao of statusesSimNao"
@@ -270,12 +276,13 @@
 											</select>
 										</div>
 										<div class="col s2" *ngIf="statusSim[r]">
-											<a class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addItemResposta(resposta.pergunta.itens, r)">
-												<i class="material-icons center-icon">add</i>
+											<a
+												class="btn-floating waves-effect waves-light green btn-add"
+												(click)="addItemResposta(resposta.pergunta.itens, r)"> <i
+												class="material-icons center-icon">add</i>
 											</a>
 										</div>
-		
+
 										<table class="striped" *ngIf="statusSim[r]">
 											<thead>
 												<tr class="row col s12">
@@ -288,17 +295,19 @@
 													<th class="row col s2">Remover</th>
 												</tr>
 											</thead>
-		
+
 											<tbody class="col s12">
 												<tr class="col s12">
-													<div *ngFor="let respostaItem of resposta.itens; let i = index">
+													<div
+														*ngFor="let respostaItem of resposta.itens; let i = index">
 														<div class="row">
-															<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-																<td [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																	<input
-																		id="resposta.item" type="text" name="resposta.item"
-																		class="resposta-item"
-																		[(ngModel)]="item.conteudo">
+															<div
+																*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+																<td
+																	[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																	<input id="resposta.item" type="text"
+																	name="resposta.item" class="resposta-item"
+																	[(ngModel)]="item.conteudo">
 																</td>
 															</div>
 															<td class="col s2 botao-remover"><a
@@ -310,50 +319,57 @@
 													</div>
 												</tr>
 											</tbody>
-		
+
 										</table>
-		
+
 									</div>
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
 						</fieldset>
 					</div>
-	
+
 					<div *ngSwitchCase="'EXAMEF'">
-						<fieldset><legend>Pergunta {{r}}</legend>
-							<p><b>{{resposta.pergunta.descricao}}</b></p>
-		
+						<fieldset>
+							<legend>Pergunta {{r}}</legend>
+							<p>
+								<b>{{resposta.pergunta.descricao}}</b>
+							</p>
+
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
 										<div class="input-field col s5">
-											<input type="text" name="DOUBLE{{r}}" class="resposta-conteudo" 
+											<input type="text" name="DOUBLE{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'INTEIRO'">
 										<div class="input-field col s5">
-											<input type="text" name="INTEIRO{{r}}"  class="resposta-conteudo"
+											<input type="text" name="INTEIRO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'TEXTO'">
 										<div class="input-field col s5">
-											<input type="text" name="TEXTO{{r}}" class="resposta-conteudo"
+											<input type="text" name="TEXTO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
 									<div *ngSwitchCase="'SIM'">
 										<div class="input-field col s4 select-sim-nao">
-											<select class="browser-default" name="SIM{{r}}" class="resposta-conteudo" 
-												#statusSimNao [disabled]="verifyEquipe(resposta)"
-												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)" 
+											<select class="browser-default" name="SIM{{r}}"
+												class="resposta-conteudo" #statusSimNao
+												[disabled]="verifyEquipe(resposta)"
+												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 												<option disabled selected value="">Selecione uma resposta</option>
 												<option *ngFor="let statusSimNao of statusesSimNao"
@@ -361,12 +377,13 @@
 											</select>
 										</div>
 										<div class="col s2" *ngIf="statusSim[r]">
-											<a class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addItemResposta(resposta.pergunta.itens, r)">
-												<i class="material-icons center-icon">add</i>
+											<a
+												class="btn-floating waves-effect waves-light green btn-add"
+												(click)="addItemResposta(resposta.pergunta.itens, r)"> <i
+												class="material-icons center-icon">add</i>
 											</a>
 										</div>
-		
+
 										<table class="striped" *ngIf="statusSim[r]">
 											<thead>
 												<tr class="row col s12">
@@ -379,17 +396,19 @@
 													<th class="row col s2">Remover</th>
 												</tr>
 											</thead>
-		
+
 											<tbody class="col s12">
 												<tr class="col s12">
-													<div *ngFor="let respostaItem of resposta.itens; let i = index">
+													<div
+														*ngFor="let respostaItem of resposta.itens; let i = index">
 														<div class="row">
-															<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-																<td [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																	<input
-																		id="resposta.item" type="text" name="resposta.item"
-																		class="resposta-item"
-																		[(ngModel)]="item.conteudo">
+															<div
+																*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+																<td
+																	[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																	<input id="resposta.item" type="text"
+																	name="resposta.item" class="resposta-item"
+																	[(ngModel)]="item.conteudo">
 																</td>
 															</div>
 															<td class="col s2 botao-remover"><a
@@ -401,9 +420,9 @@
 													</div>
 												</tr>
 											</tbody>
-		
+
 										</table>
-		
+
 									</div>
 									<div *ngSwitchDefault></div>
 								</div>
@@ -411,39 +430,46 @@
 						</fieldset>
 					</div>
 					<div *ngSwitchCase="'EXAMEODONTOL'">
-						<fieldset><legend>Pergunta {{r}}</legend>
-							<p><b>{{resposta.pergunta.descricao}}</b></p>
-		
+						<fieldset>
+							<legend>Pergunta {{r}}</legend>
+							<p>
+								<b>{{resposta.pergunta.descricao}}</b>
+							</p>
+
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
 										<div class="input-field col s5">
-											<input type="text" name="DOUBLE{{r}}" class="resposta-conteudo"
+											<input type="text" name="DOUBLE{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'INTEIRO'">
 										<div class="input-field col s5">
-											<input type="text" name="INTEIRO{{r}}" class="resposta-conteudo"
+											<input type="text" name="INTEIRO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'TEXTO'">
 										<div class="input-field col s5">
-											<input type="text" name="TEXTO{{r}}" class="resposta-conteudo"
+											<input type="text" name="TEXTO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
 									<div *ngSwitchCase="'SIM'">
 										<div class="input-field col s4 select-sim-nao">
-											<select class="browser-default" name="SIM{{r}}" class="resposta-conteudo"
-												#statusSimNao [disabled]="verifyEquipe(resposta)"
-												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)" 
+											<select class="browser-default" name="SIM{{r}}"
+												class="resposta-conteudo" #statusSimNao
+												[disabled]="verifyEquipe(resposta)"
+												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 												<option disabled selected value="">Selecione uma resposta</option>
 												<option *ngFor="let statusSimNao of statusesSimNao"
@@ -451,12 +477,13 @@
 											</select>
 										</div>
 										<div class="col s2" *ngIf="statusSim[r]">
-											<a class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addItemResposta(resposta.pergunta.itens, r)">
-												<i class="material-icons center-icon">add</i>
+											<a
+												class="btn-floating waves-effect waves-light green btn-add"
+												(click)="addItemResposta(resposta.pergunta.itens, r)"> <i
+												class="material-icons center-icon">add</i>
 											</a>
 										</div>
-		
+
 										<table class="striped" *ngIf="statusSim[r]">
 											<thead>
 												<tr class="row col s12">
@@ -469,17 +496,19 @@
 													<th class="row col s2">Remover</th>
 												</tr>
 											</thead>
-		
+
 											<tbody class="col s12">
 												<tr class="col s12">
-													<div *ngFor="let respostaItem of resposta.itens; let i = index">
+													<div
+														*ngFor="let respostaItem of resposta.itens; let i = index">
 														<div class="row">
-															<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-																<td [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																	<input
-																		id="resposta.item" type="text" name="resposta.item"
-																		class="resposta-item"
-																		[(ngModel)]="item.conteudo">
+															<div
+																*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+																<td
+																	[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																	<input id="resposta.item" type="text"
+																	name="resposta.item" class="resposta-item"
+																	[(ngModel)]="item.conteudo">
 																</td>
 															</div>
 															<td class="col s2 botao-remover"><a
@@ -491,9 +520,9 @@
 													</div>
 												</tr>
 											</tbody>
-		
+
 										</table>
-		
+
 									</div>
 									<div *ngSwitchDefault></div>
 								</div>
@@ -501,39 +530,46 @@
 						</fieldset>
 					</div>
 					<div *ngSwitchCase="'BITOSALIMENTARES'">
-						<fieldset><legend>Pergunta {{r}}</legend>
-							<p><b>{{resposta.pergunta.descricao}}</b></p>
-		
+						<fieldset>
+							<legend>Pergunta {{r}}</legend>
+							<p>
+								<b>{{resposta.pergunta.descricao}}</b>
+							</p>
+
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
-										<div class="input-field col s5"> 
-											<input type="text" name="DOUBLE{{r}}" class="resposta-conteudo"
+										<div class="input-field col s5">
+											<input type="text" name="DOUBLE{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'INTEIRO'">
 										<div class="input-field col s5">
-											<input type="text" name="INTEIRO{{r}}" class="resposta-conteudo"
+											<input type="text" name="INTEIRO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'TEXTO'">
 										<div class="input-field col s5">
-											<input type="text" name="TEXTO{{r}}" class="resposta-conteudo"
+											<input type="text" name="TEXTO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
 									<div *ngSwitchCase="'SIM'">
 										<div class="input-field col s4 select-sim-nao">
-											<select class="browser-default" name="SIM{{r}}" class="resposta-conteudo"
-												#statusSimNao [disabled]="verifyEquipe(resposta)"
-												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)" 
+											<select class="browser-default" name="SIM{{r}}"
+												class="resposta-conteudo" #statusSimNao
+												[disabled]="verifyEquipe(resposta)"
+												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 												<option disabled selected value="">Selecione uma resposta</option>
 												<option *ngFor="let statusSimNao of statusesSimNao"
@@ -541,12 +577,13 @@
 											</select>
 										</div>
 										<div class="col s2" *ngIf="statusSim[r]">
-											<a class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addItemResposta(resposta.pergunta.itens, r)">
-												<i class="material-icons center-icon">add</i>
+											<a
+												class="btn-floating waves-effect waves-light green btn-add"
+												(click)="addItemResposta(resposta.pergunta.itens, r)"> <i
+												class="material-icons center-icon">add</i>
 											</a>
 										</div>
-		
+
 										<table class="striped" *ngIf="statusSim[r]">
 											<thead>
 												<tr class="row col s12">
@@ -559,17 +596,19 @@
 													<th class="row col s2">Remover</th>
 												</tr>
 											</thead>
-		
+
 											<tbody class="col s12">
 												<tr class="col s12">
-													<div *ngFor="let respostaItem of resposta.itens; let i = index">
+													<div
+														*ngFor="let respostaItem of resposta.itens; let i = index">
 														<div class="row">
-															<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-																<td [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																	<input
-																		id="resposta.item" type="text" name="resposta.item"
-																		class="resposta-item"
-																		[(ngModel)]="item.conteudo">
+															<div
+																*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+																<td
+																	[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																	<input id="resposta.item" type="text"
+																	name="resposta.item" class="resposta-item"
+																	[(ngModel)]="item.conteudo">
 																</td>
 															</div>
 															<td class="col s2 botao-remover"><a
@@ -581,9 +620,9 @@
 													</div>
 												</tr>
 											</tbody>
-		
+
 										</table>
-		
+
 									</div>
 									<div *ngSwitchDefault></div>
 								</div>
@@ -591,39 +630,46 @@
 						</fieldset>
 					</div>
 					<div *ngSwitchCase="'TESTEDEFAGERSTR'">
-						<fieldset><legend>Pergunta {{r}}</legend>
-							<p><b>{{resposta.pergunta.descricao}}</b></p>
-		
+						<fieldset>
+							<legend>Pergunta {{r}}</legend>
+							<p>
+								<b>{{resposta.pergunta.descricao}}</b>
+							</p>
+
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
 										<div class="input-field col s5">
-											<input type="text" name="DOUBLE{{r}}" class="resposta-conteudo"
+											<input type="text" name="DOUBLE{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'INTEIRO'">
 										<div class="input-field col s5">
-											<input type="text" name="INTEIRO{{r}}" class="resposta-conteudo"
+											<input type="text" name="INTEIRO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'TEXTO'">
 										<div class="input-field col s5">
-											<input type="text" name="TEXTO{{r}}" class="resposta-conteudo"
+											<input type="text" name="TEXTO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
 									<div *ngSwitchCase="'SIM'">
 										<div class="input-field col s4 select-sim-nao">
-											<select class="browser-default" name="SIM{{r}}" class="resposta-conteudo"
-												#statusSimNao [disabled]="verifyEquipe(resposta)"
-												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)" 
+											<select class="browser-default" name="SIM{{r}}"
+												class="resposta-conteudo" #statusSimNao
+												[disabled]="verifyEquipe(resposta)"
+												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 												<option disabled selected value="">Selecione uma resposta</option>
 												<option *ngFor="let statusSimNao of statusesSimNao"
@@ -631,12 +677,13 @@
 											</select>
 										</div>
 										<div class="col s2" *ngIf="statusSim[r]">
-											<a class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addItemResposta(resposta.pergunta.itens, r)">
-												<i class="material-icons center-icon">add</i>
+											<a
+												class="btn-floating waves-effect waves-light green btn-add"
+												(click)="addItemResposta(resposta.pergunta.itens, r)"> <i
+												class="material-icons center-icon">add</i>
 											</a>
 										</div>
-		
+
 										<table class="striped" *ngIf="statusSim[r]">
 											<thead>
 												<tr class="row col s12">
@@ -649,17 +696,19 @@
 													<th class="row col s2">Remover</th>
 												</tr>
 											</thead>
-		
+
 											<tbody class="col s12">
 												<tr class="col s12">
-													<div *ngFor="let respostaItem of resposta.itens; let i = index">
+													<div
+														*ngFor="let respostaItem of resposta.itens; let i = index">
 														<div class="row">
-															<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-																<td [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																	<input
-																		id="resposta.item" type="text" name="resposta.item"
-																		class="resposta-item"
-																		[(ngModel)]="item.conteudo">
+															<div
+																*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+																<td
+																	[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																	<input id="resposta.item" type="text"
+																	name="resposta.item" class="resposta-item"
+																	[(ngModel)]="item.conteudo">
 																</td>
 															</div>
 															<td class="col s2 botao-remover"><a
@@ -671,9 +720,9 @@
 													</div>
 												</tr>
 											</tbody>
-		
+
 										</table>
-		
+
 									</div>
 									<div *ngSwitchDefault></div>
 								</div>
@@ -681,39 +730,46 @@
 						</fieldset>
 					</div>
 					<div *ngSwitchCase="'VELDEESTRESSE'">
-						<fieldset><legend>Pergunta {{r}}</legend>
-							<p><b>{{resposta.pergunta.descricao}}</b></p>
-		
+						<fieldset>
+							<legend>Pergunta {{r}}</legend>
+							<p>
+								<b>{{resposta.pergunta.descricao}}</b>
+							</p>
+
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
 										<div class="input-field col s5">
-											<input type="text" name="DOUBLE{{r}}" class="resposta-conteudo"
+											<input type="text" name="DOUBLE{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'INTEIRO'">
 										<div class="input-field col s5">
-											<input type="text" name="INTEIRO{{r}}" class="resposta-conteudo"
+											<input type="text" name="INTEIRO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'TEXTO'">
 										<div class="input-field col s5">
-											<input type="text" name="TEXTO{{r}}" class="resposta-conteudo"
+											<input type="text" name="TEXTO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
 									<div *ngSwitchCase="'SIM'">
 										<div class="input-field col s4 select-sim-nao">
-											<select class="browser-default" name="SIM{{r}}" class="resposta-conteudo"
-												#statusSimNao [disabled]="verifyEquipe(resposta)"
-												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)" 
+											<select class="browser-default" name="SIM{{r}}"
+												class="resposta-conteudo" #statusSimNao
+												[disabled]="verifyEquipe(resposta)"
+												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 												<option disabled selected value="">Selecione uma resposta</option>
 												<option *ngFor="let statusSimNao of statusesSimNao"
@@ -721,12 +777,13 @@
 											</select>
 										</div>
 										<div class="col s2" *ngIf="statusSim[r]">
-											<a class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addItemResposta(resposta.pergunta.itens, r)">
-												<i class="material-icons center-icon">add</i>
+											<a
+												class="btn-floating waves-effect waves-light green btn-add"
+												(click)="addItemResposta(resposta.pergunta.itens, r)"> <i
+												class="material-icons center-icon">add</i>
 											</a>
 										</div>
-		
+
 										<table class="striped" *ngIf="statusSim[r]">
 											<thead>
 												<tr class="row col s12">
@@ -739,17 +796,19 @@
 													<th class="row col s2">Remover</th>
 												</tr>
 											</thead>
-		
+
 											<tbody class="col s12">
 												<tr class="col s12">
-													<div *ngFor="let respostaItem of resposta.itens; let i = index">
+													<div
+														*ngFor="let respostaItem of resposta.itens; let i = index">
 														<div class="row">
-															<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-																<td [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																	<input
-																		id="resposta.item" type="text" name="resposta.item"
-																		class="resposta-item"
-																		[(ngModel)]="item.conteudo">
+															<div
+																*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+																<td
+																	[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																	<input id="resposta.item" type="text"
+																	name="resposta.item" class="resposta-item"
+																	[(ngModel)]="item.conteudo">
 																</td>
 															</div>
 															<td class="col s2 botao-remover"><a
@@ -761,9 +820,9 @@
 													</div>
 												</tr>
 											</tbody>
-		
+
 										</table>
-		
+
 									</div>
 									<div *ngSwitchDefault></div>
 								</div>
@@ -771,39 +830,46 @@
 						</fieldset>
 					</div>
 					<div *ngSwitchDefault>
-						<fieldset><legend>Pergunta {{r}}</legend>
-							<p><b>{{resposta.pergunta.descricao}}</b></p>
-		
+						<fieldset>
+							<legend>Pergunta {{r}}</legend>
+							<p>
+								<b>{{resposta.pergunta.descricao}}</b>
+							</p>
+
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
 										<div class="input-field col s5">
-											<input type="text" name="DOUBLE{{r}}" class="resposta-conteudo"	
+											<input type="text" name="DOUBLE{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'INTEIRO'">
 										<div class="input-field col s5">
-											<input type="text" name="INTEIRO{{r}}" class="resposta-conteudo"
+											<input type="text" name="INTEIRO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
-		
+
 									<div *ngSwitchCase="'TEXTO'">
 										<div class="input-field col s5">
-											<input type="text" name="TEXTO{{r}}" class="resposta-conteudo"
+											<input type="text" name="TEXTO{{r}}"
+												class="resposta-conteudo"
 												[disabled]="verifyEquipe(resposta)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 										</div>
 									</div>
 									<div *ngSwitchCase="'SIM'">
 										<div class="input-field col s4 select-sim-nao">
-											<select class="browser-default" name="SIM{{r}}" class="resposta-conteudo"
-												#statusSimNao [disabled]="verifyEquipe(resposta)"
-												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)" 
+											<select class="browser-default" name="SIM{{r}}"
+												class="resposta-conteudo" #statusSimNao
+												[disabled]="verifyEquipe(resposta)"
+												(change)="selectStatusSimNao(resposta.pergunta.itens, r, statusSimNao.value)"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas[r].conteudo">
 												<option disabled selected value="">Selecione uma resposta</option>
 												<option *ngFor="let statusSimNao of statusesSimNao"
@@ -811,12 +877,13 @@
 											</select>
 										</div>
 										<div class="col s2" *ngIf="statusSim[r]">
-											<a class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addItemResposta(resposta.pergunta.itens, r)">
-												<i class="material-icons center-icon">add</i>
+											<a
+												class="btn-floating waves-effect waves-light green btn-add"
+												(click)="addItemResposta(resposta.pergunta.itens, r)"> <i
+												class="material-icons center-icon">add</i>
 											</a>
 										</div>
-		
+
 										<table class="striped" *ngIf="statusSim[r]">
 											<thead>
 												<tr class="row col s12">
@@ -829,17 +896,19 @@
 													<th class="row col s2">Remover</th>
 												</tr>
 											</thead>
-		
+
 											<tbody class="col s12">
 												<tr class="col s12">
-													<div *ngFor="let respostaItem of resposta.itens; let i = index">
+													<div
+														*ngFor="let respostaItem of resposta.itens; let i = index">
 														<div class="row">
-															<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-																<td [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																	<input
-																		id="resposta.item" type="text" name="resposta.item"
-																		class="resposta-item"
-																		[(ngModel)]="item.conteudo">
+															<div
+																*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+																<td
+																	[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																	<input id="resposta.item" type="text"
+																	name="resposta.item" class="resposta-item"
+																	[(ngModel)]="item.conteudo">
 																</td>
 															</div>
 															<td class="col s2 botao-remover"><a
@@ -851,9 +920,9 @@
 													</div>
 												</tr>
 											</tbody>
-		
+
 										</table>
-		
+
 									</div>
 									<div *ngSwitchDefault></div>
 								</div>
@@ -861,56 +930,66 @@
 						</fieldset>
 					</div>
 				</div>
-	
+
 			</div>
-	
+
 		</div>
 	</div>
 
 	<div id="triagem">
 
-		<div class="table-triagem">
-			<table>
-				<thead>
-					<tr class="row col s12">
-						<th class="col s2">Indicador</th>
-						<th class="col s2">Índice 0</th>
-						<th class="col s2">Índice 1</th>
-						<th class="col s2">Índice 2</th>
-						<th class="col s2">Índice 3</th>
-						<th class="col s2">Índice 4</th>
-					</tr>
-				</thead>
-				<div class="container-triagem">
-					<div *ngFor="let triagem of triagens; let t = index">
-						<tbody>
-							<tr class="col s12">
-								<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">{{triagem.indicadorSast.nome}}</td>
-								<td class="col s2 indice0" #tdIndice0 id="0"
-									title="indice0_{{t}}" (click)="selectTriagem(t, tdIndice0.id)"
-									[ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice0}}</td>
-								<td class="col s2 indice1" #tdIndice1 id="1"
-									title="indice1_{{t}}" (click)="selectTriagem(t, tdIndice1.id)"
-									[ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice1}}</td>
-								<td class="col s2 indice2" #tdIndice2 id="2"
-									title="indice2_{{t}}" (click)="selectTriagem(t, tdIndice2.id)"
-									[ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice2}}</td>
-								<td class="col s2 indice3" #tdIndice3 id="3"
-									title="indice3_{{t}}" (click)="selectTriagem(t, tdIndice3.id)"
-									[ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice3}}</td>
-								<td class="col s2 indice4" #tdIndice4 id="4"
-									title="indice4_{{t}}" (click)="selectTriagem(t, tdIndice4.id)"
-									[ngStyle]="{'cursor': 'pointer'}">
-									{{triagem.indicadorSast.indice4}}</td>
-							</tr>
-						</tbody>
+		<div class="container-triagem">
+			<div class="table-triagem">
+				<table>
+					<thead>
+						<tr class="row col s12">
+							<th class="col s2">Indicador</th>
+							<th class="col s2">Índice 0</th>
+							<th class="col s2">Índice 1</th>
+							<th class="col s2">Índice 2</th>
+							<th class="col s2">Índice 3</th>
+							<th class="col s2">Índice 4</th>
+						</tr>
+					</thead>
+					<div class="container-triagens">
+						<div
+							*ngFor="let triagem of atendimento.triagens; let t = index">
+							<tbody>
+								<tr class="row col s12">
+									<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.nome}}</td>
+									<td class="col s2 indice0" #tdIndice0 id="0"
+										title="indice0_{{t}}"
+										(click)="selectTriagem(e, t, tdIndice0.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice0}}</td>
+									<td class="col s2 indice1" #tdIndice1 id="1"
+										title="indice1_{{t}}"
+										(click)="selectTriagem(e, t, tdIndice1.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice1}}</td>
+									<td class="col s2 indice2" #tdIndice2 id="2"
+										title="indice2_{{t}}"
+										(click)="selectTriagem(e, t, tdIndice2.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice2}}</td>
+									<td class="col s2 indice3" #tdIndice3 id="3"
+										title="indice3_{{t}}"
+										(click)="selectTriagem(e, t, tdIndice3.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice3}}</td>
+									<td class="col s2 indice4" #tdIndice4 id="4"
+										title="indice4_{{t}}"
+										(click)="selectTriagem(e, t, tdIndice4.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice4}}</td>
+								</tr>
+							</tbody>
 					</div>
-				</div>
-			</table>
+					</div>
+				</table>
+			</div>
+
 		</div>
 
 	</div>

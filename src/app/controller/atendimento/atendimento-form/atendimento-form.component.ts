@@ -27,6 +27,7 @@ import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissiona
 import { Triagem } from './../../../model/triagem';
 import { TriagemBuilder } from './../../triagem/triagem.builder';
 import { Equipe } from './../../../model/equipe';
+import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { ItemRespostaFichaColeta } from './../../../model/item-resposta-ficha-coleta';
 import { ItemRespostaFichaColetaBuilder } from './../../item-resposta-ficha-coleta/item-resposta-ficha-coleta.builder';
 import { ItemPerguntaFichaColeta } from './../../../model/item-pergunta-ficha-coleta';
@@ -50,7 +51,6 @@ export class AtendimentoFormComponent {
     private statusProfissional: String;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
-    private triagens: Array<Triagem>;
     //contem os indices já clicados, key = index da triagem, value = numero do indice
     private triagemIndices: Map<number, number>;
     private existLocalizacao: boolean;
@@ -65,7 +65,7 @@ export class AtendimentoFormComponent {
     private tabsActions;
     private modalConfirmLocalizacao;
     audio: any;
-    
+
     statusesSimNao: Array<string>;
     statusSim: Array<boolean>;
 
@@ -73,11 +73,10 @@ export class AtendimentoFormComponent {
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
         this.statusProfissional = "";
-        this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
+        this.localizacao = new LocalizacaoBuilder().initialize( this.localizacao );
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
-        this.triagens = new TriagemBuilder().initializeList( this.triagens );
         this.triagemIndices = new Map<number, number>();
         this.filaAtendimentoOcupacionais = new FilaAtendimentoOcupacionalBuilder().
             initializeList( this.filaAtendimentoOcupacionais );
@@ -96,11 +95,11 @@ export class AtendimentoFormComponent {
 
     ngOnInit() {
         this.audio.src = "./../../../../assets/audio/beep.mp3";
-        
-        $(document).keypress(function(event){
-            if (event.charCode == 13) return false; 
-        });
-        
+
+        $( document ).keypress( function( event ) {
+            if ( event.charCode == 13 ) return false;
+        } );
+
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
             this.atendimentoService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
@@ -121,7 +120,7 @@ export class AtendimentoFormComponent {
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 15000 )
+                                    this.inscricao = TimerObservable.create( 0, 60000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -134,7 +133,7 @@ export class AtendimentoFormComponent {
                             } )
                             .catch( error => {
                                 console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
-                                this.catchConfiguration(error);
+                                this.catchConfiguration( error );
                             } )
                     } else {
                         this.router.navigate( ["/login"] );
@@ -143,7 +142,7 @@ export class AtendimentoFormComponent {
                 } )
                 .catch( error => {
                     console.log( "Erro no servidor ao buscar o usuario." );
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                 } )
         } else {
             console.log( "Usuario nao logada." );
@@ -163,7 +162,7 @@ export class AtendimentoFormComponent {
                 console.log( "Erro ao retornar as localizações." );
             } )
     }
-    
+
     getStatusSimNao() {
         this.atendimentoService.getStatusSimNao()
             .then( res => {
@@ -173,17 +172,17 @@ export class AtendimentoFormComponent {
                 console.log( "Erro ao retornar as localizações." );
             } )
     }
-    
+
     confirmarLocalizacao() {
         //verifico no openModalConfirmLocalizacao() se o id da localizacao eh maior que zero
         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
-        this.atendimento.setFilaAtendimentoOcupacional(this.filaAtendimentoOcupacional);
+        this.atendimento.setFilaAtendimentoOcupacional( this.filaAtendimentoOcupacional );
         this.existLocalizacao = true;
         this.closeModalConfirmLocalizacao();
     }
-    
+
     cancelarLocalizacao() {
         this.existLocalizacao = false;
         this.localizacao.setId( 0 );
@@ -194,10 +193,11 @@ export class AtendimentoFormComponent {
         if ( this.profissional != undefined ) {
             this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
             this.filaAtendimentoOcupacional.setProfissional( this.profissional );
-            this.atendimento.setFilaAtendimentoOcupacional(this.filaAtendimentoOcupacional);
+            this.atendimento.setFilaAtendimentoOcupacional( this.filaAtendimentoOcupacional );
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
-                    this.atendimento = new AtendimentoBuilder().clone( res.json() );                    
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
@@ -210,7 +210,7 @@ export class AtendimentoFormComponent {
                     }
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.filaAtendimentoOcupacional = undefined;
                     console.log( "Erro ao atualizar primeira vez: " + error );
                 } )
@@ -218,35 +218,169 @@ export class AtendimentoFormComponent {
             console.log( "Profissional nao setado." )
         }
     }
-    
+
     atualizar() {
         if ( this.atendimento != undefined ) {
+
+            let respostasConteudoName: Array<string> = new Array<string>();
+            $( ".resposta-conteudo:enabled" ).each( function( index ) {
+                respostasConteudoName.push( $( this ).attr( 'ng-reflect-name' ) );
+            } );
+
+            respostasConteudoName.forEach( r => {
+                $( ".resposta-conteudo[ng-reflect-name=" + r + "]" ).prop( "disabled", true );
+            } )
+
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
+                    respostasConteudoName.forEach( r => {
+                        $( ".resposta-conteudo[ng-reflect-name=" + r + "]" ).prop( "disabled", false );
+                    } )
+
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento);
-                    
+
+                    let triagem: Triagem = new Triagem();
+                    let indicadorSast: IndicadorSast = new IndicadorSast();
+                    let equipe: Equipe = new Equipe();
+                    equipe.setNome( "EQUIPE 0" );
+                    equipe.setId( 0 );
+                    indicadorSast.setCodigo( "000" );
+                    indicadorSast.setNome( "INDICADOR 0" );
+                    indicadorSast.setIndice0( "Indice 00" );
+                    indicadorSast.setIndice1( "Indice 01" );
+                    indicadorSast.setIndice2( "Indice 02" );
+                    indicadorSast.setIndice3( "Indice 03" );
+                    indicadorSast.setIndice4( "Indice 04" );
+                    indicadorSast.setObrigatorio( true );
+                    triagem.setId( 0 );
+                    triagem.setIndicadorSast( indicadorSast );
+                    triagem.setEquipeAbordagem( equipe )
+                    this.atendimento.getTriagens().push( triagem );
+
+                    triagem = new Triagem();
+                    indicadorSast = new IndicadorSast();
+                    equipe = new Equipe();
+                    equipe.setNome( "EQUIPE 0" );
+                    equipe.setId( 0 );
+                    indicadorSast.setNome( "INDICADOR 1" );
+                    indicadorSast.setCodigo( "001" );
+                    indicadorSast.setIndice0( "Indice 01" );
+                    indicadorSast.setIndice1( "Indice 11" );
+                    indicadorSast.setIndice2( "Indice 11" );
+                    indicadorSast.setIndice3( "Indice 11" );
+                    indicadorSast.setIndice4( "Indice 11" );
+                    triagem.setId( 1 );
+                    triagem.setIndicadorSast( indicadorSast );
+                    triagem.setEquipeAbordagem( equipe )
+                    this.atendimento.getTriagens().push( triagem );
+
+                    triagem = new Triagem();
+                    indicadorSast = new IndicadorSast();
+                    equipe = new Equipe();
+                    equipe.setNome( "EQUIPE 0" );
+                    equipe.setId( 0 );
+                    indicadorSast.setNome( "INDICADOR 1" );
+                    indicadorSast.setCodigo( "001" );
+                    indicadorSast.setIndice0( "Indice 01" );
+                    indicadorSast.setIndice1( "Indice 11" );
+                    indicadorSast.setIndice2( "Indice 11" );
+                    indicadorSast.setIndice3( "Indice 11" );
+                    indicadorSast.setIndice4( "Indice 11" );
+                    triagem.setId( 2 );
+                    triagem.setIndicadorSast( indicadorSast );
+                    triagem.setEquipeAbordagem( equipe )
+                    this.atendimento.getTriagens().push( triagem );
+
+                    triagem = new Triagem();
+                    indicadorSast = new IndicadorSast();
+                    equipe = new Equipe();
+                    equipe.setNome( "EQUIPE 0" );
+                    equipe.setId( 0 );
+                    indicadorSast.setNome( "INDICADOR 1" );
+                    indicadorSast.setCodigo( "001" );
+                    indicadorSast.setIndice0( "Indice 01" );
+                    indicadorSast.setIndice1( "Indice 11" );
+                    indicadorSast.setIndice2( "Indice 11" );
+                    indicadorSast.setIndice3( "Indice 11" );
+                    indicadorSast.setIndice4( "Indice 11" );
+                    triagem.setId( 3 );
+                    triagem.setIndicadorSast( indicadorSast );
+                    triagem.setEquipeAbordagem( equipe )
+                    this.atendimento.getTriagens().push( triagem );
+
+                    triagem = new Triagem();
+                    indicadorSast = new IndicadorSast();
+                    equipe = new Equipe();
+                    equipe.setNome( "EQUIPE 0" );
+                    equipe.setId( 0 );
+                    indicadorSast.setNome( "INDICADOR 1" );
+                    indicadorSast.setCodigo( "001" );
+                    indicadorSast.setIndice0( "Indice 01" );
+                    indicadorSast.setIndice1( "Indice 11" );
+                    indicadorSast.setIndice2( "Indice 11" );
+                    indicadorSast.setIndice3( "Indice 11" );
+                    indicadorSast.setIndice4( "Indice 11" );
+                    triagem.setId( 4 );
+                    triagem.setIndicadorSast( indicadorSast );
+                    triagem.setEquipeAbordagem( equipe )
+                    this.atendimento.getTriagens().push( triagem );
+
+                    triagem = new Triagem();
+                    indicadorSast = new IndicadorSast();
+                    equipe = new Equipe();
+                    indicadorSast.setNome( "INDICADOR 2" );
+                    equipe.setNome( "EQUIPE 2" );
+                    equipe.setId( 1 );
+                    indicadorSast.setCodigo( "002" );
+                    indicadorSast.setIndice0( "Indice 21" );
+                    indicadorSast.setIndice1( "Indice 21" );
+                    indicadorSast.setIndice2( "Indice 21" );
+                    indicadorSast.setIndice3( "Indice 21" );
+                    indicadorSast.setIndice4( "Indice 21" );
+                    triagem.setId( 5 );
+                    triagem.setIndicadorSast( indicadorSast );
+                    triagem.setEquipeAbordagem( equipe )
+                    this.atendimento.getTriagens().push( triagem );
+
+                    triagem = new Triagem();
+                    indicadorSast = new IndicadorSast();
+                    equipe = new Equipe();
+                    indicadorSast.setNome( "INDICADOR 3" );
+                    equipe.setNome( "EQUIPE 3" );
+                    equipe.setId( 2 );
+                    indicadorSast.setCodigo( "003" );
+                    indicadorSast.setIndice0( "Indice 31" );
+                    indicadorSast.setIndice1( "Indice 31" );
+                    indicadorSast.setIndice2( "Indice 31" );
+                    indicadorSast.setIndice3( "Indice 31" );
+                    indicadorSast.setIndice4( "Indice 31" );
+                    indicadorSast.setObrigatorio( true );
+                    triagem.setId( 6 );
+                    triagem.setIndicadorSast( indicadorSast );
+                    triagem.setEquipeAbordagem( equipe )
+                    this.atendimento.getTriagens().push( triagem );
+
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
                         this.setDataNascimento();
 
-                        for( let i = 0; i < $(".tab").children().length; i++ ) {
-                            if ( $(".tab").children()[0].className == "active" )
-                                this.tabsActions.emit({action:"tabs", params:['select_tab', 'atendimento']});
+                        for ( let i = 0; i < $( ".tab" ).children().length; i++ ) {
+                            if ( $( ".tab" ).children()[0].className == "active" )
+                                this.tabsActions.emit( { action: "tabs", params: ['select_tab', 'atendimento'] } );
                         }
-                        
-                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20) {
-//                            this.audio.load();
-//                            this.audio.play();
+
+                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20 ) {
+                            //                            this.audio.load();
+                            //                            this.audio.play();
                         }
                     }
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     console.log( "Erro ao atualizar: " + error );
-                    this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
+                    this.atendimento = new AtendimentoBuilder().initialize( new Atendimento() );
                 } )
         } else {
             this.primeiraAtualizacao();
@@ -261,38 +395,38 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     console.log( "Erro ao atualizar lista: " + error );
                 } )
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
     }
-    
-    selectTriagem(indexTriagem, indice) {
-        let i: string = "indice"+indice+"_"+indexTriagem.toString();
-    
+
+    selectTriagem( indexEquipe, indexTriagem, indice ) {
+        let i: string = "indice" + indice + "_" + indexTriagem.toString();
+
         if ( this.triagemIndices.get( indexTriagem ) != undefined ) {
-            if ( this.triagemIndices.get( indexTriagem ) == Number(indice) ) {
+            if ( this.triagemIndices.get( indexTriagem ) == Number( indice ) ) {
                 $( "td[title=" + i + "]" ).css( "background", "" );
                 this.atendimento.getTriagens()[indexTriagem].setIndice( -1 );
                 return;
             }
-            let iAntigo: string = "indice"+this.triagemIndices.get( indexTriagem )+"_"+indexTriagem.toString();
+            let iAntigo: string = "indice" + this.triagemIndices.get( indexTriagem ) + "_" + indexTriagem.toString();
             $( "td[title=" + iAntigo + "]" ).css( "background", "" );
         }
-        
-        
-        $("td[title=" + i + "]").css("background", "#D4D4D4");
-        
+
+        $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
+
         this.triagemIndices.set( indexTriagem, Number( indice ) );
+
         this.atendimento.getTriagens()[indexTriagem].setIndice( Number( indice ) );
     }
 
     entrar() {
         if ( this.localizacao == undefined || this.localizacao.getId() <= 0 ) {
             this.toastParams = ["Por favor, seleciona um local", 4000];
-            this.globalActions.emit( 'toast' );   
+            this.globalActions.emit( 'toast' );
             return;
         }
         if ( this.filaAtendimentoOcupacional != undefined ) {
@@ -303,7 +437,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -321,7 +455,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -339,7 +473,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -360,7 +494,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -381,7 +515,7 @@ export class AtendimentoFormComponent {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -399,7 +533,7 @@ export class AtendimentoFormComponent {
                     this.globalActions.emit( 'toast' );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -415,7 +549,7 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -424,13 +558,13 @@ export class AtendimentoFormComponent {
 
     liberar() {
         if ( this.atendimento.getId() > 0 ) {
-            
-            if ( !this.verifyCompleteFichaColeta() ) {
-                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta", 4000];
+
+            if ( !this.verifyValidFichaColeta() ) {
+                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+
             this.atendimentoService.liberar( this.atendimento )
                 .then( res => {
                     this.toastParams = ["Empregado liberado", 4000];
@@ -438,7 +572,7 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
@@ -447,13 +581,19 @@ export class AtendimentoFormComponent {
 
     finalizar() {
         if ( this.atendimento.getId() > 0 ) {
-            
-            if ( !this.verifyCompleteFichaColeta() ) {
-                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta", 4000];
+
+            if ( !this.verifyValidFichaColeta() ) {
+                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+
+            if ( !this.verifyValidTriagens() ) {
+                this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+
             this.atendimentoService.finalizar( this.atendimento )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
@@ -461,13 +601,13 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
         }
     }
-    
+
     devolverPraFila() {
         if ( this.atendimento.getId() > 0 ) {
             this.atendimentoService.devolverPraFila( this.atendimento )
@@ -477,22 +617,28 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                    this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
         }
     }
-    
+
     finalizarPausar() {
         if ( this.atendimento.getId() > 0 ) {
-            
-            if ( !this.verifyCompleteFichaColeta() ) {
-                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta", 4000];
+
+            if ( !this.verifyValidFichaColeta() ) {
+                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+
+            if ( !this.verifyValidTriagens() ) {
+                this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+
             this.atendimentoService.finalizarPausar( this.atendimento )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
@@ -500,30 +646,40 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                 } )
                 .catch( error => {
-                	this.catchConfiguration(error);
+                    this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
         }
     }
-    
-    verifyCompleteFichaColeta() {
-        if ( $(".resposta-conteudo:enabled").val() == "" )
+
+    verifyValidFichaColeta() {
+        if ( $( ".resposta-conteudo:enabled" ).val() == "" )
             return false;
         return true;
-        
     }
-    
+
+    verifyValidTriagens() {
+        let triagem = this.atendimento.getTriagens().find( t => {
+            if ( t.getIndicadorSast().getObrigatorio() == true && t.getIndice() == -1 )
+                return true;
+            else return false;
+        } );
+
+        if ( triagem != undefined ) return false;
+        else return true;
+    }
+
     verifyEquipe( resposta: RespostaFichaColeta ) {
-        let e: Equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.profissional.getEquipe().getId());
-        
+        let e: Equipe = resposta.getPergunta().getEquipes().find( e => e.getId() == this.profissional.getEquipe().getId() );
+
         if ( e != undefined ) return false;
         return true;
     }
-    
+
     openModalConfirmLocalizacao() {
         if ( this.localizacao.getId() > 0 ) {
-            this.modalConfirmLocalizacao.emit( { action: "modal", params: ['open'] } );            
+            this.modalConfirmLocalizacao.emit( { action: "modal", params: ['open'] } );
         } else {
             this.toastParams = ["Por favor, selecione um local.", 4000];
             this.globalActions.emit( 'toast' );
@@ -541,7 +697,7 @@ export class AtendimentoFormComponent {
         if ( this.inscricao != undefined )
             this.inscricao.unsubscribe();
     }
-    
+
     setDataNascimento() {
         if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() != undefined ) {
             this.dataNascimento = this.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() );
@@ -573,91 +729,111 @@ export class AtendimentoFormComponent {
         let d: Date = new Date( s[0] + "-" + s[1] + "-" + s[2] );
         return d;
     }
-    
+
     getGridItensPergunta( itens: Array<ItemPerguntaFichaColeta> ) {
-        let s:number = Math.floor(10 / itens.length);
-        return "col s"+s.toString();
+        let s: number = Math.floor( 10 / itens.length );
+        return "col s" + s.toString();
     }
-    
+
     getGridItensResposta( itens: Array<ItemRespostaFichaColeta> ) {
-        let s:number = Math.floor(10 / itens.length);
-        return "col s"+s.toString();
+        let s: number = Math.floor( 10 / itens.length );
+        return "col s" + s.toString();
     }
-    
+
     getArrayItensResposta( item: ItemRespostaFichaColeta ) {
         let ret = [];
-        
+
         while ( item != null && item != undefined ) {
-            ret.push(item);
+            ret.push( item );
             item = item.getItem();
         }
-        
+
         return ret;
     }
-    
+
     verifyExistItemResposta( itens ) {
         if ( itens != null ) return true;
         return false;
     }
-    
+
     contains( texto: string ) {
         let ret: string = "";
         if ( texto == undefined ) return;
-        if ( texto.includes("SIM") ) ret = "SIM";
-        else if ( texto.includes("ANAMNESE") ) ret = "ANAMNESE";
-        else if ( texto.includes("DOUBLE") ) ret = "DOUBLE";
-        else if ( texto.includes("INTEIRO") ) ret = "INTEIRO";
-        else if ( texto.includes("TEXTO") ) ret = "TEXTO";
-        else if ( texto.includes("EXAME F") ) ret = "EXAMEF";
-        else if ( texto.includes("EXAME ODONTOL") ) ret = "EXAMEODONTOL";
-        else if ( texto.includes("BITOS ALIMENTARES") ) ret = "BITOSALIMENTARES";
-        else if ( texto.includes("TESTE DE FAGERSTR") ) ret = "TESTEDEFAGERSTR";
-        else if ( texto.includes("VEL DE ESTRESSE") ) ret = "VELDEESTRESSE";
+        if ( texto.includes( "SIM" ) ) ret = "SIM";
+        else if ( texto.includes( "ANAMNESE" ) ) ret = "ANAMNESE";
+        else if ( texto.includes( "DOUBLE" ) ) ret = "DOUBLE";
+        else if ( texto.includes( "INTEIRO" ) ) ret = "INTEIRO";
+        else if ( texto.includes( "TEXTO" ) ) ret = "TEXTO";
+        else if ( texto.includes( "EXAME F" ) ) ret = "EXAMEF";
+        else if ( texto.includes( "EXAME ODONTOL" ) ) ret = "EXAMEODONTOL";
+        else if ( texto.includes( "BITOS ALIMENTARES" ) ) ret = "BITOSALIMENTARES";
+        else if ( texto.includes( "TESTE DE FAGERSTR" ) ) ret = "TESTEDEFAGERSTR";
+        else if ( texto.includes( "VEL DE ESTRESSE" ) ) ret = "VELDEESTRESSE";
         return ret;
     }
-    
+
     selectStatusSimNao( itens, indexResposta, status ) {
         if ( status == "SIM" ) {
             this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
-            .setItens([]);
-            this.addItemResposta(itens, indexResposta);
+                .setItens( [] );
+            this.addItemResposta( itens, indexResposta );
             this.statusSim[indexResposta] = true;
         } else this.statusSim[indexResposta] = false;
     }
-    
+
     addItemResposta( itens: Array<ItemPerguntaFichaColeta>, indexResposta ) {
         let quantidadeItens = itens.length;
 
-        let itemRespostaFichaColeta: ItemRespostaFichaColeta = 
-            new ItemRespostaFichaColetaBuilder().initialize(new ItemRespostaFichaColeta());
-        
+        let itemRespostaFichaColeta: ItemRespostaFichaColeta =
+            new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
+
         this.constructItemRespostaFichaColeta( quantidadeItens, itemRespostaFichaColeta );
-        
+
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
-            .getItens().push(itemRespostaFichaColeta);
+            .getItens().push( itemRespostaFichaColeta );
     }
-    
-    removeItemResposta(respostaIndex, itemIndex) {
+
+    removeItemResposta( respostaIndex, itemIndex ) {
         this.atendimento.getFilaEsperaOcupacional().
-            getFichaColeta().getRespostaFichaColetas()[respostaIndex].getItens().splice(itemIndex, 1);
+            getFichaColeta().getRespostaFichaColetas()[respostaIndex].getItens().splice( itemIndex, 1 );
     }
-    
+
     constructItemRespostaFichaColeta( quantidadeItens: number, itemRespostaFichaColeta: ItemRespostaFichaColeta ) {
         quantidadeItens--;
         if ( quantidadeItens == 1 ) return;
-        
-        let item: ItemRespostaFichaColeta = 
-            new ItemRespostaFichaColetaBuilder().initialize(new ItemRespostaFichaColeta());
-        
-        itemRespostaFichaColeta.setItem(item);
-        this.constructItemRespostaFichaColeta(quantidadeItens, item);
+
+        let item: ItemRespostaFichaColeta =
+            new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
+
+        itemRespostaFichaColeta.setItem( item );
+        this.constructItemRespostaFichaColeta( quantidadeItens, item );
     }
-    
+
+    getEquipesTriagens() {
+        let eqps: Array<Equipe> = new Array<Equipe>();
+
+        this.atendimento.getTriagens().forEach( t => {
+            if ( eqps.find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
+                eqps.push( t.getEquipeAbordagem() );
+            }
+        } )
+
+        return eqps;
+    }
+
+    getTriagensByEquipe( equipe: Equipe ) {
+        let listTriagens: Array<Triagem> = new Array<Triagem>();
+
+        listTriagens = this.atendimento.getTriagens().filter( t => t.getEquipeAbordagem().getId() == equipe.getId() );
+
+        return listTriagens;
+    }
+
     catchConfiguration( error ) {
         switch ( error.status ) {
             case 401:
                 localStorage.clear();
-                this.router.navigate(["login"]);
+                this.router.navigate( ["login"] );
                 break;
         }
     }
