@@ -1,5 +1,8 @@
 import { IndicadorSast } from './indicador-sast';
 import { Atendimento } from './atendimento';
+import { Diagnostico } from './diagnostico';
+import { Intervencao } from './intervencao';
+import { Equipe } from './equipe';
 import { RiscoEmpregado } from './risco-empregado';
 
 export class Triagem {
@@ -8,6 +11,11 @@ export class Triagem {
     private atendimento: Atendimento;
     private indice: number = -1;
     private riscoEmpregado: RiscoEmpregado;
+    private diagnostico: Diagnostico;
+    private intervencao: Intervencao;
+    private equipeAbordagem: Equipe;
+    private prazo: string;
+    private justificativa: string;
     private version: number;
 
     getId() {
@@ -48,6 +56,46 @@ export class Triagem {
     
     setRiscoEmpregado(riscoEmpregado: RiscoEmpregado) {
         this.riscoEmpregado = riscoEmpregado;
+    }
+    
+    getDiagnostico(){
+        return this.diagnostico;
+    }
+    
+    setDiagnostico(d:Diagnostico){
+        this.diagnostico = d;
+    }
+    
+    getIntervencao(){
+        return this.intervencao;
+    }
+    
+    setIntervencao(i:Intervencao){
+        this.intervencao = i;
+    }
+    
+    getEquipeAbordagem(){
+        return this.equipeAbordagem;
+    }
+    
+    setEquipeAbordagem(e:Equipe){
+        this.equipeAbordagem = e;
+    }
+    
+    getPrazo(){
+        return this.prazo;
+    }
+    
+    setPrazo(prazo:string){
+        this.prazo = prazo;
+    }
+    
+    getJustificativa(){
+        return this.justificativa;
+    }
+    
+    setJustificativa(justificativa:string){
+        this.justificativa = justificativa;
     }
 
     getVersion() {

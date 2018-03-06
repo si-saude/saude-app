@@ -24,14 +24,22 @@
 			</div>
 
 			<div id="dadosGerais">
-
 				<div class="row">
 					<div class="input-field col s6">
 						<label data-error="Campo obrigatório." for="nome">Nome</label> <input
 							id="nome" type="text" required [(ngModel)]="indicadorSast.nome"
 							name="nome">
 					</div>
-
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6 checkbox-obrigatorio">
+						<input type="checkbox" id="ausenteCalculoInterdisciplinar"
+							[(ngModel)]="indicadorSast.ausenteCalculoInterdisciplinar"
+							name="indicadorSast.ausenteCalculoInterdisciplinar"> <label
+							for="ausenteCalculoInterdisciplinar">Ausente do Cálculo Interdisciplinar</label>
+					</div>
+					
 					<div class="input-field col s3 checkbox-obrigatorio">
 						<input type="checkbox" id="obrigatorio"
 							[(ngModel)]="indicadorSast.obrigatorio"
