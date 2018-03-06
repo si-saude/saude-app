@@ -6,7 +6,7 @@ export class RespostaFichaColeta {
     private id: number;
     private pergunta: PerguntaFichaColeta;
     private ficha: FichaColeta;
-    private conteudo: string;
+    private conteudo: string = "";
     private itens: Array<ItemRespostaFichaColeta>;
     private version: number;
 

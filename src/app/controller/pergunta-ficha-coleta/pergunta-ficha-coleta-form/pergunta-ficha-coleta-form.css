@@ -18,3 +18,46 @@
     margin-top: 15px;
     pointer-events: auto;
 }
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+    width: 95%;	
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.botao-remover {
+	padding-left: 30px;
+}
+
+.btn-remove {
+	margin-top: -5px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
+}
+
+.row-labels {
+    margin-left: -20px;
+}
+
+.btn-add {  
+	margin-top: 33px !important;
+}

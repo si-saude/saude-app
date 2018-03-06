@@ -42,7 +42,11 @@ export class RespostaFichaColetaBuilder extends GenericBuilder{
         
         cloneRespostaFichaColeta.setId(this.getValue(respostaFichaColeta, "getId"));
         cloneRespostaFichaColeta.setVersion(this.getValue(respostaFichaColeta, "getVersion"));
-        cloneRespostaFichaColeta.setConteudo(this.getValue(respostaFichaColeta, "getConteudo"));
+
+        if (this.getValue(respostaFichaColeta, "getConteudo") == undefined )
+            cloneRespostaFichaColeta.setConteudo("");
+        else
+            cloneRespostaFichaColeta.setConteudo(this.getValue(respostaFichaColeta, "getConteudo"));
         
         cloneRespostaFichaColeta.setFicha(new FichaColeta());
         cloneRespostaFichaColeta.setItens(

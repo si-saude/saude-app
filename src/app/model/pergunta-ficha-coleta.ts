@@ -1,4 +1,5 @@
 import { ItemPerguntaFichaColeta } from './item-pergunta-ficha-coleta';
+import { Equipe } from './equipe';
 
 export class PerguntaFichaColeta {
     private id: number;
@@ -8,7 +9,9 @@ export class PerguntaFichaColeta {
     private inativo: boolean;
     private descricao: string;
     private quantidadeDeItens: number;
+    private ordem: number;
     private itens: Array<ItemPerguntaFichaColeta>;
+    private equipes: Array<Equipe>;
     private version: number;
 
     getId() {
@@ -77,5 +80,22 @@ export class PerguntaFichaColeta {
 
     setItens(itens: Array<ItemPerguntaFichaColeta>) {
         this.itens = itens;
-    }    
+    }
+    
+    getOrdem() {
+        return this.ordem;
+    }
+    
+    setOrdem(ordem: number) {
+        this.ordem = ordem;
+    }
+    
+    getEquipes() {
+        return this.equipes;
+    }
+    
+    setEquipes(equipes: Array<Equipe>) {
+        this.equipes = equipes;
+    }
+    
 }

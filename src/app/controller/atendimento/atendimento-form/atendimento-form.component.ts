@@ -26,9 +26,12 @@ import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { Triagem } from './../../../model/triagem';
 import { TriagemBuilder } from './../../triagem/triagem.builder';
+import { Equipe } from './../../../model/equipe';
 import { ItemRespostaFichaColeta } from './../../../model/item-resposta-ficha-coleta';
+import { ItemRespostaFichaColetaBuilder } from './../../item-resposta-ficha-coleta/item-resposta-ficha-coleta.builder';
 import { ItemPerguntaFichaColeta } from './../../../model/item-pergunta-ficha-coleta';
 import { IndicadorSast } from './../../../model/indicador-sast';
+import { RespostaFichaColeta } from './../../../model/resposta-ficha-coleta';
 import { IndicadorSastBuilder } from './../../indicador-sast/indicador-sast.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
 
@@ -64,6 +67,7 @@ export class AtendimentoFormComponent {
     audio: any;
     
     statusesSimNao: Array<string>;
+    statusSim: Array<boolean>;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -87,6 +91,7 @@ export class AtendimentoFormComponent {
         this.modalConfirmLocalizacao = new EventEmitter<string | MaterializeAction>();
         this.existLocalizacao = false;
         this.audio = new Audio();
+        this.statusSim = Array<boolean>();
     }
 
     ngOnInit() {
@@ -116,7 +121,7 @@ export class AtendimentoFormComponent {
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 60000 )
+                                    this.inscricao = TimerObservable.create( 0, 15000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -192,9 +197,7 @@ export class AtendimentoFormComponent {
             this.atendimento.setFilaAtendimentoOcupacional(this.filaAtendimentoOcupacional);
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
-                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento);
-                    
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );                    
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
@@ -221,6 +224,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    console.log(this.atendimento);
                     
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
@@ -420,6 +424,13 @@ export class AtendimentoFormComponent {
 
     liberar() {
         if ( this.atendimento.getId() > 0 ) {
+            
+            if ( !this.verifyCompleteFichaColeta() ) {
+                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
             this.atendimentoService.liberar( this.atendimento )
                 .then( res => {
                     this.toastParams = ["Empregado liberado", 4000];
@@ -436,6 +447,13 @@ export class AtendimentoFormComponent {
 
     finalizar() {
         if ( this.atendimento.getId() > 0 ) {
+            
+            if ( !this.verifyCompleteFichaColeta() ) {
+                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
             this.atendimentoService.finalizar( this.atendimento )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
@@ -468,6 +486,13 @@ export class AtendimentoFormComponent {
     
     finalizarPausar() {
         if ( this.atendimento.getId() > 0 ) {
+            
+            if ( !this.verifyCompleteFichaColeta() ) {
+                this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
             this.atendimentoService.finalizarPausar( this.atendimento )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
@@ -480,6 +505,20 @@ export class AtendimentoFormComponent {
                     this.globalActions.emit( 'toast' );
                 } )
         }
+    }
+    
+    verifyCompleteFichaColeta() {
+        if ( $(".resposta-conteudo:enabled").val() == "" )
+            return false;
+        return true;
+        
+    }
+    
+    verifyEquipe( resposta: RespostaFichaColeta ) {
+        let e: Equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.profissional.getEquipe().getId());
+        
+        if ( e != undefined ) return false;
+        return true;
     }
     
     openModalConfirmLocalizacao() {
@@ -536,7 +575,7 @@ export class AtendimentoFormComponent {
     }
     
     getGridItensPergunta( itens: Array<ItemPerguntaFichaColeta> ) {
-        let s:number = Math.floor(12 / itens.length);
+        let s:number = Math.floor(10 / itens.length);
         return "col s"+s.toString();
     }
     
@@ -545,18 +584,57 @@ export class AtendimentoFormComponent {
         return "col s"+s.toString();
     }
     
-    getArrayItensResposta( itens: Array<ItemRespostaFichaColeta> ) {
+    getArrayItensResposta( item: ItemRespostaFichaColeta ) {
         let ret = [];
-        let count = 0;
-        let item: ItemRespostaFichaColeta;
         
-        while ( item != null ) {
-            item = itens[count].getItem();
+        while ( item != null && item != undefined ) {
             ret.push(item);
-            count++;
+            item = item.getItem();
         }
         
         return ret;
+    }
+    
+    verifyExistItemResposta( itens ) {
+        if ( itens != null ) return true;
+        return false;
+    }
+    
+    contains( texto: string ) {
+        let ret: string = "";
+        if ( texto == undefined ) return;
+        if ( texto.includes("SIM") ) ret = "SIM";
+        else if ( texto.includes("ANAMNESE") ) ret = "ANAMNESE";
+        else if ( texto.includes("DOUBLE") ) ret = "DOUBLE";
+        else if ( texto.includes("INTEIRO") ) ret = "INTEIRO";
+        else if ( texto.includes("TEXTO") ) ret = "TEXTO";
+        else if ( texto.includes("EXAME F") ) ret = "EXAMEF";
+        else if ( texto.includes("EXAME ODONTOL") ) ret = "EXAMEODONTOL";
+        else if ( texto.includes("BITOS ALIMENTARES") ) ret = "BITOSALIMENTARES";
+        else if ( texto.includes("TESTE DE FAGERSTR") ) ret = "TESTEDEFAGERSTR";
+        else if ( texto.includes("VEL DE ESTRESSE") ) ret = "VELDEESTRESSE";
+        return ret;
+    }
+    
+    selectStatusSimNao( itens, indexResposta, status ) {
+        if ( status == "SIM" ) {
+            this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
+            .setItens([]);
+            this.addItemResposta(itens, indexResposta);
+            this.statusSim[indexResposta] = true;
+        } else this.statusSim[indexResposta] = false;
+    }
+    
+    addItemResposta( itens: Array<ItemPerguntaFichaColeta>, indexResposta ) {
+        let quantidadeItens = itens.length;
+
+        let itemRespostaFichaColeta: ItemRespostaFichaColeta = 
+            new ItemRespostaFichaColetaBuilder().initialize(new ItemRespostaFichaColeta());
+        
+        this.constructItemRespostaFichaColeta( quantidadeItens, itemRespostaFichaColeta );
+        
+        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
+            .getItens().push(itemRespostaFichaColeta);
     }
     
     removeItemResposta(respostaIndex, itemIndex) {
@@ -564,37 +642,12 @@ export class AtendimentoFormComponent {
             getFichaColeta().getRespostaFichaColetas()[respostaIndex].getItens().splice(itemIndex, 1);
     }
     
-    verifyExistItemResposta( itens ) {
-        if ( itens != null ) return false;
-        return true;
-    }
-    
-    contains( texto: string ) {
-        if ( texto == undefined ) return;
-        if ( texto.includes("SIM") ) return "SIM";
-        else if ( texto.includes("DOUBLE") ) return "DOUBLE";
-        else if ( texto.includes("INTEIRO") ) return "INTEIRO";
-        else if ( texto.includes("TEXTO") ) return "TEXTO";
-        else if ( texto.includes("EXAME F") ) return "EXAMEF";
-        else if ( texto.includes("EXAME ODONTOL") ) return "EXAMEODONTOL";
-        else if ( texto.includes("BITOS ALIMENTARES") ) return "BITOSALIMENTARES";
-        else if ( texto.includes("TESTE DE FAGERSTR") ) return "TESTEDEFAGERSTR";
-        else if ( texto.includes("VEL DE ESTRESSE") ) return "VELDEESTRESSE";
-        return "";
-    }
-    
-    addItemResposta( quantidadeItens ) {
-        let itemRespostaFichaColeta: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
-        
-        this.constructItemRespostaFichaColeta( quantidadeItens - 1, itemRespostaFichaColeta );
-    }
-    
-    constructItemRespostaFichaColeta( quantidadeItens, itemRespostaFichaColeta ) {
+    constructItemRespostaFichaColeta( quantidadeItens: number, itemRespostaFichaColeta: ItemRespostaFichaColeta ) {
         quantidadeItens--;
+        if ( quantidadeItens == 1 ) return;
         
-        if ( quantidadeItens == 0 ) return;
-        
-        let item: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
+        let item: ItemRespostaFichaColeta = 
+            new ItemRespostaFichaColetaBuilder().initialize(new ItemRespostaFichaColeta());
         
         itemRespostaFichaColeta.setItem(item);
         this.constructItemRespostaFichaColeta(quantidadeItens, item);

@@ -27,11 +27,10 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
             
             this.goTo = "cargo";
             this.cargo = new CargoBuilder().initialize(this.cargo);
+            this.cursosSelecteds = new Array<Curso>();
         }
     
     ngOnInit() {
-        this.cursosSelecteds = new Array<Curso>();
-        
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if( params['id'] !== undefined ) {

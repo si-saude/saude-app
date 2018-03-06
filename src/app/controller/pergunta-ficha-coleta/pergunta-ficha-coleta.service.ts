@@ -2,13 +2,15 @@ import { Router } from '@angular/router';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
-import { GlobalVariable } from './../../global'
+import { GlobalVariable } from './../../global';
+import { EquipeService } from './../equipe/equipe.service';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
 export class PerguntaFichaColetaService extends GenericService {
 
-    constructor( http: Http, router: Router ) {
+    constructor( http: Http, router: Router,
+            private equipeService: EquipeService ) {
         super( http, router, "pergunta-ficha-coleta" );
     }
 
@@ -24,5 +26,9 @@ export class PerguntaFichaColetaService extends GenericService {
         return this.http
             .get( urlTipos + "?filter=", { headers: this.headers } )
             .toPromise();
+    }
+    
+    getEquipes() {
+        return this.equipeService.getEquipes();
     }
 }

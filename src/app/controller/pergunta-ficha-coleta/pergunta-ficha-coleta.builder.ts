@@ -1,6 +1,8 @@
 import { PerguntaFichaColeta } from './../../model/pergunta-ficha-coleta';
 import { ItemPerguntaFichaColeta } from './../../model/item-pergunta-ficha-coleta';
 import { ItemPerguntaFichaColetaBuilder } from './../item-pergunta-ficha-coleta/item-pergunta-ficha-coleta.builder';
+import { Equipe } from './../../model/equipe';
+import { EquipeBuilder } from './../equipe/equipe.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class PerguntaFichaColetaBuilder extends GenericBuilder{
@@ -10,6 +12,9 @@ export class PerguntaFichaColetaBuilder extends GenericBuilder{
         
         perguntaFichaColeta.setItens(
                 new ItemPerguntaFichaColetaBuilder().initializeList(new Array<ItemPerguntaFichaColeta>()));
+        
+        perguntaFichaColeta.setEquipes(
+                new EquipeBuilder().initializeList(new Array<Equipe>()));
         
         return perguntaFichaColeta;
     }
@@ -38,6 +43,7 @@ export class PerguntaFichaColetaBuilder extends GenericBuilder{
         clonePerguntaFichaColeta.setVersion(this.getValue(perguntaFichaColeta, "getVersion"));
         clonePerguntaFichaColeta.setCodigo(this.getValue(perguntaFichaColeta, "getCodigo"));
         clonePerguntaFichaColeta.setDescricao(this.getValue(perguntaFichaColeta, "getDescricao"));
+        clonePerguntaFichaColeta.setOrdem(this.getValue(perguntaFichaColeta, "getOrdem"));
         clonePerguntaFichaColeta.setInativo(this.getValue(perguntaFichaColeta, "getInativo"));
         
         if(this.getValue(perguntaFichaColeta, "getGrupo") == "")
@@ -57,6 +63,10 @@ export class PerguntaFichaColetaBuilder extends GenericBuilder{
         clonePerguntaFichaColeta.setItens(
                 new ItemPerguntaFichaColetaBuilder().cloneList(
                         this.getValue(perguntaFichaColeta, "getItens")));
+        
+        clonePerguntaFichaColeta.setEquipes(
+                new EquipeBuilder().cloneList(
+                        this.getValue(perguntaFichaColeta, "getEquipes")));
         
         return clonePerguntaFichaColeta;
     }

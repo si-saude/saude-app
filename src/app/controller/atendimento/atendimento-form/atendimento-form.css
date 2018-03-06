@@ -45,6 +45,14 @@ select {
 	margin-left: 70px;
 }
 
+.btn-remove {
+	margin-left: 15px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
+}
+
 table {
 	border: 1px solid #c0c0c0;
     display: inline-table;
@@ -55,6 +63,10 @@ table {
 thead > tr {
 	margin-bottom: 0px;
 	border-bottom: 1px solid;
+}
+
+th {
+	margin-bottom: 0px;
 }
 
 .btn-floating i {
@@ -152,4 +164,18 @@ tr:nth-child(even) {
 
 .paragraph-modal {
 	margin-left: 10px;
+}
+
+#fichaColeta {
+	margin-bottom: 50px;
+}
+
+.select-sim-nao {
+	margin-bottom: 40px;
+}
+
+.conteiner-ficha-coleta {
+	max-height: 400px;
+    overflow-y: scroll;
+    width: 100%;
 }

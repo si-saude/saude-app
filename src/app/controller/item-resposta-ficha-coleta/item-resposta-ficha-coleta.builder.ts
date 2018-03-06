@@ -9,8 +9,7 @@ export class ItemRespostaFichaColetaBuilder extends GenericBuilder{
                 itemRespostaFichaColeta == undefined ) return null;
         else itemRespostaFichaColeta = new ItemRespostaFichaColeta();
         
-        itemRespostaFichaColeta.setItem(
-                new ItemRespostaFichaColetaBuilder().initialize(new ItemRespostaFichaColeta()));
+        itemRespostaFichaColeta.setItem( new ItemRespostaFichaColeta() );
         itemRespostaFichaColeta.setResposta( new RespostaFichaColeta() );
         
         return itemRespostaFichaColeta;
@@ -40,8 +39,11 @@ export class ItemRespostaFichaColetaBuilder extends GenericBuilder{
         cloneItemRespostaFichaColeta.setVersion(this.getValue(itemRespostaFichaColeta, "getVersion"));
         cloneItemRespostaFichaColeta.setConteudo(this.getValue(itemRespostaFichaColeta, "getConteudo"));
         
-        cloneItemRespostaFichaColeta.setItem(
-                new ItemRespostaFichaColetaBuilder().clone(this.getValue(itemRespostaFichaColeta, "getItem")));
+        if ( this.getValue(itemRespostaFichaColeta, "getItem") != undefined || 
+                this.getValue(itemRespostaFichaColeta, "getItem") != null )
+            cloneItemRespostaFichaColeta.setItem(
+                    new ItemRespostaFichaColetaBuilder().clone(this.getValue(itemRespostaFichaColeta, "getItem")));
+        
         cloneItemRespostaFichaColeta.setResposta(new RespostaFichaColeta());
         
         return cloneItemRespostaFichaColeta;
