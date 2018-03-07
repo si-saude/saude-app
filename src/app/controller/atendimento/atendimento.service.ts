@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 import { GlobalVariable } from './../../global';
 import { UsuarioService } from './../usuario/usuario.service';
 import { LocalizacaoService } from './../localizacao/localizacao.service';
+import { DiagnosticoService } from './../diagnostico/diagnostico.service';
+import { IntervencaoService } from './../intervencao/intervencao.service';
+import { EquipeService } from './../equipe/equipe.service';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { GenericService } from './../../generics/generic.service';
@@ -15,7 +18,10 @@ export class AtendimentoService extends GenericService {
     constructor( http: Http, router: Router,
             private usuarioService: UsuarioService,
             private profissionalService: ProfissionalSaudeService,
-            private localizacaoService: LocalizacaoService ) {
+            private localizacaoService: LocalizacaoService,
+            private diagnosticoService: DiagnosticoService,
+            private intervencaoService: IntervencaoService,
+            private equipeService: EquipeService) {
         super(http,router,"atendimento");
     }
     
@@ -127,6 +133,29 @@ export class AtendimentoService extends GenericService {
         return this.http
             .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
             .toPromise();
+    }
+    
+    getPrazos() {
+        let urlPrazo = GlobalVariable.BASE_API_URL + "/generic/prazo-em-meses";
+        return this.http
+            .get( urlPrazo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getDiagnosticoByDescricao( descricao ) {
+        return this.diagnosticoService.getDiagnosticoByDescricao(descricao);
+    }
+    
+    getDiagnosticoByCodigo( codigo ) {
+        return this.diagnosticoService.getDiagnosticoByCodigo(codigo);
+    }
+    
+    getIntervencaoByDescricao( descricao ) {
+        return this.intervencaoService.getIntervencaoByDescricao(descricao);
+    }
+    
+    getEquipeAbordagemByName( nome ) {
+        return this.equipeService.getEquipeByName(nome);
     }
     
 }

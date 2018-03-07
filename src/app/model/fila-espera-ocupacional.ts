@@ -2,6 +2,7 @@ import { Servico } from './servico';
 import { Localizacao } from './localizacao';
 import { Empregado } from './empregado';
 import { FichaColeta } from './ficha-coleta';
+import { RiscoPotencial } from './risco-potencial';
 
 export class FilaEsperaOcupacional {
     private id: number;
@@ -13,6 +14,7 @@ export class FilaEsperaOcupacional {
     private status: string;
     private tempoEspera: number;
     private fichaColeta: FichaColeta;
+    private riscoPotencial: RiscoPotencial;
     private saida: Date;
     private version: number;
 
@@ -102,5 +104,13 @@ export class FilaEsperaOcupacional {
     
     setFichaColeta(fichaColeta: FichaColeta) {
         this.fichaColeta = fichaColeta;
+    }
+    
+    getRiscoPotencial() {
+        return this.riscoPotencial;
+    }
+    
+    setRiscoPotencial(riscoPotencial: RiscoPotencial) {
+        this.riscoPotencial = riscoPotencial;
     }
 }

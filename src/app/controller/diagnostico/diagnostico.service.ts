@@ -23,4 +23,20 @@ export class DiagnosticoService extends GenericService {
     getDiagnosticos() {
         return this.selectList(new DiagnosticoFilter());
     }
+    
+    getDiagnosticoByDescricao(descricao: string) {
+        let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
+        diagnosticoFilter.setPageSize(30);
+        diagnosticoFilter.setDescricao(descricao);
+        
+        return this.selectList(diagnosticoFilter);
+    }
+    
+    getDiagnosticoByCodigo(codigo: string) {
+        let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
+        diagnosticoFilter.setPageSize(30);
+        diagnosticoFilter.setCodigo(codigo);
+        
+        return this.selectList(diagnosticoFilter);
+    }
 }

@@ -20,10 +20,11 @@
 		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs">
 			<li class="tab col s3"><a href="#filaAtendimento">Fila de
 					Atendimento</a></li>
-			<li class="tab col s3"><a href="#atendimento">Atendimento</a></li>
+			<li class="tab col s2"><a href="#atendimento">Atendimento</a></li>
 			<li class="tab col s3"><a href="#fichaColeta">Ficha de
 					Coleta</a></li>
-			<li class="tab col s3"><a href="#triagem">Triagem</a></li>
+			<li class="tab col s2"><a href="#triagem">Triagem</a></li>
+			<li class="tab col s2"><a href="#planejamento">Planejamento</a></li>
 		</ul>
 	</div>
 
@@ -952,8 +953,7 @@
 						</tr>
 					</thead>
 					<div class="container-triagens">
-						<div
-							*ngFor="let triagem of atendimento.triagens; let t = index">
+						<div *ngFor="let triagem of atendimento.triagens; let t = index">
 							<tbody>
 								<tr class="row col s12">
 									<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">
@@ -992,6 +992,119 @@
 
 		</div>
 
+	</div>
+
+	<div id="planejamento">
+
+		<div class="container-triagem">
+			<div class="table-triagem">
+				<table style="width: 100%">
+					<div class="container-triagens-planejamento">
+						<div *ngFor="let triagem of atendimento.triagens; let t = index">
+							<div *ngIf="verifyIndiceTriagem(triagem)">
+								<fieldset class="fieldset-planejamento-triagem">
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-indicador">Indicador</td>
+											<td class="col s9 indicador">{{triagem.indicadorSast.nome}}</td>
+										</tr>
+									</div>
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-indice-descricao">Índice Descrição</td>
+											<td class="col s9 indice-descricao">{{getIndiceDescricao(triagem)}}</td>
+										</tr>
+									</div>
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-eixo-clinico">Eixo Clínico</td>
+											<td class="col s9 eixo-clinico">
+											<input type="text" name="eixo-clinico" disabled
+												[(ngModel)]="triagem.diagnostico.eixo.titulo">
+											</td>
+										</tr>
+									</div>
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-diagnostico">Diagnóstico</td>
+											<td class="col s9 diagnostico">
+												<input type="text" materialize="autocomplete" autocomplete="off"
+													name="diagnostico{{t}}" class="resposta-conteudo"
+													[(ngModel)]="triagem.diagnostico.descricao"
+													(blur)="getDiagnostico(t)"
+													(ngModelChange)="selectDiagnosticoByCodigo($event); selectDiagnosticoByDescricao($event);"
+													[materializeParams]="autocompleteDiagnostico">
+												<input
+													id="triagem.diagnostico.id" type="hidden"
+													name="triagem.diagnostico.id"
+													[(ngModel)]="triagem.diagnostico.id">
+											</td>
+										</tr>
+									</div>
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-intervencao">Intervenção</td>
+											<td class="col s9 intervencao">
+												<input type="text" materialize="autocomplete" autocomplete="off"
+													name="intervencao{{t}}" class="resposta-conteudo"
+													[(ngModel)]="triagem.intervencao.descricao"
+													(blur)="getIntervencao(t)"
+													(ngModelChange)="selectIntervencaoByDescricao($event);"
+													[materializeParams]="autocompleteIntervencao">
+												<input
+													id="triagem.intervencao.id" type="hidden"
+													name="triagem.intervencao.id"
+													[(ngModel)]="triagem.intervencao.id">
+											</td>
+										</tr>
+									</div>
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-equipe-abordagem">Equipe de Abordagem</td>
+											<td class="col s9 equipe-abordagem">
+												<input type="text" materialize="autocomplete" autocomplete="off"
+													name="equipeAbordagem{{t}}" class="resposta-conteudo"
+													[(ngModel)]="triagem.equipeAbordagem.nome"
+													(blur)="getEquipeAbordagem(t)"
+													(ngModelChange)="selectEquipeAbordagemByName($event);"
+													[materializeParams]="autocompleteEquipeAbordagem">
+												<input
+													id="triagem.equipeAbordagem.id" type="hidden"
+													name="triagem.equipeAbordagem.id"
+													[(ngModel)]="triagem.equipeAbordagem.id">
+											</td>
+										</tr>
+									</div>
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-prazo-inicio">Sugestão de prazo de início</td>
+											<td class="col s9 prazo-inicio">
+												<select name="prazo{{t}}" class="resposta-conteudo" 
+													class="browser-default" [(ngModel)]="triagem.prazo">
+													<option disabled selected value="">Selecione um prazo</option>
+													<option *ngFor="let prazo of prazos"
+														value="{{prazo}}">{{prazo}}</option>
+												</select>
+											</td>
+										</tr>
+									</div>
+									<div class="row">
+										<tr class="row col s12">
+											<td class="col s3 label-justificativa">Justificativa/Observação</td>
+											<td class="col s9 justificativa">
+												<input type="text" name="justificativa{{t}}" class="resposta-conteudo"
+													[(ngModel)]="triagem.justificativa">
+											</td>
+										</tr>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</div>
+				</table>
+			</div>
+
+		</div>
 	</div>
 
 </div>

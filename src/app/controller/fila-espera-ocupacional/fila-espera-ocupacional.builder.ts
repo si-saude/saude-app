@@ -7,6 +7,8 @@ import { Servico } from './../../model/servico';
 import { ServicoBuilder } from './../servico/servico.builder';
 import { FichaColeta } from './../../model/ficha-coleta';
 import { FichaColetaBuilder } from './../ficha-coleta/ficha-coleta.builder';
+import { RiscoPotencial } from './../../model/risco-potencial';
+import { RiscoPotencialBuilder } from './../risco-potencial/risco-potencial.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
@@ -18,6 +20,7 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         filaEsperaOcupacional.setLocalizacao(new LocalizacaoBuilder().initialize(new Localizacao()));
         filaEsperaOcupacional.setServico(new ServicoBuilder().initialize(new Servico()));
         filaEsperaOcupacional.setFichaColeta(new FichaColetaBuilder().initialize(new FichaColeta()));
+        filaEsperaOcupacional.setRiscoPotencial(new RiscoPotencialBuilder().initialize(new RiscoPotencial()));
         
         return filaEsperaOcupacional;
     }

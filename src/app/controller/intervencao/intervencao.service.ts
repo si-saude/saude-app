@@ -22,4 +22,12 @@ export class IntervencaoService extends GenericService {
         return this.selectList(new IntervencaoFilter());
     }
     
+    getIntervencaoByDescricao(descricao: string) {
+        let intervencaoFilter: IntervencaoFilter = new IntervencaoFilter();
+        intervencaoFilter.setPageSize(30);
+        intervencaoFilter.setDescricao(descricao);
+        
+        return this.selectList(intervencaoFilter);
+    }
+    
 }

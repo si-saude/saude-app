@@ -14,7 +14,7 @@ export class Triagem {
     private diagnostico: Diagnostico;
     private intervencao: Intervencao;
     private equipeAbordagem: Equipe;
-    private prazo: string;
+    private prazo: string = "";
     private justificativa: string;
     private version: number;
 
