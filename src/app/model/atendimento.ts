@@ -12,6 +12,7 @@ export class Atendimento {
     private triagens: Array<Triagem>;
     private tarefa: Tarefa;
     private aso: Aso;
+    private triagensTodosAtendimentos: Array<Triagem>;
     private version: number;
 
     getId() {
@@ -68,5 +69,13 @@ export class Atendimento {
 
     setAso(aso: Aso) {
         this.aso = aso;
+    }
+    
+    getTriagensTodosAtendimentos() {
+        return this.triagensTodosAtendimentos;
+    }
+    
+    setTriagensTodosAtendimentos(triagensTodosAtendimentos: Array<Triagem>) {
+        this.triagensTodosAtendimentos = triagensTodosAtendimentos;
     }
 }

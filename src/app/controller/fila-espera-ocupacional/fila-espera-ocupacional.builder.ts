@@ -50,6 +50,7 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         cloneFilaEsperaOcupacional.setAtualizacao(this.getValue( filaEsperaOcupacional, "getAtualizacao" ) );
         cloneFilaEsperaOcupacional.setHorarioCheckin(this.getValue( filaEsperaOcupacional, "getHorarioCheckin" ) );
         cloneFilaEsperaOcupacional.setSaida(this.getValue( filaEsperaOcupacional, "getSaida" ) );
+        cloneFilaEsperaOcupacional.setTempoEspera(this.getValue( filaEsperaOcupacional, "getTempoEspera" ) );
         
         if (this.getValue(filaEsperaOcupacional, "getFichaColeta") !== undefined) { 
             cloneFilaEsperaOcupacional.setFichaColeta(
@@ -66,6 +67,13 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
             cloneFilaEsperaOcupacional.setStatus("");
         else
             cloneFilaEsperaOcupacional.setStatus(this.getValue(filaEsperaOcupacional, "getStatus"));
+        
+        if (this.getValue(filaEsperaOcupacional, "getRiscoPotencial") !== undefined) { 
+            cloneFilaEsperaOcupacional.setRiscoPotencial(
+                    new RiscoPotencialBuilder().clone(this.getValue(filaEsperaOcupacional,"getRiscoPotencial")));
+        } else {
+            cloneFilaEsperaOcupacional.setRiscoPotencial(new RiscoPotencialBuilder().initialize(null));            
+        }
         
         cloneFilaEsperaOcupacional.setEmpregado(new EmpregadoBuilder().clone(this.getValue(filaEsperaOcupacional, "getEmpregado")));
         cloneFilaEsperaOcupacional.setLocalizacao(new LocalizacaoBuilder().clone(this.getValue(filaEsperaOcupacional, "getLocalizacao")));

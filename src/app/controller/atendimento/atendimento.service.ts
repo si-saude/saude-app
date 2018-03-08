@@ -158,4 +158,8 @@ export class AtendimentoService extends GenericService {
         return this.equipeService.getEquipeByName(nome);
     }
     
+    getEquipes() {
+        return this.equipeService.getEquipes();
+    }
+    
 }
