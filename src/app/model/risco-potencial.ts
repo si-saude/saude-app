@@ -14,6 +14,8 @@ export class RiscoPotencial {
     private fimAgendamento: Date;
     private riscosInterdiciplinares: Array<RiscoEmpregado>;
     private valor: number;
+    private atual: boolean;
+    private statusRPSat: string;
     private version: number;
 
     public getId() {
@@ -56,12 +58,12 @@ export class RiscoPotencial {
         this.version = version;
     }
 
+    public setRiscosInterdiciplinares(riscosInterdiciplinares: Array<RiscoEmpregado>) {
+        this.riscosInterdiciplinares = riscosInterdiciplinares;
+    }
+    
     public getRiscosInterdiciplinares() {
         return this.riscosInterdiciplinares;
-    }
-
-    public getValor() {
-        return this.valor;
     }
 
     public getEquipeResponsavel() {
@@ -103,4 +105,29 @@ export class RiscoPotencial {
     public setFimAgendamento(fimAgendamento: Date) {
         this.fimAgendamento = fimAgendamento;
     }
+    
+    public getAtual() {
+        return this.atual;
+    }
+    
+    public setAtual(atual: boolean) {
+        this.atual = atual;
+    }
+    
+    public getStatusRPSat() {
+        return this.statusRPSat;
+    }
+    
+    public setStatusRPSat(statusRPSat: string) {
+        this.statusRPSat = statusRPSat;
+    }
+    
+    public getValor() {
+        return this.valor;
+    }
+    
+    public setValor(valor: number) {
+        this.valor = valor;
+    }
+    
 }

@@ -1,0 +1,26 @@
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.ranking {
+	padding-top: 10px;
+}
+
+.col {
+	margin: 0 auto;
+}

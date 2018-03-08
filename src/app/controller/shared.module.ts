@@ -58,6 +58,7 @@ import { EixoService } from './eixo/eixo.service';
 import { DiagnosticoService } from './diagnostico/diagnostico.service';
 import { IntervencaoService } from './intervencao/intervencao.service';
 import { PerguntaFichaColetaService } from './pergunta-ficha-coleta/pergunta-ficha-coleta.service';
+import { RiscoPotencialService } from './risco-potencial/risco-potencial.service';
 
 @NgModule({
   declarations: [
@@ -134,6 +135,7 @@ import { PerguntaFichaColetaService } from './pergunta-ficha-coleta/pergunta-fic
     DiagnosticoService,
     EixoService,
     PerguntaFichaColetaService,
+    RiscoPotencialService,
     CanDeactivateGuard
   ]
 })
