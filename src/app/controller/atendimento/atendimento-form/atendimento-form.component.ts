@@ -274,7 +274,7 @@ export class AtendimentoFormComponent {
 
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     
-                    let triagem: Triagem = new Triagem();
+                    /*let triagem: Triagem = new Triagem();
                     let diagnostico: Diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
                     let intervencao: Intervencao = new IntervencaoBuilder().initialize(new Intervencao());
                     let indicadorSast: IndicadorSast = new IndicadorSast();
@@ -428,7 +428,7 @@ export class AtendimentoFormComponent {
                     triagem.setEquipeAbordagem( equipe );
                     triagem.setDiagnostico(diagnostico);
                     triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
+                    this.atendimento.getTriagens().push( triagem );*/
 //                    
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
@@ -442,8 +442,8 @@ export class AtendimentoFormComponent {
                         }
 
                         if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20 ) {
-                            //                            this.audio.load();
-                            //                            this.audio.play();
+                            this.audio.load();
+                            this.audio.play();
                         }
                     }
                 } )
