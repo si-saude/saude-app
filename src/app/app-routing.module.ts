@@ -55,8 +55,8 @@ import { EixoGuard } from './guards/guards-child/eixo.guard';
 import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
+import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
 import { AgendaComponent } from './agenda/agenda.component';
-
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -179,6 +179,9 @@ const routes: Routes = [
   { path: 'risco-ghe',
       loadChildren: 'app/controller/risco-ghe/risco-ghe.module#RiscoGheModule',
       canActivateChild: [RiscoGheGuard]},
+  { path: 'risco-potencial',
+      loadChildren: 'app/controller/risco-potencial/risco-potencial.module#RiscoPotencialModule',
+      canActivateChild: [RiscoPotencialGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

@@ -1,0 +1,92 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="list-container">
+
+	<div class="row">
+
+		<table class="striped">
+			<thead>
+				<tr class="row col s12">
+					<th class="col s1">Ranking</th>
+					<th class="col s2">RPSat</th>
+					<th class="col s2">Gestão</th>
+					<th class="col s5">Empregado</th>
+					<th class="col s2">Data</th>
+				</tr>
+			</thead>
+			<div *ngFor="let riscoPotencial of riscoPotenciais;let i = index">
+				<tbody class="col s12">
+					<tr class="col s12">
+						<td class="col s1 ranking">{{i+1}}</td>
+						<td class="col s2 rpsat">{{riscoPotencial.statusRPSat}}</td>
+						<td class="col s2 gestao">{{riscoPotencial.equipeResponsavel.nome}}</td>
+						<td class="col s5 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
+						<td class="col s2 data">
+							<my-date-picker name="data" [options]="myDatePickerOptions"
+								[ngModel]="riscoPotencialDatas[i]" placeholder="Data"> </my-date-picker>
+						</td>
+					</tr>
+				</tbody>
+			</div>
+
+		</table>
+
+	</div>
+
+	<!-- Paginação
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+
+	<div class="row bts">
+		<div class="col s8">
+			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+		</div>
+		<div class="col s4">
+			<a [routerLink]="['/risco-ghe/cadastrar']"
+				class="waves-effect waves-light btn button-add">Adicionar</a>
+		</div>
+	</div>
+ -->
+</div>
+
+<!-- Modal Structure 
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+
+	<div class="row">
+
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="nome">Título</label> <input type="text" id="titulo"
+					[(ngModel)]="filter.titulo" name="titulo">
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="setFilter()">Filtrar</a>
+	</div>
+
+</div>
+-->
+<!-- 
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" 
+	[show]="openModalDelete"></app-confirm-delete>
+ -->
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
+</div>

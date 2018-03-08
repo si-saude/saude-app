@@ -70,6 +70,7 @@ import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
+import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
 
 @NgModule({
   declarations: [
@@ -143,7 +144,8 @@ import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
     DiagnosticoGuard,
     PerguntaFichaColetaGuard,
     IntervencaoGuard,
-    RiscoGheGuard
+    RiscoGheGuard,
+    RiscoPotencialGuard
   ],
   bootstrap: [ 
     AppComponent

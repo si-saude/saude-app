@@ -21,6 +21,7 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().initialize(new FilaEsperaOcupacional()));
         atendimento.setTarefa(new TarefaBuilder().initialize(new Tarefa()));
         atendimento.setTriagens(new TriagemBuilder().initializeList(new Array<Triagem>()));
+        atendimento.setTriagensTodosAtendimentos(new TriagemBuilder().cloneList(new Array<Triagem>()));
         
         return atendimento;
     }
@@ -53,6 +54,8 @@ export class AtendimentoBuilder extends GenericBuilder {
                 this.getValue( atendimento, "getFilaEsperaOcupacional" ) ));
         cloneAtendimento.setTarefa(new TarefaBuilder().clone(this.getValue( atendimento, "getTarefa" ) ));
         cloneAtendimento.setTriagens(new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagens" ) ));
+        cloneAtendimento.setTriagensTodosAtendimentos(
+                new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));
         
         return cloneAtendimento;
     }

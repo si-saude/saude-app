@@ -38,6 +38,8 @@ import { ItemPerguntaFichaColeta } from './../../../model/item-pergunta-ficha-co
 import { IndicadorSast } from './../../../model/indicador-sast';
 import { RespostaFichaColeta } from './../../../model/resposta-ficha-coleta';
 import { IndicadorSastBuilder } from './../../indicador-sast/indicador-sast.builder';
+import { RiscoPotencial } from './../../../model/risco-potencial';
+import { RiscoPotencialBuilder } from './../../risco-potencial/risco-potencial.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
 
 @Component( {
@@ -70,6 +72,10 @@ export class AtendimentoFormComponent {
     private modalConfirmLocalizacao;
     audio: any;
     prazos: Array<string>;
+    equipes: Array<Equipe>;
+    equipesSelecteds: Array<Equipe>;
+    disabledTab: string;
+    existAtendimento: boolean;
 
     statusesSimNao: Array<string>;
     statusSim: Array<boolean>;
@@ -86,7 +92,9 @@ export class AtendimentoFormComponent {
     validEquipeAbordagem: string;
     autocompleteEquipeAbordagem;
     
-
+    equipesTriagensTodosAtendimentos: Array<Equipe>;
+    triagensTodosAtendimentosByEquipe = [[]];
+    
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
@@ -114,6 +122,11 @@ export class AtendimentoFormComponent {
         this.validIntervencao = "";
         this.intervencoes = new Array<Intervencao>();
         this.prazos = new Array<string>();
+        this.equipes = new Array<Equipe>();
+        this.equipesSelecteds = new Array<Equipe>();
+        this.equipesTriagensTodosAtendimentos = new Array<Equipe>();
+        this.disabledTab = 'disabled';
+        this.existAtendimento = false;
     }
 
     ngOnInit() {
@@ -140,10 +153,14 @@ export class AtendimentoFormComponent {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
                                     this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
+                                    
+                                    if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) 
+                                        this.disabledTab = '';
+                                    else this.disabledTab = 'disabled';
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 30000 )
+                                    this.inscricao = TimerObservable.create( 0, 15000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -175,6 +192,7 @@ export class AtendimentoFormComponent {
         this.getLocalizacoes();
         this.getStatusSimNao();
         this.getPrazos();
+        this.getEquipes();
     }
 
     getLocalizacoes() {
@@ -206,6 +224,16 @@ export class AtendimentoFormComponent {
                 console.log( "Erro ao retornar os prazos." );
             } )
     }
+    
+    getEquipes() {
+        this.atendimentoService.getEquipes()
+            .then( res => {
+                this.equipes = new EquipeBuilder().cloneList(res.json());
+            } )
+            .catch( error => {
+                console.log( "Erro ao retornar os prazos." );
+            } )
+    }
 
     confirmarLocalizacao() {
         //verifico no openModalConfirmLocalizacao() se o id da localizacao eh maior que zero
@@ -231,6 +259,16 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    
+                    let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
+                    let equipeResponsavel: Equipe = new EquipeBuilder().initialize(new Equipe());
+                    equipeResponsavel.setNome("EQUIPE RESPONSAVEL");
+                    riscoPotencial.setEquipeResponsavel(equipeResponsavel);
+                    riscoPotencial.setInicioAgendamento(new Date());
+                    riscoPotencial.setFimAgendamento(new Date());
+                    riscoPotencial.setCondutaPercepcao("CONDUTA PERCEPCAO");
+                    
+                    this.atendimento.getFilaEsperaOcupacional().setRiscoPotencial(riscoPotencial)
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
@@ -273,6 +311,14 @@ export class AtendimentoFormComponent {
                     } )
 
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    
+                    let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
+                    let equipeResponsavel: Equipe = new EquipeBuilder().initialize(new Equipe());
+                    equipeResponsavel.setNome("EQUIPE RESPONSAVEL");
+                    riscoPotencial.setEquipeResponsavel(equipeResponsavel);
+                    riscoPotencial.setInicioAgendamento(new Date());
+                    riscoPotencial.setFimAgendamento(new Date());
+                    riscoPotencial.setCondutaPercepcao("CONDUTA PERCEPCAO");
                     
                     /*let triagem: Triagem = new Triagem();
                     let diagnostico: Diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
@@ -429,11 +475,14 @@ export class AtendimentoFormComponent {
                     triagem.setDiagnostico(diagnostico);
                     triagem.setIntervencao(intervencao);
                     this.atendimento.getTriagens().push( triagem );*/
-//                    
+                    
+                    this.getTriagensTodosAtendimentos();
+
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
+                        this.existAtendimento = true;
                         this.setDataNascimento();
 
                         for ( let i = 0; i < $( ".tab" ).children().length; i++ ) {
@@ -670,17 +719,17 @@ export class AtendimentoFormComponent {
                 return;
             }
 
-//            this.atendimentoService.finalizar( this.atendimento )
-//                .then( res => {
-//                    this.toastParams = ["Atendimento finalizado", 4000];
-//                    this.globalActions.emit( 'toast' );
-//                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
-//                } )
-//                .catch( error => {
-//                    this.catchConfiguration( error );
-//                    this.toastParams = [error.text(), 4000];
-//                    this.globalActions.emit( 'toast' );
-//                } )
+            this.atendimentoService.finalizar( this.atendimento )
+                .then( res => {
+                    this.toastParams = ["Atendimento finalizado", 4000];
+                    this.globalActions.emit( 'toast' );
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                } )
+                .catch( error => {
+                    this.catchConfiguration( error );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
+                } )
         }
     }
 
@@ -929,25 +978,20 @@ export class AtendimentoFormComponent {
         this.constructItemRespostaFichaColeta( quantidadeItens, item );
     }
 
-    getEquipesTriagens() {
-        let eqps: Array<Equipe> = new Array<Equipe>();
-
-        this.atendimento.getTriagens().forEach( t => {
-            if ( eqps.find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
-                eqps.push( t.getEquipeAbordagem() );
+    getTriagensTodosAtendimentos() {
+        this.atendimento.getTriagensTodosAtendimentos().forEach( t => {
+            if ( this.equipesTriagensTodosAtendimentos.find(e => e.getId() == t.getEquipeAbordagem().getId()) == undefined )
+                this.equipesTriagensTodosAtendimentos.push( t.getEquipeAbordagem() );
+            
+            if ( this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()] == undefined ) {
+                this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
             }
-        } )
-
-        return eqps;
+            
+            this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()].push(t);
+        })
     }
 
-    getTriagensByEquipe( equipe: Equipe ) {
-        let listTriagens: Array<Triagem> = new Array<Triagem>();
-
-        listTriagens = this.atendimento.getTriagens().filter( t => t.getEquipeAbordagem().getId() == equipe.getId() );
-
-        return listTriagens;
-    }
+    
 
     catchConfiguration( error ) {
         switch ( error.status ) {
@@ -1120,6 +1164,30 @@ export class AtendimentoFormComponent {
         array["data"] = data;
 
         return array;
+    }
+    
+    selectAcolhimentoTab() {
+        console.log(this.profissional);
+        setTimeout(() => {
+            console.log(this.profissional.getEquipe().getAbreviacao() == "ACO");
+            if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) return '';
+            else return 'disabled';
+        }, 500);
+    }
+    
+    addEquipe(valor: number) {
+        if ( valor != 0 ) {
+            let e = this.equipesSelecteds.find(c => c.getId() == valor);
+            if ( e == undefined ) {
+                let equipe: Equipe = this.equipes.find(eq => eq.getId() == valor);
+                this.equipesSelecteds.push(equipe);
+                this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipes(this.equipesSelecteds);
+            }
+        }
+    }
+
+    removeEquipe(i: number) {
+        this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getEquipes().splice(i, 1);
     }
     
 }

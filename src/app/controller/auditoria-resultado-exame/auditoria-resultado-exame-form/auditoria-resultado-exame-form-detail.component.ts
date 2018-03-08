@@ -41,6 +41,8 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
     autocompleteEmpregadoConvocacao;
 
     dataResultadoExames: Array<any>;
+    dataRecebimentoExames: Array<any>;
+    dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
     
@@ -57,6 +59,8 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
         this.conformList = new Array<boolean>();
         this.canAuditar = false;
         this.dataResultadoExames = new Array<any>();
+        this.dataRecebimentoExames = new Array<any>();
+        this.dataItemResultadoExames = new Array<any>();
         this.campoExames = new CampoExameBuilder().initializeList( this.campoExames );
         this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
         this.autocompleteEmpregadoConvocacao = [];
@@ -147,6 +151,10 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
                 this.dataResultadoExames[i] =
                     this.parseDataToObjectDatePicker(
                     this.empregadoConvocacao.getResultadoExames()[i].getData() );
+                
+                this.dataRecebimentoExames[i] =
+                    this.parseDataToObjectDatePicker(
+                        this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
             }
         }
     }

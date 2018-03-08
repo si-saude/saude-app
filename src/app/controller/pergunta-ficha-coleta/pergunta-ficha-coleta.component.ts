@@ -28,6 +28,7 @@ export class PerguntaFichaColetaComponent
             setTimeout(() => {
                 if ( this.array != undefined )
                     for ( let i=0; i < this.array.length; i++ ) {
+                      $("#descricao"+i).empty();
                       $("#descricao"+i).append(this.shortenDescricao(this.array[i]["descricao"]));                    
                     }
             }, 500);
