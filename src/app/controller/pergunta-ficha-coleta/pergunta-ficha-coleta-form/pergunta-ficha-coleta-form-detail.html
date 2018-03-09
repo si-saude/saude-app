@@ -13,61 +13,175 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
-			<div class="input-field col s10">
-				<label for="codigo">Código</label>
-				<input id="codigo" type="text" disabled
-					name="perguntaFichaColeta.codigo" [(ngModel)]="perguntaFichaColeta.codigo">
-			</div>
-		
-			<div class="input-field col s2 checkbox-inativo">
-				<input type="checkbox" id="inativo" disabled
-					[(ngModel)]="perguntaFichaColeta.inativo" name="perguntaFichaColeta.inativo">
-				<label for="perguntaFichaColeta">Inativo</label>
+
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#labels">Títulos</a></li>
+				</ul>
 			</div>
 
-		</div>
-
-		<div class="row">
-
-			<fieldset class="col s6">
-				<legend> Grupo </legend>
-				<div class="input-field col s12 select-grupo">
-					<select class="browser-default" disabled
-						[(ngModel)]="perguntaFichaColeta.grupo" name="grupo">
-						<option disabled selected value=0>Selecione um grupo</option>
-						<option *ngFor="let grupo of grupos" value="{{grupo}}">{{grupo}}</option>
-					</select>
+			<div id="dadosGerais">
+			
+				<div class="input-field col s10">
+					<label for="codigo">Código</label> 
+					<input id="codigo" type="text" disabled
+						maxlength="4" name="perguntaFichaColeta.codigo"
+						[(ngModel)]="perguntaFichaColeta.codigo">
 				</div>
-			</fieldset>
 
-			<fieldset class="col s4">
-				<legend> Tipo </legend>
-				<div class="input-field col s12 select-tipo">
-					<select class="browser-default" disabled
-						[(ngModel)]="perguntaFichaColeta.tipo" name="tipo">
-						<option disabled selected value=0>Selecione um tipo</option>
-						<option *ngFor="let tipo of tipos" value="{{tipo}}">{{tipo}}</option>
-					</select>
+				<div class="input-field col s2 checkbox-inativo">
+					<input type="checkbox" id="inativo" disabled
+						[(ngModel)]="perguntaFichaColeta.inativo"
+						name="perguntaFichaColeta.inativo"> <label
+						for="perguntaFichaColeta">Inativo</label>
 				</div>
-			</fieldset>
 
-		</div>
+				<div class="row">
+					<fieldset class="input-field col s4">
+						<legend> Grupo </legend>
+						<div class="input-field col s12 select-grupo">
+							<select class="browser-default" disabled
+								[(ngModel)]="perguntaFichaColeta.grupo" name="grupo">
+								<option disabled selected value="">Selecione um grupo</option>
+								<option *ngFor="let grupo of grupos" value="{{grupo}}">{{grupo}}</option>
+							</select>
+						</div>
+					</fieldset>
 
-		<div class="row">
+					<fieldset class="input-field col s4">
+						<legend> Tipo </legend>
+						<div class="input-field col s12 select-tipo">
+							<select class="browser-default" disabled
+								[(ngModel)]="perguntaFichaColeta.tipo" name="tipo">
+								<option disabled selected value="">Selecione um tipo</option>
+								<option *ngFor="let tipo of tipos" value="{{tipo}}">{{tipo}}</option>
+							</select>
+						</div>
+					</fieldset>
+					
+					<div class="input-field col s3">
+						<label for="ordem">Ordem</label> 
+						<input id="ordem" type="number" disabled
+							name="perguntaFichaColeta.ordem"
+							[(ngModel)]="perguntaFichaColeta.ordem">
+					</div>
+				</div>
 
-			<div class="input-field col s12">
-				<label for="descricao">Descrição</label>
-				<textarea id="descricao" class="materialize-textarea" disabled
-					name="perguntaFichaColeta.descricao"
-					[(ngModel)]="perguntaFichaColeta.descricao"></textarea>
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="descricao">Descrição</label>
+						<textarea id="descricao" class="materialize-textarea" disabled
+							name="perguntaFichaColeta.descricao"
+							[(ngModel)]="perguntaFichaColeta.descricao"></textarea>
+					</div>	
+				</div>
+				
+				<fieldset>
+					<legend>Equipes <a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
+					<div class="row row-equipe">
+
+						<div class="input-field col s4">
+							<select class="browser-default" disabled>
+								<option disabled selected value=0>Selecione uma equipe</option>
+								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+							</select>
+						</div>
+						<div class="col s2">
+							<a
+								class="btn-floating waves-effect waves-light green btn-add"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+
+					</div>
+
+				</fieldset>
+
+				<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s5">Nome</th>
+								<th class="col s5">Abreviação</th>
+								<th class="col s2">Remover</th>
+							</tr>
+						</thead>
+						<div *ngFor="let equipe of perguntaFichaColeta.equipes;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<td class="col s5 nome">{{equipe.nome}}</td>
+									<td class="col s5 abreviacao">{{equipe.abreviacao}}</td>
+									<td class="col s2 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>
+
 			</div>
 
-		</div>
+			<div id="labels">
 
-		<input id="id" type="hidden" name="perguntaFichaColeta.id"
-			[(ngModel)]="perguntaFichaColeta.id"> <input id="version"
-			type="hidden" name="perguntaFichaColeta.version"
-			[(ngModel)]="perguntaFichaColeta.version">
+				<div class="row row-labels">
+
+					<div class="input-field col s10">
+						<label for="label">Título
+						</label> <input id="label" type="text" disabled
+							name="label">
+					</div>
+					<div class="col s2">
+						<a class="btn-floating waves-effect waves-light green btn-add"> <i
+							class="material-icons center-icon">add</i>
+						</a>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s10">Título</th>
+								<th class="col s2">Remover</th>
+							</tr>
+						</thead>
+						<div *ngFor="let item of perguntaFichaColeta.itens;let p = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<td class="col s10 label">{{item.label}}</td>
+									<td class="col s2 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>
+
+			</div>
+
+			<input id="id" type="hidden" name="perguntaFichaColeta.id"
+				[(ngModel)]="perguntaFichaColeta.id"> <input id="version"
+				type="hidden" name="perguntaFichaColeta.version"
+				[(ngModel)]="perguntaFichaColeta.version">
+
+		</div>
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
@@ -78,6 +192,9 @@
 			<div class="col s6">
 				<a [routerLink]="['/pergunta-ficha-coleta']"
 					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 

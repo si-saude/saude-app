@@ -78,23 +78,29 @@ export class AtendimentoFormComponent {
     existAtendimento: boolean;
 
     statusesSimNao: Array<string>;
-    statusSim: Array<boolean>;
-    
+    statusSim;
+
     diagnosticos: Array<Diagnostico>;
     validDiagnostico: string;
     autocompleteDiagnostico;
-    
+
     intervencoes: Array<Intervencao>;
     validIntervencao: string;
     autocompleteIntervencao;
-    
+
     equipeAbordagens: Array<Equipe>;
     validEquipeAbordagem: string;
     autocompleteEquipeAbordagem;
-    
+
     equipesTriagensTodosAtendimentos: Array<Equipe>;
     triagensTodosAtendimentosByEquipe = [[]];
-    
+
+    gruposRespostasFichaColeta: Array<string>;
+    respostasFichaColetaByGrupo = [[]];
+    quantidadeItemRespostasByGrupo: Array<number>;
+
+    flag: number = 0;
+
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
@@ -116,7 +122,6 @@ export class AtendimentoFormComponent {
         this.modalConfirmLocalizacao = new EventEmitter<string | MaterializeAction>();
         this.existLocalizacao = false;
         this.audio = new Audio();
-        this.statusSim = Array<boolean>();
         this.validDiagnostico = "";
         this.diagnosticos = new Array<Diagnostico>();
         this.validIntervencao = "";
@@ -125,8 +130,10 @@ export class AtendimentoFormComponent {
         this.equipes = new Array<Equipe>();
         this.equipesSelecteds = new Array<Equipe>();
         this.equipesTriagensTodosAtendimentos = new Array<Equipe>();
+        this.gruposRespostasFichaColeta = new Array<string>();
         this.disabledTab = 'disabled';
         this.existAtendimento = false;
+        this.quantidadeItemRespostasByGrupo = new Array<number>();
     }
 
     ngOnInit() {
@@ -153,8 +160,8 @@ export class AtendimentoFormComponent {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
                                     this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
-                                    
-                                    if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) 
+
+                                    if ( this.profissional.getEquipe().getAbreviacao() == "ACO" )
                                         this.disabledTab = '';
                                     else this.disabledTab = 'disabled';
 
@@ -214,7 +221,7 @@ export class AtendimentoFormComponent {
                 console.log( "Erro ao retornar os status." );
             } )
     }
-    
+
     getPrazos() {
         this.atendimentoService.getPrazos()
             .then( res => {
@@ -224,11 +231,11 @@ export class AtendimentoFormComponent {
                 console.log( "Erro ao retornar os prazos." );
             } )
     }
-    
+
     getEquipes() {
         this.atendimentoService.getEquipes()
             .then( res => {
-                this.equipes = new EquipeBuilder().cloneList(res.json());
+                this.equipes = new EquipeBuilder().cloneList( res.json() );
             } )
             .catch( error => {
                 console.log( "Erro ao retornar os prazos." );
@@ -259,16 +266,6 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    
-                    let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
-                    let equipeResponsavel: Equipe = new EquipeBuilder().initialize(new Equipe());
-                    equipeResponsavel.setNome("EQUIPE RESPONSAVEL");
-                    riscoPotencial.setEquipeResponsavel(equipeResponsavel);
-                    riscoPotencial.setInicioAgendamento(new Date());
-                    riscoPotencial.setFimAgendamento(new Date());
-                    riscoPotencial.setCondutaPercepcao("CONDUTA PERCEPCAO");
-                    
-                    this.atendimento.getFilaEsperaOcupacional().setRiscoPotencial(riscoPotencial)
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
@@ -305,185 +302,200 @@ export class AtendimentoFormComponent {
 
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
-                    
+
                     respostasConteudoName.forEach( r => {
                         $( ".resposta-conteudo[ng-reflect-name=" + r + "]" ).prop( "disabled", false );
                     } )
 
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+
+                    setTimeout(() => {
+                        for ( let idx = 0; idx < this.atendimento.getTriagens().length; idx++ ) {
+                            if ( this.triagemIndices.get( idx ) != undefined ) {
+                                let i: string = "indice" + this.triagemIndices.get( idx ) + "_" + idx;
+                                $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
+                            }
+                        }
+                    }, 200 );
                     
-                    let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
-                    let equipeResponsavel: Equipe = new EquipeBuilder().initialize(new Equipe());
-                    equipeResponsavel.setNome("EQUIPE RESPONSAVEL");
-                    riscoPotencial.setEquipeResponsavel(equipeResponsavel);
-                    riscoPotencial.setInicioAgendamento(new Date());
-                    riscoPotencial.setFimAgendamento(new Date());
-                    riscoPotencial.setCondutaPercepcao("CONDUTA PERCEPCAO");
-                    
-                    let triagem: Triagem = new Triagem();
-                    let diagnostico: Diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
-                    let intervencao: Intervencao = new IntervencaoBuilder().initialize(new Intervencao());
-                    let indicadorSast: IndicadorSast = new IndicadorSast();
-                    let equipe: Equipe = new Equipe();
-                    equipe.setNome( "EQUIPE 0" );
-                    equipe.setId( 0 );
-                    indicadorSast.setCodigo( "000" );
-                    indicadorSast.setNome( "INDICADOR 0" );
-                    indicadorSast.setIndice0( "Indice 00" );
-                    indicadorSast.setIndice1( "Indice 01" );
-                    indicadorSast.setIndice2( "Indice 02" );
-                    indicadorSast.setIndice3( "Indice 03" );
-                    indicadorSast.setIndice4( "Indice 04" );
-                    indicadorSast.setObrigatorio( true );
-                    triagem.setId( 0 );
-                    triagem.setIndice(1);
-                    triagem.setIndicadorSast( indicadorSast );
-                    triagem.setEquipeAbordagem( equipe );
-                    triagem.setDiagnostico(diagnostico);
-                    triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
-                    this.atendimento.getTriagensTodosAtendimentos().push(triagem);
+                    if ( this.flag == 0 ) {
+                        let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize( new RiscoPotencial() );
+                        let equipeResponsavel: Equipe = new EquipeBuilder().initialize( new Equipe() );
+                        equipeResponsavel.setNome( "EQUIPE RESPONSAVEL" );
+                        riscoPotencial.setEquipeResponsavel( equipeResponsavel );
+                        riscoPotencial.setInicioAgendamento( new Date() );
+                        riscoPotencial.setFimAgendamento( new Date() );
+                        riscoPotencial.setCondutaPercepcao( "CONDUTA PERCEPCAO" );
+                        this.atendimento.getFilaEsperaOcupacional().setRiscoPotencial( riscoPotencial );
 
-                    intervencao = new IntervencaoBuilder().initialize(new Intervencao());
-                    diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
-                    triagem = new Triagem();
-                    indicadorSast = new IndicadorSast();
-                    equipe = new Equipe();
-                    equipe.setNome( "EQUIPE 0" );
-                    equipe.setId( 0 );
-                    indicadorSast.setNome( "INDICADOR 1" );
-                    indicadorSast.setCodigo( "001" );
-                    indicadorSast.setIndice0( "Indice 01" );
-                    indicadorSast.setIndice1( "Indice 11" );
-                    indicadorSast.setIndice2( "Indice 11" );
-                    indicadorSast.setIndice3( "Indice 11" );
-                    indicadorSast.setIndice4( "Indice 11" );
-                    triagem.setId( 1 );
-                    triagem.setIndice(1);
-                    triagem.setIndicadorSast( indicadorSast );
-                    triagem.setEquipeAbordagem( equipe );
-                    triagem.setDiagnostico(diagnostico);
-                    triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
-                    this.atendimento.getTriagensTodosAtendimentos().push(triagem);
+                        let triagem: Triagem = new Triagem();
+                        let diagnostico: Diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
+                        let intervencao: Intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
+                        let indicadorSast: IndicadorSast = new IndicadorSast();
+                        let equipe: Equipe = new Equipe();
+                        equipe.setNome( "EQUIPE 0" );
+                        equipe.setId( 0 );
+                        indicadorSast.setCodigo( "000" );
+                        indicadorSast.setNome( "INDICADOR 0" );
+                        indicadorSast.setIndice0( "Indice 00" );
+                        indicadorSast.setIndice1( "Indice 01" );
+                        indicadorSast.setIndice2( "Indice 02" );
+                        indicadorSast.setIndice3( "Indice 03" );
+                        indicadorSast.setIndice4( "Indice 04" );
+                        indicadorSast.setObrigatorio( true );
+                        triagem.setId( 0 );
+                        triagem.setIndice( 1 );
+                        triagem.setIndicadorSast( indicadorSast );
+                        triagem.setEquipeAbordagem( equipe );
+                        triagem.setDiagnostico( diagnostico );
+                        triagem.setIntervencao( intervencao );
+                        this.atendimento.getTriagens().push( triagem );
+                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
 
-                    intervencao = new IntervencaoBuilder().initialize(new Intervencao());
-                    diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
-                    triagem = new Triagem();
-                    indicadorSast = new IndicadorSast();
-                    equipe = new Equipe();
-                    equipe.setNome( "EQUIPE 0" );
-                    equipe.setId( 0 );
-                    indicadorSast.setNome( "INDICADOR 1" );
-                    indicadorSast.setCodigo( "001" );
-                    indicadorSast.setIndice0( "Indice 01" );
-                    indicadorSast.setIndice1( "Indice 11" );
-                    indicadorSast.setIndice2( "Indice 11" );
-                    indicadorSast.setIndice3( "Indice 11" );
-                    indicadorSast.setIndice4( "Indice 11" );
-                    triagem.setId( 2 );
-                    triagem.setIndice(1);
-                    triagem.setIndicadorSast( indicadorSast );
-                    triagem.setEquipeAbordagem( equipe );
-                    triagem.setDiagnostico(diagnostico);
-                    triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
-                    this.atendimento.getTriagensTodosAtendimentos().push(triagem);
+                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
+                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
+                        triagem = new Triagem();
+                        indicadorSast = new IndicadorSast();
+                        equipe = new Equipe();
+                        equipe.setNome( "EQUIPE 0" );
+                        equipe.setId( 0 );
+                        indicadorSast.setNome( "INDICADOR 1" );
+                        indicadorSast.setCodigo( "001" );
+                        indicadorSast.setIndice0( "Indice 01" );
+                        indicadorSast.setIndice1( "Indice 11" );
+                        indicadorSast.setIndice2( "Indice 11" );
+                        indicadorSast.setIndice3( "Indice 11" );
+                        indicadorSast.setIndice4( "Indice 11" );
+                        triagem.setId( 1 );
+                        triagem.setIndice( 1 );
+                        triagem.setIndicadorSast( indicadorSast );
+                        triagem.setEquipeAbordagem( equipe );
+                        triagem.setDiagnostico( diagnostico );
+                        triagem.setIntervencao( intervencao );
+                        this.atendimento.getTriagens().push( triagem );
+                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
 
-                    intervencao = new IntervencaoBuilder().initialize(new Intervencao());
-                    diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
-                    triagem = new Triagem();
-                    indicadorSast = new IndicadorSast();
-                    equipe = new Equipe();
-                    equipe.setNome( "EQUIPE 0" );
-                    equipe.setId( 0 );
-                    indicadorSast.setNome( "INDICADOR 1" );
-                    indicadorSast.setCodigo( "001" );
-                    indicadorSast.setIndice0( "Indice 01" );
-                    indicadorSast.setIndice1( "Indice 11" );
-                    indicadorSast.setIndice2( "Indice 11" );
-                    indicadorSast.setIndice3( "Indice 11" );
-                    indicadorSast.setIndice4( "Indice 11" );
-                    triagem.setId( 3 );
-                    triagem.setIndice(1);
-                    triagem.setIndicadorSast( indicadorSast );
-                    triagem.setEquipeAbordagem( equipe );
-                    triagem.setDiagnostico(diagnostico);
-                    triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
-                    this.atendimento.getTriagensTodosAtendimentos().push(triagem);
+                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
+                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
+                        triagem = new Triagem();
+                        indicadorSast = new IndicadorSast();
+                        equipe = new Equipe();
+                        equipe.setNome( "EQUIPE 0" );
+                        equipe.setId( 0 );
+                        indicadorSast.setNome( "INDICADOR 1" );
+                        indicadorSast.setCodigo( "001" );
+                        indicadorSast.setIndice0( "Indice 01" );
+                        indicadorSast.setIndice1( "Indice 11" );
+                        indicadorSast.setIndice2( "Indice 11" );
+                        indicadorSast.setIndice3( "Indice 11" );
+                        indicadorSast.setIndice4( "Indice 11" );
+                        triagem.setId( 2 );
+                        triagem.setIndice( 1 );
+                        triagem.setIndicadorSast( indicadorSast );
+                        triagem.setEquipeAbordagem( equipe );
+                        triagem.setDiagnostico( diagnostico );
+                        triagem.setIntervencao( intervencao );
+                        this.atendimento.getTriagens().push( triagem );
+                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
 
-                    intervencao = new IntervencaoBuilder().initialize(new Intervencao());
-                    diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
-                    triagem = new Triagem();
-                    indicadorSast = new IndicadorSast();
-                    equipe = new Equipe();
-                    equipe.setNome( "EQUIPE 0" );
-                    equipe.setId( 0 );
-                    indicadorSast.setNome( "INDICADOR 1" );
-                    indicadorSast.setCodigo( "001" );
-                    indicadorSast.setIndice0( "Indice 01" );
-                    indicadorSast.setIndice1( "Indice 11" );
-                    indicadorSast.setIndice2( "Indice 11" );
-                    indicadorSast.setIndice3( "Indice 11" );
-                    indicadorSast.setIndice4( "Indice 11" );
-                    triagem.setId( 4 );
-                    triagem.setIndice(1);
-                    triagem.setIndicadorSast( indicadorSast );
-                    triagem.setEquipeAbordagem( equipe );
-                    triagem.setDiagnostico(diagnostico);
-                    triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
-                    this.atendimento.getTriagensTodosAtendimentos().push(triagem);
+                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
+                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
+                        triagem = new Triagem();
+                        indicadorSast = new IndicadorSast();
+                        equipe = new Equipe();
+                        equipe.setNome( "EQUIPE 0" );
+                        equipe.setId( 0 );
+                        indicadorSast.setNome( "INDICADOR 1" );
+                        indicadorSast.setCodigo( "001" );
+                        indicadorSast.setIndice0( "Indice 01" );
+                        indicadorSast.setIndice1( "Indice 11" );
+                        indicadorSast.setIndice2( "Indice 11" );
+                        indicadorSast.setIndice3( "Indice 11" );
+                        indicadorSast.setIndice4( "Indice 11" );
+                        triagem.setId( 3 );
+                        triagem.setIndice( 1 );
+                        triagem.setIndicadorSast( indicadorSast );
+                        triagem.setEquipeAbordagem( equipe );
+                        triagem.setDiagnostico( diagnostico );
+                        triagem.setIntervencao( intervencao );
+                        this.atendimento.getTriagens().push( triagem );
+                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
 
-                    intervencao = new IntervencaoBuilder().initialize(new Intervencao());
-                    diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
-                    triagem = new Triagem();
-                    indicadorSast = new IndicadorSast();
-                    equipe = new Equipe();
-                    indicadorSast.setNome( "INDICADOR 2" );
-                    equipe.setNome( "EQUIPE 2" );
-                    equipe.setId( 1 );
-                    indicadorSast.setCodigo( "002" );
-                    indicadorSast.setIndice0( "Indice 21" );
-                    indicadorSast.setIndice1( "Indice 21" );
-                    indicadorSast.setIndice2( "Indice 21" );
-                    indicadorSast.setIndice3( "Indice 21" );
-                    indicadorSast.setIndice4( "Indice 21" );
-                    triagem.setId( 5 );
-                    triagem.setIndice(1);
-                    triagem.setIndicadorSast( indicadorSast );
-                    triagem.setEquipeAbordagem( equipe );
-                    triagem.setDiagnostico(diagnostico);
-                    triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
-                    this.atendimento.getTriagensTodosAtendimentos().push(triagem);
+                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
+                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
+                        triagem = new Triagem();
+                        indicadorSast = new IndicadorSast();
+                        equipe = new Equipe();
+                        equipe.setNome( "EQUIPE 0" );
+                        equipe.setId( 0 );
+                        indicadorSast.setNome( "INDICADOR 1" );
+                        indicadorSast.setCodigo( "001" );
+                        indicadorSast.setIndice0( "Indice 01" );
+                        indicadorSast.setIndice1( "Indice 11" );
+                        indicadorSast.setIndice2( "Indice 11" );
+                        indicadorSast.setIndice3( "Indice 11" );
+                        indicadorSast.setIndice4( "Indice 11" );
+                        triagem.setId( 4 );
+                        triagem.setIndice( 1 );
+                        triagem.setIndicadorSast( indicadorSast );
+                        triagem.setEquipeAbordagem( equipe );
+                        triagem.setDiagnostico( diagnostico );
+                        triagem.setIntervencao( intervencao );
+                        this.atendimento.getTriagens().push( triagem );
+                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
 
-                    intervencao = new IntervencaoBuilder().initialize(new Intervencao());
-                    diagnostico = new DiagnosticoBuilder().initialize(new Diagnostico());
-                    triagem = new Triagem();
-                    indicadorSast = new IndicadorSast();
-                    equipe = new Equipe();
-                    indicadorSast.setNome( "INDICADOR 3" );
-                    equipe.setNome( "EQUIPE 3" );
-                    equipe.setId( 2 );
-                    indicadorSast.setCodigo( "003" );
-                    indicadorSast.setIndice0( "Indice 31" );
-                    indicadorSast.setIndice1( "Indice 31" );
-                    indicadorSast.setIndice2( "Indice 31" );
-                    indicadorSast.setIndice3( "Indice 31" );
-                    indicadorSast.setIndice4( "Indice 31" );
-                    indicadorSast.setObrigatorio( true );
-                    triagem.setId( 6 );
-                    triagem.setIndice(1);
-                    triagem.setIndicadorSast( indicadorSast );
-                    triagem.setEquipeAbordagem( equipe );
-                    triagem.setDiagnostico(diagnostico);
-                    triagem.setIntervencao(intervencao);
-                    this.atendimento.getTriagens().push( triagem );
-                    this.atendimento.getTriagensTodosAtendimentos().push(triagem);
-                    
+                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
+                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
+                        triagem = new Triagem();
+                        indicadorSast = new IndicadorSast();
+                        equipe = new Equipe();
+                        indicadorSast.setNome( "INDICADOR 2" );
+                        equipe.setNome( "EQUIPE 2" );
+                        equipe.setId( 1 );
+                        indicadorSast.setCodigo( "002" );
+                        indicadorSast.setIndice0( "Indice 21" );
+                        indicadorSast.setIndice1( "Indice 21" );
+                        indicadorSast.setIndice2( "Indice 21" );
+                        indicadorSast.setIndice3( "Indice 21" );
+                        indicadorSast.setIndice4( "Indice 21" );
+                        triagem.setId( 5 );
+                        triagem.setIndice( 1 );
+                        triagem.setIndicadorSast( indicadorSast );
+                        triagem.setEquipeAbordagem( equipe );
+                        triagem.setDiagnostico( diagnostico );
+                        triagem.setIntervencao( intervencao );
+                        this.atendimento.getTriagens().push( triagem );
+                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
+
+                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
+                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
+                        triagem = new Triagem();
+                        indicadorSast = new IndicadorSast();
+                        equipe = new Equipe();
+                        indicadorSast.setNome( "INDICADOR 3" );
+                        equipe.setNome( "EQUIPE 3" );
+                        equipe.setId( 2 );
+                        indicadorSast.setCodigo( "003" );
+                        indicadorSast.setIndice0( "Indice 31" );
+                        indicadorSast.setIndice1( "Indice 31" );
+                        indicadorSast.setIndice2( "Indice 31" );
+                        indicadorSast.setIndice3( "Indice 31" );
+                        indicadorSast.setIndice4( "Indice 31" );
+                        indicadorSast.setObrigatorio( true );
+                        triagem.setId( 6 );
+                        triagem.setIndice( 1 );
+                        triagem.setIndicadorSast( indicadorSast );
+                        triagem.setEquipeAbordagem( equipe );
+                        triagem.setDiagnostico( diagnostico );
+                        triagem.setIntervencao( intervencao );
+                        this.atendimento.getTriagens().push( triagem );
+                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
+                        this.flag = 1;
+                    }
+                    console.log(this.atendimento);
                     this.getTriagensTodosAtendimentos();
+                    this.getRespostasFichaColeta();
+                    console.log(this.quantidadeItemRespostasByGrupo);
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
@@ -498,8 +510,8 @@ export class AtendimentoFormComponent {
                         }
 
                         if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20 ) {
-                            //                            this.audio.load();
-                            //                            this.audio.play();
+//                            this.audio.load();
+//                            this.audio.play();
                         }
                     }
                 } )
@@ -529,13 +541,14 @@ export class AtendimentoFormComponent {
         }
     }
 
-    selectTriagem( indexEquipe, indexTriagem, indice ) {
+    selectTriagem( indexTriagem, indice ) {
         let i: string = "indice" + indice + "_" + indexTriagem.toString();
 
         if ( this.triagemIndices.get( indexTriagem ) != undefined ) {
             if ( this.triagemIndices.get( indexTriagem ) == Number( indice ) ) {
                 $( "td[title=" + i + "]" ).css( "background", "" );
                 this.atendimento.getTriagens()[indexTriagem].setIndice( -1 );
+                this.triagemIndices.delete( indexTriagem );
                 return;
             }
             let iAntigo: string = "indice" + this.triagemIndices.get( indexTriagem ) + "_" + indexTriagem.toString();
@@ -719,24 +732,24 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+
             if ( !this.verifyPlanejamento() ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
 
-//            this.atendimentoService.finalizar( this.atendimento )
-//                .then( res => {
-//                    this.toastParams = ["Atendimento finalizado", 4000];
-//                    this.globalActions.emit( 'toast' );
-//                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
-//                } )
-//                .catch( error => {
-//                    this.catchConfiguration( error );
-//                    this.toastParams = [error.text(), 4000];
-//                    this.globalActions.emit( 'toast' );
-//                } )
+            this.atendimentoService.finalizar( this.atendimento )
+                .then( res => {
+                    this.toastParams = ["Atendimento finalizado", 4000];
+                    this.globalActions.emit( 'toast' );
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                } )
+                .catch( error => {
+                    this.catchConfiguration( error );
+                    this.toastParams = [error.text(), 4000];
+                    this.globalActions.emit( 'toast' );
+                } )
         }
     }
 
@@ -770,7 +783,7 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+
             if ( !this.verifyPlanejamento() ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
                 this.globalActions.emit( 'toast' );
@@ -792,9 +805,19 @@ export class AtendimentoFormComponent {
     }
 
     verifyValidFichaColeta() {
-        if ( $( ".resposta-conteudo:enabled" ).val() == "" )
-            return false;
-        return true;
+        let respostas: Array<RespostaFichaColeta> = new Array<RespostaFichaColeta>();
+        let ret: boolean = true;
+        
+        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().forEach(rFC => {
+            if ( rFC.getPergunta().getEquipes().find(e => e.getId() == this.profissional.getEquipe().getId() ) != undefined )
+                respostas.push(rFC);
+        })
+        
+        respostas.forEach( r => {
+            if ( r.getConteudo() == "" ) ret = false;
+        } )
+        
+        return ret;
     }
 
     verifyValidTriagens() {
@@ -807,42 +830,42 @@ export class AtendimentoFormComponent {
         if ( triagem != undefined ) return false;
         else return true;
     }
-    
+
     verifyPlanejamento() {
         let ret: boolean = true;
         let triagens: Array<Triagem> = new Array<Triagem>();
         let triagensInvalidas: Array<Triagem> = new Array<Triagem>();
-    
+
         if ( this.atendimento.getTriagens().length == 0 ) return true;
-    
-        triagens = this.atendimento.getTriagens().filter(t => {
+
+        triagens = this.atendimento.getTriagens().filter( t => {
             let valid: boolean = true;
             if ( t.getIndice() > -1 && t.getIndice() < 3 ) {
                 if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
-                    triagensInvalidas.push(t);
+                    triagensInvalidas.push( t );
                     return true;
                 } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
-                    triagensInvalidas.push(t);
-                    return true;                    
+                    triagensInvalidas.push( t );
+                    return true;
                 } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
-                    triagensInvalidas.push(t);
+                    triagensInvalidas.push( t );
                     return true;
                 } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
-                    triagensInvalidas.push(t);
-                    return true;                    
+                    triagensInvalidas.push( t );
+                    return true;
                 }
             }
-            
+
             return false;
-        })
-    
+        } )
+
         if ( triagens.length > 0 )
-            triagensInvalidas.forEach(t => {
+            triagensInvalidas.forEach( t => {
                 if ( t.getJustificativa() == "" || t.getJustificativa() == undefined )
                     ret = false;
             } );
         else ret = false;
-        
+
         return ret;
     }
 
@@ -948,17 +971,25 @@ export class AtendimentoFormComponent {
         return ret;
     }
 
-    selectStatusSimNao( itens, indexResposta, status ) {
+    selectStatusSimNao( itens, indexGrupo, indexRespostaByGrupo, status ) {
+        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
+        
         if ( status == "SIM" ) {
             this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
                 .setItens( [] );
-            this.addItemResposta( itens, indexResposta );
-            this.statusSim[indexResposta] = true;
-        } else this.statusSim[indexResposta] = false;
+            this.addItemResposta( itens, indexGrupo, indexRespostaByGrupo );
+        } else { 
+            this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
+                .setItens( [] );
+        }
     }
-
-    addItemResposta( itens: Array<ItemPerguntaFichaColeta>, indexResposta ) {
+    
+    addItemResposta( itens: Array<ItemPerguntaFichaColeta>, indexGrupo, indexRespostaByGrupo ) {
         let quantidadeItens = itens.length;
+        
+        if ( quantidadeItens == 0 ) return;
+        
+        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
 
         let itemRespostaFichaColeta: ItemRespostaFichaColeta =
             new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
@@ -968,10 +999,23 @@ export class AtendimentoFormComponent {
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
             .getItens().push( itemRespostaFichaColeta );
     }
+    
+    removeItemResposta( indexGrupo, indexRespostaByGrupo, itemIndex ) {
+        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
+        
+        if ( this.atendimento.getFilaEsperaOcupacional().
+              getFichaColeta().getRespostaFichaColetas()[indexResposta].getItens().length == 1 ) return;
 
-    removeItemResposta( respostaIndex, itemIndex ) {
         this.atendimento.getFilaEsperaOcupacional().
-            getFichaColeta().getRespostaFichaColetas()[respostaIndex].getItens().splice( itemIndex, 1 );
+            getFichaColeta().getRespostaFichaColetas()[indexResposta].getItens().splice( itemIndex, 1 );
+    }
+    
+    verifyRespostaSimNao( indexGrupo, indexRespostaByGrupo ) {
+        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
+        
+        if ( this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
+                .getItens().length > 0 ) return true;
+        else return false;
     }
 
     constructItemRespostaFichaColeta( quantidadeItens: number, itemRespostaFichaColeta: ItemRespostaFichaColeta ) {
@@ -986,33 +1030,55 @@ export class AtendimentoFormComponent {
     }
 
     getTriagensTodosAtendimentos() {
+        this.equipesTriagensTodosAtendimentos = new Array<Equipe>();
+        this.triagensTodosAtendimentosByEquipe = [[]];
+
         this.atendimento.getTriagensTodosAtendimentos().forEach( t => {
-            if ( this.equipesTriagensTodosAtendimentos.find(e => e.getId() == t.getEquipeAbordagem().getId()) == undefined )
+            if ( this.equipesTriagensTodosAtendimentos.find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined )
                 this.equipesTriagensTodosAtendimentos.push( t.getEquipeAbordagem() );
-            
+
             if ( this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()] == undefined ) {
                 this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
             }
+
+            this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()].push( t );
+        } )
+    }
+
+    getRespostasFichaColeta() {
+        this.gruposRespostasFichaColeta = new Array<string>();
+        this.respostasFichaColetaByGrupo = [[]];
+        let countIndexGrupo = -1;
+        let qtdItens = 1;
+        
+        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().forEach( r => {
+            if ( this.gruposRespostasFichaColeta.find( e => e == r.getPergunta().getGrupo() ) == undefined ) {
+                this.gruposRespostasFichaColeta.push( r.getPergunta().getGrupo() );
+                countIndexGrupo++;
+                qtdItens = 1;
+            }
             
-            this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()].push(t);
-        })
+            if ( this.respostasFichaColetaByGrupo[r.getPergunta().getGrupo()] == undefined ) {
+                this.respostasFichaColetaByGrupo[r.getPergunta().getGrupo()] = new Array<Triagem>();
+            }
+
+            this.respostasFichaColetaByGrupo[r.getPergunta().getGrupo()].push( r );
+            this.quantidadeItemRespostasByGrupo[countIndexGrupo] = qtdItens++; 
+        } )
     }
     
-    getEquipesTriagensTodosAtendimentos() {
-//        this.atendimento.getTriagensTodosAtendimentos().forEach( t => {
-//            if ( eqps.find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
-//                this.equipesTriagensTodosAtendimentos.push( t.getEquipeAbordagem() );
-//            }
-//        } )
-//
-//        return this.equipesTriagensTodosAtendimentos;
+    getIndexRespostaByGrupo( indexGrupo, itemIndex ) {
+        let quantidadeItensAnteriores = this.getQuantidadeItensAnteriores( indexGrupo );
+        
+        return quantidadeItensAnteriores + itemIndex;
     }
     
-    getTriagensTodosAtendimentosByEquipe( equipe: Equipe ) {
-//        this.triagensTodosAtendimentosByEquipe = this.atendimento.getTriagensTodosAtendimentos().filter( 
-//                t => t.getEquipeAbordagem().getId() == equipe.getId() );
-//
-//        return listTriagens;
+    getQuantidadeItensAnteriores( indexGrupo ) {
+        let qtdItens = 0;
+        for ( let i=0; i < indexGrupo; i++ )
+            qtdItens += this.quantidadeItemRespostasByGrupo[i];
+        
+        return qtdItens;
     }
 
     catchConfiguration( error ) {
@@ -1025,28 +1091,28 @@ export class AtendimentoFormComponent {
     }
 
     getIndiceDescricao( triagem: Triagem ) {
-        return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice"+triagem.getIndice()];
+        return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
     }
-    
+
     verifyIndiceTriagem( triagem: Triagem ) {
         if ( triagem.getIndice() > -1 ) return true;
-        
+
         return false;
     }
-    
-    getDiagnostico(index: number) {
+
+    getDiagnostico( index: number ) {
         if ( this.validDiagnostico == this.atendimento.getTriagens()[index].getDiagnostico().getDescricao() ) return;
         if ( this.atendimento.getTriagens()[index].getDiagnostico().getDescricao() !== undefined ) {
             let diagnostico = this.diagnosticos.find( d => {
                 if ( ( d.getCodigo() + " - " + d.getDescricao() ).trim() ==
-                    this.atendimento.getTriagens()[index].getDiagnostico().getDescricao().trim() || 
+                    this.atendimento.getTriagens()[index].getDiagnostico().getDescricao().trim() ||
                     d.getDescricao().trim() == this.atendimento.getTriagens()[index].getDiagnostico().getDescricao().trim() )
                     return true;
                 else return false;
             } );
-            
+
             if ( diagnostico !== undefined ) {
-                this.atendimento.getTriagens()[index].setDiagnostico(diagnostico);
+                this.atendimento.getTriagens()[index].setDiagnostico( diagnostico );
                 this.validDiagnostico = this.atendimento.getTriagens()[index].getDiagnostico().getDescricao();
             } else this.atendimento.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
         } else this.atendimento.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
@@ -1059,7 +1125,7 @@ export class AtendimentoFormComponent {
             if ( evento.length > 6 ) {
                 this.atendimentoService.getDiagnosticoByDescricao( evento )
                     .then( res => {
-                        this.diagnosticos = new DiagnosticoBuilder().cloneList(res.json());
+                        this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
                     } )
                     .catch( error => {
@@ -1076,7 +1142,7 @@ export class AtendimentoFormComponent {
             if ( evento.length < 6 ) {
                 this.atendimentoService.getDiagnosticoByCodigo( evento )
                     .then( res => {
-                        this.diagnosticos = new DiagnosticoBuilder().cloneList(res.json());
+                        this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
                     } )
                     .catch( error => {
@@ -1097,8 +1163,8 @@ export class AtendimentoFormComponent {
 
         return array;
     }
-    
-    getIntervencao(index: number) {
+
+    getIntervencao( index: number ) {
         if ( this.validIntervencao == this.atendimento.getTriagens()[index].getIntervencao().getDescricao() ) return;
         if ( this.atendimento.getTriagens()[index].getIntervencao().getDescricao() !== undefined ) {
             let intervencao = this.intervencoes.find( d => {
@@ -1106,9 +1172,9 @@ export class AtendimentoFormComponent {
                     return true;
                 else return false;
             } );
-            
+
             if ( intervencao !== undefined ) {
-                this.atendimento.getTriagens()[index].setIntervencao(intervencao);
+                this.atendimento.getTriagens()[index].setIntervencao( intervencao );
                 this.validIntervencao = this.atendimento.getTriagens()[index].getIntervencao().getDescricao();
             } else this.atendimento.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
         } else this.atendimento.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
@@ -1121,7 +1187,7 @@ export class AtendimentoFormComponent {
             if ( evento.length > 3 ) {
                 this.atendimentoService.getIntervencaoByDescricao( evento )
                     .then( res => {
-                        this.intervencoes = new IntervencaoBuilder().cloneList(res.json());
+                        this.intervencoes = new IntervencaoBuilder().cloneList( res.json() );
                         this.autocompleteIntervencao = [this.buildAutocompleteIntervencao( this.intervencoes )];
                     } )
                     .catch( error => {
@@ -1142,8 +1208,8 @@ export class AtendimentoFormComponent {
 
         return array;
     }
-    
-    getEquipeAbordagem(index: number) {
+
+    getEquipeAbordagem( index: number ) {
         if ( this.validEquipeAbordagem == this.atendimento.getTriagens()[index].getEquipeAbordagem().getNome() ) return;
         if ( this.atendimento.getTriagens()[index].getEquipeAbordagem().getNome() !== undefined ) {
             let equipe = this.equipeAbordagens.find( e => {
@@ -1151,9 +1217,9 @@ export class AtendimentoFormComponent {
                     return true;
                 else return false;
             } );
-            
+
             if ( equipe !== undefined ) {
-                this.atendimento.getTriagens()[index].setEquipeAbordagem(equipe);
+                this.atendimento.getTriagens()[index].setEquipeAbordagem( equipe );
                 this.validEquipeAbordagem = this.atendimento.getTriagens()[index].getEquipeAbordagem().getNome();
             } else this.atendimento.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
         } else this.atendimento.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
@@ -1166,7 +1232,7 @@ export class AtendimentoFormComponent {
             if ( evento.length > 3 ) {
                 this.atendimentoService.getEquipeAbordagemByName( evento )
                     .then( res => {
-                        this.equipeAbordagens = new EquipeBuilder().cloneList(res.json());
+                        this.equipeAbordagens = new EquipeBuilder().cloneList( res.json() );
                         this.autocompleteEquipeAbordagem = [this.buildAutocompleteEquipeAbordagem( this.equipeAbordagens )];
                     } )
                     .catch( error => {
@@ -1187,29 +1253,29 @@ export class AtendimentoFormComponent {
 
         return array;
     }
-    
+
     selectAcolhimentoTab() {
-        console.log(this.profissional);
+        console.log( this.profissional );
         setTimeout(() => {
-            console.log(this.profissional.getEquipe().getAbreviacao() == "ACO");
+            console.log( this.profissional.getEquipe().getAbreviacao() == "ACO" );
             if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) return '';
             else return 'disabled';
-        }, 500);
+        }, 500 );
     }
-    
-    addEquipe(valor: number) {
+
+    addEquipe( valor: number ) {
         if ( valor != 0 ) {
-            let e = this.equipesSelecteds.find(c => c.getId() == valor);
+            let e = this.equipesSelecteds.find( c => c.getId() == valor );
             if ( e == undefined ) {
-                let equipe: Equipe = this.equipes.find(eq => eq.getId() == valor);
-                this.equipesSelecteds.push(equipe);
-                this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipes(this.equipesSelecteds);
+                let equipe: Equipe = this.equipes.find( eq => eq.getId() == valor );
+                this.equipesSelecteds.push( equipe );
+                this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipes( this.equipesSelecteds );
             }
         }
     }
 
-    removeEquipe(i: number) {
-        this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getEquipes().splice(i, 1);
+    removeEquipe( i: number ) {
+        this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getEquipes().splice( i, 1 );
     }
     
 }

@@ -25,7 +25,7 @@
 					Coleta</a></li>
 			<li class="tab col s2"><a href="#triagem">Triagem</a></li>
 			<li class="tab col s2"><a href="#planejamento">Planejamento</a></li>
-			<li class="tab col s2" [ngClass]="disabledTab"><a
+			<li class="tab col s2"><a
 				href="#acolhimento">Acolhimento</a></li>
 		</ul>
 	</div>
@@ -226,14 +226,112 @@
 	<div id="fichaColeta" disabled>
 		<div class="conteiner-ficha-coleta">
 
-			<div
-				*ngFor="let resposta of atendimento.filaEsperaOcupacional.fichaColeta.respostaFichaColetas; let r = index">
+			<div *ngFor="let grupo of gruposRespostasFichaColeta; let g = index">
+				<fieldset>
+					<legend>{{grupo}}</legend>
 
+					<div
+						*ngFor="let resposta of respostasFichaColetaByGrupo[grupo]; let r = index">
+						<p class="pergunta-descricao">{{resposta.pergunta.descricao}}</p>
+
+						<div [ngSwitch]="contains(resposta.pergunta.tipo)">
+							<div class="row resposta">
+								<div *ngSwitchCase="'DOUBLE'">
+									<div class="input-field col s5">
+										<input type="text" name="DOUBLE{{r}}"
+											class="resposta-conteudo resposta-pergunta" [disabled]="verifyEquipe(resposta)"
+											[(ngModel)]="resposta.conteudo">
+									</div>
+								</div>
+
+								<div *ngSwitchCase="'INTEIRO'">
+									<div class="input-field col s5">
+										<input type="text" name="INTEIRO{{r}}"
+											class="resposta-conteudo resposta-pergunta" [disabled]="verifyEquipe(resposta)"
+											[(ngModel)]="resposta.conteudo">
+									</div>
+								</div>
+
+								<div *ngSwitchCase="'TEXTO'">
+									<div class="input-field col s5">
+										<input type="text" name="TEXTO{{r}}" class="resposta-conteudo resposta-pergunta"
+											[disabled]="verifyEquipe(resposta)"
+											[(ngModel)]="resposta.conteudo">
+									</div>
+								</div>
+								<div *ngSwitchCase="'SIM'">
+									<div class="input-field col s4 select-sim-nao">
+										<select class="browser-default" name="SIM{{r}}"
+											class="resposta-conteudo resposta-pergunta" #statusSimNao
+											[disabled]="verifyEquipe(resposta)"
+											(change)="selectStatusSimNao(resposta.pergunta.itens, g, r, statusSimNao.value)"
+											[(ngModel)]="resposta.conteudo">
+											<option disabled selected value="">Selecione uma resposta</option>
+											<option *ngFor="let statusSimNao of statusesSimNao"
+												value="{{statusSimNao}}">{{statusSimNao}}</option>
+										</select>
+									</div>
+									<div class="col s2" *ngIf="verifyRespostaSimNao(g, r)">
+										<a class="btn-floating waves-effect waves-light green btn-add"
+											(click)="addItemResposta(resposta.pergunta.itens, g, r)"> <i
+											class="material-icons center-icon">add</i>
+										</a>
+									</div>
+
+									<table class="striped" *ngIf="verifyRespostaSimNao(g, r)">
+										<thead>
+											<tr class="row col s12">
+												<div
+													*ngFor="let item of resposta.pergunta.itens; let i = index">
+													<th
+														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+														{{item.label}}</th>
+												</div>
+												<th class="row col s2">Remover</th>
+											</tr>
+										</thead>
+
+										<tbody class="col s12">
+											<tr class="col s12">
+												<div
+													*ngFor="let respostaItem of resposta.itens; let i = index">
+													<div class="row">
+														<div
+															*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+															<td
+																[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																<input id="resposta.item" type="text"
+																name="resposta.item" class="resposta-item"
+																[(ngModel)]="item.conteudo">
+															</td>
+														</div>
+														<td class="col s2 botao-remover"><a
+															class="btn-floating waves-effect waves-light red btn-remove"
+															(click)="removeItemResposta(g, r, i)"> <i
+																class="material-icons center-icon">delete</i>
+														</a></td>
+													</div>
+												</div>
+											</tr>
+										</tbody>
+
+									</table>
+
+								</div>
+								<div *ngSwitchDefault></div>
+							</div>
+
+						</div>
+					</div>
+				</fieldset>
+				<!-- 
 				<div [ngSwitch]="contains(resposta.pergunta.grupo)">
 
-					<div *ngSwitchCase="'ANAMNESE'">
-						<fieldset>
-							<legend>Pergunta {{r}}</legend>
+					<fieldset>
+						<legend>{{resposta.pergunta.grupo}}</legend>
+
+						<div *ngSwitchCase="'ANAMNESE'">
+
 							<p>
 								<b>{{resposta.pergunta.descricao}}</b>
 							</p>
@@ -329,16 +427,13 @@
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
-						</fieldset>
-					</div>
 
-					<div *ngSwitchCase="'EXAMEF'">
-						<fieldset>
-							<legend>Pergunta {{r}}</legend>
+						</div>
+
+						<div *ngSwitchCase="'EXAMEF'">
 							<p>
 								<b>{{resposta.pergunta.descricao}}</b>
 							</p>
-
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
@@ -430,15 +525,11 @@
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
-						</fieldset>
-					</div>
-					<div *ngSwitchCase="'EXAMEODONTOL'">
-						<fieldset>
-							<legend>Pergunta {{r}}</legend>
+						</div>
+						<div *ngSwitchCase="'EXAMEODONTOL'">
 							<p>
 								<b>{{resposta.pergunta.descricao}}</b>
 							</p>
-
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
@@ -530,15 +621,11 @@
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
-						</fieldset>
-					</div>
-					<div *ngSwitchCase="'BITOSALIMENTARES'">
-						<fieldset>
-							<legend>Pergunta {{r}}</legend>
+						</div>
+						<div *ngSwitchCase="'BITOSALIMENTARES'">
 							<p>
 								<b>{{resposta.pergunta.descricao}}</b>
 							</p>
-
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
@@ -630,15 +717,11 @@
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
-						</fieldset>
-					</div>
-					<div *ngSwitchCase="'TESTEDEFAGERSTR'">
-						<fieldset>
-							<legend>Pergunta {{r}}</legend>
+						</div>
+						<div *ngSwitchCase="'TESTEDEFAGERSTR'">
 							<p>
 								<b>{{resposta.pergunta.descricao}}</b>
 							</p>
-
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
@@ -730,15 +813,11 @@
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
-						</fieldset>
-					</div>
-					<div *ngSwitchCase="'VELDEESTRESSE'">
-						<fieldset>
-							<legend>Pergunta {{r}}</legend>
+						</div>
+						<div *ngSwitchCase="'VELDEESTRESSE'">
 							<p>
 								<b>{{resposta.pergunta.descricao}}</b>
 							</p>
-
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
@@ -830,15 +909,11 @@
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
-						</fieldset>
-					</div>
-					<div *ngSwitchDefault>
-						<fieldset>
-							<legend>Pergunta {{r}}</legend>
+						</div>
+						<div *ngSwitchDefault>
 							<p>
 								<b>{{resposta.pergunta.descricao}}</b>
 							</p>
-
 							<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 								<div class="row">
 									<div *ngSwitchCase="'DOUBLE'">
@@ -930,12 +1005,13 @@
 									<div *ngSwitchDefault></div>
 								</div>
 							</div>
-						</fieldset>
-					</div>
+
+						</div>
+					</fieldset>
 				</div>
-
+				
+				 -->
 			</div>
-
 		</div>
 	</div>
 
@@ -961,28 +1037,23 @@
 									<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">
 										{{triagem.indicadorSast.nome}}</td>
 									<td class="col s2 indice0" #tdIndice0 id="0"
-										title="indice0_{{t}}"
-										(click)="selectTriagem(e, t, tdIndice0.id)"
+										title="indice0_{{t}}" (click)="selectTriagem(t, tdIndice0.id)"
 										[ngStyle]="{'cursor': 'pointer'}">
 										{{triagem.indicadorSast.indice0}}</td>
 									<td class="col s2 indice1" #tdIndice1 id="1"
-										title="indice1_{{t}}"
-										(click)="selectTriagem(e, t, tdIndice1.id)"
+										title="indice1_{{t}}" (click)="selectTriagem(t, tdIndice1.id)"
 										[ngStyle]="{'cursor': 'pointer'}">
 										{{triagem.indicadorSast.indice1}}</td>
 									<td class="col s2 indice2" #tdIndice2 id="2"
-										title="indice2_{{t}}"
-										(click)="selectTriagem(e, t, tdIndice2.id)"
+										title="indice2_{{t}}" (click)="selectTriagem(t, tdIndice2.id)"
 										[ngStyle]="{'cursor': 'pointer'}">
 										{{triagem.indicadorSast.indice2}}</td>
 									<td class="col s2 indice3" #tdIndice3 id="3"
-										title="indice3_{{t}}"
-										(click)="selectTriagem(e, t, tdIndice3.id)"
+										title="indice3_{{t}}" (click)="selectTriagem(t, tdIndice3.id)"
 										[ngStyle]="{'cursor': 'pointer'}">
 										{{triagem.indicadorSast.indice3}}</td>
 									<td class="col s2 indice4" #tdIndice4 id="4"
-										title="indice4_{{t}}"
-										(click)="selectTriagem(e, t, tdIndice4.id)"
+										title="indice4_{{t}}" (click)="selectTriagem(t, tdIndice4.id)"
 										[ngStyle]="{'cursor': 'pointer'}">
 										{{triagem.indicadorSast.indice4}}</td>
 								</tr>
@@ -1256,37 +1327,33 @@
 										</div>
 									</table>
 								</div>
-								
+
 								<div class="row">
 									<tr class="row col s12">
-										<td class="col s3 label-reserva-agendamento">Reserva de Agendamento</td>
-										<td class="col s4 inicio-agentamento">	
-											<my-date-picker name="inicioAgendamento"
-												[options]="myDatePickerOptions" 
+										<td class="col s3 label-reserva-agendamento">Reserva de
+											Agendamento</td>
+										<td class="col s4 inicio-agentamento"><my-date-picker
+												name="inicioAgendamento" [options]="myDatePickerOptions"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.inicioAgendamento"
-												placeholder="Inicio"> </my-date-picker>
-										</td>
-										<td class="col s4 fim-agendamento">
-											<my-date-picker name="fimAgendamento"
-												[options]="myDatePickerOptions" 
+												placeholder="Inicio"> </my-date-picker></td>
+										<td class="col s4 fim-agendamento"><my-date-picker
+												name="fimAgendamento" [options]="myDatePickerOptions"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.fimAgendamento"
-												placeholder="Fim"> </my-date-picker>
-										</td>
+												placeholder="Fim"> </my-date-picker></td>
 									</tr>
 								</div>
-								
+
 								<div class="row">
 									<tr class="row col s12">
 										<td class="col s3 label-conduta-percepcao">Conduta/Persepção</td>
-										<td class="col s9 conduta-percepcao">
-											<textarea class="materialize-textarea"
-												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.condutaPercepcao" 
+										<td class="col s9 conduta-percepcao"><textarea
+												class="materialize-textarea"
+												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.condutaPercepcao"
 												name="conduta-percepcao">
-											</textarea>
-										</td>
+											</textarea></td>
 									</tr>
 								</div>
-								
+
 							</fieldset>
 
 						</div>

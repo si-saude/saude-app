@@ -10,32 +10,44 @@ import { GenericListComponent } from './../../generics/generic.list.component';
     templateUrl: './confirm-delete.component.html',
     styleUrls: ['./confirm-delete.component.css']
 } )
-export class ConfirmDeleteComponent extends GenericListComponent<null, null, null> implements OnInit {
+export class ConfirmDeleteComponent {
     @Input() service;
     @Input() show: boolean;
     @Input() idDelete: number;
     modalDelete;
-    modelParams;
+    modalParams;
 
     constructor( router: Router ) {
-        super(null,null,null,router);
         this.modalDelete = new EventEmitter<string | MaterializeAction>();
-        this.modelParams = [{
+        this.modalParams = [{
             dismissible: false,
             complete: function() { }
         }];
     }
 
-    ngOnInit() { }
-
+    ngOnInit() {
+        //para cancelar o ngoninit do list
+    }
+    
     ngOnChanges( changes: SimpleChanges ) {
         if ( changes["show"].currentValue === true )
             setTimeout(() => this.modalDelete.emit( { action: "modal", params: ["open"] } ), 1 );
     }
-
-    confirmDel() {
-        this.tempDelete = this.idDelete;
-        super.confirmDelete();
+    
+    confirmDelete() {
+        this.service.delete( this.idDelete )
+            .then( res => {
+                window.location.reload();
+            } )
+            .catch( error => {
+                window.location.reload();
+                alert("Erro ao excluir o campo: " + error.text());
+            } )
+    }
+    
+    closeModalDelete() {
+        this.modalDelete.emit( { action: "modal", params: ['close'] } );
+        window.location.reload();
     }
 
     onDestroy() {
