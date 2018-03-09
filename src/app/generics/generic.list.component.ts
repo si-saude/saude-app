@@ -56,7 +56,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         setTimeout(() => {
             this.canRemove = this.guard.canRemove;
         }, 200);
-        
     }
 
     typeFilters(): Array<string> {
@@ -123,13 +122,8 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     }
 
     delete( id ) {
-        this.modalDelete.emit( { action: "modal", params: ['open'] } );
         this.tempDelete = id;
         this.openModalDelete = true;
-    }
-
-    closeModalDelete() {
-        this.modalDelete.emit( { action: "modal", params: ['close'] } );
     }
 
     openModal() {
@@ -146,18 +140,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     
     closeModalImport() {
         this.modalImport.emit( { action: "modal", params: ['close'] } );
-    }
-
-    confirmDelete() {
-        this.showPreload = true;
-        this.service.delete( this.tempDelete )
-            .then( res => {
-                this.showPreload = false;
-                window.location.reload();
-            } )
-            .catch( error => {
-                alert("Erro ao excluir o campo: " + error.text());
-            } )
     }
 
     parseDataToObjectDatePicker( data ) {
@@ -228,7 +210,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     
     ngOnDestroy() {
         this.closeModal();
-        this.closeModalDelete();
         this.closeModalImport();
     }
 }
