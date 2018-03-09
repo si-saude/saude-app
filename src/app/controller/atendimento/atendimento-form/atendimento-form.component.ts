@@ -317,185 +317,9 @@ export class AtendimentoFormComponent {
                             }
                         }
                     }, 200 );
-                    
-                    if ( this.flag == 0 ) {
-                        let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize( new RiscoPotencial() );
-                        let equipeResponsavel: Equipe = new EquipeBuilder().initialize( new Equipe() );
-                        equipeResponsavel.setNome( "EQUIPE RESPONSAVEL" );
-                        riscoPotencial.setEquipeResponsavel( equipeResponsavel );
-                        riscoPotencial.setInicioAgendamento( new Date() );
-                        riscoPotencial.setFimAgendamento( new Date() );
-                        riscoPotencial.setCondutaPercepcao( "CONDUTA PERCEPCAO" );
-                        this.atendimento.getFilaEsperaOcupacional().setRiscoPotencial( riscoPotencial );
 
-                        let triagem: Triagem = new Triagem();
-                        let diagnostico: Diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
-                        let intervencao: Intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
-                        let indicadorSast: IndicadorSast = new IndicadorSast();
-                        let equipe: Equipe = new Equipe();
-                        equipe.setNome( "EQUIPE 0" );
-                        equipe.setId( 0 );
-                        indicadorSast.setCodigo( "000" );
-                        indicadorSast.setNome( "INDICADOR 0" );
-                        indicadorSast.setIndice0( "Indice 00" );
-                        indicadorSast.setIndice1( "Indice 01" );
-                        indicadorSast.setIndice2( "Indice 02" );
-                        indicadorSast.setIndice3( "Indice 03" );
-                        indicadorSast.setIndice4( "Indice 04" );
-                        indicadorSast.setObrigatorio( true );
-                        triagem.setId( 0 );
-                        triagem.setIndice( 1 );
-                        triagem.setIndicadorSast( indicadorSast );
-                        triagem.setEquipeAbordagem( equipe );
-                        triagem.setDiagnostico( diagnostico );
-                        triagem.setIntervencao( intervencao );
-                        this.atendimento.getTriagens().push( triagem );
-                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
-
-                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
-                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
-                        triagem = new Triagem();
-                        indicadorSast = new IndicadorSast();
-                        equipe = new Equipe();
-                        equipe.setNome( "EQUIPE 0" );
-                        equipe.setId( 0 );
-                        indicadorSast.setNome( "INDICADOR 1" );
-                        indicadorSast.setCodigo( "001" );
-                        indicadorSast.setIndice0( "Indice 01" );
-                        indicadorSast.setIndice1( "Indice 11" );
-                        indicadorSast.setIndice2( "Indice 11" );
-                        indicadorSast.setIndice3( "Indice 11" );
-                        indicadorSast.setIndice4( "Indice 11" );
-                        triagem.setId( 1 );
-                        triagem.setIndice( 1 );
-                        triagem.setIndicadorSast( indicadorSast );
-                        triagem.setEquipeAbordagem( equipe );
-                        triagem.setDiagnostico( diagnostico );
-                        triagem.setIntervencao( intervencao );
-                        this.atendimento.getTriagens().push( triagem );
-                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
-
-                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
-                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
-                        triagem = new Triagem();
-                        indicadorSast = new IndicadorSast();
-                        equipe = new Equipe();
-                        equipe.setNome( "EQUIPE 0" );
-                        equipe.setId( 0 );
-                        indicadorSast.setNome( "INDICADOR 1" );
-                        indicadorSast.setCodigo( "001" );
-                        indicadorSast.setIndice0( "Indice 01" );
-                        indicadorSast.setIndice1( "Indice 11" );
-                        indicadorSast.setIndice2( "Indice 11" );
-                        indicadorSast.setIndice3( "Indice 11" );
-                        indicadorSast.setIndice4( "Indice 11" );
-                        triagem.setId( 2 );
-                        triagem.setIndice( 1 );
-                        triagem.setIndicadorSast( indicadorSast );
-                        triagem.setEquipeAbordagem( equipe );
-                        triagem.setDiagnostico( diagnostico );
-                        triagem.setIntervencao( intervencao );
-                        this.atendimento.getTriagens().push( triagem );
-                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
-
-                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
-                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
-                        triagem = new Triagem();
-                        indicadorSast = new IndicadorSast();
-                        equipe = new Equipe();
-                        equipe.setNome( "EQUIPE 0" );
-                        equipe.setId( 0 );
-                        indicadorSast.setNome( "INDICADOR 1" );
-                        indicadorSast.setCodigo( "001" );
-                        indicadorSast.setIndice0( "Indice 01" );
-                        indicadorSast.setIndice1( "Indice 11" );
-                        indicadorSast.setIndice2( "Indice 11" );
-                        indicadorSast.setIndice3( "Indice 11" );
-                        indicadorSast.setIndice4( "Indice 11" );
-                        triagem.setId( 3 );
-                        triagem.setIndice( 1 );
-                        triagem.setIndicadorSast( indicadorSast );
-                        triagem.setEquipeAbordagem( equipe );
-                        triagem.setDiagnostico( diagnostico );
-                        triagem.setIntervencao( intervencao );
-                        this.atendimento.getTriagens().push( triagem );
-                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
-
-                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
-                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
-                        triagem = new Triagem();
-                        indicadorSast = new IndicadorSast();
-                        equipe = new Equipe();
-                        equipe.setNome( "EQUIPE 0" );
-                        equipe.setId( 0 );
-                        indicadorSast.setNome( "INDICADOR 1" );
-                        indicadorSast.setCodigo( "001" );
-                        indicadorSast.setIndice0( "Indice 01" );
-                        indicadorSast.setIndice1( "Indice 11" );
-                        indicadorSast.setIndice2( "Indice 11" );
-                        indicadorSast.setIndice3( "Indice 11" );
-                        indicadorSast.setIndice4( "Indice 11" );
-                        triagem.setId( 4 );
-                        triagem.setIndice( 1 );
-                        triagem.setIndicadorSast( indicadorSast );
-                        triagem.setEquipeAbordagem( equipe );
-                        triagem.setDiagnostico( diagnostico );
-                        triagem.setIntervencao( intervencao );
-                        this.atendimento.getTriagens().push( triagem );
-                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
-
-                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
-                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
-                        triagem = new Triagem();
-                        indicadorSast = new IndicadorSast();
-                        equipe = new Equipe();
-                        indicadorSast.setNome( "INDICADOR 2" );
-                        equipe.setNome( "EQUIPE 2" );
-                        equipe.setId( 1 );
-                        indicadorSast.setCodigo( "002" );
-                        indicadorSast.setIndice0( "Indice 21" );
-                        indicadorSast.setIndice1( "Indice 21" );
-                        indicadorSast.setIndice2( "Indice 21" );
-                        indicadorSast.setIndice3( "Indice 21" );
-                        indicadorSast.setIndice4( "Indice 21" );
-                        triagem.setId( 5 );
-                        triagem.setIndice( 1 );
-                        triagem.setIndicadorSast( indicadorSast );
-                        triagem.setEquipeAbordagem( equipe );
-                        triagem.setDiagnostico( diagnostico );
-                        triagem.setIntervencao( intervencao );
-                        this.atendimento.getTriagens().push( triagem );
-                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
-
-                        intervencao = new IntervencaoBuilder().initialize( new Intervencao() );
-                        diagnostico = new DiagnosticoBuilder().initialize( new Diagnostico() );
-                        triagem = new Triagem();
-                        indicadorSast = new IndicadorSast();
-                        equipe = new Equipe();
-                        indicadorSast.setNome( "INDICADOR 3" );
-                        equipe.setNome( "EQUIPE 3" );
-                        equipe.setId( 2 );
-                        indicadorSast.setCodigo( "003" );
-                        indicadorSast.setIndice0( "Indice 31" );
-                        indicadorSast.setIndice1( "Indice 31" );
-                        indicadorSast.setIndice2( "Indice 31" );
-                        indicadorSast.setIndice3( "Indice 31" );
-                        indicadorSast.setIndice4( "Indice 31" );
-                        indicadorSast.setObrigatorio( true );
-                        triagem.setId( 6 );
-                        triagem.setIndice( 1 );
-                        triagem.setIndicadorSast( indicadorSast );
-                        triagem.setEquipeAbordagem( equipe );
-                        triagem.setDiagnostico( diagnostico );
-                        triagem.setIntervencao( intervencao );
-                        this.atendimento.getTriagens().push( triagem );
-                        this.atendimento.getTriagensTodosAtendimentos().push( triagem );
-                        this.flag = 1;
-                    }
-                    console.log(this.atendimento);
                     this.getTriagensTodosAtendimentos();
                     this.getRespostasFichaColeta();
-                    console.log(this.quantidadeItemRespostasByGrupo);
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getId() > 0 ) {
@@ -510,8 +334,8 @@ export class AtendimentoFormComponent {
                         }
 
                         if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20 ) {
-//                            this.audio.load();
-//                            this.audio.play();
+                            this.audio.load();
+                            this.audio.play();
                         }
                     }
                 } )
@@ -1066,7 +890,7 @@ export class AtendimentoFormComponent {
             this.quantidadeItemRespostasByGrupo[countIndexGrupo] = qtdItens++; 
         } )
     }
-    
+
     getIndexRespostaByGrupo( indexGrupo, itemIndex ) {
         let quantidadeItensAnteriores = this.getQuantidadeItensAnteriores( indexGrupo );
         
