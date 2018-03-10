@@ -73,7 +73,7 @@
 
 					<div class="input-field col s2">
 						<label for="codigo">Código</label>
-						<input id="codigo" type="text" maxlength="2"
+						<input id="codigo" type="text" maxlength="3"
 							[(ngModel)]="indicadorSast.codigo" name="codigo">
 					</div>
 
@@ -156,7 +156,7 @@
 							<div class="row">
 								<div class="input-field col s3">
 									<label for="indicadorSast.indicadorAssociadoSasts[{{i}}].codigo">Código</label>
-									<input type="text" maxlength="2"
+									<input type="text" maxlength="3"
 										name="indicadorSast.indicadorAssociadoSasts[{{i}}].codigo"
 										[(ngModel)]="indicadorSast.indicadorAssociadoSasts[i].codigo">
 								</div>
