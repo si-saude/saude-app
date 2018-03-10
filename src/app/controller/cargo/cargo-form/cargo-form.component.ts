@@ -41,6 +41,7 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.cargo = new CargoBuilder().clone(res.json());
+                            this.cursosSelecteds = this.cargo.getCursos();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );

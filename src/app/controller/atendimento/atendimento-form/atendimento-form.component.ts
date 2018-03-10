@@ -97,7 +97,7 @@ export class AtendimentoFormComponent {
     gruposRespostasFichaColeta: Array<string>;
     respostasFichaColetaByGrupo = [[]];
     quantidadeItemRespostasByGrupo: Array<number>;
-    
+
     flag: number = 0;
 
     constructor( private route: ActivatedRoute, private router: Router,
@@ -315,12 +315,13 @@ export class AtendimentoFormComponent {
                     respostasConteudoName.forEach( r => {
                         $( ".resposta-conteudo[ng-reflect-name=" + r + "]" ).prop( "disabled", false );
                     } )
+
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     
                     if(this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial()
                             .getEquipeResponsavel() == undefined)
                         this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipeResponsavel(new Equipe());
-
+                    
                     setTimeout(() => {
                         for ( let idx = 0; idx < this.atendimento.getTriagens().length; idx++ ) {
                             if ( this.triagemIndices.get( idx ) != undefined ) {
@@ -334,7 +335,7 @@ export class AtendimentoFormComponent {
                     this.getRespostasFichaColeta();
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
-                    console.log(this.statusProfissional);
+
                     if ( this.atendimento.getId() > 0 ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
@@ -563,13 +564,13 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+
             if ( !this.verifyValidTriagens() ) {
                 this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+
             if ( !this.verifyPlanejamento() ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
                 this.globalActions.emit( 'toast' );
@@ -680,20 +681,20 @@ export class AtendimentoFormComponent {
             if ( t.getIndice() > -1 && t.getIndice() < 3 ) {
                 if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         } )
 
         if ( triagens.length > 0 )

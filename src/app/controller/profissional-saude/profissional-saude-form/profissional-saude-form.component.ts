@@ -79,6 +79,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                         .then( res => {
                             this.showPreload = false;
                             this.profissionalSaude = new ProfissionalSaudeBuilder().clone( res.json() );
+                            this.servicosSelecteds = this.profissionalSaude.getServicos();
                             this.validEmpregado = this.profissionalSaude.getEmpregado().getPessoa().getNome();
                             this.saveArrayEmpregado();
                             this.parseAndSetDates();

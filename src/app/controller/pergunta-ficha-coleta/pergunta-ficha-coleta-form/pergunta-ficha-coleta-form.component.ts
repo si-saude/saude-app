@@ -46,7 +46,7 @@ export class PerguntaFichaColetaFormComponent extends GenericFormComponent imple
                         .then( res => {
                             this.showPreload = false;
                             this.perguntaFichaColeta = new PerguntaFichaColetaBuilder().clone(res.json());
-                            console.log(this.perguntaFichaColeta);
+                            this.equipesSelecteds = this.perguntaFichaColeta.getEquipes();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );

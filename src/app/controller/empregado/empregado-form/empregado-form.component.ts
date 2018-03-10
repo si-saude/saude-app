@@ -110,6 +110,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                         .then( res => {
                             this.showPreload = false;
                             this.empregado = new EmpregadoBuilder().clone( res.json() );
+                            this.instalacoesSelecteds = this.empregado.getInstalacoes();
                             this.verifyAndSetSelectsStrings();
                             this.parseAndSetDates();
                             this.verifyAndSetDatasRemocaoHistorico();

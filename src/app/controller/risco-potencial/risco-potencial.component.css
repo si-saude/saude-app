@@ -24,3 +24,25 @@ tbody{
 .col {
 	margin: 0 auto;
 }
+
+.list-container {
+	max-height: 400px;
+    overflow: auto;
+}
+
+.empregado {
+	padding-left: 10px;
+}
+
+.gestao {
+	padding-left: 7px;
+}
+
+.rpsat {
+	padding-left: 2px;
+}
+
+.ranking {
+	padding-left: 20px;
+    padding-top: 7px;
+}
