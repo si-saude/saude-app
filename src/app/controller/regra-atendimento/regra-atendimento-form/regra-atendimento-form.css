@@ -22,3 +22,8 @@
 .btn-delete {
 	margin-top: -5px;
 }
+
+.container-regras {
+	max-height: 400px;
+    overflow: auto;
+}

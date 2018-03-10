@@ -78,8 +78,7 @@ export class AtendimentoFormComponent {
     existAtendimento: boolean;
 
     statusesSimNao: Array<string>;
-    statusSim;
-
+    
     diagnosticos: Array<Diagnostico>;
     validDiagnostico: string;
     autocompleteDiagnostico;
@@ -167,7 +166,7 @@ export class AtendimentoFormComponent {
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 15000 )
+                                    this.inscricao = TimerObservable.create( 0, 115000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -308,7 +307,7 @@ export class AtendimentoFormComponent {
                     } )
 
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-
+                    
                     setTimeout(() => {
                         for ( let idx = 0; idx < this.atendimento.getTriagens().length; idx++ ) {
                             if ( this.triagemIndices.get( idx ) != undefined ) {
@@ -667,20 +666,20 @@ export class AtendimentoFormComponent {
             if ( t.getIndice() > -1 && t.getIndice() < 3 ) {
                 if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
                     triagensInvalidas.push( t );
-                    return true;
+                    return false;
                 }
             }
 
-            return false;
+            return true;
         } )
 
         if ( triagens.length > 0 )
