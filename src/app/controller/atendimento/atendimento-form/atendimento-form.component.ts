@@ -97,7 +97,7 @@ export class AtendimentoFormComponent {
     gruposRespostasFichaColeta: Array<string>;
     respostasFichaColetaByGrupo = [[]];
     quantidadeItemRespostasByGrupo: Array<number>;
-
+    
     flag: number = 0;
 
     constructor( private route: ActivatedRoute, private router: Router,
@@ -315,8 +315,11 @@ export class AtendimentoFormComponent {
                     respostasConteudoName.forEach( r => {
                         $( ".resposta-conteudo[ng-reflect-name=" + r + "]" ).prop( "disabled", false );
                     } )
-
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    
+                    if(this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial()
+                            .getEquipeResponsavel() == undefined)
+                        this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipeResponsavel(new Equipe());
 
                     setTimeout(() => {
                         for ( let idx = 0; idx < this.atendimento.getTriagens().length; idx++ ) {
@@ -331,7 +334,7 @@ export class AtendimentoFormComponent {
                     this.getRespostasFichaColeta();
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
-
+                    console.log(this.statusProfissional);
                     if ( this.atendimento.getId() > 0 ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
@@ -499,7 +502,7 @@ export class AtendimentoFormComponent {
 
     iniciar() {
         if ( this.atendimento.getId() > 0 ) {
-            this.atendimentoService.iniciar( this.atendimento )
+            this.atendimentoService.iniciar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.toastParams = ["Atendimento iniciado.", 4000];
@@ -515,7 +518,7 @@ export class AtendimentoFormComponent {
 
     registrarAusencia() {
         if ( this.atendimento.getId() > 0 ) {
-            this.atendimentoService.registrarAusencia( this.atendimento )
+            this.atendimentoService.registrarAusencia( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Ausencia registrada", 4000];
                     this.globalActions.emit( 'toast' );
@@ -538,7 +541,7 @@ export class AtendimentoFormComponent {
                 return;
             }
 
-            this.atendimentoService.liberar( this.atendimento )
+            this.atendimentoService.liberar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Empregado liberado", 4000];
                     this.globalActions.emit( 'toast' );
@@ -560,20 +563,20 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
-
+            
             if ( !this.verifyValidTriagens() ) {
                 this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-
+            
             if ( !this.verifyPlanejamento() ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-
-            this.atendimentoService.finalizar( this.atendimento )
+            
+            this.atendimentoService.finalizar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
                     this.globalActions.emit( 'toast' );
@@ -589,7 +592,7 @@ export class AtendimentoFormComponent {
 
     devolverPraFila() {
         if ( this.atendimento.getId() > 0 ) {
-            this.atendimentoService.devolverPraFila( this.atendimento )
+            this.atendimentoService.devolverPraFila( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Empregado devolvido pra fila", 4000];
                     this.globalActions.emit( 'toast' );
@@ -624,7 +627,7 @@ export class AtendimentoFormComponent {
                 return;
             }
 
-            this.atendimentoService.finalizarPausar( this.atendimento )
+            this.atendimentoService.finalizarPausar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
                     this.globalActions.emit( 'toast' );

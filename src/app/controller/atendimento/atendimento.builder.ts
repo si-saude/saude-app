@@ -55,8 +55,7 @@ export class AtendimentoBuilder extends GenericBuilder {
         cloneAtendimento.setTarefa(new TarefaBuilder().clone(this.getValue( atendimento, "getTarefa" ) ));
         cloneAtendimento.setTriagens(new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagens" ) ));
         cloneAtendimento.setTriagensTodosAtendimentos(
-                new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));
-        
+                new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));;
         return cloneAtendimento;
     }
     

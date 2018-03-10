@@ -60,11 +60,10 @@ export class TriagemBuilder extends GenericBuilder {
         else
             cloneTriagem.setPrazo(this.getValue(triagem, "getPrazo"));
         
-        cloneTriagem.setIndicadorSast(this.getValue(triagem,"getIndicadorSast"));
+        cloneTriagem.setIndicadorSast(new IndicadorSastBuilder().clone(this.getValue( triagem, "getIndicadorSast" )));
         cloneTriagem.setDiagnostico(new DiagnosticoBuilder().clone(this.getValue( triagem, "getDiagnostico" )));
         cloneTriagem.setIntervencao(new IntervencaoBuilder().clone(this.getValue( triagem, "getIntervencao" )));
         cloneTriagem.setEquipeAbordagem(new EquipeBuilder().clone(this.getValue( triagem, "getEquipeAbordagem" )));
-        cloneTriagem.setAtendimento(new AtendimentoBuilder().clone(this.getValue( triagem, "getAtendimento" ) ))
         cloneTriagem.setRiscoEmpregado(new RiscoEmpregadoBuilder().clone(this.getValue(triagem, "getRiscoEmpregado")));
         
         return cloneTriagem;

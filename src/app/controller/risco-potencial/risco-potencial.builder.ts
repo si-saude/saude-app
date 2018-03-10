@@ -60,24 +60,16 @@ export class RiscoPotencialBuilder extends GenericBuilder {
                 this.getValue(riscoPotencial,"getRiscoEmpregados")));
         
         
-        
-        if (this.getValue(riscoPotencial, "getEquipeResponsavel") !== undefined) { 
-            cloneRiscoPotencial.setEquipeResponsavel(
-                    new EquipeBuilder().clone(this.getValue(riscoPotencial,"getEquipeResponsavel")));
-        } else {
-            cloneRiscoPotencial.setEquipeResponsavel(new EquipeBuilder().initialize(null));
-        }
-        
         if (this.getValue(riscoPotencial, "getEquipeResponsavel") !== undefined) { 
             cloneRiscoPotencial.setEquipeResponsavel(
                     new EquipeBuilder().clone(this.getValue(riscoPotencial,"getEquipeResponsavel")));
             if(!this.idGtZero(cloneRiscoPotencial.getEquipeResponsavel()))
                 cloneRiscoPotencial.setEquipeResponsavel(undefined);
+            
         } else {
             cloneRiscoPotencial.setEquipeResponsavel(new EquipeBuilder().initialize(null));
         }
-        
-        
+           
         
         cloneRiscoPotencial.setRiscosInterdiciplinares(
                 new RiscoEmpregadoBuilder().cloneList(this.getValue(riscoPotencial,"getRiscosInterdiciplinares")));
