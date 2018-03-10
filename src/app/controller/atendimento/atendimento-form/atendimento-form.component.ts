@@ -78,7 +78,7 @@ export class AtendimentoFormComponent {
     existAtendimento: boolean;
 
     statusesSimNao: Array<string>;
-    
+
     diagnosticos: Array<Diagnostico>;
     validDiagnostico: string;
     autocompleteDiagnostico;
@@ -265,6 +265,16 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    
+                    /*let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
+                    let equipeResponsavel: Equipe = new EquipeBuilder().initialize(new Equipe());
+                    equipeResponsavel.setNome("EQUIPE RESPONSAVEL");
+                    riscoPotencial.setEquipeResponsavel(equipeResponsavel);
+                    riscoPotencial.setInicioAgendamento(new Date());
+                    riscoPotencial.setFimAgendamento(new Date());
+                    riscoPotencial.setCondutaPercepcao("CONDUTA PERCEPCAO");
+                    
+                    this.atendimento.getFilaEsperaOcupacional().setRiscoPotencial(riscoPotencial)*/
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
@@ -321,6 +331,7 @@ export class AtendimentoFormComponent {
                     this.getRespostasFichaColeta();
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
+
                     if ( this.atendimento.getId() > 0 ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
@@ -1078,9 +1089,7 @@ export class AtendimentoFormComponent {
     }
 
     selectAcolhimentoTab() {
-        console.log( this.profissional );
         setTimeout(() => {
-            console.log( this.profissional.getEquipe().getAbreviacao() == "ACO" );
             if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) return '';
             else return 'disabled';
         }, 500 );
