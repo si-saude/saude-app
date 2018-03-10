@@ -159,7 +159,7 @@ export class AtendimentoFormComponent {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
                                     this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
-
+                                    console.log(this.profissional.getEquipe().getAbreviacao());
                                     if ( this.profissional.getEquipe().getAbreviacao() == "ACO" )
                                         this.disabledTab = '';
                                     else this.disabledTab = 'disabled';
@@ -678,20 +678,18 @@ export class AtendimentoFormComponent {
 
         triagens = this.atendimento.getTriagens().filter( t => {
             let valid: boolean = true;
-            if ( t.getIndice() > -1 && t.getIndice() < 3 ) {
-                if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                }
+            if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
+                triagensInvalidas.push( t );
+                return false;
+            } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
+                triagensInvalidas.push( t );
+                return false;
+            } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
+                triagensInvalidas.push( t );
+                return false;
+            } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
+                triagensInvalidas.push( t );
+                return false;
             }
 
             return true;
