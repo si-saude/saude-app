@@ -70,35 +70,36 @@ export class AtendimentoFormComponent {
     private toastParams;
     private tabsActions;
     private modalConfirmLocalizacao;
-    audio: any;
-    prazos: Array<string>;
-    equipes: Array<Equipe>;
-    equipesSelecteds: Array<Equipe>;
-    disabledTab: string;
-    existAtendimento: boolean;
+    private audio: any;
+    private prazos: Array<string>;
+    private equipes: Array<Equipe>;
+    private equipesSelecteds: Array<Equipe>;
+    private disabledTab: string;
+    private existAtendimento: boolean;
 
-    statusesSimNao: Array<string>;
+    private statusesSimNao: Array<string>;
 
-    diagnosticos: Array<Diagnostico>;
-    validDiagnostico: string;
-    autocompleteDiagnostico;
+    private diagnosticos: Array<Diagnostico>;
+    private validDiagnostico: string;
+    private autocompleteDiagnostico;
 
-    intervencoes: Array<Intervencao>;
-    validIntervencao: string;
-    autocompleteIntervencao;
+    private intervencoes: Array<Intervencao>;
+    private validIntervencao: string;
+    private autocompleteIntervencao;
 
-    equipeAbordagens: Array<Equipe>;
-    validEquipeAbordagem: string;
-    autocompleteEquipeAbordagem;
+    private equipeAbordagens: Array<Equipe>;
+    private validEquipeAbordagem: string;
+    private autocompleteEquipeAbordagem;
 
-    equipesTriagensTodosAtendimentos: Array<Equipe>;
-    triagensTodosAtendimentosByEquipe = [[]];
+    private equipesTriagensTodosAtendimentos: Array<Equipe>;
+    private triagensTodosAtendimentosByEquipe = [[]];
 
-    gruposRespostasFichaColeta: Array<string>;
-    respostasFichaColetaByGrupo = [[]];
-    quantidadeItemRespostasByGrupo: Array<number>;
+    private gruposRespostasFichaColeta: Array<string>;
+    private respostasFichaColetaByGrupo = [[]];
+    private quantidadeItemRespostasByGrupo: Array<number>;
 
-    flag: number = 0;
+    private showPreload: boolean;
+    private msgPreload: string;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -134,6 +135,8 @@ export class AtendimentoFormComponent {
         this.existAtendimento = false;
         this.quantidadeItemRespostasByGrupo = new Array<number>();
         this.equipeAbordagens = new EquipeBuilder().initializeList(new Array<Equipe>());
+        this.showPreload = true;
+        this.msgPreload = "Atualizando...";
     }
 
     ngOnInit() {
@@ -266,16 +269,6 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento);
-                    /*let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
-                    let equipeResponsavel: Equipe = new EquipeBuilder().initialize(new Equipe());
-                    equipeResponsavel.setNome("EQUIPE RESPONSAVEL");
-                    riscoPotencial.setEquipeResponsavel(equipeResponsavel);
-                    riscoPotencial.setInicioAgendamento(new Date());
-                    riscoPotencial.setFimAgendamento(new Date());
-                    riscoPotencial.setCondutaPercepcao("CONDUTA PERCEPCAO");
-                    
-                    this.atendimento.getFilaEsperaOcupacional().setRiscoPotencial(riscoPotencial)*/
 
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
@@ -300,27 +293,15 @@ export class AtendimentoFormComponent {
 
     atualizar() {
         if ( this.atendimento != undefined ) {
-
-            let respostasConteudoName: Array<string> = new Array<string>();
-            $( ".resposta-conteudo:enabled" ).each( function( index ) {
-                respostasConteudoName.push( $( this ).attr( 'ng-reflect-name' ) );
-            } );
-
-            respostasConteudoName.forEach( r => {
-                $( ".resposta-conteudo[ng-reflect-name=" + r + "]" ).prop( "disabled", true );
-            } )
+            this.showPreload = true;
 
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
 
-                    respostasConteudoName.forEach( r => {
-                        $( ".resposta-conteudo[ng-reflect-name=" + r + "]" ).prop( "disabled", false );
-                    } )
-
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     
-                    if(this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial()
-                            .getEquipeResponsavel() == undefined)
+                    if( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial()
+                            .getEquipeResponsavel() == undefined )
                         this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipeResponsavel(new Equipe());
                     
                     setTimeout(() => {
@@ -353,8 +334,10 @@ export class AtendimentoFormComponent {
                             this.audio.play();
                         }
                     }
+                    this.showPreload = false;
                 } )
                 .catch( error => {
+                    this.showPreload = false;
                     this.catchConfiguration( error );
                     console.log( "Erro ao atualizar: " + error );
                     this.atendimento = new AtendimentoBuilder().initialize( new Atendimento() );
@@ -395,7 +378,7 @@ export class AtendimentoFormComponent {
         }
 
         $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
-
+        
         this.triagemIndices.set( indexTriagem, Number( indice ) );
 
         this.atendimento.getTriagens()[indexTriagem].setIndice( Number( indice ) );
@@ -419,6 +402,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." );
         }
@@ -437,6 +421,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -455,6 +440,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -476,6 +462,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -497,6 +484,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -515,6 +503,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         }
     }
 
@@ -533,6 +522,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         }
     }
 
@@ -556,6 +546,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         }
     }
 
@@ -591,6 +582,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         }
     }
 
@@ -609,6 +601,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         }
     }
 
@@ -644,6 +637,7 @@ export class AtendimentoFormComponent {
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
+            this.atualizar();
         }
     }
 
@@ -682,19 +676,20 @@ export class AtendimentoFormComponent {
         if ( this.atendimento.getTriagens().length == 0 ) return true;
 
         triagens = this.atendimento.getTriagens().filter( t => {
-            let valid: boolean = true;
-            if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
-                triagensInvalidas.push( t );
-                return false;
-            } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
-                triagensInvalidas.push( t );
-                return false;
-            } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
-                triagensInvalidas.push( t );
-                return false;
-            } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
-                triagensInvalidas.push( t );
-                return false;
+            if ( t.getIndice() > -1 && t.getIndice() < 3 ) {
+                if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                }
             }
 
             return true;
