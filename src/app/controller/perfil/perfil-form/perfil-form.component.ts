@@ -90,7 +90,6 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
         perfilSave.setTitulo(this.perfil.getTitulo());
         perfilSave.setId(this.perfil.getId());
         perfilSave.setVersion(this.perfil.getVersion());
-        console.log(perfilSave);
         super.save( new PerfilBuilder().clone( perfilSave ) );
     }
 
