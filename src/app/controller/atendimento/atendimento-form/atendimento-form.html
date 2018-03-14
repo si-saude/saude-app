@@ -299,12 +299,12 @@
 															*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
 															<td
 																[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																<input id="resposta.item" type="text"
+																<input id="resposta.item" type="text" [disabled]="verifyEquipe(resposta)"
 																name="resposta.item" class="resposta-item"
 																[(ngModel)]="item.conteudo">
 															</td>
 														</div>
-														<td class="col s2 botao-remover"><a
+														<td class="col s2 botao-remover"><a *ngIf="verifyEquipe(resposta)"
 															class="btn-floating waves-effect waves-light red btn-remove"
 															(click)="removeItemResposta(g, r, i)"> <i
 																class="material-icons center-icon">delete</i>
@@ -1104,7 +1104,7 @@
 												name="diagnostico{{t}}" class="resposta-conteudo"
 												[(ngModel)]="triagem.diagnostico.descricao"
 												(blur)="getDiagnostico(t)"
-												(ngModelChange)="selectDiagnosticoByCodigo($event); selectDiagnosticoByDescricao($event);"
+												(ngModelChange)="selectDiagnosticoByCodigoAndAbreviacao($event); selectDiagnosticoByDescricaoAndAbreviacao($event);"
 												[materializeParams]="autocompleteDiagnostico"> <input
 												id="triagem.diagnostico.id" type="hidden"
 												name="triagem.diagnostico.id"
@@ -1119,7 +1119,7 @@
 												name="intervencao{{t}}" class="resposta-conteudo"
 												[(ngModel)]="triagem.intervencao.descricao"
 												(blur)="getIntervencao(t)"
-												(ngModelChange)="selectIntervencaoByDescricao($event);"
+												(ngModelChange)="selectIntervencaoByDescricaoAndAbreviacao($event);"
 												[materializeParams]="autocompleteIntervencao"> <input
 												id="triagem.intervencao.id" type="hidden"
 												name="triagem.intervencao.id"

@@ -170,7 +170,7 @@ export class AtendimentoFormComponent {
 
                                     this.primeiraAtualizacao();
 
-                                    this.inscricao = TimerObservable.create( 0, 15000 )
+                                    this.inscricao = TimerObservable.create( 0, 20000 )
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
@@ -399,13 +399,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Profissional inserido na fila de atendimento", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." );
         }
@@ -418,13 +418,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Fila de atendimento pausada", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -437,13 +437,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Fila de atendimento pausada", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -459,13 +459,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Fila de atendimento encerrada", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -481,13 +481,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Profissional retornou para a fila de atendimento", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         } else {
             console.log( "Fila de atendimento nao preenchida." )
         }
@@ -500,13 +500,13 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.toastParams = ["Atendimento iniciado.", 4000];
                     this.globalActions.emit( 'toast' );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         }
     }
 
@@ -519,13 +519,13 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.getTriagensTodosAtendimentos();
                     this.getRespostasFichaColeta();
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         }
     }
 
@@ -543,13 +543,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Empregado liberado", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         }
     }
 
@@ -579,13 +579,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Atendimento finalizado", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         }
     }
 
@@ -598,13 +598,13 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.getTriagensTodosAtendimentos();
                     this.getRespostasFichaColeta();
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         }
     }
 
@@ -634,13 +634,13 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Atendimento finalizado", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.atualizar();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.toastParams = [error.text(), 4000];
                     this.globalActions.emit( 'toast' );
                 } )
-            this.atualizar();
         }
     }
 
@@ -958,11 +958,11 @@ export class AtendimentoFormComponent {
     }
 
     private oldDescricaoDiagnostico: string;
-    selectDiagnosticoByDescricao( evento ) {
+    selectDiagnosticoByDescricaoAndAbreviacao( evento ) {
         if ( this.oldDescricaoDiagnostico != evento ) {
             this.oldDescricaoDiagnostico = evento;
             if ( evento.length > 6 ) {
-                this.atendimentoService.getDiagnosticoByDescricao( evento )
+                this.atendimentoService.getDiagnosticoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
@@ -975,11 +975,11 @@ export class AtendimentoFormComponent {
     }
 
     private oldCodigoDiagnostico: string;
-    selectDiagnosticoByCodigo( evento ) {
+    selectDiagnosticoByCodigoAndAbreviacao( evento ) {
         if ( this.oldCodigoDiagnostico != evento ) {
             this.oldCodigoDiagnostico = evento;
             if ( evento.length < 6 ) {
-                this.atendimentoService.getDiagnosticoByCodigo( evento )
+                this.atendimentoService.getDiagnosticoByCodigoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
@@ -1020,11 +1020,11 @@ export class AtendimentoFormComponent {
     }
 
     private oldDescricaoIntervencao: string;
-    selectIntervencaoByDescricao( evento ) {
+    selectIntervencaoByDescricaoAndAbreviacao( evento ) {
         if ( this.oldDescricaoIntervencao != evento ) {
             this.oldDescricaoIntervencao = evento;
             if ( evento.length > 3 ) {
-                this.atendimentoService.getIntervencaoByDescricao( evento )
+                this.atendimentoService.getIntervencaoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.intervencoes = new IntervencaoBuilder().cloneList( res.json() );
                         this.autocompleteIntervencao = [this.buildAutocompleteIntervencao( this.intervencoes )];

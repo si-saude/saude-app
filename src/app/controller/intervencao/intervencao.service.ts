@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { IntervencaoFilter } from './intervencao.filter';
+import { EquipeFilter } from './../equipe/equipe.filter';
 import { EquipeService } from './../equipe/equipe.service';
 import { GenericService } from './../../generics/generic.service';
 
@@ -22,10 +23,15 @@ export class IntervencaoService extends GenericService {
         return this.selectList(new IntervencaoFilter());
     }
     
-    getIntervencaoByDescricao(descricao: string) {
+    getIntervencaoByDescricaoAndAbreviacao(descricao: string, abreviacaoEquipe: string) {
         let intervencaoFilter: IntervencaoFilter = new IntervencaoFilter();
+        let equipeFilter: EquipeFilter = new EquipeFilter();
+        
+        equipeFilter.setAbreviacao(abreviacaoEquipe);
+    
         intervencaoFilter.setPageSize(30);
         intervencaoFilter.setDescricao(descricao);
+        intervencaoFilter.setEquipe(equipeFilter);
         
         return this.selectList(intervencaoFilter);
     }
