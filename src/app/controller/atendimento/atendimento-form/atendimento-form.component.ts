@@ -133,6 +133,7 @@ export class AtendimentoFormComponent {
         this.disabledTab = 'disabled';
         this.existAtendimento = false;
         this.quantidadeItemRespostasByGrupo = new Array<number>();
+        this.equipeAbordagens = new EquipeBuilder().initializeList(new Array<Equipe>());
     }
 
     ngOnInit() {
@@ -265,7 +266,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    
+                    console.log(this.atendimento);
                     /*let riscoPotencial: RiscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
                     let equipeResponsavel: Equipe = new EquipeBuilder().initialize(new Equipe());
                     equipeResponsavel.setNome("EQUIPE RESPONSAVEL");
@@ -524,6 +525,8 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Ausencia registrada", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.getTriagensTodosAtendimentos();
+                    this.getRespostasFichaColeta();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
@@ -598,6 +601,8 @@ export class AtendimentoFormComponent {
                     this.toastParams = ["Empregado devolvido pra fila", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    this.getTriagensTodosAtendimentos();
+                    this.getRespostasFichaColeta();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );

@@ -10,7 +10,7 @@ export class ItemRespostaFichaColetaBuilder extends GenericBuilder{
         else itemRespostaFichaColeta = new ItemRespostaFichaColeta();
         
         itemRespostaFichaColeta.setItem( new ItemRespostaFichaColeta() );
-        itemRespostaFichaColeta.setResposta( new RespostaFichaColeta() );
+//        itemRespostaFichaColeta.setResposta( new RespostaFichaColeta() );
         
         return itemRespostaFichaColeta;
     }
@@ -44,7 +44,7 @@ export class ItemRespostaFichaColetaBuilder extends GenericBuilder{
             cloneItemRespostaFichaColeta.setItem(
                     new ItemRespostaFichaColetaBuilder().clone(this.getValue(itemRespostaFichaColeta, "getItem")));
         
-        cloneItemRespostaFichaColeta.setResposta(new RespostaFichaColeta());
+//        cloneItemRespostaFichaColeta.setResposta(new RespostaFichaColeta());
         
         return cloneItemRespostaFichaColeta;
     }
