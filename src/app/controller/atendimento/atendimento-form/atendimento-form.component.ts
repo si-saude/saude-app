@@ -163,7 +163,7 @@ export class AtendimentoFormComponent {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
                                     this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
-                                    console.log(this.profissional.getEquipe().getAbreviacao());
+                                    
                                     if ( this.profissional.getEquipe().getAbreviacao() == "ACO" )
                                         this.disabledTab = '';
                                     else this.disabledTab = 'disabled';

@@ -41,8 +41,8 @@ export class PerguntaFichaColetaComponent
         else return ( descricao.substr(0, 96) + "..." );
     }
     
-    goToPage( index: number ) {
-        super.goToPage(index);
+    list() {
+        super.list();
         this.flagChange = true;
     }
 
