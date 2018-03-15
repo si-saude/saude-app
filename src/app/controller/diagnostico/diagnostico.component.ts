@@ -5,6 +5,9 @@ import { GlobalVariable } from './../../global';
 import { Diagnostico } from './../../model/diagnostico';
 import { DiagnosticoService } from './diagnostico.service';
 import { DiagnosticoFilter } from './diagnostico.filter';
+import { Eixo } from './../../model/eixo';
+import { EixoFilter } from './../eixo/eixo.filter';
+import { EixoBuilder } from './../eixo/eixo.builder';
 import { DiagnosticoGuard } from './../../guards/guards-child/diagnostico.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
@@ -18,10 +21,16 @@ export class DiagnosticoComponent extends GenericListComponent<Diagnostico, Diag
     inativo: HTMLInputElement;
     flagInativo: number = 0;
     
-    constructor( diagnosticoService: DiagnosticoService, diagnosticoGuard: DiagnosticoGuard, router: Router ) {
+    constructor( private diagnosticoService: DiagnosticoService, diagnosticoGuard: DiagnosticoGuard, router: Router ) {
         super( diagnosticoService, new DiagnosticoFilter(), diagnosticoGuard, router );
     }
     
+    ngOnInit() {
+        this.filter.setEixo(new EixoFilter());
+        
+        super.ngOnInit();
+    }
+     
     ngAfterViewInit() {
         this.inativo = this.ina.nativeElement;
         this.inativo.indeterminate = true;
@@ -46,7 +55,7 @@ export class DiagnosticoComponent extends GenericListComponent<Diagnostico, Diag
             this.filter.getInativo().setValue(1);
         else this.filter.getInativo().setValue(2);
         
-        this.setFilter();
+        super.setFilter();
     }
     
 }

@@ -115,6 +115,16 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="row">
+		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="eixo">Eixo</label> 
+				<input type="text" id="eixo" 
+					[(ngModel)]="filter.eixo.titulo" name="eixo">
+			</div>
+		</div>
+	</div>
 
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
