@@ -269,7 +269,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-
+                    
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
@@ -305,8 +305,11 @@ export class AtendimentoFormComponent {
                         this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipeResponsavel(new Equipe());
                     
                     setTimeout(() => {
+                        this.triagemIndices = new Map<number, number>();
+                        
                         for ( let idx = 0; idx < this.atendimento.getTriagens().length; idx++ ) {
-                            if ( this.triagemIndices.get( idx ) != undefined ) {
+                            this.triagemIndices.set( idx, this.atendimento.getTriagens()[idx].getIndice() );
+                            if ( this.atendimento.getTriagens()[idx].getIndice() != -1 ) {
                                 let i: string = "indice" + this.triagemIndices.get( idx ) + "_" + idx;
                                 $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
                             }
