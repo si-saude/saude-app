@@ -64,6 +64,8 @@ export class AtendimentoFormComponent {
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private alive: boolean;
     private dataNascimento: any;
+    private inicioAgendamento: any;
+    private fimAgendamento: any;
     private idade: number;
     private myDatePickerOptions: IMyDpOptions;
     private globalActions;
@@ -294,7 +296,7 @@ export class AtendimentoFormComponent {
     atualizar() {
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
-
+            this.setDatas();
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
 
@@ -322,10 +324,12 @@ export class AtendimentoFormComponent {
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
 
                     if ( this.atendimento.getId() > 0 ) {
+                        this.equipesSelecteds = this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getEquipes();
+                        
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
                         this.existAtendimento = true;
-                        this.setDataNascimento();
+                        this.getDatas();
 
                         for ( let i = 0; i < $( ".tab" ).children().length; i++ ) {
                             if ( $( ".tab" ).children()[0].className == "active" )
@@ -679,7 +683,7 @@ export class AtendimentoFormComponent {
         if ( this.atendimento.getTriagens().length == 0 ) return true;
 
         triagens = this.atendimento.getTriagens().filter( t => {
-            if ( t.getIndice() > -1 && t.getIndice() < 3 ) {
+            if ( t.getIndice() > -1 ) {
                 if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
                     triagensInvalidas.push( t );
                     return false;
@@ -698,11 +702,16 @@ export class AtendimentoFormComponent {
             return true;
         } )
 
-        if ( triagens.length > 0 )
+        if ( triagens.length > 0 ){
             triagensInvalidas.forEach( t => {
-                if ( t.getJustificativa() == "" || t.getJustificativa() == undefined )
+                if (t.getIndice() < 3 && (t.getJustificativa() == "" || t.getJustificativa() == undefined) )
                     ret = false;
             } );
+            
+            if( triagens.find(t => t.getEquipeAbordagem().getId() == this.profissional.getEquipe().getId())
+                    == undefined)
+                ret = false;
+        }
         else ret = false;
 
         return ret;
@@ -736,10 +745,36 @@ export class AtendimentoFormComponent {
             this.inscricao.unsubscribe();
     }
 
-    setDataNascimento() {
+    getDatas() {
         if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() != undefined ) {
             this.dataNascimento = this.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() );
         }
+        
+        if ( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getInicioAgendamento() != undefined ) {
+            this.inicioAgendamento = this.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getInicioAgendamento() );
+        }else{
+            this.inicioAgendamento = null;
+        }
+        
+        if ( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getFimAgendamento() != undefined ) {
+            this.fimAgendamento = this.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getFimAgendamento() );
+        }else{
+            this.fimAgendamento = null;
+        }
+    }
+    
+    setDatas(){
+        if ( this.inicioAgendamento != undefined && this.inicioAgendamento != null) {
+            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setInicioAgendamento(
+                    this.parseDatePickerToDate(this.inicioAgendamento));
+        }else
+            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setInicioAgendamento(undefined);
+        
+        if ( this.fimAgendamento != undefined && this.fimAgendamento != null ) {
+            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setFimAgendamento(
+                    this.parseDatePickerToDate(this.fimAgendamento));
+        }else
+            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setFimAgendamento(undefined);
     }
 
     parseDataToObjectDatePicker( data ) {
@@ -873,14 +908,14 @@ export class AtendimentoFormComponent {
         this.triagensTodosAtendimentosByEquipe = [[]];
 
         this.atendimento.getTriagensTodosAtendimentos().forEach( t => {
-            if ( this.equipesTriagensTodosAtendimentos.find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined )
-                this.equipesTriagensTodosAtendimentos.push( t.getEquipeAbordagem() );
+            if ( this.equipesTriagensTodosAtendimentos.find( e => e.getId() == t.getIndicadorSast().getEquipe().getId() ) == undefined )
+                this.equipesTriagensTodosAtendimentos.push( t.getIndicadorSast().getEquipe() );
 
-            if ( this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()] == undefined ) {
-                this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
+            if ( this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()] == undefined ) {
+                this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()] = new Array<Triagem>();
             }
 
-            this.triagensTodosAtendimentosByEquipe[t.getEquipeAbordagem().getId()].push( t );
+            this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()].push( t );
         } )
     }
 
@@ -961,7 +996,8 @@ export class AtendimentoFormComponent {
     selectDiagnosticoByDescricaoAndAbreviacao( evento ) {
         if ( this.oldDescricaoDiagnostico != evento ) {
             this.oldDescricaoDiagnostico = evento;
-            if ( evento.length > 6 ) {
+            if ( evento.length >= 6 ) {
+                this.autocompleteDiagnostico = [];
                 this.atendimentoService.getDiagnosticoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
@@ -979,6 +1015,7 @@ export class AtendimentoFormComponent {
         if ( this.oldCodigoDiagnostico != evento ) {
             this.oldCodigoDiagnostico = evento;
             if ( evento.length < 6 ) {
+                this.autocompleteDiagnostico = [];
                 this.atendimentoService.getDiagnosticoByCodigoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
@@ -1113,6 +1150,16 @@ export class AtendimentoFormComponent {
 
     removeEquipe( i: number ) {
         this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getEquipes().splice( i, 1 );
+    }
+    
+    parseDatePickerToDate( data ) {
+        if ( data === undefined || data === null ) {
+            return null;
+        } else if ( data instanceof Date ) {
+            return data;
+        }
+        let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
+        return d;
     }
     
 }

@@ -304,7 +304,7 @@
 																[(ngModel)]="item.conteudo">
 															</td>
 														</div>
-														<td class="col s2 botao-remover"><a *ngIf="verifyEquipe(resposta)"
+														<td class="col s2 botao-remover"><a *ngIf="!verifyEquipe(resposta)"
 															class="btn-floating waves-effect waves-light red btn-remove"
 															(click)="removeItemResposta(g, r, i)"> <i
 																class="material-icons center-icon">delete</i>
@@ -1333,18 +1333,18 @@
 											Agendamento</td>
 										<td class="col s4 inicio-agentamento"><my-date-picker
 												name="inicioAgendamento" [options]="myDatePickerOptions"
-												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.inicioAgendamento"
-												placeholder="Inicio"> </my-date-picker></td>
+												[(ngModel)]="inicioAgendamento"
+												placeholder="Inicio"> </my-date-picker></td>										
 										<td class="col s4 fim-agendamento"><my-date-picker
 												name="fimAgendamento" [options]="myDatePickerOptions"
-												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.fimAgendamento"
+												[(ngModel)]="fimAgendamento"
 												placeholder="Fim"> </my-date-picker></td>
 									</tr>
 								</div>
 
 								<div class="row">
 									<tr class="row col s12">
-										<td class="col s3 label-conduta-percepcao">Conduta/Persepção</td>
+										<td class="col s3 label-conduta-percepcao">Conduta/Percepção</td>
 										<td class="col s9 conduta-percepcao"><textarea
 												class="materialize-textarea"
 												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.condutaPercepcao"
