@@ -5,6 +5,7 @@ import { GlobalVariable } from './../../global';
 import { Eixo } from './../../model/eixo';
 import { EixoService } from './eixo.service';
 import { EixoFilter } from './eixo.filter';
+import { EquipeFilter } from './../equipe/equipe.filter';
 import { EixoGuard } from './../../guards/guards-child/eixo.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
 
@@ -17,6 +18,12 @@ export class EixoComponent extends GenericListComponent<Eixo, EixoFilter, EixoGu
     
     constructor( eixoService: EixoService, eixoGuard: EixoGuard, router: Router ) {
         super( eixoService, new EixoFilter(), eixoGuard, router );
+    }
+    
+    ngOnInit() {
+        this.filter.setEquipe(new EquipeFilter());
+        
+        super.ngOnInit();
     }
     
 }
