@@ -64,6 +64,7 @@ import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-re
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
+import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 
 @NgModule({
@@ -133,6 +134,7 @@ import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
     AuditoriaAsoGuard,
     AgendaGuard,
     FilaEsperaOcupacionalRecepcaoGuard,
+    FilaEsperaOcupacionalGuard,
     RiscoGheGuard
   ],
   bootstrap: [ 

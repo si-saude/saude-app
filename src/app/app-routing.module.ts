@@ -50,6 +50,7 @@ import { ServicoGuard } from './guards/guards-child/servico.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
+import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
@@ -142,7 +143,8 @@ const routes: Routes = [
   { path: 'solicitacao-servico',
       loadChildren: 'app/solicitacao-servico/solicitacao-servico.module#SolicitacaoServicoModule'},
   { path: 'fila-espera-ocupacional',
-      loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule' },
+      loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule',
+      canActivateChild: [FilaEsperaOcupacionalGuard]},
   { path: 'fila-espera-ocupacional-recepcao',
       loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional-recepcao.module#FilaEsperaOcupacionalRecepcaoModule',
       canActivateChild: [FilaEsperaOcupacionalRecepcaoGuard]},
