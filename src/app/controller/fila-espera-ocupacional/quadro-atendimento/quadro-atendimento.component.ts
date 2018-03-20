@@ -79,7 +79,6 @@ export class QuadroAtendimentoComponent {
         this.filaEsperaOcupacionalService.buscarQuadroAtendimento( this.atendimento )
             .then(res => {
                 this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
-                console.log(res.json());
                 this.dataInicioTarefa = [[]];
                 this.dataFimTarefa = [[]];
                 this.tarefas = [[]];
@@ -99,6 +98,7 @@ export class QuadroAtendimentoComponent {
                     }
                     this.atendimentos.filter( a => a.getFilaEsperaOcupacional().getEmpregado().getId() == e.getId() )
                         .forEach( aT => {
+                            
                             if ( flagServico ) {
                                 setTimeout(() => {
                                     $("."+e.getId()).append(" - " + aT.getTarefa().getServico().getNome());
@@ -106,19 +106,19 @@ export class QuadroAtendimentoComponent {
                                 flagServico = false;
                             }
                             
-                            this.tarefas[ e.getId() ].push( aT.getTarefa() ) 
+                            this.tarefas[ e.getId() ].push( aT.getTarefa() )
                             if ( aT.getTarefa().getInicio() != undefined ) {
                                 if ( this.dataInicioTarefa[aT.getTarefa().getId()] == undefined ) {
                                     this.dataInicioTarefa[aT.getTarefa().getId()] = new Array<string>();
                                     this.dataInicioTarefa[aT.getTarefa().getId()].push(
-                                            this.treatString(aT.getTarefa().getInicio().toString()));
+                                            this.treatString( aT.getTarefa().getInicio().toString() ));
                                 }
                             } else this.dataInicioTarefa[aT.getTarefa().getId()].push("");
                             if ( aT.getTarefa().getFim() != undefined ) {
                                 if ( this.dataFimTarefa[aT.getTarefa().getId()] == undefined ) {
                                     this.dataFimTarefa[aT.getTarefa().getId()] = new Array<any>();
                                     this.dataFimTarefa[aT.getTarefa().getId()].push(
-                                            this.treatString(aT.getTarefa().getFim().toString()));
+                                            this.treatString( aT.getTarefa().getFim().toString() ));
                                 }
                             } else this.dataFimTarefa[aT.getTarefa().getId()].push("");
                         });
@@ -156,10 +156,12 @@ export class QuadroAtendimentoComponent {
         return o;
     }
     
-    treatString(date: string) {
+    treatString( date: string ) {
         let s = date.split("T");
         s = s[1].split(".");
-        return s[0];
+        let hour: number = Number(s[0].substr(0, 2)) - 3;
+        let ret = hour + s[0].substr(2, date.length);
+        return ret;
     }
     
 }
