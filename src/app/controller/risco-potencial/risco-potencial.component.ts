@@ -24,6 +24,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     riscoPotencialRPSats: Array<string>;
     empregado;
     equipe;
+    private servico:RiscoPotencialService;
 
     constructor( service: RiscoPotencialService, riscoGuard: RiscoPotencialGuard, router: Router ) {
         super( service, new RiscoPotencialFilter(), riscoGuard, router );
@@ -39,10 +40,17 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         this.riscoPotenciais = new RiscoPotencialBuilder().cloneList(new Array<RiscoPotencial>());
         this.riscoPotencialDatas = new Array<any>();
         this.riscoPotencialRPSats = new Array<string>();
+        
+        this.servico = service;
     }
     
     ngOnInit() {
-        super.ngOnInit();
+        
+        this.listar();
+        
+        setTimeout(() => {
+            this.canRemove = this.guard.canRemove;
+        }, 200);
         
         setTimeout(() => {
             if ( this.array != undefined ) {
@@ -58,14 +66,6 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                 
                 this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
                 
-                this.riscoPotenciais.forEach(r => {
-                    if ( r.getId() > 0 && r.getId() < 3 )
-                        r.setStatusRPSat("INACEITAVEL");
-                    else if ( r.getId() >= 3 && r.getId() < 6 )
-                        r.setStatusRPSat("TOLERAVEL");
-                    else if ( r.getId() >= 6 ) r.setStatusRPSat("ACEITAVEL");
-                })
-                
                 setTimeout(() => {
                     this.changeColorStatusRPSat();
                 }, 200);
@@ -74,6 +74,27 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
             }
         }, 500);
         
+    }
+    
+    listar() {
+        this.servico.listAll( this.filter )
+            .then( res => {
+                this.canImport = true;
+                this.showPreload = false;
+                this.array = JSON.parse( JSON.stringify( res.json() ) ).list;
+                this.paginas = this.getPaginas( res.json().total );
+                this.paginator();
+                if ( res.json().total === 0 ) {
+                    this.verifyEmptyPaginas = true;
+                } else {
+                    this.verifyEmptyPaginas = false;
+                }
+            } )
+            .catch( error => {
+                this.showPreload = false;
+                this.canImport = false;
+                this.catchConfiguration( error );
+            } )
     }
     
     changeColorStatusRPSat() {
