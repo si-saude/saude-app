@@ -151,7 +151,7 @@
 					</div>
 
 					<div class="row">
-						<div class="input-field col s12">
+						<div class="input-field col s6">
 							<fieldset>
 								<legend>
 									Escolaridade <a
@@ -167,6 +167,12 @@
 										value="{{escolaridade}}">{{escolaridade}}</option>
 								</select>
 							</fieldset>
+						</div>
+						
+						<div class="input-field col s6">
+							<label for="email">Email</label> 
+							<input id="email" type="email"
+								[(ngModel)]="empregado.pessoa.email" name="email">
 						</div>
 
 					</div>

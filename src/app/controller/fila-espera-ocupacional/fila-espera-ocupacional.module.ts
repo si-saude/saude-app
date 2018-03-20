@@ -8,6 +8,7 @@ import { Ng2InputMaskModule } from 'ng2-input-mask';
 import { CheckInComponent } from './check-in/check-in.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { QuadroAtendimentoComponent } from './quadro-atendimento/quadro-atendimento.component';
+import { DeclaracaoComparecimentoComponent } from './declaracao-comparecimento/declaracao-comparecimento.component';
 import { FilaComponent } from './fila/fila.component';
 import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional.service';
 import { FilaEsperaOcupacionalRoutingModule } from './fila-espera-ocupacional.routing.module';
@@ -18,6 +19,7 @@ import { SharedModule } from './../shared.module';
        CheckInComponent,
        CheckOutComponent,
        QuadroAtendimentoComponent,
+       DeclaracaoComparecimentoComponent,
        FilaComponent
      ],
      imports: [

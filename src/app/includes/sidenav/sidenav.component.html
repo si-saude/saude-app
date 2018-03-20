@@ -108,6 +108,8 @@
 			<a [routerLink]="['/fila-espera-ocupacional/check-out']">Check-out</a>
 			<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-out']" 
 				*ngIf="checkPermissao('FILA-ESPERA-OCUPACIONAL-RECEPCAO')">Check-out (Recepção)</a>
+			<a [routerLink]="['/fila-espera-ocupacional/declaracao-comparecimento']" 
+				*ngIf="checkPermissao('DECLARACAO-COMPARECIMENTO')">Declaração de Comparecimento</a>
 			<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
 			<a [routerLink]="['/fila-espera-ocupacional/quadro-atendimento']"
 				*ngIf="checkPermissao('QUADRO-ATENDIMENTO')">Quadro de Atendimento</a>

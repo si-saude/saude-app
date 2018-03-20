@@ -11,6 +11,7 @@ export class Pessoa {
     private telefones: Array<Telefone>;
     private endereco: Endereco;
     private version: number;
+    private email: string;
     private idade: number;
 
     getId(): number {
@@ -91,5 +92,13 @@ export class Pessoa {
     
     setEndereco(endereco: Endereco){
         this.endereco = endereco;
+    }
+    
+    getEmail(): string {
+        return this.email;
+    }
+    
+    setEmail(email: string) {
+        this.email = email;
     }
 }
