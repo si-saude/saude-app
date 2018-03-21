@@ -19,21 +19,28 @@
 					<th class="col s1">Ranking</th>
 					<th class="col s2">RPSat</th>
 					<th class="col s2">Gestão</th>
-					<th class="col s5">Empregado</th>
-					<th class="col s2">Data</th>
+					<th class="col s4">Empregado</th>
+					<th class="col s3">Data</th>
 				</tr>
 			</thead>
 			<div *ngFor="let riscoPotencial of riscoPotenciais;let i = index">
-				<tbody class="col s12 row-risco{{i}}">
-					<tr class="col s12">
+				<tbody class="col s12 row-risco row-risco{{i}}">
+					<tr class="col s12" (click)="toggleButtons(i)">
 						<td class="col s1 ranking">{{i+1}}</td>
 						<td class="col s2 rpsat">{{riscoPotencial.statusRPSat}}</td>
 						<td class="col s2 gestao">{{riscoPotencial.equipeResponsavel.nome}}</td>
-						<td class="col s5 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
-						<td class="col s2 data">
+						<td class="col s4 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
+						<td class="col s3 data">
 							<my-date-picker name="data" disabled [options]="myDatePickerOptions"
 								[ngModel]="riscoPotencialDatas[i]" placeholder="Data"> </my-date-picker>
 						</td>
+					</tr>
+					<tr class="col s12 row-btns row-btns-risco{{i}}" hidden >
+						<a [routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Triagem</a>
+						<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Planejamento</a>
+						<a [routerLink]="['/risco-potencial/avaliacao/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Avaliação</a>
+						<a [routerLink]="['/risco-potencial/acoes/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ações</a>
+						<a [routerLink]="['/risco-potencial/acolhimento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Acolhimento</a>
 					</tr>
 				</tbody>
 			</div>

@@ -27,7 +27,8 @@ tbody{
 
 .list-container {
 	max-height: 400px;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .empregado {
@@ -45,4 +46,20 @@ tbody{
 .ranking {
 	padding-left: 20px;
     padding-top: 7px;
+}
+
+.row-risco { 
+	cursor: pointer;
+	padding-top: 10px;
+}
+
+.row-btns {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.btn-ranking {
+	background: #2d286f;
+	margin-left: 10px;
 }

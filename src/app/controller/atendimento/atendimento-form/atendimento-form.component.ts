@@ -997,7 +997,6 @@ export class AtendimentoFormComponent {
         if ( this.oldDescricaoDiagnostico != evento ) {
             this.oldDescricaoDiagnostico = evento;
             if ( evento.length >= 6 ) {
-                this.autocompleteDiagnostico = [];
                 this.atendimentoService.getDiagnosticoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
@@ -1015,11 +1014,12 @@ export class AtendimentoFormComponent {
         if ( this.oldCodigoDiagnostico != evento ) {
             this.oldCodigoDiagnostico = evento;
             if ( evento.length < 6 ) {
-                this.autocompleteDiagnostico = [];
                 this.atendimentoService.getDiagnosticoByCodigoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
+                        console.log(this.diagnosticos);
+                        console.log(this.autocompleteDiagnostico);
                     } )
                     .catch( error => {
                         console.log( error );

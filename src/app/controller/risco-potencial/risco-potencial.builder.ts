@@ -65,7 +65,6 @@ export class RiscoPotencialBuilder extends GenericBuilder {
                     new EquipeBuilder().clone(this.getValue(riscoPotencial,"getEquipeResponsavel")));
             if(!this.idGtZero(cloneRiscoPotencial.getEquipeResponsavel()))
                 cloneRiscoPotencial.setEquipeResponsavel(undefined);
-            
         } else {
             cloneRiscoPotencial.setEquipeResponsavel(new EquipeBuilder().initialize(null));
         }

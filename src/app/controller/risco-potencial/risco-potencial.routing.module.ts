@@ -3,18 +3,25 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RiscoPotencialComponent } from './risco-potencial.component';
-//import { RiscoPotencialFormComponent } from './risco-potencial-form/risco-potencial-form.component';
-//import { RiscoPotencialFormDetailComponent } from './risco-potencial-form/risco-potencial-form-detail.component';
-//import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
-//import { RiscoPotencialGuard } from './../../guards/guards-child/risco-potencial.guard';
+import { AcoesComponent } from './acoes/acoes.component';
+import { AcolhimentoComponent } from './acolhimento/acolhimento.component';
+import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
+import { PlanejamentoComponent } from './planejamento/planejamento.component';
+import { TriagemComponent } from './triagem/triagem.component';
+import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const riscoPotencialRoutes: Routes = [
-    { path: '', component: RiscoPotencialComponent}
-//    { path: 'cadastrar', component: RiscoPotencialFormComponent,
-//        canDeactivate: [CanDeactivateGuard]},
-//    { path: 'editar/:id', component: RiscoPotencialFormComponent,
-//        canDeactivate: [CanDeactivateGuard]},
-//    { path: 'detalhe/:id', component: RiscoPotencialFormDetailComponent}
+    { path: '', component: RiscoPotencialComponent},
+    { path: 'triagem/:id', component: TriagemComponent,
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'acoes/:id', component: AcoesComponent,
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'avaliacao/:id', component: AvaliacaoComponent,
+            canDeactivate: [CanDeactivateGuard]},
+    { path: 'planejamento/:id', component: PlanejamentoComponent,
+        canDeactivate: [CanDeactivateGuard]},
+    { path: 'acolhimento/:id', component: AcolhimentoComponent,
+        canDeactivate: [CanDeactivateGuard]}
 ];
 
 @NgModule({

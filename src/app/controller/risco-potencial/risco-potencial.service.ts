@@ -22,14 +22,6 @@ export class RiscoPotencialService extends GenericService {
         return this.selectList(new RiscoPotencialFilter());
     }
     
-    getEmpregado1() {
-        return this.empregadoService.get(15);
-    }
-    
-    getEquipe1() {
-        return this.equipeService.get(1);
-    }
-    
     listAll( filter: RiscoPotencialFilter) {
         let urlList = this.URL + "/list-all";
         return this.http

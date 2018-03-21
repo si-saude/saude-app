@@ -12,6 +12,7 @@ import { RiscoPotencialGuard } from './../../guards/guards-child/risco-potencial
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { EquipeBuilder } from './../equipe/equipe.builder';
 import { GenericListComponent } from './../../generics/generic.list.component';
+import { BooleanFilter } from './../../generics/boolean.filter';
 
 @Component({
   selector: 'app-risco-potencial',
@@ -29,15 +30,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     constructor( service: RiscoPotencialService, riscoGuard: RiscoPotencialGuard, router: Router ) {
         super( service, new RiscoPotencialFilter(), riscoGuard, router );
         
-        service.getEmpregado1().then(res => {
-            this.empregado = new EmpregadoBuilder().clone(res.json());
-        })
-        
-        service.getEquipe1().then(res => {
-            this.equipe = new EquipeBuilder().clone(res.json());
-        })
-        
-        this.riscoPotenciais = new RiscoPotencialBuilder().cloneList(new Array<RiscoPotencial>());
+        this.riscoPotenciais = new RiscoPotencialBuilder().initializeList(new Array<RiscoPotencial>());
         this.riscoPotencialDatas = new Array<any>();
         this.riscoPotencialRPSats = new Array<string>();
         
@@ -77,6 +70,9 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     }
     
     listar() {
+        this.showPreload = true;
+        this.filter.setAtual(new BooleanFilter());
+        this.filter.getAtual().setValue(1);
         this.servico.listAll( this.filter )
             .then( res => {
                 this.canImport = true;
@@ -117,6 +113,10 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                         this.riscoPotenciais[i].getData() );
             }
         }
+    }
+    
+    toggleButtons(indexRisco: number) {
+        $(".row-btns-risco"+indexRisco).toggle("slow");
     }
 
 }

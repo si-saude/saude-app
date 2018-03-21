@@ -42,5 +42,10 @@ export class IntervencaoComponent extends GenericListComponent<Intervencao, Inte
         super.goToPage(index);
         this.flagChange = true;
     }
+    
+    list() {
+        super.list();
+        this.flagChange = true;
+    }
 
 }
