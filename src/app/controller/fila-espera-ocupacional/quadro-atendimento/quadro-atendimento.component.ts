@@ -101,7 +101,9 @@ export class QuadroAtendimentoComponent {
                             
                             if ( flagServico ) {
                                 setTimeout(() => {
-                                    $("."+e.getId()).append(" - " + aT.getTarefa().getServico().getNome());
+                                    $("."+e.getId()).append(" - " 
+                                            + aT.getTarefa().getServico().getNome() + " - " 
+                                            + aT.getFilaEsperaOcupacional().getStatus() );
                                 }, 300);
                                 flagServico = false;
                             }
