@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 
-import { QuadroAtendimentoComponent } from './quadro-atendimento/quadro-atendimento.component';
 import { CheckInRecepcaoComponent } from './check-in-recepcao/check-in-recepcao.component';
 import { CheckOutRecepcaoComponent } from './check-out-recepcao/check-out-recepcao.component';
 import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional.service';
@@ -12,8 +11,7 @@ import { SharedModule } from './../shared.module';
 @NgModule({
     declarations: [
        CheckInRecepcaoComponent,
-       CheckOutRecepcaoComponent,
-       QuadroAtendimentoComponent
+       CheckOutRecepcaoComponent
      ],
      imports: [
         FilaEsperaOcupacionalRecepcaoRoutingModule,
