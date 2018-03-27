@@ -13,6 +13,7 @@ export class RiscoPotencialFilter extends GenericFilter {
     private inicioAgendamento: DateFilter;
     private fimAgendamento: DateFilter;
     private atual: BooleanFilter;
+    private status: string;
 
     public getEmpregado() {
         return this.empregado;
@@ -55,5 +56,11 @@ export class RiscoPotencialFilter extends GenericFilter {
     }
     public setAtual(atual: BooleanFilter) {
         this.atual = atual;
+    }
+    public getStatus(){
+        return this.status;
+    }
+    public setStatus(status: string){
+        this.status = status;
     }
 }
