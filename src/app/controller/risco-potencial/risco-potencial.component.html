@@ -36,11 +36,16 @@
 						</td>
 					</tr>
 					<tr class="col s12 row-btns row-btns-risco{{i}}" hidden >
-						<a [routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Triagem</a>
-						<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Planejamento</a>
-						<a [routerLink]="['/risco-potencial/avaliacao/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Avaliação</a>
-						<a [routerLink]="['/risco-potencial/acoes/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ações</a>
-						<a [routerLink]="['/risco-potencial/acolhimento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Acolhimento</a>
+						<div class="row div-btns-risco">
+							<a [routerLink]="['/risco-potencial/ficha-coleta/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ficha Coleta</a>
+							<a [routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Triagem</a>
+							<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Planejamento</a>
+						</div>
+						<div class="row div-btns-risco">
+							<a [routerLink]="['/risco-potencial/criar-plano/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Criar Plano</a>
+							<a [routerLink]="['/risco-potencial/acoes/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ações</a>
+							<a [routerLink]="['/risco-potencial/avaliacao/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Avaliação</a>
+						</div>
 					</tr>
 				</tbody>
 			</div>

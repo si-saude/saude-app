@@ -15,8 +15,10 @@ export abstract class GenericComponent {
     protected verifyError: boolean = false;
     protected myDatePickerOptions: IMyDpOptions;
     protected modalParams;
+    protected router;
     
-    constructor( private router: Router ) {
+    constructor( r: Router ) {
+        this.router = r;
         this.showPreload = true;
         this.showConfirmSave = false;
         this.msgConfirmSave = "Salvo com sucesso! Ao confirmar, você será redirecionado para a tela de listagem.";

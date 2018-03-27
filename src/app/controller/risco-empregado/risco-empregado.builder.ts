@@ -1,9 +1,14 @@
 import { RiscoEmpregado } from './../../model/risco-empregado';
 import { Empregado } from './../../model/empregado';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
+import { RiscoPotencial } from './../../model/risco-potencial';
+import { RiscoPotencialBuilder } from './../risco-potencial/risco-potencial.builder';
 import { Equipe } from './../../model/equipe';
 import { EquipeBuilder } from './../equipe/equipe.builder';
+import { Profissional } from './../../model/profissional';
+import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
 import { Triagem } from './../../model/triagem';
+import { TriagemBuilder } from './../triagem/triagem.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class RiscoEmpregadoBuilder extends GenericBuilder {
@@ -12,7 +17,9 @@ export class RiscoEmpregadoBuilder extends GenericBuilder {
         riscoEmpregado = new RiscoEmpregado();
         
         riscoEmpregado.setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
+        riscoEmpregado.setRiscoPotencial(new RiscoPotencialBuilder().initialize(new RiscoPotencial()));
         riscoEmpregado.setEquipe(new EquipeBuilder().initialize(new Equipe()));
+        riscoEmpregado.setProfissional(new ProfissionalSaudeBuilder().initialize(new Profissional()));
         riscoEmpregado.setTriagens(new Array<Triagem>());
         
         return riscoEmpregado;
@@ -44,9 +51,14 @@ export class RiscoEmpregadoBuilder extends GenericBuilder {
         cloneRiscoEmpregado.setData(this.getValue(riscoEmpregado,"getData"));
         cloneRiscoEmpregado.setStatus(this.getValue(riscoEmpregado,"getStatus"));
         
+        cloneRiscoEmpregado.setRiscoPotencial(
+                new RiscoPotencialBuilder().clone(this.getValue(riscoEmpregado,"getRiscoPotencial")));
         cloneRiscoEmpregado.setEmpregado(new EmpregadoBuilder().clone(this.getValue(riscoEmpregado,"getEmpregado")));
         cloneRiscoEmpregado.setEquipe(new EquipeBuilder().clone(this.getValue(riscoEmpregado,"getEquipe")));
-        cloneRiscoEmpregado.setTriagens(new Array<Triagem>());
+        cloneRiscoEmpregado.setProfissional(
+                new ProfissionalSaudeBuilder().clone(this.getValue(riscoEmpregado,"getProfissional")));
+        cloneRiscoEmpregado.setTriagens(
+                new TriagemBuilder().cloneList(this.getValue(riscoEmpregado,"getTriagens")));
         
         return cloneRiscoEmpregado;
     }

@@ -61,9 +61,31 @@ export class TriagemBuilder extends GenericBuilder {
             cloneTriagem.setPrazo(this.getValue(triagem, "getPrazo"));
         
         cloneTriagem.setIndicadorSast(new IndicadorSastBuilder().clone(this.getValue( triagem, "getIndicadorSast" )));
-        cloneTriagem.setDiagnostico(new DiagnosticoBuilder().clone(this.getValue( triagem, "getDiagnostico" )));
-        cloneTriagem.setIntervencao(new IntervencaoBuilder().clone(this.getValue( triagem, "getIntervencao" )));
-        cloneTriagem.setEquipeAbordagem(new EquipeBuilder().clone(this.getValue( triagem, "getEquipeAbordagem" )));
+        
+        if (this.getValue(triagem, "getDiagnostico") !== undefined) { 
+            cloneTriagem.setDiagnostico(new DiagnosticoBuilder().clone(this.getValue( triagem, "getDiagnostico" )));
+            if(!this.idGtZero(cloneTriagem.getDiagnostico()))
+                cloneTriagem.setDiagnostico(undefined);
+        } else {
+            cloneTriagem.setDiagnostico(new DiagnosticoBuilder().initialize(null));            
+        }
+        
+        if (this.getValue(triagem, "getIntervencao") !== undefined) { 
+            cloneTriagem.setIntervencao(new IntervencaoBuilder().clone(this.getValue( triagem, "getIntervencao" )));
+            if(!this.idGtZero(cloneTriagem.getIntervencao()))
+                cloneTriagem.setIntervencao(undefined);
+        } else {
+            cloneTriagem.setIntervencao(new IntervencaoBuilder().initialize(null));            
+        }
+        
+        if (this.getValue(triagem, "getEquipeAbordagem") !== undefined) { 
+            cloneTriagem.setEquipeAbordagem(new EquipeBuilder().clone(this.getValue( triagem, "getEquipeAbordagem" )));
+            if(!this.idGtZero(cloneTriagem.getEquipeAbordagem()))
+                cloneTriagem.setEquipeAbordagem(undefined);
+        } else {
+            cloneTriagem.setEquipeAbordagem(new EquipeBuilder().initialize(null));            
+        }
+        
         cloneTriagem.setRiscoEmpregado(new RiscoEmpregadoBuilder().clone(this.getValue(triagem, "getRiscoEmpregado")));
         
         return cloneTriagem;

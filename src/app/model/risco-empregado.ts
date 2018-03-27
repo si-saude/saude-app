@@ -1,13 +1,17 @@
 import { Empregado } from './empregado';
 import { Equipe } from './equipe';
 import { Triagem } from './triagem';
+import { Profissional } from './profissional';
+import { RiscoPotencial } from './risco-potencial';
 
 export class RiscoEmpregado {
     private id: number;
     private valor: number;
+    private riscoPotencial: RiscoPotencial;
     private empregado: Empregado;
     private equipe: Equipe;
     private triagens: Array<Triagem>;
+    private profissional: Profissional;
     private version: number;
     private data: Date;
     private status: string;
@@ -26,6 +30,14 @@ export class RiscoEmpregado {
 
     setValor(valor: number) {
         this.valor = valor;
+    }
+    
+    getRiscoPotencial() {
+        return this.riscoPotencial;
+    }
+
+    setRiscoPotencial(riscoPotencial: RiscoPotencial) {
+        this.riscoPotencial = riscoPotencial;
     }
 
     getEmpregado() {
@@ -50,6 +62,14 @@ export class RiscoEmpregado {
 
     setTriagens(triagens: Array<Triagem>) {
         this.triagens = triagens;
+    }
+    
+    getProfissional() {
+        return this.profissional;
+    }
+
+    setProfissional(profissional: Profissional) {
+        this.profissional = profissional;
     }
 
     getVersion() {
