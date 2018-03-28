@@ -42,9 +42,15 @@
 							<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Planejamento</a>
 						</div>
 						<div class="row div-btns-risco">
-							<a [routerLink]="['/risco-potencial/criar-plano/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Criar Plano</a>
-							<a [routerLink]="['/risco-potencial/acoes/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ações</a>
-							<a [routerLink]="['/risco-potencial/plano-intervencao/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Plano de Intervenção</a>
+							<div style="display: inline;" *ngIf="verifyStatusCriarPlano(i)">
+								<a [routerLink]="['/risco-potencial/criar-plano/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Criar Plano</a>
+							</div>
+							<div style="display: inline;" *ngIf="verifyStatusAcao(i)">
+								<a [routerLink]="['/risco-potencial/acoes/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ações</a>
+							</div>
+							<div style="display: inline;" *ngIf="verifyStatusPlanoIntervencao(i)">
+								<a [routerLink]="['/risco-potencial/plano-intervencao/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Plano de Intervenção</a>
+							</div>
 						</div>
 					</tr>
 				</tbody>

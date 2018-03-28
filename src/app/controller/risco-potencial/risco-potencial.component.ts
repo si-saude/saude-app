@@ -118,5 +118,23 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     toggleButtons(indexRisco: number) {
         $(".row-btns-risco"+indexRisco).toggle("slow");
     }
+    
+    verifyStatusAcao(indexRisco) {
+        if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" )
+            return true;
+        return false;
+    }
+    
+    verifyStatusPlanoIntervencao(indexRisco) {
+        if ( this.riscoPotenciais[indexRisco].getStatus() == "PLANEJAMENTO" )
+            return true;
+        return false;
+    }
+    
+    verifyStatusCriarPlano(indexRisco) {
+        if ( this.riscoPotenciais[indexRisco].getStatus() == "ABERTO" )
+            return true;
+        return false;
+    }
 
 }
