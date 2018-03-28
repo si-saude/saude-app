@@ -13,6 +13,8 @@ export class RiscoEmpregado {
     private triagens: Array<Triagem>;
     private profissional: Profissional;
     private version: number;
+    private data: Date;
+    private status: string;
 
     getId() {
         return this.id;
@@ -78,4 +80,18 @@ export class RiscoEmpregado {
         this.version = version;
     }
     
+    getData(){
+        return this.data;
+    }
+    
+    setData(data:Date){
+        this.data = data;
+    }
+    
+    getStatus(){
+        return this.status;
+    }
+    setStatus(status:string){
+        this.status = status;
+    }
 }

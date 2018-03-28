@@ -47,6 +47,7 @@ export class RiscoPotencialBuilder extends GenericBuilder {
         cloneRiscoPotencial.setCondutaPercepcao(this.getValue(riscoPotencial,"getCondutaPercepcao"));
         cloneRiscoPotencial.setAtual(this.getValue(riscoPotencial,"getAtual"));
         cloneRiscoPotencial.setStatusRPSat(this.getValue(riscoPotencial,"getStatusRPSat"));
+        cloneRiscoPotencial.setStatus(this.getValue(riscoPotencial,"getStatus"));
         cloneRiscoPotencial.setValor(this.getValue(riscoPotencial,"getValor"));
         
         if (this.getValue(riscoPotencial, "getEmpregado") !== undefined) { 

@@ -17,6 +17,7 @@ export class RiscoPotencial {
     private atual: boolean;
     private statusRPSat: string;
     private version: number;
+    private status: string;
 
     public getId() {
         return this.id;
@@ -120,6 +121,14 @@ export class RiscoPotencial {
     
     public setStatusRPSat(statusRPSat: string) {
         this.statusRPSat = statusRPSat;
+    }
+    
+    public getStatus() {
+        return this.status;
+    }
+    
+    public setStatus(status: string) {
+        this.status = status;
     }
     
     public getValor() {
