@@ -17,7 +17,7 @@
 				<table style="width: 100%">
 					<div class="container-triagens-planejamento">
 						<div
-							*ngFor="let triagem of riscoEmpregado.triagens; let t = index">
+							*ngFor="let triagem of triagens; let t = index">
 							<div *ngIf="verifyIndiceTriagem(triagem)">
 								<fieldset class="fieldset-planejamento-triagem">
 									<div class="row">
@@ -109,16 +109,13 @@
 									</div>
 								</fieldset>
 							</div>
+							
 						</div>
 					</div>
 				</table>
 			</div>
 
 		</div>
-
-		<input id="id" name="id" type="hidden" [(ngModel)]="riscoEmpregado.id">
-		<input id="version" name="version" type="hidden"
-			[(ngModel)]="riscoEmpregado.version">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"

@@ -1,0 +1,58 @@
+.form-container {
+	display: grid !important;
+}
+
+.container-triagem {
+	max-height: 500px;
+    overflow: auto;
+}
+
+.row-modal-acao {
+	padding: 15px;
+}
+
+.btn-remove-div {
+	margin-top: -66%;
+    margin-left: 95%;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    display: inline-table;
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+
+tbody {
+	margin-top: 2px;
+	border-bottom: 1px solid #c0c0c0;
+	display: grid;
+	padding: 0;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+th {
+	margin-bottom: 0px;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+
+.fieldset-planejamento-triagem {
+	background: #e6fdff;
+	margin: 20px;
+}
+
+.icon-btn-add-acao {
+	margin: 0 !important;
+}

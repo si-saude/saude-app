@@ -33,6 +33,27 @@ export class RiscoPotencialService extends GenericService {
             .toPromise();
     }
     
+    getTipoAcao( filter: RiscoPotencialFilter) {
+        let urlTipoAcao = GlobalVariable.BASE_API_URL + "/generic/tipo-acao";
+        return this.http
+            .get( urlTipoAcao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getStatusAcao( filter: RiscoPotencialFilter) {
+        let urlStatusAcao = GlobalVariable.BASE_API_URL + "/generic/status-acao";
+        return this.http
+            .get( urlStatusAcao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getTipoContatoAcao( filter: RiscoPotencialFilter) {
+        let urlTipoContato = GlobalVariable.BASE_API_URL + "/generic/tipo-contato";
+        return this.http
+            .get( urlTipoContato + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
     getPrazos() {
         let urlPrazo = GlobalVariable.BASE_API_URL + "/generic/prazo-em-meses";
         return this.http

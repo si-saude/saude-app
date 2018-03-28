@@ -20,6 +20,13 @@ export abstract class GenericService {
             .post( urlSubmit, formulario, { headers: this.headers } )
             .toPromise();
     }
+    
+    submitList( formulario: any ) {
+        let urlSubmitList = this.URL + "/save-list";
+        return this.http
+            .post( urlSubmitList, formulario, { headers: this.headers } )
+            .toPromise();
+    }
 
     get( id: number ) {
         let urlGet = this.URL;

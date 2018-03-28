@@ -52,6 +52,18 @@ export abstract class GenericFormComponent extends GenericComponent implements O
                 this.processReturn( false, error );
             } )
     }
+    
+    saveList( object ) {
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.service.submitList( object )
+            .then( res => {
+                this.processReturn( true, res );
+            } )
+            .catch( error => {
+                this.processReturn( false, error );
+            } )
+    }
 
     processReturn( sucess: boolean, res: any ) {
         if ( sucess ) {

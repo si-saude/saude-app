@@ -4,6 +4,7 @@ import { Diagnostico } from './diagnostico';
 import { Intervencao } from './intervencao';
 import { Equipe } from './equipe';
 import { RiscoEmpregado } from './risco-empregado';
+import { Acao } from './acao';
 
 export class Triagem {
     private id: number;
@@ -16,6 +17,7 @@ export class Triagem {
     private equipeAbordagem: Equipe;
     private prazo: string = "";
     private justificativa: string;
+    private acoes: Array<Acao>;
     private version: number;
 
     getId() {
@@ -104,5 +106,13 @@ export class Triagem {
 
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    getAcoes() {
+        return this.acoes;
+    }
+
+    setAcoes(acoes: Array<Acao>) {
+        this.acoes = acoes;
     }
 }

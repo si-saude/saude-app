@@ -12,11 +12,11 @@ import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 
 @Component({
-  selector: 'app-avaliacao',
-  templateUrl: './avaliacao.html',
-  styleUrls: ['./avaliacao.css', './../../../../assets/css/form-component.css']
+  selector: 'app-plano-intervencao',
+  templateUrl: './plano-intervencao.html',
+  styleUrls: ['./plano-intervencao.css', './../../../../assets/css/form-component.css']
 })
-export class AvaliacaoComponent extends GenericFormComponent implements OnInit {
+export class PlanoIntervencaoComponent extends GenericFormComponent implements OnInit {
     private equipesAbordagemTriagens: Array<Equipe>;
     private flagEquipesAbordagemTriagens: Array<Equipe>;
     private triagensByEquipeAbordagem = [[]];

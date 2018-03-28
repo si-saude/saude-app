@@ -1,6 +1,7 @@
 import { Triagem } from './../../model/triagem';
 import { Atendimento } from './../../model/atendimento';
 import { Equipe } from './../../model/equipe';
+import { Acao } from './../../model/acao';
 import { Intervencao } from './../../model/intervencao';
 import { Diagnostico } from './../../model/diagnostico';
 import { AtendimentoBuilder } from './../atendimento/atendimento.builder';
@@ -11,6 +12,7 @@ import { IndicadorSast } from './../../model/indicador-sast';
 import { IndicadorSastBuilder } from './../indicador-sast/indicador-sast.builder';
 import { RiscoEmpregado } from './../../model/risco-empregado';
 import { RiscoEmpregadoBuilder } from './../risco-empregado/risco-empregado.builder';
+import { AcaoBuilder } from './../acao/acao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class TriagemBuilder extends GenericBuilder {
@@ -24,6 +26,7 @@ export class TriagemBuilder extends GenericBuilder {
         triagem.setDiagnostico(new DiagnosticoBuilder().initialize(new Diagnostico()));
         triagem.setIntervencao(new IntervencaoBuilder().initialize(new Intervencao()));
         triagem.setEquipeAbordagem(new EquipeBuilder().initialize(new Equipe()));
+        triagem.setAcoes(new AcaoBuilder().initializeList(new Array<Acao>()));
         
         return triagem;
     }
@@ -86,6 +89,7 @@ export class TriagemBuilder extends GenericBuilder {
             cloneTriagem.setEquipeAbordagem(new EquipeBuilder().initialize(null));            
         }
         
+        cloneTriagem.setAcoes(new AcaoBuilder().cloneList(this.getValue(triagem, "getAcoes")));
         cloneTriagem.setRiscoEmpregado(new RiscoEmpregadoBuilder().clone(this.getValue(triagem, "getRiscoEmpregado")));
         
         return cloneTriagem;

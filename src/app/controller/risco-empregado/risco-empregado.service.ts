@@ -4,9 +4,9 @@ import { Http } from '@angular/http';
 
 import { GlobalVariable } from './../../global';
 import { RiscoEmpregado } from './../../model/risco-empregado';
+import { RiscoEmpregadoFilter } from './risco-empregado.filter';
 import { RiscoPotencialFilter } from './../risco-potencial/risco-potencial.filter';
 import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
-import { RiscoEmpregadoFilter } from './risco-empregado.filter';
 import { GenericService } from './../../generics/generic.service';
 import { UsuarioService } from './../usuario/usuario.service';
 import { RiscoPotencialService } from './../risco-potencial/risco-potencial.service';
@@ -14,6 +14,9 @@ import { ProfissionalSaudeService } from './../profissional-saude/profissional-s
 import { DiagnosticoService } from './../diagnostico/diagnostico.service';
 import { IntervencaoService } from './../intervencao/intervencao.service';
 import { EquipeService } from './../equipe/equipe.service';
+import { EquipeFilter } from './../equipe/equipe.filter';
+import { TriagemService } from './../triagem/triagem.service';
+import { TriagemFilter } from './../triagem/triagem.filter';
 
 @Injectable()
 export class RiscoEmpregadoService extends GenericService {
@@ -24,8 +27,22 @@ export class RiscoEmpregadoService extends GenericService {
             private riscoPotencialService: RiscoPotencialService,
             private diagnosticoService: DiagnosticoService,
             private intervencaoService: IntervencaoService,
-            private equipeService: EquipeService) {
+            private equipeService: EquipeService,
+            private triagemService: TriagemService) {
         super(http,router,"risco-empregado");
+    }
+    
+    getTriagensByEquipeAbordagem( equipeProfissionalId, riscoPotencialId ) {
+        let triagemFilter: TriagemFilter = new TriagemFilter();
+        triagemFilter.setEquipeAbordagem(new EquipeFilter());
+        triagemFilter.setRiscoEmpregado(new RiscoEmpregadoFilter());
+        triagemFilter.getRiscoEmpregado().setRiscoPotencial(new RiscoPotencialFilter());
+        triagemFilter.setPageSize(Math.pow(2, 31)-1);
+        
+        triagemFilter.getEquipeAbordagem().setId(equipeProfissionalId);
+        triagemFilter.getRiscoEmpregado().getRiscoPotencial().setId(riscoPotencialId);
+        
+        return this.triagemService.list(triagemFilter);
     }
     
     getPrazos() {

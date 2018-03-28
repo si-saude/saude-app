@@ -9,7 +9,7 @@ import { RiscoPotencialComponent } from './risco-potencial.component';
 import { TriagemComponent } from './triagem/triagem.component';
 import { AcoesComponent } from './acoes/acoes.component';
 import { FichaColetaComponent } from './ficha-coleta/ficha-coleta.component';
-import { AvaliacaoComponent } from './avaliacao/avaliacao.component';
+import { PlanoIntervencaoComponent } from './plano-intervencao/plano-intervencao.component';
 import { PlanejamentoComponent } from './planejamento/planejamento.component';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { RiscoPotencialService } from './risco-potencial.service';
@@ -23,7 +23,7 @@ import { SharedModule } from './../shared.module';
        TriagemComponent,
        AcoesComponent,
        FichaColetaComponent,
-       AvaliacaoComponent,
+       PlanoIntervencaoComponent,
        PlanejamentoComponent,
        CriarPlanoComponent
      ],
