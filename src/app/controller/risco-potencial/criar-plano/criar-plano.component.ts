@@ -79,6 +79,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
             this.riscoPotencial.getRiscoEmpregados().push( sRE );
         });
         
+        this.riscoPotencial.setStatus("PLANEJAMENTO");
         super.save( new RiscoPotencialBuilder().clone( this.riscoPotencial ) );
     }
     

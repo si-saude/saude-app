@@ -74,64 +74,89 @@
 											disabled [(ngModel)]="triagem.justificativa"></td>
 									</tr>
 									<tr class="row col s12">
-										<td class="col s3 label-acoes">Acões <a
-											(click)="addAcao(equipe.id, t)" 
-											class="btn-floating waves-effect waves-light btn-add-acao">
-												<i class="material-icons icon-btn-add-acao">add</i>
-										</a>
-										</td>
+										<td class="col s3 label-acoes">Acões</td>
 										<td class="col s9">
 											<div *ngFor="let acao of triagem.acoes; let a = index">
-											<fieldset (mouseenter)="showDelete(a)"
-													  (mouseleave)="hiddenDelete(a)">
-												<legend>Ação</legend>
-												<div class="row">
-													<div class="col s6">
-														<label for="tipo{{a}}">Tipo</label> 
-														<input type="text" disabled
-															name="tipo{{a}}" value={{acao.tipo}}>
+												<fieldset>
+													<legend>Ação</legend>
+													<div class="row">
+														<div class="col s6">
+															<label for="tipo{{a}}">Tipo</label> <input type="text"
+																disabled name="tipo{{a}}" value={{acao.tipo}}>
+														</div>
+														<div class="col s6">
+															<label for="status{{a}}">Status</label> <input
+																type="text" disabled name="status{{a}}"
+																value={{acao.status}}>
+														</div>
 													</div>
-													<div class="col s6">
-														<label for="status{{a}}">Status</label> 
-														<input type="text" disabled
-															name="status{{a}}" value={{acao.status}}>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col s6">
-														<label for="tipoContato">Tipo de Contato</label> 
-														<input type="text" disabled
-															name="tipoContato{{a}}" value={{acao.tipoContato}}>
-													</div>
-													<div class="col s6">
-														<label for="dataAcao">Data</label>
-														<p>{{dataAcoes[triagem.id][a].formatted}}</p>
-														<!-- <my-date-picker name="dataAcoes{{a}}" disabled 
+													<div class="row">
+														<div class="col s6">
+															<label for="tipoContato">Tipo de Contato</label> <input
+																type="text" disabled name="tipoContato{{a}}"
+																value={{acao.tipoContato}}>
+														</div>
+														<div class="col s6">
+															<label for="dataAcao">Data</label>
+															<p>{{dataAcoes[triagem.id][a].formatted}}</p>
+															<!-- <my-date-picker name="dataAcoes{{a}}" disabled 
 															[options]="myDatePickerOptions" placeholder="Data"
 															[(ngModel)]="dataAcoes[triagem.id][a]"> </my-date-picker>
 															 -->
+														</div>
 													</div>
-												</div>
-												<div class="row">
-													<div class="col s12">
-														<label for="detalhe">Detalhe</label> 
-														<textarea class="materialize-textarea" disabled
-															name="detalhe{{a}}" value={{acao.detalhe}}></textarea>
+													<div class="row">
+														<div class="col s12">
+															<label for="detalhe">Detalhe</label>
+															<textarea class="materialize-textarea" disabled
+																name="detalhe{{a}}" value={{acao.detalhe}}></textarea>
+														</div>
 													</div>
-												</div>
-												<div class="btn-edit{{a}} btn-edit-div" hidden>
-													<a class="btn-floating waves-effect waves-light blue btn-edit"
-														(click)="editAcao(equipe.id, t, triagem.id, a)">
-														<i class="material-icons center-icon">mode_edit</i></a>
-												</div>
-												<div class="btn-remove{{a}} btn-remove-div" hidden>
-													<a class="btn-floating waves-effect waves-light red btn-remove"
-														(click)="removeAcao(equipe.id, t, triagem.id, a)"> 
-														<i class="material-icons center-icon">delete</i>
-													</a>
-												</div>
-											</fieldset>
-											
+
+													<div class="row">
+														<fieldset>
+															<legend>Acompanhamentos
+																<a (click)="addAcompanhamento(equipe.id,triagem.id,a)" 
+																	*ngIf="verifyAcompanhamento(equipe.id, triagem.id, a)"
+																	class="btn-floating waves-effect waves-light btn-add-acompanhamento">
+																		<i class="material-icons center-icon">add</i>
+																</a>
+															</legend>
+															<table class="striped table-acompanhamento">
+																<thead>
+																	<tr class="row col s12">
+																		<th class="col s9">Descrição</th>
+																		<th class="col s3">Remover</th>
+																	</tr>
+																</thead>
+																<div
+																	*ngFor="let acompanhamento of acao.acompanhamentos; let acmp = index">
+																	<tbody class="col s12">
+																		<tr class="col s12">
+																			<td class="col s9 descricao">
+																				<textarea class="materialize-textarea acompanhamento-descricao" 
+																					[(ngModel)]="acompanhamento.descricao"
+																					name="acompanhamento{{acmp}}.descricao">
+																				</textarea>
+																			</td>
+																			<td class="col s3 botao-remover"><a
+																				*ngIf="verifyAcompanhamento(equipe.id, triagem.id, a)"
+																				class="btn-floating waves-effect waves-light red btn-remove"
+																				(click)="removeAcompanhamento(equipe.id,triagem.id,a,acmp)"> <i
+																					class="material-icons i-remove-acompanhamento">delete</i>
+																			</a></td>
+																		</tr>
+																	</tbody>
+																</div>
+															</table>
+														</fieldset>
+													</div>
+													
+													<div class="row center">
+														<a (click)="encerrarAcao(equipe.id, triagem.id, a)" class="btn btn-primary btn-encerrar">Encerrar</a>
+													</div>
+												</fieldset>
+
 											</div>
 										</td>
 									</tr>
@@ -150,12 +175,15 @@
 		</div>
 
 		<div class='row row-btns'>
-			<div class="col s6">
+			<div class="col s4">
 				<a [routerLink]="['/risco-potencial']"
 					class="btn btn-primary btn-voltar">Voltar</a>
 			</div>
-			<div class="col s6">
-				<button type="submit" class="btn btn-primary btn-salvar" right>Salvar</button>
+			<div class="col s4 center">
+				<a (click)="validar()" class="btn btn-primary btn-validar">Validar</a>
+			</div>
+			<div class="col s4">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 	</form>
@@ -196,11 +224,12 @@
 					</select>
 				</fieldset>
 			</div>
-			
+
 			<div class="input-field col s6">
 				<label for="dataTarefaAcao">Data</label>
-				<my-date-picker name="dataTarefaAcao" [options]="myDatePickerOptions"
-					[(ngModel)]="dataTarefaAcao" placeholder="Data"> </my-date-picker>
+				<my-date-picker name="dataTarefaAcao"
+					[options]="myDatePickerOptions" [(ngModel)]="dataTarefaAcao"
+					placeholder="Data"> </my-date-picker>
 			</div>
 		</div>
 

@@ -4,10 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { RiscoPotencialComponent } from './risco-potencial.component';
 import { AcoesComponent } from './acoes/acoes.component';
+import { AcompanhamentoComponent } from './acompanhamento/acompanhamento.component';
 import { FichaColetaComponent } from './ficha-coleta/ficha-coleta.component';
 import { PlanejamentoComponent } from './planejamento/planejamento.component';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { TriagemComponent } from './triagem/triagem.component';
+import { GraficosComponent } from './graficos/graficos.component';
 import { PlanoIntervencaoComponent } from './plano-intervencao/plano-intervencao.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
@@ -17,10 +19,13 @@ const riscoPotencialRoutes: Routes = [
         canDeactivate: [CanDeactivateGuard]},
     { path: 'acoes/:id', component: AcoesComponent,
         canDeactivate: [CanDeactivateGuard]},
+    { path: 'acompanhamento/:id', component: AcompanhamentoComponent,
+        canDeactivate: [CanDeactivateGuard]},
     { path: 'ficha-coleta/:id', component: FichaColetaComponent},
     { path: 'planejamento/:id', component: PlanejamentoComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'criar-plano/:id', component: CriarPlanoComponent},
+    { path: 'graficos/:id', component: GraficosComponent},
     { path: 'plano-intervencao/:id', component: PlanoIntervencaoComponent,
         canDeactivate: [CanDeactivateGuard]}
 ];

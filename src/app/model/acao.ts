@@ -1,5 +1,6 @@
 import { Tarefa } from './tarefa';
 import { Triagem } from './triagem';
+import { Acompanhamento } from './acompanhamento';
 
 export class Acao {
 	private id: number;
@@ -9,6 +10,7 @@ export class Acao {
 	private detalhe: string;
 	private tarefa: Tarefa;
 	private triagem: Triagem;
+    private acompanhamentos: Array<Acompanhamento>; 
 	private version: number;
 
 	getId() {
@@ -66,6 +68,14 @@ export class Acao {
 	setTriagem(triagem: Triagem) {
 		this.triagem = triagem;
 	}
+	
+    getAcompanhamentos() {
+        return this.acompanhamentos;
+    }
+
+    setAcompanhamentos(acompanhamentos: Array<Acompanhamento>) {
+        this.acompanhamentos = acompanhamentos;
+    }
 
 	getVersion() {
 		return this.version;

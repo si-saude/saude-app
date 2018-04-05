@@ -10,11 +10,15 @@ import { DiagnosticoService } from './../diagnostico/diagnostico.service';
 import { IntervencaoService } from './../intervencao/intervencao.service';
 import { EmpregadoService } from './../empregado/empregado.service';
 import { EquipeService } from './../equipe/equipe.service';
+import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
+import { UsuarioService } from './../usuario/usuario.service';
 
 @Injectable()
 export class RiscoPotencialService extends GenericService {
 
     constructor( http: Http, router: Router,
+            private usuarioService: UsuarioService,
+            private profissionalService: ProfissionalSaudeService,
             private empregadoService: EmpregadoService,
             private diagnosticoService: DiagnosticoService,
             private intervencaoService: IntervencaoService,
@@ -22,8 +26,30 @@ export class RiscoPotencialService extends GenericService {
         super(http,router,"risco-potencial");
     }
     
+    getUsuario( id: number ) {
+        return this.usuarioService.get( id );
+    }
+    
+    getProfissional( profissionalFilter ) {
+        return this.profissionalService.list( profissionalFilter );
+    }
+    
     getRiscos() {
         return this.selectList(new RiscoPotencialFilter());
+    }
+    
+    getAcoes(id) {
+        let urlGetAcoes = this.URL + "/get-acoes";
+        return this.http
+            .get( urlGetAcoes + "?id=" + id, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    saveAcoes( riscoPotencial ) {
+        let urlSaveAcoes = this.URL + "/save-acoes";
+        return this.http
+            .post( urlSaveAcoes, riscoPotencial, { headers: this.headers } )
+            .toPromise();
     }
     
     listAll( filter: RiscoPotencialFilter) {

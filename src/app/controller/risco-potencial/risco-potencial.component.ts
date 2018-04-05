@@ -13,66 +13,113 @@ import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { EquipeBuilder } from './../equipe/equipe.builder';
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { BooleanFilter } from './../../generics/boolean.filter';
+import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
+import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
+import { Profissional } from './../../model/profissional';
+import { Usuario } from './../../model/usuario';
+import { UsuarioBuilder } from './../usuario/usuario.builder';
+import { EmpregadoFilter } from './../empregado/empregado.filter';
+import { PessoaFilter } from './../pessoa/pessoa.filter';
 
-@Component({
-  selector: 'app-risco-potencial',
-  templateUrl: './risco-potencial.component.html',
-  styleUrls: ['./risco-potencial.component.css', '../../../assets/css/list-component.css']
-})
+@Component( {
+    selector: 'app-risco-potencial',
+    templateUrl: './risco-potencial.component.html',
+    styleUrls: ['./risco-potencial.component.css', '../../../assets/css/list-component.css']
+} )
 export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial, RiscoPotencialFilter, RiscoPotencialGuard> {
-    riscoPotenciais: Array<RiscoPotencial>;
-    riscoPotencialDatas: Array<any>;
-    riscoPotencialRPSats: Array<string>;
-    empregado;
-    equipe;
-    private servico:RiscoPotencialService;
+    private riscoPotenciais: Array<RiscoPotencial>;
+    private riscoPotencialDatas: Array<any>;
+    private riscoPotencialRPSats: Array<string>;
+    private empregado;
+    private equipe;
+    private profissional: Profissional;
+    private servico: RiscoPotencialService;
 
     constructor( service: RiscoPotencialService, riscoGuard: RiscoPotencialGuard, router: Router ) {
         super( service, new RiscoPotencialFilter(), riscoGuard, router );
-        
-        this.riscoPotenciais = new RiscoPotencialBuilder().initializeList(new Array<RiscoPotencial>());
+
+        this.riscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
         this.riscoPotencialDatas = new Array<any>();
         this.riscoPotencialRPSats = new Array<string>();
-        
+
         this.servico = service;
     }
-    
+
     ngOnInit() {
-        
+
         this.listar();
-        
-        setTimeout(() => {
-            this.canRemove = this.guard.canRemove;
-        }, 200);
-        
-        setTimeout(() => {
-            if ( this.array != undefined ) {
-                this.array = new RiscoPotencialBuilder().cloneList(this.array);
-                
-                this.array.sort(function( a, b ) {
-                    if ( a.getValor() < b.getValor() )
-                        return 1;
-                    else if ( a.getValor() > b.getValor() )
-                        return -1;
-                    else return 0;
-                })
-                
-                this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
-                
-                setTimeout(() => {
-                    this.changeColorStatusRPSat();
-                }, 200);
-                
-                this.parseAndSetDates();
-            }
-        }, 500);
-        
+
+        if ( localStorage.getItem( "usuario-id" ) != undefined ) {
+            this.servico.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
+                .then( res => {
+                    let usuario: Usuario = new Usuario();
+                    usuario = new UsuarioBuilder().clone( res.json() );
+                    if ( usuario.getId() > 0 && usuario.getPessoa() != undefined ) {
+                        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+                        profissionalFilter.setEmpregado( new EmpregadoFilter() );
+                        profissionalFilter.getEmpregado().setPessoa( new PessoaFilter() );
+                        profissionalFilter.getEmpregado().getPessoa().setCpf( usuario.getPessoa().getCpf() );
+
+                        this.servico.getProfissional( profissionalFilter )
+                            .then( res => {
+                                if ( res.json().list[0] != undefined ) {
+                                    this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
+                                    
+                                    setTimeout(() => {
+                                        this.canRemove = this.guard.canRemove;
+                                    }, 200 );
+
+                                    setTimeout(() => {
+                                        if ( this.array != undefined ) {
+                                            this.array = new RiscoPotencialBuilder().cloneList( this.array );
+
+                                            this.array.sort( function( a, b ) {
+                                                if ( a.getValor() < b.getValor() )
+                                                    return 1;
+                                                else if ( a.getValor() > b.getValor() )
+                                                    return -1;
+                                                else return 0;
+                                            } )
+
+                                            this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
+
+                                            setTimeout(() => {
+                                                this.changeColorStatusRPSat();
+                                            }, 200 );
+
+                                            this.parseAndSetDates();
+                                        }
+                                    }, 500 );
+
+                                } else {
+                                    this.router.navigate( ["/login"] );
+                                    return;
+                                }
+                            } )
+                            .catch( error => {
+                                console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
+                                this.catchConfiguration( error );
+                            } )
+                    } else {
+                        this.router.navigate( ["/login"] );
+                        return;
+                    }
+                } )
+                .catch( error => {
+                    console.log( "Erro no servidor ao buscar o usuario." );
+                    this.catchConfiguration( error );
+                } )
+        } else {
+            console.log( "Usuario nao logada." );
+            this.router.navigate( ["/login"] );
+        }
+
     }
-    
+
     listar() {
         this.showPreload = true;
-        this.filter.setAtual(new BooleanFilter());
-        this.filter.getAtual().setValue(1);
+        this.filter.setAtual( new BooleanFilter() );
+        this.filter.getAtual().setValue( 1 );
         this.servico.listAll( this.filter )
             .then( res => {
                 this.canImport = true;
@@ -92,19 +139,19 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                 this.catchConfiguration( error );
             } )
     }
-    
+
     changeColorStatusRPSat() {
-        for( let i = 0; i < this.riscoPotenciais.length; i++ ) {
+        for ( let i = 0; i < this.riscoPotenciais.length; i++ ) {
             if ( this.riscoPotenciais[i].getStatusRPSat() != undefined ) {
-                if ( this.riscoPotenciais[i].getStatusRPSat().includes("IN") )
-                    $(".row-risco"+i).css("background-color", "red");
-                else if ( this.riscoPotenciais[i].getStatusRPSat().includes("TOLER") )
-                    $(".row-risco"+i).css("background-color", "yellow");
-                else $(".row-risco"+i).css("background-color", "green");
+                if ( this.riscoPotenciais[i].getStatusRPSat().includes( "IN" ) )
+                    $( ".row-risco" + i ).css( "background-color", "red" );
+                else if ( this.riscoPotenciais[i].getStatusRPSat().includes( "TOLER" ) )
+                    $( ".row-risco" + i ).css( "background-color", "yellow" );
+                else $( ".row-risco" + i ).css( "background-color", "green" );
             }
         }
     }
-    
+
     parseAndSetDates() {
         for ( let i = 0; i < this.riscoPotenciais.length; i++ ) {
             if ( this.riscoPotenciais[i].getData() != null ) {
@@ -114,25 +161,32 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
             }
         }
     }
-    
-    toggleButtons(indexRisco: number) {
-        $(".row-btns-risco"+indexRisco).toggle("slow");
+
+    toggleButtons( indexRisco: number ) {
+        $( ".row-btns-risco" + indexRisco ).toggle( "slow" );
     }
-    
-    verifyStatusAcao(indexRisco) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" )
+
+    verifyStatusAcao( indexRisco ) {
+        if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" &&
+            this.riscoPotenciais[indexRisco].getEquipeResponsavel().getId() == this.profissional.getEquipe().getId() )
             return true;
         return false;
     }
-    
-    verifyStatusPlanoIntervencao(indexRisco) {
+
+    verifyStatusPlanoIntervencao( indexRisco ) {
         if ( this.riscoPotenciais[indexRisco].getStatus() == "PLANEJAMENTO" )
             return true;
         return false;
     }
-    
-    verifyStatusCriarPlano(indexRisco) {
+
+    verifyStatusCriarPlano( indexRisco ) {
         if ( this.riscoPotenciais[indexRisco].getStatus() == "ABERTO" )
+            return true;
+        return false;
+    }
+    
+    verifyStatusAcompanhamento( indexRisco ) {
+        if ( this.riscoPotenciais[indexRisco].getStatus() != "ABERTO" )
             return true;
         return false;
     }

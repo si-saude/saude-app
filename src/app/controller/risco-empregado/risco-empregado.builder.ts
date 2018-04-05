@@ -50,6 +50,7 @@ export class RiscoEmpregadoBuilder extends GenericBuilder {
         cloneRiscoEmpregado.setValor(this.getValue(riscoEmpregado,"getValor"));
         cloneRiscoEmpregado.setData(this.getValue(riscoEmpregado,"getData"));
         cloneRiscoEmpregado.setStatus(this.getValue(riscoEmpregado,"getStatus"));
+        cloneRiscoEmpregado.setStatusRPSat(this.getValue(riscoEmpregado,"getStatusRPSat"));
         
         cloneRiscoEmpregado.setRiscoPotencial(
                 new RiscoPotencialBuilder().clone(this.getValue(riscoEmpregado,"getRiscoPotencial")));

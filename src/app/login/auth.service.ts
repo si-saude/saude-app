@@ -26,6 +26,7 @@ export class AuthService extends GenericService {
     
     login( usuario: Usuario ) {
         let urlLogin = this.URL + "/login";
+        console.log(urlLogin);
         return this.http
             .post( urlLogin, usuario, { headers: this.headers } )
             .toPromise();

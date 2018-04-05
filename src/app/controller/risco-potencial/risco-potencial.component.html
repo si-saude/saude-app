@@ -19,8 +19,9 @@
 					<th class="col s1">Ranking</th>
 					<th class="col s2">RPSat</th>
 					<th class="col s2">Gestão</th>
-					<th class="col s4">Empregado</th>
-					<th class="col s3">Data</th>
+					<th class="col s3">Empregado</th>
+					<th class="col s2">Data</th>
+					<th class="col s2">Status</th>
 				</tr>
 			</thead>
 			<div *ngFor="let riscoPotencial of riscoPotenciais;let i = index">
@@ -29,17 +30,19 @@
 						<td class="col s1 ranking">{{i+1}}</td>
 						<td class="col s2 rpsat">{{riscoPotencial.statusRPSat}}</td>
 						<td class="col s2 gestao">{{riscoPotencial.equipeResponsavel.nome}}</td>
-						<td class="col s4 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
-						<td class="col s3 data">
+						<td class="col s3 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
+						<td class="col s2 data">
 							<my-date-picker name="data" disabled [options]="myDatePickerOptions"
 								[ngModel]="riscoPotencialDatas[i]" placeholder="Data"> </my-date-picker>
 						</td>
+						<td class="col s2 status">{{riscoPotencial.status}}</td>
 					</tr>
 					<tr class="col s12 row-btns row-btns-risco{{i}}" hidden >
 						<div class="row div-btns-risco">
 							<a [routerLink]="['/risco-potencial/ficha-coleta/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ficha Coleta</a>
 							<a [routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Triagem</a>
 							<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Planejamento</a>
+							<a [routerLink]="['/risco-potencial/graficos/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Gráficos</a>
 						</div>
 						<div class="row div-btns-risco">
 							<div style="display: inline;" *ngIf="verifyStatusCriarPlano(i)">
@@ -50,6 +53,9 @@
 							</div>
 							<div style="display: inline;" *ngIf="verifyStatusPlanoIntervencao(i)">
 								<a [routerLink]="['/risco-potencial/plano-intervencao/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Plano de Intervenção</a>
+							</div>
+							<div style="display: inline;" *ngIf="verifyStatusAcompanhamento(i)">
+								<a [routerLink]="['/risco-potencial/acompanhamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Acompanhamento</a>
 							</div>
 						</div>
 					</tr>

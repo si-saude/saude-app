@@ -15,6 +15,11 @@
 				[materializeActions]="sidenavActionsProcesso" data-activates="slide-out-processo"
 				(click)="closeSidenavProcesso()">Processo
 			</a>
+			<a materialize="sideNav"
+				[materializeParams]="[{closeOnClick: true}]"
+				[materializeActions]="sidenavActionsRelatorio" data-activates="slide-out-relatorio"
+				(click)="closeSidenavRelatorio()">Relatorio
+			</a>
 		</div>
 	</li>
 		
@@ -96,6 +101,19 @@
 			</li>
 			<a [routerLink]="['/atendimento/gerenciar']" *ngIf="checkPermissao('ATENDIMENTO_GERENCIAR')">Gerenciar Atendimentos</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
+		</div>
+	</li>
+</ul>
+
+<ul id="slide-out-relatorio" class="side-nav">
+	<li>
+		<a materialize="sideNav" style="margin-left: -20px;"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActions3" data-activates="slide-out1"
+			(click)="closeSidenavRelatorio()"><i class="material-icons">chevron_left</i>
+		</a>
+		<div class="groups">
+			<a [routerLink]="['/agenda']" *ngIf="checkPermissao('AGENDA')">Agenda</a>
 		</div>
 	</li>
 </ul>

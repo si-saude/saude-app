@@ -65,3 +65,22 @@ td > a > i {
 .icon-btn-add-acao {
 	margin: 0 !important;
 }
+
+.acompanhamento-descricao {
+	margin-bottom: 0px;
+	margin-left: -10px;
+}
+
+.btn-remove {
+	margin-top: 20px;
+    margin-left: 15px;
+}
+
+.i-remove-acompanhamento { 
+	margin-top: 0px !important;
+}
+
+.table-acompanhamento {
+	margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}

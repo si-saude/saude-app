@@ -2,6 +2,8 @@ import { Acao } from './../../model/acao';
 import { Tarefa } from './../../model/tarefa';
 import { Triagem } from './../../model/triagem';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
+import { Acompanhamento } from './../../model/acompanhamento';
+import { AcompanhamentoBuilder } from './../acompanhamento/acompanhamento.builder';
 import { TriagemBuilder } from './../triagem/triagem.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
@@ -11,6 +13,7 @@ export class AcaoBuilder extends GenericBuilder {
         acao = new Acao();
         
         acao.setTarefa(new TarefaBuilder().initialize(new Tarefa()));
+        acao.setAcompanhamentos(new AcompanhamentoBuilder().initializeList(new Array<Acompanhamento>()));
         acao.setTriagem(new Triagem());
         
         return acao;
@@ -59,6 +62,7 @@ export class AcaoBuilder extends GenericBuilder {
         else cloneAcao.setStatus(this.getValue( acao, "getStatus" ) );
         
         cloneAcao.setTarefa(new TarefaBuilder().clone(this.getValue( acao, "getTarefa" ) ) );
+        cloneAcao.setAcompanhamentos(new AcompanhamentoBuilder().cloneList(this.getValue( acao, "getAcompanhamentos" )));
         
         if (this.getValue(acao, "getTriagem") !== undefined) { 
             cloneAcao.setTriagem(new TriagemBuilder().clone(this.getValue( acao, "getTriagem" )));

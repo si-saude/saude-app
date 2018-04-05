@@ -15,6 +15,7 @@ export class RiscoEmpregado {
     private version: number;
     private data: Date;
     private status: string;
+    private statusRPSat: string;
 
     getId() {
         return this.id;
@@ -91,7 +92,16 @@ export class RiscoEmpregado {
     getStatus(){
         return this.status;
     }
+    
     setStatus(status:string){
         this.status = status;
+    }
+    
+    setStatusRPSat(statusRPSat: string) {
+        this.statusRPSat = statusRPSat;
+    }
+    
+    getStatusRPSat() {
+        return this.statusRPSat;
     }
 }

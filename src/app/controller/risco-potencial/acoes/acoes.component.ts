@@ -34,6 +34,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private dataTarefaAcao: any;
     private dataAcoes = [[]];
     private flagTriagem: Triagem;
+    private flagIndexAcao: number = -1;
     private modalAcao;
 
     constructor( private route: ActivatedRoute,
@@ -56,12 +57,12 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
                     let id = params['id'];
                     this.showPreload = true;
 
-                    this.riscoPotencialService.get( id )
+                    this.riscoPotencialService.getAcoes( id )
                         .then( res => {
                             this.showPreload = false;
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
-                            console.log(this.riscoPotencial);
                             this.getTriagensEquipeAbordagem();
+                            this.getDataTarefaAcoes();
                         } )
                         .catch( error => {
                             this.showPreload = false;
@@ -105,7 +106,15 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
-        super.save( new RiscoPotencialBuilder().clone( this.riscoPotencial ) );
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.riscoPotencialService.saveAcoes( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
+            .then( res => {
+                this.processReturn( true, res );
+            } )
+            .catch( error => {
+                this.processReturn( false, error );
+            } )
     }
     
     validar() {
@@ -132,7 +141,27 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     getDataTarefaAcoes() {
-        
+        this.riscoPotencial.getRiscoEmpregados().forEach(rE =>{
+            rE.getTriagens().forEach(t => {
+                t.getAcoes().forEach(a => {
+                    if ( this.dataAcoes[t.getId()] == undefined )
+                        this.dataAcoes[t.getId()] = new Array<any>();
+                    let data = this.addFormattedDate(a.getTarefa().getFim());
+                    this.dataAcoes[t.getId()].push(data);
+                });
+            });
+        });
+    }
+    
+    addFormattedDate( data: any ) {
+        if ( data === undefined || data === null ) {
+            return undefined;
+        }
+        let s = data.split( "T" );
+        let datas = s[0].split( "-" );
+        let st = datas[2] + "/" + datas[1] + "/" + datas[0];
+        let o = { formatted: st };
+        return o;
     }
     
     adjustDataAcoes() {
@@ -153,9 +182,21 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         this.acao = new AcaoBuilder().initialize( new Acao( ) );
         
         this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
+        this.flagIndexAcao = -1;
         
         this.dataTarefaAcao = null;
         this.openModal( );
+    }
+    
+    editAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
+        let triagem: Triagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
+        this.dataTarefaAcao = this.dataAcoes[triagemId][indexAcao];
+        this.acao = triagem.getAcoes()[indexAcao];
+        
+        this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
+        this.flagIndexAcao = indexAcao;
+        
+        this.openModal();
     }
     
     confirmAddAcao() {
@@ -168,16 +209,22 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         
         let triagem: Triagem = this.flagTriagem;
         
+        if ( this.flagIndexAcao > -1 ) {
+            this.dataAcoes[triagem.getId()][this.flagIndexAcao] = this.dataTarefaAcao;
+            this.acao.getTarefa().setFim(this.parseDatePickerToDate(this.dataTarefaAcao));
+            return;
+        }
+        
         if ( this.dataAcoes[triagem.getId()] == undefined )
             this.dataAcoes[triagem.getId()] = new Array<any>();
-        
+       
         this.dataAcoes[triagem.getId()][this.dataAcoes[triagem.getId()].length] = this.dataTarefaAcao;
         
         if ( triagem.getAcoes() == undefined ) 
             triagem.setAcoes(new Array<Acao>());
         
-        this.acao.setStatus(this.statusAcoes[0]);
         this.acao.setTarefa(new Tarefa());
+        this.acao.setStatus(this.statusAcoes[0]);
         this.acao.getTarefa().setFim(this.parseDatePickerToDate(this.dataTarefaAcao));
         
         triagem.getAcoes().push(this.acao);
@@ -199,10 +246,12 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     
     showDelete(indexAcao) {
         $(".btn-remove"+indexAcao).show();
+        $(".btn-edit"+indexAcao).show();
     }
     
     hiddenDelete(indexAcao) {
         $(".btn-remove"+indexAcao).hide();
+        $(".btn-edit"+indexAcao).hide();
     }
     
     ngOnDestroy() {
