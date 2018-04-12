@@ -13,7 +13,6 @@ import { FooterComponent } from './includes/footer/footer.component';
 import { ContatoModule } from './contato/contato.module';
 import { NavbarPrincipalComponent } from './includes/navbar-principal/navbar-principal.component';
 import { AuthService } from './login/auth.service';
-import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { PermissaoComponent } from './controller/permissao/permissao.component';
 import { MenuComponent } from './includes/menu/menu.component';
@@ -71,6 +70,7 @@ import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
+import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 
 @NgModule({
   declarations: [
@@ -78,7 +78,6 @@ import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard
     NavbarComponent,
     FooterComponent,
     NavbarPrincipalComponent,
-    HomeComponent,
     PermissaoComponent,
     MenuComponent,
     SidenavComponent,
@@ -145,7 +144,8 @@ import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard
     PerguntaFichaColetaGuard,
     IntervencaoGuard,
     RiscoGheGuard,
-    RiscoPotencialGuard
+    RiscoPotencialGuard,
+    NotificacaoGuard
   ],
   bootstrap: [ 
     AppComponent

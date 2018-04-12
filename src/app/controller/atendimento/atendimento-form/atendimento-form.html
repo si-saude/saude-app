@@ -62,7 +62,6 @@
 				<button (click)="voltar()" style="margin-left: -5px"
 					class="btn btn-primary btn-fila">Voltar</button>
 				<button (click)="encerrar()" class="btn btn-primary btn-fila">Encerrar</button>
-				<button (click)="atualizar()" class="btn btn-primary btn-fila">Atualizar</button>
 			</div>
 
 		</div>
@@ -271,7 +270,8 @@
 										</select>
 									</div>
 									<div class="col s2" *ngIf="verifyRespostaSimNao(g, r)">
-										<a class="btn-floating waves-effect waves-light green btn-add"
+										<a *ngIf="!verifyEquipe(resposta)"
+											class="btn-floating waves-effect waves-light green btn-add"
 											(click)="addItemResposta(resposta.pergunta.itens, g, r)"> <i
 											class="material-icons center-icon">add</i>
 										</a>
@@ -1258,13 +1258,12 @@
 						</div>
 						<div class="dados-acolhimento">
 							<p style="margin-left: 20px;">
-								<b>Acolhimento</b>
+								<b>ACOLHIMENTO</b>
 							</p>
 							<fieldset class="fieldset-planejamento-triagem">
 								<div class="row">
 									<tr class="row col s12">
-										<td class="col s3 label-equipe-responsavel">Equipe de
-											Abordagem</td>
+										<td class="col s3 label-equipe-responsavel">Equipe Responsável</td>
 										<td class="col s9 equipe-responsavel"><input type="text"
 											name="equipe-responsavel" disabled
 											[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.equipeResponsavel.nome">
@@ -1297,10 +1296,8 @@
 										</div>
 
 									</div>
-
-								</fieldset>
-
-								<div class="row">
+									
+									<div class="row">
 
 									<table class="striped">
 										<thead>
@@ -1326,6 +1323,8 @@
 										</div>
 									</table>
 								</div>
+
+								</fieldset>
 
 								<div class="row">
 									<tr class="row col s12">

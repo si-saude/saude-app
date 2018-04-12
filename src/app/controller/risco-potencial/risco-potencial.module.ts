@@ -8,6 +8,7 @@ import { ChartsModule } from 'ng2-charts';
 
 import { RiscoPotencialComponent } from './risco-potencial.component';
 import { TriagemComponent } from './triagem/triagem.component';
+import { TriagemReavaliacaoComponent } from './triagem-reavaliacao/triagem-reavaliacao.component';
 import { GraficosComponent } from './graficos/graficos.component';
 import { AcoesComponent } from './acoes/acoes.component';
 import { AcompanhamentoComponent } from './acompanhamento/acompanhamento.component';
@@ -30,7 +31,8 @@ import { SharedModule } from './../shared.module';
        PlanoIntervencaoComponent,
        PlanejamentoComponent,
        GraficosComponent,
-       CriarPlanoComponent
+       CriarPlanoComponent,
+       TriagemReavaliacaoComponent
      ],
      imports: [
         RiscoPotencialRoutingModule,

@@ -88,6 +88,7 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
                                                     .then( res => {
                                                         this.showPreload = false;
                                                         this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
+                                                        this.riscoPotencial.setProfissional(this.profissional);
                                                         this.getTriagensEquipeAbordagem();
                                                         this.getDataTarefaAcoes();
                                                     } )
@@ -157,9 +158,21 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
     save() {
         this.showPreload = true;
         this.canDeactivate = true;
-        this.riscoPotencialService.saveAcoes( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
+        this.riscoPotencialService.saveAcompanhamentos( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
             .then( res => {
                 this.processReturn( true, res );
+            } )
+            .catch( error => {
+                this.processReturn( false, error );
+            } )
+    }
+    
+    savaAndRedirect() {
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.riscoPotencialService.saveAcompanhamentos( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
+            .then( res => {
+                this.router.navigate(['/risco-potencial/triagem-reavaliacao', this.riscoPotencial.getId()])
             } )
             .catch( error => {
                 this.processReturn( false, error );
@@ -173,7 +186,8 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
     getTriagensEquipeAbordagem() {
         this.riscoPotencial.getRiscoEmpregados().forEach( rE => {
             rE.getTriagens().forEach( t => {
-                if ( this.profissional.getEquipe().getId() == t.getEquipeAbordagem().getId() ) {
+                if ( this.riscoPotencial.getEquipeResponsavel().getId() == this.profissional.getEquipe().getId() ||
+                        this.profissional.getEquipe().getId() == t.getEquipeAbordagem().getId() ) {
                     if ( t.getEquipeAbordagem().getId() > 0 &&
                         this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
     
@@ -229,14 +243,18 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
         let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );
         triagem.getAcoes()[indexAcao].setStatus( this.statusAcoes[1] )
     }
-
-    verifyAcompanhamento( idEquipe, idTriagem, indexAcao ) {
-        let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );
-        if ( triagem.getAcoes()[indexAcao].getStatus() == this.statusAcoes[1] )
-            return false;
-        return true;
+    
+    reavaliar( ideEquipe, idTriagem, indexAcao) {
+        
     }
 
+    verifyAcompanhamento( acao: Acao ) {
+        if ( acao.getStatus() == this.statusAcoes[1] )
+            return false;
+        
+        return true;
+    }
+    
     getIndiceDescricao( triagem: Triagem ) {
         return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
     }

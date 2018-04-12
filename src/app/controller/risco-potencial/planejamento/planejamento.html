@@ -9,6 +9,8 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
+<p style="color: #26a69a;"><b>Nome do Empregado:  {{nomeEmpregado}}</b></p>
+
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 

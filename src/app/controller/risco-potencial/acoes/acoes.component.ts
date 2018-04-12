@@ -233,6 +233,11 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     removeAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
         let triagem: Triagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
         this.dataAcoes[triagemId].splice(indexAcao, 1);
+        
+        if ( this.riscoPotencial.getAcoesDelete() == undefined )
+            this.riscoPotencial.setAcoesDelete(new AcaoBuilder().initializeList(new Array<Acao>()));
+        this.riscoPotencial.getAcoesDelete().push(triagem.getAcoes()[indexAcao]);
+        
         triagem.getAcoes().splice(indexAcao, 1);
     }
     

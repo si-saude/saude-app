@@ -67,7 +67,15 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     }
     
     validar() {
-        
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.riscoPotencialService.validar(new RiscoPotencialBuilder().clone(this.riscoPotencial))
+            .then(res => {
+                this.processReturn( true, res );
+            })
+            .catch(error => {
+                this.processReturn( false, error );
+            })
     }
     
     getTriagensEquipeAbordagem() {

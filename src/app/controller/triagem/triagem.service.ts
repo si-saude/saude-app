@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { GlobalVariable } from './../../global';
 import { Triagem } from './../../model/triagem';
 import { TriagemFilter } from './triagem.filter';
+import { IndicadorSastFilter } from './../indicador-sast/indicador-sast.filter';
 import { RiscoEmpregadoFilter } from './../risco-empregado/risco-empregado.filter';
 import { RiscoPotencialFilter } from './../risco-potencial/risco-potencial.filter';
 import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
@@ -44,14 +45,16 @@ export class TriagemService extends GenericService {
             .toPromise();
     }
     
-    getTriagensByEquipeAbordagem( equipeProfissionalId, riscoPotencialId ) {
+    getTriagensByEquipeIndicador( equipeProfissionalId, riscoPotencialId ) {
         let triagemFilter: TriagemFilter = new TriagemFilter();
-        triagemFilter.setEquipeAbordagem(new EquipeFilter());
         triagemFilter.setRiscoEmpregado(new RiscoEmpregadoFilter());
         triagemFilter.getRiscoEmpregado().setRiscoPotencial(new RiscoPotencialFilter());
         triagemFilter.setPageSize(Math.pow(2, 31)-1);
         
-        triagemFilter.getEquipeAbordagem().setId(equipeProfissionalId);
+        triagemFilter.setIndicadorSast(new IndicadorSastFilter())
+        triagemFilter.getIndicadorSast().setEquipe(new EquipeFilter());
+        triagemFilter.getIndicadorSast().getEquipe().setId(equipeProfissionalId);
+        
         triagemFilter.getRiscoEmpregado().getRiscoPotencial().setId(riscoPotencialId);
         
         return this.list(triagemFilter);

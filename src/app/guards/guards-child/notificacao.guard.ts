@@ -3,11 +3,11 @@ import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router }
 
 import { Observable } from 'rxjs/Rx';
 
-import { ChildGuard } from './../../generics/child.guard';
 import { AuthService } from './../../login/auth.service';
+import { ChildGuard } from './../../generics/child.guard';
 
 @Injectable()
-export class LocalizacaoGuard extends ChildGuard implements CanActivateChild {   
+export class NotificacaoGuard extends ChildGuard implements CanActivateChild {   
     
     constructor(router: Router) {
         super(router);
@@ -17,6 +17,10 @@ export class LocalizacaoGuard extends ChildGuard implements CanActivateChild {
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot
     ): boolean | Observable<boolean> | Promise<boolean> {
-        return super.activateChild("localizacao", route, state);
+        if ( state.url.includes( "home" ) ) {
+            return true;
+        }
+
+        return false;
     }
 }

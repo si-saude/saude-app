@@ -12,7 +12,8 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 
 @Component( {
     selector: 'app-graficos',
-    templateUrl: './graficos.html'
+    templateUrl: './graficos.html',
+    styleUrls: ['./graficos.css']
 } )
 export class GraficosComponent extends GenericFormComponent {
     private riscoPotencial: RiscoPotencial;
@@ -44,6 +45,12 @@ export class GraficosComponent extends GenericFormComponent {
                         ticks: {
                             beginAtZero: true
                         }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 9,
+                            position: 'top'
+                        }
                     }]
                 },
                 responsive: true
@@ -66,7 +73,7 @@ export class GraficosComponent extends GenericFormComponent {
                         .then( res => {
                             this.showPreload = false;
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
-                            console.log(this.riscoPotencial);
+                            
                             let lineColor:string;
                             
                             if ( this.riscoPotencial.getStatusRPSat().includes("INACEIT") )
@@ -96,7 +103,7 @@ export class GraficosComponent extends GenericFormComponent {
                                     fill: false,
                                     borderWidth: 10,
                                     type: "line"};
-                            let jsonData = { data: arrayData };
+                            let jsonData = { data: arrayData, legend: { fontSize: 9} };
                             
                             this.barChartColors.push(jsonColor);
                             this.barChartColors.splice(0, 0, jsonLineData)

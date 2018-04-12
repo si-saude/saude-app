@@ -30,6 +30,8 @@ import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { Diagnostico } from './../../../model/diagnostico';
 import { DiagnosticoBuilder } from './../../diagnostico/diagnostico.builder';
+import { Eixo } from './../../../model/eixo';
+import { EixoBuilder } from './../../eixo/eixo.builder';
 import { Intervencao } from './../../../model/intervencao';
 import { IntervencaoBuilder } from './../../intervencao/intervencao.builder';
 import { ItemRespostaFichaColeta } from './../../../model/item-resposta-ficha-coleta';
@@ -297,10 +299,20 @@ export class AtendimentoFormComponent {
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
             this.setDatas();
+            
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
-
+                    
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    if ( this.atendimento.getTriagens() != undefined )
+                        this.atendimento.getTriagens().forEach(t => {
+                            if ( t.getDiagnostico() == undefined )
+                                t.setDiagnostico(new DiagnosticoBuilder().initialize(new Diagnostico()));
+                            if ( t.getEquipeAbordagem() == undefined )
+                                t.setEquipeAbordagem(new EquipeBuilder().initialize(new Equipe()));
+                            if ( t.getIntervencao() == undefined )
+                                t.setIntervencao(new IntervencaoBuilder().initialize(new Intervencao()));
+                        })
                     
                     if( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial()
                             .getEquipeResponsavel() == undefined )
@@ -887,9 +899,24 @@ export class AtendimentoFormComponent {
     verifyRespostaSimNao( indexGrupo, indexRespostaByGrupo ) {
         let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
         
-        if ( this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
+        if ( this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta] != undefined &&
+                this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
                 .getItens().length > 0 ) return true;
         else return false;
+    }
+    
+    getIndexRespostaByGrupo( indexGrupo, itemIndex ) {
+        let quantidadeItensAnteriores = this.getQuantidadeItensAnteriores( indexGrupo );
+        
+        return quantidadeItensAnteriores + itemIndex;
+    }
+    
+    getQuantidadeItensAnteriores( indexGrupo ) {
+        let qtdItens = 0;
+        for ( let i=0; i < indexGrupo; i++ )
+            qtdItens += this.quantidadeItemRespostasByGrupo[i];
+        
+        return qtdItens;
     }
 
     constructItemRespostaFichaColeta( quantidadeItens: number, itemRespostaFichaColeta: ItemRespostaFichaColeta ) {
@@ -908,14 +935,23 @@ export class AtendimentoFormComponent {
         this.triagensTodosAtendimentosByEquipe = [[]];
 
         this.atendimento.getTriagensTodosAtendimentos().forEach( t => {
-            if ( this.equipesTriagensTodosAtendimentos.find( e => e.getId() == t.getIndicadorSast().getEquipe().getId() ) == undefined )
-                this.equipesTriagensTodosAtendimentos.push( t.getIndicadorSast().getEquipe() );
-
-            if ( this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()] == undefined ) {
-                this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()] = new Array<Triagem>();
+            if ( t.getJustificativa() != undefined && t.getJustificativa() != "" ) {
+                t.setDiagnostico(new DiagnosticoBuilder().initialize(new Diagnostico()));
+                t.setEquipeAbordagem(new EquipeBuilder().initialize(new Equipe()));
+                t.setIntervencao(new IntervencaoBuilder().initialize(new Intervencao()));
             }
-
-            this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()].push( t );
+            
+            if ( t.getDiagnostico() != undefined && t.getDiagnostico().getId() > 0 || 
+                    ( t.getJustificativa() != undefined && t.getJustificativa() != "" ) ) {
+                if ( this.equipesTriagensTodosAtendimentos.find( e => e.getId() == t.getIndicadorSast().getEquipe().getId() ) == undefined )
+                    this.equipesTriagensTodosAtendimentos.push( t.getIndicadorSast().getEquipe() );
+    
+                if ( this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()] == undefined ) {
+                    this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()] = new Array<Triagem>();
+                }
+    
+                this.triagensTodosAtendimentosByEquipe[t.getIndicadorSast().getEquipe().getId()].push( t );
+            }
         } )
     }
 
@@ -939,20 +975,6 @@ export class AtendimentoFormComponent {
             this.respostasFichaColetaByGrupo[r.getPergunta().getGrupo()].push( r );
             this.quantidadeItemRespostasByGrupo[countIndexGrupo] = qtdItens++; 
         } )
-    }
-
-    getIndexRespostaByGrupo( indexGrupo, itemIndex ) {
-        let quantidadeItensAnteriores = this.getQuantidadeItensAnteriores( indexGrupo );
-        
-        return quantidadeItensAnteriores + itemIndex;
-    }
-    
-    getQuantidadeItensAnteriores( indexGrupo ) {
-        let qtdItens = 0;
-        for ( let i=0; i < indexGrupo; i++ )
-            qtdItens += this.quantidadeItemRespostasByGrupo[i];
-        
-        return qtdItens;
     }
 
     catchConfiguration( error ) {

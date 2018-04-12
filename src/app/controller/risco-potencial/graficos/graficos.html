@@ -1,11 +1,25 @@
-<div>
-  <div style="display: block">
-    <canvas baseChart  #baseChart="base-chart"
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [colors]="barChartColors"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"></canvas>
-  </div>
+<head>
+<meta charset="utf-8">
+</head>
+
+
+<div class="form-container">
+	<p style="margin-left: 50px;" class="label-equipe-responsavel">
+		<b>Equipe Responsável:  {{riscoPotencial.equipeResponsavel.nome}}</b>
+	</p>
+
+	<div style="display: block">
+		<canvas baseChart #baseChart="base-chart" [datasets]="barChartData"
+			[labels]="barChartLabels" [options]="barChartOptions"
+			[colors]="barChartColors" [legend]="barChartLegend"
+			[chartType]="barChartType"></canvas>
+	</div>
+
+	<div class='row row-btns'>
+		<div class="col s6">
+			<a [routerLink]="['/risco-potencial']"
+				class="btn btn-primary btn-listar">Voltar</a>
+		</div>
+	</div>
+
 </div>

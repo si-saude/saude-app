@@ -1,10 +1,14 @@
 import { RiscoPotencial } from './../../model/risco-potencial';
 import { Empregado } from './../../model/empregado';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
+import { Acao } from './../../model/acao';
+import { AcaoBuilder } from './../acao/acao.builder';
 import { RiscoEmpregado } from './../../model/risco-empregado';
 import { RiscoEmpregadoBuilder } from './../risco-empregado/risco-empregado.builder';
 import { Equipe } from './../../model/equipe';
 import { EquipeBuilder } from './../equipe/equipe.builder';
+import { Profissional } from './../../model/profissional';
+import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class RiscoPotencialBuilder extends GenericBuilder {
@@ -16,6 +20,8 @@ export class RiscoPotencialBuilder extends GenericBuilder {
         riscoPotencial.setEquipeResponsavel(new EquipeBuilder().initialize(new Equipe()));
         riscoPotencial.setEquipes(new EquipeBuilder().initializeList(new Array<Equipe>()));
         riscoPotencial.setRiscosInterdiciplinares(new RiscoEmpregadoBuilder().initializeList(new Array<RiscoEmpregado>()));        
+        riscoPotencial.setProfissional(undefined);
+        riscoPotencial.setAcoesDelete(undefined);
         
         return riscoPotencial;
     }
@@ -50,6 +56,13 @@ export class RiscoPotencialBuilder extends GenericBuilder {
         cloneRiscoPotencial.setStatus(this.getValue(riscoPotencial,"getStatus"));
         cloneRiscoPotencial.setValor(this.getValue(riscoPotencial,"getValor"));
         
+        if (this.getValue(riscoPotencial, "getProfissional") !== undefined) { 
+            cloneRiscoPotencial.setProfissional(
+                    new ProfissionalSaudeBuilder().clone(this.getValue(riscoPotencial,"getProfissional")));
+        } else {
+            cloneRiscoPotencial.setProfissional(undefined);
+        }
+        
         if (this.getValue(riscoPotencial, "getEmpregado") !== undefined) { 
             cloneRiscoPotencial.setEmpregado(
                     new EmpregadoBuilder().clone(this.getValue(riscoPotencial,"getEmpregado")));
@@ -60,6 +73,12 @@ export class RiscoPotencialBuilder extends GenericBuilder {
         cloneRiscoPotencial.setRiscoEmpregados(new RiscoEmpregadoBuilder().cloneList(
                 this.getValue(riscoPotencial,"getRiscoEmpregados")));
         
+        if (this.getValue(riscoPotencial, "getAcoesDelete") !== undefined) { 
+            cloneRiscoPotencial.setAcoesDelete(
+                    new AcaoBuilder().cloneList(this.getValue(riscoPotencial,"getAcoesDelete")));
+        } else {
+            cloneRiscoPotencial.setAcoesDelete(undefined);
+        }
         
         if (this.getValue(riscoPotencial, "getEquipeResponsavel") !== undefined) { 
             cloneRiscoPotencial.setEquipeResponsavel(

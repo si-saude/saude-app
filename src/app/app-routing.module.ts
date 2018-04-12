@@ -56,13 +56,15 @@ import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
+import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contato', component: ContatoComponent },
   { path: 'permissao', component: PermissaoComponent },
-  { path: 'home', component: HomeComponent,
+  { path: 'home', loadChildren: 'app/home/home.module#HomeModule',
+      canActivateChild: [NotificacaoGuard],
       canActivate: [AuthGuard]},
   { path: 'agenda', loadChildren: 'app/agenda/agenda.module#AgendaModule',
       canActivateChild: [AgendaGuard]},

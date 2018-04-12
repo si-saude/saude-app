@@ -1,4 +1,6 @@
 import { Empregado } from './empregado';
+import { Acao } from './acao';
+import { Profissional } from './profissional';
 import { RiscoEmpregado } from './risco-empregado';
 import { Equipe } from './equipe';
 
@@ -18,6 +20,8 @@ export class RiscoPotencial {
     private statusRPSat: string;
     private version: number;
     private status: string;
+    private acoesDelete: Array<Acao>;
+    private profissional: Profissional;
 
     public getId() {
         return this.id;
@@ -139,4 +143,19 @@ export class RiscoPotencial {
         this.valor = valor;
     }
     
+    public getProfissional() {
+        return this.profissional;
+    }
+    
+    public setProfissional(profissional: Profissional) {
+        this.profissional = profissional;
+    }
+    
+    public getAcoesDelete() {
+        return this.acoesDelete;
+    }
+    
+    public setAcoesDelete(acoesDelete: Array<Acao>) {
+        this.acoesDelete = acoesDelete;
+    }
 }

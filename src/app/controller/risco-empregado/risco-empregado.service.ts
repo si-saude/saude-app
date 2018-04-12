@@ -97,4 +97,11 @@ export class RiscoEmpregadoService extends GenericService {
         return this.equipeService.getEquipes();
     }
     
+    listToCopy( riscoEmpregadoFilter ) {
+        let urlList = this.URL + "/list-to-copy";
+        return this.http
+            .post( urlList, riscoEmpregadoFilter, { headers: this.headers } )
+            .toPromise();
+    }
+    
 }
