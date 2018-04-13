@@ -7,6 +7,7 @@ export class RegraAtendimentoEquipe {
     private regraAtendimento: RegraAtendimento;
     private equipe: Equipe;
     private regraAtendimentoEquipeRequisitos: Array<RegraAtendimentoEquipeRequisito>;
+    private acolhimento: boolean;
     private version: number;
 
     getId() {
@@ -15,6 +16,14 @@ export class RegraAtendimentoEquipe {
 
     setId(id: number) {
         this.id = id;
+    }
+    
+    getAcolhimento(){
+        return this.acolhimento;
+    }
+    
+    setAcolhimento(acolhimento:boolean){
+        this.acolhimento = acolhimento;
     }
 
     getRegraAtendimento() {

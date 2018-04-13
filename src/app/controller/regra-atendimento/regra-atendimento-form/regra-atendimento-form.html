@@ -73,13 +73,20 @@
 							<div class="row-item-collection"
 								*ngFor="let regraAtendimentoEquipe of regraAtendimento.regraAtendimentoEquipes; let rAE = index">
 								<div class="row row-collection">
-									<div class="col s10">
+									<div class="col s9">
 										<a [ngClass]="selectedEquipe(rAE)"
 											[routerLinkActive]="['active']" class="collection-item"
 											(click)="selectEquipe(rAE)">
 											{{regraAtendimentoEquipe.equipe.nome}} </a>
 									</div>
-									<div class="col s2 btn-delete">
+									<div class="input-field col s2 checkbox">
+										<input type="checkbox"
+											id="regraAtendimento{{rAE}}.acolhimento"
+											[(ngModel)]="regraAtendimentoEquipe.acolhimento"
+											name="regraAtendimento{{rAE}}.acolhimento"><label
+											for="regraAtendimento{{rAE}}.acolhimento"></label>
+									</div>
+									<div class="col s1 btn-delete">
 										<a [ngStyle]="{'cursor': 'pointer'}"
 											(click)="removeEquipe(rAE)"> <i class="material-icons">delete</i>
 										</a>
