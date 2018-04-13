@@ -21,6 +21,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
     private riscoPotencial: RiscoPotencial;
     private idsEquipes: Array<number>;
     private selectedRiscoEmpregados: Array<RiscoEmpregado>;
+    private arrayDatas: Array<any>;
     
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -32,6 +33,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
             this.idsEquipes = new Array<number>();
             this.riscoPotencial = new RiscoPotencialBuilder().initialize( new RiscoPotencial() );
             this.selectedRiscoEmpregados = new RiscoEmpregadoBuilder().initializeList( new Array<RiscoEmpregado>() );
+            this.arrayDatas = new Array<any>();
     }
 
     ngOnInit() {
@@ -46,6 +48,9 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
                         .then( res => {
                             this.showPreload = false;
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
+                            this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
+                                this.arrayDatas.push(this.parseDataToString(rE.getData()));
+                            })
                         } )
                         .catch( error => {
                             component.showPreload = false;
@@ -60,6 +65,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
             if ( this.idsEquipes.find( e => e == this.riscoPotencial.getRiscoEmpregados()[index].getEquipe().getId() ) == undefined ) {
                 $('.item-collection'+index).addClass('active');
                 this.idsEquipes.push( this.riscoPotencial.getRiscoEmpregados()[index].getEquipe().getId() );
+                this.riscoPotencial.getRiscoEmpregados()[index].setAtivo(true);
                 this.selectedRiscoEmpregados.push( this.riscoPotencial.getRiscoEmpregados()[index] );
             } else {
                 this.toastParams = ["Equipe escolhida anteriormente", 4000];
@@ -67,6 +73,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
             }
         else {
             $( '.item-collection'+index ).removeClass( 'active' );
+            this.riscoPotencial.getRiscoEmpregados()[index].setAtivo(false);
             this.idsEquipes.splice( this.idsEquipes.indexOf( this.riscoPotencial.getRiscoEmpregados()[index].getEquipe().getId() ), 1 );
             this.selectedRiscoEmpregados.splice( this.selectedRiscoEmpregados.indexOf( 
                     this.riscoPotencial.getRiscoEmpregados()[index] ), 1 );
@@ -74,6 +81,12 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
     }
     
     save() {
+        if ( this.selectedRiscoEmpregados.length != 5 ) {
+            this.toastParams = ["Deve-se escolhar cinco equipes.", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+        
         this.riscoPotencial.setRiscoEmpregados( new Array<RiscoEmpregado>() );
         this.selectedRiscoEmpregados.forEach( sRE => {
             this.riscoPotencial.getRiscoEmpregados().push( sRE );

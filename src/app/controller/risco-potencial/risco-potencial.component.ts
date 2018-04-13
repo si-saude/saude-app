@@ -71,16 +71,6 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
 
                                     setTimeout(() => {
                                         if ( this.array != undefined ) {
-                                            this.array = new RiscoPotencialBuilder().cloneList( this.array );
-
-                                            this.array.sort( function( a, b ) {
-                                                if ( a.getValor() < b.getValor() )
-                                                    return 1;
-                                                else if ( a.getValor() > b.getValor() )
-                                                    return -1;
-                                                else return 0;
-                                            } )
-
                                             this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
 
                                             setTimeout(() => {
@@ -166,6 +156,12 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         $( ".row-btns-risco" + indexRisco ).toggle( "slow" );
     }
 
+    verifyPlanejamento( indexRisco ) {
+        if ( this.riscoPotenciais[indexRisco].getStatus() == "PLANEJAMENTO" )
+            return true;
+        return false;
+    }
+    
     verifyStatusAcao( indexRisco ) {
         if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" &&
             this.riscoPotenciais[indexRisco].getEquipeResponsavel().getId() == this.profissional.getEquipe().getId() )
@@ -186,7 +182,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     }
     
     verifyStatusAcompanhamento( indexRisco ) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() != "ABERTO" )
+        if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" )
             return true;
         return false;
     }

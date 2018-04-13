@@ -1,4 +1,5 @@
 import { GenericFilter } from './../../generics/generic.filter';
+import { BooleanFilter } from './../../generics/boolean.filter';
 import { RiscoPotencialFilter } from './../risco-potencial/risco-potencial.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
@@ -7,6 +8,7 @@ export class RiscoEmpregadoFilter extends GenericFilter {
     private riscoPotencial: RiscoPotencialFilter;
     private equipe: EquipeFilter;
     private profissional: ProfissionalSaudeFilter;
+    private ativo: BooleanFilter
 
     getRiscoPotencial() {
         return this.riscoPotencial;
@@ -30,6 +32,14 @@ export class RiscoEmpregadoFilter extends GenericFilter {
 
     setProfissional(profissional: ProfissionalSaudeFilter) {
         this.profissional = profissional;
+    }
+    
+    getAtivo() {
+        return this.ativo;
+    }
+
+    setAtivo(ativo: BooleanFilter) {
+        this.ativo = ativo;
     }
     
 }

@@ -8,7 +8,7 @@ export abstract class GenericService {
     protected headers: Headers;
     protected URL: string;
     
-    constructor(protected http: Http, protected router: Router, path:string) { 
+    constructor(protected http: Http, protected router: Router, path:string) {
         this.headers = new Headers( { 'Content-Type': 'application/json' } );
         this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
         this.URL = GlobalVariable.BASE_API_URL + "/" + path;

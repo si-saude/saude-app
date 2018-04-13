@@ -12,6 +12,9 @@ import { EmpregadoService } from './../empregado/empregado.service';
 import { EquipeService } from './../equipe/equipe.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { UsuarioService } from './../usuario/usuario.service';
+import { IndicadorSastService } from './../indicador-sast/indicador-sast.service';
+import { IndicadorSastFilter } from './../indicador-sast/indicador-sast.filter';
+import { EquipeFilter } from './../equipe/equipe.filter';
 
 @Injectable()
 export class RiscoPotencialService extends GenericService {
@@ -22,7 +25,8 @@ export class RiscoPotencialService extends GenericService {
             private empregadoService: EmpregadoService,
             private diagnosticoService: DiagnosticoService,
             private intervencaoService: IntervencaoService,
-            private equipeService: EquipeService ) { 
+            private equipeService: EquipeService,
+            private indicadorSastService: IndicadorSastService ) { 
         super(http,router,"risco-potencial");
     }
     
@@ -45,10 +49,24 @@ export class RiscoPotencialService extends GenericService {
             .toPromise();
     }
     
+    validar( riscoPotencial ) {
+        let urlValidar = this.URL + "/validar";
+        return this.http
+            .post( urlValidar, riscoPotencial, { headers: this.headers } )
+            .toPromise();
+    }
+    
     saveAcoes( riscoPotencial ) {
         let urlSaveAcoes = this.URL + "/save-acoes";
         return this.http
             .post( urlSaveAcoes, riscoPotencial, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    saveAcompanhamentos( riscoPotencial ) {
+        let urlSaveAcompanhamentos = this.URL + "/save-acompanhamentos";
+        return this.http
+            .post( urlSaveAcompanhamentos, riscoPotencial, { headers: this.headers } )
             .toPromise();
     }
     

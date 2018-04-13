@@ -15,9 +15,14 @@
 		<p><b>{{riscoPotencial.empregado.pessoa.nome}}</b></p>
 
 		<div class="collection" *ngFor="let riscoEmpregado of riscoPotencial.riscoEmpregados; let r = index">
-			<a (click)="verifyActive(r)" class="collection-item item-collection{{r}}">{{riscoEmpregado.equipe.nome}}</a>
+			<div class="col s10">
+				<a (click)="verifyActive(r)" class="collection-item item-collection{{r}}">{{riscoEmpregado.equipe.nome}}</a>
+			</div>
+			<div class="col s2">
+				<p>{{arrayDatas[r]}}</p>
+			</div>
 		</div>
-
+		
 	</div>
 
 	<div class='row row-btns'>

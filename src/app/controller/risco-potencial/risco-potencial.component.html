@@ -39,10 +39,18 @@
 					</tr>
 					<tr class="col s12 row-btns row-btns-risco{{i}}" hidden >
 						<div class="row div-btns-risco">
-							<a [routerLink]="['/risco-potencial/ficha-coleta/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ficha Coleta</a>
-							<a [routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Triagem</a>
-							<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Planejamento</a>
-							<a [routerLink]="['/risco-potencial/graficos/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Gráficos</a>
+							<div style="display: inline;">
+								<a [routerLink]="['/risco-potencial/ficha-coleta/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ficha Coleta</a>
+							</div>
+							<div style="display: inline;">
+								<a [routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Triagem</a>
+							</div>
+							<div style="display: inline;" *ngIf="verifyPlanejamento(i)">
+								<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id, riscoPotencial.empregado.pessoa.nome]" class="btn btn-primary btn-ranking">Planejamento</a>
+							</div>
+							<div style="display: inline;">
+								<a [routerLink]="['/risco-potencial/graficos/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Gráficos</a>
+							</div>
 						</div>
 						<div class="row div-btns-risco">
 							<div style="display: inline;" *ngIf="verifyStatusCriarPlano(i)">

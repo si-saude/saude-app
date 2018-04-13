@@ -17,7 +17,7 @@ export class RiscoEmpregadoBuilder extends GenericBuilder {
         riscoEmpregado = new RiscoEmpregado();
         
         riscoEmpregado.setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
-        riscoEmpregado.setRiscoPotencial(new RiscoPotencialBuilder().initialize(new RiscoPotencial()));
+        riscoEmpregado.setRiscoPotencial(new RiscoPotencial());
         riscoEmpregado.setEquipe(new EquipeBuilder().initialize(new Equipe()));
         riscoEmpregado.setProfissional(new ProfissionalSaudeBuilder().initialize(new Profissional()));
         riscoEmpregado.setTriagens(new Array<Triagem>());
@@ -51,6 +51,7 @@ export class RiscoEmpregadoBuilder extends GenericBuilder {
         cloneRiscoEmpregado.setData(this.getValue(riscoEmpregado,"getData"));
         cloneRiscoEmpregado.setStatus(this.getValue(riscoEmpregado,"getStatus"));
         cloneRiscoEmpregado.setStatusRPSat(this.getValue(riscoEmpregado,"getStatusRPSat"));
+        cloneRiscoEmpregado.setAtivo(this.getValue(riscoEmpregado,"getAtivo"));
         
         cloneRiscoEmpregado.setRiscoPotencial(
                 new RiscoPotencialBuilder().clone(this.getValue(riscoEmpregado,"getRiscoPotencial")));

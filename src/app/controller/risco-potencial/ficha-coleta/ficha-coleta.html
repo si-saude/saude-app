@@ -8,6 +8,8 @@
 <!-- Confirm Save -->
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
+	
+<p style="color: #26a69a;"><b>Nome do Empregado:  {{nomeEmpregado}}</b></p>
 
 <div class="row form-container">
 
@@ -72,18 +74,17 @@
 
 										<tbody class="col s12">
 											<tr class="col s12">
-												<div
-													*ngFor="let respostaItem of resposta.itens; let i = index">
-													<div class="row">
+												<div class="row">
 														<div
 															*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-															<td class="col s12">
-																<input id="resposta.item" type="text" name="resposta.item"
-																class="resposta-item" [(ngModel)]="item.conteudo">
+															<td
+																[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																<input id="resposta.item" type="text"
+																name="resposta.item" class="resposta-item"
+																[(ngModel)]="item.conteudo">
 															</td>
 														</div>
 													</div>
-												</div>
 											</tr>
 										</tbody>
 

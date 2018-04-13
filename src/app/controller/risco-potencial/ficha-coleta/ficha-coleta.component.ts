@@ -6,6 +6,8 @@ import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { FichaColeta } from './../../../model/ficha-coleta';
 import { FichaColetaBuilder } from './../../ficha-coleta/ficha-coleta.builder';
+import { ItemRespostaFichaColeta } from './../../../model/item-resposta-ficha-coleta';
+import { ItemPerguntaFichaColeta } from './../../../model/item-pergunta-ficha-coleta';
 import { FilaEsperaOcupacionalFilter } from './../../fila-espera-ocupacional/fila-espera-ocupacional.filter';
 import { FilaEsperaOcupacionalService } from './../../fila-espera-ocupacional/fila-espera-ocupacional.service';
 import { RiscoPotencial } from './../../../model/risco-potencial';
@@ -26,6 +28,7 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
     private respostasFichaColetaByGrupo = [[]];
     private quantidadeItemRespostasByGrupo: Array<number>;
     private statusesSimNao: Array<string>;
+    private nomeEmpregado: string;
 
     constructor( private route: ActivatedRoute,
             private filaEsperaOcupacionalService: FilaEsperaOcupacionalService,
@@ -54,6 +57,7 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
                     component.filaEsperaOcupacionalService.listAll( filaFilter )
                         .then( res => {
                             component.showPreload = false;
+                            component.nomeEmpregado = res.json().list[0]["empregado"]["pessoa"]["nome"];
                             component.fichaColeta = new FichaColetaBuilder().clone( res.json().list[0]["fichaColeta"] );
                             component.getRespostasFichaColeta();
                             component.getStatusSimNao();
@@ -133,6 +137,22 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
             qtdItens += this.quantidadeItemRespostasByGrupo[i];
         
         return qtdItens;
+    }
+    
+    getGridItensPergunta( itens: Array<ItemPerguntaFichaColeta> ) {
+        let s: number = Math.floor( 12 / itens.length );
+        return "col s" + s.toString();
+    }
+    
+    getArrayItensResposta( item: ItemRespostaFichaColeta ) {
+        let ret = [];
+
+        while ( item != null && item != undefined ) {
+            ret.push( item );
+            item = item.getItem();
+        }
+
+        return ret;
     }
     
     ngOnDestroy() {

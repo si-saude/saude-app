@@ -36,7 +36,7 @@ import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.s
     styleUrls: ['./planejamento.css', './../../../../assets/css/form-component.css']
 } )
 export class PlanejamentoComponent extends GenericFormComponent implements OnInit {
-    private riscoPotencial: RiscoPotencial;
+    private nomeEmpregado: string;
     private riscoEmpregado: RiscoEmpregado;
     private profissional: Profissional;
     private prazos: Array<string>;
@@ -64,7 +64,6 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         this.goTo = "risco-potencial";
 
         this.triagens = new TriagemBuilder().initializeList( new Array<Triagem>() );
-        this.riscoPotencial = new RiscoPotencialBuilder().initialize( new RiscoPotencial() );
         this.riscoEmpregado = new RiscoEmpregadoBuilder().initialize( new RiscoEmpregado() );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
@@ -99,14 +98,13 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
                                         ( params: any ) => {
                                             if ( params['id'] !== undefined ) {
                                                 let id = params['id'];
+                                                component.nomeEmpregado = params['empregado'];
                                                 component.showPreload = true;
 
-                                                component.triagemService.getTriagensByEquipeAbordagem( component.profissional.getEquipe().getId(), id )
+                                                component.triagemService.getTriagensByEquipeIndicador( component.profissional.getEquipe().getId(), id )
                                                     .then( res => {
                                                         component.showPreload = false;
                                                         component.triagens = new TriagemBuilder().cloneList( res.json().list );
-                                                        
-                                                        console.log(component.triagens);
                                                         
                                                         component.triagens.forEach(t => {
                                                             component.diagnosticos.push(t.getDiagnostico());

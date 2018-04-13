@@ -9,6 +9,8 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
+<p style="color: #26a69a;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b></p>
+
 <div class="form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
@@ -117,7 +119,7 @@
 														<fieldset>
 															<legend>Acompanhamentos
 																<a (click)="addAcompanhamento(equipe.id,triagem.id,a)" 
-																	*ngIf="verifyAcompanhamento(equipe.id, triagem.id, a)"
+																	*ngIf="verifyAcompanhamento(acao)"
 																	class="btn-floating waves-effect waves-light btn-add-acompanhamento">
 																		<i class="material-icons center-icon">add</i>
 																</a>
@@ -134,17 +136,19 @@
 																	<tbody class="col s12">
 																		<tr class="col s12">
 																			<td class="col s9 descricao">
-																				<textarea class="materialize-textarea acompanhamento-descricao" 
+																				<textarea [disabled]="!verifyAcompanhamento(acao)"
+																					class="materialize-textarea acompanhamento-descricao" 
 																					[(ngModel)]="acompanhamento.descricao"
-																					name="acompanhamento{{acmp}}.descricao">
+																					name="acompanhamento{{e}}_{{t}}_{{a}}_{{acmp}}.descricao">
 																				</textarea>
 																			</td>
-																			<td class="col s3 botao-remover"><a
-																				*ngIf="verifyAcompanhamento(equipe.id, triagem.id, a)"
-																				class="btn-floating waves-effect waves-light red btn-remove"
-																				(click)="removeAcompanhamento(equipe.id,triagem.id,a,acmp)"> <i
+																			<td class="col s3 botao-remover">
+																				<a *ngIf="verifyAcompanhamento(acao)"
+																					class="btn-floating waves-effect waves-light red btn-remove"
+																					(click)="removeAcompanhamento(equipe.id,triagem.id,a,acmp)"> <i
 																					class="material-icons i-remove-acompanhamento">delete</i>
-																			</a></td>
+																				</a>
+																			</td>
 																		</tr>
 																	</tbody>
 																</div>
@@ -153,7 +157,12 @@
 													</div>
 													
 													<div class="row center">
-														<a (click)="encerrarAcao(equipe.id, triagem.id, a)" class="btn btn-primary btn-encerrar">Encerrar</a>
+														<a  *ngIf="verifyAcompanhamento(acao)"
+															(click)="encerrarAcao(equipe.id, triagem.id, a)" 
+															class="btn btn-primary btn-encerrar">Encerrar</a>
+														<a  *ngIf="!verifyAcompanhamento(acao)"
+															(click)="savaAndRedirect()"
+															class="btn btn-primary btn-encerrar">Reavaliar</a>
 													</div>
 												</fieldset>
 
