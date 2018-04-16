@@ -9,193 +9,73 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<p style="color: #26a69a;"><b>Nome do Empregado:  </b></p>
+<p style="color: #26a69a;">
+	<b>Nome do Empregado: {{nomeEmpregado}}</b>
+</p>
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
-	
-		<div class="col s12">
-			<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs">
-				<li class="tab col s6"><a href="#triagem">Triagem</a></li>
-				<li class="tab col s6"><a href="#planejamento">Planejamento</a></li>
-			</ul>
-		</div>
-		
-		<div id="triagem">
 
-			<div class="container-triagem">
-				<div class="table-triagem">
-					<table>
-						<thead>
-							<tr class="row col s12">
-								<th class="col s2">Indicador</th>
-								<th class="col s2">Índice 0</th>
-								<th class="col s2">Índice 1</th>
-								<th class="col s2">Índice 2</th>
-								<th class="col s2">Índice 3</th>
-								<th class="col s2">Índice 4</th>
-							</tr>
-						</thead>
-						<div class="container-triagens">
-							<div *ngFor="let triagem of riscoEmpregado.triagens; let t = index">
-								<tbody>
-									<tr class="row col s12">
-										<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">
-											{{triagem.indicadorSast.nome}}</td>
-										<td class="col s2 indice0" #tdIndice0 id="0"
-											title="indice0_{{t}}"
-											(click)="selectTriagem(t, tdIndice0.id)"
-											[ngStyle]="{'cursor': 'pointer'}">
-											{{triagem.indicadorSast.indice0}}</td>
-										<td class="col s2 indice1" #tdIndice1 id="1"
-											title="indice1_{{t}}"
-											(click)="selectTriagem(t, tdIndice1.id)"
-											[ngStyle]="{'cursor': 'pointer'}">
-											{{triagem.indicadorSast.indice1}}</td>
-										<td class="col s2 indice2" #tdIndice2 id="2"
-											title="indice2_{{t}}"
-											(click)="selectTriagem(t, tdIndice2.id)"
-											[ngStyle]="{'cursor': 'pointer'}">
-											{{triagem.indicadorSast.indice2}}</td>
-										<td class="col s2 indice3" #tdIndice3 id="3"
-											title="indice3_{{t}}"
-											(click)="selectTriagem(t, tdIndice3.id)"
-											[ngStyle]="{'cursor': 'pointer'}">
-											{{triagem.indicadorSast.indice3}}</td>
-										<td class="col s2 indice4" #tdIndice4 id="4"
-											title="indice4_{{t}}"
-											(click)="selectTriagem(t, tdIndice4.id)"
-											[ngStyle]="{'cursor': 'pointer'}">
-											{{triagem.indicadorSast.indice4}}</td>
-									</tr>
-								</tbody>
-							</div>
+		<div class="container-triagem">
+			<div class="table-triagem">
+				<table>
+					<thead>
+						<tr class="row col s12">
+							<th class="col s2">Indicador</th>
+							<th class="col s2">Índice 0</th>
+							<th class="col s2">Índice 1</th>
+							<th class="col s2">Índice 2</th>
+							<th class="col s2">Índice 3</th>
+							<th class="col s2">Índice 4</th>
+						</tr>
+					</thead>
+					<div class="container-triagens">
+						<div
+							*ngFor="let triagem of riscoEmpregado.triagens; let t = index">
+							<tbody>
+								<tr class="row col s12">
+									<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.nome}}</td>
+									<td class="col s2 indice0" #tdIndice0 id="0"
+										title="indice0_{{t}}" (click)="selectTriagem(t, tdIndice0.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice0}}</td>
+									<td class="col s2 indice1" #tdIndice1 id="1"
+										title="indice1_{{t}}" (click)="selectTriagem(t, tdIndice1.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice1}}</td>
+									<td class="col s2 indice2" #tdIndice2 id="2"
+										title="indice2_{{t}}" (click)="selectTriagem(t, tdIndice2.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice2}}</td>
+									<td class="col s2 indice3" #tdIndice3 id="3"
+										title="indice3_{{t}}" (click)="selectTriagem(t, tdIndice3.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice3}}</td>
+									<td class="col s2 indice4" #tdIndice4 id="4"
+										title="indice4_{{t}}" (click)="selectTriagem(t, tdIndice4.id)"
+										[ngStyle]="{'cursor': 'pointer'}">
+										{{triagem.indicadorSast.indice4}}</td>
+								</tr>
+							</tbody>
 						</div>
-					</table>
-				</div>
-
+					</div>
+				</table>
 			</div>
 
 		</div>
 
-		<div id="planejamento">
-
-			<div class="container-triagem">
-				<div class="table-triagem">
-					<table style="width: 100%">
-						<div class="container-triagens-planejamento">
-							<div *ngFor="let triagem of riscoEmpregado.triagens; let t = index">
-								<div *ngIf="verifyIndiceTriagem(triagem)">
-									<fieldset class="fieldset-planejamento-triagem">
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-indicador">Indicador</td>
-												<td class="col s9 indicador">{{triagem.indicadorSast.nome}}</td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-indice-descricao">Índice
-													Descrição</td>
-												<td class="col s9 indice-descricao">{{getIndiceDescricao(triagem)}}</td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-eixo-clinico">Eixo Clínico</td>
-												<td class="col s9 eixo-clinico"><input type="text"
-													name="eixo-clinico{{t}}" disabled
-													[(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-diagnostico">Diagnóstico</td>
-												<td class="col s9 diagnostico"><input type="text"
-													materialize="autocomplete" autocomplete="off"
-													name="diagnostico{{t}}" class="resposta-conteudo"
-													[(ngModel)]="triagem.diagnostico.descricao"
-													(blur)="getDiagnostico(t)"
-													(ngModelChange)="selectDiagnosticoByCodigoAndAbreviacao($event); selectDiagnosticoByDescricaoAndAbreviacao($event);"
-													[materializeParams]="autocompleteDiagnostico"> <input
-													id="triagem.diagnostico.id" type="hidden"
-													name="triagem.diagnostico.id"
-													[(ngModel)]="triagem.diagnostico.id"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-intervencao">Intervenção</td>
-												<td class="col s9 intervencao"><input type="text"
-													materialize="autocomplete" autocomplete="off"
-													name="intervencao{{t}}" class="resposta-conteudo"
-													[(ngModel)]="triagem.intervencao.descricao"
-													(blur)="getIntervencao(t)"
-													(ngModelChange)="selectIntervencaoByDescricaoAndAbreviacao($event);"
-													[materializeParams]="autocompleteIntervencao"> <input
-													id="triagem.intervencao.id" type="hidden"
-													name="triagem.intervencao.id"
-													[(ngModel)]="triagem.intervencao.id"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-equipe-abordagem">Equipe de
-													Abordagem</td>
-												<td class="col s9 equipe-abordagem"><input type="text"
-													materialize="autocomplete" autocomplete="off"
-													name="equipeAbordagem{{t}}" class="resposta-conteudo"
-													[(ngModel)]="triagem.equipeAbordagem.nome"
-													(blur)="getEquipeAbordagem(t)"
-													(ngModelChange)="selectEquipeAbordagemByName($event);"
-													[materializeParams]="autocompleteEquipeAbordagem">
-													<input id="triagem.equipeAbordagem.id" type="hidden"
-													name="triagem.equipeAbordagem.id"
-													[(ngModel)]="triagem.equipeAbordagem.id"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-prazo-inicio">Sugestão de prazo
-													de início</td>
-												<td class="col s9 prazo-inicio">
-													<select name="prazo{{t}}" class="resposta-conteudo"
-														class="browser-default" [(ngModel)]="triagem.prazo">
-														<option disabled selected value="">Selecione um prazo</option>
-														<option *ngFor="let prazo of prazos" value="{{prazo}}">{{prazo}}</option>
-													</select>
-												</td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-justificativa">Justificativa/Observação</td>
-												<td class="col s9 justificativa"><input type="text"
-													name="justificativa{{t}}" class="resposta-conteudo"
-													[(ngModel)]="triagem.justificativa"></td>
-											</tr>
-										</div>
-									</fieldset>
-								</div>
-							</div>
-						</div>
-					</table>
-				</div>
-
-			</div>
-		</div>
-		
 		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
 		</div>
-		
+
 		<div class='row row-btns'>
 			<div class="col s6">
 				<a [routerLink]="['/risco-potencial']"
 					class="btn btn-primary btn-voltar">Voltar</a>
 			</div>
 			<div class="col s6">
-				<button type="submit"
-				class="btn btn-primary btn-salvar">Salvar</button>
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 
