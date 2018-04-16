@@ -92,8 +92,15 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
             this.riscoPotencial.getRiscoEmpregados().push( sRE );
         });
         
-        this.riscoPotencial.setStatus("PLANEJAMENTO");
-        super.save( new RiscoPotencialBuilder().clone( this.riscoPotencial ) );
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.riscoPotencialService.criarPlano( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
+            .then( res => {
+                this.processReturn( true, res );
+            } )
+            .catch( error => {
+                this.processReturn( false, error );
+            } );
     }
     
     ngOnDestroy() {

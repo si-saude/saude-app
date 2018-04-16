@@ -56,6 +56,13 @@ export class RiscoPotencialService extends GenericService {
             .toPromise();
     }
     
+    criarPlano( riscoPotencial ) {
+        let urlCriarPlano = this.URL + "/criar-plano";
+        return this.http
+            .post( urlCriarPlano, riscoPotencial, { headers: this.headers } )
+            .toPromise();
+    }
+    
     saveAcoes( riscoPotencial ) {
         let urlSaveAcoes = this.URL + "/save-acoes";
         return this.http
