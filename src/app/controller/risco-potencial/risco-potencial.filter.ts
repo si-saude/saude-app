@@ -14,6 +14,7 @@ export class RiscoPotencialFilter extends GenericFilter {
     private fimAgendamento: DateFilter;
     private atual: BooleanFilter;
     private status: string;
+    private abreviacaoEquipeAcolhimento: string;
 
     public getEmpregado() {
         return this.empregado;
@@ -62,5 +63,12 @@ export class RiscoPotencialFilter extends GenericFilter {
     }
     public setStatus(status: string){
         this.status = status;
+    }
+    public getAbreviacaoEquipeAcolhimento(){
+        return this.abreviacaoEquipeAcolhimento;
+    }
+    
+    public setAbreviacaoEquipeAcolhimento(abreviacao:string){
+        this.abreviacaoEquipeAcolhimento = abreviacao;
     }
 }
