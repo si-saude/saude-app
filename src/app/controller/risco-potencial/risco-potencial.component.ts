@@ -176,7 +176,8 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     }
 
     verifyStatusCriarPlano( indexRisco ) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() == "ABERTO" )
+        if ( this.riscoPotenciais[indexRisco].getStatus() == "ABERTO" || 
+                this.riscoPotenciais[indexRisco].getStatus() == "FINALIZADO")
             return true;
         return false;
     }

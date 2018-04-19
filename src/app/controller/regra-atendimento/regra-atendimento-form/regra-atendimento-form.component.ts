@@ -163,4 +163,14 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
         this.arrayRequisito.splice(i, 1);
     }
     
+    checkCheckbox( regraAtendimentoEquipe: RegraAtendimentoEquipe ) {
+        let regraAtendimentoEquipeAnterior: RegraAtendimentoEquipe = this.regraAtendimento.getRegraAtendimentoEquipes().
+                                                                        find(rAE => rAE.getAcolhimento() );
+        
+        if ( regraAtendimentoEquipeAnterior != undefined )
+            regraAtendimentoEquipeAnterior.setAcolhimento(false);
+        
+        regraAtendimentoEquipe.setAcolhimento(true);
+    }
+    
 }

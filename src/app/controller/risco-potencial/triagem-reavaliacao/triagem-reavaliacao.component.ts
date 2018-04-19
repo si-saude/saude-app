@@ -43,21 +43,8 @@ import { RiscoPotencialFilter } from './../../risco-potencial/risco-potencial.fi
 export class TriagemReavaliacaoComponent extends GenericFormComponent implements OnInit {
     private riscoEmpregado: RiscoEmpregado;
     private profissional: Profissional;
-    private prazos: Array<string>;
-    private tabsActions;
     private triagemIndices: Map<number, number>;
-
-    private diagnosticos: Array<Diagnostico>;
-    private validDiagnostico: string;
-    private autocompleteDiagnostico;
-    
-    private intervencoes: Array<Intervencao>;
-    private validIntervencao: string;
-    private autocompleteIntervencao;
-    
-    private equipeAbordagens: Array<Equipe>;
-    private validEquipeAbordagem: string;
-    private autocompleteEquipeAbordagem;
+    private nomeEmpregado: string;
     
     constructor(private route: ActivatedRoute,
             private riscoEmpregadoService: RiscoEmpregadoService,
@@ -68,14 +55,7 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
             
             this.riscoEmpregado = new RiscoEmpregadoBuilder().initialize(new RiscoEmpregado());
             this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
-            this.tabsActions = new EventEmitter<string | MaterializeAction>();
             this.triagemIndices = new Map<number, number>();
-            this.validDiagnostico = "";
-            this.diagnosticos = new Array<Diagnostico>();
-            this.validIntervencao = "";
-            this.intervencoes = new Array<Intervencao>();
-            this.prazos = new Array<string>();
-            this.equipeAbordagens = new EquipeBuilder().initializeList(new Array<Equipe>());
     }
 
     ngOnInit() {
@@ -114,7 +94,7 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
                                                         .then( res => {
                                                             component.showPreload = false;
                                                             this.riscoEmpregado = new RiscoEmpregadoBuilder().clone( res.json().list[0] );
-                                                            console.log(this.riscoEmpregado);
+                                                            this.nomeEmpregado = this.riscoEmpregado.getRiscoPotencial().getEmpregado().getPessoa().getNome();
                                                             setTimeout(() => {
                                                                 component.triagemIndices = new Map<number, number>();
                                                                 
@@ -126,12 +106,7 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
                                                                     }
                                                                 }
                                                             }, 200 );
-                                                            
-                                                            component.riscoEmpregado.getTriagens().forEach(t => {
-                                                                component.diagnosticos.push(t.getDiagnostico());
-                                                                component.intervencoes.push(t.getIntervencao());
-                                                                component.equipeAbordagens.push(t.getEquipeAbordagem());
-                                                            });
+                                                            console.log(this.riscoEmpregado);
                                                         } )
                                                         .catch( error => {
                                                             component.catchConfiguration( error );
@@ -160,23 +135,13 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
             console.log( "Usuario nao logada." );
             component.router.navigate( ["/login"] );
         }
-        
-        component.getPrazos();
+    
     }
     
     save() {
         super.save(new RiscoEmpregadoBuilder().clone(this.riscoEmpregado));
     }
     
-    getPrazos() {
-        this.riscoEmpregadoService.getPrazos()
-            .then( res => {
-                this.prazos = Object.keys( res.json() ).sort();
-            } )
-            .catch( error => {
-                console.log( "Erro ao retornar os prazos." );
-            } )
-    }
     
     verifyIndiceTriagem( triagem: Triagem ) {
         if ( triagem.getIndice() > -1 ) return true;
@@ -207,160 +172,6 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
         this.triagemIndices.set( indexTriagem, Number( indice ) );
 
         this.riscoEmpregado.getTriagens()[indexTriagem].setIndice( Number( indice ) );
-    }
-    
-    getDiagnostico( index: number ) {
-        if ( this.validDiagnostico == this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao() ) return;
-        if ( this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao() !== undefined ) {
-            let diagnostico = this.diagnosticos.find( d => {
-                if ( ( d.getCodigo() + " - " + d.getDescricao() ).trim() ==
-                    this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao().trim() ||
-                    d.getDescricao().trim() == this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao().trim() )
-                    return true;
-                else return false;
-            } );
-
-            if ( diagnostico !== undefined ) {
-                this.riscoEmpregado.getTriagens()[index].setDiagnostico( diagnostico );
-                this.validDiagnostico = this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao();
-            } else this.riscoEmpregado.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
-        } else this.riscoEmpregado.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
-    }
-
-    private oldDescricaoDiagnostico: string;
-    selectDiagnosticoByDescricaoAndAbreviacao( evento ) {
-        if ( this.oldDescricaoDiagnostico != evento ) {
-            this.oldDescricaoDiagnostico = evento;
-            if ( evento.length >= 6 ) {
-                this.riscoEmpregadoService.getDiagnosticoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
-                    .then( res => {
-                        this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
-                        this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    private oldCodigoDiagnostico: string;
-    selectDiagnosticoByCodigoAndAbreviacao( evento ) {
-        if ( this.oldCodigoDiagnostico != evento ) {
-            this.oldCodigoDiagnostico = evento;
-            if ( evento.length < 6 ) {
-                this.riscoEmpregadoService.getDiagnosticoByCodigoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
-                    .then( res => {
-                        this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
-                        this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    buildAutocompleteDiagnostico( diagnosticos: Array<Diagnostico> ) {
-        let data = {};
-        diagnosticos.forEach( item => {
-            data[item.getCodigo() + " - " + item.getDescricao()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
-
-    getIntervencao( index: number ) {
-        if ( this.validIntervencao == this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao() ) return;
-        if ( this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao() !== undefined ) {
-            let intervencao = this.intervencoes.find( d => {
-                if ( d.getDescricao().trim() == this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao().trim() )
-                    return true;
-                else return false;
-            } );
-
-            if ( intervencao !== undefined ) {
-                this.riscoEmpregado.getTriagens()[index].setIntervencao( intervencao );
-                this.validIntervencao = this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao();
-            } else this.riscoEmpregado.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
-        } else this.riscoEmpregado.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
-    }
-
-    private oldDescricaoIntervencao: string;
-    selectIntervencaoByDescricaoAndAbreviacao( evento ) {
-        if ( this.oldDescricaoIntervencao != evento ) {
-            this.oldDescricaoIntervencao = evento;
-            if ( evento.length > 3 ) {
-                this.riscoEmpregadoService.getIntervencaoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
-                    .then( res => {
-                        this.intervencoes = new IntervencaoBuilder().cloneList( res.json() );
-                        this.autocompleteIntervencao = [this.buildAutocompleteIntervencao( this.intervencoes )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    buildAutocompleteIntervencao( intervencoes: Array<Intervencao> ) {
-        let data = {};
-        intervencoes.forEach( item => {
-            data[item.getDescricao()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
-
-    getEquipeAbordagem( index: number ) {
-        if ( this.validEquipeAbordagem == this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome() ) return;
-        if ( this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome() !== undefined ) {
-            let equipe = this.equipeAbordagens.find( e => {
-                if ( e.getNome().trim() == this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome().trim() )
-                    return true;
-                else return false;
-            } );
-
-            if ( equipe !== undefined ) {
-                this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( equipe );
-                this.validEquipeAbordagem = this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome();
-            } else this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
-        } else this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
-    }
-
-    private oldNomeEquipeAbordagem: string;
-    selectEquipeAbordagemByName( evento ) {
-        if ( this.oldNomeEquipeAbordagem != evento ) {
-            this.oldNomeEquipeAbordagem = evento;
-            if ( evento.length > 3 ) {
-                this.riscoEmpregadoService.getEquipeAbordagemByName( evento )
-                    .then( res => {
-                        this.equipeAbordagens = new EquipeBuilder().cloneList( res.json() );
-                        this.autocompleteEquipeAbordagem = [this.buildAutocompleteEquipeAbordagem( this.equipeAbordagens )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    buildAutocompleteEquipeAbordagem( equipeAbordagens: Array<Equipe> ) {
-        let data = {};
-        equipeAbordagens.forEach( item => {
-            data[item.getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
     }
     
     ngOnDestroy() {

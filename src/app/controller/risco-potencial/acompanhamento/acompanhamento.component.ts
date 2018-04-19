@@ -179,10 +179,6 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
             } )
     }
 
-    validar() {
-
-    }
-
     getTriagensEquipeAbordagem() {
         this.riscoPotencial.getRiscoEmpregados().forEach( rE => {
             rE.getTriagens().forEach( t => {
@@ -244,11 +240,28 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
         triagem.getAcoes()[indexAcao].setStatus( this.statusAcoes[1] )
     }
     
-    reavaliar( ideEquipe, idTriagem, indexAcao) {
-        
+    triagensEncerradas() {
+        let ret: boolean = true;
+        this.equipesAbordagemTriagens.forEach(eA => {
+            this.triagensByEquipeAbordagem[eA.getId()].forEach(t => {
+                if ( t.getAcoes().find( a => a.getStatus() != "ENCERRADA" ) != undefined )
+                    ret = false;
+            });
+        });
+        return ret;
     }
 
     verifyAcompanhamento( acao: Acao ) {
+        if ( acao.getStatus() == this.statusAcoes[1] )
+            return false;
+        
+        return true;
+    }
+    
+    verifyEncerrarAcompanhamento(triagem: Triagem, acao: Acao) {
+        if ( this.profissional.getEquipe().getId() != triagem.getEquipeAbordagem().getId() )
+            return false;
+        
         if ( acao.getStatus() == this.statusAcoes[1] )
             return false;
         

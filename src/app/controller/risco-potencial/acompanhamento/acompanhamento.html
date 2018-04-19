@@ -157,12 +157,9 @@
 													</div>
 													
 													<div class="row center">
-														<a  *ngIf="verifyAcompanhamento(acao)"
+														<a  *ngIf="verifyEncerrarAcompanhamento(triagem, acao)"
 															(click)="encerrarAcao(equipe.id, triagem.id, a)" 
 															class="btn btn-primary btn-encerrar">Encerrar</a>
-														<a  *ngIf="!verifyAcompanhamento(acao)"
-															(click)="savaAndRedirect()"
-															class="btn btn-primary btn-encerrar">Reavaliar</a>
 													</div>
 												</fieldset>
 
@@ -189,7 +186,8 @@
 					class="btn btn-primary btn-voltar">Voltar</a>
 			</div>
 			<div class="col s4 center">
-				<a (click)="validar()" class="btn btn-primary btn-validar">Validar</a>
+				<a (click)="savaAndRedirect()" *ngIf="triagensEncerradas()"
+					class="btn btn-primary btn-validar">Reavaliar</a>
 			</div>
 			<div class="col s4">
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>

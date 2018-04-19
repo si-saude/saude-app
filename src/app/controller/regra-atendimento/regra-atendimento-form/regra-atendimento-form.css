@@ -23,6 +23,10 @@
 	margin-top: -5px;
 }
 
+.a-btn-delete {
+	margin-left: -50px;
+}
+
 .container-regras {
 	max-height: 400px;
     overflow: auto;
@@ -43,4 +47,33 @@
 .checkbox_selecionado {
 	margin-top: 1px;
     padding-left: 4rem;
+}
+
+.label-row-collection {
+	background-color: #fff;
+    color: #26a69a;
+}
+
+.div-label-equipe {
+	border-right: 1px solid #e0e0e0;
+    width: 56.3% !important;
+}
+
+.label-equipe {
+	margin-left: 43%;
+}
+
+.div-label-acolhimento {
+	width: 20% !important;
+    border-right: 1px solid #e0e0e0;
+}
+
+.label-acolhimento {}
+
+.div-label-remover {
+	width: 22% !important;
+}
+
+.label-remover {
+	margin-left: 20px;
 }
