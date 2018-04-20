@@ -1106,8 +1106,8 @@
 												(blur)="getDiagnostico(t)"
 												(ngModelChange)="selectDiagnosticoByCodigoAndAbreviacao($event); selectDiagnosticoByDescricaoAndAbreviacao($event);"
 												[materializeParams]="autocompleteDiagnostico"> <input
-												id="triagem.diagnostico.id" type="hidden"
-												name="triagem.diagnostico.id"
+												id="triagem{{t}}.diagnostico.id" type="hidden"
+												name="triagem{{t}}.diagnostico.id"
 												[(ngModel)]="triagem.diagnostico.id"></td>
 										</tr>
 									</div>
@@ -1119,10 +1119,10 @@
 												name="intervencao{{t}}" class="resposta-conteudo"
 												[(ngModel)]="triagem.intervencao.descricao"
 												(blur)="getIntervencao(t)"
-												(ngModelChange)="selectIntervencaoByDescricaoAndAbreviacao($event);"
+												(ngModelChange)="selectIntervencaoByDescricaoAndAbreviacao($event)"
 												[materializeParams]="autocompleteIntervencao"> <input
-												id="triagem.intervencao.id" type="hidden"
-												name="triagem.intervencao.id"
+												id="triagem{{t}}.intervencao.id" type="hidden"
+												name="triagem{{t}}.intervencao.id"
 												[(ngModel)]="triagem.intervencao.id"></td>
 										</tr>
 									</div>
@@ -1137,8 +1137,8 @@
 												(blur)="getEquipeAbordagem(t)"
 												(ngModelChange)="selectEquipeAbordagemByName($event);"
 												[materializeParams]="autocompleteEquipeAbordagem"> <input
-												id="triagem.equipeAbordagem.id" type="hidden"
-												name="triagem.equipeAbordagem.id"
+												id="triagem{{t}}.equipeAbordagem.id" type="hidden"
+												name="triagem{{t}}.equipeAbordagem.id"
 												[(ngModel)]="triagem.equipeAbordagem.id"></td>
 										</tr>
 									</div>

@@ -84,9 +84,18 @@
 										</td>
 										<td class="col s9">
 											<div *ngFor="let acao of triagem.acoes; let a = index">
-											<fieldset (mouseenter)="showDelete(a)"
-													  (mouseleave)="hiddenDelete(a)">
+											<fieldset (mouseenter)="showActions(a)"
+													  (mouseleave)="hiddenActions(a)">
 												<legend>Ação</legend>
+												<div class="row btn-action{{a}} btn-action-div" hidden>
+													<a class="btn-floating waves-effect waves-light blue btn-edit"
+														(click)="editAcao(equipe.id, t, triagem.id, a)">
+														<i class="material-icons center-icon">mode_edit</i></a>
+													<a class="btn-floating waves-effect waves-light red btn-remove"
+														(click)="removeAcao(equipe.id, t, triagem.id, a)"> 
+														<i class="material-icons center-icon">delete</i>
+													</a>
+												</div>
 												<div class="row">
 													<div class="col s6">
 														<label for="tipo{{a}}">Tipo</label> 
@@ -121,19 +130,11 @@
 															name="detalhe{{a}}" value={{acao.detalhe}}></textarea>
 													</div>
 												</div>
-												<div class="btn-edit{{a}} btn-edit-div" hidden>
-													<a class="btn-floating waves-effect waves-light blue btn-edit"
-														(click)="editAcao(equipe.id, t, triagem.id, a)">
-														<i class="material-icons center-icon">mode_edit</i></a>
-												</div>
-												<div class="btn-remove{{a}} btn-remove-div" hidden>
-													<a class="btn-floating waves-effect waves-light red btn-remove"
-														(click)="removeAcao(equipe.id, t, triagem.id, a)"> 
-														<i class="material-icons center-icon">delete</i>
-													</a>
+												<div class="row center" *ngIf="verifyReopenAcao(acao)">
+													<a (click)="reopenAcao(acao)" 
+														class="btn btn-primary btn-reabrir">Reabrir</a>
 												</div>
 											</fieldset>
-											
 											</div>
 										</td>
 									</tr>

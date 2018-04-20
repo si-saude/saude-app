@@ -17,6 +17,7 @@ import { DiagnosticoService } from './../diagnostico/diagnostico.service';
 import { IntervencaoService } from './../intervencao/intervencao.service';
 import { EquipeService } from './../equipe/equipe.service';
 import { GenericService } from './../../generics/generic.service';
+import { BooleanFilter } from './../../generics/boolean.filter';
 
 @Injectable()
 export class TriagemService extends GenericService {
@@ -48,6 +49,8 @@ export class TriagemService extends GenericService {
     getTriagensByEquipeIndicador( equipeProfissionalId, riscoPotencialId ) {
         let triagemFilter: TriagemFilter = new TriagemFilter();
         triagemFilter.setRiscoEmpregado(new RiscoEmpregadoFilter());
+        triagemFilter.getRiscoEmpregado().setAtivo(new BooleanFilter());
+        triagemFilter.getRiscoEmpregado().getAtivo().setValue(1);
         triagemFilter.getRiscoEmpregado().setRiscoPotencial(new RiscoPotencialFilter());
         triagemFilter.setPageSize(Math.pow(2, 31)-1);
         

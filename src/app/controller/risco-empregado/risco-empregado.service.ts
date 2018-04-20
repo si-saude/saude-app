@@ -7,7 +7,6 @@ import { RiscoEmpregado } from './../../model/risco-empregado';
 import { RiscoEmpregadoFilter } from './risco-empregado.filter';
 import { RiscoPotencialFilter } from './../risco-potencial/risco-potencial.filter';
 import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
-import { GenericService } from './../../generics/generic.service';
 import { UsuarioService } from './../usuario/usuario.service';
 import { RiscoPotencialService } from './../risco-potencial/risco-potencial.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
@@ -17,6 +16,8 @@ import { EquipeService } from './../equipe/equipe.service';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { TriagemService } from './../triagem/triagem.service';
 import { TriagemFilter } from './../triagem/triagem.filter';
+import { GenericService } from './../../generics/generic.service';
+import { BooleanFilter } from './../../generics/boolean.filter';
 
 @Injectable()
 export class RiscoEmpregadoService extends GenericService {
@@ -30,6 +31,26 @@ export class RiscoEmpregadoService extends GenericService {
             private equipeService: EquipeService,
             private triagemService: TriagemService) {
         super(http,router,"risco-empregado");
+    }
+    
+    saveReavaliacao( riscoEmpregado ) {
+        let urlSaveReavaliacao = this.URL + "/save-reavaliacao";
+        return this.http
+            .post( urlSaveReavaliacao, riscoEmpregado, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getByEquipe( equipeProfissionalId, riscoPotencialId ) {
+        let riscoEmpregadoFilter: RiscoEmpregadoFilter = new RiscoEmpregadoFilter();
+        riscoEmpregadoFilter.setEquipe(new EquipeFilter());
+        riscoEmpregadoFilter.setRiscoPotencial(new RiscoPotencialFilter());
+        riscoEmpregadoFilter.setAtivo(new BooleanFilter());
+        
+        riscoEmpregadoFilter.getAtivo().setValue(1);
+        riscoEmpregadoFilter.getEquipe().setId(equipeProfissionalId);
+        riscoEmpregadoFilter.getRiscoPotencial().setId(riscoPotencialId);
+        
+        return super.list(riscoEmpregadoFilter);
     }
     
     getTriagensByEquipeAbordagem( equipeProfissionalId, riscoPotencialId ) {
@@ -58,6 +79,8 @@ export class RiscoEmpregadoService extends GenericService {
         riscoEmpregadoFilter.setPageNumber(1);
         riscoEmpregadoFilter.setPageSize(1);
         riscoEmpregadoFilter.setRiscoPotencial( new RiscoPotencialFilter() );
+        riscoEmpregadoFilter.setAtivo(new BooleanFilter());
+        riscoEmpregadoFilter.getAtivo().setValue(1);
         riscoEmpregadoFilter.setProfissional( new ProfissionalSaudeFilter() );
         riscoEmpregadoFilter.getRiscoPotencial().setId( riscoPotencialId );
         riscoEmpregadoFilter.getProfissional().setId( profissionalId );

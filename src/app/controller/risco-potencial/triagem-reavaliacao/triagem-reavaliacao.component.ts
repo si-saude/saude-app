@@ -87,8 +87,7 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
                                                     riscoEmpregadoFilter.getRiscoPotencial().setId(id);
                                                     riscoEmpregadoFilter.setEquipe(new EquipeFilter());
                                                     riscoEmpregadoFilter.getEquipe().setId(this.profissional.getEquipe().getId());
-                                                    riscoEmpregadoFilter.setProfissional(new ProfissionalSaudeFilter());
-                                                    riscoEmpregadoFilter.getProfissional().setId(this.profissional.getId());
+                                                    riscoEmpregadoFilter.setStatus('VALIDADO');
     
                                                     component.riscoEmpregadoService.listToCopy(riscoEmpregadoFilter)
                                                         .then( res => {
@@ -135,11 +134,18 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
             console.log( "Usuario nao logada." );
             component.router.navigate( ["/login"] );
         }
-    
     }
     
     save() {
-        super.save(new RiscoEmpregadoBuilder().clone(this.riscoEmpregado));
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.riscoEmpregadoService.saveReavaliacao(new RiscoEmpregadoBuilder().clone(this.riscoEmpregado))
+            .then( res => {
+                this.processReturn( true, res );
+            } )
+            .catch( error => {
+                this.processReturn( false, error );
+            } )
     }
     
     

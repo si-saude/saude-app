@@ -100,7 +100,7 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
                                         } );
                                     this.getTipoAcao();
                                     this.getStatusAcao();
-                                    this.getTipoContatoAcao();
+                                    this.getTipoContatoAcao();                                    
                                 } else {
                                     this.router.navigate( ["/risco-potencial"] );
                                     return;
@@ -181,23 +181,25 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
 
     getTriagensEquipeAbordagem() {
         this.riscoPotencial.getRiscoEmpregados().forEach( rE => {
-            rE.getTriagens().forEach( t => {
-                if ( this.riscoPotencial.getEquipeResponsavel().getId() == this.profissional.getEquipe().getId() ||
-                        this.profissional.getEquipe().getId() == t.getEquipeAbordagem().getId() ) {
-                    if ( t.getEquipeAbordagem().getId() > 0 &&
-                        this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
-    
-                        if ( this.riscoPotencial.getEquipes().find( e => e.getId() == t.getEquipeAbordagem().getId() ) != undefined ) {
-                            this.equipesAbordagemTriagens.push( t.getEquipeAbordagem() );
-                            this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
+            if ( rE.getAtivo() ) {
+                rE.getTriagens().forEach( t => {
+                    if ( this.riscoPotencial.getEquipeResponsavel().getId() == this.profissional.getEquipe().getId() ||
+                            this.profissional.getEquipe().getId() == t.getEquipeAbordagem().getId() ) {
+                        if ( t.getEquipeAbordagem().getId() > 0 &&
+                            this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
+        
+                            if ( this.riscoPotencial.getEquipes().find( e => e.getId() == t.getEquipeAbordagem().getId() ) != undefined ) {
+                                this.equipesAbordagemTriagens.push( t.getEquipeAbordagem() );
+                                this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
+                            }
                         }
+        
+                        if ( this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] != undefined &&
+                            t.getEquipeAbordagem().getId() > 0 )
+                            this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()].push( t );
                     }
-    
-                    if ( this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] != undefined &&
-                        t.getEquipeAbordagem().getId() > 0 )
-                        this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()].push( t );
-                }
-            } )
+                } )
+            }
         } )
     }
 
@@ -240,32 +242,54 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
         triagem.getAcoes()[indexAcao].setStatus( this.statusAcoes[1] )
     }
     
-    triagensEncerradas() {
-        let ret: boolean = true;
+    validarAcao( idEquipe, idTriagem, indexAcao ) {
+        let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );
+        triagem.getAcoes()[indexAcao].setStatus( this.statusAcoes[4] );
+    }
+    
+    triagensValidadas() {
+        let ret: boolean = (this.equipesAbordagemTriagens != undefined && this.equipesAbordagemTriagens.length > 0);
         this.equipesAbordagemTriagens.forEach(eA => {
             this.triagensByEquipeAbordagem[eA.getId()].forEach(t => {
-                if ( t.getAcoes().find( a => a.getStatus() != "ENCERRADA" ) != undefined )
+                if ( ( this.profissional.getEquipe().getId() != this.riscoPotencial.getEquipeResponsavel().getId() && 
+                        t.getIndicadorSast().getEquipe().getId() != this.profissional.getEquipe().getId() &&
+                        t.getEquipeAbordagem().getId() != this.profissional.getEquipe().getId() ) ||
+                                t.getAcoes() == undefined || 
+                                t.getAcoes().length == 0 ||
+                                t.getAcoes().filter(a => a.getStatus() != "VALIDADA").
+                                    filter(a1 => a1.getStatus() != "REAVALIADA").length > 0 )
                     ret = false;
             });
         });
+        console.log(this.triagensByEquipeAbordagem);
         return ret;
     }
 
     verifyAcompanhamento( acao: Acao ) {
-        if ( acao.getStatus() == this.statusAcoes[1] )
+        if ( acao.getStatus() == this.statusAcoes[1] || 
+                acao.getStatus() == this.statusAcoes[3] || 
+                acao.getStatus() == this.statusAcoes[4] )
             return false;
         
         return true;
     }
     
     verifyEncerrarAcompanhamento(triagem: Triagem, acao: Acao) {
-        if ( this.profissional.getEquipe().getId() != triagem.getEquipeAbordagem().getId() )
-            return false;
-        
-        if ( acao.getStatus() == this.statusAcoes[1] )
+        if ( this.profissional.getEquipe().getId() != triagem.getEquipeAbordagem().getId() || 
+                acao.getStatus() == this.statusAcoes[1] || 
+                acao.getStatus() == this.statusAcoes[3] ||
+                acao.getStatus() == this.statusAcoes[4] )
             return false;
         
         return true;
+    }
+    
+    verifyValidarAcompanhamento(triagem: Triagem, acao: Acao) {
+        if ( this.profissional.getEquipe().getId() == this.riscoPotencial.getEquipeResponsavel().getId() && 
+                acao.getStatus() == this.statusAcoes[1] )
+            return true;
+        
+        return false;
     }
     
     getIndiceDescricao( triagem: Triagem ) {

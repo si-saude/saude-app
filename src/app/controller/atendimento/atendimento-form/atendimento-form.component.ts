@@ -299,10 +299,8 @@ export class AtendimentoFormComponent {
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
             this.setDatas();
-            
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
-                    
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     if ( this.atendimento.getTriagens() != undefined )
                         this.atendimento.getTriagens().forEach(t => {
@@ -1040,8 +1038,6 @@ export class AtendimentoFormComponent {
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
-                        console.log(this.diagnosticos);
-                        console.log(this.autocompleteDiagnostico);
                     } )
                     .catch( error => {
                         console.log( error );
@@ -1063,14 +1059,14 @@ export class AtendimentoFormComponent {
     }
 
     getIntervencao( index: number ) {
-        if ( this.validIntervencao == this.atendimento.getTriagens()[index].getIntervencao().getDescricao() ) return;
+//        if ( this.validIntervencao == this.atendimento.getTriagens()[index].getIntervencao().getDescricao() ) return;
         if ( this.atendimento.getTriagens()[index].getIntervencao().getDescricao() !== undefined ) {
-            let intervencao = this.intervencoes.find( d => {
-                if ( d.getDescricao().trim() == this.atendimento.getTriagens()[index].getIntervencao().getDescricao().trim() )
+            let intervencao = this.intervencoes.find( i => {
+                if ( i.getDescricao().trim() == this.atendimento.getTriagens()[index].getIntervencao().getDescricao().trim() )
                     return true;
                 else return false;
             } );
-
+        
             if ( intervencao !== undefined ) {
                 this.atendimento.getTriagens()[index].setIntervencao( intervencao );
                 this.validIntervencao = this.atendimento.getTriagens()[index].getIntervencao().getDescricao();
@@ -1108,7 +1104,7 @@ export class AtendimentoFormComponent {
     }
 
     getEquipeAbordagem( index: number ) {
-        if ( this.validEquipeAbordagem == this.atendimento.getTriagens()[index].getEquipeAbordagem().getNome() ) return;
+//        if ( this.validEquipeAbordagem == this.atendimento.getTriagens()[index].getEquipeAbordagem().getNome() ) return;
         if ( this.atendimento.getTriagens()[index].getEquipeAbordagem().getNome() !== undefined ) {
             let equipe = this.equipeAbordagens.find( e => {
                 if ( e.getNome().trim() == this.atendimento.getTriagens()[index].getEquipeAbordagem().getNome().trim() )

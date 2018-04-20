@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GenericListComponent } from './../../generics/generic.list.component';
+import { BooleanFilter } from './../../generics/boolean.filter';
 import { IndicadorSast } from './../../model/indicador-sast';
 import { IndicadorSastFilter } from './indicador-sast.filter';
 import { IndicadorSastGuard } from './../../guards/guards-child/indicador-sast.guard';
@@ -74,6 +75,10 @@ export class IndicadorSastComponent extends GenericListComponent<IndicadorSast, 
     }
     
     filtrar() {
+        this.filter.setObrigatorio(new BooleanFilter());
+        this.filter.setInativo(new BooleanFilter());
+        this.filter.setAusenteCalculoInterdisciplinar(new BooleanFilter());
+        
         if ( this.obrigatorio.indeterminate == true )
             this.filter.getObrigatorio().setValue(0);
         else if ( this.obrigatorio.checked == true )

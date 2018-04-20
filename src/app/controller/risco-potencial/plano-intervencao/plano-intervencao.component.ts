@@ -80,21 +80,23 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     
     getTriagensEquipeAbordagem() {
         this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
-            rE.getTriagens().forEach( t => {
-                if ( t.getEquipeAbordagem().getId() > 0 && 
-                        this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
+            if ( rE.getAtivo() ) {
+                rE.getTriagens().forEach( t => {
+                    if ( t.getEquipeAbordagem().getId() > 0 && 
+                            this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
+                        
+                        if ( this.riscoPotencial.getEquipes().find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
+                            this.flagEquipesAbordagemTriagens.push( t.getEquipeAbordagem() );
+                        } else
+                            this.equipesAbordagemTriagens.push( t.getEquipeAbordagem() );
+                        
+                        this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
+                    }
                     
-                    if ( this.riscoPotencial.getEquipes().find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
-                        this.flagEquipesAbordagemTriagens.push( t.getEquipeAbordagem() );
-                    } else
-                        this.equipesAbordagemTriagens.push( t.getEquipeAbordagem() );
-                    
-                    this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
-                }
-                
-                if ( t.getEquipeAbordagem().getId() > 0 )
-                    this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()].push(t);
-            } )
+                    if ( t.getEquipeAbordagem().getId() > 0 )
+                        this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()].push(t);
+                } )
+            }
         })
         this.equipesAbordagemTriagens.forEach( eA => this.flagEquipesAbordagemTriagens.push( eA ) ); 
     }

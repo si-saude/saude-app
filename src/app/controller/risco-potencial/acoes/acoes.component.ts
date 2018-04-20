@@ -123,20 +123,22 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     
     getTriagensEquipeAbordagem() {
         this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
-            rE.getTriagens().forEach( t => {
-                if ( t.getEquipeAbordagem().getId() > 0 && 
-                        this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
-                    
-                    if ( this.riscoPotencial.getEquipes().find( e => e.getId() == t.getEquipeAbordagem().getId() ) != undefined ) {
-                        this.equipesAbordagemTriagens.push( t.getEquipeAbordagem() );
-                        this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] = new Array<Triagem>();   
+            if ( rE.getAtivo() ) {
+                rE.getTriagens().forEach( t => {
+                    if ( t.getEquipeAbordagem().getId() > 0 && 
+                            this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
+                        
+                        if ( this.riscoPotencial.getEquipes().find( e => e.getId() == t.getEquipeAbordagem().getId() ) != undefined ) {
+                            this.equipesAbordagemTriagens.push( t.getEquipeAbordagem() );
+                            this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] = new Array<Triagem>();   
+                        }
                     }
-                }
-                
-                if ( this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] != undefined &&
-                        t.getEquipeAbordagem().getId() > 0 )
-                    this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()].push(t);
-            } )
+                    
+                    if ( this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] != undefined &&
+                            t.getEquipeAbordagem().getId() > 0 )
+                        this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()].push(t);
+                } )
+            }
         })
     }
     
@@ -241,6 +243,16 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         triagem.getAcoes().splice(indexAcao, 1);
     }
     
+    verifyReopenAcao(acao: Acao) {
+        if ( acao.getStatus() == "ENCERRADA" )
+            return true;
+        return false;
+    }
+    
+    reopenAcao(acao: Acao) {
+        acao.setStatus("ABERTA");
+    }
+    
     openModal() {
         this.modalAcao.emit( { action: "modal", params: ['open'] } );
     }
@@ -249,14 +261,12 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         this.modalAcao.emit( { action: "modal", params: ['close'] } );
     }
     
-    showDelete(indexAcao) {
-        $(".btn-remove"+indexAcao).show();
-        $(".btn-edit"+indexAcao).show();
+    showActions(indexAcao) {
+        $(".btn-action"+indexAcao).show();
     }
     
-    hiddenDelete(indexAcao) {
-        $(".btn-remove"+indexAcao).hide();
-        $(".btn-edit"+indexAcao).hide();
+    hiddenActions(indexAcao) {
+        $(".btn-action"+indexAcao).hide();
     }
     
     ngOnDestroy() {

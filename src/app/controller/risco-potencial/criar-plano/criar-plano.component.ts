@@ -87,9 +87,10 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
             return;
         }
         
-        this.riscoPotencial.setRiscoEmpregados( new Array<RiscoEmpregado>() );
+        this.riscoPotencial.getRiscoEmpregados().forEach(rE => rE.setAtivo(false));
+        
         this.selectedRiscoEmpregados.forEach( sRE => {
-            this.riscoPotencial.getRiscoEmpregados().push( sRE );
+            this.riscoPotencial.getRiscoEmpregados().find( rE => rE.getId() == sRE.getId() ).setAtivo(true);
         });
         
         this.showPreload = true;

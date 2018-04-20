@@ -28,7 +28,6 @@ import { RiscoPotencialBuilder } from './../../risco-potencial/risco-potencial.b
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { RiscoEmpregadoService } from './../../risco-empregado/risco-empregado.service';
-import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.service';
 
 @Component( {
     selector: 'app-planejamento',
@@ -41,9 +40,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private profissional: Profissional;
     private prazos: Array<string>;
     private tabsActions;
-    private triagemIndices: Map<number, number>;
-    private triagens: Array<Triagem>;
-
+    
     private diagnosticos: Array<Diagnostico>;
     private validDiagnostico: string;
     private autocompleteDiagnostico;
@@ -57,17 +54,15 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private autocompleteEquipeAbordagem;
 
     constructor( private route: ActivatedRoute,
-        private triagemService: TriagemService,
+        private riscoEmpregadoService: RiscoEmpregadoService,
         router: Router ) {
-        super( triagemService, router );
+        super( riscoEmpregadoService, router );
 
         this.goTo = "risco-potencial";
 
-        this.triagens = new TriagemBuilder().initializeList( new Array<Triagem>() );
         this.riscoEmpregado = new RiscoEmpregadoBuilder().initialize( new RiscoEmpregado() );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
-        this.triagemIndices = new Map<number, number>();
         this.validDiagnostico = "";
         this.diagnosticos = new Array<Diagnostico>();
         this.validIntervencao = "";
@@ -79,7 +74,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     ngOnInit() {
         let component = this;
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
-            component.triagemService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
+            component.riscoEmpregadoService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
                     let usuario: Usuario = new Usuario();
                     usuario = new UsuarioBuilder().clone( res.json() );
@@ -89,7 +84,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
                         profissionalFilter.getEmpregado().setPessoa( new PessoaFilter() );
                         profissionalFilter.getEmpregado().getPessoa().setCpf( usuario.getPessoa().getCpf() );
 
-                        component.triagemService.getProfissional( profissionalFilter )
+                        component.riscoEmpregadoService.getProfissional( profissionalFilter )
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
                                     component.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
@@ -101,17 +96,10 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
                                                 component.nomeEmpregado = params['empregado'];
                                                 component.showPreload = true;
 
-                                                component.triagemService.getTriagensByEquipeIndicador( component.profissional.getEquipe().getId(), id )
+                                                component.riscoEmpregadoService.getByEquipe( component.profissional.getEquipe().getId(), id )
                                                     .then( res => {
                                                         component.showPreload = false;
-                                                        component.triagens = new TriagemBuilder().cloneList( res.json().list );
-                                                        
-                                                        component.triagens.forEach(t => {
-                                                            component.diagnosticos.push(t.getDiagnostico());
-                                                            component.intervencoes.push(t.getIntervencao());
-                                                            component.equipeAbordagens.push(t.getEquipeAbordagem());
-                                                        });
-                                                        
+                                                        this.riscoEmpregado = new RiscoEmpregadoBuilder().clone(res.json().list[0]);
                                                     } )
                                                     .catch( error => {
                                                         component.catchConfiguration( error );
@@ -145,11 +133,17 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-        super.saveList( JSON.stringify(new TriagemBuilder().cloneList( this.triagens )) );
+        if ( !this.verifyPlanejamento() ) {
+            this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+        
+        super.save( new RiscoEmpregadoBuilder().clone( this.riscoEmpregado ));
     }
 
     getPrazos() {
-        this.triagemService.getPrazos()
+        this.riscoEmpregadoService.getPrazos()
             .then( res => {
                 this.prazos = Object.keys( res.json() ).sort();
             } )
@@ -167,23 +161,65 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     getIndiceDescricao( triagem: Triagem ) {
         return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
     }
+    
+    verifyPlanejamento() {
+        let ret: boolean = true;
+        let ts: Array<Triagem> = new Array<Triagem>();
+        let triagensInvalidas: Array<Triagem> = new Array<Triagem>();
+
+        if ( this.riscoEmpregado.getTriagens().length == 0 ) return true;
+
+        ts = this.riscoEmpregado.getTriagens().filter( t => {
+            if ( t.getIndice() > -1 ) {
+                if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                }
+            }
+
+            return true;
+        } )
+
+        if ( ts.length > 0 ){
+            triagensInvalidas.forEach( t => {
+                if (t.getIndice() < 3 && (t.getJustificativa() == "" || t.getJustificativa() == undefined) )
+                    ret = false;
+            } );
+            
+            if( ts.find(t => t.getEquipeAbordagem().getId() == this.profissional.getEquipe().getId())
+                    == undefined)
+                ret = false;
+        }
+        else ret = false;
+
+        return ret;
+    }
 
     getDiagnostico( index: number ) {
-        if ( this.validDiagnostico == this.triagens[index].getDiagnostico().getDescricao() ) return;
-        if ( this.triagens[index].getDiagnostico().getDescricao() !== undefined ) {
+//        if ( this.validDiagnostico == this.triagens[index].getDiagnostico().getDescricao() ) return;
+        if ( this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao() !== undefined ) {
             let diagnostico = this.diagnosticos.find( d => {
                 if ( ( d.getCodigo() + " - " + d.getDescricao() ).trim() ==
-                    this.triagens[index].getDiagnostico().getDescricao().trim() ||
-                    d.getDescricao().trim() == this.triagens[index].getDiagnostico().getDescricao().trim() )
+                    this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao().trim() ||
+                    d.getDescricao().trim() == this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao().trim() )
                     return true;
                 else return false;
             } );
 
             if ( diagnostico !== undefined ) {
-                this.triagens[index].setDiagnostico( diagnostico );
-                this.validDiagnostico = this.triagens[index].getDiagnostico().getDescricao();
-            } else this.triagens[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
-        } else this.triagens[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
+                this.riscoEmpregado.getTriagens()[index].setDiagnostico( diagnostico );
+                this.validDiagnostico = this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao();
+            } else this.riscoEmpregado.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
+        } else this.riscoEmpregado.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
     }
 
     private oldDescricaoDiagnostico: string;
@@ -191,7 +227,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         if ( this.oldDescricaoDiagnostico != evento ) {
             this.oldDescricaoDiagnostico = evento;
             if ( evento.length >= 6 ) {
-                this.triagemService.getDiagnosticoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
+                this.riscoEmpregadoService.getDiagnosticoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
@@ -208,7 +244,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         if ( this.oldCodigoDiagnostico != evento ) {
             this.oldCodigoDiagnostico = evento;
             if ( evento.length < 6 ) {
-                this.triagemService.getDiagnosticoByCodigoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
+                this.riscoEmpregadoService.getDiagnosticoByCodigoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
                         this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
@@ -233,19 +269,19 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
 
     getIntervencao( index: number ) {
-        if ( this.validIntervencao == this.triagens[index].getIntervencao().getDescricao() ) return;
-        if ( this.triagens[index].getIntervencao().getDescricao() !== undefined ) {
+//        if ( this.validIntervencao == this.triagens[index].getIntervencao().getDescricao() ) return;
+        if ( this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao() !== undefined ) {
             let intervencao = this.intervencoes.find( d => {
-                if ( d.getDescricao().trim() == this.triagens[index].getIntervencao().getDescricao().trim() )
+                if ( d.getDescricao().trim() == this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao().trim() )
                     return true;
                 else return false;
             } );
 
             if ( intervencao !== undefined ) {
-                this.triagens[index].setIntervencao( intervencao );
-                this.validIntervencao = this.triagens[index].getIntervencao().getDescricao();
-            } else this.triagens[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
-        } else this.triagens[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
+                this.riscoEmpregado.getTriagens()[index].setIntervencao( intervencao );
+                this.validIntervencao = this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao();
+            } else this.riscoEmpregado.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
+        } else this.riscoEmpregado.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
     }
 
     private oldDescricaoIntervencao: string;
@@ -253,7 +289,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         if ( this.oldDescricaoIntervencao != evento ) {
             this.oldDescricaoIntervencao = evento;
             if ( evento.length > 3 ) {
-                this.triagemService.getIntervencaoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
+                this.riscoEmpregadoService.getIntervencaoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
                     .then( res => {
                         this.intervencoes = new IntervencaoBuilder().cloneList( res.json() );
                         this.autocompleteIntervencao = [this.buildAutocompleteIntervencao( this.intervencoes )];
@@ -278,19 +314,19 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
 
     getEquipeAbordagem( index: number ) {
-        if ( this.validEquipeAbordagem == this.triagens[index].getEquipeAbordagem().getNome() ) return;
-        if ( this.triagens[index].getEquipeAbordagem().getNome() !== undefined ) {
+//        if ( this.validEquipeAbordagem == this.triagens[index].getEquipeAbordagem().getNome() ) return;
+        if ( this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome() !== undefined ) {
             let equipe = this.equipeAbordagens.find( e => {
-                if ( e.getNome().trim() == this.triagens[index].getEquipeAbordagem().getNome().trim() )
+                if ( e.getNome().trim() == this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome().trim() )
                     return true;
                 else return false;
             } );
 
             if ( equipe !== undefined ) {
-                this.triagens[index].setEquipeAbordagem( equipe );
-                this.validEquipeAbordagem = this.triagens[index].getEquipeAbordagem().getNome();
-            } else this.triagens[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
-        } else this.triagens[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
+                this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( equipe );
+                this.validEquipeAbordagem = this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome();
+            } else this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
+        } else this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
     }
 
     private oldNomeEquipeAbordagem: string;
@@ -298,7 +334,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         if ( this.oldNomeEquipeAbordagem != evento ) {
             this.oldNomeEquipeAbordagem = evento;
             if ( evento.length > 3 ) {
-                this.triagemService.getEquipeAbordagemByName( evento )
+                this.riscoEmpregadoService.getEquipeAbordagemByName( evento )
                     .then( res => {
                         this.equipeAbordagens = new EquipeBuilder().cloneList( res.json() );
                         this.autocompleteEquipeAbordagem = [this.buildAutocompleteEquipeAbordagem( this.equipeAbordagens )];
