@@ -20,6 +20,7 @@ export class RiscoPotencial {
     private statusRPSat: string;
     private version: number;
     private status: string;
+    private abreviacaoEquipeAcolhimento: string;
     private acoesDelete: Array<Acao>;
     private profissional: Profissional;
     private abreviacaoEquipeAcolhimento: string;
@@ -134,6 +135,14 @@ export class RiscoPotencial {
     
     public setStatus(status: string) {
         this.status = status;
+    }
+    
+    public getAbreviacaoEquipeAcolhimento(){
+        return this.abreviacaoEquipeAcolhimento;
+    }
+    
+    public setAbreviacaoEquipeAcolhimento(abreviacao:string){
+        this.abreviacaoEquipeAcolhimento = abreviacao;
     }
     
     public getValor() {
