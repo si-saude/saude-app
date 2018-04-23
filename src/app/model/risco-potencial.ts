@@ -23,6 +23,7 @@ export class RiscoPotencial {
     private abreviacaoEquipeAcolhimento: string;
     private acoesDelete: Array<Acao>;
     private profissional: Profissional;
+    private abreviacaoEquipeAcolhimento: string;
 
     public getId() {
         return this.id;
@@ -166,5 +167,13 @@ export class RiscoPotencial {
     
     public setAcoesDelete(acoesDelete: Array<Acao>) {
         this.acoesDelete = acoesDelete;
+    }
+    
+    public getAbreviacaoEquipeAcolhimento() {
+        return this.abreviacaoEquipeAcolhimento;
+    }
+    
+    public setAbreviacaoEquipeAcolhimento(abreviacaoEquipeAcolhimento: string) {
+        this.abreviacaoEquipeAcolhimento = abreviacaoEquipeAcolhimento;
     }
 }

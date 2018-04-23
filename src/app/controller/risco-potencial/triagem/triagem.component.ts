@@ -159,6 +159,18 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
+        if ( !this.verifyValidTriagens() ) {
+            this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+
+        if ( !this.verifyPlanejamento() ) {
+            this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+        
         super.save(new RiscoEmpregadoBuilder().clone(this.riscoEmpregado));
     }
     
@@ -201,6 +213,59 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
         this.triagemIndices.set( indexTriagem, Number( indice ) );
 
         this.riscoEmpregado.getTriagens()[indexTriagem].setIndice( Number( indice ) );
+    }
+    
+    verifyValidTriagens() {
+        let triagem = this.riscoEmpregado.getTriagens().find( t => {
+            if ( t.getIndicadorSast().getObrigatorio() == true && t.getIndice() == -1 )
+                return true;
+            else return false;
+        } );
+
+        if ( triagem != undefined ) return false;
+        else return true;
+    }
+
+    verifyPlanejamento() {
+        let ret: boolean = true;
+        let triagens: Array<Triagem> = new Array<Triagem>();
+        let triagensInvalidas: Array<Triagem> = new Array<Triagem>();
+
+        if ( this.riscoEmpregado.getTriagens().length == 0 ) return true;
+
+        triagens = this.riscoEmpregado.getTriagens().filter( t => {
+            if ( t.getIndice() > -1 ) {
+                if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
+                    triagensInvalidas.push( t );
+                    return false;
+                }
+            }
+
+            return true;
+        } )
+
+        if ( triagens.length > 0 ){
+            triagensInvalidas.forEach( t => {
+                if (t.getIndice() < 3 && (t.getJustificativa() == "" || t.getJustificativa() == undefined) )
+                    ret = false;
+            } );
+            
+            if( triagens.find(t => t.getEquipeAbordagem().getId() == this.profissional.getEquipe().getId())
+                    == undefined)
+                ret = false;
+        }
+        else ret = false;
+
+        return ret;
     }
     
     getDiagnostico( index: number ) {

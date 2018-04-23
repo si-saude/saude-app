@@ -19,7 +19,7 @@
 				<table style="width: 100%">
 					<div class="container-triagens-planejamento">
 						<div
-							*ngFor="let triagem of triagens; let t = index">
+							*ngFor="let triagem of riscoEmpregado.triagens; let t = index">
 							<div *ngIf="verifyIndiceTriagem(triagem)">
 								<fieldset class="fieldset-planejamento-triagem">
 									<div class="row">
@@ -136,3 +136,6 @@
 
 	</form>
 </div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

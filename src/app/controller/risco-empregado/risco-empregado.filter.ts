@@ -9,6 +9,7 @@ export class RiscoEmpregadoFilter extends GenericFilter {
     private equipe: EquipeFilter;
     private profissional: ProfissionalSaudeFilter;
     private ativo: BooleanFilter
+    private status: string;
 
     getRiscoPotencial() {
         return this.riscoPotencial;
@@ -40,6 +41,14 @@ export class RiscoEmpregadoFilter extends GenericFilter {
 
     setAtivo(ativo: BooleanFilter) {
         this.ativo = ativo;
+    }
+    
+    getStatus() {
+        return this.status;
+    }
+
+    setStatus(status: string) {
+        this.status = status;
     }
     
 }

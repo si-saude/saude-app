@@ -161,6 +161,11 @@
 															(click)="encerrarAcao(equipe.id, triagem.id, a)" 
 															class="btn btn-primary btn-encerrar">Encerrar</a>
 													</div>
+													<div class="row center">
+														<a  *ngIf="verifyValidarAcompanhamento(triagem, acao)"
+															(click)="validarAcao(equipe.id, triagem.id, a)" 
+															class="btn btn-primary btn-encerrar">Validar</a>
+													</div>
 												</fieldset>
 
 											</div>
@@ -186,7 +191,7 @@
 					class="btn btn-primary btn-voltar">Voltar</a>
 			</div>
 			<div class="col s4 center">
-				<a (click)="savaAndRedirect()" *ngIf="triagensEncerradas()"
+				<a (click)="savaAndRedirect()" *ngIf="triagensValidadas()"
 					class="btn btn-primary btn-validar">Reavaliar</a>
 			</div>
 			<div class="col s4">
