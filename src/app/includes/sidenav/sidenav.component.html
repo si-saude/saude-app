@@ -15,6 +15,11 @@
 				[materializeActions]="sidenavActionsProcesso" data-activates="slide-out-processo"
 				(click)="closeSidenavProcesso()">Processo
 			</a>
+			<a materialize="sideNav"
+				[materializeParams]="[{closeOnClick: true}]"
+				[materializeActions]="sidenavActionsRelatorio" data-activates="slide-out-relatorio"
+				(click)="closeSidenavRelatorio()">Relatório
+			</a>
 		</div>
 	</li>
 		
@@ -113,6 +118,21 @@
 			<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
 			<a [routerLink]="['/fila-espera-ocupacional/quadro-atendimento']"
 				*ngIf="checkPermissao('QUADRO-ATENDIMENTO')">Quadro de Atendimento</a>
+		</div>
+	</li>
+</ul>
+
+<ul id="slide-out-relatorio" class="side-nav">
+	<li>
+		<a materialize="sideNav" style="margin-left: -20px;"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActions3" data-activates="slide-out1"
+			(click)="closeSidenavRelatorio()"><i class="material-icons">chevron_left</i>
+		</a>
+		<div class="groups">
+			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">
+				Empregados por Grupo de Monitoramento
+			</a>
 		</div>
 	</li>
 </ul>

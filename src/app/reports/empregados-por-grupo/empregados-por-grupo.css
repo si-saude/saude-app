@@ -1,0 +1,11 @@
+.list-container {
+	max-height: 400px;
+	overflow: auto;
+	margin-bottom: 130px;
+}
+
+.row-select {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 50px;
+}

@@ -1,0 +1,63 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="select">
+	<div class="row row-select">
+		<div class="col s8">
+			<select name="gruposMonitoramento" class="browser-default"
+				[(ngModel)]="grupoMonitoramento">
+				<option disabled selected value="0">Selecione um grupo de monitoramento</option>
+				<option *ngFor="let grupo of gruposMonitoramento" value="{{grupo.id}}">{{grupo.nome}}</option>
+			</select>
+		</div>
+		
+		<div class="col s4">
+			<a class="btn btn-primary btn-listar" (click)='fetchEmpregadosPorGrupo()'>Buscar</a>
+		</div>
+	</div>
+</div>
+
+<div class="list-container">
+	<table class="table table-striped" [mfData]="empregadosPorGrupo" #mf="mfDataTable">
+	    <thead>
+		    <tr>
+		        <th style="width: 50%">
+		            <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+		        </th>
+		        <th style="width: 10%">
+		            <mfDefaultSorter by="chave">Chave</mfDefaultSorter>
+		        </th>
+		        <th style="width: 15%">
+		            <mfDefaultSorter by="matricula">Matrícula</mfDefaultSorter>
+		        </th>
+		        <th style="width: 25%">
+		            <mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
+		        </th>
+		    </tr>
+	    </thead>
+	    <tbody>
+		    <tr *ngFor="let item of mf.data">
+		        <td>{{item.nome}}</td>
+		        <td>{{item.chave}}</td>
+		        <td>{{item.matricula}}</td>
+		        <td>{{item.gerencia}}</td>
+		    </tr>
+	    </tbody>
+	</table>
+</div>
+
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

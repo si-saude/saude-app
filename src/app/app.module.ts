@@ -66,6 +66,7 @@ import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
+import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-grupo.guard';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
     AgendaGuard,
     FilaEsperaOcupacionalRecepcaoGuard,
     FilaEsperaOcupacionalGuard,
-    RiscoGheGuard
+    RiscoGheGuard,
+    EmpregadosPorGrupoGuard
   ],
   bootstrap: [ 
     AppComponent

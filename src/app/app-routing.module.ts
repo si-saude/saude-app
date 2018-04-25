@@ -160,6 +160,8 @@ const routes: Routes = [
   { path: 'risco-ghe',
       loadChildren: 'app/controller/risco-ghe/risco-ghe.module#RiscoGheModule',
       canActivateChild: [RiscoGheGuard]},
+  { path: 'reports',
+      loadChildren: 'app/reports/reports.module#ReportsModule'},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
