@@ -167,10 +167,6 @@ export class AtendimentoFormComponent {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
                                     this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
-                                    
-                                    if ( this.profissional.getEquipe().getAbreviacao() == "ACO" )
-                                        this.disabledTab = '';
-                                    else this.disabledTab = 'disabled';
 
                                     this.primeiraAtualizacao();
 
@@ -315,6 +311,11 @@ export class AtendimentoFormComponent {
                     if( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial()
                             .getEquipeResponsavel() == undefined )
                         this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipeResponsavel(new Equipe());
+                    
+                    if(this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial()
+                            .getAbreviacaoEquipeAcolhimento() == this.profissional.getEquipe().getAbreviacao() )
+                        this.disabledTab = '';
+                    else this.disabledTab = 'disabled';
                     
                     setTimeout(() => {
                         this.triagemIndices = new Map<number, number>();
