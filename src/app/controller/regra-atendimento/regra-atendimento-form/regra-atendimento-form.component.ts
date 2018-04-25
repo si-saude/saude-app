@@ -119,6 +119,7 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
         
         this.regraAtendimentoService.getEquipesWithFilter(equipeFilter)
             .then(res => {
+                console.log(res.json())
                 this.requisitos = new EquipeBuilder().cloneList(res.json());
             })
             .catch(error => {

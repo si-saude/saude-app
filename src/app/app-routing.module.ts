@@ -184,6 +184,8 @@ const routes: Routes = [
       canActivateChild: [RiscoPotencialGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
+  { path: 'reports',
+      loadChildren: 'app/reports/reports.module#ReportsModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }
