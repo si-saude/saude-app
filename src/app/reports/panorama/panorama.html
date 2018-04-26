@@ -3,22 +3,14 @@
 </head>
 
 <div class="list-container">
-	<table class="table table-striped" [mfData]="panoramas | filterData : filter : typeFilter" #mf="mfDataTable">
+	<table class="table table-striped" [mfData]="panoramas | filterData : filter : typeFilter : value" #mf="mfDataTable">
 		<thead>
 			<tr>
 				<th style="width: 1%">
-					<div class="row" style="display: inherit;">
-						<mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
-					</div>
-					<div class="row" style="display: table-row;">
-						<input type="text" name="gerencia" style="width: 80%" 
-								placeholder="filtrar gerência" 
-								(input)="selectFilter($event, 'gerencia')">
-						<div class="div-icon" id="gerencia">
-							<i class="small material-icons icon" 
-								(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
-						</div>
-					</div>
+					<mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
+					<i class="small material-icons icon" 
+							(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
+					<div class="div-icon" id="gerencia"></div>
 				</th>
 				<th style="width: 1%">
 					<mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
@@ -34,12 +26,7 @@
 				</th>
 				<th style="width: 1%">
 					<div class="row">
-						<mfDefaultSorter by="mesConvocacao">Mês da Convocacao</mfDefaultSorter>
-					</div>
-					<div class="row" style="width: 100%;">
-						<input type="text" name="mesConvocacao" style="width: 75%" 
-								placeholder="filtrar mês da convocação" 
-								(input)="selectFilter($event, 'mesConvocacao')">
+						<mfDefaultSorter class="mleft" by="mesConvocacao">Mês da Convocacao</mfDefaultSorter>
 						<div class="div-icon" id="mesConvocacao">
 							<i class="small material-icons icon" 
 								(click)="dropdown($event, 'mesConvocacao')">arrow_drop_down</i>
@@ -48,12 +35,7 @@
 				</th>
 				<th style="width: 1%">
 					<div class="row">
-						<mfDefaultSorter by="base">Base</mfDefaultSorter>
-					</div>
-					<div class="row">
-						<input type="text" name="base" style="width: 78%" 
-								placeholder="filtrar base" 
-								(input)="selectFilter($event, 'base')">
+						<mfDefaultSorter class="mleft" by="base">Base</mfDefaultSorter>
 						<div class="div-icon" id="base">
 							<i class="small material-icons icon" 
 								(click)="dropdown($event, 'base')">arrow_drop_down</i>
@@ -80,12 +62,7 @@
 				</th>
 				<th style="width: 1%">
 					<div class="row">
-						<mfDefaultSorter by="situacaoAso">Situação Aso</mfDefaultSorter>
-					</div>
-					<div class="row" style="width: 100%;">
-						<input type="text" name="situacaoAso" style="width: 75%;" 
-							placeholder="filtrar situação aso" 
-							(input)="selectFilter($event, 'situacaoAso')">
+						<mfDefaultSorter class="mleft" by="situacaoAso">Situação Aso</mfDefaultSorter>
 						<div class="div-icon" id="situacaoAso">
 							<i class="small material-icons icon" 
 								(click)="dropdown($event, 'situacaoAso')">arrow_drop_down</i>
@@ -94,12 +71,7 @@
 				</th>
 				<th style="width: 1%">
 					<div class="row">
-						<mfDefaultSorter by="asoNoPrazo">Aso no Prazo</mfDefaultSorter>
-					</div>
-					<div class="row">
-						<input type="text" name="asoNoPrazo" style="width: 75%;" 
-							placeholder="filtrar aso no prazo" 
-							(input)="selectFilter($event, 'asoNoPrazo')">
+						<mfDefaultSorter class="mleft" by="asoNoPrazo">Aso no Prazo</mfDefaultSorter>
 						<div class="div-icon" id="asoNoPrazo">
 							<i class="small material-icons icon" 
 								(click)="dropdown($event, 'asoNoPrazo')">arrow_drop_down</i>
@@ -112,14 +84,9 @@
 							placeholder="filtrar pendências" 
 							(input)="selectFilter($event, 'pendencias')">
 				</th>
-				<th style="width: 1%; font-size: 14px;">
+				<th style="width: 1%; font-size: 13px;">
 					<div class="row">
-						<mfDefaultSorter by="gerenciaPrimeiraLinha">Gerência de Primeira Linha</mfDefaultSorter>
-					</div>
-					<div class="row" style="width: 100%">
-						<input type="text" name="gerenciaPrimeiraLinha" style="width: 75%" 
-							placeholder="filtrar gerência de primeira linha" 
-							(input)="selectFilter($event, 'gerenciaPrimeiraLinha')">
+						<mfDefaultSorter class="mleft" by="gerenciaPrimeiraLinha">Gerência de Primeira Linha</mfDefaultSorter>
 						<div class="div-icon" id="gerenciaPrimeiraLinha">
 							<i class="small material-icons icon" 
 								(click)="dropdown($event, 'gerenciaPrimeiraLinha')">arrow_drop_down</i>
@@ -128,12 +95,7 @@
 				</th>
 				<th style="width: 1%">
 					<div class="row">
-						<mfDefaultSorter by="statusPreClinico">Status Pré-Clínico</mfDefaultSorter>
-					</div>
-					<div class="row">
-						<input type="text" name="statusPreClinico" style="width: 78%" 
-							placeholder="filtrar status pré clínico" 
-							(input)="selectFilter($event, 'statusPreClinico')">
+						<mfDefaultSorter class="mleft" by="statusPreClinico">Status Pré-Clínico</mfDefaultSorter>
 						<div class="div-icon" id="statusPreClinico">
 							<i class="small material-icons icon" 
 								(click)="dropdown($event, 'statusPreClinico')">arrow_drop_down</i>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MaterializeDirective } from "angular2-materialize";
@@ -17,12 +17,15 @@ export class PanoramaComponent {
     private panoramas;
     private filter: string;
     private typeFilter: string;
-    private arrayFilter = [[]];
+    private value: string;
     private numberScroll: number;
+    private arrayObjects = [[]];
+    private arrayTypes: Array<string>;
 
     constructor( private panoramaService: PanoramaService ) { 
         this.panoramas = new PanoramaBuilder().initializeList(new Array<PanoramaDto>());
         this.filter = "";
+        this.arrayTypes = new Array<string>();
     }
     
     ngOnInit() {
@@ -48,6 +51,7 @@ export class PanoramaComponent {
     selectFilter( event, type: string ) {
         this.filter = event;
         this.typeFilter = type;
+        this.value = $('input[name='+type).val();
     }
     
     dropdown( event, tipo ) {
@@ -55,21 +59,50 @@ export class PanoramaComponent {
         arrayDropDown = this.getItensDropDown( tipo );
         
         $("#dropdown").empty();
-        
+        let count = 0;
         for( let item of arrayDropDown ) {
-            let el = $("<li id='"+item+"' title='"+tipo+"'><input type='checkbox' id='"+tipo+"_"+item+"'>" +
-                    "<label for='"+item+"'>"+item+"</label></li>");
+          let el = $("<li id='"+item+"' title='"+tipo+"'><input type='checkbox' id='"+ item+(++count) +"' value='false'>" +
+                  "<label for='"+(item+count)+"'>"+item+"</label></li>");
             $('#dropdown').append(el);
             let component = this;
-            el.click( function() {
+            
+            el.mousedown(function() {
+                if ( $(this).get(0).children.item(0).getAttribute('value') == 'false') {
+                    $(this).get(0).children.item(0).setAttribute('value', 'true');
+                    if ( component.arrayObjects[$(this).attr('title')] == undefined ) {
+                        component.arrayObjects[$(this).attr('title')] = new Array<any>();
+                        component.arrayTypes.push($(this).attr('title'));
+                    }
+                    component.arrayObjects[$(this).attr('title')].push($(this).attr('id'));
+                } else {
+                    $(this).get(0).children.item(0).setAttribute('value', 'false');
+                    component.arrayObjects[$(this).attr('title')].splice( 
+                            component.arrayObjects[$(this).attr('title')].indexOf($(this).attr('id')), 1);
+                }
+                
                 component.filter = $(this).attr('id');
                 component.typeFilter = $(this).attr('title');
+                setTimeout(() => {
+                    component.filter = "";
+                    component.typeFilter = "";
+                }, 50);
             });
+                
         }
         
         $('#dropdown').toggleClass('show');
         $('#dropdown').insertAfter("#"+tipo);
         $('#dropdown').css("margin-left", "-"+$(".list-container").scrollLeft()+"px");
+        
+        for ( let t of this.arrayTypes ) {
+            this.arrayObjects[t].forEach(aO => {
+                if ( document.getElementById(aO) != null && document.getElementById(aO) != undefined ) {
+                    document.getElementById(aO).children.item(0).setAttribute('checked', 'true');
+                    document.getElementById(aO).children.item(0).setAttribute('value', 'true');
+                }
+            })
+        }
+        
     }
     
     selectItemDropDown( item, tipo ) {

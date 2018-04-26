@@ -33,13 +33,18 @@ td {
 }
 
 .div-icon {
-	float: right;
-    margin-right: 10px;
-    margin-top: 2px;
+    display: initial;
+}
+
+.div-icon > i {
+	
+}
+
+.mleft {
+    margin-left: 5%;
 }
 
 .icon {
-	margin: 0;
 	cursor: pointer;
 }
 
