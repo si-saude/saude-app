@@ -26,20 +26,32 @@
 </div>
 
 <div class="list-container">
-	<table class="table table-striped" [mfData]="empregadosPorGrupo" #mf="mfDataTable">
+	<table class="table table-striped" [mfData]="empregadosPorGrupo | filterData : filter : typeFilter : value" #mf="mfDataTable">
 	    <thead>
 		    <tr>
-		        <th style="width: 50%">
+		        <th style="width: 1%">
 		            <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+		            <input type="text" name="nome" style="width: 90%" 
+							placeholder="filtrar nome"
+							(input)="selectFilter($event, 'nome')">
 		        </th>
-		        <th style="width: 10%">
+		        <th style="width: 1%">
 		            <mfDefaultSorter by="chave">Chave</mfDefaultSorter>
+		            <input type="text" name="chave" style="width: 90%" 
+							placeholder="filtrar chave"
+							(input)="selectFilter($event, 'chave')">
 		        </th>
-		        <th style="width: 15%">
+		        <th style="width: 1%">
 		            <mfDefaultSorter by="matricula">Matrícula</mfDefaultSorter>
+		            <input type="text" name="matricula" style="width: 90%" 
+							placeholder="filtrar matrícula"
+							(input)="selectFilter($event, 'matricula')">
 		        </th>
-		        <th style="width: 25%">
+		        <th style="width: 1%">
 		            <mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
+		            <i class="small material-icons icon" style="margin-top: -10%;"
+							(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
+					<div class="div-icon" id="gerencia"></div>
 		        </th>
 		    </tr>
 	    </thead>
@@ -58,6 +70,8 @@
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 		[msg]="msgError"></app-mensagem-form>
 </div>
+
+<ul id='dropdown' class='dropdown-conteudo'></ul>
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

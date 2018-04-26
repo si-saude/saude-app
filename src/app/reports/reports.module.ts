@@ -8,10 +8,11 @@ import { EmpregadosPorGrupoComponent } from './empregados-por-grupo/empregados-p
 import { EmpregadosPorGrupoService } from './empregados-por-grupo/empregados-por-grupo.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
-
+import { FilterDataPipe } from './../pipes/filter-data.pipe';
 @NgModule({
     declarations: [
-       EmpregadosPorGrupoComponent 
+       EmpregadosPorGrupoComponent,
+       FilterDataPipe
      ],
      imports: [
         ReportsRoutingModule,
