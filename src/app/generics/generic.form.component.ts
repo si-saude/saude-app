@@ -17,8 +17,6 @@ export abstract class GenericFormComponent extends GenericComponent implements O
     protected showPreload: boolean;
     @ViewChild( "form" ) formulario;
     protected modalDeactivate;
-    globalActions;
-    toastParams;
     canDeactivate: boolean;
 
     constructor( protected service: GenericService, router: Router ) {
@@ -26,8 +24,6 @@ export abstract class GenericFormComponent extends GenericComponent implements O
         this.showPreload = false;
         this.showConfirmSave = false;
         this.modalDeactivate = new EventEmitter<string | MaterializeAction>();
-        this.globalActions = new EventEmitter<string | MaterializeAction>();
-        this.toastParams = ['', 4000];
         this.canDeactivate = false;
         $(document).keypress(function(event){
             if (event.charCode == 13) return false; 

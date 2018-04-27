@@ -1,6 +1,8 @@
+import { EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { IMyDpOptions } from 'mydatepicker';
+import { MaterializeAction } from "angular2-materialize";
 
 import { HTMLStatus } from './../html-status';
 
@@ -16,6 +18,8 @@ export abstract class GenericComponent {
     protected myDatePickerOptions: IMyDpOptions;
     protected modalParams;
     protected router;
+    protected globalActions;
+    protected toastParams;
     
     constructor( r: Router ) {
         this.router = r;
@@ -30,6 +34,8 @@ export abstract class GenericComponent {
             dismissible: false,
             complete: function() { }
         }];
+        this.globalActions = new EventEmitter<string | MaterializeAction>();
+        this.toastParams = ['', 4000];
     }
     
     // verifica se servidor está ligado

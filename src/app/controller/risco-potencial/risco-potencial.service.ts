@@ -12,6 +12,8 @@ import { EmpregadoService } from './../empregado/empregado.service';
 import { EquipeService } from './../equipe/equipe.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { UsuarioService } from './../usuario/usuario.service';
+import { BaseService } from './../base/base.service';
+import { BaseFilter } from './../base/base.filter';
 import { IndicadorSastService } from './../indicador-sast/indicador-sast.service';
 import { IndicadorSastFilter } from './../indicador-sast/indicador-sast.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
@@ -26,8 +28,13 @@ export class RiscoPotencialService extends GenericService {
             private diagnosticoService: DiagnosticoService,
             private intervencaoService: IntervencaoService,
             private equipeService: EquipeService,
-            private indicadorSastService: IndicadorSastService ) { 
+            private indicadorSastService: IndicadorSastService,
+            private baseService: BaseService ) { 
         super(http,router,"risco-potencial");
+    }
+    
+    getUfs() {
+        return this.baseService.getUfs();
     }
     
     getUsuario( id: number ) {

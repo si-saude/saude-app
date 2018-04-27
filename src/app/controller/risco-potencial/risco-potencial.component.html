@@ -1,5 +1,5 @@
 <head>
-<meta charset="utf-8">
+	<meta charset="utf-8">
 </head>
 
 <!-- -->
@@ -8,6 +8,17 @@
 
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="row div-select">
+	<fieldset class="col s8 fieldset-select">
+		<legend> Base - UF </legend>
+		<select name="uf" class="browser-default" [(ngModel)]="uf">
+			<option disabled selected value=''>Selecione um uf</option>
+			<option *ngFor="let uf of ufs" value="{{uf}}">{{uf}}</option>
+		</select>
+	</fieldset>
+	<button class="btn btn-primary btn-filtrar" (click)="selectUf()">Filtrar</button>
+</div>
 
 <div class="list-container">
 
@@ -31,39 +42,56 @@
 						<td class="col s2 rpsat">{{riscoPotencial.statusRPSat}}</td>
 						<td class="col s2 gestao">{{riscoPotencial.equipeResponsavel.nome}}</td>
 						<td class="col s3 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
-						<td class="col s2 data">
-							<my-date-picker name="data" disabled [options]="myDatePickerOptions"
-								[ngModel]="riscoPotencialDatas[i]" placeholder="Data"> </my-date-picker>
-						</td>
+						<td class="col s2 data"><my-date-picker name="data" disabled
+								[options]="myDatePickerOptions"
+								[ngModel]="riscoPotencialDatas[i]" placeholder="Data">
+							</my-date-picker></td>
 						<td class="col s2 status">{{riscoPotencial.status}}</td>
 					</tr>
-					<tr class="col s12 row-btns row-btns-risco{{i}}" hidden >
+					<tr class="col s12 row-btns row-btns-risco{{i}}" hidden>
 						<div class="row div-btns-risco">
 							<div style="display: inline;">
-								<a [routerLink]="['/risco-potencial/ficha-coleta/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ficha Coleta</a>
+								<a
+									[routerLink]="['/risco-potencial/ficha-coleta/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Ficha Coleta</a>
 							</div>
 							<div style="display: inline;">
-								<a [routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Triagem</a>
+								<a
+									[routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Triagem</a>
 							</div>
 							<div style="display: inline;" *ngIf="verifyPlanejamento(i)">
-								<a [routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id, riscoPotencial.empregado.pessoa.nome]" class="btn btn-primary btn-ranking">Planejamento</a>
+								<a
+									[routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id, riscoPotencial.empregado.pessoa.nome]"
+									class="btn btn-primary btn-ranking">Planejamento</a>
 							</div>
 							<div style="display: inline;">
-								<a [routerLink]="['/risco-potencial/graficos/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Gráficos</a>
+								<a
+									[routerLink]="['/risco-potencial/graficos/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Gráficos</a>
 							</div>
 						</div>
 						<div class="row div-btns-risco">
 							<div style="display: inline;" *ngIf="verifyStatusCriarPlano(i)">
-								<a [routerLink]="['/risco-potencial/criar-plano/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Criar Plano</a>
+								<a
+									[routerLink]="['/risco-potencial/criar-plano/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Criar Plano</a>
 							</div>
 							<div style="display: inline;" *ngIf="verifyStatusAcao(i)">
-								<a [routerLink]="['/risco-potencial/acoes/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Ações</a>
+								<a [routerLink]="['/risco-potencial/acoes/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Ações</a>
 							</div>
-							<div style="display: inline;" *ngIf="verifyStatusPlanoIntervencao(i)">
-								<a [routerLink]="['/risco-potencial/plano-intervencao/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Plano de Intervenção</a>
+							<div style="display: inline;"
+								*ngIf="verifyStatusPlanoIntervencao(i)">
+								<a
+									[routerLink]="['/risco-potencial/plano-intervencao/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Plano de Intervenção</a>
 							</div>
-							<div style="display: inline;" *ngIf="verifyStatusAcompanhamento(i)">
-								<a [routerLink]="['/risco-potencial/acompanhamento/', riscoPotencial.id]" class="btn btn-primary btn-ranking">Acompanhamento</a>
+							<div style="display: inline;"
+								*ngIf="verifyStatusAcompanhamento(i)">
+								<a
+									[routerLink]="['/risco-potencial/acompanhamento/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Acompanhamento</a>
 							</div>
 						</div>
 					</tr>
@@ -122,3 +150,6 @@
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 		[msg]="msgError"></app-mensagem-form>
 </div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

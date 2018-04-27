@@ -19,6 +19,7 @@ import { Profissional } from './../../model/profissional';
 import { Usuario } from './../../model/usuario';
 import { UsuarioBuilder } from './../usuario/usuario.builder';
 import { EmpregadoFilter } from './../empregado/empregado.filter';
+import { BaseFilter } from './../base/base.filter';
 import { PessoaFilter } from './../pessoa/pessoa.filter';
 
 @Component( {
@@ -34,6 +35,8 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     private equipe;
     private profissional: Profissional;
     private servico: RiscoPotencialService;
+    private uf: string;
+    private ufs: Array<string>;
 
     constructor( service: RiscoPotencialService, riscoGuard: RiscoPotencialGuard, router: Router ) {
         super( service, new RiscoPotencialFilter(), riscoGuard, router );
@@ -41,76 +44,98 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         this.riscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
         this.riscoPotencialDatas = new Array<any>();
         this.riscoPotencialRPSats = new Array<string>();
+        this.uf = '';
+        this.ufs = new Array<string>();
 
         this.servico = service;
     }
 
     ngOnInit() {
+        if ( localStorage.getItem( "usuario-id" ) != undefined ) {
+            this.servico.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
+                .then( res => {
+                    let usuario: Usuario = new Usuario();
+                    usuario = new UsuarioBuilder().clone( res.json() );
+                    if ( usuario.getId() > 0 && usuario.getPessoa() != undefined ) {
+                        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+                        profissionalFilter.setEmpregado( new EmpregadoFilter() );
+                        profissionalFilter.getEmpregado().setPessoa( new PessoaFilter() );
+                        profissionalFilter.getEmpregado().getPessoa().setCpf( usuario.getPessoa().getCpf() );
 
-        this.showPreload = true;
-        this.filter.setAtual( new BooleanFilter() );
-        this.filter.getAtual().setValue( 1 );
-        this.servico.listAll( this.filter )
-            .then( res => {
-                this.canImport = true;
-                this.showPreload = false;
-                this.array = JSON.parse( JSON.stringify( res.json() ) ).list;
+                        this.servico.getProfissional( profissionalFilter )
+                            .then( res => {
+                                this.canImport = true;
+                                this.showPreload = false;
+                                if ( res.json().list[0] != undefined )
+                                    this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
+                                else {
+                                    this.router.navigate( ["/login"] );
+                                    return;
+                                }
+                            } )
+                            .catch( error => {
+                                console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
+                                this.catchConfiguration( error );
+                            } )
+                    } else {
+                        this.router.navigate( ["/login"] );
+                        return;
+                    }
+                } )
+                .catch( error => {
+                    console.log( "Erro no servidor ao buscar o usuario." );
+                    this.catchConfiguration( error );
+                } )
+        } else {
+            console.log( "Usuario nao logada." );
+            this.router.navigate( ["/login"] );
+        }
+            
+        this.getUfs();
+    }
+    
+    getUfs() {
+        this.servico.getUfs()
+            .then(res => {
+                this.ufs = Object.keys( res.json() ).sort();
+            })
+            .catch(error => {
+                console.log("Erro ao retornar ufs.");
+            })
+    }
+    
+    selectUf() {
+        if ( this.uf != '' ) {
+            this.showPreload = true;
+            this.filter.setAtual( new BooleanFilter() );
+            this.filter.getAtual().setValue( 1 );
+            this.filter.setEmpregado(new EmpregadoFilter());
+            this.filter.getEmpregado().setBase(new BaseFilter());
+            this.filter.getEmpregado().getBase().setUf(this.uf);
+            this.servico.listAll( this.filter )
+                .then( res => {
+                    this.showPreload = false;
+                    this.canImport = true;
+                    this.array = JSON.parse( JSON.stringify( res.json() ) ).list;
+                        if ( this.array != undefined ) {
+                            this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
                 
-                if ( localStorage.getItem( "usuario-id" ) != undefined ) {
-                    this.servico.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
-                        .then( res => {
-                            let usuario: Usuario = new Usuario();
-                            usuario = new UsuarioBuilder().clone( res.json() );
-                            if ( usuario.getId() > 0 && usuario.getPessoa() != undefined ) {
-                                let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-                                profissionalFilter.setEmpregado( new EmpregadoFilter() );
-                                profissionalFilter.getEmpregado().setPessoa( new PessoaFilter() );
-                                profissionalFilter.getEmpregado().getPessoa().setCpf( usuario.getPessoa().getCpf() );
-
-                                this.servico.getProfissional( profissionalFilter )
-                                    .then( res => {
-                                        if ( res.json().list[0] != undefined ) {
-                                            this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-
-                                            if ( this.array != undefined ) {
-                                                this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
-
-                                                setTimeout(() => {
-                                                    this.changeColorStatusRPSat();
-                                                }, 250 );
-
-                                                this.parseAndSetDates();
-                                            }
-
-                                        } else {
-                                            this.router.navigate( ["/login"] );
-                                            return;
-                                        }
-                                    } )
-                                    .catch( error => {
-                                        console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
-                                        this.catchConfiguration( error );
-                                    } )
-                            } else {
-                                this.router.navigate( ["/login"] );
-                                return;
-                            }
-                        } )
-                        .catch( error => {
-                            console.log( "Erro no servidor ao buscar o usuario." );
-                            this.catchConfiguration( error );
-                        } )
-                } else {
-                    console.log( "Usuario nao logada." );
-                    this.router.navigate( ["/login"] );
-                }
-            } )
-            .catch( error => {
-                this.showPreload = false;
-                this.canImport = false;
-                this.catchConfiguration( error );
-            } );
-
+                            setTimeout(() => {
+                                this.changeColorStatusRPSat();
+                            }, 250 );   
+                        }
+                    } )
+                    .catch( error => {
+                        this.showPreload = false;
+                        this.canImport = false;
+                        this.catchConfiguration( error );
+                    } );
+    
+            this.parseAndSetDates();
+        } else {
+            this.toastParams = ['Por favor, selecione um UF', 4000];
+            this.globalActions.emit( 'toast' );
+        }
     }
 
     changeColorStatusRPSat() {
