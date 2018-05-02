@@ -12,6 +12,7 @@ export class PerguntaFichaColeta {
     private ordem: number;
     private itens: Array<ItemPerguntaFichaColeta>;
     private equipes: Array<Equipe>;
+    private path: string;
     private version: number;
 
     getId() {
@@ -96,6 +97,14 @@ export class PerguntaFichaColeta {
     
     setEquipes(equipes: Array<Equipe>) {
         this.equipes = equipes;
+    }
+    
+    getPath() {
+        return this.path;
+    }
+    
+    setPath(path: string) {
+        this.path = path;
     }
     
 }

@@ -25,10 +25,16 @@
 
 			<div id="dadosGerais">
 			
-				<div class="input-field col s10">
+				<div class="input-field col s4">
 					<label for="codigo">Código</label> <input id="codigo" type="text"
 						maxlength="4" name="perguntaFichaColeta.codigo"
 						[(ngModel)]="perguntaFichaColeta.codigo">
+				</div>
+				
+				<div class="input-field col s6">
+					<label for="path">Path</label> <input id="path" type="text"
+						name="perguntaFichaColeta.path"
+						[(ngModel)]="perguntaFichaColeta.path">
 				</div>
 
 				<div class="input-field col s2 checkbox-inativo">
@@ -156,14 +162,18 @@
 					<table class="striped">
 						<thead>
 							<tr class="row col s12">
-								<th class="col s10">Título</th>
+								<th class="col s5">Título</th>
+								<th class="col s5">Path</th>
 								<th class="col s2">Remover</th>
 							</tr>
 						</thead>
 						<div *ngFor="let item of perguntaFichaColeta.itens;let p = index">
 							<tbody class="col s12">
 								<tr class="col s12">
-									<td class="col s10 label">{{item.label}}</td>
+									<td class="col s5 label">{{item.label}}</td>
+									<td class="col s5 path">
+										<input type='text' name="path{{p}}" [(ngModel)]="item.path">
+									</td>
 									<td class="col s2 botao-remover"><a
 										class="btn-floating waves-effect waves-light red btn-remove"
 										(click)="removeLabel(p)"> <i

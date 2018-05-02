@@ -4,6 +4,7 @@ export class ItemPerguntaFichaColeta {
     private id: number;
     private label: string;
     private pergunta: PerguntaFichaColeta;
+    private path: string;
     private version: number;
 
     getId() {
@@ -37,4 +38,12 @@ export class ItemPerguntaFichaColeta {
     setPergunta(pergunta: PerguntaFichaColeta) {
         this.pergunta = pergunta;
     }
+    
+    getPath() {
+        return this.path;
+    }
+    
+    setPath(path: string) {
+        this.path = path;
+    } 
 }

@@ -19,6 +19,7 @@ import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { RiscoPotencialService } from './risco-potencial.service';
 import { RiscoEmpregadoService } from './../risco-empregado/risco-empregado.service';
 import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
+import { TransformDatePipe } from './../../pipes/transform-date.pipe';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SharedModule } from './../shared.module';
        PlanejamentoComponent,
        GraficosComponent,
        CriarPlanoComponent,
+       TransformDatePipe,
        TriagemReavaliacaoComponent
      ],
      imports: [

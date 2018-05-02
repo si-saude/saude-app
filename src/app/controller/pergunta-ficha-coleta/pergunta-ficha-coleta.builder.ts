@@ -45,6 +45,7 @@ export class PerguntaFichaColetaBuilder extends GenericBuilder{
         clonePerguntaFichaColeta.setDescricao(this.getValue(perguntaFichaColeta, "getDescricao"));
         clonePerguntaFichaColeta.setOrdem(this.getValue(perguntaFichaColeta, "getOrdem"));
         clonePerguntaFichaColeta.setInativo(this.getValue(perguntaFichaColeta, "getInativo"));
+        clonePerguntaFichaColeta.setPath(this.getValue(perguntaFichaColeta, "getPath"));
         
         if(this.getValue(perguntaFichaColeta, "getGrupo") == "")
             clonePerguntaFichaColeta.setGrupo(undefined);

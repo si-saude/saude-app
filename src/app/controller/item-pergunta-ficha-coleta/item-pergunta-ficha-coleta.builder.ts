@@ -37,6 +37,7 @@ export class ItemPerguntaFichaColetaBuilder extends GenericBuilder {
         cloneItemPerguntaFichaColeta.setId(this.getValue(itemPerguntaFichaColeta, "getId"));
         cloneItemPerguntaFichaColeta.setVersion(this.getValue(itemPerguntaFichaColeta, "getVersion"));
         cloneItemPerguntaFichaColeta.setLabel(this.getValue(itemPerguntaFichaColeta, "getLabel"));
+        cloneItemPerguntaFichaColeta.setPath(this.getValue(itemPerguntaFichaColeta, "getPath"));
         
         cloneItemPerguntaFichaColeta.setPergunta(new PerguntaFichaColeta());
         

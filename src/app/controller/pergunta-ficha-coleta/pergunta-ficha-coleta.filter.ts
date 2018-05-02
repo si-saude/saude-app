@@ -5,6 +5,7 @@ export class PerguntaFichaColetaFilter extends GenericFilter {
     private grupo: string;
     private tipo: string;
     private codigo: string;
+    private path: string;
     private inativo: BooleanFilter;
 
     getGrupo() {
@@ -37,6 +38,14 @@ export class PerguntaFichaColetaFilter extends GenericFilter {
 
     setInativo(inativo: BooleanFilter) {
         this.inativo = inativo;
+    }
+    
+    getPath() {
+        return this.path;
+    }
+
+    setPath(path: string) {
+        this.path = path;
     }
 
 }

@@ -42,10 +42,7 @@
 						<td class="col s2 rpsat">{{riscoPotencial.statusRPSat}}</td>
 						<td class="col s2 gestao">{{riscoPotencial.equipeResponsavel.nome}}</td>
 						<td class="col s3 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
-						<td class="col s2 data"><my-date-picker name="data" disabled
-								[options]="myDatePickerOptions"
-								[ngModel]="riscoPotencialDatas[i]" placeholder="Data">
-							</my-date-picker></td>
+						<td class="col s2 data">{{riscoPotencial.data | transformDate}}</td>
 						<td class="col s2 status">{{riscoPotencial.status}}</td>
 					</tr>
 					<tr class="col s12 row-btns row-btns-risco{{i}}" hidden>

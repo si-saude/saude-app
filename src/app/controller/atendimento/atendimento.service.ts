@@ -162,4 +162,11 @@ export class AtendimentoService extends GenericService {
         return this.equipeService.getEquipes();
     }
     
+    getEnums( path ) {
+        let urlEnums = GlobalVariable.BASE_API_URL + "/generic/"+path;
+        return this.http
+            .get( urlEnums + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

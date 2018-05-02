@@ -4,7 +4,7 @@ export class ItemRespostaFichaColeta {
     private id: number;
     private item: ItemRespostaFichaColeta;
     private resposta: RespostaFichaColeta;
-    private conteudo: string;
+    private conteudo: string = '';
     private version: number;
 
     getId() {

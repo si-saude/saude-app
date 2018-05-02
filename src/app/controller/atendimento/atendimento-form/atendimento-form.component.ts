@@ -104,6 +104,11 @@ export class AtendimentoFormComponent {
 
     private showPreload: boolean;
     private msgPreload: string;
+    
+    private listPathsEnumPergunta: Array<string>;
+    private listEnumsByPathPergunta = [[]];
+    private listPathsEnumItem: Array<string>;
+    private listEnumsByPathItem = [[]];
 
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -141,6 +146,8 @@ export class AtendimentoFormComponent {
         this.equipeAbordagens = new EquipeBuilder().initializeList(new Array<Equipe>());
         this.showPreload = true;
         this.msgPreload = "Atualizando...";
+        this.listPathsEnumItem = new Array<string>();
+        this.listPathsEnumPergunta = new Array<string>();
     }
 
     ngOnInit() {
@@ -848,6 +855,7 @@ export class AtendimentoFormComponent {
         else if ( texto.includes( "DOUBLE" ) ) ret = "DOUBLE";
         else if ( texto.includes( "INTEIRO" ) ) ret = "INTEIRO";
         else if ( texto.includes( "TEXTO" ) ) ret = "TEXTO";
+        else if ( texto.includes( "ENUM" ) ) ret = "ENUM";
         else if ( texto.includes( "EXAME F" ) ) ret = "EXAMEF";
         else if ( texto.includes( "EXAME ODONTOL" ) ) ret = "EXAMEODONTOL";
         else if ( texto.includes( "BITOS ALIMENTARES" ) ) ret = "BITOSALIMENTARES";
@@ -1181,4 +1189,50 @@ export class AtendimentoFormComponent {
         return d;
     }
     
+    getEnumsPergunta( resposta: RespostaFichaColeta ) {
+        let path = resposta.getPergunta().getPath();
+        
+        if ( this.listPathsEnumPergunta.find(l => l == path) == undefined ) {
+            this.atendimentoService.getEnums(path)
+                .then(res => {
+                    this.listPathsEnumPergunta.push(path);
+                    this.listEnumsByPathPergunta[path] = new Array<string>();
+                    this.listEnumsByPathPergunta[path] = Object.keys( res.json() ).sort();
+                })
+                .catch(error => {
+                    console.log("Erro ao retornar enums");
+                    return [];
+                })
+        }
+
+        return this.listEnumsByPathPergunta[path];
+    }
+
+    getEnumsItem( resposta: RespostaFichaColeta, indexPath: number ) {
+        let path = resposta.getPergunta().getItens()[indexPath].getPath();
+        
+        if ( this.listPathsEnumItem.find(l => l == path) == undefined ) {
+            this.atendimentoService.getEnums(path)
+                .then(res => {
+                    this.listPathsEnumItem.push(path);
+                    this.listEnumsByPathItem[path] = new Array<string>();
+                    this.listEnumsByPathItem[path] = Object.keys( res.json() ).sort();
+                })
+                .catch(error => {
+                    console.log("Erro ao retornar enums");
+                    return [];
+                })
+        } 
+
+        return this.listEnumsByPathItem[path];
+    }
+    
+    verifyItemPath( resposta: RespostaFichaColeta, indexPath: number ) {
+        let path = resposta.getPergunta().getItens()[indexPath].getPath();
+        
+        if ( path != undefined && path != '' )
+            return true;
+        
+        return false;
+    }
 }
