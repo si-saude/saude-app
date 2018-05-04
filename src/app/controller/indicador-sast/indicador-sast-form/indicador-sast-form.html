@@ -1,0 +1,202 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#indicadoresAssociados">Indicadores Associados</a></li>
+				</ul>
+			</div>
+
+			<div id="dadosGerais">
+				<div class="row">
+					<div class="input-field col s6">
+						<label data-error="Campo obrigatório." for="nome">Nome</label> <input
+							id="nome" type="text" required [(ngModel)]="indicadorSast.nome"
+							name="nome">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6 checkbox-obrigatorio">
+						<input type="checkbox" id="ausenteCalculoInterdisciplinar"
+							[(ngModel)]="indicadorSast.ausenteCalculoInterdisciplinar"
+							name="indicadorSast.ausenteCalculoInterdisciplinar"> <label
+							for="ausenteCalculoInterdisciplinar">Ausente do Cálculo Interdisciplinar</label>
+					</div>
+					
+					<div class="input-field col s3 checkbox-obrigatorio">
+						<input type="checkbox" id="obrigatorio"
+							[(ngModel)]="indicadorSast.obrigatorio"
+							name="indicadorSast.obrigatorio"> <label
+							for="obrigatorio">Obrigatório</label>
+					</div>
+
+					<div class="input-field col s3 checkbox-inativo">
+						<input type="checkbox" id="inativo"
+							[(ngModel)]="indicadorSast.inativo" name="indicadorSast.inativo">
+						<label for="inativo">Inativo</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<fieldset>
+							<legend>Equipe</legend>
+							<select name="indicadorSast.equipe" class="browser-default"
+								[(ngModel)]="indicadorSast.equipe.id">
+								<option disabled selected value=0>Selecione uma equipe</option>
+								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+							</select>
+						</fieldset>
+					</div>
+
+					<div class="input-field col s2">
+						<label for="critico">Crítico</label> <input id="critico"
+							type="number" [(ngModel)]="indicadorSast.critico" name="critico">
+					</div>
+
+					<div class="input-field col s2">
+						<label for="codigo">Código</label>
+						<input id="codigo" type="text" maxlength="3"
+							[(ngModel)]="indicadorSast.codigo" name="codigo">
+					</div>
+
+					<div class="input-field col s2">
+						<label for="codigoExcludente">Código Excludente</label> 
+						<input id="codigoExcludente" type="text" maxlength="2"
+							[(ngModel)]="indicadorSast.codigoExcludente"
+							name="codigoExcludente">
+					</div>
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="indice0">Indice 0</label>
+						<textarea class="materialize-textarea" id="indice0"
+							[(ngModel)]="indicadorSast.indice0" name="indicadorSast.indice0"></textarea>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="indice1">Indice 1</label>
+						<textarea class="materialize-textarea" id="indice1"
+							[(ngModel)]="indicadorSast.indice1" name="indicadorSast.indice1"></textarea>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="indice2">Indice 2</label>
+						<textarea class="materialize-textarea" id="indice2"
+							[(ngModel)]="indicadorSast.indice2" name="indicadorSast.indice2"></textarea>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="indice3">Indice 3</label>
+						<textarea class="materialize-textarea" id="indice3"
+							[(ngModel)]="indicadorSast.indice3" name="indicadorSast.indice3"></textarea>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="input-field col s12">
+						<label for="indice4">Indice 4</label>
+						<textarea class="materialize-textarea" id="indice4"
+							[(ngModel)]="indicadorSast.indice4" name="indicadorSast.indice4"></textarea>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="indicadoresAssociados">
+
+				<fieldset>
+
+					<legend class="legend">
+						Indicadores Associados <a
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
+							(click)="addIndicadorAssociadoSast()"> <i
+							class="material-icons center-icon">add</i>
+						</a>
+					</legend>
+
+					<div class="form-group">
+						<div
+							*ngFor="let indicadorAssociado of indicadorSast.indicadorAssociadoSasts;let i = index">
+
+							<div class="row">
+								<div class="input-field col s3">
+									<label for="indicadorSast.indicadorAssociadoSasts[{{i}}].codigo">Código</label>
+									<input type="text" maxlength="3"
+										name="indicadorSast.indicadorAssociadoSasts[{{i}}].codigo"
+										[(ngModel)]="indicadorSast.indicadorAssociadoSasts[i].codigo">
+								</div>
+	
+								<div class="col s2">
+									<a class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeIndicadorAssociadoSast(i)"> <i
+										class="material-icons center-icon">delete</i>
+									</a>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</fieldset>
+
+			</div>
+
+			<input id="id" type="hidden" name="indicadorSast.id"
+				[(ngModel)]="indicadorSast.id"> 
+			<input id="version"
+				type="hidden" name="indicadorSast.version"
+				[(ngModel)]="indicadorSast.version">
+			
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/indicador-sast']" class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+
+	</form>
+</div>

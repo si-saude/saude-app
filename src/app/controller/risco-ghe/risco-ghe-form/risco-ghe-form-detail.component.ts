@@ -10,7 +10,7 @@ import { RiscoGheService } from './../risco-ghe.service';
 
 @Component({
   selector: 'app-risco-ghe-form-detail',
-  templateUrl: './risco-ghe-form-detail.component.html',
+  templateUrl: './risco-ghe-form-detail.html',
   styleUrls: ['./risco-ghe-form.component.css', './../../../../assets/css/form-component.css']
 })
 export class RiscoGheFormDetailComponent extends GenericFormComponent implements OnInit {

@@ -1,0 +1,42 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+
+	<div class="conteiner-criar-plano">
+		<p><b>{{riscoPotencial.empregado.pessoa.nome}}</b></p>
+
+		<div class="collection" *ngFor="let riscoEmpregado of riscoPotencial.riscoEmpregados; let r = index">
+			<div class="col s10">
+				<a (click)="verifyActive(r)" class="collection-item item-collection{{r}}">{{riscoEmpregado.equipe.nome}}</a>
+			</div>
+			<div class="col s2">
+				<p>{{arrayDatas[r]}}</p>
+			</div>
+		</div>
+		
+	</div>
+
+	<div class='row row-btns'>
+		<div class="col s6">
+			<a [routerLink]="['/risco-potencial']"
+				class="btn btn-primary btn-voltar">Voltar</a>
+		</div>
+		<div class="col s6">
+			<a (click)="save()"
+				class="btn btn-primary btn-escolher">Escolher</a>
+		</div>
+	</div>
+
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

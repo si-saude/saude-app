@@ -3,6 +3,7 @@ import { DateFilter } from './../../generics/date.filter';
 import { ServicoFilter } from './../servico/servico.filter';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { EmpregadoFilter } from './../empregado/empregado.filter';
+import { RiscoPotencialFilter } from './../risco-potencial/risco-potencial.filter';
 
 export class FilaEsperaOcupacionalFilter extends GenericFilter {
 
@@ -14,6 +15,7 @@ export class FilaEsperaOcupacionalFilter extends GenericFilter {
     private status: string;
     private tempoEspera: number;
     private saida: DateFilter;
+    private riscoPotencial: RiscoPotencialFilter;
 
     getServico() {
         return this.servico;
@@ -62,5 +64,11 @@ export class FilaEsperaOcupacionalFilter extends GenericFilter {
     }
     setSaida(saida: DateFilter) {
         this.saida = saida;
+    }
+    getRiscoPotencial() {
+        return this.riscoPotencial;
+    }
+    setRiscoPotencial(riscoPotencial: RiscoPotencialFilter) {
+        this.riscoPotencial = riscoPotencial;
     }
 }

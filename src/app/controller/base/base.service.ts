@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
+import { GlobalVariable } from './../../global';
 import { Base } from './../../model/base';
 import { BaseFilter } from './base.filter';
 import { GenericService } from './../../generics/generic.service';
@@ -15,6 +16,13 @@ export class BaseService extends GenericService {
     
     getBases() {
         return this.selectList(new BaseFilter());
+    }
+    
+    getUfs() {
+        let urlUf = GlobalVariable.BASE_API_URL + "/generic/uf";
+        return this.http
+            .get( urlUf + "?filter=", { headers: this.headers } )
+            .toPromise();
     }
     
 }

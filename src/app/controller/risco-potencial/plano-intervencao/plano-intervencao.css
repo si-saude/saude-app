@@ -1,0 +1,63 @@
+.form-container {
+	display: grid !important;
+}    
+
+.container-triagem {
+	padding-top: 20px;
+	width: 100%;
+    margin-bottom: 30px;
+}
+
+.table-triagem {
+	margin-top: -40px;
+}
+
+.fieldset-planejamento-triagem {
+	background: #e6fdff;
+	margin: 20px;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    display: inline-table;
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+
+tbody {
+	display: table !important;
+	width: 100%;
+	padding: 0;
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+th {
+	margin-bottom: 0px;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+.btn-remove {
+	margin-left: 15px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+	width: 30px;
+    height: 30px;
+}
+
+.row-btns {
+	margin-bottom: 130px;
+}
+

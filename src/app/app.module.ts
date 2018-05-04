@@ -65,8 +65,15 @@ import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
+import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
+import { EixoGuard } from './guards/guards-child/eixo.guard';
+import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
+import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
+import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-grupo.guard';
+import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
+import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 
 @NgModule({
   declarations: [
@@ -138,6 +145,14 @@ import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-gr
     FilaEsperaOcupacionalGuard,
     RiscoGheGuard,
     EmpregadosPorGrupoGuard
+    IndicadorSastGuard,
+    EixoGuard,
+    DiagnosticoGuard,
+    PerguntaFichaColetaGuard,
+    IntervencaoGuard,
+    RiscoGheGuard,
+    RiscoPotencialGuard,
+    NotificacaoGuard
   ],
   bootstrap: [ 
     AppComponent

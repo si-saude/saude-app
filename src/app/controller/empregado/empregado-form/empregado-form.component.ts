@@ -65,10 +65,9 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     historicoGrupoMonitoramentos: Array<HistoricoGrupoMonitoramento>;
     fotoSrc: string;
     assinaturaSrc: any;
-    
+
     //ngModel
     dataNascimento: any;
-    dataAdmissao: any;
     dataVacinas: Array<any> = new Array<any>();
     proximaDoseVacinas: Array<any> = new Array<any>();
     dataRemocaoHistoricos: Array<any> = new Array<any>();
@@ -507,11 +506,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             this.dataNascimento !== undefined )
             this.empregado.getPessoa().setDataNascimento(
                 this.parseDatePickerToDate( this.dataNascimento ) );
-        
-        if ( this.dataAdmissao !== null &&
-                this.dataAdmissao !== undefined )
-                this.empregado.setDataAdmissao(
-                    this.parseDatePickerToDate( this.dataAdmissao ) );
 
         if ( this.empregado.getEmpregadoVacinas() !== undefined &&
             this.empregado.getEmpregadoVacinas() !== null ) {
@@ -529,11 +523,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         if ( this.empregado.getPessoa().getDataNascimento() !== null &&
             this.empregado.getPessoa().getDataNascimento() !== undefined ) {
             this.dataNascimento = this.parseDataToObjectDatePicker( this.empregado.getPessoa().getDataNascimento() );
-        }
-        
-        if ( this.empregado.getDataAdmissao() !== null &&
-            this.empregado.getDataAdmissao() !== undefined ) {
-            this.dataAdmissao = this.parseDataToObjectDatePicker( this.empregado.getDataAdmissao() );
         }
 
         if ( this.empregado.getEmpregadoVacinas() !== undefined &&

@@ -65,7 +65,7 @@ export class TarefaBuilder extends GenericBuilder {
             if ( !this.idGtZero( cloneTarefa.getResponsavel() ) )
                 cloneTarefa.setResponsavel( undefined );
         } else {
-            cloneTarefa.setResponsavel( new ProfissionalSaudeBuilder().initialize( null ) );
+            cloneTarefa.setResponsavel( undefined );
         }
 
         return cloneTarefa;

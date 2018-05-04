@@ -188,7 +188,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     selectEmpregadoByChave( evento ) {
         if ( this.oldNomeByChave != evento ) {
             this.oldNomeByChave = evento;
-            if ( evento.length <= 4 ) {
+            if ( evento.length < 4 ) {
                 this.profissionalSaudeService.getEmpregadoByChave( evento )
                     .then( res => {
                         this.empregados = new EmpregadoBuilder().cloneList(res.json());

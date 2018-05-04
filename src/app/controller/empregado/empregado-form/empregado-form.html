@@ -62,36 +62,24 @@
 								name="cpf">
 						</div>
 
-						<div class="input-field col s3">
+						<div class="input-field col s4">
 							<label for="dataNascimento">Data de Nascimento</label>
 							<my-date-picker name="dataNascimento"
 								[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
 								placeholder="Data de Nascimento"> </my-date-picker>
 						</div>
-						<div class="input-field col s3">
-							<label for="dataAdmissao">Data de Admissão</label>
-							<my-date-picker name="dataAdmissao"
-								[options]="myDatePickerOptions" [(ngModel)]="dataAdmissao"
-								placeholder="Data de Admissão"> </my-date-picker>
-						</div>
 					</div>
 
 					<div class="row">
-						<div class="input-field col s4">
+						<div class="input-field col s6">
 							<label for="chave">Chave</label> <input id="chave" type="text"
 								maxlength="16" [(ngModel)]="empregado.chave" name="chave">
 						</div>
 
-						<div class="input-field col s4">
+						<div class="input-field col s6">
 							<label for="matricula">Matrícula</label> <input id="matricula"
 								type="text" maxlength="32" [(ngModel)]="empregado.matricula"
 								name="matricula">
-						</div>
-						
-						<div class="input-field col s4">
-							<label for="pis">PIS</label> <input id="pis"
-								type="text" maxlength="20" [(ngModel)]="empregado.pis"
-								name="pis">
 						</div>
 					</div>
 
@@ -163,7 +151,7 @@
 					</div>
 
 					<div class="row">
-						<div class="input-field col s6">
+						<div class="input-field col s12">
 							<fieldset>
 								<legend>
 									Escolaridade <a
@@ -179,12 +167,6 @@
 										value="{{escolaridade}}">{{escolaridade}}</option>
 								</select>
 							</fieldset>
-						</div>
-						
-						<div class="input-field col s6">
-							<label for="email">Email</label> 
-							<input id="email" type="email"
-								[(ngModel)]="empregado.pessoa.email" name="email">
 						</div>
 
 					</div>
