@@ -90,8 +90,6 @@ export class EmpregadoBuilder extends GenericBuilder{
         cloneEmpregado.setRamal(this.getValue(empregado, "getRamal"));
         cloneEmpregado.setFotoBase64(this.getValue(empregado, "getFotoBase64"));
         cloneEmpregado.setAssinaturaBase64(this.getValue(empregado, "getAssinaturaBase64"));
-        cloneEmpregado.setPis(this.getValue(empregado, "getPis"));
-        cloneEmpregado.setDataAdmissao(this.getValue(empregado, "getDataAdmissao"));
         
         cloneEmpregado.setPessoa(
                 new PessoaBuilder().clone(this.getValue(empregado,"getPessoa")));

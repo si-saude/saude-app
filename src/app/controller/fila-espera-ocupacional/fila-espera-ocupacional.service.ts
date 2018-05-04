@@ -22,26 +22,12 @@ export class FilaEsperaOcupacionalService extends GenericService {
         super(http,router,"fila-espera-ocupacional");
     }
     
-    downloadDeclaracaoComparecimento( atendimento ) {
-        let urlDeclaracaoComparecimento = this.URL + "/declaracao-comparecimento";
-        return this.http
-            .post( urlDeclaracaoComparecimento, atendimento, { headers: this.headers } )
-            .toPromise();
-    }
-    
-    buscarQuadroAtendimento( atendimento ) {
-        let urlQuadroAtendimento = this.URL + "/quadro-atendimento";
-        
-        return this.http
-            .post( urlQuadroAtendimento, atendimento, { headers: this.headers } )
-            .toPromise();
-    }
-
     getStatusSimNao() {
         let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
         return this.http
             .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
-
+            .toPromise();
+    }
     
     checkIn( filaEsperaOcupacional ) {
         let urlCheckIn = this.URL + "/check-in";

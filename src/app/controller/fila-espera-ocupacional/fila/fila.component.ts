@@ -94,8 +94,8 @@ export class FilaComponent {
                 .then( res => {
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                     if ( this.atendimentos.length > 0 ) {
-                        this.audio.load();
-                        this.audio.play();
+//                        this.audio.load();
+//                        this.audio.play();
                     }
                     this.wasRequested = true;
                 } )

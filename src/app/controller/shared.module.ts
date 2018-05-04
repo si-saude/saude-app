@@ -53,7 +53,13 @@ import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
 import { RiscoGheService } from './risco-ghe/risco-ghe.service';
 import { AgendaService } from './../agenda/agenda.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
-import { TarefaComponent } from './tarefa/tarefa.component';
+import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
+import { EixoService } from './eixo/eixo.service';
+import { DiagnosticoService } from './diagnostico/diagnostico.service';
+import { IntervencaoService } from './intervencao/intervencao.service';
+import { PerguntaFichaColetaService } from './pergunta-ficha-coleta/pergunta-ficha-coleta.service';
+import { RiscoPotencialService } from './risco-potencial/risco-potencial.service';
+import { TriagemService } from './triagem/triagem.service';
 
 @NgModule({
   declarations: [
@@ -61,8 +67,7 @@ import { TarefaComponent } from './tarefa/tarefa.component';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent,
-    TarefaComponent
+    PaginacaoComponent
   ],
   imports: [ 
     CommonModule,
@@ -126,6 +131,13 @@ import { TarefaComponent } from './tarefa/tarefa.component';
     AuditoriaAsoService,
     RiscoGheService,
     AgendaService,
+    IndicadorSastService,
+    IntervencaoService,
+    DiagnosticoService,
+    EixoService,
+    PerguntaFichaColetaService,
+    RiscoPotencialService,
+    TriagemService,
     CanDeactivateGuard
   ]
 })

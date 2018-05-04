@@ -50,7 +50,6 @@ import { ServicoGuard } from './guards/guards-child/servico.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
-import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
 import { EixoGuard } from './guards/guards-child/eixo.guard';
 import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
@@ -58,6 +57,7 @@ import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
 import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
+import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -150,8 +150,7 @@ const routes: Routes = [
   { path: 'solicitacao-servico',
       loadChildren: 'app/solicitacao-servico/solicitacao-servico.module#SolicitacaoServicoModule'},
   { path: 'fila-espera-ocupacional',
-      loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule',
-      canActivateChild: [FilaEsperaOcupacionalGuard]},
+      loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional.module#FilaEsperaOcupacionalModule' },
   { path: 'fila-espera-ocupacional-recepcao',
       loadChildren: 'app/controller/fila-espera-ocupacional/fila-espera-ocupacional-recepcao.module#FilaEsperaOcupacionalRecepcaoModule',
       canActivateChild: [FilaEsperaOcupacionalRecepcaoGuard]},
@@ -182,8 +181,6 @@ const routes: Routes = [
   { path: 'risco-ghe',
       loadChildren: 'app/controller/risco-ghe/risco-ghe.module#RiscoGheModule',
       canActivateChild: [RiscoGheGuard]},
-  { path: 'reports',
-      loadChildren: 'app/reports/reports.module#ReportsModule'},
   { path: 'risco-potencial',
       loadChildren: 'app/controller/risco-potencial/risco-potencial.module#RiscoPotencialModule',
       canActivateChild: [RiscoPotencialGuard]},

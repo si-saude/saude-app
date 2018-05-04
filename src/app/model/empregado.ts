@@ -37,8 +37,6 @@ export class Empregado {
     private fotoBase64: string;
     private assinatura: any;
     private assinaturaBase64: string;
-    private pis: string;
-    private dataAdmissao: Date;
     private version: number;
 
     getId(): number {
@@ -241,20 +239,4 @@ export class Empregado {
         this.assinaturaBase64 = a;
     }
     
-    getPis() {
-        return this.pis;
-    }
-    
-    setPis(pis: string) {
-        this.pis = pis;
-    }
-    
-    getDataAdmissao() {
-        return this.dataAdmissao;
-    }
-    
-    setDataAdmissao(dataAdmissao: Date) {
-        this.dataAdmissao = dataAdmissao;
-    }
-       
 }

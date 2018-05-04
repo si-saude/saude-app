@@ -43,3 +43,8 @@
 .btn-delete {
 	margin-top: -5px;
 }
+
+.content-profissiograma {
+    overflow-y: auto;
+    max-height: 400px;
+}

@@ -17,34 +17,32 @@ export class EmpregadoConvocacaoGuard extends ChildGuard implements CanActivateC
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot
     ): boolean | Observable<boolean> | Promise<boolean> {
-        return super.activateChild("empregado-convocacao", route, state);
+        if ( state.url.includes("auditoria-exame") ) {
+            if ( window.localStorage.getItem("EMPREGADO-CONVOCACAO_LISTAR") !== undefined &&
+                    window.localStorage.getItem("EMPREGADO-CONVOCACAO_LISTAR") !== null &&
+                    window.localStorage.getItem("EMPREGADO-CONVOCACAO_LISTAR") !== '' &&
+                    window.localStorage.getItem("EMPREGADO-CONVOCACAO_LISTAR") == "true" ) {
+                if ( state.url.includes("editar") ) {
+                    if ( window.localStorage.getItem("EMPREGADO-CONVOCACAO_ALTERAR") !== undefined &&
+                            window.localStorage.getItem("EMPREGADO-CONVOCACAO_ALTERAR") !== null &&
+                            window.localStorage.getItem("EMPREGADO-CONVOCACAO_ALTERAR") !== '' &&
+                            window.localStorage.getItem("EMPREGADO-CONVOCACAO_ALTERAR") == "true" ){
+                        return true;
+                    }
+                    else return false;
+                }
+                if ( state.url.includes("detalhe") ) {
+                    if ( window.localStorage.getItem("EMPREGADO-CONVOCACAO_DETALHE") !== undefined &&
+                            window.localStorage.getItem("EMPREGADO-CONVOCACAO_DETALHE") !== null &&
+                            window.localStorage.getItem("EMPREGADO-CONVOCACAO_DETALHE") !== '' &&
+                            window.localStorage.getItem("EMPREGADO-CONVOCACAO_DETALHE") == "true" )
+                        return true;
+                    else return false;
+                }
+                return true;
+            } else return false;
+        }
         
-//        if ( state.url.includes("empregado-convocacao") ) {
-//            if ( window.localStorage.getItem("EMPREGADO_CONVOCACAO_LISTAR") !== undefined &&
-//                    window.localStorage.getItem("EMPREGADO_CONVOCACAO_LISTAR") !== null &&
-//                    window.localStorage.getItem("EMPREGADO_CONVOCACAO_LISTAR") !== '' &&
-//                    window.localStorage.getItem("EMPREGADO_CONVOCACAO_LISTAR") == "true" ) {
-//                if ( state.url.includes("editar") ) {
-//                    if ( window.localStorage.getItem("EMPREGADO_CONVOCACAO_ALTERAR") !== undefined &&
-//                            window.localStorage.getItem("EMPREGADO_CONVOCACAO_ALTERAR") !== null &&
-//                            window.localStorage.getItem("EMPREGADO_CONVOCACAO_ALTERAR") !== '' &&
-//                            window.localStorage.getItem("EMPREGADO_CONVOCACAO_ALTERAR") == "true" ){
-//                        return true;
-//                    }
-//                    else return false;
-//                }
-//                if ( state.url.includes("detalhe") ) {
-//                    if ( window.localStorage.getItem("EMPREGADO_CONVOCACAO_DETALHE") !== undefined &&
-//                            window.localStorage.getItem("EMPREGADO_CONVOCACAO_DETALHE") !== null &&
-//                            window.localStorage.getItem("EMPREGADO_CONVOCACAO_DETALHE") !== '' &&
-//                            window.localStorage.getItem("EMPREGADO_CONVOCACAO_DETALHE") == "true" )
-//                        return true;
-//                    else return false;
-//                }
-//                return true;
-//            } else return false;
-//        }
-//        
-//        return true;
+        return true;
     }
 }

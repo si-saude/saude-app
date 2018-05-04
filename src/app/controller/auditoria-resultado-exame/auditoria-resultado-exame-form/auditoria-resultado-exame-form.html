@@ -32,23 +32,23 @@
 						<div class="input-field col s4 checkbox">
 							<input type="checkbox" id="selecionarTodos"
 								[(ngModel)]="selecionarTodos" (click)="selectAll()"
-								name="selecionarTodos"> <label for="selecionarTodos"></label>
-							<label>Selecionar/Desselecionar todos</label>
+								name="selecionarTodos">
+							<label for="selecionarTodos">Selecionar/Desselecionar todos</label>
 						</div>
 
 						<div class="input-field col s4 checkbox" *ngIf="!verifyAuditado()">
 							<input type="checkbox" disabled
 								id="empregadoConvocacao.resultadoAuditado"
 								[(ngModel)]="empregadoConvocacao.resultadoAuditado"
-								name="empregadoConvocacao.resultadoAuditado"> <label
-								for="empregadoConvocacao.resultadoAuditado"></label> <label>Auditado</label>
+								name="empregadoConvocacao.resultadoAuditado">
+							<label for="empregadoConvocacao.resultadoAuditado">Auditado</label>
 						</div>
 
 						<div class="input-field col s4 checkbox" *ngIf="verifyAuditado()">
 							<input type="checkbox" id="empregadoConvocacao.resultadoAuditado"
 								[(ngModel)]="empregadoConvocacao.resultadoAuditado"
-								name="empregadoConvocacao.resultadoAuditado"> <label
-								for="empregadoConvocacao.resultadoAuditado"></label> <label>Auditado</label>
+								name="empregadoConvocacao.resultadoAuditado"> 
+								<label for="empregadoConvocacao.resultadoAuditado">Auditado</label>
 						</div>
 					</div>
 					<div
