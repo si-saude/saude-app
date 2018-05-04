@@ -15,6 +15,11 @@
 				[materializeActions]="sidenavActionsProcesso" data-activates="slide-out-processo"
 				(click)="closeSidenavProcesso()">Processo
 			</a>
+			<a materialize="sideNav"
+				[materializeParams]="[{closeOnClick: true}]"
+				[materializeActions]="sidenavActionsRelatorio" data-activates="slide-out-relatorio"
+				(click)="closeSidenavRelatorio()">Relatório
+			</a>
 		</div>
 	</li>
 		
@@ -115,6 +120,20 @@
 			<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-out']" 
 				*ngIf="checkPermissao('FILA-ESPERA-OCUPACIONAL-RECEPCAO')">Check-out (Recepção)</a>
 			<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
+		</div>
+	</li>
+</ul>
+
+<ul id="slide-out-relatorio" class="side-nav">
+	<li>
+		<a materialize="sideNav" style="margin-left: -20px;"
+			[materializeParams]="sidenavParams"
+			[materializeActions]="sidenavActions3" data-activates="slide-out1"
+			(click)="closeSidenavRelatorio()"><i class="material-icons">chevron_left</i>
+		</a>
+		<div class="groups">
+			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
+			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>
 		</div>
 	</li>
 </ul>
