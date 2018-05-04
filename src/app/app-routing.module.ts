@@ -51,20 +51,13 @@ import { AgendaGuard } from './guards/guards-child/agenda.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
-import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
-import { EixoGuard } from './guards/guards-child/eixo.guard';
-import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
-import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
-import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
-import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
-import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
+import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contato', component: ContatoComponent },
   { path: 'permissao', component: PermissaoComponent },
-  { path: 'home', loadChildren: 'app/home/home.module#HomeModule',
-      canActivateChild: [NotificacaoGuard],
+  { path: 'home', component: HomeComponent,
       canActivate: [AuthGuard]},
   { path: 'agenda', loadChildren: 'app/agenda/agenda.module#AgendaModule',
       canActivateChild: [AgendaGuard]},
@@ -164,29 +157,11 @@ const routes: Routes = [
   { path: 'auditoria-aso',
       loadChildren: 'app/controller/auditoria-aso/auditoria-aso.module#AuditoriaAsoModule',
       canActivateChild: [AuditoriaAsoGuard]},
-  { path: 'indicador-sast',
-      loadChildren: 'app/controller/indicador-sast/indicador-sast.module#IndicadorSastModule',
-      canActivateChild: [IndicadorSastGuard]},
-  { path: 'eixo',
-      loadChildren: 'app/controller/eixo/eixo.module#EixoModule',
-      canActivateChild: [EixoGuard]},
-  { path: 'diagnostico',
-      loadChildren: 'app/controller/diagnostico/diagnostico.module#DiagnosticoModule',
-      canActivateChild: [DiagnosticoGuard]},
-  { path: 'intervencao',
-      loadChildren: 'app/controller/intervencao/intervencao.module#IntervencaoModule',
-      canActivateChild: [IntervencaoGuard]},
-  { path: 'pergunta-ficha-coleta',
-      loadChildren: 'app/controller/pergunta-ficha-coleta/pergunta-ficha-coleta.module#PerguntaFichaColetaModule',
-      canActivateChild: [PerguntaFichaColetaGuard]},
   { path: 'risco-ghe',
       loadChildren: 'app/controller/risco-ghe/risco-ghe.module#RiscoGheModule',
       canActivateChild: [RiscoGheGuard]},
   { path: 'reports',
       loadChildren: 'app/reports/reports.module#ReportsModule'},
-  { path: 'risco-potencial',
-      loadChildren: 'app/controller/risco-potencial/risco-potencial.module#RiscoPotencialModule',
-      canActivateChild: [RiscoPotencialGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<div class="row form-container">
+<div class="row">
 
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
@@ -213,11 +213,10 @@
 						</fieldset>
 					</div>
 
-					<div class="input-field col s4"
-						(mouseover)="showToastGhe(ghe.value)" (mouseleave)="closeTooltip()">
+					<div class="input-field col s4">
 						<fieldset>
-							<legend>GHE</legend>
-							<select name="ghe" class="browser-default" disabled #ghe
+							<legend>Ghe</legend>
+							<select name="ghe" class="browser-default" disabled
 								[(ngModel)]="empregado.ghe.id">
 								<option disabled selected value=0>Selecione um ghe</option>
 								<option *ngFor="let ghe of ghes" value="{{ghe.id}}">{{ghe.nome}}</option>
@@ -225,11 +224,10 @@
 						</fieldset>
 					</div>
 
-					<div class="input-field col s4"
-					 	(mouseover)="showToastGhee(ghee.value)" (mouseleave)="closeTooltip()">
+					<div class="input-field col s4">
 						<fieldset>
-							<legend>GHEE</legend>
-							<select name="ghee" class="browser-default" disabled #ghee
+							<legend>Ghee</legend>
+							<select name="ghee" class="browser-default" disabled
 								[(ngModel)]="empregado.ghee.id">
 								<option disabled selected value=0>Selecione um ghee</option>
 								<option *ngFor="let ghee of ghees" value="{{ghee.id}}">{{ghee.nome}}</option>
@@ -627,9 +625,4 @@
 		<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 			[msg]="msgError"></app-mensagem-form>
 	</div>
-
-
 </div>
-
-<div materialize [materializeParams]="toastParams" 
-	[materializeActions]="globalActions"></div>
