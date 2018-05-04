@@ -8,7 +8,7 @@ import { RiscoGheFormDetailComponent } from './risco-ghe-form/risco-ghe-form-det
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 import { RiscoGheGuard } from './../../guards/guards-child/risco-ghe.guard';
 
-const baseRoutes: Routes = [
+const riscoGheRoutes: Routes = [
     { path: '', component: RiscoGheComponent},
     { path: 'cadastrar', component: RiscoGheFormComponent,
         canDeactivate: [CanDeactivateGuard]},
@@ -18,7 +18,7 @@ const baseRoutes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(baseRoutes)],
+    imports: [RouterModule.forChild(riscoGheRoutes)],
     exports: [RouterModule]
 })
 export class RiscoGheRoutingModule {}

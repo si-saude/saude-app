@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 import { GlobalVariable } from './../../global';
 import { UsuarioService } from './../usuario/usuario.service';
 import { LocalizacaoService } from './../localizacao/localizacao.service';
+import { DiagnosticoService } from './../diagnostico/diagnostico.service';
+import { IntervencaoService } from './../intervencao/intervencao.service';
+import { EquipeService } from './../equipe/equipe.service';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { GenericService } from './../../generics/generic.service';
@@ -15,7 +18,10 @@ export class AtendimentoService extends GenericService {
     constructor( http: Http, router: Router,
             private usuarioService: UsuarioService,
             private profissionalService: ProfissionalSaudeService,
-            private localizacaoService: LocalizacaoService ) {
+            private localizacaoService: LocalizacaoService,
+            private diagnosticoService: DiagnosticoService,
+            private intervencaoService: IntervencaoService,
+            private equipeService: EquipeService) {
         super(http,router,"atendimento");
     }
     
@@ -31,10 +37,10 @@ export class AtendimentoService extends GenericService {
         return this.localizacaoService.selectList( new LocalizacaoFilter() );
     }
     
-    atualizar( filaAtendimentoOcupacional ) {
+    atualizar( atendimento ) {
         let urlAtualizar = this.URL + "/atualizar";
         return this.http
-            .post( urlAtualizar, filaAtendimentoOcupacional, { headers: this.headers } )
+            .post( urlAtualizar, atendimento, { headers: this.headers } )
             .toPromise();
     }
     
@@ -119,6 +125,47 @@ export class AtendimentoService extends GenericService {
         let urlFinalizar = this.URL + "/finalizar-pausar";
         return this.http
             .post( urlFinalizar, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getStatusSimNao() {
+        let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
+        return this.http
+            .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getPrazos() {
+        let urlPrazo = GlobalVariable.BASE_API_URL + "/generic/prazo-em-meses";
+        return this.http
+            .get( urlPrazo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getDiagnosticoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {
+        return this.diagnosticoService.getDiagnosticoByDescricaoAndAbreviacao(descricao, abreviacaoEquipe);
+    }
+    
+    getDiagnosticoByCodigoAndAbreviacao( codigo, abreviacaoEquipe ) {
+        return this.diagnosticoService.getDiagnosticoByCodigoAndAbreviacao(codigo, abreviacaoEquipe);
+    }
+    
+    getIntervencaoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {
+        return this.intervencaoService.getIntervencaoByDescricaoAndAbreviacao(descricao, abreviacaoEquipe);
+    }
+    
+    getEquipeAbordagemByName( nome ) {
+        return this.equipeService.getEquipeByName(nome);
+    }
+    
+    getEquipes() {
+        return this.equipeService.getEquipes();
+    }
+    
+    getEnums( path ) {
+        let urlEnums = GlobalVariable.BASE_API_URL + "/generic/"+path;
+        return this.http
+            .get( urlEnums + "?filter=", { headers: this.headers } )
             .toPromise();
     }
     

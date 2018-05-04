@@ -24,4 +24,11 @@ export class EquipeService extends GenericService{
       return this.selectList( equipeFilter );
   }
   
+  getEquipeByName( nome ) {
+      let equipeFilter: EquipeFilter = new EquipeFilter();
+      equipeFilter.setNome(nome);
+      
+      return this.selectList(equipeFilter);
+  }
+  
 }

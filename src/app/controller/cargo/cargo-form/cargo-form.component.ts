@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Cargo } from './../../../model/cargo';
+import { CargoBuilder } from './../cargo.builder';
+import { CargoService } from './../cargo.service';
 import { Curso } from './../../../model/curso';
 import { CursoBuilder } from './../../curso/curso.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { CargoBuilder } from './../cargo.builder';
-import { CargoService } from './../cargo.service';
 
 @Component( {
     selector: 'app-cargo-form',
@@ -27,11 +27,10 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
             
             this.goTo = "cargo";
             this.cargo = new CargoBuilder().initialize(this.cargo);
+            this.cursosSelecteds = new Array<Curso>();
         }
     
     ngOnInit() {
-        this.cursosSelecteds = new Array<Curso>();
-        
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if( params['id'] !== undefined ) {
@@ -42,6 +41,7 @@ export class CargoFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.cargo = new CargoBuilder().clone(res.json());
+                            this.cursosSelecteds = this.cargo.getCursos();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );

@@ -22,6 +22,13 @@ export class FilaEsperaOcupacionalService extends GenericService {
         super(http,router,"fila-espera-ocupacional");
     }
     
+    getStatusSimNao() {
+        let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
+        return this.http
+            .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
     downloadDeclaracaoComparecimento( atendimento ) {
         let urlDeclaracaoComparecimento = this.URL + "/declaracao-comparecimento";
         return this.http
@@ -79,6 +86,14 @@ export class FilaEsperaOcupacionalService extends GenericService {
     
     getRegraAtendimentos() {
         return this.regraAtendimentoService.selectList( new RegraAtendimentoFilter() );
+    }
+    
+    listAll( filaEsperaOcupacional ) {
+        let urlListAll = this.URL + "/list-all";
+        
+        return this.http
+            .post( urlListAll, filaEsperaOcupacional, { headers: this.headers } )
+            .toPromise();
     }
     
 }

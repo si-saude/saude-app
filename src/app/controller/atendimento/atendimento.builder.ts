@@ -7,6 +7,8 @@ import { Tarefa } from './../../model/tarefa';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { Aso } from './../../model/aso';
 import { AsoBuilder } from './../aso/aso.builder';
+import { Triagem } from './../../model/triagem';
+import { TriagemBuilder } from './../triagem/triagem.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
  
 export class AtendimentoBuilder extends GenericBuilder {
@@ -18,6 +20,8 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setFilaAtendimentoOcupacional(new FilaAtendimentoOcupacionalBuilder().initialize(new FilaAtendimentoOcupacional()));
         atendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().initialize(new FilaEsperaOcupacional()));
         atendimento.setTarefa(new TarefaBuilder().initialize(new Tarefa()));
+        atendimento.setTriagens(new TriagemBuilder().initializeList(new Array<Triagem>()));
+        atendimento.setTriagensTodosAtendimentos(new TriagemBuilder().cloneList(new Array<Triagem>()));
         
         return atendimento;
     }
@@ -49,6 +53,9 @@ export class AtendimentoBuilder extends GenericBuilder {
         cloneAtendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().clone(
                 this.getValue( atendimento, "getFilaEsperaOcupacional" ) ));
         cloneAtendimento.setTarefa(new TarefaBuilder().clone(this.getValue( atendimento, "getTarefa" ) ));
+        cloneAtendimento.setTriagens(new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagens" ) ));
+        cloneAtendimento.setTriagensTodosAtendimentos(
+                new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));;
         return cloneAtendimento;
     }
     

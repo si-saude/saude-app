@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {MaterializeDirective,MaterializeAction} from "angular2-materialize";

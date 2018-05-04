@@ -68,6 +68,7 @@ select {
 .tab, .tabs {
 	background-color: #f2f2f2 !important;
 	color: #4fc3f7  !important;
+	overflow: hidden;
 }
 
 .tabs .tab a {

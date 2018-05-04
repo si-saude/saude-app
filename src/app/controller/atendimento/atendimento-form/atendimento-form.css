@@ -1,3 +1,18 @@
+select {
+	display: inline;
+}
+
+.input-field>select {
+	display: block;
+	position: absolute;
+	width: 250px;
+	pointer-events: all;
+	height: 50px;
+	top: 0;
+	left: 20px;
+	opacity: 10;
+}
+
 .form-container {
 	margin-bottom: 100px;
 }
@@ -30,14 +45,33 @@
 	margin-left: 70px;
 }
 
+.btn-remove {
+	margin-left: 15px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
+}
+
 table {
 	border: 1px solid #c0c0c0;
-    margin-top: 25px;
+    display: inline-table;
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+
+tbody {
+	display: flex !important;
+	padding: 0;
 }
 
 thead > tr {
 	margin-bottom: 0px;
 	border-bottom: 1px solid;
+}
+
+th {
+	margin-bottom: 0px;
 }
 
 .btn-floating i {
@@ -51,6 +85,70 @@ td > a > i {
 tbody{
 	margin-top: 10px;
 	border-bottom: 1px solid #c0c0c0;	
+}
+
+.container-triagens-planejamento tbody {
+	margin-top: 0px !important;
+}
+
+.container-triagens-planejamento tr {
+	margin-bottom: 0px !important;
+}
+
+.container-triagens-planejamento .row {
+	margin-bottom: 5px;
+}
+
+.container-triagens-planejamento input {
+	margin-bottom: 5px;
+}
+
+.fieldset-planejamento-triagem {
+	background: #e6fdff;
+	margin: 20px;
+}
+
+.table-triagem {
+	margin-top: -40px;
+}
+
+.nome {
+	padding-left: 0px;
+	font-size: 12px;
+}
+
+.indice0 {
+    padding-left: 0px;
+    font-size: 12px;
+}
+
+.indice1 {
+	padding-left: 0px;
+	font-size: 12px;
+}
+
+.indice2 {
+	padding-left: 0px;
+	font-size: 12px;
+}
+
+.indice3 {
+	padding-left: 0px;
+	font-size: 12px;
+}
+
+.indice4 {
+	padding-left: 0px;
+	font-size: 12px;
+}
+
+.container-triagem {
+	padding-top: 20px;
+	width: 100%;
+    margin-bottom: 30px;
+}
+
+.container-triagens {
 }
 
 .btn-add-fieldset {
@@ -106,4 +204,41 @@ tbody{
 
 .paragraph-modal {
 	margin-left: 10px;
+}
+
+#fichaColeta {
+	margin-bottom: 50px;
+}
+
+.select-sim-nao {
+	margin-bottom: 40px;
+	padding-bottom: 20px;
+}
+
+.conteiner-ficha-coleta {
+	max-height: 400px;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.pergunta-descricao {
+	margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+input.resposta-pergunta {
+	margin-left: 10px;
+}
+
+.resposta {
+	border-bottom: 1px solid #d2d2d2;
+}
+
+.btn-add {
+	margin-top: 17px;
+    margin-left: -30px;
+}
+
+input[type="text"]:disabled {
+	background: #D2D2D2 !important;
 }

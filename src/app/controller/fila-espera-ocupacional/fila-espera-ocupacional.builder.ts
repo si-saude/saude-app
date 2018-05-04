@@ -5,6 +5,10 @@ import { Localizacao } from './../../model/localizacao';
 import { LocalizacaoBuilder } from './../localizacao/localizacao.builder';
 import { Servico } from './../../model/servico';
 import { ServicoBuilder } from './../servico/servico.builder';
+import { FichaColeta } from './../../model/ficha-coleta';
+import { FichaColetaBuilder } from './../ficha-coleta/ficha-coleta.builder';
+import { RiscoPotencial } from './../../model/risco-potencial';
+import { RiscoPotencialBuilder } from './../risco-potencial/risco-potencial.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
@@ -15,6 +19,8 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         filaEsperaOcupacional.setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
         filaEsperaOcupacional.setLocalizacao(new LocalizacaoBuilder().initialize(new Localizacao()));
         filaEsperaOcupacional.setServico(new ServicoBuilder().initialize(new Servico()));
+        filaEsperaOcupacional.setFichaColeta(new FichaColetaBuilder().initialize(new FichaColeta()));
+        filaEsperaOcupacional.setRiscoPotencial(new RiscoPotencialBuilder().initialize(new RiscoPotencial()));
         
         return filaEsperaOcupacional;
     }
@@ -44,6 +50,16 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         cloneFilaEsperaOcupacional.setAtualizacao(this.getValue( filaEsperaOcupacional, "getAtualizacao" ) );
         cloneFilaEsperaOcupacional.setHorarioCheckin(this.getValue( filaEsperaOcupacional, "getHorarioCheckin" ) );
         cloneFilaEsperaOcupacional.setSaida(this.getValue( filaEsperaOcupacional, "getSaida" ) );
+        cloneFilaEsperaOcupacional.setTempoEspera(this.getValue( filaEsperaOcupacional, "getTempoEspera" ) );
+        
+        if (this.getValue(filaEsperaOcupacional, "getFichaColeta") !== undefined) { 
+            cloneFilaEsperaOcupacional.setFichaColeta(
+                    new FichaColetaBuilder().clone(this.getValue(filaEsperaOcupacional,"getFichaColeta")));
+            if(!this.idGtZero(cloneFilaEsperaOcupacional.getFichaColeta()))
+                cloneFilaEsperaOcupacional.setFichaColeta(undefined);
+        } else {
+            cloneFilaEsperaOcupacional.setFichaColeta(new FichaColetaBuilder().initialize(null));
+        }
         
         if(this.getValue(filaEsperaOcupacional, "getStatus") == "")
             cloneFilaEsperaOcupacional.setStatus(undefined);
@@ -51,6 +67,13 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
             cloneFilaEsperaOcupacional.setStatus("");
         else
             cloneFilaEsperaOcupacional.setStatus(this.getValue(filaEsperaOcupacional, "getStatus"));
+        
+        if (this.getValue(filaEsperaOcupacional, "getRiscoPotencial") !== undefined) { 
+            cloneFilaEsperaOcupacional.setRiscoPotencial(
+                    new RiscoPotencialBuilder().clone(this.getValue(filaEsperaOcupacional,"getRiscoPotencial")));
+        } else {
+            cloneFilaEsperaOcupacional.setRiscoPotencial(new RiscoPotencialBuilder().initialize(null));            
+        }
         
         cloneFilaEsperaOcupacional.setEmpregado(new EmpregadoBuilder().clone(this.getValue(filaEsperaOcupacional, "getEmpregado")));
         cloneFilaEsperaOcupacional.setLocalizacao(new LocalizacaoBuilder().clone(this.getValue(filaEsperaOcupacional, "getLocalizacao")));
