@@ -74,6 +74,7 @@ import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-grupo.guard';
 import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
 import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
+import { PanoramaGuard } from './guards/panorama.guard';
 
 @NgModule({
   declarations: [
@@ -153,6 +154,7 @@ import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
     RiscoGheGuard,
     RiscoPotencialGuard,
     NotificacaoGuard
+    PanoramaGuard
   ],
   bootstrap: [ 
     AppComponent
