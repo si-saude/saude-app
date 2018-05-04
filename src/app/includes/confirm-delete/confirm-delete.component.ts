@@ -33,9 +33,21 @@ export class ConfirmDeleteComponent extends GenericListComponent<null, null, nul
             setTimeout(() => this.modalDelete.emit( { action: "modal", params: ["open"] } ), 1 );
     }
 
-    confirmDel() {
-        this.tempDelete = this.idDelete;
-        super.confirmDelete();
+//    confirmDel() {
+//        this.tempDelete = this.idDelete;
+//        super.confirmDelete();
+//    }
+    
+    confirmDelete() {
+        this.showPreload = true;
+        this.service.delete( this.idDelete )
+            .then( res => {
+                this.showPreload = false;
+                window.location.reload();
+            } )
+            .catch( error => {
+                alert("Erro ao excluir o campo: " + error.text());
+            } )
     }
 
     onDestroy() {

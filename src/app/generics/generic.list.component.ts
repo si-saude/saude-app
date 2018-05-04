@@ -122,12 +122,6 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         this.list();
     }
 
-    delete( id ) {
-        this.modalDelete.emit( { action: "modal", params: ['open'] } );
-        this.tempDelete = id;
-        this.openModalDelete = true;
-    }
-
     closeModalDelete() {
         this.modalDelete.emit( { action: "modal", params: ['close'] } );
     }
@@ -148,16 +142,22 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         this.modalImport.emit( { action: "modal", params: ['close'] } );
     }
 
-    confirmDelete() {
-        this.showPreload = true;
-        this.service.delete( this.tempDelete )
-            .then( res => {
-                this.showPreload = false;
-                window.location.reload();
-            } )
-            .catch( error => {
-                alert("Erro ao excluir o campo: " + error.text());
-            } )
+//    confirmDelete() {
+//        this.showPreload = true;
+//        this.service.delete( this.tempDelete )
+//            .then( res => {
+//                this.showPreload = false;
+//                window.location.reload();
+//            } )
+//            .catch( error => {
+//                alert("Erro ao excluir o campo: " + error.text());
+//            } )
+//    }
+    
+    delete( id ) {
+        this.modalDelete.emit( { action: "modal", params: ['open'] } );
+        this.tempDelete = id;
+        this.openModalDelete = true;
     }
 
     parseDataToObjectDatePicker( data ) {
