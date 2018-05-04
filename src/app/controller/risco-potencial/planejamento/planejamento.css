@@ -8,6 +8,8 @@ table {
 tbody {
 	display: flex !important;
 	padding: 0;
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
 }
 
 thead > tr {
@@ -26,12 +28,6 @@ th {
 td > a > i {
 	margin-top: -5px;
 }
-
-tbody{
-	margin-top: 10px;
-	border-bottom: 1px solid #c0c0c0;	
-}
-
 
 .container-triagens-planejamento tbody {
 	margin-top: 0px !important;

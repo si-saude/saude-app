@@ -55,7 +55,7 @@ tbody{
 }
 
 .table-triagem {
-	margin-top: -40px;
+	
 }
 
 .indice0 {
@@ -86,4 +86,8 @@ tbody{
 .nome {
 	padding-left: 0px;
     font-size: 12px;
+}
+
+.row-btns {
+	margin-bottom: 40px;
 }

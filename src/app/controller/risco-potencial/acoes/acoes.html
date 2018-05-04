@@ -76,6 +76,15 @@
 											disabled [(ngModel)]="triagem.justificativa"></td>
 									</tr>
 									<tr class="row col s12">
+										<td class="col s3 label-ignorar-acoes">Ignorar Ações</td>
+										<td class="col s9 ignorar-acoes"><input type="checkbox"
+											id="triagem.ignorarAcoes{{e}}{{t}}"
+											[(ngModel)]="triagem.ignorarAcoes"
+											name="triagem.ignorarAcoes{{e}}{{t}}">
+											<label for="triagem.ignorarAcoes{{e}}{{t}}"></label>
+										</td>
+									</tr>
+									<tr class="row col s12">
 										<td class="col s3 label-acoes">Acões <a
 											(click)="addAcao(equipe.id, t)" 
 											class="btn-floating waves-effect waves-light btn-add-acao">

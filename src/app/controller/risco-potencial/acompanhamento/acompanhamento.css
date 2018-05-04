@@ -3,8 +3,7 @@
 }
 
 .container-triagem {
-	max-height: 500px;
-    overflow: auto;
+
 }
 
 .row-modal-acao {
@@ -35,8 +34,9 @@ table {
 tbody {
 	margin-top: 2px;
 	border-bottom: 1px solid #c0c0c0;
-	display: grid;
+	display: table;
 	padding: 0;
+	width: 100%;
 }
 
 thead > tr {
@@ -83,4 +83,8 @@ td > a > i {
 .table-acompanhamento {
 	margin-top: 10px !important;
     margin-bottom: 10px !important;
+}
+
+.row-btns {
+	margin-bottom: 130px;
 }

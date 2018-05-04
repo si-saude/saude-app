@@ -251,6 +251,7 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
         let ret: boolean = (this.equipesAbordagemTriagens != undefined && this.equipesAbordagemTriagens.length > 0);
         this.equipesAbordagemTriagens.forEach(eA => {
             this.triagensByEquipeAbordagem[eA.getId()].forEach(t => {
+                if ( t.getIgnorarAcoes() ) return; 
                 if ( ( this.profissional.getEquipe().getId() != this.riscoPotencial.getEquipeResponsavel().getId() && 
                         t.getIndicadorSast().getEquipe().getId() != this.profissional.getEquipe().getId() &&
                         t.getEquipeAbordagem().getId() != this.profissional.getEquipe().getId() ) ||
@@ -261,7 +262,7 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
                     ret = false;
             });
         });
-        console.log(this.triagensByEquipeAbordagem);
+        
         return ret;
     }
 

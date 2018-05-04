@@ -6,9 +6,6 @@
 	padding-top: 20px;
 	width: 100%;
     margin-bottom: 30px;
-	max-height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .table-triagem {
@@ -28,10 +25,11 @@ table {
 }
 
 tbody {
-	margin-top: 2px;
-	border-bottom: 1px solid #c0c0c0;
-	display: grid;
+	display: table !important;
+	width: 100%;
 	padding: 0;
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;
 }
 
 thead > tr {
@@ -57,5 +55,9 @@ td > a > i {
     margin-bottom: 0px !important;
 	width: 30px;
     height: 30px;
+}
+
+.row-btns {
+	margin-bottom: 130px;
 }
 

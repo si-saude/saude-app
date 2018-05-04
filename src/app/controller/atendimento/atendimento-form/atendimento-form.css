@@ -146,9 +146,6 @@ tbody{
 	padding-top: 20px;
 	width: 100%;
     margin-bottom: 30px;
-	max-height: 400px;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .container-triagens {

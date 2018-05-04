@@ -137,6 +137,13 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
     }
     
     save() {
+        
+        if ( !this.verifyValidTriagens() ) {
+            this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+        
         this.showPreload = true;
         this.canDeactivate = true;
         this.riscoEmpregadoService.saveReavaliacao(new RiscoEmpregadoBuilder().clone(this.riscoEmpregado))
@@ -148,6 +155,16 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
             } )
     }
     
+    verifyValidTriagens() {
+        let triagem = this.riscoEmpregado.getTriagens().find( t => {
+            if ( t.getIndicadorSast().getObrigatorio() == true && t.getIndice() == -1 )
+                return true;
+            else return false;
+        } );
+
+        if ( triagem != undefined ) return false;
+        else return true;
+    }
     
     verifyIndiceTriagem( triagem: Triagem ) {
         if ( triagem.getIndice() > -1 ) return true;

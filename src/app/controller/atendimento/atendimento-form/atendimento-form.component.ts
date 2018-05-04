@@ -305,6 +305,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    
                     if ( this.atendimento.getTriagens() != undefined )
                         this.atendimento.getTriagens().forEach(t => {
                             if ( t.getDiagnostico() == undefined )
@@ -940,12 +941,17 @@ export class AtendimentoFormComponent {
     getTriagensTodosAtendimentos() {
         this.equipesTriagensTodosAtendimentos = new Array<Equipe>();
         this.triagensTodosAtendimentosByEquipe = [[]];
-
+        
         this.atendimento.getTriagensTodosAtendimentos().forEach( t => {
-            if ( t.getJustificativa() != undefined && t.getJustificativa() != "" ) {
-                t.setDiagnostico(new DiagnosticoBuilder().initialize(new Diagnostico()));
-                t.setEquipeAbordagem(new EquipeBuilder().initialize(new Equipe()));
-                t.setIntervencao(new IntervencaoBuilder().initialize(new Intervencao()));
+            if ( t.getJustificativa() != undefined || t.getJustificativa() != '' ) {
+                if ( t.getDiagnostico() == undefined )
+                    t.setDiagnostico(new DiagnosticoBuilder().initialize(new Diagnostico()));
+                if (t.getIntervencao() == undefined )
+                    t.setIntervencao(new IntervencaoBuilder().initialize(new Intervencao()));
+                if (t.getEquipeAbordagem() == undefined )
+                    t.setEquipeAbordagem(new EquipeBuilder().initialize(new Equipe()));
+                if (t.getPrazo() == undefined )
+                    t.setPrazo('');
             }
             
             if ( t.getDiagnostico() != undefined && t.getDiagnostico().getId() > 0 || 

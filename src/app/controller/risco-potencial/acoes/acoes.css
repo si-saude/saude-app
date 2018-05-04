@@ -1,10 +1,21 @@
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked  {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}
+
+.checkbox {
+	margin-top: 0px;
+	padding-left: 35px;
+}
+
 .form-container {
 	display: grid !important;
 }
 
 .container-triagem {
-	max-height: 500px;
-    overflow: auto;
+
 }
 
 .row-modal-acao {
@@ -37,7 +48,8 @@ table {
 tbody {
 	margin-top: 2px;
 	border-bottom: 1px solid #c0c0c0;
-	display: grid;
+	display: table;
+	width: 100%;
 	padding: 0;
 }
 
@@ -66,4 +78,8 @@ td > a > i {
 
 .icon-btn-add-acao {
 	margin: 0 !important;
+}
+
+.row-btns {
+	margin-bottom: 130px;
 }

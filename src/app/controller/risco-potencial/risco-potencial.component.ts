@@ -112,6 +112,8 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
             this.filter.setEmpregado(new EmpregadoFilter());
             this.filter.getEmpregado().setBase(new BaseFilter());
             this.filter.getEmpregado().getBase().setUf(this.uf);
+            this.filter.setPageNumber(1);
+            this.filter.setPageSize(Math.pow(2, 31)-1);
             this.servico.listAll( this.filter )
                 .then( res => {
                     this.showPreload = false;

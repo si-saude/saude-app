@@ -18,6 +18,7 @@ export class Triagem {
     private prazo: string = "";
     private justificativa: string;
     private acoes: Array<Acao>;
+    private ignorarAcoes: boolean;
     private version: number;
 
     getId() {
@@ -115,4 +116,13 @@ export class Triagem {
     setAcoes(acoes: Array<Acao>) {
         this.acoes = acoes;
     }
+    
+    getIgnorarAcoes() {
+        return this.ignorarAcoes;
+    }
+    
+    setIgnorarAcoes(ignorarAcoes: boolean) {
+        this.ignorarAcoes = ignorarAcoes;
+    }
+    
 }
