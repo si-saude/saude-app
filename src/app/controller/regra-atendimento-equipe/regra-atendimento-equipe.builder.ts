@@ -41,7 +41,6 @@ export class RegraAtendimentoEquipeBuilder extends GenericBuilder {
         let cloneRegraAtendimentoEquipe = new RegraAtendimentoEquipe();
         cloneRegraAtendimentoEquipe.setId(this.getValue(regraAtendimentoEquipe,"getId"));
         cloneRegraAtendimentoEquipe.setVersion(this.getValue(regraAtendimentoEquipe,"getVersion"));
-        cloneRegraAtendimentoEquipe.setAcolhimento(this.getValue(regraAtendimentoEquipe,"getAcolhimento"));
         
         cloneRegraAtendimentoEquipe.setEquipe(new EquipeBuilder().
                 clone(this.getValue(regraAtendimentoEquipe,"getEquipe")));

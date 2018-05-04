@@ -30,7 +30,8 @@
 				<div class="row">
 					<div class="input-field col s12">
 						<label for="nome">Nome</label> <input id="nome" type="text"
-							[(ngModel)]="regraAtendimento.nome" name="regraAtendimento.nome">
+							[(ngModel)]="regraAtendimento.nome"
+							name="regraAtendimento.nome">
 					</div>
 				</div>
 
@@ -38,7 +39,7 @@
 
 			<div id="informacoesAdicionais">
 
-				<div class="row container-regras">
+				<div class="row">
 
 					<div class="input-field col s7">
 						<div class="collection">
@@ -68,35 +69,18 @@
 									</div>
 								</div>
 							</fieldset>
-							<div class="row row-collection label-row-collection">
-								<div class="col s7 div-label-equipe">
-									<p class="label-equipe"><b>Equipe</b></p>
-								</div>
-								<div class="col s4 div-label-acolhimento">
-									<p class="label-acolhimento"><b>Acolhimento</b></p>
-								</div>
-								<div class="col s1 div-label-remover">
-									<p class="label-remover"><b>Remover</b></p>
-								</div>
-							</div>
+
 							<div class="row-item-collection"
 								*ngFor="let regraAtendimentoEquipe of regraAtendimento.regraAtendimentoEquipes; let rAE = index">
 								<div class="row row-collection">
-									<div class="col s7">
+									<div class="col s10">
 										<a [ngClass]="selectedEquipe(rAE)"
 											[routerLinkActive]="['active']" class="collection-item"
 											(click)="selectEquipe(rAE)">
 											{{regraAtendimentoEquipe.equipe.nome}} </a>
 									</div>
-									<div class="input-field col s4 checkbox">
-										<input type="checkbox" (click)="checkCheckbox(regraAtendimentoEquipe)"
-											id="regraAtendimento{{rAE}}.acolhimento"
-											[(ngModel)]="regraAtendimentoEquipe.acolhimento"
-											name="regraAtendimento{{rAE}}.acolhimento"><label
-											for="regraAtendimento{{rAE}}.acolhimento"></label>
-									</div>
-									<div class="col s1 btn-delete">
-										<a [ngStyle]="{'cursor': 'pointer'}" class="a-btn-delete"
+									<div class="col s2 btn-delete">
+										<a [ngStyle]="{'cursor': 'pointer'}"
 											(click)="removeEquipe(rAE)"> <i class="material-icons">delete</i>
 										</a>
 									</div>
@@ -122,7 +106,8 @@
 									<div class="input-field col s4">
 										<select class="browser-default" #requisito>
 											<option disabled selected value=0>Selecione um requisito</option>
-											<option *ngFor="let rqst of requisitos" value="{{rqst.id}}">{{rqst.nome}}</option>
+											<option *ngFor="let rqst of requisitos"
+												value="{{rqst.id}}">{{rqst.nome}}</option>
 										</select>
 									</div>
 

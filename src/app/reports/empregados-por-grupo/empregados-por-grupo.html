@@ -1,0 +1,77 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="select">
+	<div class="row row-select">
+		<div class="col s8">
+			<select name="gruposMonitoramento" class="browser-default"
+				[(ngModel)]="grupoMonitoramento">
+				<option disabled selected value="0">Selecione um grupo de monitoramento</option>
+				<option *ngFor="let grupo of gruposMonitoramento" value="{{grupo.id}}">{{grupo.nome}}</option>
+			</select>
+		</div>
+		
+		<div class="col s4">
+			<a class="btn btn-primary btn-listar" (click)='fetchEmpregadosPorGrupo()'>Buscar</a>
+		</div>
+	</div>
+</div>
+
+<div class="list-container">
+	<table class="table table-striped" [mfData]="empregadosPorGrupo | filterData : filter : typeFilter : value" #mf="mfDataTable">
+	    <thead>
+		    <tr>
+		        <th style="width: 1%">
+		            <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+		            <input type="text" name="nome" style="width: 90%" 
+							placeholder="filtrar nome"
+							(input)="selectFilter($event, 'nome')">
+		        </th>
+		        <th style="width: 1%">
+		            <mfDefaultSorter by="chave">Chave</mfDefaultSorter>
+		            <input type="text" name="chave" style="width: 90%" 
+							placeholder="filtrar chave"
+							(input)="selectFilter($event, 'chave')">
+		        </th>
+		        <th style="width: 1%">
+		            <mfDefaultSorter by="matricula">Matrícula</mfDefaultSorter>
+		            <input type="text" name="matricula" style="width: 90%" 
+							placeholder="filtrar matrícula"
+							(input)="selectFilter($event, 'matricula')">
+		        </th>
+		        <th style="width: 1%">
+		            <mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
+		            <i class="small material-icons icon" style="margin-top: -10%;"
+							(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
+					<div class="div-icon" id="gerencia"></div>
+		        </th>
+		    </tr>
+	    </thead>
+	    <tbody>
+		    <tr *ngFor="let item of mf.data">
+		        <td>{{item.nome}}</td>
+		        <td>{{item.chave}}</td>
+		        <td>{{item.matricula}}</td>
+		        <td>{{item.gerencia}}</td>
+		    </tr>
+	    </tbody>
+	</table>
+</div>
+
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
+</div>
+
+<ul id='dropdown' class='dropdown-conteudo'></ul>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

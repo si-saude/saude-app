@@ -17,7 +17,7 @@
 				<label for="nome">Nome</label> <input id="nome" type="text" disabled
 					[(ngModel)]="empregadoConvocacao.empregado.pessoa.nome" name="nome">
 			</div>
-			<div class="input-field col s2 checkbox checkbox-auditado">
+			<div class="input-field col s2 checkbox">
 				<input type="checkbox" id="auditado" [disabled]="!verifyAuditado()"
 					[(ngModel)]="empregadoConvocacao.auditado"
 					name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
@@ -66,10 +66,10 @@
 			<table class="striped">
 				<thead>
 					<tr class="row col s12">
-						<th class="col s2">Código</th>
-						<th class="col s8">Descrição</th>
-						<th class="col s1">Conforme</th>
-						<th class="col s1">Excluir</th>
+						<th class="col s3">Código</th>
+						<th class="col s3">Descrição</th>
+						<th class="col s3">Conforme</th>
+						<th class="col s3">Excluir</th>
 					</tr>
 				</thead>
 				<div class="contaniner-exames">
@@ -77,16 +77,16 @@
 						*ngFor="let empregadoConvocacaoExame of empregadoConvocacao.empregadoConvocacaoExames; let eCE = index">
 						<tbody class="col s12">
 							<tr class="col s12">
-								<td class="col s2 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
-								<td class="col s8 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
-								<td class="col s1 checkbox-conforme">
+								<td class="col s3 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
+								<td class="col s3 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
+								<td class="col s3 checkbox-conforme">
 									<input [disabled]="empregadoConvocacaoExame.pendenteRelatorio"
 									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].conforme"
 									[(ngModel)]="empregadoConvocacaoExame.conforme"
 									name="empregadoConvocacaoExame[{{eCE}}].conforme"> 
 									<label for="empregadoConvocacaoExame[{{eCE}}].conforme"></label>
 								</td>
-								<td class="col s1 btn-remover"><a
+								<td class="col s3 btn-remover"><a
 									(click)="removeExame(eCE)" [ngStyle]="{'cursor': 'pointer'}"><i
 										class="material-icons">delete</i></a></td>
 							</tr>

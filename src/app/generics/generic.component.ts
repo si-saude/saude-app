@@ -1,8 +1,6 @@
-import { EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { IMyDpOptions } from 'mydatepicker';
-import { MaterializeAction } from "angular2-materialize";
 
 import { HTMLStatus } from './../html-status';
 
@@ -17,12 +15,8 @@ export abstract class GenericComponent {
     protected verifyError: boolean = false;
     protected myDatePickerOptions: IMyDpOptions;
     protected modalParams;
-    protected router;
-    protected globalActions;
-    protected toastParams;
     
-    constructor( r: Router ) {
-        this.router = r;
+    constructor( private router: Router ) {
         this.showPreload = true;
         this.showConfirmSave = false;
         this.msgConfirmSave = "Salvo com sucesso! Ao confirmar, você será redirecionado para a tela de listagem.";
@@ -34,8 +28,6 @@ export abstract class GenericComponent {
             dismissible: false,
             complete: function() { }
         }];
-        this.globalActions = new EventEmitter<string | MaterializeAction>();
-        this.toastParams = ['', 4000];
     }
     
     // verifica se servidor está ligado

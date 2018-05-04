@@ -14,8 +14,7 @@ import { BaseService } from './../base.service';
     styleUrls: ['./base-form.css', './../../../../assets/css/form-component.css']
 } )
 export class BaseFormComponent extends GenericFormComponent implements OnInit {
-    private base: Base;
-    private ufs: Array<string>;
+    base: Base;
 
     constructor( private route: ActivatedRoute,
         private baseService: BaseService,
@@ -24,7 +23,6 @@ export class BaseFormComponent extends GenericFormComponent implements OnInit {
 
         this.goTo = "base";
         this.base = new BaseBuilder().initialize( this.base );
-        this.ufs = new Array<string>();
     }
 
     ngOnInit() {
@@ -44,18 +42,6 @@ export class BaseFormComponent extends GenericFormComponent implements OnInit {
                         } )
                 }
             } );
-        
-        this.getUfs();
-    }
-    
-    getUfs() {
-        this.baseService.getUfs()
-            .then(res => {
-                this.ufs = Object.keys( res.json() ).sort();
-            })
-            .catch(error => {
-                console.log("Erro ao retornar ufs.");
-            })
     }
 
     ngOnDestroy() {

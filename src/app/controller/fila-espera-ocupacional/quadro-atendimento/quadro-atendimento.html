@@ -1,0 +1,78 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="content-request">
+
+	<fieldset class="fieldset-informacoes">
+		<legend>Informações</legend>
+
+		<div class="row">
+
+			<div class="input-field col s7">
+				<fieldset>
+					<legend>Localizacao</legend>
+					<div class="input-field col s12 fldst">
+						<select class="browser-default" #localizacao>
+							<option disabled selected value=0>Selecione uma localização</option>
+							<option *ngFor="let localizacao of localizacoes"
+								value="{{localizacao.id}}">{{localizacao.nome}}</option>
+						</select>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="input-field col s3 dataTarefas">
+				<label for="dataTarefas">Data das Tarefas</label>
+				<my-date-picker name="dataTarefas" [options]="myDatePickerOptions"
+					[(ngModel)]="dataTarefas" placeholder="Data"> </my-date-picker>
+			</div>
+
+			<div class="col s2 btn-buscar">
+				<button (click)="search(localizacao.value)"
+					class="btn btn-primary btn-buscar">Buscar</button>
+			</div>
+
+		</div>
+
+	</fieldset>
+
+	<div class="row content-tarefas">
+
+		<div *ngFor="let empregado of empregados; let e = index">
+
+			<fieldset>
+				<legend class="{{empregado.id}}">{{empregado.pessoa.nome}}</legend>
+				<table class="striped">
+					<thead>
+						<tr class="row col s12 table-fila-espera">
+							<th class="col s4">Equipe</th>
+							<th class="col s4">Início</th>
+							<th class="col s4">Fim</th>
+						</tr>
+					</thead>
+					<tbody class="col s12">
+						<tr class="col s12">
+							<div *ngFor="let tarefa of tarefas[empregado.id-1]; let t = index">
+								<td class="col s4 equipe-nome">{{tarefa.equipe.nome}}</td>
+								<td class="col s4 inicio">
+									<input name="dataInicioTarefa{{tarefa.id}}" disabled
+										type="text" [(ngModel)]="dataInicioTarefa[tarefa.id]">
+									</td>
+								<td class="col s4 fim">
+									<input name="dataFimTarefa{{tarefa.id}}" disabled 
+										type="text" [(ngModel)]="dataFimTarefa[tarefa.id]">
+								</td>
+							</div>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+
+	</div>
+
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

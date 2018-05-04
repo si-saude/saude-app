@@ -342,26 +342,4 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
             }
         }
     }
-    
-    showToastGhe(evento) {
-        if ( evento == 0 ) return;
-        
-        let ghe = this.ghes.find(g => g['id'] == evento);
-        
-        this.toastParams = [ghe['descricao'], 60000];
-        this.globalActions.emit('toast');
-    }
-    
-    showToastGhee(evento) {
-        if ( evento == 0 ) return;
-        
-        let ghee = this.ghees.find(g => g['id'] == evento);
-        
-        this.toastParams = [ghee['descricao'], 60000];
-        this.globalActions.emit('toast');
-    }
-    
-    closeTooltip() {
-        $(".toast").remove();
-    }
 }

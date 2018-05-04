@@ -5,7 +5,6 @@ export class Equipe {
     private nome: string;
     private abreviacao: string;
     private coordenador: Profissional;
-    private prioridadeSast: number;
     private version: number;
 
     getId(): number {
@@ -47,13 +46,4 @@ export class Equipe {
     setCoordenador(coordenador: Profissional){
         this.coordenador = coordenador;
     }
-    
-    getPrioridadeSast(){
-        return this.prioridadeSast;
-    }
-    
-    setPrioridadeSast(prioridade:number){
-        this.prioridadeSast = prioridade;
-    }
-    
 }

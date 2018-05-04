@@ -6,7 +6,6 @@ export class FilterDataPipe implements PipeTransform {
     private mapValue = [[]];
     private mapTypes: Array<string>;
     private savedArray: Array<any>;
-    private lastFlagArray: Array<any> = new Array<any>();
 
     constructor() {
         this.mapTypes = new Array<string>();
@@ -15,6 +14,14 @@ export class FilterDataPipe implements PipeTransform {
 
     transform( array: any[], filter: any, tipo: string, value: string ) {
         let typeofFilter = typeof filter;
+        
+        if ( value == "$*all*$" ) {
+            this.mapValue = [[]];
+            this.mapTypes = new Array<string>();
+            this.arrayFiltered = array;
+            this.savedArray = array;
+            return array;
+        }
         
         if ( tipo == undefined ) {
             this.arrayFiltered = array;

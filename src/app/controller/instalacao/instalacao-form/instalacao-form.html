@@ -71,62 +71,60 @@
 						<div
 							*ngFor="let indicadorRiscoAcidenteInstalacao of instalacao.indicadorRiscoAcidenteInstalacoes;let i = index">
 
-							<div class="row">
-								<div class="input-field col s4">
-									<fieldset>
-										<legend>
-											Indicador de Risco Acidente <a
-												class="btn-floating waves-effect waves-light green btn-add-fieldset"
-												(click)="getAcidentes()"> <i
-												class="material-icons center-icon">cached</i>
-											</a>
-										</legend>
+							<div class="input-field col s4">
+								<fieldset>
+									<legend>
+										Indicador de Risco Acidente <a
+											class="btn-floating waves-effect waves-light green btn-add-fieldset"
+											(click)="getAcidentes()"> <i
+											class="material-icons center-icon">cached</i>
+										</a>
+									</legend>
 
-										<select class="browser-default"
-											name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].indicadorRisco.id"
-											[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].indicadorRisco.id">
-											<option disabled selected value=0>Selecione um indicador</option>
-											<option
-												*ngFor="let indicadorRiscoAcidente of indicadoresRiscoAcidente"
-												value="{{indicadorRiscoAcidente.id}}">{{indicadorRiscoAcidente.nome}}</option>
-										</select>
+									<select class="browser-default"
+										name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].indicadorRisco.id"
+										[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].indicadorRisco.id">
+										<option disabled selected value=0>Selecione um indicador</option>
+										<option
+											*ngFor="let indicadorRiscoAcidente of indicadoresRiscoAcidente"
+											value="{{indicadorRiscoAcidente.id}}">{{indicadorRiscoAcidente.nome}}</option>
+									</select>
 
-									</fieldset>
-								</div>
-
-								<div class="input-field col s3">
-									<label for="dataInspecaoAcidente">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoAcidente[i]"
-										placeholder="Data de Inspeção"> </my-date-picker>
-								</div>
-
-								<div class="input-field col s3">
-									<label for="indicadorRiscoAcidenteInstalacoes[{{i}}].avaliacao">Avaliação</label>
-									<input type="number" min="0" max="5"
-										name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].avaliacao"
-										[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].avaliacao">
-								</div>
-
-								<div class="col s2">
-									<a class="btn-floating waves-effect waves-light red btn-remove"
-										(click)="removeIndicadoresRiscoAcidenteInstalacao(i)"> <i
-										class="material-icons center-icon">delete</i>
-									</a>
-								</div>
-
-								<input id="id"
-									name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].id"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].id">
-								<input id="version"
-									name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].version"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].version">
-
+								</fieldset>
 							</div>
+
+							<div class="input-field col s3">
+								<label for="dataInspecaoAcidente">Data de Inspeção</label>
+								<my-date-picker
+									name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].dataInspecao"
+									[options]="myDatePickerOptions"
+									[(ngModel)]="dataInspecaoAcidente[i]"
+									placeholder="Data de Inspeção"> </my-date-picker>
+							</div>
+
+							<div class="input-field col s3">
+								<label for="indicadorRiscoAcidenteInstalacoes[{{i}}].avaliacao">Avaliação</label>
+								<input type="number" min="0" max="5"
+									name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].avaliacao"
+									[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].avaliacao">
+							</div>
+
+							<div class="col s2">
+								<a class="btn-floating waves-effect waves-light red btn-remove"
+									(click)="removeIndicadoresRiscoAcidenteInstalacao(i)"> <i
+									class="material-icons center-icon">delete</i>
+								</a>
+							</div>
+
+							<input id="id"
+								name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].id"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].id">
+							<input id="version"
+								name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].version"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].version">
+
 						</div>
 
 					</div>
@@ -151,64 +149,62 @@
 						<div
 							*ngFor="let indicadorRiscoAmbientalInstalacao of instalacao.indicadorRiscoAmbientalInstalacoes;let i = index">
 
-							<div class="row">
-								<div class="input-field col s4">
-									<fieldset>
-										<legend>
-											Indicador de Risco Ambiental <a
-												class="btn-floating waves-effect waves-light green btn-add-fieldset"
-												(click)="getAmbientais()"> <i
-												class="material-icons center-icon">cached</i>
-											</a>
-										</legend>
+							<div class="input-field col s4">
+								<fieldset>
+									<legend>
+										Indicador de Risco Ambiental <a
+											class="btn-floating waves-effect waves-light green btn-add-fieldset"
+											(click)="getAmbientais()"> <i
+											class="material-icons center-icon">cached</i>
+										</a>
+									</legend>
 
-										<select class="browser-default"
-											name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].indicadorRisco.id"
-											[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].indicadorRisco.id">
-											<option disabled selected value=0>Selecione um indicador</option>
-											<option
-												*ngFor="let indicadorRiscoAmbiental of indicadoresRiscoAmbiental"
-												value="{{indicadorRiscoAmbiental.id}}">{{indicadorRiscoAmbiental.nome}}</option>
-										</select>
+									<select class="browser-default"
+										name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].indicadorRisco.id"
+										[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].indicadorRisco.id">
+										<option disabled selected value=0>Selecione um indicador</option>
+										<option
+											*ngFor="let indicadorRiscoAmbiental of indicadoresRiscoAmbiental"
+											value="{{indicadorRiscoAmbiental.id}}">{{indicadorRiscoAmbiental.nome}}</option>
+									</select>
 
-									</fieldset>
-								</div>
-
-								<div class="input-field col s3">
-									<label for="dataInspecaoAmbiental">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoAmbiental[i]"
-										placeholder="Data de Inspeção"> </my-date-picker>
-								</div>
-
-								<div class="input-field col s3">
-									<label
-										for="indicadorRiscoAmbientalInstalacoes[{{i}}].avaliacao">Avaliação</label>
-									<input type="number" min="0" max="5"
-										name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].avaliacao"
-										[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].avaliacao">
-								</div>
-
-								<div class="col s2">
-									<a class="btn-floating waves-effect waves-light red btn-remove"
-										(click)="removeIndicadoresRiscoAmbientalInstalacao(i)"> <i
-										class="material-icons center-icon">delete</i>
-									</a>
-								</div>
-
-								<input id="id"
-									name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].id"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].id">
-								<input id="version"
-									name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].version"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].version">
-
+								</fieldset>
 							</div>
+
+							<div class="input-field col s3">
+								<label for="dataInspecaoAmbiental">Data de Inspeção</label>
+								<my-date-picker
+									name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].dataInspecao"
+									[options]="myDatePickerOptions"
+									[(ngModel)]="dataInspecaoAmbiental[i]"
+									placeholder="Data de Inspeção"> </my-date-picker>
+							</div>
+
+							<div class="input-field col s3">
+								<label for="indicadorRiscoAmbientalInstalacoes[{{i}}].avaliacao">Avaliação</label>
+								<input type="number" min="0" max="5"
+									name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].avaliacao"
+									[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].avaliacao">
+							</div>
+
+							<div class="col s2">
+								<a class="btn-floating waves-effect waves-light red btn-remove"
+									(click)="removeIndicadoresRiscoAmbientalInstalacao(i)"> <i
+									class="material-icons center-icon">delete</i>
+								</a>
+							</div>
+
+							<input id="id"
+								name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].id"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].id">
+							<input id="version"
+								name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].version"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].version">
+
 						</div>
+
 					</div>
 
 				</fieldset>
@@ -232,64 +228,63 @@
 						<div
 							*ngFor="let indicadorRiscoErgonomicoInstalacao of instalacao.indicadorRiscoErgonomicoInstalacoes;let i = index">
 
-							<div class="row">
-								<div class="input-field col s4">
-									<fieldset>
-										<legend>
-											Indicador de Risco Ergonomico <a
-												class="btn-floating waves-effect waves-light green btn-add-fieldset"
-												(click)="getErgonomicos()"> <i
-												class="material-icons center-icon">cached</i>
-											</a>
-										</legend>
+							<div class="input-field col s4">
+								<fieldset>
+									<legend>
+										Indicador de Risco Ergonomico <a
+											class="btn-floating waves-effect waves-light green btn-add-fieldset"
+											(click)="getErgonomicos()"> <i
+											class="material-icons center-icon">cached</i>
+										</a>
+									</legend>
 
-										<select class="browser-default"
-											name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].indicadorRisco.id"
-											[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].indicadorRisco.id">
-											<option disabled selected value=0>Selecione um indicador</option>
-											<option
-												*ngFor="let indicadorRiscoErgonomico of indicadoresRiscoErgonomico"
-												value="{{indicadorRiscoErgonomico.id}}">{{indicadorRiscoErgonomico.nome}}</option>
-										</select>
+									<select class="browser-default"
+										name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].indicadorRisco.id"
+										[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].indicadorRisco.id">
+										<option disabled selected value=0>Selecione um indicador</option>
+										<option
+											*ngFor="let indicadorRiscoErgonomico of indicadoresRiscoErgonomico"
+											value="{{indicadorRiscoErgonomico.id}}">{{indicadorRiscoErgonomico.nome}}</option>
+									</select>
 
-									</fieldset>
-								</div>
-
-								<div class="input-field col s3">
-									<label for="dataInspecaoErgonomico">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoErgonomico[i]"
-										placeholder="Data de Inspeção"> </my-date-picker>
-								</div>
-
-								<div class="input-field col s3">
-									<label
-										for="indicadorRiscoErgonomicoInstalacoes[{{i}}].avaliacao">Avaliação</label>
-									<input type="number" min="0" max="5"
-										name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].avaliacao"
-										[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].avaliacao">
-								</div>
-
-								<div class="col s2">
-									<a class="btn-floating waves-effect waves-light red btn-remove"
-										(click)="removeIndicadoresRiscoErgonomicoInstalacao(i)"> <i
-										class="material-icons center-icon">delete</i>
-									</a>
-								</div>
-
-								<input id="id"
-									name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].id"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].id">
-								<input id="version"
-									name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].version"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].version">
-
+								</fieldset>
 							</div>
+
+							<div class="input-field col s3">
+								<label for="dataInspecaoErgonomico">Data de Inspeção</label>
+								<my-date-picker
+									name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].dataInspecao"
+									[options]="myDatePickerOptions"
+									[(ngModel)]="dataInspecaoErgonomico[i]"
+									placeholder="Data de Inspeção"> </my-date-picker>
+							</div>
+
+							<div class="input-field col s3">
+								<label
+									for="indicadorRiscoErgonomicoInstalacoes[{{i}}].avaliacao">Avaliação</label>
+								<input type="number" min="0" max="5"
+									name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].avaliacao"
+									[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].avaliacao">
+							</div>
+
+							<div class="col s2">
+								<a class="btn-floating waves-effect waves-light red btn-remove"
+									(click)="removeIndicadoresRiscoErgonomicoInstalacao(i)"> <i
+									class="material-icons center-icon">delete</i>
+								</a>
+							</div>
+
+							<input id="id"
+								name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].id"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].id">
+							<input id="version"
+								name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].version"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].version">
+
 						</div>
+
 					</div>
 
 				</fieldset>
@@ -312,64 +307,62 @@
 						<div
 							*ngFor="let indicadorRiscoSanitarioInstalacao of instalacao.indicadorRiscoSanitarioInstalacoes;let i = index">
 
-							<div class="row">
-								<div class="input-field col s4">
-									<fieldset>
-										<legend>
-											Indicador de Risco Sanitário <a
-												class="btn-floating waves-effect waves-light green btn-add-fieldset"
-												(click)="getSanitarios()"> <i
-												class="material-icons center-icon">cached</i>
-											</a>
-										</legend>
+							<div class="input-field col s4">
+								<fieldset>
+									<legend>
+										Indicador de Risco Sanitário <a
+											class="btn-floating waves-effect waves-light green btn-add-fieldset"
+											(click)="getSanitarios()"> <i
+											class="material-icons center-icon">cached</i>
+										</a>
+									</legend>
 
-										<select class="browser-default"
-											name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].indicadorRisco.id"
-											[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].indicadorRisco.id">
-											<option disabled selected value=0>Selecione um indicador</option>
-											<option
-												*ngFor="let indicadorRiscoSanitario of indicadoresRiscoSanitario"
-												value="{{indicadorRiscoSanitario.id}}">{{indicadorRiscoSanitario.nome}}</option>
-										</select>
+									<select class="browser-default"
+										name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].indicadorRisco.id"
+										[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].indicadorRisco.id">
+										<option disabled selected value=0>Selecione um indicador</option>
+										<option
+											*ngFor="let indicadorRiscoSanitario of indicadoresRiscoSanitario"
+											value="{{indicadorRiscoSanitario.id}}">{{indicadorRiscoSanitario.nome}}</option>
+									</select>
 
-									</fieldset>
-								</div>
-
-								<div class="input-field col s3">
-									<label for="dataInspecaoSanitario">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoSanitario[i]"
-										placeholder="Data de Inspeção"> </my-date-picker>
-								</div>
-
-								<div class="input-field col s3">
-									<label
-										for="indicadorRiscoSanitarioInstalacoes[{{i}}].avaliacao">Avaliação</label>
-									<input type="number" min="0" max="5"
-										name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].avaliacao"
-										[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].avaliacao">
-								</div>
-
-								<div class="col s2">
-									<a class="btn-floating waves-effect waves-light red btn-remove"
-										(click)="removeIndicadoresRiscoSanitarioInstalacao(i)"> <i
-										class="material-icons center-icon">delete</i>
-									</a>
-								</div>
-
-								<input id="id"
-									name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].id"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].id">
-								<input id="version"
-									name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].version"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].version">
-
+								</fieldset>
 							</div>
+
+							<div class="input-field col s3">
+								<label for="dataInspecaoSanitario">Data de Inspeção</label>
+								<my-date-picker
+									name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].dataInspecao"
+									[options]="myDatePickerOptions"
+									[(ngModel)]="dataInspecaoSanitario[i]"
+									placeholder="Data de Inspeção"> </my-date-picker>
+							</div>
+
+							<div class="input-field col s3">
+								<label for="indicadorRiscoSanitarioInstalacoes[{{i}}].avaliacao">Avaliação</label>
+								<input type="number" min="0" max="5"
+									name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].avaliacao"
+									[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].avaliacao">
+							</div>
+
+							<div class="col s2">
+								<a class="btn-floating waves-effect waves-light red btn-remove"
+									(click)="removeIndicadoresRiscoSanitarioInstalacao(i)"> <i
+									class="material-icons center-icon">delete</i>
+								</a>
+							</div>
+
+							<input id="id"
+								name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].id"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].id">
+							<input id="version"
+								name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].version"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].version">
+
 						</div>
+
 					</div>
 
 				</fieldset>
@@ -391,65 +384,64 @@
 					<div class="form-group">
 						<div
 							*ngFor="let indicadorRiscoSaudeAmbientalInstalacao of instalacao.indicadorRiscoSaudeAmbientalInstalacoes;let i = index">
-							<div class="row">
-								<div class="input-field col s4">
-									<fieldset>
-										<legend>
-											Indicador de Risco Saúde Ambiental <a
-												class="btn-floating waves-effect waves-light green btn-add-fieldset"
-												(click)="getSaudeAmbientais()"> <i
-												class="material-icons center-icon">cached</i>
-											</a>
-										</legend>
 
-										<select class="browser-default"
-											name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].indicadorRisco.id"
-											[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].indicadorRisco.id">
-											<option disabled selected value=0>Selecione um indicador</option>
-											<option
-												*ngFor="let indicadorRiscoSaudeAmbiental of indicadoresRiscoSaudeAmbiental"
-												value="{{indicadorRiscoSaudeAmbiental.id}}">{{indicadorRiscoSaudeAmbiental.nome}}</option>
-										</select>
+							<div class="input-field col s4">
+								<fieldset>
+									<legend>
+										Indicador de Risco Saúde Ambiental <a
+											class="btn-floating waves-effect waves-light green btn-add-fieldset"
+											(click)="getSaudeAmbientais()"> <i
+											class="material-icons center-icon">cached</i>
+										</a>
+									</legend>
 
-									</fieldset>
-								</div>
+									<select class="browser-default"
+										name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].indicadorRisco.id"
+										[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].indicadorRisco.id">
+										<option disabled selected value=0>Selecione um indicador</option>
+										<option
+											*ngFor="let indicadorRiscoSaudeAmbiental of indicadoresRiscoSaudeAmbiental"
+											value="{{indicadorRiscoSaudeAmbiental.id}}">{{indicadorRiscoSaudeAmbiental.nome}}</option>
+									</select>
 
-								<div class="input-field col s3">
-									<label for="dataInspecaoSaudeAmbiental">Data de
-										Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoSaudeAmbiental[i]"
-										placeholder="Data de Inspeção"> </my-date-picker>
-								</div>
-
-								<div class="input-field col s3">
-									<label
-										for="indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].avaliacao">Avaliação</label>
-									<input type="number" min="0" max="5"
-										name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].avaliacao"
-										[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].avaliacao">
-								</div>
-
-								<div class="col s2">
-									<a class="btn-floating waves-effect waves-light red btn-remove"
-										(click)="removeIndicadoresRiscoSaudeAmbientalInstalacao(i)">
-										<i class="material-icons center-icon">delete</i>
-									</a>
-								</div>
-
-								<input id="id"
-									name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].id"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].id">
-								<input id="version"
-									name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].version"
-									type="hidden"
-									[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].version">
-
+								</fieldset>
 							</div>
+
+							<div class="input-field col s3">
+								<label for="dataInspecaoSaudeAmbiental">Data de Inspeção</label>
+								<my-date-picker
+									name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].dataInspecao"
+									[options]="myDatePickerOptions"
+									[(ngModel)]="dataInspecaoSaudeAmbiental[i]"
+									placeholder="Data de Inspeção"> </my-date-picker>
+							</div>
+
+							<div class="input-field col s3">
+								<label
+									for="indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].avaliacao">Avaliação</label>
+								<input type="number" min="0" max="5"
+									name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].avaliacao"
+									[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].avaliacao">
+							</div>
+
+							<div class="col s2">
+								<a class="btn-floating waves-effect waves-light red btn-remove"
+									(click)="removeIndicadoresRiscoSaudeAmbientalInstalacao(i)">
+									<i class="material-icons center-icon">delete</i>
+								</a>
+							</div>
+
+							<input id="id"
+								name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].id"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].id">
+							<input id="version"
+								name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].version"
+								type="hidden"
+								[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].version">
+
 						</div>
+
 					</div>
 
 				</fieldset>

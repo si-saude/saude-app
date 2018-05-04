@@ -13,20 +13,10 @@
 
 		<div class="row">
 
-			<div class="input-field col s9">
+			<div class="input-field col s12">
 				<label for="nome">Nome</label>
 				<input id="nome" type="text" 
 				name="nome" [(ngModel)]="base.nome">
-			</div>
-			
-			<div class="input-field col s3">
-				<fieldset>
-					<legend> UF </legend>
-					<select name="base.uf" class="browser-default" [(ngModel)]="base.uf">
-						<option disabled selected value=''>Selecione um uf</option>
-						<option *ngFor="let uf of ufs" value="{{uf}}">{{uf}}</option>
-					</select>
-				</fieldset>
 			</div>
 		
 		</div>

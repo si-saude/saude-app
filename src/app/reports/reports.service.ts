@@ -8,7 +8,7 @@ import { GenericService } from './../generics/generic.service';
 export class ReportsService extends GenericService {
 
     constructor( http: Http, router: Router ) { 
-        super( http, router, "reports" );
+        super(http, router, "reports");
     }
-    
+   
 }

@@ -1,34 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MyDatePickerModule } from 'mydatepicker';
 import { DataTableModule } from "angular2-datatable";
-import { MaterializeModule } from "angular2-materialize";
 
-import { PanoramaComponent } from './panorama/panorama.component';
-import { PanoramaService } from './panorama/panorama.service';
-import { SharedModule } from './../controller/shared.module';
+import { EmpregadosPorGrupoComponent } from './empregados-por-grupo/empregados-por-grupo.component';
+import { EmpregadosPorGrupoService } from './empregados-por-grupo/empregados-por-grupo.service';
 import { ReportsRoutingModule } from './reports.routing.module';
-import { TransformDatePipe } from './../pipes/transform-date.pipe';
+import { SharedModule } from './../controller/shared.module';
 import { FilterDataPipe } from './../pipes/filter-data.pipe';
-
-@NgModule( {
-    imports: [
-        SharedModule,
-        MyDatePickerModule,
-        DataTableModule,
-        MaterializeModule,
-        ReportsRoutingModule
-    ],
+@NgModule({
     declarations: [
-        PanoramaComponent,
-        TransformDatePipe,
-        FilterDataPipe
-    ],
-    providers: [
-        PanoramaService
-    ]
-} )
-export class ReportsModule {}
+       EmpregadosPorGrupoComponent,
+       FilterDataPipe
+     ],
+     imports: [
+        ReportsRoutingModule,
+        DataTableModule,
+        SharedModule
+     ],
+     providers: [
+        EmpregadosPorGrupoService
+     ]
+})
+export class ReportsModule{}

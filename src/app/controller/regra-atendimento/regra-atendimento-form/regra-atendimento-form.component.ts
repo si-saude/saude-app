@@ -119,7 +119,6 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
         
         this.regraAtendimentoService.getEquipesWithFilter(equipeFilter)
             .then(res => {
-                console.log(res.json())
                 this.requisitos = new EquipeBuilder().cloneList(res.json());
             })
             .catch(error => {
@@ -162,16 +161,6 @@ export class RegraAtendimentoFormComponent extends GenericFormComponent implemen
 
     removeRequisito(i: number) {
         this.arrayRequisito.splice(i, 1);
-    }
-    
-    checkCheckbox( regraAtendimentoEquipe: RegraAtendimentoEquipe ) {
-        let regraAtendimentoEquipeAnterior: RegraAtendimentoEquipe = this.regraAtendimento.getRegraAtendimentoEquipes().
-                                                                        find(rAE => rAE.getAcolhimento() );
-        
-        if ( regraAtendimentoEquipeAnterior != undefined )
-            regraAtendimentoEquipeAnterior.setAcolhimento(false);
-        
-        regraAtendimentoEquipe.setAcolhimento(true);
     }
     
 }

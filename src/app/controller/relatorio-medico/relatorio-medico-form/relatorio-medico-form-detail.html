@@ -8,95 +8,82 @@
 <!-- Confirm Save -->
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
+	
+<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
-<div class"rowform-container">
-	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+	<div class="row">
 
-		<div class="row">
-
+		<div class="input-field col s12">
+			<div class="input-field col s10">
+				<label for="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome">Empregado</label> 
+				<input disabled id="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome" disabled
+					type="text" name="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome" 
+					[(ngModel)]="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome">
+			</div>
+			<div class="input-field col s2">
+				<input type="checkbox" id="relatorioMedico.finalizado" disabled
+					[(ngModel)]="relatorioMedico.finalizado" name="relatorioMedico.finalizado">
+	            <label for="finalizado">Finalizado</label>
+	        </div>
+		</div>
+		
+		<fieldset>
+			<legend>Exame</legend>
 			<div class="input-field col s12">
-				<div class="input-field col s10">
-					<label
-						for="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome">Empregado</label>
-					<input disabled
-						id="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome"
-						disabled type="text"
-						name="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome"
-						[(ngModel)]="relatorioMedico.empregadoConvocacaoExame.empregadoConvocacao.empregado.pessoa.nome">
+				<div class="input-field col s6">
+					<label for="relatorioMedico.empregadoConvocacaoExame.exame.codigo">Código</label> 
+					<input disabled id="relatorioMedico.empregadoConvocacaoExame.exame.codigo" disabled 
+						type="text" name="relatorioMedico.empregadoConvocacaoExame.exame.codigo" 
+						[(ngModel)]="relatorioMedico.empregadoConvocacaoExame.exame.codigo">
 				</div>
-				<div class="input-field col s2">
-					<input type="checkbox" id="relatorioMedico.finalizado" disabled
-						[(ngModel)]="relatorioMedico.finalizado"
-						name="relatorioMedico.finalizado"> <label for="finalizado">Finalizado</label>
+				<div class="input-field col s6">
+					<label for="relatorioMedico.empregadoConvocacaoExame.exame.descricao">Descrição</label> 
+					<input disabled id="relatorioMedico.empregadoConvocacaoExame.exame.descricao" disabled 
+						type="text" name="relatorioMedico.empregadoConvocacaoExame.exame.descricao" 
+						[(ngModel)]="relatorioMedico.empregadoConvocacaoExame.exame.descricao">
 				</div>
 			</div>
-
-			<fieldset>
-				<legend>Exame</legend>
-				<div class="input-field col s12">
-					<div class="input-field col s6">
-						<label for="relatorioMedico.empregadoConvocacaoExame.exame.codigo">Código</label>
-						<input disabled
-							id="relatorioMedico.empregadoConvocacaoExame.exame.codigo"
-							disabled type="text"
-							name="relatorioMedico.empregadoConvocacaoExame.exame.codigo"
-							[(ngModel)]="relatorioMedico.empregadoConvocacaoExame.exame.codigo">
-					</div>
-					<div class="input-field col s6">
-						<label
-							for="relatorioMedico.empregadoConvocacaoExame.exame.descricao">Descrição</label>
-						<input disabled
-							id="relatorioMedico.empregadoConvocacaoExame.exame.descricao"
-							disabled type="text"
-							name="relatorioMedico.empregadoConvocacaoExame.exame.descricao"
-							[(ngModel)]="relatorioMedico.empregadoConvocacaoExame.exame.descricao">
-					</div>
-				</div>
-			</fieldset>
-
-			<div class="input-field col s12">
-				<label for="relatorioMedico.medicoPrestador">Médico
-					Prestador</label> <input id="relatorioMedico.medicoPrestador" disabled
-					type="text" name="relatorioMedico.medicoPrestador"
-					[(ngModel)]="relatorioMedico.medicoPrestador">
-			</div>
-
-			<div class="input-field col s12">
-				<label for="relatorioMedico.medicoPrestador">Médico
-					Prestador</label>
-				<textarea class="materialize-textarea" disabled
-					id="relatorioMedico.medicoPrestador"
-					[(ngModel)]="relatorioMedico.medicoPrestador"
+		</fieldset>
+		
+		<div class="input-field col s12">
+			<label for="relatorioMedico.medicoPrestador">Médico Prestador</label> 
+			<input id="relatorioMedico.medicoPrestador" disabled 
+				type="text" name="relatorioMedico.medicoPrestador" 
+				[(ngModel)]="relatorioMedico.medicoPrestador">
+		</div>
+		
+		<div class="input-field col s12">
+			<label for="relatorioMedico.medicoPrestador">Médico Prestador</label> 
+			<textarea class="materialize-textarea" disabled
+				id="relatorioMedico.medicoPrestador" [(ngModel)]="relatorioMedico.medicoPrestador" 
 					name="relatorioMedico.medicoPrestador"></textarea>
-			</div>
-
-			<div class="input-field col s12">
-				<label for="relatorioMedico.resumo">Resumo</label>
-				<textarea class="materialize-textarea" disabled
-					id="relatorioMedico.resumo" [(ngModel)]="relatorioMedico.resumo"
+		</div>
+		
+		<div class="input-field col s12">
+			<label for="relatorioMedico.resumo">Resumo</label> 
+			<textarea class="materialize-textarea" disabled
+				id="relatorioMedico.resumo" [(ngModel)]="relatorioMedico.resumo" 
 					name="relatorioMedico.resumo"></textarea>
-			</div>
-
-			<div class="input-field col s12">
-				<label for="relatorioMedico.questionamentos">Questionamentos</label>
-				<textarea class="materialize-textarea" disabled
-					id="relatorioMedico.questionamentos"
-					[(ngModel)]="relatorioMedico.questionamentos"
+		</div>
+		
+		<div class="input-field col s12">
+			<label for="relatorioMedico.questionamentos">Questionamentos</label> 
+			<textarea class="materialize-textarea" disabled 
+				id="relatorioMedico.questionamentos" [(ngModel)]="relatorioMedico.questionamentos" 
 					name="relatorioMedico.questionamentos"></textarea>
-			</div>
-
 		</div>
 
-		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
-				[msg]="msgError"></app-mensagem-form>
-		</div>
+	</div>
 
-		<div class='row row-btns'>
-			<div class="col s6">
-				<a [routerLink]="['/relatorio-medico']"
-					class="btn btn-primary btn-listar">Listar</a>
-			</div>
+	<div class="mensagem">
+		<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+			[msg]="msgError"></app-mensagem-form>
+	</div>
+
+	<div class='row row-btns'>
+		<div class="col s6">
+			<a [routerLink]="['/relatorio-medico']"
+				class="btn btn-primary btn-listar">Listar</a>
 		</div>
-	</form>
-</div>
+	</div>
+</form>

@@ -80,7 +80,7 @@ export class Tarefa {
     }
 
     getStatus() {
-        return this.status;
+        return status;
     }
 
     setStatus(status: string) {

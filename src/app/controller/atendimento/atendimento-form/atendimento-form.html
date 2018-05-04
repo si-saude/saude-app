@@ -6,26 +6,18 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <div class="row infos-profissional">
-	<p class="nome-profissional">
-		<b>Profissional: {{nomeProfissional}}</b>
-	</p>
-	<p class="status-profissional">
-		<b>Status: {{statusProfissional}}</b>
-	</p>
+	<p class="nome-profissional"><b>Profissional: {{nomeProfissional}}</b></p>
+	<p class="status-profissional"><b>Status: {{statusProfissional}}</b></p>
 </div>
 
 <div class="row form-container">
 
 	<div class="col s12">
-		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs">
-			<li class="tab col s2"><a href="#filaAtendimento">Fila de
-					Atendimento</a></li>
-			<li class="tab col s2"><a href="#atendimento">Atendimento</a></li>
-			<li class="tab col s2"><a href="#fichaColeta">Ficha de
-					Coleta</a></li>
-			<li class="tab col s2"><a href="#triagem">Triagem</a></li>
-			<li class="tab col s2"><a href="#planejamento">Planejamento</a></li>
-			<li class="tab col s2" [ngClass]="disabledTab"><a href="#acolhimento">Acolhimento</a></li>
+		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs" materialize="tabs">
+			<li class="tab col s6"><a
+				href="#filaAtendimento">Fila de Atendimento</a></li>
+			<li class="tab col s6"><a
+				href="#atendimento">Atendimento</a></li>
 		</ul>
 	</div>
 
@@ -57,11 +49,12 @@
 					class="btn btn-primary btn-fila">Entrar</button>
 				<button (click)="pausar()" class="btn btn-primary btn-fila">Pausar</button>
 				<button (click)="almoco()" class="btn btn-primary btn-fila">Almoço</button>
-			</div>
+				</div>
 			<div class="row">
 				<button (click)="voltar()" style="margin-left: -5px"
 					class="btn btn-primary btn-fila">Voltar</button>
 				<button (click)="encerrar()" class="btn btn-primary btn-fila">Encerrar</button>
+				<button (click)="atualizar()" class="btn btn-primary btn-fila">Atualizar</button>
 			</div>
 
 		</div>
@@ -156,22 +149,21 @@
 
 					<div class="input-field-empregado input-field col s3">
 						<label for="idade">Idade</label> <input id="idade" type="text"
-							disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.idade"
+							disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.idade"
 							name="idade" class="input-empregado">
 					</div>
 
 					<div class="input-field-empregado input-field col s3">
-						<label for="sexo">Sexo</label> <input id="sexo" type="text"
-							disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.sexo"
+						<label for="sexo">Sexo</label> <input
+							id="sexo"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.sexo" 
 							name="sexo" class="input-empregado">
 					</div>
 
 					<div class="input-field-empregado input-field col s3">
-						<label for="base">Base</label> <input id="base.nome" type="text"
-							disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.base.nome"
+						<label for="base">Base</label> <input
+							id="base.nome"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.base.nome" 
 							name="base" class="input-empregado">
 					</div>
 
@@ -180,16 +172,16 @@
 				<div class="row-empregado row">
 
 					<div class="input-field-empregado input-field col s6">
-						<label for="cargo">Cargo</label> <input id="cargo.nome"
-							type="text" disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
+						<label for="cargo">Cargo</label> <input
+							id="cargo.nome"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
 							name="cargo" class="input-empregado">
 					</div>
 
 					<div class="input-field-empregado input-field col s6">
 						<label for="gerencia">Gerência</label> <input
-							id="gerencia.codigoCompleto" type="text" disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto"
+							id="gerencia.codigoCompleto"
+							type="text" disabled [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto" 
 							name="gerencia" class="input-empregado">
 					</div>
 
@@ -197,7 +189,7 @@
 
 			</fieldset>
 		</div>
-
+		
 		<div class="content-quiz"></div>
 
 		<div class="content-buttons-atendimento">
@@ -221,481 +213,6 @@
 
 	</div>
 
-	<div id="fichaColeta" disabled>
-		<div class="conteiner-ficha-coleta">
-
-			<div *ngFor="let grupo of gruposRespostasFichaColeta; let g = index">
-				<fieldset>
-					<legend>{{grupo}}</legend>
-
-					<div
-						*ngFor="let resposta of respostasFichaColetaByGrupo[grupo]; let r = index">
-						<p class="pergunta-descricao">{{resposta.pergunta.descricao}}</p>
-						
-						<div [ngSwitch]="contains(resposta.pergunta.tipo)">
-							<div class="row resposta">
-								<div *ngSwitchCase="'DOUBLE'">
-									<div class="input-field col s5">
-										<input type="text" name="DOUBLE{{r}}"
-											class="resposta-conteudo resposta-pergunta" [disabled]="verifyEquipe(resposta)"
-											[(ngModel)]="resposta.conteudo">
-									</div>
-								</div>
-
-								<div *ngSwitchCase="'INTEIRO'">
-									<div class="input-field col s5">
-										<input type="text" name="INTEIRO{{r}}"
-											class="resposta-conteudo resposta-pergunta" [disabled]="verifyEquipe(resposta)"
-											[(ngModel)]="resposta.conteudo">
-									</div>
-								</div>
-
-								<div *ngSwitchCase="'TEXTO'">
-									<div class="input-field col s5">
-										<input type="text" name="TEXTO{{r}}" class="resposta-conteudo resposta-pergunta"
-											[disabled]="verifyEquipe(resposta)"
-											[(ngModel)]="resposta.conteudo">
-									</div>
-								</div>
-								
-								<div *ngSwitchCase="'ENUM'">
-									<div class="input-field col s4  select-sim-nao">
-										<select class="browser-default resposta-conteudo resposta-pergunta" [(ngModel)]="resposta.conteudo" 
-											[disabled]="verifyEquipe(resposta)" name="ENUM{{r}}"> 
-											<option disabled selected value="">Selecione um resposta</option>
-											<option *ngFor="let enum of getEnumsPergunta(resposta)"
-												value="{{enum}}">{{enum}}</option>
-										</select>
-									</div>
-								</div>
-								
-								<div *ngSwitchCase="'SIM'">
-									<div class="input-field col s4 select-sim-nao">
-										<select class="browser-default resposta-conteudo resposta-pergunta" 
-											name="SIM{{r}}" #statusSimNao
-											[disabled]="verifyEquipe(resposta)"
-											(change)="selectStatusSimNao(resposta.pergunta.itens, g, r, statusSimNao.value)"
-											[(ngModel)]="resposta.conteudo">
-											<option disabled selected value="">Selecione uma resposta</option>
-											<option *ngFor="let statusSimNao of statusesSimNao"
-												value="{{statusSimNao}}">{{statusSimNao}}</option>
-										</select>
-									</div>
-									<div class="col s2" *ngIf="verifyRespostaSimNao(g, r)">
-										<a *ngIf="!verifyEquipe(resposta)"
-											class="btn-floating waves-effect waves-light green btn-add"
-											(click)="addItemResposta(resposta.pergunta.itens, g, r)"> <i
-											class="material-icons center-icon">add</i>
-										</a>
-									</div>
-
-									<table class="striped" *ngIf="verifyRespostaSimNao(g, r)">
-										<thead>
-											<tr class="row col s12">
-												<div
-													*ngFor="let item of resposta.pergunta.itens; let i = index">
-													<th
-														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-														{{item.label}}</th>
-												</div>
-												<th class="row col s2">Remover</th>
-											</tr>
-										</thead>
-
-										<tbody class="col s12">
-											<tr class="col s12">
-												<div
-													*ngFor="let respostaItem of resposta.itens; let i = index">
-													<div class="row">
-														<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-															<td *ngIf="verifyItemPath(resposta, rI)"
-																[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																<select class="resposta-item" [(ngModel)]="item.conteudo" 
-																	[disabled]="verifyEquipe(resposta)" name="resposta.item"> 
-																	<option disabled selected value="">Selecione um resposta</option>
-																	<option *ngFor="let enum of getEnumsItem(resposta, rI)"
-																		value="{{enum}}">{{enum}}</option>
-																</select>
-															</td>
-															<td *ngIf="!verifyItemPath(resposta, rI)"
-																[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																<input id="resposta.item" type="text" [disabled]="verifyEquipe(resposta)"
-																name="resposta.item" class="resposta-item"
-																[(ngModel)]="item.conteudo">
-															</td>
-														</div>
-														<td class="col s2 botao-remover"><a *ngIf="!verifyEquipe(resposta)"
-															class="btn-floating waves-effect waves-light red btn-remove"
-															(click)="removeItemResposta(g, r, i)"> <i
-																class="material-icons center-icon">delete</i>
-														</a></td>
-													</div>
-												</div>
-											</tr>
-										</tbody>
-
-									</table>
-
-								</div>
-								<div *ngSwitchDefault></div>
-							</div>
-
-						</div>
-					</div>
-				</fieldset>
-			</div>
-		</div>
-	</div>
-
-	<div id="triagem">
-
-		<div class="container-triagem">
-			<div class="table-triagem">
-				<table>
-					<thead>
-						<tr class="row col s12">
-							<th class="col s2">Indicador</th>
-							<th class="col s2">Índice 0</th>
-							<th class="col s2">Índice 1</th>
-							<th class="col s2">Índice 2</th>
-							<th class="col s2">Índice 3</th>
-							<th class="col s2">Índice 4</th>
-						</tr>
-					</thead>
-					<div class="container-triagens">
-						<div *ngFor="let triagem of atendimento.triagens; let t = index">
-							<tbody>
-								<tr class="row col s12">
-									<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.nome}}</td>
-									<td class="col s2 indice0" #tdIndice0 id="0"
-										title="indice0_{{t}}" (click)="selectTriagem(t, tdIndice0.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice0}}</td>
-									<td class="col s2 indice1" #tdIndice1 id="1"
-										title="indice1_{{t}}" (click)="selectTriagem(t, tdIndice1.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice1}}</td>
-									<td class="col s2 indice2" #tdIndice2 id="2"
-										title="indice2_{{t}}" (click)="selectTriagem(t, tdIndice2.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice2}}</td>
-									<td class="col s2 indice3" #tdIndice3 id="3"
-										title="indice3_{{t}}" (click)="selectTriagem(t, tdIndice3.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice3}}</td>
-									<td class="col s2 indice4" #tdIndice4 id="4"
-										title="indice4_{{t}}" (click)="selectTriagem(t, tdIndice4.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice4}}</td>
-								</tr>
-							</tbody>
-						</div>
-					</div>
-				</table>
-			</div>
-
-		</div>
-
-	</div>
-
-	<div id="planejamento">
-
-		<div class="container-triagem">
-			<div class="table-triagem">
-				<table style="width: 100%">
-					<div class="container-triagens-planejamento">
-						<div *ngFor="let triagem of atendimento.triagens; let t = index">
-							<div *ngIf="verifyIndiceTriagem(triagem)">
-								<fieldset class="fieldset-planejamento-triagem">
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-indicador">Indicador</td>
-											<td class="col s9 indicador">{{triagem.indicadorSast.nome}}</td>
-										</tr>
-									</div>
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-indice-descricao">Índice
-												Descrição</td>
-											<td class="col s9 indice-descricao">{{getIndiceDescricao(triagem)}}</td>
-										</tr>
-									</div>
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-eixo-clinico">Eixo Clínico</td>
-											<td class="col s9 eixo-clinico"><input type="text"
-												name="eixo-clinico{{t}}" disabled
-												[(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
-										</tr>
-									</div>
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-diagnostico">Diagnóstico</td>
-											<td class="col s9 diagnostico"><input type="text"
-												materialize="autocomplete" autocomplete="off"
-												name="diagnostico{{t}}" class="resposta-conteudo"
-												[(ngModel)]="triagem.diagnostico.descricao"
-												(blur)="getDiagnostico(t)"
-												(ngModelChange)="selectDiagnosticoByCodigoAndAbreviacao($event); selectDiagnosticoByDescricaoAndAbreviacao($event);"
-												[materializeParams]="autocompleteDiagnostico"> <input
-												id="triagem{{t}}.diagnostico.id" type="hidden"
-												name="triagem{{t}}.diagnostico.id"
-												[(ngModel)]="triagem.diagnostico.id"></td>
-										</tr>
-									</div>
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-intervencao">Intervenção</td>
-											<td class="col s9 intervencao"><input type="text"
-												materialize="autocomplete" autocomplete="off"
-												name="intervencao{{t}}" class="resposta-conteudo"
-												[(ngModel)]="triagem.intervencao.descricao"
-												(blur)="getIntervencao(t)"
-												(ngModelChange)="selectIntervencaoByDescricaoAndAbreviacao($event)"
-												[materializeParams]="autocompleteIntervencao"> <input
-												id="triagem{{t}}.intervencao.id" type="hidden"
-												name="triagem{{t}}.intervencao.id"
-												[(ngModel)]="triagem.intervencao.id"></td>
-										</tr>
-									</div>
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-equipe-abordagem">Equipe de
-												Abordagem</td>
-											<td class="col s9 equipe-abordagem"><input type="text"
-												materialize="autocomplete" autocomplete="off"
-												name="equipeAbordagem{{t}}" class="resposta-conteudo"
-												[(ngModel)]="triagem.equipeAbordagem.nome"
-												(blur)="getEquipeAbordagem(t)"
-												(ngModelChange)="selectEquipeAbordagemByName($event);"
-												[materializeParams]="autocompleteEquipeAbordagem"> <input
-												id="triagem{{t}}.equipeAbordagem.id" type="hidden"
-												name="triagem{{t}}.equipeAbordagem.id"
-												[(ngModel)]="triagem.equipeAbordagem.id"></td>
-										</tr>
-									</div>
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-prazo-inicio">Sugestão de prazo
-												de início</td>
-											<td class="col s9 prazo-inicio"><select
-												name="prazo{{t}}" class="resposta-conteudo"
-												class="browser-default" [(ngModel)]="triagem.prazo">
-													<option disabled selected value="">Selecione um prazo</option>
-													<option *ngFor="let prazo of prazos" value="{{prazo}}">{{prazo}}</option>
-											</select></td>
-										</tr>
-									</div>
-									<div class="row">
-										<tr class="row col s12">
-											<td class="col s3 label-justificativa">Justificativa/Observação</td>
-											<td class="col s9 justificativa"><input type="text"
-												name="justificativa{{t}}" class="resposta-conteudo"
-												[(ngModel)]="triagem.justificativa"></td>
-										</tr>
-									</div>
-								</fieldset>
-							</div>
-						</div>
-					</div>
-				</table>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="acolhimento">
-
-		<div class="container-triagem" *ngIf="existAtendimento">
-			<div class="table-triagem">
-				<table style="width: 100%">
-					<div class="container-triagens-acolhimento">
-						<div
-							*ngFor="let equipe of equipesTriagensTodosAtendimentos; let e = index">
-							<p style="margin-left: 20px;">
-								<b>{{equipe.nome}}</b>
-							</p>
-							<div
-								*ngFor="let triagem of triagensTodosAtendimentosByEquipe[equipe.id]; let t = index">
-								<div *ngIf="verifyIndiceTriagem(triagem)">
-									<fieldset class="fieldset-planejamento-triagem">
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-indicador-acolhimento">Indicador</td>
-												<td class="col s9 indicador-acolhimento">{{triagem.indicadorSast.nome}}</td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-indice-descricao-acolhimento">Índice
-													Descrição</td>
-												<td class="col s9 indice-descricao-acolhimento">{{getIndiceDescricao(triagem)}}</td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-eixo-clinico-acolhimento">Eixo
-													Clínico</td>
-												<td class="col s9 eixo-clinico-acolhimento"><input
-													type="text" name="eixo-clinico-acolhimento{{t}}" disabled
-													[(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-diagnostico-acolhimento">Diagnóstico</td>
-												<td class="col s9 diagnostico-acolhimento"><input
-													type="text" name="diagnostico-acolhimento{{t}}" disabled
-													[(ngModel)]="triagem.diagnostico.descricao"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-intervencao-acolhimento">Intervenção</td>
-												<td class="col s9 intervencao-acolhimento"><input
-													type="text" name="intervencao-acolhimento{{t}}" disabled
-													[(ngModel)]="triagem.intervencao.descricao"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-equipe-abordagem-acolhimento">Equipe
-													de Abordagem</td>
-												<td class="col s9 equipe-abordagem-acolhimento"><input
-													type="text" name="equipe-abordagem-acolhimento{{t}}"
-													disabled [(ngModel)]="triagem.equipeAbordagem.nome">
-												</td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-prazo-inicio-acolhimento">Sugestão
-													de prazo de início</td>
-												<td class="col s9 prazo-inicio-acolhimento"><input
-													type="text" name="prazo-inicio-acolhimento{{t}}" disabled
-													[(ngModel)]="triagem.prazo"></td>
-											</tr>
-										</div>
-										<div class="row">
-											<tr class="row col s12">
-												<td class="col s3 label-justificativa-acolhimento">Justificativa/Observação</td>
-												<td class="col s9 justificativa-acolhimento"><input
-													type="text" name="justificativa-acolhimento{{t}}" disabled
-													[(ngModel)]="triagem.justificativa"></td>
-											</tr>
-										</div>
-									</fieldset>
-								</div>
-							</div>
-						</div>
-						<div class="dados-acolhimento">
-							<p style="margin-left: 20px;">
-								<b>ACOLHIMENTO</b>
-							</p>
-							<fieldset class="fieldset-planejamento-triagem">
-								<div class="row">
-									<tr class="row col s12">
-										<td class="col s3 label-equipe-responsavel">Equipe Responsável</td>
-										<td class="col s9 equipe-responsavel"><input type="text"
-											name="equipe-responsavel" disabled
-											[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.equipeResponsavel.nome">
-										</td>
-									</tr>
-								</div>
-
-								<fieldset>
-									<legend>
-										Equipes <a
-											class="btn-floating waves-effect waves-light green btn-add-fieldset"
-											(click)="getEquipes()"> <i
-											class="material-icons center-icon">cached</i>
-										</a>
-									</legend>
-									<div class="row row-equipe">
-
-										<div class="input-field col s4">
-											<select class="browser-default" #equipe>
-												<option disabled selected value=0>Selecione uma equipe</option>
-												<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
-											</select>
-										</div>
-										<div class="col s2">
-											<a
-												class="btn-floating waves-effect waves-light green btn-add"
-												(click)="addEquipe(equipe.value)"> <i
-												class="material-icons center-icon">add</i>
-											</a>
-										</div>
-
-									</div>
-									
-									<div class="row">
-
-									<table class="striped">
-										<thead>
-											<tr class="row col s12">
-												<th class="col s5">Nome</th>
-												<th class="col s5">Abreviação</th>
-												<th class="col s2">Remover</th>
-											</tr>
-										</thead>
-										<div
-											*ngFor="let equipe of atendimento.filaEsperaOcupacional.riscoPotencial.equipes;let i = index">
-											<tbody class="col s12">
-												<tr class="col s12">
-													<td class="col s5 risco-potencial-equipe-nome">{{equipe.nome}}</td>
-													<td class="col s5 risco-potencial-equipe-abreviacao">{{equipe.abreviacao}}</td>
-													<td class="col s2 botao-remover"><a
-														class="btn-floating waves-effect waves-light red btn-remove"
-														(click)="removeEquipe(i)"> <i
-															class="material-icons center-icon">delete</i>
-													</a></td>
-												</tr>
-											</tbody>
-										</div>
-									</table>
-								</div>
-
-								</fieldset>
-
-								<div class="row">
-									<tr class="row col s12">
-										<td class="col s3 label-reserva-agendamento">Reserva de
-											Agendamento</td>
-										<td class="col s4 inicio-agentamento"><my-date-picker
-												name="inicioAgendamento" [options]="myDatePickerOptions"
-												[(ngModel)]="inicioAgendamento"
-												placeholder="Inicio"> </my-date-picker></td>										
-										<td class="col s4 fim-agendamento"><my-date-picker
-												name="fimAgendamento" [options]="myDatePickerOptions"
-												[(ngModel)]="fimAgendamento"
-												placeholder="Fim"> </my-date-picker></td>
-									</tr>
-								</div>
-
-								<div class="row">
-									<tr class="row col s12">
-										<td class="col s3 label-conduta-percepcao">Conduta/Percepção</td>
-										<td class="col s9 conduta-percepcao"><textarea
-												class="materialize-textarea"
-												[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.condutaPercepcao"
-												name="conduta-percepcao">
-											</textarea></td>
-									</tr>
-								</div>
-
-							</fieldset>
-
-						</div>
-					</div>
-				</table>
-			</div>
-
-		</div>
-
-	</div>
-
 </div>
 
 
@@ -708,8 +225,8 @@
 
 	<p class="paragraph-modal">Tem certeza que deseja selecionar esta
 		localização?</p>
-	<p class="paragraph-modal">Se sim, ele não poderá ser alterado até
-		você encerrar o atendimento do dia.</p>
+	<p class="paragraph-modal">Se sim, ele não poderá ser alterado 
+		até você encerrar o atendimento do dia.</p>
 
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat"

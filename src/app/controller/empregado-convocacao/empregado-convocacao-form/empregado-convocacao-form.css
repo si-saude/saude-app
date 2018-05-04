@@ -33,7 +33,7 @@ tbody{
 }
 
 .checkbox-conforme {
-	padding-left: 45px;
+	padding-left: 35px;
 }
 
 .btn-remover {
@@ -43,8 +43,4 @@ tbody{
 
 .btn-add {
 	margin-top: 40px;
-}
-
-.checkbox-auditado {
-	margin-top: 30px;
 }

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';
 
@@ -16,7 +17,6 @@ import { SharedModule } from './../shared.module';
        AtendimentoComponent
      ],
      imports: [
-        CommonModule,
         AtendimentoRoutingModule,
         MyDatePickerModule,
         SharedModule
