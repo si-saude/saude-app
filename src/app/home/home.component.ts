@@ -23,11 +23,13 @@ import { NotificacaoFilter } from './../controller/notificacao/notificacao.filte
 } )
 export class HomeComponent extends GenericListComponent<Notificacao, NotificacaoFilter, NotificacaoGuard> {
     private profissional: Profissional;
+    private showPaginator: boolean;
 
     constructor(private notificacaoService: NotificacaoService, notificacaoGuard: NotificacaoGuard, router: Router) {
         super(notificacaoService, new NotificacaoFilter(), notificacaoGuard, router);
         
-        this.msgEmptyPaginas = "Nada a notificar."
+        this.msgEmptyPaginas = "Nada a notificar.";
+        this.showPaginator = true;
     }
     
     ngOnInit() {
@@ -54,7 +56,8 @@ export class HomeComponent extends GenericListComponent<Notificacao, Notificacao
                                         
                                         super.list();
                                     } else {
-                                        this.router.navigate( ["/home"] );
+                                        this.showPreload = false;
+                                        this.showPaginator = false;
                                         return;
                                     }
                                 } )

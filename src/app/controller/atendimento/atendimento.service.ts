@@ -142,12 +142,20 @@ export class AtendimentoService extends GenericService {
             .toPromise();
     }
     
+    getDiagnosticos() {
+        return this.diagnosticoService.getDiagnosticos();
+    }
+    
     getDiagnosticoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {
         return this.diagnosticoService.getDiagnosticoByDescricaoAndAbreviacao(descricao, abreviacaoEquipe);
     }
     
     getDiagnosticoByCodigoAndAbreviacao( codigo, abreviacaoEquipe ) {
         return this.diagnosticoService.getDiagnosticoByCodigoAndAbreviacao(codigo, abreviacaoEquipe);
+    }
+    
+    getIntervencoes() {
+        return this.intervencaoService.getIntervencoes();
     }
     
     getIntervencaoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {

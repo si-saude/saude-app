@@ -109,7 +109,19 @@ export class AtendimentoFormComponent {
     private listEnumsByPathPergunta = [[]];
     private listPathsEnumItem: Array<string>;
     private listEnumsByPathItem = [[]];
-
+    
+    private flagTriagem: Triagem;
+    
+    private modalDiagnostico;
+    private filterDiagnostico: string;
+    private arrayDiagnostico: Array<Diagnostico>;
+    private modalIntervencao;
+    private filterIntervencao: string;
+    private arrayIntervencao: Array<Intervencao>;
+    private modalEquipe;
+    private filterEquipe: string;
+    private arrayEquipe: Array<Equipe>;
+    
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
@@ -148,6 +160,18 @@ export class AtendimentoFormComponent {
         this.msgPreload = "Atualizando...";
         this.listPathsEnumItem = new Array<string>();
         this.listPathsEnumPergunta = new Array<string>();
+        
+        this.flagTriagem = new TriagemBuilder().initialize(new Triagem());
+        
+        this.modalDiagnostico = new EventEmitter<string | MaterializeAction>();
+        this.filterDiagnostico = "";
+        this.arrayDiagnostico = new Array<Diagnostico>();
+        this.modalIntervencao = new EventEmitter<string | MaterializeAction>();
+        this.filterIntervencao = "";
+        this.arrayIntervencao = new Array<Intervencao>();
+        this.modalEquipe = new EventEmitter<string | MaterializeAction>();
+        this.filterEquipe = "";
+        this.arrayEquipe = new Array<Equipe>();
     }
 
     ngOnInit() {
@@ -336,6 +360,14 @@ export class AtendimentoFormComponent {
                             }
                         }
                     }, 200 );
+                    
+                    this.atendimento.getTriagens().sort(function(a, b) {
+                        if ( a.getIndicadorSast().getCodigo() < b.getIndicadorSast().getCodigo() )
+                            return -1;
+                        if ( a.getIndicadorSast().getCodigo() > b.getIndicadorSast().getCodigo() )
+                            return 1;
+                        return 0;
+                    })
 
                     this.getTriagensTodosAtendimentos();
                     this.getRespostasFichaColeta();
@@ -1241,4 +1273,83 @@ export class AtendimentoFormComponent {
         
         return false;
     }
+    
+    openModalDiagnostico( triagem: Triagem ) {
+        this.flagTriagem = triagem;
+        this.modalDiagnostico.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    fetchDiagnosticos( evento: string ) {
+        if ( evento.length > 3 ) {
+            this.atendimentoService.getDiagnosticoByDescricaoAndAbreviacao(evento, this.profissional.getEquipe().getAbreviacao())
+                .then(res => {
+                    this.arrayDiagnostico = new DiagnosticoBuilder().cloneList(res.json());
+                })
+                .catch(error => {
+                    console.log("Erro ao buscar o diagnostico por descricao");
+                })
+        }
+    }
+    
+    selectDiagnostico( diagnostico: Diagnostico ) {
+        this.flagTriagem.setDiagnostico(diagnostico);
+        this.modalDiagnostico.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    cancelarModalDiagnostico() {
+        this.modalDiagnostico.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    openModalIntervencao( triagem: Triagem ) {
+        this.flagTriagem = triagem;
+        this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    fetchIntervencao( evento ) {
+        if ( evento.length > 3 ) {
+            this.atendimentoService.getIntervencaoByDescricaoAndAbreviacao(evento, this.profissional.getEquipe().getAbreviacao())
+                .then(res => {
+                    this.arrayIntervencao = new IntervencaoBuilder().cloneList(res.json());
+                })
+                .catch(error => {
+                    console.log("Erro ao buscar o diagnostico por descricao");
+                })
+        }
+    }
+    
+    selectIntervencao( intervencao: Intervencao) {
+        this.flagTriagem.setIntervencao(intervencao);
+        this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    cancelarModalIntervencao() {
+        this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    openModalEquipe( triagem: Triagem ) {
+        this.flagTriagem = triagem;
+        this.modalEquipe.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    fetchEquipe( evento ) {
+        if ( evento.length > 3 ) {
+            this.atendimentoService.getEquipeAbordagemByName(evento)
+                .then(res => {
+                    this.arrayEquipe = new EquipeBuilder().cloneList(res.json());
+                })
+                .catch(error => {
+                    console.log("Erro ao buscar o diagnostico por descricao");
+                })
+        }
+    }
+    
+    selectEquipe( equipe: Equipe ) {
+        this.flagTriagem.setEquipeAbordagem(equipe);
+        this.modalEquipe.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    cancelarModalEquipe() {
+        this.modalEquipe.emit( { action: "modal", params: ['close'] } );
+    }
+    
 }
