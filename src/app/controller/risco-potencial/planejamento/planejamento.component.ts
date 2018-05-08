@@ -52,6 +52,17 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private equipeAbordagens: Array<Equipe>;
     private validEquipeAbordagem: string;
     private autocompleteEquipeAbordagem;
+    
+    private flagTriagem: Triagem;
+    private modalDiagnostico;
+    private filterDiagnostico: string;
+    private arrayDiagnostico: Array<Diagnostico>;
+    private modalIntervencao;
+    private filterIntervencao: string;
+    private arrayIntervencao: Array<Intervencao>;
+    private modalEquipe;
+    private filterEquipe: string;
+    private arrayEquipe: Array<Equipe>;
 
     constructor( private route: ActivatedRoute,
         private riscoEmpregadoService: RiscoEmpregadoService,
@@ -69,6 +80,17 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         this.intervencoes = new Array<Intervencao>();
         this.prazos = new Array<string>();
         this.equipeAbordagens = new EquipeBuilder().initializeList( new Array<Equipe>() );
+        
+        this.flagTriagem = new TriagemBuilder().initialize(new Triagem());
+        this.modalDiagnostico = new EventEmitter<string | MaterializeAction>();
+        this.filterDiagnostico = "";
+        this.arrayDiagnostico = new Array<Diagnostico>();
+        this.modalIntervencao = new EventEmitter<string | MaterializeAction>();
+        this.filterIntervencao = "";
+        this.arrayIntervencao = new Array<Intervencao>();
+        this.modalEquipe = new EventEmitter<string | MaterializeAction>();
+        this.filterEquipe = "";
+        this.arrayEquipe = new Array<Equipe>();
     }
 
     ngOnInit() {
@@ -357,9 +379,88 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
 
         return array;
     }
+    
+    openModalDiagnostico( triagem: Triagem ) {
+        this.flagTriagem = triagem;
+        this.modalDiagnostico.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    fetchDiagnosticos( evento: string ) {
+        if ( evento.length > 3 ) {
+            this.riscoEmpregadoService.getDiagnosticoByDescricaoAndAbreviacao(evento, this.profissional.getEquipe().getAbreviacao())
+                .then(res => {
+                    this.arrayDiagnostico = new DiagnosticoBuilder().cloneList(res.json());
+                })
+                .catch(error => {
+                    console.log("Erro ao buscar o diagnostico por descricao");
+                })
+        }
+    }
+    
+    selectDiagnostico( diagnostico: Diagnostico ) {
+        this.flagTriagem.setDiagnostico(diagnostico);
+        this.modalDiagnostico.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    cancelarModalDiagnostico() {
+        this.modalDiagnostico.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    openModalIntervencao( triagem: Triagem ) {
+        this.flagTriagem = triagem;
+        this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    fetchIntervencao( evento ) {
+        if ( evento.length > 3 ) {
+            this.riscoEmpregadoService.getIntervencaoByDescricaoAndAbreviacao(evento, this.profissional.getEquipe().getAbreviacao())
+                .then(res => {
+                    this.arrayIntervencao = new IntervencaoBuilder().cloneList(res.json());
+                })
+                .catch(error => {
+                    console.log("Erro ao buscar o diagnostico por descricao");
+                })
+        }
+    }
+    
+    selectIntervencao( intervencao: Intervencao) {
+        this.flagTriagem.setIntervencao(intervencao);
+        this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    cancelarModalIntervencao() {
+        this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    openModalEquipe( triagem: Triagem ) {
+        this.flagTriagem = triagem;
+        this.modalEquipe.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    fetchEquipe( evento ) {
+        if ( evento.length > 3 ) {
+            this.riscoEmpregadoService.getEquipeAbordagemByName(evento)
+                .then(res => {
+                    this.arrayEquipe = new EquipeBuilder().cloneList(res.json());
+                })
+                .catch(error => {
+                    console.log("Erro ao buscar o diagnostico por descricao");
+                })
+        }
+    }
+    
+    selectEquipe( equipe: Equipe ) {
+        this.flagTriagem.setEquipeAbordagem(equipe);
+        this.modalEquipe.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    cancelarModalEquipe() {
+        this.modalEquipe.emit( { action: "modal", params: ['close'] } );
+    }
 
     ngOnDestroy() {
         if ( this.inscricao != undefined )
             this.inscricao.unsubscribe();
     }
+    
 }

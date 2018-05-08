@@ -53,3 +53,25 @@ td > a > i {
 .table-triagem {
 	margin-top: -40px;
 }
+
+.title-modal-planejamento {
+	margin-bottom: 30px;
+	color: #26a69a;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.select-planejamento {
+	cursor: pointer;
+	margin-bottom: 0px !important;
+}
+
+.label-select-planejamento {
+	font-size: 1.2rem !important;
+    color: #26a69a !important;
+    margin-right: 10px !important;
+}
+
+.input-filter-planejamento {
+	width: 70% !important;
+}

@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
 import { Observable } from 'rxjs/Rx';
 
@@ -7,9 +7,9 @@ import { ChildGuard } from './../../generics/child.guard';
 import { AuthService } from './../../login/auth.service';
 
 @Injectable()
-export class QuadroAtendimentoGuard implements CanActivateChild {
+export class QuadroAtendimentoGuard implements CanActivate {
     
-    canActivateChild(
+    canActivate(
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): boolean | Observable<boolean> | Promise<boolean> {

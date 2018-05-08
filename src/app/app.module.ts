@@ -74,6 +74,8 @@ import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-grupo.guard';
 import { PanoramaGuard } from './guards/panorama.guard';
+import { DeclaracaoComparecimentoGuard } from './guards/guards-child/declaracao-comparecimento.guard';
+import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento.guard';
 
 @NgModule({
   declarations: [
@@ -151,6 +153,8 @@ import { PanoramaGuard } from './guards/panorama.guard';
     RiscoPotencialGuard,
     NotificacaoGuard,
     EmpregadosPorGrupoGuard,
+    DeclaracaoComparecimentoGuard,
+    QuadroAtendimentoGuard,
     PanoramaGuard
   ],
   bootstrap: [ 

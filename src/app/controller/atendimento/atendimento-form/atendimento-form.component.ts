@@ -111,7 +111,6 @@ export class AtendimentoFormComponent {
     private listEnumsByPathItem = [[]];
     
     private flagTriagem: Triagem;
-    
     private modalDiagnostico;
     private filterDiagnostico: string;
     private arrayDiagnostico: Array<Diagnostico>;
@@ -162,7 +161,6 @@ export class AtendimentoFormComponent {
         this.listPathsEnumPergunta = new Array<string>();
         
         this.flagTriagem = new TriagemBuilder().initialize(new Triagem());
-        
         this.modalDiagnostico = new EventEmitter<string | MaterializeAction>();
         this.filterDiagnostico = "";
         this.arrayDiagnostico = new Array<Diagnostico>();
