@@ -6,10 +6,14 @@ export class FilterDataPipe implements PipeTransform {
     private mapValue = [[]];
     private mapTypes: Array<string>;
     private savedArray: Array<any>;
+    private previewArrayReturn: Array<any>;
+    private arrayReturn: Array<any>;
 
     constructor() {
         this.mapTypes = new Array<string>();
         this.savedArray = new Array<any>();
+        this.previewArrayReturn = new Array<any>();
+        this.arrayReturn = new Array<any>();
     }
 
     transform( array: any[], filter: any, tipo: string, value: string ) {
@@ -25,14 +29,13 @@ export class FilterDataPipe implements PipeTransform {
         
         if ( tipo == undefined ) {
             this.arrayFiltered = array;
+            return this.arrayFiltered;
         } else if ( typeofFilter == 'string' && filter == '' ) {
             return this.savedArray;
         }
             
         if ( tipo != "" && filter ) {
             let arrayString: Array<string> = new Array<string>();
-            
-            array = this.arrayFiltered;
             
             if ( this.mapValue[tipo] == undefined ) {
                 this.mapValue[tipo] = new Array<string>();
@@ -73,33 +76,61 @@ export class FilterDataPipe implements PipeTransform {
                 }
             }
             
-            
+            this.arrayReturn = new Array<any>();
+            this.previewArrayReturn = this.arrayFiltered;
             for ( let i = 0; i < this.mapTypes.length; i++ ) {
                 arrayString = this.mapValue[this.mapTypes[i]].split("$");
                 for ( let i1 = 0; i1 < arrayString.length; i1++ ) {
-                    if ( arrayString[i1] == '' ) continue;
-                    if ( i1 <= 1 ) {
-                        array = array.filter(a => {
+                    if ( i1 == 0 ) {
+                        this.arrayReturn = this.previewArrayReturn.filter(a => {
+                            if ( a[this.mapTypes[i]] != undefined )
+                                return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                            else return false;
+                        })
+                        this.previewArrayReturn = this.arrayReturn;
+                    } else if ( i == 0 && i1 == 1 ) {
+                        this.arrayReturn = this.arrayFiltered.filter(a => {
                                     if ( a[this.mapTypes[i]] != undefined )
                                         return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
                                     else return false;
-                                }) 
-                    }
-                    else {
+                                })
+                        this.previewArrayReturn = this.arrayReturn;
+                    } else if ( i == 0 && i1 > 1 ) {
                         Array.prototype.push.apply(
-                                array,
-                                this.arrayFiltered.filter(a => { 
+                                this.arrayReturn,
+                                this.arrayFiltered.filter(a => {
                                     if ( a[this.mapTypes[i]] != undefined )
                                         return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
                                     else return false;
-                                }) 
+                                })
                         );
-                    } 
+                        this.previewArrayReturn = this.arrayReturn;
+                    } else if ( i > 0 && i1 == 1 ) {
+                        this.arrayReturn = this.previewArrayReturn.filter(a => {
+                            if ( a[this.mapTypes[i]] != undefined )
+                                return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                            else return false;
+                        })
+                    } else if ( i > 0 && i1 > 1 ) {
+                        Array.prototype.push.apply(
+                                this.arrayReturn,
+                                this.previewArrayReturn.filter(a => {
+                                    if ( a[this.mapTypes[i]] != undefined )
+                                        return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                                    else return false;
+                                })
+                        );
+                        this.previewArrayReturn = this.arrayReturn;
+                    }
                 }
             }
+            
         }
         
-        this.savedArray = array;
-        return array;
+        console.log('mapValue: ');
+        console.log(this.mapValue);
+        console.log('mapTypes: '+this.mapTypes);
+        this.savedArray = this.arrayReturn;
+        return this.arrayReturn;
     }
 }

@@ -5,7 +5,8 @@ import { Headers, Http } from '@angular/http';
 import { GlobalVariable } from './../../global';
 import { Eixo } from './../../model/eixo';
 import { EixoFilter } from './eixo.filter';
-import { EquipeService } from './../equipe/equipe.service'; 
+import { EquipeService } from './../equipe/equipe.service';
+import { EquipeFilter } from './../equipe/equipe.filter';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
@@ -22,5 +23,13 @@ export class EixoService extends GenericService {
     
     getEixos() {
         return this.selectList(new EixoFilter());
+    }
+    
+    getEixosByEquipe( idEquipe ) {
+        let eixoFilter: EixoFilter = new EixoFilter();
+        eixoFilter.setEquipe( new EquipeFilter() );
+        eixoFilter.getEquipe().setId( idEquipe );
+        
+        return this.selectList( eixoFilter );
     }
 }

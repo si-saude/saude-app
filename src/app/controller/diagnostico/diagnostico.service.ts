@@ -55,4 +55,17 @@ export class DiagnosticoService extends GenericService {
         
         return this.selectList(diagnosticoFilter);
     }
+    
+    getDiagnosticoByEixo(idEixo: number, idEquipe: number) {
+        let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
+        
+        diagnosticoFilter.setEixo(new EixoFilter());
+        diagnosticoFilter.getEixo().setId(idEixo);
+        diagnosticoFilter.getEixo().setEquipe(new EquipeFilter());
+        diagnosticoFilter.getEixo().getEquipe().setId(idEquipe);
+        
+        diagnosticoFilter.setPageSize(Math.pow(2, 31)-1);
+        
+        return this.selectList(diagnosticoFilter);
+    }
 }

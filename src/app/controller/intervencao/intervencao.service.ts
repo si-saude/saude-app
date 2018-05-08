@@ -23,6 +23,14 @@ export class IntervencaoService extends GenericService {
         return this.selectList(new IntervencaoFilter());
     }
     
+    getIntervencoesByEquipe( idEquipe ) {
+        let intervencaoFilter: IntervencaoFilter = new IntervencaoFilter();
+        intervencaoFilter.setEquipe(new EquipeFilter());
+        intervencaoFilter.getEquipe().setId( idEquipe );
+        
+        return this.selectList(intervencaoFilter);
+    }
+    
     getIntervencaoByDescricaoAndAbreviacao(descricao: string, abreviacaoEquipe: string) {
         let intervencaoFilter: IntervencaoFilter = new IntervencaoFilter();
         let equipeFilter: EquipeFilter = new EquipeFilter();
