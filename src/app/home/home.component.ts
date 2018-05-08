@@ -39,7 +39,7 @@ export class HomeComponent extends GenericListComponent<Notificacao, Notificacao
                     .then( res => {
                         let usuario: Usuario = new UsuarioBuilder().clone( res.json() );
                         if ( usuario.getId() > 0 && usuario.getPessoa() != undefined ) {
-                            
+                            this.showPreload = false;
                             let pessoaFilter: PessoaFilter = new PessoaFilter();
                             pessoaFilter.setCpf( usuario.getPessoa().getCpf() );
                             let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
