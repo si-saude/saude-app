@@ -127,9 +127,6 @@ export class FilterDataPipe implements PipeTransform {
             
         }
         
-        console.log('mapValue: ');
-        console.log(this.mapValue);
-        console.log('mapTypes: '+this.mapTypes);
         this.savedArray = this.arrayReturn;
         return this.arrayReturn;
     }

@@ -27,6 +27,7 @@ export class EixoService extends GenericService {
     
     getEixosByEquipe( idEquipe ) {
         let eixoFilter: EixoFilter = new EixoFilter();
+        eixoFilter.setPageSize(Math.pow(2, 31)-1);
         eixoFilter.setEquipe( new EquipeFilter() );
         eixoFilter.getEquipe().setId( idEquipe );
         

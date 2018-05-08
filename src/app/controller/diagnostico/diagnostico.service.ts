@@ -34,7 +34,7 @@ export class DiagnosticoService extends GenericService {
         equipeFilter.setAbreviacao(abreviacaoEquipe);
         eixoFilter.setEquipe(equipeFilter);
         
-        diagnosticoFilter.setPageSize(30);
+        diagnosticoFilter.setPageSize(Math.pow(2, 31)-1);
         diagnosticoFilter.setDescricao(descricao);
         diagnosticoFilter.setEixo(eixoFilter);
         
@@ -50,7 +50,7 @@ export class DiagnosticoService extends GenericService {
         eixoFilter.setEquipe(equipeFilter);
         
         diagnosticoFilter.setEixo(eixoFilter);
-        diagnosticoFilter.setPageSize(30);
+        diagnosticoFilter.setPageSize(Math.pow(2, 31)-1);
         diagnosticoFilter.setCodigo(codigo);
         
         return this.selectList(diagnosticoFilter);

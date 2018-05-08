@@ -25,6 +25,8 @@ export class IntervencaoService extends GenericService {
     
     getIntervencoesByEquipe( idEquipe ) {
         let intervencaoFilter: IntervencaoFilter = new IntervencaoFilter();
+    
+        intervencaoFilter.setPageSize(Math.pow(2, 31)-1);
         intervencaoFilter.setEquipe(new EquipeFilter());
         intervencaoFilter.getEquipe().setId( idEquipe );
         
@@ -37,7 +39,7 @@ export class IntervencaoService extends GenericService {
         
         equipeFilter.setAbreviacao(abreviacaoEquipe);
     
-        intervencaoFilter.setPageSize(30);
+        intervencaoFilter.setPageSize(Math.pow(2, 31)-1);
         intervencaoFilter.setDescricao(descricao);
         intervencaoFilter.setEquipe(equipeFilter);
         

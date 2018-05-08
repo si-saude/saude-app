@@ -107,6 +107,7 @@ tbody{
 
 .table-triagem {
 	margin-top: -40px;
+	display: inline-block;
 }
 
 .nome {

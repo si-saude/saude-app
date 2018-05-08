@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';
 import { ChartsModule } from 'ng2-charts';
+import { DataTableModule } from "angular2-datatable";
 
 import { RiscoPotencialComponent } from './risco-potencial.component';
 import { TriagemComponent } from './triagem/triagem.component';
@@ -21,6 +22,7 @@ import { RiscoEmpregadoService } from './../risco-empregado/risco-empregado.serv
 import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
 import { TransformDatePipe } from './../../pipes/transform-date.pipe';
 import { SharedModule } from './../shared.module';
+import { FilterDataPipe } from './../../pipes/filter-data.pipe';
 
 @NgModule({
     declarations: [
@@ -34,12 +36,14 @@ import { SharedModule } from './../shared.module';
        GraficosComponent,
        CriarPlanoComponent,
        TransformDatePipe,
-       TriagemReavaliacaoComponent
+       TriagemReavaliacaoComponent,
+       FilterDataPipe
      ],
      imports: [
         RiscoPotencialRoutingModule,
         MyDatePickerModule,
         ChartsModule,
+        DataTableModule,
         SharedModule
      ],
      providers: [
