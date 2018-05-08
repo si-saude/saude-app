@@ -429,7 +429,7 @@
 												[(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
 										</tr>
 									</div>
-									<div class="row">
+									<!-- <div class="row">
 										<tr class="row col s12">
 											<td class="col s3 label-diagnostico">Diagnóstico</td>
 											<td class="col s9 diagnostico"><input type="text"
@@ -444,35 +444,38 @@
 												[(ngModel)]="triagem.diagnostico.id"></td>
 										</tr>
 									</div>
+									 -->
+									 <div class="row">
+									 	<tr class="row col s12">
+										 	<td class="col s3 label-diagnostico">Diagnóstico</td>
+										 	<td class="col s9 diagnostico">
+										 		<input (click)="openModalDiagnostico(triagem)" 
+										 			id="triagem{{t}}.diagnostico.descricao" type="text"
+													name="triagem{{t}}.diagnostico.descricao"
+													[(ngModel)]="triagem.diagnostico.descricao">
+									 		</td>
+									 	</tr>
+									 </div>
 									<div class="row">
 										<tr class="row col s12">
 											<td class="col s3 label-intervencao">Intervenção</td>
-											<td class="col s9 intervencao"><input type="text"
-												materialize="autocomplete" autocomplete="off"
-												name="intervencao{{t}}" class="resposta-conteudo"
-												[(ngModel)]="triagem.intervencao.descricao"
-												(blur)="getIntervencao(t)"
-												(ngModelChange)="selectIntervencaoByDescricaoAndAbreviacao($event)"
-												[materializeParams]="autocompleteIntervencao"> <input
-												id="triagem{{t}}.intervencao.id" type="hidden"
-												name="triagem{{t}}.intervencao.id"
-												[(ngModel)]="triagem.intervencao.id"></td>
+											<td class="col s9 intervencao">
+												<input (click)="openModalIntervencao(triagem)" 
+										 			id="triagem{{t}}.intervencao.descricao" type="text"
+													name="triagem{{t}}.intervencao.descricao"
+													[(ngModel)]="triagem.intervencao.descricao">
+											</td>
 										</tr>
 									</div>
 									<div class="row">
 										<tr class="row col s12">
 											<td class="col s3 label-equipe-abordagem">Equipe de
 												Abordagem</td>
-											<td class="col s9 equipe-abordagem"><input type="text"
-												materialize="autocomplete" autocomplete="off"
-												name="equipeAbordagem{{t}}" class="resposta-conteudo"
-												[(ngModel)]="triagem.equipeAbordagem.nome"
-												(blur)="getEquipeAbordagem(t)"
-												(ngModelChange)="selectEquipeAbordagemByName($event);"
-												[materializeParams]="autocompleteEquipeAbordagem"> <input
-												id="triagem{{t}}.equipeAbordagem.id" type="hidden"
-												name="triagem{{t}}.equipeAbordagem.id"
-												[(ngModel)]="triagem.equipeAbordagem.id"></td>
+											<td class="col s9 equipe-abordagem">
+											<input (click)="openModalEquipe(triagem)" 
+										 			id="triagem{{t}}.equipeAbordagem.nome" type="text"
+													name="triagem{{t}}.equipeAbordagem.nome"
+													[(ngModel)]="triagem.equipeAbordagem.nome">
 										</tr>
 									</div>
 									<div class="row">
@@ -719,6 +722,112 @@
 	</div>
 
 </div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams"
+	[materializeActions]="modalDiagnostico">
+
+	<h5 class="title-modal title-modal-planejamento">Diagnósticos</h5>
+	
+	<div class="div-filter-diagnostico col s6 center">
+		<label for="filterDiagnostico" class="label-select-planejamento">Filtrar</label><br>
+		<input id="filterDiagnostico" type="text" class="input-filter-planejamento"
+			[(ngModel)]="filterDiagnostico" name="filterDiagnostico"
+			(ngModelChange)="fetchDiagnosticos($event)">
+	</div>
+
+	<div class="collection">
+		<div *ngFor="let a of arrayDiagnostico">
+			<div class="row row-collection select-planejamento">
+				<div class="col s12" (click)="selectDiagnostico(a)">
+					<div class="col s12">
+						<a [routerLinkActive]="['active']" class="collection-item">
+							{{a.descricao}}
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		 <a class="waves-effect waves-green btn-flat"
+			(click)="cancelarModalDiagnostico()">Cancelar</a>
+	</div>
+
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams"
+	[materializeActions]="modalIntervencao">
+
+	<h5 class="title-modal title-modal-planejamento">Intervenções</h5>
+	
+	<div class="div-filter-intervencao col s6 center">
+		<label for="filterIntervencao" class="label-select-planejamento">Filtrar</label><br>
+		<input id="filterIntervencao" type="text" class="input-filter-planejamento"
+			[(ngModel)]="filterIntervencao" name="filterIntervencao"
+			(ngModelChange)="fetchIntervencao($event)">
+	</div>
+
+	<div class="collection">
+		<div *ngFor="let a of arrayIntervencao">
+			<div class="row row-collection select-planejamento">
+				<div class="col s12" (click)="selectIntervencao(a)">
+					<div class="col s12">
+						<a [routerLinkActive]="['active']" class="collection-item">
+							{{a.descricao}}
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		 <a class="waves-effect waves-green btn-flat"
+			(click)="cancelarModalIntervencao()">Cancelar</a>
+	</div>
+
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modalParams"
+	[materializeActions]="modalEquipe">
+
+	<h5 class="title-modal title-modal-planejamento">Equipes</h5>
+	
+	<div class="div-filter-equipe col s6 center">
+		<label for="filterEquipe" class="label-select-planejamento">Filtrar</label><br>
+		<input id="filterEquipe" type="text" class="input-filter-planejamento"
+			[(ngModel)]="filterEquipe" name="filterEquipe"
+			(ngModelChange)="fetchEquipe($event)">
+	</div>
+
+	<div class="collection">
+		<div *ngFor="let a of arrayEquipe">
+			<div class="row row-collection select-planejamento">
+				<div class="col s12" (click)="selectEquipe(a)">
+					<div class="col s12">
+						<a [routerLinkActive]="['active']" class="collection-item">
+							{{a.nome}}
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		 <a class="waves-effect waves-green btn-flat"
+			(click)="cancelarModalEquipe()">Cancelar</a>
+	</div>
+
+</div>
+
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

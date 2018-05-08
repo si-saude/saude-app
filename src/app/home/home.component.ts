@@ -23,11 +23,13 @@ import { NotificacaoFilter } from './../controller/notificacao/notificacao.filte
 } )
 export class HomeComponent extends GenericListComponent<Notificacao, NotificacaoFilter, NotificacaoGuard> {
     private profissional: Profissional;
+    private showPaginator: boolean;
 
     constructor(private notificacaoService: NotificacaoService, notificacaoGuard: NotificacaoGuard, router: Router) {
         super(notificacaoService, new NotificacaoFilter(), notificacaoGuard, router);
         
-        this.msgEmptyPaginas = "Nada a notificar."
+        this.msgEmptyPaginas = "Nada a notificar.";
+        this.showPaginator = true;
     }
     
     ngOnInit() {
@@ -38,30 +40,31 @@ export class HomeComponent extends GenericListComponent<Notificacao, Notificacao
                         let usuario: Usuario = new UsuarioBuilder().clone( res.json() );
                         if ( usuario.getId() > 0 && usuario.getPessoa() != undefined ) {
                             this.showPreload = false;
-//                            let pessoaFilter: PessoaFilter = new PessoaFilter();
-//                            pessoaFilter.setCpf( usuario.getPessoa().getCpf() );
-//                            let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-//                            profissionalFilter.setEmpregado( new EmpregadoFilter() );
-//                            profissionalFilter.getEmpregado().setPessoa(pessoaFilter);
-//    
-//                            this.notificacaoService.getProfissional( profissionalFilter )
-//                                .then( res => {
-//                                    if ( res.json().list[0] != undefined ) {
-//                                        this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-//                                        
-//                                        this.filter.setEquipe(new EquipeFilter());
-//                                        this.filter.getEquipe().setId(this.profissional.getEquipe().getId());
-//                                        
-//                                        super.list();
-//                                    } else {
-//                                        this.router.navigate( ["/home"] );
-//                                        return;
-//                                    }
-//                                } )
-//                                .catch( error => {
-//                                    console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
-//                                    this.catchConfiguration( error );
-//                                } )
+                            let pessoaFilter: PessoaFilter = new PessoaFilter();
+                            pessoaFilter.setCpf( usuario.getPessoa().getCpf() );
+                            let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+                            profissionalFilter.setEmpregado( new EmpregadoFilter() );
+                            profissionalFilter.getEmpregado().setPessoa(pessoaFilter);
+    
+                            this.notificacaoService.getProfissional( profissionalFilter )
+                                .then( res => {
+                                    if ( res.json().list[0] != undefined ) {
+                                        this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
+                                        
+                                        this.filter.setEquipe(new EquipeFilter());
+                                        this.filter.getEquipe().setId(this.profissional.getEquipe().getId());
+                                        
+                                        super.list();
+                                    } else {
+                                        this.showPreload = false;
+                                        this.showPaginator = false;
+                                        return;
+                                    }
+                                } )
+                                .catch( error => {
+                                    console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
+                                    this.catchConfiguration( error );
+                                } )
                         } else {
                             this.router.navigate( ["/login"] );
                             return;

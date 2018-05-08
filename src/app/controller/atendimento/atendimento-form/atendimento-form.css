@@ -242,3 +242,22 @@ input.resposta-pergunta {
 input[type="text"]:disabled {
 	background: #D2D2D2 !important;
 }
+
+.title-modal-planejamento {
+	margin-bottom: 30px;
+}
+
+.select-planejamento {
+	cursor: pointer;
+	margin-bottom: 0px !important;
+}
+
+.label-select-planejamento {
+	font-size: 1.2rem !important;
+    color: #26a69a !important;
+    margin-right: 10px !important;
+}
+
+.input-filter-planejamento {
+	width: 70% !important;
+}

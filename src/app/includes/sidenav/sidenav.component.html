@@ -85,6 +85,7 @@
 			(click)="closeSidenavProcesso()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
+			<a [routerLink]="['/home']">Notificação</a>
 			<a [routerLink]="['/agenda']" *ngIf="checkPermissao('AGENDA')">Agenda</a>
 			<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
 			<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria De Aso</a>
@@ -120,6 +121,10 @@
 			<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-out']" 
 				*ngIf="checkPermissao('FILA-ESPERA-OCUPACIONAL-RECEPCAO')">Check-out (Recepção)</a>
 			<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
+			<a [routerLink]="['/fila-espera-ocupacional/quadro-atendimento']"
+				*ngIf="checkPermissao('QUADRO-ATENDIMENTO')">Quadro de Atendimento</a>
+			<a [routerLink]="['/fila-espera-ocupacional/quadro-atendimento']"
+				*ngIf="checkPermissao('DECLARACAO-COMPARECIMENTO')">Declaração de Comparecimento</a>
 		</div>
 	</li>
 </ul>
