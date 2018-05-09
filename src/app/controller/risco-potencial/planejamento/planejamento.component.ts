@@ -15,6 +15,8 @@ import { Intervencao } from './../../../model/intervencao';
 import { IntervencaoBuilder } from './../../intervencao/intervencao.builder';
 import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
+import { Eixo } from './../../../model/eixo';
+import { EixoBuilder } from './../../eixo/eixo.builder';
 import { UsuarioBuilder } from './../../usuario/usuario.builder';
 import { Profissional } from './../../../model/profissional';
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
@@ -63,6 +65,13 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private modalEquipe;
     private filterEquipe: string;
     private arrayEquipe: Array<Equipe>;
+    private eixos: Array<Eixo>;
+    private selectEixoId: string;
+    private filter;
+    private typeFilter;
+    private value;
+    private activeDiagnostico:boolean;
+    private activeIntervencao:boolean;
 
     constructor( private route: ActivatedRoute,
         private riscoEmpregadoService: RiscoEmpregadoService,
@@ -91,6 +100,11 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         this.modalEquipe = new EventEmitter<string | MaterializeAction>();
         this.filterEquipe = "";
         this.arrayEquipe = new Array<Equipe>();
+        this.eixos = new Array<Eixo>();
+        this.selectEixoId = "";
+        this.filter = "";
+        this.activeDiagnostico = false;
+        this.activeIntervencao = false;
     }
 
     ngOnInit() {
@@ -381,20 +395,33 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     openModalDiagnostico( triagem: Triagem ) {
+        this.activeDiagnostico = true;
+        this.activeIntervencao = false;
         this.flagTriagem = triagem;
+        this.riscoEmpregadoService.getEixosByEquipe(this.profissional.getEquipe().getId())
+            .then(res => {
+                this.eixos = new EixoBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log("Erro ao retornar os eixos.");
+            })
         this.modalDiagnostico.emit( { action: "modal", params: ['open'] } );
     }
     
-    fetchDiagnosticos( evento: string ) {
-        if ( evento.length > 3 ) {
-            this.riscoEmpregadoService.getDiagnosticoByDescricaoAndAbreviacao(evento, this.profissional.getEquipe().getAbreviacao())
+    fetchDiagnosticos( ) {
+        if ( this.selectEixoId != "" ) {
+            this.riscoEmpregadoService.getDiagnosticoByEixo( Number(this.selectEixoId), this.profissional.getEquipe().getId() )
                 .then(res => {
                     this.arrayDiagnostico = new DiagnosticoBuilder().cloneList(res.json());
+                    this.value = '$*all*$';
                 })
                 .catch(error => {
                     console.log("Erro ao buscar o diagnostico por descricao");
                 })
-        }
+        } else {
+            this.toastParams = ["Por favor, seleciona um eixo", 4000];
+            this.globalActions.emit( 'toast' );
+        }        
     }
     
     selectDiagnostico( diagnostico: Diagnostico ) {
@@ -407,20 +434,21 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     openModalIntervencao( triagem: Triagem ) {
+        this.activeDiagnostico = false;
+        this.activeIntervencao = true;
         this.flagTriagem = triagem;
+        this.fetchIntervencao()
         this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
     }
     
-    fetchIntervencao( evento ) {
-        if ( evento.length > 3 ) {
-            this.riscoEmpregadoService.getIntervencaoByDescricaoAndAbreviacao(evento, this.profissional.getEquipe().getAbreviacao())
-                .then(res => {
-                    this.arrayIntervencao = new IntervencaoBuilder().cloneList(res.json());
-                })
-                .catch(error => {
-                    console.log("Erro ao buscar o diagnostico por descricao");
-                })
-        }
+    fetchIntervencao() {
+        this.riscoEmpregadoService.getIntervencoesByEquipe(this.profissional.getEquipe().getId())
+            .then(res => {
+                this.arrayIntervencao = new IntervencaoBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log("Erro ao buscar o diagnostico por descricao");
+            })
     }
     
     selectIntervencao( intervencao: Intervencao) {
@@ -434,19 +462,18 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     
     openModalEquipe( triagem: Triagem ) {
         this.flagTriagem = triagem;
+        this.fetchEquipe();
         this.modalEquipe.emit( { action: "modal", params: ['open'] } );
     }
     
-    fetchEquipe( evento ) {
-        if ( evento.length > 3 ) {
-            this.riscoEmpregadoService.getEquipeAbordagemByName(evento)
-                .then(res => {
-                    this.arrayEquipe = new EquipeBuilder().cloneList(res.json());
-                })
-                .catch(error => {
-                    console.log("Erro ao buscar o diagnostico por descricao");
-                })
-        }
+    fetchEquipe() {
+        this.riscoEmpregadoService.getEquipes()
+            .then(res => {
+                this.arrayEquipe = new EquipeBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log("Erro ao buscar o diagnostico por descricao");
+            })
     }
     
     selectEquipe( equipe: Equipe ) {
@@ -456,6 +483,13 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     
     cancelarModalEquipe() {
         this.modalEquipe.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    selectFilter( event, type: string ) {
+        let splitType = type.split('-');   
+        this.filter = event;
+        this.typeFilter = splitType[2];
+        this.value = $('input[name='+type).val();
     }
 
     ngOnDestroy() {

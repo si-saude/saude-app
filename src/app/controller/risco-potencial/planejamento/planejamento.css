@@ -52,6 +52,7 @@ td > a > i {
 
 .table-triagem {
 	margin-top: -40px;
+	display: inline-block;
 }
 
 .title-modal-planejamento {
@@ -74,4 +75,30 @@ td > a > i {
 
 .input-filter-planejamento {
 	width: 70% !important;
+}
+
+.tr-table-modal { 
+	display: inline-table;
+}
+
+
+.table-filter-planejamento {
+	display: block;
+}
+
+.table-filter-planejamento > tbody {
+	display: block !important;
+	margin-top: 0;
+}
+
+.filter-diagnostico-descricao {
+	padding-left: 0;
+}
+
+.tr-filter-descricao {
+	cursor: pointer;
+}
+
+.tr-filter-descricao:nth-child(even) {
+    background-color: #d9d9d9;
 }

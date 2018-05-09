@@ -16,6 +16,7 @@ import { EquipeService } from './../equipe/equipe.service';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { TriagemService } from './../triagem/triagem.service';
 import { TriagemFilter } from './../triagem/triagem.filter';
+import { EixoService } from './../eixo/eixo.service';
 import { GenericService } from './../../generics/generic.service';
 import { BooleanFilter } from './../../generics/boolean.filter';
 
@@ -29,7 +30,8 @@ export class RiscoEmpregadoService extends GenericService {
             private diagnosticoService: DiagnosticoService,
             private intervencaoService: IntervencaoService,
             private equipeService: EquipeService,
-            private triagemService: TriagemService) {
+            private triagemService: TriagemService,
+            private eixoService: EixoService) {
         super(http,router,"risco-empregado");
     }
     
@@ -111,6 +113,18 @@ export class RiscoEmpregadoService extends GenericService {
     getIntervencaoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {
         return this.intervencaoService.getIntervencaoByDescricaoAndAbreviacao(descricao, abreviacaoEquipe);
     }
+    
+    getIntervencoesByEquipe( idEquipe ) {
+        return this.intervencaoService.getIntervencoesByEquipe( idEquipe );
+    }
+    
+    getDiagnosticoByEixo( idEixo, idEquipe ) {
+        return this.diagnosticoService.getDiagnosticoByEixo( idEixo, idEquipe );
+    }
+    
+    getEixosByEquipe( idEquipe ) {
+        return this.eixoService.getEixosByEquipe( idEquipe );
+     }
     
     getEquipeAbordagemByName( nome ) {
         return this.equipeService.getEquipeByName(nome);

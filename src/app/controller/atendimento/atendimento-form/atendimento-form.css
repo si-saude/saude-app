@@ -60,11 +60,6 @@ table {
 	margin-bottom: 50px;
 }
 
-tbody {
-	display: flex !important;
-	padding: 0;
-}
-
 thead > tr {
 	margin-bottom: 0px;
 	border-bottom: 1px solid;
@@ -85,6 +80,8 @@ td > a > i {
 tbody{
 	margin-top: 10px;
 	border-bottom: 1px solid #c0c0c0;	
+	display: flex !important;
+	padding: 0;
 }
 
 .container-triagens-planejamento tbody {
@@ -110,6 +107,7 @@ tbody{
 
 .table-triagem {
 	margin-top: -40px;
+	display: inline-block;
 }
 
 .nome {
@@ -260,4 +258,30 @@ input[type="text"]:disabled {
 
 .input-filter-planejamento {
 	width: 70% !important;
+}
+
+.tr-table-modal { 
+	display: inline-table;
+}
+
+
+.table-filter-planejamento {
+	display: block;
+}
+
+.table-filter-planejamento > tbody {
+	display: block !important;
+	margin-top: 0;
+}
+
+.filter-diagnostico-descricao {
+	padding-left: 0;
+}
+
+.tr-filter-descricao {
+	cursor: pointer;
+}
+
+.tr-filter-descricao:nth-child(even) {
+    background-color: #d9d9d9;
 }

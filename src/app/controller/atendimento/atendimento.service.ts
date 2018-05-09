@@ -8,6 +8,7 @@ import { LocalizacaoService } from './../localizacao/localizacao.service';
 import { DiagnosticoService } from './../diagnostico/diagnostico.service';
 import { IntervencaoService } from './../intervencao/intervencao.service';
 import { EquipeService } from './../equipe/equipe.service';
+import { EixoService } from './../eixo/eixo.service';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { GenericService } from './../../generics/generic.service';
@@ -21,7 +22,8 @@ export class AtendimentoService extends GenericService {
             private localizacaoService: LocalizacaoService,
             private diagnosticoService: DiagnosticoService,
             private intervencaoService: IntervencaoService,
-            private equipeService: EquipeService) {
+            private equipeService: EquipeService,
+            private eixoService: EixoService) {
         super(http,router,"atendimento");
     }
     
@@ -154,12 +156,24 @@ export class AtendimentoService extends GenericService {
         return this.diagnosticoService.getDiagnosticoByCodigoAndAbreviacao(codigo, abreviacaoEquipe);
     }
     
+    getDiagnosticoByEixo( idEixo, idEquipe ) {
+        return this.diagnosticoService.getDiagnosticoByEixo( idEixo, idEquipe );
+    }
+    
     getIntervencoes() {
         return this.intervencaoService.getIntervencoes();
     }
     
+    getIntervencoesByEquipe( idEquipe ) {
+        return this.intervencaoService.getIntervencoesByEquipe( idEquipe );
+    }
+    
     getIntervencaoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {
         return this.intervencaoService.getIntervencaoByDescricaoAndAbreviacao(descricao, abreviacaoEquipe);
+    }
+    
+    getEixosByEquipe( idEquipe ) {
+       return this.eixoService.getEixosByEquipe( idEquipe );
     }
     
     getEquipeAbordagemByName( nome ) {
