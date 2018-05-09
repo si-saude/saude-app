@@ -18,9 +18,8 @@ export class FilterDataPipe implements PipeTransform {
 
     transform( array: any[], filter: any, tipo: string, value: string ) {
         let typeofFilter = typeof filter;
-        
+            
         if ( value == "$*all*$" ) {
-            this.mapValue = [[]];
             this.mapTypes = new Array<string>();
             this.arrayFiltered = array;
             this.savedArray = array;
@@ -42,7 +41,8 @@ export class FilterDataPipe implements PipeTransform {
                 
                 if ( typeofFilter == 'string' ) 
                     this.mapValue[tipo] = "$"+filter;
-                else this.mapValue[tipo] = filter.data;
+                else 
+                    this.mapValue[tipo] = filter.target.value;
                 
                 this.mapTypes.push( tipo );
             } else {
@@ -59,20 +59,24 @@ export class FilterDataPipe implements PipeTransform {
                         }
                     }
                 } else {
-                    if ( filter.data == null || filter.data == undefined ) {
-                        for ( let i = 0; i < arrayString.length; i++ ) {
-                            let delString = arrayString[0].length - value.length;
-                            if ( i == 0 ) this.mapValue[tipo] = arrayString[0].substring( 0, arrayString[0].length - delString );
-                            else this.mapValue[tipo] += "$"+arrayString[i]; 
-                        }
-                    }
-                    else {
-                        arrayString[0] = arrayString[0] + filter.data;
-                        for ( let i = 0; i < arrayString.length; i++ ) {
-                            if ( i == 0 ) this.mapValue[tipo] = arrayString[0];
-                            else this.mapValue[tipo] += "$"+arrayString[i];
-                        }
-                    }
+                    this.mapValue[tipo] = filter.target.value;
+//                    if ( filter.data == null || filter.data == undefined ) {
+//                        for ( let i = 0; i < arrayString.length; i++ ) {
+//                            let delString = arrayString[0].length - value.length;
+//                            if ( i == 0 ) this.mapValue[tipo] = arrayString[0].substring( 0, arrayString[0].length - delString );
+//                            else this.mapValue[tipo] += "$"+arrayString[i]; 
+//                        }
+//                    }
+//                    else {
+//                        if ( filter.data == undefined )
+//                            arrayString[0] = arrayString[0] + filter.target.value;
+//                        else 
+//                            arrayString[0] = arrayString[0] + filter.data;
+//                        for ( let i = 0; i < arrayString.length; i++ ) {
+//                            if ( i == 0 ) this.mapValue[tipo] = arrayString[0];
+//                            else this.mapValue[tipo] += "$"+arrayString[i];
+//                        }
+//                    }
                 }
             }
             
