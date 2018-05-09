@@ -26,10 +26,11 @@ export class FilterDataPipe implements PipeTransform {
             return array;
         }
         
-        if ( tipo == undefined ) {
+        if ( tipo == undefined || value == "$*new*$") {
             this.arrayFiltered = array;
             return this.arrayFiltered;
         } else if ( typeofFilter == 'string' && filter == '' ) {
+            console.log('savedarray')
             return this.savedArray;
         }
             
@@ -130,7 +131,7 @@ export class FilterDataPipe implements PipeTransform {
             }
             
         }
-        
+        console.log(this.arrayReturn.length)
         this.savedArray = this.arrayReturn;
         return this.arrayReturn;
     }

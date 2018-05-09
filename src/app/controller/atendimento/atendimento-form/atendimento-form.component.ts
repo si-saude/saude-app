@@ -712,9 +712,14 @@ export class AtendimentoFormComponent {
     verifyValidFichaColeta() {
         let respostas: Array<RespostaFichaColeta> = new Array<RespostaFichaColeta>();
         let ret: boolean = true;
+        let resp: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()
+            .find( r => r.getPergunta().getGrupo() == 'ANAMNESE' && r.getPergunta().getCodigo() == '0008' &&
+                        r.getConteudo() != 'SIM');
         
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().forEach(rFC => {
-            if ( rFC.getPergunta().getEquipes().find(e => e.getId() == this.profissional.getEquipe().getId() ) != undefined )
+            if ( rFC.getPergunta().getEquipes().find(e => e.getId() == this.profissional.getEquipe().getId() ) != undefined &&
+                    ((rFC.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" ) && resp == undefined) || 
+                            !rFC.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" )) )
                 respostas.push(rFC);
         })
         
@@ -787,7 +792,7 @@ export class AtendimentoFormComponent {
         let e: Equipe = resposta.getPergunta().getEquipes()
             .find( e => e.getId() == this.profissional.getEquipe().getId() );
     
-        if(r.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" )){
+        if(resposta.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" )){
             if(e != undefined && resp != undefined) return false;
         }else{
             if(e != undefined) return false;
@@ -1296,6 +1301,8 @@ export class AtendimentoFormComponent {
     }
     
     openModalDiagnostico( triagem: Triagem ) {
+        this.value = "$*new*$";
+        $("input[name='filter-diagnostico-descricao']").val('');
         this.activeDiagnostico = true;
         this.activeIntervencao = false;
         this.flagTriagem = triagem;
@@ -1310,11 +1317,12 @@ export class AtendimentoFormComponent {
     }
     
     fetchDiagnosticos( ) {
+        this.filter = $("input[name='filter-diagnostico-descricao']").val('');
+        this.value = '$*new*$';
         if ( this.selectEixoId != "" ) {
             this.atendimentoService.getDiagnosticoByEixo( Number(this.selectEixoId), this.profissional.getEquipe().getId() )
                 .then(res => {
                     this.arrayDiagnostico = new DiagnosticoBuilder().cloneList(res.json());
-                    this.value = '$*all*$';
                 })
                 .catch(error => {
                     console.log("Erro ao buscar o diagnostico por descricao");
@@ -1335,6 +1343,8 @@ export class AtendimentoFormComponent {
     }
     
     openModalIntervencao( triagem: Triagem ) {
+        this.value = "$*new*$";
+        this.filter = $("input[name='filter-intervencao-descricao']").val('');
         this.activeDiagnostico = false;
         this.activeIntervencao = true;
         this.flagTriagem = triagem;
