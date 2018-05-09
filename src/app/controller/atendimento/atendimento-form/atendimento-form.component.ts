@@ -767,9 +767,20 @@ export class AtendimentoFormComponent {
     }
 
     verifyEquipe( resposta: RespostaFichaColeta ) {
-        let e: Equipe = resposta.getPergunta().getEquipes().find( e => e.getId() == this.profissional.getEquipe().getId() );
+        
+        let resp: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()
+            .find( r => r.getPergunta().getGrupo() == 'ANAMNESE' && r.getPergunta().getCodigo() == '0008' &&
+                        r.getConteudo() == 'SIM');
+        
+        let e: Equipe = resposta.getPergunta().getEquipes()
+            .find( e => e.getId() == this.profissional.getEquipe().getId() );
+    
+        if(r.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" )){
+            if(e != undefined && resp != undefined) return false;
+        }else{
+            if(e != undefined) return false;
+        }
 
-        if ( e != undefined ) return false;
         return true;
     }
 
