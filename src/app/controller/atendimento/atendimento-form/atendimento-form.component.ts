@@ -110,7 +110,7 @@ export class AtendimentoFormComponent {
     private listPathsEnumItem: Array<string>;
     private listEnumsByPathItem = [[]];
     
-    private flagTriagem: Triagem;
+    private flagIdTriagem: number;
     private modalDiagnostico;
     private filterDiagnostico: string;
     private arrayDiagnostico: Array<Diagnostico>;
@@ -167,7 +167,6 @@ export class AtendimentoFormComponent {
         this.listPathsEnumItem = new Array<string>();
         this.listPathsEnumPergunta = new Array<string>();
         
-        this.flagTriagem = new TriagemBuilder().initialize(new Triagem());
         this.modalDiagnostico = new EventEmitter<string | MaterializeAction>();
         this.filterDiagnostico = "";
         this.arrayDiagnostico = new Array<Diagnostico>();
@@ -1305,7 +1304,7 @@ export class AtendimentoFormComponent {
         $("input[name='filter-diagnostico-descricao']").val('');
         this.activeDiagnostico = true;
         this.activeIntervencao = false;
-        this.flagTriagem = triagem;
+        this.flagIdTriagem = triagem.getId();
         this.atendimentoService.getEixosByEquipe(this.profissional.getEquipe().getId())
             .then(res => {
                 this.eixos = new EixoBuilder().cloneList(res.json());
@@ -1334,7 +1333,8 @@ export class AtendimentoFormComponent {
     }
     
     selectDiagnostico( diagnostico: Diagnostico ) {
-        this.flagTriagem.setDiagnostico(diagnostico);
+        let triagem = this.atendimento.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setDiagnostico(diagnostico);
         this.modalDiagnostico.emit( { action: "modal", params: ['close'] } );
     }
     
@@ -1347,7 +1347,7 @@ export class AtendimentoFormComponent {
         this.filter = $("input[name='filter-intervencao-descricao']").val('');
         this.activeDiagnostico = false;
         this.activeIntervencao = true;
-        this.flagTriagem = triagem;
+        this.flagIdTriagem = triagem.getId();
         this.fetchIntervencao()
         this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
     }
@@ -1363,7 +1363,8 @@ export class AtendimentoFormComponent {
     }
     
     selectIntervencao( intervencao: Intervencao) {
-        this.flagTriagem.setIntervencao(intervencao);
+        let triagem = this.atendimento.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setIntervencao(intervencao);
         this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
     }
     
@@ -1372,7 +1373,7 @@ export class AtendimentoFormComponent {
     }
     
     openModalEquipe( triagem: Triagem ) {
-        this.flagTriagem = triagem;
+        this.flagIdTriagem = triagem.getId();
         this.fetchEquipe();
         this.modalEquipe.emit( { action: "modal", params: ['open'] } );
     }
@@ -1388,7 +1389,8 @@ export class AtendimentoFormComponent {
     }
     
     selectEquipe( equipe: Equipe ) {
-        this.flagTriagem.setEquipeAbordagem(equipe);
+        let triagem = this.atendimento.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setEquipeAbordagem(equipe);
         this.modalEquipe.emit( { action: "modal", params: ['close'] } );
     }
     

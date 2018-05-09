@@ -55,7 +55,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private validEquipeAbordagem: string;
     private autocompleteEquipeAbordagem;
     
-    private flagTriagem: Triagem;
+    private flagIdTriagem: number;
     private modalDiagnostico;
     private filterDiagnostico: string;
     private arrayDiagnostico: Array<Diagnostico>;
@@ -90,7 +90,6 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         this.prazos = new Array<string>();
         this.equipeAbordagens = new EquipeBuilder().initializeList( new Array<Equipe>() );
         
-        this.flagTriagem = new TriagemBuilder().initialize(new Triagem());
         this.modalDiagnostico = new EventEmitter<string | MaterializeAction>();
         this.filterDiagnostico = "";
         this.arrayDiagnostico = new Array<Diagnostico>();
@@ -395,9 +394,11 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     openModalDiagnostico( triagem: Triagem ) {
+        this.value = "$*new*$";
+        $("input[name='filter-diagnostico-descricao']").val('');
         this.activeDiagnostico = true;
         this.activeIntervencao = false;
-        this.flagTriagem = triagem;
+        this.flagIdTriagem = triagem.getId();
         this.riscoEmpregadoService.getEixosByEquipe(this.profissional.getEquipe().getId())
             .then(res => {
                 this.eixos = new EixoBuilder().cloneList(res.json());
@@ -409,11 +410,12 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     fetchDiagnosticos( ) {
+        this.filter = $("input[name='filter-diagnostico-descricao']").val('');
+        this.value = '$*new*$';
         if ( this.selectEixoId != "" ) {
-            this.riscoEmpregadoService.getDiagnosticoByEixo( Number(this.selectEixoId), this.profissional.getEquipe().getId() )
+            this.riscoEmpregadoService.getDiagnosticoByEixo(Number(this.selectEixoId), this.profissional.getEquipe().getId() )
                 .then(res => {
                     this.arrayDiagnostico = new DiagnosticoBuilder().cloneList(res.json());
-                    this.value = '$*all*$';
                 })
                 .catch(error => {
                     console.log("Erro ao buscar o diagnostico por descricao");
@@ -425,7 +427,8 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     selectDiagnostico( diagnostico: Diagnostico ) {
-        this.flagTriagem.setDiagnostico(diagnostico);
+        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setDiagnostico(diagnostico);
         this.modalDiagnostico.emit( { action: "modal", params: ['close'] } );
     }
     
@@ -434,9 +437,11 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     openModalIntervencao( triagem: Triagem ) {
+        this.value = "$*new*$";
+        this.filter = $("input[name='filter-intervencao-descricao']").val('');
         this.activeDiagnostico = false;
         this.activeIntervencao = true;
-        this.flagTriagem = triagem;
+        this.flagIdTriagem = triagem.getId();
         this.fetchIntervencao()
         this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
     }
@@ -452,7 +457,8 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     selectIntervencao( intervencao: Intervencao) {
-        this.flagTriagem.setIntervencao(intervencao);
+        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setIntervencao(intervencao);
         this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
     }
     
@@ -461,7 +467,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     openModalEquipe( triagem: Triagem ) {
-        this.flagTriagem = triagem;
+        this.flagIdTriagem = triagem.getId();
         this.fetchEquipe();
         this.modalEquipe.emit( { action: "modal", params: ['open'] } );
     }
@@ -477,7 +483,8 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
     
     selectEquipe( equipe: Equipe ) {
-        this.flagTriagem.setEquipeAbordagem(equipe);
+        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setEquipeAbordagem(equipe);
         this.modalEquipe.emit( { action: "modal", params: ['close'] } );
     }
     
