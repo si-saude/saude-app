@@ -498,6 +498,11 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         this.typeFilter = splitType[2];
         this.value = $('input[name='+type).val();
     }
+    
+    planejamentoBackground( triagem: Triagem ) {
+        if ( triagem.getIndice() <= 2 )
+            return 'red';
+    }
 
     ngOnDestroy() {
         if ( this.inscricao != undefined )

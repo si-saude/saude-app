@@ -407,7 +407,7 @@
 					<div class="container-triagens-planejamento">
 						<div *ngFor="let triagem of atendimento.triagens; let t = index">
 							<div *ngIf="verifyIndiceTriagem(triagem)">
-								<fieldset class="fieldset-planejamento-triagem">
+								<fieldset [ngClass]="planejamentoBackground(triagem)" class="fieldset-planejamento-triagem">
 									<div class="row">
 										<tr class="row col s12">
 											<td class="col s3 label-indicador">Indicador</td>

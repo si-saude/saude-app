@@ -128,6 +128,8 @@ export class AtendimentoFormComponent {
     private activeDiagnostico:boolean;
     private activeIntervencao:boolean;
     
+    private t = 0;
+    
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
@@ -783,7 +785,6 @@ export class AtendimentoFormComponent {
     }
 
     verifyEquipe( resposta: RespostaFichaColeta ) {
-        
         let resp: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()
             .find( r => r.getPergunta().getGrupo() == 'ANAMNESE' && r.getPergunta().getCodigo() == '0008' &&
                         r.getConteudo() == 'SIM');
@@ -891,7 +892,7 @@ export class AtendimentoFormComponent {
 
     getArrayItensResposta( item: ItemRespostaFichaColeta ) {
         let ret = [];
-
+        
         while ( item != null && item != undefined ) {
             ret.push( item );
             item = item.getItem();
@@ -937,18 +938,43 @@ export class AtendimentoFormComponent {
     
     addItemResposta( itens: Array<ItemPerguntaFichaColeta>, indexGrupo, indexRespostaByGrupo ) {
         let quantidadeItens = itens.length;
-        
-        if ( quantidadeItens == 0 ) return;
-        
         let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
-
-        let itemRespostaFichaColeta: ItemRespostaFichaColeta =
+        
+        if ( quantidadeItens == 0 ) 
+            return;
+        else if ( quantidadeItens == 1 ) {
+            this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
+                .getItens().push( new ItemRespostaFichaColeta() );
+            return;
+        }
+        
+        let item: ItemRespostaFichaColeta =
+            new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
+        let itemRespostaFichaColeta: ItemRespostaFichaColeta;
+        
+        if ( item.getItem() != undefined ) {
+            
+            itemRespostaFichaColeta = item.getItem();
+        
+            for ( let i = 0; i < quantidadeItens-2; i++ ) {
+                itemRespostaFichaColeta.setItem(new ItemRespostaFichaColeta());
+                itemRespostaFichaColeta = itemRespostaFichaColeta.getItem(); 
+            }
+        }
+                
+        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
+            .getItens().push( item );
+    }
+    
+    constructItemRespostaFichaColeta( quantidadeItens: number, itemRespostaFichaColeta: ItemRespostaFichaColeta ) {
+        if ( quantidadeItens <= 3 ) return;
+        quantidadeItens--;
+        
+        let item: ItemRespostaFichaColeta =
             new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
 
-        this.constructItemRespostaFichaColeta( quantidadeItens, itemRespostaFichaColeta );
-
-        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()[indexResposta]
-            .getItens().push( itemRespostaFichaColeta );
+        itemRespostaFichaColeta.setItem( item );
+        this.constructItemRespostaFichaColeta( quantidadeItens, item );
     }
     
     removeItemResposta( indexGrupo, indexRespostaByGrupo, itemIndex ) {
@@ -982,17 +1008,6 @@ export class AtendimentoFormComponent {
             qtdItens += this.quantidadeItemRespostasByGrupo[i];
         
         return qtdItens;
-    }
-
-    constructItemRespostaFichaColeta( quantidadeItens: number, itemRespostaFichaColeta: ItemRespostaFichaColeta ) {
-        quantidadeItens--;
-        if ( quantidadeItens == 1 ) return;
-
-        let item: ItemRespostaFichaColeta =
-            new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
-
-        itemRespostaFichaColeta.setItem( item );
-        this.constructItemRespostaFichaColeta( quantidadeItens, item );
     }
 
     getTriagensTodosAtendimentos() {
@@ -1291,6 +1306,8 @@ export class AtendimentoFormComponent {
     }
     
     verifyItemPath( resposta: RespostaFichaColeta, indexPath: number ) {
+        if ( resposta.getPergunta().getItens()[indexPath] == undefined ) return;
+        
         let path = resposta.getPergunta().getItens()[indexPath].getPath();
         
         if ( path != undefined && path != '' )
@@ -1404,4 +1421,10 @@ export class AtendimentoFormComponent {
         this.typeFilter = splitType[2];
         this.value = $('input[name='+type).val();
     }
+    
+    planejamentoBackground( triagem: Triagem ) {
+        if ( triagem.getIndice() <= 2 )
+            return 'red';
+    }
+    
 }
