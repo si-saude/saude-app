@@ -366,7 +366,8 @@
 						<div *ngFor="let triagem of atendimento.triagens; let t = index">
 							<tbody>
 								<tr class="row col s12">
-									<td class="col s2 nome" [ngStyle]="{'cursor': 'pointer'}">
+									<td class="col s2 nome" [ngStyle]="{'cursor':'pointer'}"
+										[ngClass]="verifyObrigatoriedadeIndicador(triagem)">
 										{{triagem.indicadorSast.nome}}</td>
 									<td class="col s2 indice0" #tdIndice0 id="0"
 										title="indice0_{{t}}" (click)="selectTriagem(t, tdIndice0.id)"

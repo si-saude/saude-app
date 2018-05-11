@@ -1427,4 +1427,12 @@ export class AtendimentoFormComponent {
             return 'red';
     }
     
+    verifyObrigatoriedadeIndicador( triagem: Triagem ) {
+        if ( triagem.getIndicadorSast().getObrigatorio() ) 
+            return "triagem-indicador-bold";
+        
+        return "";
+    } 
+    
+    
 }

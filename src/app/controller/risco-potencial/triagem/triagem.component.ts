@@ -422,6 +422,13 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
         return array;
     }
     
+    verifyObrigatoriedadeIndicador( triagem: Triagem ) {
+        if ( triagem.getIndicadorSast().getObrigatorio() ) 
+            return "triagem-indicador-bold";
+        
+        return "";
+    } 
+    
     ngOnDestroy() {
         if ( this.inscricao != undefined ) 
             this.inscricao.unsubscribe();

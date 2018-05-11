@@ -197,6 +197,13 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
         this.riscoEmpregado.getTriagens()[indexTriagem].setIndice( Number( indice ) );
     }
     
+    verifyObrigatoriedadeIndicador( triagem: Triagem ) {
+        if ( triagem.getIndicadorSast().getObrigatorio() ) 
+            return "triagem-indicador-bold";
+        
+        return "";
+    } 
+    
     ngOnDestroy() {
         if ( this.inscricao != undefined ) 
             this.inscricao.unsubscribe();

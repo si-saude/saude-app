@@ -88,14 +88,14 @@ export class FilterDataPipe implements PipeTransform {
                     if ( i1 == 0 ) {
                         this.arrayReturn = this.previewArrayReturn.filter(a => {
                             if ( a[this.mapTypes[i]] != undefined )
-                                return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                                return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
                             else return false;
                         })
                         this.previewArrayReturn = this.arrayReturn;
                     } else if ( i == 0 && i1 == 1 ) {
                         this.arrayReturn = this.arrayFiltered.filter(a => {
                                     if ( a[this.mapTypes[i]] != undefined )
-                                        return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                                        return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
                                     else return false;
                                 })
                         this.previewArrayReturn = this.arrayReturn;
@@ -104,7 +104,7 @@ export class FilterDataPipe implements PipeTransform {
                                 this.arrayReturn,
                                 this.arrayFiltered.filter(a => {
                                     if ( a[this.mapTypes[i]] != undefined )
-                                        return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                                        return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
                                     else return false;
                                 })
                         );
@@ -112,7 +112,7 @@ export class FilterDataPipe implements PipeTransform {
                     } else if ( i > 0 && i1 == 1 ) {
                         this.arrayReturn = this.previewArrayReturn.filter(a => {
                             if ( a[this.mapTypes[i]] != undefined )
-                                return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                                return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
                             else return false;
                         })
                     } else if ( i > 0 && i1 > 1 ) {
@@ -120,7 +120,7 @@ export class FilterDataPipe implements PipeTransform {
                                 this.arrayReturn,
                                 this.previewArrayReturn.filter(a => {
                                     if ( a[this.mapTypes[i]] != undefined )
-                                        return (a[this.mapTypes[i]].indexOf(arrayString[i1]) > -1);
+                                        return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
                                     else return false;
                                 })
                         );
