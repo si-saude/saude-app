@@ -13,7 +13,7 @@
 
 <div class="row form-container">
 
-	<div id="fichaColeta">
+	<div id="fichaColeta" disabled>
 		<div class="conteiner-ficha-coleta">
 
 			<div *ngFor="let grupo of gruposRespostasFichaColeta; let g = index">
@@ -23,7 +23,7 @@
 					<div
 						*ngFor="let resposta of respostasFichaColetaByGrupo[grupo]; let r = index">
 						<p class="pergunta-descricao">{{resposta.pergunta.descricao}}</p>
-
+						
 						<div [ngSwitch]="contains(resposta.pergunta.tipo)">
 							<div class="row resposta">
 								<div *ngSwitchCase="'DOUBLE'">
@@ -45,15 +45,25 @@
 								<div *ngSwitchCase="'TEXTO'">
 									<div class="input-field col s5">
 										<input type="text" name="TEXTO{{r}}" disabled
-											class="resposta-conteudo resposta-pergunta"
-											[(ngModel)]="resposta.conteudo">
+											class="resposta-conteudo resposta-pergunta" [(ngModel)]="resposta.conteudo">
 									</div>
 								</div>
+								
+								<div *ngSwitchCase="'ENUM'">
+									<div class="input-field col s4  select-sim-nao">
+										<select class="browser-default resposta-conteudo resposta-pergunta" disabled 
+											[(ngModel)]="resposta.conteudo" name="ENUM{{r}}"> 
+											<option disabled selected value="">Selecione um resposta</option>
+											<option *ngFor="let enum of getEnumsPergunta(resposta)"
+												value="{{enum}}">{{enum}}</option>
+										</select>
+									</div>
+								</div>
+								
 								<div *ngSwitchCase="'SIM'">
-									<div class="input-field col s6 select-sim-nao">
-										<select class="browser-default" name="SIM{{r}}" disabled
-											class="resposta-conteudo resposta-pergunta" #statusSimNao
-											(change)="selectStatusSimNao(resposta.pergunta.itens, g, r, statusSimNao.value)"
+									<div class="input-field col s4 select-sim-nao">
+										<select class="browser-default resposta-conteudo resposta-pergunta" 
+											name="SIM{{r}}" #statusSimNao disabled
 											[(ngModel)]="resposta.conteudo">
 											<option disabled selected value="">Selecione uma resposta</option>
 											<option *ngFor="let statusSimNao of statusesSimNao"
@@ -66,7 +76,7 @@
 											<tr class="row col s12">
 												<div
 													*ngFor="let item of resposta.pergunta.itens; let i = index">
-													<th class="col s12">
+													<th [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
 														{{item.label}}</th>
 												</div>
 											</tr>
@@ -74,17 +84,28 @@
 
 										<tbody class="col s12">
 											<tr class="col s12">
-												<div class="row">
-														<div
-															*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-															<td
+												<div
+													*ngFor="let respostaItem of resposta.itens; let i = index">
+													<div class="row">
+														<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+															<td *ngIf="verifyItemPath(resposta, rI)"
 																[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-																<input id="resposta.item" type="text"
+																<select class="resposta-item" [(ngModel)]="item.conteudo"
+																	name="resposta.item" disabled> 
+																	<option disabled selected value="">Selecione um resposta</option>
+																	<option *ngFor="let enum of getEnumsItem(resposta, rI)"
+																		value="{{enum}}">{{enum}}</option>
+																</select>
+															</td>
+															<td *ngIf="!verifyItemPath(resposta, rI)"
+																[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+																<input id="resposta.item" type="text" disabled
 																name="resposta.item" class="resposta-item"
 																[(ngModel)]="item.conteudo">
 															</td>
 														</div>
 													</div>
+												</div>
 											</tr>
 										</tbody>
 

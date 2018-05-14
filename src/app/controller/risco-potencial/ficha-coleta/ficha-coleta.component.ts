@@ -29,6 +29,8 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
     private quantidadeItemRespostasByGrupo: Array<number>;
     private statusesSimNao: Array<string>;
     private nomeEmpregado: string;
+    private listPathsEnumItem: Array<string>;
+    private listEnumsByPathItem = [[]];
 
     constructor( private route: ActivatedRoute,
             private filaEsperaOcupacionalService: FilaEsperaOcupacionalService,
@@ -40,6 +42,7 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
             this.fichaColeta = new FichaColetaBuilder().initialize(new FichaColeta());
             this.gruposRespostasFichaColeta = new Array<string>();
             this.quantidadeItemRespostasByGrupo = new Array<number>();
+            this.listPathsEnumItem = new Array<string>();
     }
 
     ngOnInit() {
@@ -120,8 +123,8 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
     verifyRespostaSimNao( indexGrupo, indexRespostaByGrupo ) {
         let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
         
-        if ( this.fichaColeta.getRespostaFichaColetas()[indexResposta].getItens().length > 0 ) 
-            return true;
+        if ( this.fichaColeta.getRespostaFichaColetas()[indexResposta] != undefined &&
+                this.fichaColeta.getRespostaFichaColetas()[indexResposta].getItens().length > 0 ) return true;
         else return false;
     }
     
@@ -153,6 +156,36 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
         }
 
         return ret;
+    }
+    
+    verifyItemPath( resposta: RespostaFichaColeta, indexPath: number ) {
+        if ( resposta.getPergunta().getItens()[indexPath] == undefined ) return;
+        
+        let path = resposta.getPergunta().getItens()[indexPath].getPath();
+        
+        if ( path != undefined && path != '' )
+            return true;
+        
+        return false;
+    }
+    
+    getEnumsItem( resposta: RespostaFichaColeta, indexPath: number ) {
+        let path = resposta.getPergunta().getItens()[indexPath].getPath();
+        
+        if ( this.listPathsEnumItem.find(l => l == path) == undefined ) {   
+            this.filaEsperaOcupacionalService.getEnums(path)
+                .then(res => {
+                    this.listPathsEnumItem.push(path);
+                    this.listEnumsByPathItem[path] = new Array<string>();
+                    this.listEnumsByPathItem[path] = Object.keys( res.json() ).sort();
+                })
+                .catch(error => {
+                    console.log("Erro ao retornar enums");
+                    return [];
+                })
+        }
+
+        return this.listEnumsByPathItem[path];
     }
     
     ngOnDestroy() {

@@ -96,4 +96,11 @@ export class FilaEsperaOcupacionalService extends GenericService {
             .toPromise();
     }
     
+    getEnums( path ) {
+        let urlEnums = GlobalVariable.BASE_API_URL + "/generic/"+path;
+        return this.http
+            .get( urlEnums + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
 }
