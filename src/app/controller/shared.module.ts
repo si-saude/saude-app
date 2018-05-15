@@ -61,6 +61,7 @@ import { PerguntaFichaColetaService } from './pergunta-ficha-coleta/pergunta-fic
 import { RiscoPotencialService } from './risco-potencial/risco-potencial.service';
 import { TriagemService } from './triagem/triagem.service';
 import { TarefaComponent } from './tarefa/tarefa.component';
+import { FilterDataPipe } from './../pipes/filter-data.pipe';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { TarefaComponent } from './tarefa/tarefa.component';
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
     PaginacaoComponent,
-    TarefaComponent
+    TarefaComponent,
+    FilterDataPipe
   ],
   imports: [ 
     CommonModule,
@@ -88,7 +90,8 @@ import { TarefaComponent } from './tarefa/tarefa.component';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent
+    PaginacaoComponent,
+    FilterDataPipe
   ],
   providers: [
     PerfilService,

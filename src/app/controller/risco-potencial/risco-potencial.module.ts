@@ -22,7 +22,6 @@ import { RiscoEmpregadoService } from './../risco-empregado/risco-empregado.serv
 import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
 import { TransformDatePipe } from './../../pipes/transform-date.pipe';
 import { SharedModule } from './../shared.module';
-import { FilterDataPipe } from './../../pipes/filter-data.pipe';
 
 @NgModule({
     declarations: [
@@ -36,8 +35,7 @@ import { FilterDataPipe } from './../../pipes/filter-data.pipe';
        GraficosComponent,
        CriarPlanoComponent,
        TransformDatePipe,
-       TriagemReavaliacaoComponent,
-       FilterDataPipe
+       TriagemReavaliacaoComponent
      ],
      imports: [
         RiscoPotencialRoutingModule,
