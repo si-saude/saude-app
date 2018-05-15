@@ -6,8 +6,6 @@ import { MaterializeAction } from "angular2-materialize";
 
 import { HTMLStatus } from './../html-status';
 
-import { DateUtil } from 'date.util.ts';
-
 export abstract class GenericComponent {
     protected showPreload: boolean;
     protected msgPreload: string;

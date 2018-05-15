@@ -112,14 +112,7 @@ export class AtendimentoFormComponent {
     
     private flagIdTriagem: number;
     private modalDiagnostico;
-    private filterDiagnostico: string;
     private arrayDiagnostico: Array<Diagnostico>;
-    private modalIntervencao;
-    private filterIntervencao: string;
-    private arrayIntervencao: Array<Intervencao>;
-    private modalEquipe;
-    private filterEquipe: string;
-    private arrayEquipe: Array<Equipe>;
     private eixos: Array<Eixo>;
     private selectEixoId: string;
     private filter;
@@ -128,12 +121,15 @@ export class AtendimentoFormComponent {
     private activeDiagnostico:boolean;
     private activeIntervencao:boolean;
     
-    private t = 0;
+    private idEquipeProfissional: number;
+    private showModalIntervencao: boolean;
+    private showModalEquipe: boolean;
     
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.nomeProfissional = "";
         this.statusProfissional = "";
+        this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.localizacao = new LocalizacaoBuilder().initialize( this.localizacao );
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
@@ -170,14 +166,7 @@ export class AtendimentoFormComponent {
         this.listPathsEnumPergunta = new Array<string>();
         
         this.modalDiagnostico = new EventEmitter<string | MaterializeAction>();
-        this.filterDiagnostico = "";
         this.arrayDiagnostico = new Array<Diagnostico>();
-        this.modalIntervencao = new EventEmitter<string | MaterializeAction>();
-        this.filterIntervencao = "";
-        this.arrayIntervencao = new Array<Intervencao>();
-        this.modalEquipe = new EventEmitter<string | MaterializeAction>();
-        this.filterEquipe = "";
-        this.arrayEquipe = new Array<Equipe>();
         this.eixos = new Array<Eixo>();
         this.selectEixoId = "";
         this.filter = "";
@@ -1360,59 +1349,32 @@ export class AtendimentoFormComponent {
     }
     
     openModalIntervencao( triagem: Triagem ) {
-        this.value = "$*new*$";
-        this.filter = $("input[name='filter-intervencao-descricao']").val('');
         this.activeDiagnostico = false;
         this.activeIntervencao = true;
+        this.showModalIntervencao = true;
         this.flagIdTriagem = triagem.getId();
-        this.fetchIntervencao()
-        this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
-    }
-    
-    fetchIntervencao() {
-        this.atendimentoService.getIntervencoesByEquipe(this.profissional.getEquipe().getId())
-            .then(res => {
-                this.arrayIntervencao = new IntervencaoBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log("Erro ao buscar o diagnostico por descricao");
-            })
+        this.idEquipeProfissional = this.profissional.getEquipe().getId();
     }
     
     selectIntervencao( intervencao: Intervencao) {
         let triagem = this.atendimento.getTriagens().find(t => t.getId() == this.flagIdTriagem);
         triagem.setIntervencao(intervencao);
-        this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
+//        this.showModalIntervencao = false;
     }
     
-    cancelarModalIntervencao() {
-        this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
+    cancelarModalIntervencao( valor ) {
+        this.showModalIntervencao = false;
     }
     
     openModalEquipe( triagem: Triagem ) {
         this.flagIdTriagem = triagem.getId();
-        this.fetchEquipe();
-        this.modalEquipe.emit( { action: "modal", params: ['open'] } );
-    }
-    
-    fetchEquipe() {
-        this.atendimentoService.getEquipes()
-            .then(res => {
-                this.arrayEquipe = new EquipeBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log("Erro ao buscar o diagnostico por descricao");
-            })
+        this.showModalEquipe = true;
     }
     
     selectEquipe( equipe: Equipe ) {
         let triagem = this.atendimento.getTriagens().find(t => t.getId() == this.flagIdTriagem);
         triagem.setEquipeAbordagem(equipe);
-        this.modalEquipe.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    cancelarModalEquipe() {
-        this.modalEquipe.emit( { action: "modal", params: ['close'] } );
+        this.showModalEquipe = false;
     }
     
     selectFilter( event, type: string ) {

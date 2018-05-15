@@ -10,6 +10,7 @@ import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component({
   selector: 'app-plano-intervencao',
@@ -24,6 +25,7 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     private inicioAgendamento: any;
     private fimAgendamento: any;
     private equipesSelecteds: Array<Equipe>;
+    private dateUtil: DateUtil;
 
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -36,6 +38,7 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
             this.flagEquipesAbordagemTriagens = new EquipeBuilder().initializeList(new Array<Equipe>());
             this.riscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
             this.equipesSelecteds = new EquipeBuilder().initializeList(new Array<Equipe>());
+            this.dateUtil = new DateUtil();
     }
     
     ngOnInit() {
@@ -125,16 +128,16 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     
     setDates() {
         if ( this.inicioAgendamento != null )
-            this.riscoPotencial.setInicioAgendamento(this.parseDatePickerToDate(this.inicioAgendamento));
+            this.riscoPotencial.setInicioAgendamento(this.dateUtil.parseDatePickerToDate(this.inicioAgendamento));
         if ( this.fimAgendamento != null )
-            this.riscoPotencial.setFimAgendamento(this.parseDatePickerToDate(this.fimAgendamento));
+            this.riscoPotencial.setFimAgendamento(this.dateUtil.parseDatePickerToDate(this.fimAgendamento));
     }
     
     getDates() {
         if ( this.riscoPotencial.getInicioAgendamento() != undefined )
-            this.inicioAgendamento = this.parseDataToObjectDatePicker( this.riscoPotencial.getInicioAgendamento() );
+            this.inicioAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.riscoPotencial.getInicioAgendamento() );
         if ( this.riscoPotencial.getFimAgendamento() != undefined )
-            this.fimAgendamento = this.parseDataToObjectDatePicker( this.riscoPotencial.getFimAgendamento() );
+            this.fimAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.riscoPotencial.getFimAgendamento() );
     }
 
     ngOnDestroy() {

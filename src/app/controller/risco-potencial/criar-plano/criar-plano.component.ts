@@ -11,6 +11,7 @@ import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 import { RiscoPotencialService } from './../risco-potencial.service';
 import { RiscoEmpregado } from './../../../model/risco-empregado';
 import { RiscoEmpregadoBuilder } from './../../risco-empregado/risco-empregado.builder';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-criar-plano',
@@ -22,6 +23,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
     private idsEquipes: Array<number>;
     private selectedRiscoEmpregados: Array<RiscoEmpregado>;
     private arrayDatas: Array<any>;
+    private dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -34,6 +36,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
             this.riscoPotencial = new RiscoPotencialBuilder().initialize( new RiscoPotencial() );
             this.selectedRiscoEmpregados = new RiscoEmpregadoBuilder().initializeList( new Array<RiscoEmpregado>() );
             this.arrayDatas = new Array<any>();
+            this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -49,7 +52,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
                             this.showPreload = false;
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
                             this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
-                                this.arrayDatas.push(this.parseDataToString(rE.getData()));
+                                this.arrayDatas.push(this.dateUtil.parseDataToString(rE.getData()));
                             })
                         } )
                         .catch( error => {

@@ -748,7 +748,7 @@
 		</select>
 	</fieldset>
 	<!-- -->
-	<table class="table table-striped table-filter-planejamento" *ngIf="activeDiagnostico"
+	<table class="table table-striped table-filter-planejamento"
 		[mfData]="arrayDiagnostico | filterData : filter : typeFilter : value" #mf1="mfDataTable">
 	    <thead>
 		    <tr>
@@ -795,98 +795,12 @@
 
 </div>
 
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams"
-	[materializeActions]="modalIntervencao">
+<app-modal-intervencao *ngIf="activeIntervencao" [service]="atendimentoService" 
+	(intervencao)="selectIntervencao($event)" (cancelModalIntervencao)="cancelarModalIntervencao($event)" 
+	[showModalIntervencao]="showModalIntervencao" [idEquipeProfissional]="idEquipeProfissional"></app-modal-intervencao>
 
-	<h5 class="title-modal title-modal-planejamento">Intervenções</h5>
-	
-	<!-- <div class="div-filter-intervencao col s6 center">
-		<label for="filterIntervencao" class="label-select-planejamento">Filtrar</label><br>
-		<input id="filterIntervencao" type="text" class="input-filter-planejamento"
-			[(ngModel)]="filterIntervencao" name="filterIntervencao"
-			(ngModelChange)="fetchIntervencao($event)">
-	</div>
-
-	<div class="collection">
-		<div *ngFor="let a of arrayIntervencao">
-			<div class="row row-collection select-planejamento">
-				<div class="col s12" (click)="selectIntervencao(a)">
-					<div class="col s12">
-						<a [routerLinkActive]="['active']" class="collection-item">
-							{{a.descricao}}
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
-	<table class="table table-striped table-filter-planejamento" *ngIf="activeIntervencao"
-		[mfData]="arrayIntervencao | filterData : filter : typeFilter : value" 
-			#mf="mfDataTable" [mfRowsOnPage]="40">
-	    <thead>
-		    <tr>
-		        <th style="width: 1%">
-		            <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
-		            <input type="text" name="filter-intervencao-descricao" style="width: 90%" 
-							placeholder="filtrar descrição"
-							(input)="selectFilter($event, 'filter-intervencao-descricao')">
-		        </th>
-		    </tr>
-	    </thead>
-    	<tbody>
-		    <tr *ngFor="let item of mf.data" class="tr-filter-descricao" (click)="selectIntervencao(item)">
-		        <td style="width: 1%" class="filter-intervencao-descricao">{{item.descricao}}</td>
-		    </tr>
-	    </tbody>
-	    <div style="width: 50%; margin: 0 auto; text-align: -webkit-center;">
-	        <tfoot>
-			    <tr>
-			        <td colspan="4">
-			            <mfBootstrapPaginator></mfBootstrapPaginator>
-			        </td>
-			    </tr>
-		    </tfoot>
-	    
-	    </div>
-	</table>
-
-	<div class="modal-footer">
-		 <a class="waves-effect waves-green btn-flat"
-			(click)="cancelarModalIntervencao()">Cancelar</a>
-	</div>
-
-</div>
-
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams"
-	[materializeActions]="modalEquipe">
-
-	<h5 class="title-modal title-modal-planejamento">Equipes</h5>
-	
-	<div class="collection">
-		<div *ngFor="let a of arrayEquipe">
-			<div class="row row-collection select-planejamento">
-				<div class="col s12" (click)="selectEquipe(a)">
-					<div class="col s12">
-						<a [routerLinkActive]="['active']" class="collection-item">
-							{{a.nome}}
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal-footer">
-		 <a class="waves-effect waves-green btn-flat"
-			(click)="cancelarModalEquipe()">Cancelar</a>
-	</div>
-
-</div>
-
+<app-modal-equipe (equipe)="selectEquipe($event)" [service]="atendimentoService" 
+	[showModalEquipe]="showModalEquipe"></app-modal-equipe>
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

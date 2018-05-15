@@ -21,6 +21,7 @@ import { IndicadorRiscoErgonomicoInstalacao } from './../../../model/indicador-r
 import { IndicadorRiscoSanitarioInstalacao } from './../../../model/indicador-risco-sanitario-instalacao';
 import { IndicadorRiscoSaudeAmbientalInstalacao } from './../../../model/indicador-risco-saude-ambiental-instalacao';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-instalacao-form-detail',
@@ -43,6 +44,8 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
     dataInspecaoSaudeAmbiental: Array<any> = new Array<any>();
     
     instalacaoFilter: InstalacaoFilter = new InstalacaoFilter();
+
+    private dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute,
         private instalacaoService: InstalacaoService, 
@@ -51,6 +54,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
         this.goTo = "instalacao";
         
         this.instalacao = new InstalacaoBuilder().initialize(this.instalacao);
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -64,7 +68,6 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
                     .then( res => {
                         this.showPreload = false;
                         this.instalacao = new InstalacaoBuilder().clone(res.json());
-                        console.log(res.json());
                         this.parseAndSetDates();
                     } )
                     .catch( error => {
@@ -125,7 +128,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoAcidenteInstalacoes().length; i++) {
                 this.dataInspecaoAcidente[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoAcidenteInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -135,7 +138,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoAmbientalInstalacoes().length; i++) {
                 this.dataInspecaoAmbiental[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoAmbientalInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -145,7 +148,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoErgonomicoInstalacoes().length; i++) {
                 this.dataInspecaoErgonomico[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoErgonomicoInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -155,7 +158,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoSanitarioInstalacoes().length; i++) {
                 this.dataInspecaoSanitario[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoSanitarioInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -165,7 +168,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes().length; i++) {
                 this.dataInspecaoSaudeAmbiental[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes()[i].getDataInspecao());   
             }
         }

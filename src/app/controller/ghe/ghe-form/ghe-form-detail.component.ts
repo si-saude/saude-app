@@ -11,6 +11,7 @@ import { GheService } from './../ghe.service';
 import { GheFilter } from './../ghe.filter';
 import { GheBuilder } from './../ghe.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-ghe-form-detail',
@@ -26,6 +27,8 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
     dataDesativacao: any;
     
     gheFilter: GheFilter = new GheFilter();
+
+    private dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute,
         private gheService: GheService,
@@ -34,6 +37,7 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
         this.goTo = "ghe";
 
         this.ghe = new GheBuilder().initialize(this.ghe);
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -73,11 +77,11 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
     parseAndSetDates() {
         if (this.ghe.getDataCriacao() !== null && 
                 this.ghe.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
+            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
         }
         if (this.ghe.getDataDesativacao() !== null && 
                 this.ghe.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
+            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
         }
         
     }

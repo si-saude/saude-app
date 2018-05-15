@@ -11,6 +11,7 @@ import { GheService } from './../ghe.service';
 import { GheFilter } from './../ghe.filter';
 import { GheBuilder } from './../ghe.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-ghe-form',
@@ -26,6 +27,8 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
     dataDesativacao: any;
     
     gheFilter: GheFilter = new GheFilter();
+
+    private dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute,
         private gheService: GheService,
@@ -34,6 +37,7 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
         this.goTo = "ghe";
 
         this.ghe = new GheBuilder().initialize(this.ghe);
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -81,22 +85,22 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
         if (this.dataCriacao !== null && 
                 this.dataCriacao  !== undefined)
             this.ghe.setDataCriacao(
-                    this.parseDatePickerToDate(this.dataCriacao));
+                    this.dateUtil.parseDatePickerToDate(this.dataCriacao));
 
         if (this.dataDesativacao !== null && 
                 this.dataDesativacao !== undefined)
             this.ghe.setDataDesativacao(
-                    this.parseDatePickerToDate(this.dataDesativacao));
+                    this.dateUtil.parseDatePickerToDate(this.dataDesativacao));
     }
     
     parseAndSetDates() {
         if (this.ghe.getDataCriacao() !== null && 
                 this.ghe.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
+            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
         }
         if (this.ghe.getDataDesativacao() !== null && 
                 this.ghe.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
+            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
         }
         
     }

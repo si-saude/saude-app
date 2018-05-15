@@ -24,6 +24,7 @@ import { EmpregadoConvocacaoExameBuilder } from './../../empregado-convocacao-ex
 import { GerenciaConvocacaoBuilder } from './../../gerencia-convocacao/gerencia-convocacao.builder';
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-convocacao-form-detail',
@@ -64,6 +65,8 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
     dataGerenciaConvocacaoInicio: Array<any>;
     dataGerenciaConvocacaoFim: Array<any>;
 
+    private dateUtil: DateUtil;
+    
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
         private empregadoService: EmpregadoService,
@@ -94,6 +97,7 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
         this.modalConfirmProfissiograma = new EventEmitter<string | MaterializeAction>();
         this.checkEmpregados = false;
         this.conformList = new Array<boolean>();
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -296,11 +300,11 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
 
             if ( this.gerenciaConvocacoes[i].getSelecionado() == true ) {
                 this.dataGerenciaConvocacaoInicio[cC] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.gerenciaConvocacoes[i].getInicio() );
 
                 this.dataGerenciaConvocacaoFim[cC] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.gerenciaConvocacoes[i].getFim() );
             }
         }

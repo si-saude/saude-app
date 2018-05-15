@@ -30,6 +30,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 import { EmpregadoBuilder } from './../empregado.builder';
 import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-monitoramento.builder';
 import { HistoricoGrupoMonitoramentoBuilder } from './../../historico-grupo-monitoramento/historico-grupo-monitoramento.builder';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-empregado-form',
@@ -74,6 +75,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     dataRemocaoHistoricos: Array<any> = new Array<any>();
 
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+    
+    private dateUtil: DateUtil;
 
     constructor( private route: ActivatedRoute,
         private empregadoService: EmpregadoService,
@@ -84,6 +87,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.assinaturaSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.fotoSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.empregado = new EmpregadoBuilder().initialize( this.empregado );
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -507,20 +511,20 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         if ( this.dataNascimento !== null &&
             this.dataNascimento !== undefined )
             this.empregado.getPessoa().setDataNascimento(
-                this.parseDatePickerToDate( this.dataNascimento ) );
+                this.dateUtil.parseDatePickerToDate( this.dataNascimento ) );
         
         if ( this.dataAdmissao !== null &&
                 this.dataAdmissao !== undefined )
                 this.empregado.setDataAdmissao(
-                    this.parseDatePickerToDate( this.dataAdmissao ) );
+                        this.dateUtil.parseDatePickerToDate( this.dataAdmissao ) );
 
         if ( this.empregado.getEmpregadoVacinas() !== undefined &&
             this.empregado.getEmpregadoVacinas() !== null ) {
             for ( let i = 0; i < this.empregado.getEmpregadoVacinas().length; i++ ) {
                 this.empregado.getEmpregadoVacinas()[i].setData(
-                    this.parseDatePickerToDate( this.dataVacinas[i] ) );
+                        this.dateUtil.parseDatePickerToDate( this.dataVacinas[i] ) );
                 this.empregado.getEmpregadoVacinas()[i].setProximaDose(
-                    this.parseDatePickerToDate( this.proximaDoseVacinas[i] ) );
+                        this.dateUtil.parseDatePickerToDate( this.proximaDoseVacinas[i] ) );
             }
         }
 
@@ -529,22 +533,22 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     parseAndSetDates() {
         if ( this.empregado.getPessoa().getDataNascimento() !== null &&
             this.empregado.getPessoa().getDataNascimento() !== undefined ) {
-            this.dataNascimento = this.parseDataToObjectDatePicker( this.empregado.getPessoa().getDataNascimento() );
+            this.dataNascimento = this.dateUtil.parseDataToObjectDatePicker( this.empregado.getPessoa().getDataNascimento() );
         }
         
         if ( this.empregado.getDataAdmissao() !== null &&
             this.empregado.getDataAdmissao() !== undefined ) {
-            this.dataAdmissao = this.parseDataToObjectDatePicker( this.empregado.getDataAdmissao() );
+            this.dataAdmissao = this.dateUtil.parseDataToObjectDatePicker( this.empregado.getDataAdmissao() );
         }
 
         if ( this.empregado.getEmpregadoVacinas() !== undefined &&
             this.empregado.getEmpregadoVacinas() !== null ) {
             for ( let i = 0; i < this.empregado.getEmpregadoVacinas().length; i++ ) {
                 this.dataVacinas[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregado.getEmpregadoVacinas()[i].getData() );
                 this.proximaDoseVacinas[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregado.getEmpregadoVacinas()[i].getProximaDose() );
             }
         }
@@ -566,7 +570,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             this.empregado.getHistoricoGrupoMonitoramentos() !== null ) {
             for ( let i = 0; i < this.empregado.getHistoricoGrupoMonitoramentos().length; i++ ) {
                 this.dataRemocaoHistoricos[i] =
-                    this.parseDataToString(
+                    this.dateUtil.parseDataToString(
                         this.empregado.getHistoricoGrupoMonitoramentos()[i].getDataRemocao() );
             }
         }

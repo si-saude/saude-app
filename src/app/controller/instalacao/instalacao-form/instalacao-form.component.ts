@@ -21,6 +21,7 @@ import { IndicadorRiscoErgonomicoInstalacao } from './../../../model/indicador-r
 import { IndicadorRiscoSanitarioInstalacao } from './../../../model/indicador-risco-sanitario-instalacao';
 import { IndicadorRiscoSaudeAmbientalInstalacao } from './../../../model/indicador-risco-saude-ambiental-instalacao';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-instalacao-form',
@@ -44,6 +45,8 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
 
     instalacaoFilter: InstalacaoFilter = new InstalacaoFilter();
 
+    private dateUtil: DateUtil;
+
     constructor( private route: ActivatedRoute,
         private instalacaoService: InstalacaoService,
         router: Router) {
@@ -51,6 +54,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
         this.goTo = "instalacao";
 
         this.instalacao = new InstalacaoBuilder().initialize( this.instalacao );
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -65,7 +69,6 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                         .then( res => {
                             this.showPreload = false;
                             this.instalacao = new InstalacaoBuilder().clone( res.json() );
-                            console.log( res.json() );
                             this.parseAndSetDates();
                         } )
                         .catch( error => {
@@ -219,7 +222,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                 if ( this.dataInspecaoAcidente[i] !== undefined &&
                     this.dataInspecaoAcidente[i] !== null )
                     this.instalacao.getIndicadorRiscoAcidenteInstalacoes()[i].setDataInspecao(
-                        this.parseDatePickerToDate( this.dataInspecaoAcidente[i] ) );
+                        this.dateUtil.parseDatePickerToDate( this.dataInspecaoAcidente[i] ) );
             }
         }
 
@@ -230,7 +233,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                 if ( this.dataInspecaoAmbiental[i] !== undefined &&
                     this.dataInspecaoAmbiental[i] !== null )
                     this.instalacao.getIndicadorRiscoAmbientalInstalacoes()[i].setDataInspecao(
-                        this.parseDatePickerToDate( this.dataInspecaoAmbiental[i] ) );
+                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoAmbiental[i] ) );
             }
         }
 
@@ -241,7 +244,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                 if ( this.dataInspecaoErgonomico[i] !== undefined &&
                     this.dataInspecaoErgonomico[i] !== null )
                     this.instalacao.getIndicadorRiscoErgonomicoInstalacoes()[i].setDataInspecao(
-                        this.parseDatePickerToDate( this.dataInspecaoErgonomico[i] ) );
+                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoErgonomico[i] ) );
             }
         }
 
@@ -252,7 +255,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                 if ( this.dataInspecaoSanitario[i] !== undefined &&
                     this.dataInspecaoSanitario[i] !== null )
                     this.instalacao.getIndicadorRiscoSanitarioInstalacoes()[i].setDataInspecao(
-                        this.parseDatePickerToDate( this.dataInspecaoSanitario[i] ) );
+                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoSanitario[i] ) );
             }
         }
 
@@ -263,7 +266,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                 if ( this.dataInspecaoSaudeAmbiental[i] !== undefined &&
                     this.dataInspecaoSaudeAmbiental[i] !== null )
                     this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes()[i].setDataInspecao(
-                        this.parseDatePickerToDate( this.dataInspecaoSaudeAmbiental[i] ) );
+                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoSaudeAmbiental[i] ) );
             }
         }
 
@@ -275,7 +278,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
 
             for ( let i = 0; i < this.instalacao.getIndicadorRiscoAcidenteInstalacoes().length; i++ ) {
                 this.dataInspecaoAcidente[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.instalacao.getIndicadorRiscoAcidenteInstalacoes()[i].getDataInspecao() );
             }
         }
@@ -285,7 +288,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
 
             for ( let i = 0; i < this.instalacao.getIndicadorRiscoAmbientalInstalacoes().length; i++ ) {
                 this.dataInspecaoAmbiental[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.instalacao.getIndicadorRiscoAmbientalInstalacoes()[i].getDataInspecao() );
             }
         }
@@ -295,7 +298,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
 
             for ( let i = 0; i < this.instalacao.getIndicadorRiscoErgonomicoInstalacoes().length; i++ ) {
                 this.dataInspecaoErgonomico[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.instalacao.getIndicadorRiscoErgonomicoInstalacoes()[i].getDataInspecao() );
             }
         }
@@ -305,7 +308,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
 
             for ( let i = 0; i < this.instalacao.getIndicadorRiscoSanitarioInstalacoes().length; i++ ) {
                 this.dataInspecaoSanitario[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.instalacao.getIndicadorRiscoSanitarioInstalacoes()[i].getDataInspecao() );
             }
         }
@@ -315,7 +318,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
 
             for ( let i = 0; i < this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes().length; i++ ) {
                 this.dataInspecaoSaudeAmbiental[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes()[i].getDataInspecao() );
             }
         }

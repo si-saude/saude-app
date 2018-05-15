@@ -18,6 +18,7 @@ import { EmpregadoConvocacaoService } from './../../empregado-convocacao/emprega
 import { EmpregadoConvocacaoFilter } from './../../empregado-convocacao/empregado-convocacao.filter';
 import { EmpregadoConvocacaoBuilder } from './../../empregado-convocacao/empregado-convocacao.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-auditoria-resultado-exame-form',
@@ -50,6 +51,8 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
+    
+    private dateUtil: DateUtil;
 
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
@@ -72,6 +75,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
         this.autocompleteEmpregadoConvocacao = [];
         this.validExame = "";
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -240,10 +244,10 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             this.empregadoConvocacao.getResultadoExames() !== null ) {
             for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
                 this.empregadoConvocacao.getResultadoExames()[i].setData(
-                    this.parseDatePickerToDate( this.dataResultadoExames[i] ) );
+                        this.dateUtil.parseDatePickerToDate( this.dataResultadoExames[i] ) );
 
                 this.empregadoConvocacao.getResultadoExames()[i].setDataRecebimento(
-                    this.parseDatePickerToDate( this.dataRecebimentoExames[i] ) );
+                        this.dateUtil.parseDatePickerToDate( this.dataRecebimentoExames[i] ) );
                 
                 this.empregadoConvocacao.getResultadoExames()[i].getItemResultadoExames().forEach(iREx => {
                     if ( iREx.getCodigo() == "010") {
@@ -259,11 +263,11 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             this.empregadoConvocacao.getResultadoExames() !== null ) {
             for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
                 this.dataResultadoExames[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregadoConvocacao.getResultadoExames()[i].getData() );
 
                 this.dataRecebimentoExames[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
             }
         }

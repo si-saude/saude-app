@@ -1,6 +1,6 @@
 export class DateUtil {
     
-    protected parseDataToObjectDatePicker( data ) {
+    public parseDataToObjectDatePicker( data ) {
         if ( data === undefined || data === null ) {
             return undefined;
         }
@@ -16,7 +16,7 @@ export class DateUtil {
         return o;
     }
 
-    protected parseDatePickerToDate( data ) {
+    public parseDatePickerToDate( data ) {
         if ( data === undefined || data === null ) {
             return null;
         } else if ( data instanceof Date ) {
@@ -26,7 +26,7 @@ export class DateUtil {
         return d;
     }
 
-    protected parseDataToString( data ) {
+    public parseDataToString( data ) {
         if ( data === undefined || data === null ) {
             return undefined;
         }

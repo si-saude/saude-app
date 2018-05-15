@@ -10,6 +10,7 @@ import { GheeService } from './../ghee.service';
 import { GheeFilter } from './../ghee.filter';
 import { GheeBuilder } from './../ghee.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-ghee-form',
@@ -24,6 +25,8 @@ export class GheeFormComponent extends GenericFormComponent implements OnInit {
     dataDesativacao: any;
     
     gheeFilter: GheeFilter = new GheeFilter();
+
+    private dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute,
         private gheeService: GheeService,
@@ -32,6 +35,7 @@ export class GheeFormComponent extends GenericFormComponent implements OnInit {
         this.goTo = "ghee";
 
         this.ghee = new GheeBuilder().initialize(this.ghee);
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -69,22 +73,22 @@ export class GheeFormComponent extends GenericFormComponent implements OnInit {
         if (this.dataCriacao !== null && 
                 this.dataCriacao  !== undefined)
             this.ghee.setDataCriacao(
-                    this.parseDatePickerToDate(this.dataCriacao));
+                    this.dateUtil.parseDatePickerToDate(this.dataCriacao));
 
         if (this.dataDesativacao !== null && 
                 this.dataDesativacao !== undefined)
             this.ghee.setDataDesativacao(
-                    this.parseDatePickerToDate(this.dataDesativacao));
+                    this.dateUtil.parseDatePickerToDate(this.dataDesativacao));
     }
     
     parseAndSetDates() {
         if (this.ghee.getDataCriacao() !== null && 
                 this.ghee.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.parseDataToObjectDatePicker(this.ghee.getDataCriacao());
+            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataCriacao());
         }
         if (this.ghee.getDataDesativacao() !== null && 
                 this.ghee.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.parseDataToObjectDatePicker(this.ghee.getDataDesativacao());
+            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataDesativacao());
         }
         
     }
