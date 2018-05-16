@@ -20,9 +20,10 @@ import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { RiscoPotencialService } from './risco-potencial.service';
 import { RiscoEmpregadoService } from './../risco-empregado/risco-empregado.service';
 import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
-import { TransformDatePipe } from './../../pipes/transform-date.pipe';
 import { SharedModule } from './../shared.module';
-import { FilterDataPipe } from './../../pipes/filter-data.pipe';
+import { PipesModule } from './../pipes.module';
+import { PlanejamentoModule } from './../planejamento.module';
+import { FichaColetaModule } from './../ficha-coleta.module';
 
 @NgModule({
     declarations: [
@@ -35,16 +36,17 @@ import { FilterDataPipe } from './../../pipes/filter-data.pipe';
        PlanejamentoComponent,
        GraficosComponent,
        CriarPlanoComponent,
-       TransformDatePipe,
-       TriagemReavaliacaoComponent,
-       FilterDataPipe
+       TriagemReavaliacaoComponent
      ],
      imports: [
         RiscoPotencialRoutingModule,
         MyDatePickerModule,
         ChartsModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        PipesModule,
+        PlanejamentoModule,
+        FichaColetaModule 
      ],
      providers: [
         RiscoPotencialService,

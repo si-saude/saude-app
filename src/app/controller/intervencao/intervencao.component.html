@@ -90,9 +90,9 @@
 
 </div>
 
-<app-confirm-delete [service]="service" [idDelete]="tempDelete"
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" (cancelDelete)="closeModalDelete($event)"
 	[show]="openModalDelete"></app-confirm-delete>
-
+	
 <div class="mensagem">
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 		[msg]="msgError"></app-mensagem-form>

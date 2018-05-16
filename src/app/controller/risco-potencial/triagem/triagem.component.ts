@@ -29,7 +29,7 @@ import { RiscoEmpregadoService } from './../../risco-empregado/risco-empregado.s
 import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.service';
 
 @Component({
-  selector: 'app-triagem',
+  selector: 'app-risco-potencial-triagem',
   templateUrl: './triagem.html',
   styleUrls: ['./triagem.css', './../../../../assets/css/form-component.css']
 })
@@ -41,17 +41,14 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
     private tabsActions;
     private triagemIndices: Map<number, number>;
 
-    private diagnosticos: Array<Diagnostico>;
-    private validDiagnostico: string;
-    private autocompleteDiagnostico;
+    private flagIdTriagem: number;
+    private activeDiagnostico:boolean;
+    private activeIntervencao:boolean;
     
-    private intervencoes: Array<Intervencao>;
-    private validIntervencao: string;
-    private autocompleteIntervencao;
-    
-    private equipeAbordagens: Array<Equipe>;
-    private validEquipeAbordagem: string;
-    private autocompleteEquipeAbordagem;
+    private idEquipeProfissional: number;
+    private showModalDiagnostico: boolean;
+    private showModalIntervencao: boolean;
+    private showModalEquipe: boolean;
     
     constructor(private route: ActivatedRoute,
             private riscoEmpregadoService: RiscoEmpregadoService,
@@ -65,12 +62,10 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
             this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
             this.tabsActions = new EventEmitter<string | MaterializeAction>();
             this.triagemIndices = new Map<number, number>();
-            this.validDiagnostico = "";
-            this.diagnosticos = new Array<Diagnostico>();
-            this.validIntervencao = "";
-            this.intervencoes = new Array<Intervencao>();
             this.prazos = new Array<string>();
-            this.equipeAbordagens = new EquipeBuilder().initializeList(new Array<Equipe>());
+            
+            this.activeDiagnostico = false;
+            this.activeIntervencao = false;
     }
 
     ngOnInit() {
@@ -116,12 +111,6 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
                                                                                 }
                                                                             }
                                                                         }, 200 );
-                                                                        
-                                                                        component.riscoEmpregado.getTriagens().forEach(t => {
-                                                                            component.diagnosticos.push(t.getDiagnostico());
-                                                                            component.intervencoes.push(t.getIntervencao());
-                                                                            component.equipeAbordagens.push(t.getEquipeAbordagem());
-                                                                        });
                                                                     })
                                                                     .catch(error => {
                                                                         component.catchConfiguration( error );
@@ -268,158 +257,60 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
         return ret;
     }
     
-    getDiagnostico( index: number ) {
-        if ( this.validDiagnostico == this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao() ) return;
-        if ( this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao() !== undefined ) {
-            let diagnostico = this.diagnosticos.find( d => {
-                if ( ( d.getCodigo() + " - " + d.getDescricao() ).trim() ==
-                    this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao().trim() ||
-                    d.getDescricao().trim() == this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao().trim() )
-                    return true;
-                else return false;
-            } );
-
-            if ( diagnostico !== undefined ) {
-                this.riscoEmpregado.getTriagens()[index].setDiagnostico( diagnostico );
-                this.validDiagnostico = this.riscoEmpregado.getTriagens()[index].getDiagnostico().getDescricao();
-            } else this.riscoEmpregado.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
-        } else this.riscoEmpregado.getTriagens()[index].setDiagnostico( new DiagnosticoBuilder().initialize( new Diagnostico() ) );
+    openModalDiagnostico( triagem: Triagem ) {
+        this.activeDiagnostico = true;
+        this.activeIntervencao = false;
+        this.showModalDiagnostico = true;
+        this.flagIdTriagem = triagem.getId();
+        this.idEquipeProfissional = this.profissional.getEquipe().getId();
     }
-
-    private oldDescricaoDiagnostico: string;
-    selectDiagnosticoByDescricaoAndAbreviacao( evento ) {
-        if ( this.oldDescricaoDiagnostico != evento ) {
-            this.oldDescricaoDiagnostico = evento;
-            if ( evento.length >= 6 ) {
-                this.riscoEmpregadoService.getDiagnosticoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
-                    .then( res => {
-                        this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
-                        this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
+    
+    selectDiagnostico( diagnostico: Diagnostico ) {
+        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setDiagnostico(diagnostico);
+        this.showModalDiagnostico = false; 
     }
-
-    private oldCodigoDiagnostico: string;
-    selectDiagnosticoByCodigoAndAbreviacao( evento ) {
-        if ( this.oldCodigoDiagnostico != evento ) {
-            this.oldCodigoDiagnostico = evento;
-            if ( evento.length < 6 ) {
-                this.riscoEmpregadoService.getDiagnosticoByCodigoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
-                    .then( res => {
-                        this.diagnosticos = new DiagnosticoBuilder().cloneList( res.json() );
-                        this.autocompleteDiagnostico = [this.buildAutocompleteDiagnostico( this.diagnosticos )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
+    
+    cancelarModalDiagnostico() {
+        this.showModalDiagnostico = false;
     }
-
-    buildAutocompleteDiagnostico( diagnosticos: Array<Diagnostico> ) {
-        let data = {};
-        diagnosticos.forEach( item => {
-            data[item.getCodigo() + " - " + item.getDescricao()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
+    
+    openModalIntervencao( triagem: Triagem ) {
+        this.activeDiagnostico = false;
+        this.activeIntervencao = true;
+        this.showModalIntervencao = true;
+        this.flagIdTriagem = triagem.getId();
+        this.idEquipeProfissional = this.profissional.getEquipe().getId();
     }
-
-    getIntervencao( index: number ) {
-        if ( this.validIntervencao == this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao() ) return;
-        if ( this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao() !== undefined ) {
-            let intervencao = this.intervencoes.find( d => {
-                if ( d.getDescricao().trim() == this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao().trim() )
-                    return true;
-                else return false;
-            } );
-
-            if ( intervencao !== undefined ) {
-                this.riscoEmpregado.getTriagens()[index].setIntervencao( intervencao );
-                this.validIntervencao = this.riscoEmpregado.getTriagens()[index].getIntervencao().getDescricao();
-            } else this.riscoEmpregado.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
-        } else this.riscoEmpregado.getTriagens()[index].setIntervencao( new IntervencaoBuilder().initialize( new Intervencao() ) );
+    
+    selectIntervencao( intervencao: Intervencao) {
+        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setIntervencao(intervencao);
+        this.showModalIntervencao = false;
     }
-
-    private oldDescricaoIntervencao: string;
-    selectIntervencaoByDescricaoAndAbreviacao( evento ) {
-        if ( this.oldDescricaoIntervencao != evento ) {
-            this.oldDescricaoIntervencao = evento;
-            if ( evento.length > 3 ) {
-                this.riscoEmpregadoService.getIntervencaoByDescricaoAndAbreviacao( evento, this.profissional.getEquipe().getAbreviacao() )
-                    .then( res => {
-                        this.intervencoes = new IntervencaoBuilder().cloneList( res.json() );
-                        this.autocompleteIntervencao = [this.buildAutocompleteIntervencao( this.intervencoes )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
+    
+    cancelarModalIntervencao( valor ) {
+        this.showModalIntervencao = false;
     }
-
-    buildAutocompleteIntervencao( intervencoes: Array<Intervencao> ) {
-        let data = {};
-        intervencoes.forEach( item => {
-            data[item.getDescricao()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
+    
+    openModalEquipe( triagem: Triagem ) {
+        this.flagIdTriagem = triagem.getId();
+        this.showModalEquipe = true;
     }
-
-    getEquipeAbordagem( index: number ) {
-        if ( this.validEquipeAbordagem == this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome() ) return;
-        if ( this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome() !== undefined ) {
-            let equipe = this.equipeAbordagens.find( e => {
-                if ( e.getNome().trim() == this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome().trim() )
-                    return true;
-                else return false;
-            } );
-
-            if ( equipe !== undefined ) {
-                this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( equipe );
-                this.validEquipeAbordagem = this.riscoEmpregado.getTriagens()[index].getEquipeAbordagem().getNome();
-            } else this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
-        } else this.riscoEmpregado.getTriagens()[index].setEquipeAbordagem( new EquipeBuilder().initialize( new Equipe() ) );
+    
+    selectEquipe( equipe: Equipe ) {
+        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
+        triagem.setEquipeAbordagem(equipe);
+        this.showModalEquipe = false;
     }
-
-    private oldNomeEquipeAbordagem: string;
-    selectEquipeAbordagemByName( evento ) {
-        if ( this.oldNomeEquipeAbordagem != evento ) {
-            this.oldNomeEquipeAbordagem = evento;
-            if ( evento.length > 3 ) {
-                this.riscoEmpregadoService.getEquipeAbordagemByName( evento )
-                    .then( res => {
-                        this.equipeAbordagens = new EquipeBuilder().cloneList( res.json() );
-                        this.autocompleteEquipeAbordagem = [this.buildAutocompleteEquipeAbordagem( this.equipeAbordagens )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
+    
+    cancelarModalEquipe( valor ) {
+        this.showModalEquipe = false;
     }
-
-    buildAutocompleteEquipeAbordagem( equipeAbordagens: Array<Equipe> ) {
-        let data = {};
-        equipeAbordagens.forEach( item => {
-            data[item.getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
+    
+    planejamentoBackground( triagem: Triagem ) {
+        if ( triagem.getIndice() <= 2 )
+            return 'red';
     }
     
     verifyObrigatoriedadeIndicador( triagem: Triagem ) {

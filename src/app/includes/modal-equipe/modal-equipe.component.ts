@@ -15,6 +15,7 @@ export class ModalEquipeComponent{
     @Input() service;
     @Input() showModalEquipe: boolean;
     @Output() equipe: EventEmitter<Equipe>;
+    @Output() cancelModalEquipe: EventEmitter<boolean>;
     private arrayEquipe: Array<Equipe>;
     modalEquipe;
     modelParams;
@@ -26,6 +27,7 @@ export class ModalEquipeComponent{
             complete: function() { }
         }];
         this.equipe = new EventEmitter<Equipe>();
+        this.cancelModalEquipe = new EventEmitter<boolean>();
     }
 
     ngOnInit() { 
@@ -54,6 +56,7 @@ export class ModalEquipeComponent{
     }
     
     cancelarModalEquipe() {
+        this.cancelModalEquipe.emit(true);
         this.modalEquipe.emit( { action: "modal", params: ['close'] } );
     }
 

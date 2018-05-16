@@ -5,8 +5,9 @@ import { MaterializeAction } from "angular2-materialize";
 import * as $ from 'jquery';
 
 import { Intervencao } from './../../model/intervencao';
-import { IntervencaoBuilder } from './../../controller/intervencao/intervencao.builder';
-
+import { IntervencaoBuilder } from './../../controller/intervencao/intervencao.builder';/**
+ * Para criar esse modal, deve-se criar as funções open, select e cancel na classe onde ele será utilizado
+ */
 @Component( {
     selector: 'app-modal-intervencao',
     templateUrl: './modal-intervencao.html',
@@ -22,38 +23,40 @@ export class ModalIntervencaoComponent{
     private filter;
     private typeFilter;
     private value;
+    private idEqpProf;
     modalIntervencao;
     modelParams;
 
     constructor( router: Router ) {
         this.modalIntervencao = new EventEmitter<string | MaterializeAction>();
         this.modelParams = [{
-            dismissible: false,
-            complete: function() { }
+            dismissible: true
         }];
         this.intervencao = new EventEmitter<Intervencao>();
-        this.cancelModalIntervencao = new EventEmitter<boolean>(); 
+        this.cancelModalIntervencao = new EventEmitter<boolean>();
         this.filter = "";
     }
 
     ngOnInit() { 
         this.arrayIntervencao = new IntervencaoBuilder().initializeList(new Array<Intervencao>());
-        this.fetchIntervencao();
     }
 
     ngOnChanges( changes: SimpleChanges ) {
+        if ( changes["idEquipeProfissional"] != undefined ) 
+            this.idEqpProf = changes["idEquipeProfissional"].currentValue; 
         if ( changes["showModalIntervencao"] != undefined && changes["showModalIntervencao"].currentValue === true )
-            setTimeout(() => this.modalIntervencao.emit( { action: "modal", params: ["open"] } ), 1 );
+            setTimeout(() => this.openModalIntervencao(), 1 );
     }
     
     openModalIntervencao( ) {
         this.value = "$*new*$";
         this.filter = $("input[name='filter-intervencao-descricao']").val('');
+        this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
         this.fetchIntervencao();
     }
     
     fetchIntervencao() {
-        this.service.getIntervencoesByEquipe( this.idEquipeProfissional )
+        this.service.getIntervencoesByEquipe( this.idEqpProf )
             .then(res => {
                 this.arrayIntervencao = new IntervencaoBuilder().cloneList(res.json());
             })
@@ -75,11 +78,11 @@ export class ModalIntervencaoComponent{
     }
     
     cancelarModalIntervencao() {
+        this.cancelModalIntervencao.emit(true);
         this.modalIntervencao.emit( { action: "modal", params: ['close'] } );
     }
 
     onDestroy() {
-        this.cancelModalIntervencao.emit(false);
         this.modalIntervencao.emit( { action: "modal", params: ["close"] } );
     }
 

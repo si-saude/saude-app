@@ -122,8 +122,11 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         this.list();
     }
 
-    closeModalDelete() {
-        this.modalDelete.emit( { action: "modal", params: ['close'] } );
+    closeModalDelete( valor ) {
+        if ( valor != false )
+            this.array.splice(this.array.indexOf(this.array.find( a => a['id'] == this.tempDelete )), 1);
+        this.openModalDelete = false;
+        this.showPreload = false;
     }
 
     openModal() {
@@ -141,21 +144,8 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     closeModalImport() {
         this.modalImport.emit( { action: "modal", params: ['close'] } );
     }
-
-//    confirmDelete() {
-//        this.showPreload = true;
-//        this.service.delete( this.tempDelete )
-//            .then( res => {
-//                this.showPreload = false;
-//                window.location.reload();
-//            } )
-//            .catch( error => {
-//                alert("Erro ao excluir o campo: " + error.text());
-//            } )
-//    }
     
     delete( id ) {
-        this.modalDelete.emit( { action: "modal", params: ['open'] } );
         this.tempDelete = id;
         this.openModalDelete = true;
     }
@@ -228,7 +218,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     
     ngOnDestroy() {
         this.closeModal();
-        this.closeModalDelete();
+        this.closeModalDelete(true);
         this.closeModalImport();
     }
 }
