@@ -238,6 +238,13 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.empregadoService.getGerencias()
             .then( res => {
                 this.gerencias = res.json();
+                this.gerencias.sort(function(a, b){
+                    if ( a['codigoCompleto'] > b['codigoCompleto'] )
+                        return 1;
+                    else if ( a['codigoCompleto'] < b['codigoCompleto'] )
+                        return -1;
+                    else return 0;
+                })
             } )
             .catch( error => {
                 console.log( error );
