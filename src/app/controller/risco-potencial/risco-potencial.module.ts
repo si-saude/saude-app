@@ -24,6 +24,7 @@ import { SharedModule } from './../shared.module';
 import { PipesModule } from './../pipes.module';
 import { PlanejamentoModule } from './../planejamento.module';
 import { FichaColetaModule } from './../ficha-coleta.module';
+import { AcolhimentoModule } from './../acolhimento.module';
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import { FichaColetaModule } from './../ficha-coleta.module';
         SharedModule,
         PipesModule,
         PlanejamentoModule,
-        FichaColetaModule 
+        FichaColetaModule,
+        AcolhimentoModule
      ],
      providers: [
         RiscoPotencialService,

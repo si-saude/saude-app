@@ -94,7 +94,7 @@
 									Responsável</td>
 								<td class="col s9 equipe-responsavel"><input type="text"
 									name="equipe-responsavel" disabled
-									[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.equipeResponsavel.nome">
+									[(ngModel)]="riscoPotencial.equipeResponsavel.nome">
 								</td>
 							</tr>
 						</div>
@@ -135,7 +135,7 @@
 										</tr>
 									</thead>
 									<div
-										*ngFor="let equipe of atendimento.filaEsperaOcupacional.riscoPotencial.equipes;let i = index">
+										*ngFor="let equipe of riscoPotencial.equipes;let i = index">
 										<tbody class="col s12">
 											<tr class="col s12">
 												<td class="col s5 risco-potencial-equipe-nome">{{equipe.nome}}</td>
@@ -157,11 +157,13 @@
 							<tr class="row col s12">
 								<td class="col s3 label-reserva-agendamento">Reserva de
 									Agendamento</td>
-								<td class="col s4 inicio-agentamento"><my-date-picker
+								<td class="col s4 inicio-agentamento">
+									<my-date-picker (ngModelChange)="setInicioAgendamento($event)"
 										name="inicioAgendamento" [options]="myDatePickerOptions"
 										[(ngModel)]="inicioAgendamento" placeholder="Inicio">
 									</my-date-picker></td>
-								<td class="col s4 fim-agendamento"><my-date-picker
+								<td class="col s4 fim-agendamento">
+									<my-date-picker (ngModelChange)="setFimAgendamento($event)"
 										name="fimAgendamento" [options]="myDatePickerOptions"
 										[(ngModel)]="fimAgendamento" placeholder="Fim">
 									</my-date-picker></td>
@@ -173,7 +175,7 @@
 								<td class="col s3 label-conduta-percepcao">Conduta/Percepção</td>
 								<td class="col s9 conduta-percepcao"><textarea
 										class="materialize-textarea"
-										[(ngModel)]="atendimento.filaEsperaOcupacional.riscoPotencial.condutaPercepcao"
+										[(ngModel)]="riscoPotencial.condutaPercepcao"
 										name="conduta-percepcao">
 											</textarea></td>
 							</tr>

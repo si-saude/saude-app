@@ -3,15 +3,19 @@ import { Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
 import * as $ from 'jquery';
+import { MyDatePickerModule } from 'mydatepicker';
+import { IMyDpOptions } from 'mydatepicker';
 
 import { Triagem } from './../../model/triagem';
+import { TriagemBuilder } from './../../controller/triagem/triagem.builder';
 import { Equipe } from './../../model/equipe';
 import { EquipeBuilder } from './../../controller/equipe/equipe.builder';
 import { Diagnostico } from './../../model/diagnostico';
 import { DiagnosticoBuilder } from './../../controller/diagnostico/diagnostico.builder';
 import { Intervencao } from './../../model/intervencao';
 import { IntervencaoBuilder } from './../../controller/intervencao/intervencao.builder';
-import { Atendimento } from './../../model/atendimento';
+import { RiscoPotencial } from './../../model/risco-potencial';
+import { DateUtil } from './../../generics/date.util';
 
 @Component( {
     selector: 'app-acolhimento',
@@ -21,14 +25,18 @@ import { Atendimento } from './../../model/atendimento';
 export class AcolhimentoComponent{
     @Input() triagensTodosAtendimentos;
     @Input() service;
-    @Input() atendimento;
-    private innerAtendimento: Atendimento;
+    @Input() riscoPotencial;
+    private innerRiscoPotencial: RiscoPotencial;
     private innerService;
     private innerTriagensTodosAtendimentos: Array<Triagem>;
     private equipesTriagensTodosAtendimentos: Array<Equipe>;
     private triagensTodosAtendimentosByEquipe = [[]];
     private equipes: Array<Equipe>;
     private equipesSelecteds: Array<Equipe>;
+    private dateUtil: DateUtil;
+    private inicioAgendamento: any;
+    private fimAgendamento: any;
+    private myDatePickerOptions: IMyDpOptions;
     
     constructor( router: Router ) {
     }
@@ -37,22 +45,26 @@ export class AcolhimentoComponent{
         this.equipes = new Array<Equipe>();
         this.equipesSelecteds = new Array<Equipe>();
         this.equipesTriagensTodosAtendimentos = new Array<Equipe>();
+        this.innerTriagensTodosAtendimentos = new Array<Triagem>();
+        this.dateUtil = new DateUtil();
+        this.myDatePickerOptions = {
+                dateFormat: 'dd/mm/yyyy'
+            };
     }
     
     ngOnChanges( changes: SimpleChanges ) {
         if ( changes["triagensTodosAtendimentos"] != undefined ) {
-            this.innerTriagensTodosAtendimentos = changes["triagensTodosAtendimentos"].currentValue;
+            this.innerTriagensTodosAtendimentos = new TriagemBuilder().cloneList(changes["triagensTodosAtendimentos"].currentValue);
             this.getTriagensTodosAtendimentos();
         }
         if ( changes["service"] != undefined ) {
             this.innerService = changes["service"].currentValue;
             this.getEquipes();
         }
-        if ( changes["atendimento"] != undefined ) {
-            this.innerAtendimento = changes["atendimento"].currentValue;
-            if ( this.innerAtendimento.getId() > 0 ) {
-                this.equipesSelecteds = this.innerAtendimento.getFilaEsperaOcupacional().getRiscoPotencial().getEquipes();
-            }
+        if ( changes["riscoPotencial"] != undefined ) {
+            this.innerRiscoPotencial = changes["riscoPotencial"].currentValue;
+            this.equipesSelecteds = this.innerRiscoPotencial.getEquipes();
+            this.getDates();
         }
     }
     
@@ -70,7 +82,7 @@ export class AcolhimentoComponent{
         this.equipesTriagensTodosAtendimentos = new Array<Equipe>();
         this.triagensTodosAtendimentosByEquipe = [[]];
         
-        this.triagensTodosAtendimentos.forEach( t => {
+        this.innerTriagensTodosAtendimentos.forEach( t => {
             if ( t.getJustificativa() != undefined || t.getJustificativa() != '' ) {
                 if ( t.getDiagnostico() == undefined )
                     t.setDiagnostico(new DiagnosticoBuilder().initialize(new Diagnostico()));
@@ -102,13 +114,13 @@ export class AcolhimentoComponent{
             if ( e == undefined ) {
                 let equipe: Equipe = this.equipes.find( eq => eq.getId() == valor );
                 this.equipesSelecteds.push( equipe );
-                this.innerAtendimento.getFilaEsperaOcupacional().getRiscoPotencial().setEquipes( this.equipesSelecteds );
+                this.innerRiscoPotencial.setEquipes( this.equipesSelecteds );
             }
         }
     }
 
     removeEquipe( i: number ) {
-        this.innerAtendimento.getFilaEsperaOcupacional().getRiscoPotencial().getEquipes().splice( i, 1 );
+        this.innerRiscoPotencial.getEquipes().splice( i, 1 );
     }
     
     verifyIndiceTriagem( triagem: Triagem ) {
@@ -119,6 +131,25 @@ export class AcolhimentoComponent{
     
     getIndiceDescricao( triagem: Triagem ) {
         return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
+    }
+    
+    setInicioAgendamento( inicioAgendamento ) {
+        if ( inicioAgendamento != null ) {
+            this.innerRiscoPotencial.setInicioAgendamento(this.dateUtil.parseDatePickerToDate(inicioAgendamento));
+        }
+    }
+    
+    setFimAgendamento( fimAgendamento ) {
+        if ( fimAgendamento != null ) {
+            this.innerRiscoPotencial.setFimAgendamento(this.dateUtil.parseDatePickerToDate(fimAgendamento));
+        }
+    }
+    
+    getDates() {
+        if ( this.riscoPotencial.getInicioAgendamento() != undefined )
+            this.inicioAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.riscoPotencial.getInicioAgendamento() );
+        if ( this.riscoPotencial.getFimAgendamento() != undefined )
+            this.fimAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.riscoPotencial.getFimAgendamento() );
     }
     
 }

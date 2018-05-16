@@ -53,6 +53,7 @@ import { DateUtil } from './../../../generics/date.util';
 export class AtendimentoFormComponent {
     private inscricao: Subscription;
     private atendimento: Atendimento;
+    private riscoPotencial: RiscoPotencial;
     private atendimentos: Array<Atendimento>;
     private usuario: Usuario;
     private profissional: Profissional;
@@ -65,8 +66,6 @@ export class AtendimentoFormComponent {
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private alive: boolean;
     private dataNascimento: any;
-    private inicioAgendamento: any;
-    private fimAgendamento: any;
     private idade: number;
     private myDatePickerOptions: IMyDpOptions;
     private globalActions;
@@ -91,6 +90,7 @@ export class AtendimentoFormComponent {
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
+        this.riscoPotencial = new RiscoPotencialBuilder().initialize( this.riscoPotencial );
         this.filaAtendimentoOcupacionais = new FilaAtendimentoOcupacionalBuilder().
             initializeList( this.filaAtendimentoOcupacionais );
         this.alive = true;
@@ -228,7 +228,6 @@ export class AtendimentoFormComponent {
     atualizar() {
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
-            this.setDatas();
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
@@ -255,10 +254,11 @@ export class AtendimentoFormComponent {
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
 
                     if ( this.atendimento.getId() > 0 ) {
+                        this.riscoPotencial = this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial();
+                        
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
                         this.existAtendimento = true;
-                        this.getDatas();
 
                         for ( let i = 0; i < $( ".tab" ).children().length; i++ ) {
                             if ( $( ".tab" ).children()[0].className == "active" )
@@ -639,38 +639,6 @@ export class AtendimentoFormComponent {
 
     closeModalConfirmLocalizacao() {
         this.modalConfirmLocalizacao.emit( { action: "modal", params: ['close'] } );
-    }
-
-    getDatas() {
-        if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() != undefined ) {
-            this.dataNascimento = this.dateUtil.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getDataNascimento() );
-        }
-        
-        if ( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getInicioAgendamento() != undefined ) {
-            this.inicioAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getInicioAgendamento() );
-        }else{
-            this.inicioAgendamento = null;
-        }
-        
-        if ( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getFimAgendamento() != undefined ) {
-            this.fimAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getFimAgendamento() );
-        }else{
-            this.fimAgendamento = null;
-        }
-    }
-    
-    setDatas(){
-        if ( this.inicioAgendamento != undefined && this.inicioAgendamento != null) {
-            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setInicioAgendamento(
-                    this.dateUtil.parseDatePickerToDate(this.inicioAgendamento));
-        }else
-            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setInicioAgendamento(undefined);
-        
-        if ( this.fimAgendamento != undefined && this.fimAgendamento != null ) {
-            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setFimAgendamento(
-                    this.dateUtil.parseDatePickerToDate(this.fimAgendamento));
-        }else
-            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().setFimAgendamento(undefined);
     }
 
     catchConfiguration( error ) {
