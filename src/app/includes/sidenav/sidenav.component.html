@@ -85,7 +85,6 @@
 			(click)="closeSidenavProcesso()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
-			<a [routerLink]="['/home']">Notificação</a>
 			<a [routerLink]="['/agenda']" *ngIf="checkPermissao('AGENDA')">Agenda</a>
 			<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
 			<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria De Aso</a>
@@ -101,6 +100,7 @@
 			</a>
 			</li>
 			<a [routerLink]="['/atendimento/gerenciar']" *ngIf="checkPermissao('ATENDIMENTO_GERENCIAR')">Gerenciar Atendimentos</a>
+			<a [routerLink]="['/home']" *ngIf="checkPermissao('NOTIFICACAO')">Notificação</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		</div>
 	</li>
