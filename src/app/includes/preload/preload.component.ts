@@ -21,7 +21,14 @@ export class PreloadComponent implements OnInit {
       }];
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+      $(document).ready(function() {
+          window.history.pushState(null, "", window.location.href);        
+          window.onpopstate = function() {
+              window.history.pushState(null, "", window.location.href);
+          };
+      });
+  }
   
   ngOnChanges(changes: SimpleChanges) {
       if (changes["show"].currentValue === true)
