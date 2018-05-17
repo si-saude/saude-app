@@ -27,7 +27,6 @@ import { ServicoBuilder } from './../../servico/servico.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-profissional-saude-form',
@@ -53,8 +52,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
 
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
     
-    private dateUtil: DateUtil;
-
     constructor( private route: ActivatedRoute,
         private profissionalSaudeService: ProfissionalSaudeService,
         router: Router) {
@@ -68,7 +65,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         this.autocompleteEmpregado = [];
         this.servicos = new ServicoBuilder().initializeList( this.servicos );
         this.servicosSelecteds = new Array<Servico>();
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {

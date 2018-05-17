@@ -30,7 +30,6 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 import { EmpregadoBuilder } from './../empregado.builder';
 import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-monitoramento.builder';
 import { HistoricoGrupoMonitoramentoBuilder } from './../../historico-grupo-monitoramento/historico-grupo-monitoramento.builder';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-empregado-form',
@@ -76,8 +75,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
 
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
     
-    private dateUtil: DateUtil;
-
     constructor( private route: ActivatedRoute,
         private empregadoService: EmpregadoService,
         router: Router ) {
@@ -87,7 +84,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.assinaturaSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.fotoSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.empregado = new EmpregadoBuilder().initialize( this.empregado );
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {

@@ -20,7 +20,7 @@
 				</div>
 				<div class="col s6">
 					<a [routerLinkActive]="['active']" class="collection-item"
-						id="descricao{{i}}"></a>
+						id="descricao{{i}}">{{getDescricao(a.descricao)}}</a>
 				</div>
 				<div class="col s1">
 					<a [routerLink]="['/intervencao/detalhe', a.id]"><i

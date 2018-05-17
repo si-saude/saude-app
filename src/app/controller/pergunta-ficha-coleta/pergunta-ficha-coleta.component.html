@@ -19,7 +19,7 @@
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.codigo}}</a>
 				</div>
 				<div class="col s7">
-					<a [routerLinkActive]="['active']" class="collection-item" id="descricao{{i}}"></a>
+					<a [routerLinkActive]="['active']" class="collection-item" id="descricao{{i}}">{{getDescricao(a.descricao)}}</a>
 				</div>
 				<div class="col s1">
 					<a [routerLink]="['/pergunta-ficha-coleta/detalhe', a.id]"><i

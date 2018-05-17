@@ -18,7 +18,6 @@ import { EmpregadoConvocacaoService } from './../../empregado-convocacao/emprega
 import { EmpregadoConvocacaoFilter } from './../../empregado-convocacao/empregado-convocacao.filter';
 import { EmpregadoConvocacaoBuilder } from './../../empregado-convocacao/empregado-convocacao.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-auditoria-resultado-exame-form-detail',
@@ -46,9 +45,7 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
     dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
-    
-    private dateUtil: DateUtil;
-    
+
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
         router: Router) {
@@ -67,7 +64,6 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
         this.campoExames = new CampoExameBuilder().initializeList( this.campoExames );
         this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
         this.autocompleteEmpregadoConvocacao = [];
-        this.dateUtil = new DateUtil();
     }
     
     ngOnInit() {

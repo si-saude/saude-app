@@ -15,7 +15,7 @@ import { DiagnosticoBuilder } from './../../controller/diagnostico/diagnostico.b
 import { Intervencao } from './../../model/intervencao';
 import { IntervencaoBuilder } from './../../controller/intervencao/intervencao.builder';
 import { RiscoPotencial } from './../../model/risco-potencial';
-import { DateUtil } from './../../generics/date.util';
+import { DateUtil } from '../../generics/utils/date.util';
 
 @Component( {
     selector: 'app-acolhimento',

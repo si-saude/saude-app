@@ -23,7 +23,6 @@ import { EmpregadoConvocacaoExameBuilder } from './../../empregado-convocacao-ex
 import { GerenciaConvocacaoBuilder } from './../../gerencia-convocacao/gerencia-convocacao.builder';
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-convocacao-form',
@@ -67,8 +66,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     inicio: any;
     fim: any;
     
-    private dateUtil: DateUtil;
-
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
         router: Router) {
@@ -98,7 +95,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         this.modalConfirmProfissiograma = new EventEmitter<string | MaterializeAction>();
         this.checkEmpregados = false;
         this.conformList = new Array<boolean>();
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {

@@ -8,7 +8,7 @@ import { FeriadoService } from './../feriado.service';
 import { FeriadoFilter } from './../feriado.filter';
 import { FeriadoBuilder } from './../feriado.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { DateUtil } from './../../../generics/date.util';
+import { DateUtil } from '../../../generics/utils/date.util';
 
 @Component( {
     selector: 'app-feriado-form',
@@ -19,8 +19,6 @@ export class FeriadoFormComponent extends GenericFormComponent implements OnInit
     feriado: Feriado;
     data: any; 
     
-    private dateUtil: DateUtil;
-
     constructor( private route: ActivatedRoute,
         private feriadoService: FeriadoService,
         router: Router) { 
@@ -28,8 +26,6 @@ export class FeriadoFormComponent extends GenericFormComponent implements OnInit
         this.goTo = "feriado";
         
         this.feriado = new FeriadoBuilder().initialize(this.feriado);
-        
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {

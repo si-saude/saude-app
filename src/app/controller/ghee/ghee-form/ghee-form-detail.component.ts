@@ -10,7 +10,6 @@ import { GheeService } from './../ghee.service';
 import { GheeFilter } from './../ghee.filter';
 import { GheeBuilder } from './../ghee.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-ghee-form-detail',
@@ -26,8 +25,6 @@ export class GheeFormDetailComponent extends GenericFormComponent implements OnI
     
     gheeFilter: GheeFilter = new GheeFilter();
 
-    private dateUtil: DateUtil;
-    
     constructor( private route: ActivatedRoute,
         private gheeService: GheeService,
         router: Router) { 
@@ -35,7 +32,6 @@ export class GheeFormDetailComponent extends GenericFormComponent implements OnI
         this.goTo = "ghee";
 
         this.ghee = new GheeBuilder().initialize(this.ghee);
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {

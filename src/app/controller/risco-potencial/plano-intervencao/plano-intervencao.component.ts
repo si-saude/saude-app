@@ -11,7 +11,6 @@ import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component({
   selector: 'app-plano-intervencao',
@@ -26,7 +25,6 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     private inicioAgendamento: any;
     private fimAgendamento: any;
     private equipesSelecteds: Array<Equipe>;
-    private dateUtil: DateUtil;
     private triagensTodosAtendimentos: Array<Triagem>;
 
     constructor( private route: ActivatedRoute,
@@ -40,7 +38,6 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
             this.flagEquipesAbordagemTriagens = new EquipeBuilder().initializeList(new Array<Equipe>());
             this.riscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
             this.equipesSelecteds = new EquipeBuilder().initializeList(new Array<Equipe>());
-            this.dateUtil = new DateUtil();
             this.triagensTodosAtendimentos = new Array<Triagem>();
     }
     

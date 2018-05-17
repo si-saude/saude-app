@@ -25,7 +25,6 @@ import { ProfissionalVacinaBuilder } from './../../profissional-vacina/profissio
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-profissional-saude-form-detail',
@@ -49,8 +48,6 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
     
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
     
-    private dateUtil: DateUtil;
-    
     constructor( private route: ActivatedRoute,
         private profissionalSaudeService: ProfissionalSaudeService,
         router: Router) { 
@@ -61,7 +58,6 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
         this.empregados = new Array<Empregado>();
         this.profissionalSaude = new ProfissionalSaudeBuilder().initialize(this.profissionalSaude);
         this.autocompleteEmpregado = [];
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {

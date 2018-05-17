@@ -11,7 +11,6 @@ import { GheService } from './../ghe.service';
 import { GheFilter } from './../ghe.filter';
 import { GheBuilder } from './../ghe.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-ghe-form-detail',
@@ -27,8 +26,6 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
     dataDesativacao: any;
     
     gheFilter: GheFilter = new GheFilter();
-
-    private dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute,
         private gheService: GheService,
@@ -37,7 +34,6 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
         this.goTo = "ghe";
 
         this.ghe = new GheBuilder().initialize(this.ghe);
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {

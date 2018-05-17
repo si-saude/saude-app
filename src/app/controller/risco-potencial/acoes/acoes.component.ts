@@ -17,7 +17,6 @@ import { Tarefa } from './../../../model/tarefa';
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 import { RiscoPotencialFilter } from './../risco-potencial.filter';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component({
   selector: 'app-acoes',
@@ -37,7 +36,6 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private flagTriagem: Triagem;
     private flagIndexAcao: number = -1;
     private modalAcao;
-    private dateUtil: DateUtil;
 
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -50,7 +48,6 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             this.riscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
             this.modalAcao = new EventEmitter<string | MaterializeAction>();
             this.acao = new AcaoBuilder().initialize(new Acao());
-            this.dateUtil = new DateUtil();
     }
     
     ngOnInit() {

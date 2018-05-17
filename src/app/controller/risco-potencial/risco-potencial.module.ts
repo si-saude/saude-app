@@ -23,6 +23,7 @@ import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
 import { SharedModule } from './../shared.module';
 import { PipesModule } from './../pipes.module';
 import { PlanejamentoModule } from './../planejamento.module';
+import { TriagemModule } from './../triagem.module';
 import { FichaColetaModule } from './../ficha-coleta.module';
 import { AcolhimentoModule } from './../acolhimento.module';
 
@@ -48,7 +49,8 @@ import { AcolhimentoModule } from './../acolhimento.module';
         PipesModule,
         PlanejamentoModule,
         FichaColetaModule,
-        AcolhimentoModule
+        AcolhimentoModule,
+        TriagemModule
      ],
      providers: [
         RiscoPotencialService,

@@ -43,7 +43,10 @@ import { IndicadorSastBuilder } from './../../indicador-sast/indicador-sast.buil
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../../risco-potencial/risco-potencial.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
-import { DateUtil } from './../../../generics/date.util';
+import { DateUtil } from '../../../generics/utils/date.util';
+import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
+import { TriagemUtil } from './../../../generics/utils/triagem.util';
+import { FichaColetaUtil } from './../../../generics/utils/ficha-coleta.util';
 
 @Component( {
     selector: 'app-atendimento-form',
@@ -62,6 +65,7 @@ export class AtendimentoFormComponent {
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
     private existLocalizacao: boolean;
+    private acolhimento: boolean;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private alive: boolean;
@@ -80,6 +84,9 @@ export class AtendimentoFormComponent {
     private msgPreload: string;
     
     private dateUtil: DateUtil;
+    private planejamentoUtil: PlanejamentoUtil;
+    private triagemUtil: TriagemUtil;
+    private fichaColetaUtil: FichaColetaUtil;
     
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -108,6 +115,9 @@ export class AtendimentoFormComponent {
         this.showPreload = true;
         this.msgPreload = "Atualizando...";
         this.dateUtil = new DateUtil();
+        this.planejamentoUtil = new PlanejamentoUtil();
+        this.triagemUtil = new TriagemUtil();
+        this.fichaColetaUtil = new FichaColetaUtil();
     }
 
     ngOnInit() {
@@ -143,6 +153,9 @@ export class AtendimentoFormComponent {
                                             this.atualizar();
                                             this.atualizarLista();
                                         } );
+                                    if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) {
+                                        this.acolhimento = true;
+                                    } else this.acolhimento = false;
                                 } else {
                                     this.router.navigate( ["/home"] );
                                     return;
@@ -254,8 +267,8 @@ export class AtendimentoFormComponent {
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
 
                     if ( this.atendimento.getId() > 0 ) {
-                        this.riscoPotencial = this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial();
-                        
+                        this.riscoPotencial = new RiscoPotencialBuilder()
+                            .clone(this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial());
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
                         this.existAtendimento = true;
@@ -442,7 +455,8 @@ export class AtendimentoFormComponent {
     liberar() {
         if ( this.atendimento.getId() > 0 ) {
 
-            if ( !this.verifyValidFichaColeta() ) {
+            if ( !this.fichaColetaUtil.verifyValidFichaColeta(
+                    this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
                 this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
@@ -466,19 +480,21 @@ export class AtendimentoFormComponent {
     finalizar() {
         if ( this.atendimento.getId() > 0 ) {
 
-            if ( !this.verifyValidFichaColeta() ) {
+            if ( !this.fichaColetaUtil.verifyValidFichaColeta(
+                    this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
                 this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
 
-            if ( !this.verifyValidTriagens() ) {
+            if ( !this.triagemUtil.verifyValidTriagens( this.atendimento.getTriagens() ) ) {
                 this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
 
-            if ( !this.verifyPlanejamento() ) {
+            if ( !this.planejamentoUtil.verifyPlanejamento( 
+                    this.atendimento.getTriagens(), this.profissional.getEquipe().getId() ) ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
@@ -519,19 +535,21 @@ export class AtendimentoFormComponent {
     finalizarPausar() {
         if ( this.atendimento.getId() > 0 ) {
 
-            if ( !this.verifyValidFichaColeta() ) {
+            if ( !this.fichaColetaUtil.verifyValidFichaColeta(
+                    this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
                 this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
 
-            if ( !this.verifyValidTriagens() ) {
+            if ( !this.triagemUtil.verifyValidTriagens( this.atendimento.getTriagens() ) ) {
                 this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
 
-            if ( !this.verifyPlanejamento() ) {
+            if ( !this.planejamentoUtil.verifyPlanejamento( 
+                    this.atendimento.getTriagens(), this.profissional.getEquipe().getId() ) ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
@@ -550,80 +568,6 @@ export class AtendimentoFormComponent {
                     this.globalActions.emit( 'toast' );
                 } )
         }
-    }
-
-    verifyValidFichaColeta() {
-        let respostas: Array<RespostaFichaColeta> = new Array<RespostaFichaColeta>();
-        let ret: boolean = true;
-        let resp: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas()
-            .find( r => r.getPergunta().getGrupo() == 'ANAMNESE' && r.getPergunta().getCodigo() == '0008' &&
-                        r.getConteudo() != 'SIM');
-        
-        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().forEach(rFC => {
-            if ( rFC.getPergunta().getEquipes().find(e => e.getId() == this.profissional.getEquipe().getId() ) != undefined &&
-                    ((rFC.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" ) && resp == undefined) || 
-                            !rFC.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" )) )
-                respostas.push(rFC);
-        })
-        
-        respostas.forEach( r => {
-            if ( r.getConteudo() == "" ) ret = false;
-        } )
-        
-        return ret;
-    }
-
-    verifyValidTriagens() {
-        let triagem = this.atendimento.getTriagens().find( t => {
-            if ( t.getIndicadorSast().getObrigatorio() == true && t.getIndice() == -1 )
-                return true;
-            else return false;
-        } );
-
-        if ( triagem != undefined ) return false;
-        else return true;
-    }
-
-    verifyPlanejamento() {
-        let ret: boolean = true;
-        let triagens: Array<Triagem> = new Array<Triagem>();
-        let triagensInvalidas: Array<Triagem> = new Array<Triagem>();
-
-        if ( this.atendimento.getTriagens().length == 0 ) return true;
-
-        triagens = this.atendimento.getTriagens().filter( t => {
-            if ( t.getIndice() > -1 ) {
-                if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                }
-            }
-
-            return true;
-        } )
-
-        if ( triagens.length > 0 ){
-            triagensInvalidas.forEach( t => {
-                if (t.getIndice() < 3 && (t.getJustificativa() == "" || t.getJustificativa() == undefined) )
-                    ret = false;
-            } );
-            
-            if( triagens.find(t => t.getEquipeAbordagem().getId() == this.profissional.getEquipe().getId())
-                    == undefined)
-                ret = false;
-        }
-        else ret = false;
-
-        return ret;
     }
 
     openModalConfirmLocalizacao() {

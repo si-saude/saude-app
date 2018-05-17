@@ -21,7 +21,6 @@ import { IndicadorRiscoErgonomicoInstalacao } from './../../../model/indicador-r
 import { IndicadorRiscoSanitarioInstalacao } from './../../../model/indicador-risco-sanitario-instalacao';
 import { IndicadorRiscoSaudeAmbientalInstalacao } from './../../../model/indicador-risco-saude-ambiental-instalacao';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { DateUtil } from './../../../generics/date.util';
 
 @Component( {
     selector: 'app-instalacao-form',
@@ -45,8 +44,6 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
 
     instalacaoFilter: InstalacaoFilter = new InstalacaoFilter();
 
-    private dateUtil: DateUtil;
-
     constructor( private route: ActivatedRoute,
         private instalacaoService: InstalacaoService,
         router: Router) {
@@ -54,7 +51,6 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
         this.goTo = "instalacao";
 
         this.instalacao = new InstalacaoBuilder().initialize( this.instalacao );
-        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
