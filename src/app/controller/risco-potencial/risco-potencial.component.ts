@@ -198,5 +198,11 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
             return true;
         return false;
     }
+    
+    verifyAcolhimento(i) { 
+        if ( this.profissional.getEquipe().getAbreviacao() == "ACO" )
+            return true;
+        return false;
+    }
 
 }

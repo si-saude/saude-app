@@ -139,4 +139,18 @@ export class RiscoPotencialService extends GenericService {
         return this.equipeService.getEquipes();
     }
     
+    getStatusSimNao() {
+        let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
+        return this.http
+            .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEnums( path ) {
+        let urlEnums = GlobalVariable.BASE_API_URL + "/generic/"+path;
+        return this.http
+            .get( urlEnums + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

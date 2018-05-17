@@ -27,6 +27,8 @@ import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { RiscoEmpregadoService } from './../../risco-empregado/risco-empregado.service';
 import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.service';
+import { TriagemUtil } from './../../../generics/utils/triagem.util';
+import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
 
 @Component({
   selector: 'app-risco-potencial-triagem',
@@ -50,6 +52,9 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
     private showModalIntervencao: boolean;
     private showModalEquipe: boolean;
     
+    private triagemUtil: TriagemUtil;
+    private planejamentoUtil: PlanejamentoUtil;
+    
     constructor(private route: ActivatedRoute,
             private riscoEmpregadoService: RiscoEmpregadoService,
             router: Router) {
@@ -66,6 +71,9 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
             
             this.activeDiagnostico = false;
             this.activeIntervencao = false;
+            
+            this.triagemUtil = new TriagemUtil();
+            this.planejamentoUtil = new PlanejamentoUtil();
     }
 
     ngOnInit() {
@@ -148,13 +156,13 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
-        if ( !this.verifyValidTriagens() ) {
+        if ( !this.triagemUtil.verifyValidTriagens( this.riscoEmpregado.getTriagens() ) ) {
             this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
             this.globalActions.emit( 'toast' );
             return;
         }
 
-        if ( !this.verifyPlanejamento() ) {
+        if ( !this.planejamentoUtil.verifyPlanejamento( this.riscoEmpregado.getTriagens(), this.profissional.getEquipe().getId() ) ) {
             this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
             this.globalActions.emit( 'toast' );
             return;

@@ -30,6 +30,7 @@ import { RiscoPotencialBuilder } from './../../risco-potencial/risco-potencial.b
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { RiscoEmpregadoService } from './../../risco-empregado/risco-empregado.service';
+import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
 
 @Component( {
     selector: 'app-risco-potencial-planejamento',
@@ -51,6 +52,8 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private showModalDiagnostico: boolean;
     private showModalIntervencao: boolean;
     private showModalEquipe: boolean;
+    
+    private planejamentoUtil: PlanejamentoUtil;
 
     constructor( private route: ActivatedRoute,
         private riscoEmpregadoService: RiscoEmpregadoService,
@@ -66,6 +69,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         
         this.activeDiagnostico = false;
         this.activeIntervencao = false;
+        this.planejamentoUtil = new PlanejamentoUtil();
     }
 
     ngOnInit() {
@@ -130,7 +134,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-        if ( !this.verifyPlanejamento() ) {
+        if ( !this.planejamentoUtil.verifyPlanejamento(this.riscoEmpregado.getTriagens(), this.profissional.getEquipe().getId()) ) {
             this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
             this.globalActions.emit( 'toast' );
             return;
@@ -158,49 +162,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     getIndiceDescricao( triagem: Triagem ) {
         return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
     }
-    
-    verifyPlanejamento() {
-        let ret: boolean = true;
-        let ts: Array<Triagem> = new Array<Triagem>();
-        let triagensInvalidas: Array<Triagem> = new Array<Triagem>();
-
-        if ( this.riscoEmpregado.getTriagens().length == 0 ) return true;
-
-        ts = this.riscoEmpregado.getTriagens().filter( t => {
-            if ( t.getIndice() > -1 ) {
-                if ( t.getDiagnostico().getDescricao() == "" || t.getDiagnostico().getDescricao() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getIntervencao().getDescricao() == "" || t.getIntervencao().getDescricao() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getEquipeAbordagem().getNome() == "" || t.getEquipeAbordagem().getNome() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                } else if ( t.getPrazo() == "" || t.getPrazo() == undefined ) {
-                    triagensInvalidas.push( t );
-                    return false;
-                }
-            }
-
-            return true;
-        } )
-
-        if ( ts.length > 0 ){
-            triagensInvalidas.forEach( t => {
-                if (t.getIndice() < 3 && (t.getJustificativa() == "" || t.getJustificativa() == undefined) )
-                    ret = false;
-            } );
-            
-            if( ts.find(t => t.getEquipeAbordagem().getId() == this.profissional.getEquipe().getId())
-                    == undefined)
-                ret = false;
-        }
-        else ret = false;
-
-        return ret;
-    }
-    
+        
     openModalDiagnostico( triagem: Triagem ) {
         this.activeDiagnostico = true;
         this.activeIntervencao = false;

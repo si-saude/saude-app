@@ -16,10 +16,8 @@ import { Equipe } from './../../model/equipe';
 } )
 export class PlanejamentoComponent{
     @Input() triagens;
-    @Input() idEquipeProfissional;
     @Input() service;
     
-    private innerIdEquipeProfissional;
     private innerTriagens;
     private innerService;
     
@@ -46,9 +44,6 @@ export class PlanejamentoComponent{
         }
         if ( changes["triagens"] != undefined ) {
             this.innerTriagens = changes["triagens"].currentValue;
-        }
-        if ( changes["idEquipeProfissional"] != undefined ) {
-            this.innerIdEquipeProfissional = changes["idEquipeProfissional"].currentValue;
         }
     }
     

@@ -17,6 +17,7 @@ import { FichaColetaComponent } from './ficha-coleta/ficha-coleta.component';
 import { PlanoIntervencaoComponent } from './plano-intervencao/plano-intervencao.component';
 import { PlanejamentoComponent } from './planejamento/planejamento.component';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
+import { AcolhimentoComponent } from './acolhimento/acolhimento.component';
 import { RiscoPotencialService } from './risco-potencial.service';
 import { RiscoEmpregadoService } from './../risco-empregado/risco-empregado.service';
 import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
@@ -38,6 +39,7 @@ import { AcolhimentoModule } from './../acolhimento.module';
        PlanejamentoComponent,
        GraficosComponent,
        CriarPlanoComponent,
+       AcolhimentoComponent,
        TriagemReavaliacaoComponent
      ],
      imports: [

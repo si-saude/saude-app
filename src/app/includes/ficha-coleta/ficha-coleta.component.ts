@@ -191,12 +191,9 @@ export class FichaColetaComponent{
         this.innerFichaColeta.getRespostaFichaColetas()[indexResposta].getItens().splice( itemIndex, 1 );
     }
     
-    verifyRespostaSimNao( indexGrupo, indexRespostaByGrupo ) {
-        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
-        
-        if ( this.innerFichaColeta.getRespostaFichaColetas()[indexResposta] != undefined &&
-                this.innerFichaColeta.getRespostaFichaColetas()[indexResposta]
-                .getItens().length > 0 ) return true;
+    verifyRespostaSimNao( resposta: RespostaFichaColeta ) {
+        if ( resposta.getItens() != undefined && resposta.getItens().length > 0 )
+            return true;
         else return false;
     }
     

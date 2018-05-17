@@ -67,7 +67,7 @@
 										value="{{statusSimNao}}">{{statusSimNao}}</option>
 								</select>
 							</div>
-							<div class="col s2" *ngIf="verifyRespostaSimNao(g, r)">
+							<div class="col s2" *ngIf="verifyRespostaSimNao(resposta)">
 								<a *ngIf="!verifyEquipe(resposta)"
 									class="btn-floating waves-effect waves-light green btn-add"
 									(click)="addItemResposta(resposta.pergunta.itens, g, r)"> <i
@@ -75,7 +75,7 @@
 								</a>
 							</div>
 
-							<table class="striped" *ngIf="verifyRespostaSimNao(g, r)">
+							<table class="striped" *ngIf="verifyRespostaSimNao(resposta)">
 								<thead>
 									<tr class="row col s12">
 										<div
