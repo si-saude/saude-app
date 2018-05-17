@@ -21,6 +21,7 @@ import { UsuarioBuilder } from './../usuario/usuario.builder';
 import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { BaseFilter } from './../base/base.filter';
 import { PessoaFilter } from './../pessoa/pessoa.filter';
+import { FilterDataPipe } from './../../pipes/filter-data.pipe';
 
 @Component( {
     selector: 'app-risco-potencial',
@@ -29,6 +30,7 @@ import { PessoaFilter } from './../pessoa/pessoa.filter';
 } )
 export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial, RiscoPotencialFilter, RiscoPotencialGuard> {
     private riscoPotenciais: Array<RiscoPotencial>;
+    private flagRiscoPotenciais: Array<RiscoPotencial>;
     private riscoPotencialDatas: Array<any>;
     private riscoPotencialRPSats: Array<string>;
     private empregado;
@@ -42,11 +44,11 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         super( service, new RiscoPotencialFilter(), riscoGuard, router );
 
         this.riscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
         this.riscoPotencialDatas = new Array<any>();
         this.riscoPotencialRPSats = new Array<string>();
         this.uf = '';
         this.ufs = new Array<string>();
-
         this.servico = service;
     }
 
@@ -104,6 +106,18 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
             })
     }
     
+    selectFilter( filtro ) {
+        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        this.riscoPotenciais.forEach(rP => {
+            if ( this.transformDate( rP.getData() ).includes( filtro.target.value ) ) {
+                this.flagRiscoPotenciais.push(rP);
+            }
+        })
+        setTimeout(() => {
+            this.changeColorStatusRPSat();
+        }, 250 );
+    }
+    
     selectUf() {
         if ( this.uf != '' ) {
             this.showPreload = true;
@@ -121,6 +135,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                     this.array = JSON.parse( JSON.stringify( res.json() ) ).list;
                         if ( this.array != undefined ) {
                             this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
+                            this.flagRiscoPotenciais = this.riscoPotenciais;
                 
                             setTimeout(() => {
                                 this.changeColorStatusRPSat();
@@ -197,6 +212,16 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" )
             return true;
         return false;
+    }
+    
+    transformDate( value: Date ): string {
+        let date: string;
+        let arrayDate: Array<string>;
+        date = value.toString();
+        arrayDate = date.split('T');
+        arrayDate = arrayDate[0].split('-');
+        date = arrayDate[2] + '/' + arrayDate[1] + '/' + arrayDate[0];
+        return date;
     }
 
 }

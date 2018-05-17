@@ -8,16 +8,21 @@
 
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
-
-<div class="row div-select">
-	<fieldset class="col s8 fieldset-select">
-		<legend> Base - UF </legend>
-		<select name="uf" class="browser-default" [(ngModel)]="uf">
-			<option disabled selected value=''>Selecione um uf</option>
-			<option *ngFor="let uf of ufs" value="{{uf}}">{{uf}}</option>
-		</select>
-	</fieldset>
-	<button class="btn btn-primary btn-filtrar" (click)="selectUf()">Filtrar</button>
+<div class="filtro">
+	<div class="row div-select">
+		<fieldset class="col s8 fieldset-select">
+			<legend> Base - UF </legend>
+			<select name="uf" class="browser-default" [(ngModel)]="uf">
+				<option disabled selected value=''>Selecione um uf</option>
+				<option *ngFor="let uf of ufs" value="{{uf}}">{{uf}}</option>
+			</select>
+			<button center class="btn btn-primary btn-filtrar" (click)="selectUf()">Filtrar</button>
+		</fieldset>
+	</div>
+	<div class="row div-filter-by-data">
+		<label>Filtrar por data</label>
+		<input type="text" name="data" style="width: 70%" placeholder="filtrar data" (input)="selectFilter($event)">
+	</div>
 </div>
 
 <div class="list-container">
@@ -35,7 +40,7 @@
 					<th class="col s2">Status</th>
 				</tr>
 			</thead>
-			<div *ngFor="let riscoPotencial of riscoPotenciais;let i = index">
+			<div *ngFor="let riscoPotencial of flagRiscoPotenciais;let i = index">
 				<tbody class="col s12 row-risco row-risco{{i}}">
 					<tr class="col s12" (click)="toggleButtons(i)">
 						<td class="col s1 ranking">{{i+1}}</td>

@@ -31,18 +31,41 @@ tbody{
     overflow-x: hidden;
 }
 
+.filtro {
+	display: flex;
+}
+
 .div-select {
-	width: 50%;
+	display: flex;
+	width: 	50%;
     margin: 0 auto;
+    margin-right: 0px !important;
+    margin-left: 10%;
+}
+
+.div-filter-by-data {
+	width: 20%;
+    margin: 0 auto;
+    display: grid;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+
+.div-filter-by-data > label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #4fc3f7;
 }
 
 .fieldset-select {
 	padding-bottom: 2%;
+	padding: 10px;
+    margin-right: 0;
 }
 
 .btn-filtrar {
-	margin-top: 4.5%;
-    margin-left: 2%;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .empregado {
