@@ -76,6 +76,9 @@ import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-gr
 import { PanoramaGuard } from './guards/panorama.guard';
 import { DeclaracaoComparecimentoGuard } from './guards/guards-child/declaracao-comparecimento.guard';
 import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento.guard';
+import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
+
+
 
 @NgModule({
   declarations: [
@@ -155,7 +158,8 @@ import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento
     EmpregadosPorGrupoGuard,
     DeclaracaoComparecimentoGuard,
     QuadroAtendimentoGuard,
-    PanoramaGuard
+    PanoramaGuard,
+    FonteGeradoraGuard
   ],
   bootstrap: [ 
     AppComponent

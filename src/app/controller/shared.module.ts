@@ -62,6 +62,7 @@ import { RiscoPotencialService } from './risco-potencial/risco-potencial.service
 import { TriagemService } from './triagem/triagem.service';
 import { TarefaComponent } from './tarefa/tarefa.component';
 import { FilterDataPipe } from './../pipes/filter-data.pipe';
+import { FonteGeradoraService } from './fonte-geradora/fonte-geradora.service';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { FilterDataPipe } from './../pipes/filter-data.pipe';
     PaginacaoComponent,
     TarefaComponent,
     FilterDataPipe
+    
   ],
   imports: [ 
     CommonModule,
@@ -143,7 +145,8 @@ import { FilterDataPipe } from './../pipes/filter-data.pipe';
     PerguntaFichaColetaService,
     RiscoPotencialService,
     TriagemService,
-    CanDeactivateGuard
+    CanDeactivateGuard,
+    FonteGeradoraService
   ]
 })
 export class SharedModule { }
