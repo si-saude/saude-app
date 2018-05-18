@@ -119,6 +119,24 @@ export class RiscoPotencialService extends GenericService {
             .toPromise();
     }
     
+    getStatusRiscoPotencial() {
+        let urlRiscoPotencial = GlobalVariable.BASE_API_URL + "/generic/status-risco-potencial";
+        return this.http
+            .get( urlRiscoPotencial + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getStatusRPSat() {
+        let urlRiscoPotencial = GlobalVariable.BASE_API_URL + "/generic/status-rpsat";
+        return this.http
+            .get( urlRiscoPotencial + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEquipes( ) {
+        return this.equipeService.selectList(new EquipeFilter());
+    }
+    
     getDiagnosticoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {
         return this.diagnosticoService.getDiagnosticoByDescricaoAndAbreviacao(descricao, abreviacaoEquipe);
     }

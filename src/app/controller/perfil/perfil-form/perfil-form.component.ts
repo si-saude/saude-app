@@ -43,19 +43,11 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
                     this.showPreload = true;
                     this.perfilService.get( id )
                         .then( res => {
-                            this.getFuncionalidades();
                             this.perfilGet = new PerfilBuilder().clone( res.json() );
                             this.perfil.setVersion(this.perfilGet.getVersion());
                             this.perfil.setId(this.perfilGet.getId());
-                            setTimeout(() => {
-                                this.initializeFuncionalidades();
-                                this.perfil.getPermissoes().forEach(p => {
-                                    if ( this.perfilGet.getPermissoes().
-                                            find( pGet => p.getFuncionalidade() == pGet.getFuncionalidade() ) != undefined )
-                                        p.setValor(true);
-                                })
-                            }, 200);
                             this.perfil.setTitulo( this.perfilGet.getTitulo() );
+                            this.getFuncionalidades();
                             this.showPreload = false;
                         } )
                         .catch( error => {
@@ -63,9 +55,6 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
                         } )
                 } else {
                     this.getFuncionalidades();
-                    setTimeout(() => {
-                        this.initializeFuncionalidades();
-                    }, 100);
                 }
             } );
     }
@@ -74,6 +63,12 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
         this.perfilService.getFuncionalidades()
             .then( res => {
                 this.funcionalidades = Object.keys( res.json() ).sort();
+                this.initializeFuncionalidades();
+                this.perfil.getPermissoes().forEach(p => {
+                    if ( this.perfilGet.getPermissoes().
+                            find( pGet => p.getFuncionalidade() == pGet.getFuncionalidade() ) != undefined )
+                        p.setValor(true);
+                })
             } )
             .catch( error => {
                 console.log( error.text() );

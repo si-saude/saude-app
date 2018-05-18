@@ -10,6 +10,7 @@ import { RiscoPotencialFilter } from './risco-potencial.filter';
 import { RiscoPotencialBuilder } from './risco-potencial.builder';
 import { RiscoPotencialGuard } from './../../guards/guards-child/risco-potencial.guard';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
+import { Equipe } from './../../model/equipe';
 import { EquipeBuilder } from './../equipe/equipe.builder';
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { BooleanFilter } from './../../generics/boolean.filter';
@@ -33,16 +34,20 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     private flagRiscoPotenciais: Array<RiscoPotencial>;
     private riscoPotencialDatas: Array<any>;
     private riscoPotencialRPSats: Array<string>;
+    private equipes: Array<Equipe>;
+    private statuses: Array<string>;
+    private rpsats: Array<string>;
     private empregado;
     private equipe;
     private profissional: Profissional;
     private servico: RiscoPotencialService;
     private uf: string;
     private ufs: Array<string>;
+    private filtro: string;
+    private instantTypeFiltro: string;
 
     constructor( service: RiscoPotencialService, riscoGuard: RiscoPotencialGuard, router: Router ) {
         super( service, new RiscoPotencialFilter(), riscoGuard, router );
-
         this.riscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
         this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
         this.riscoPotencialDatas = new Array<any>();
@@ -50,6 +55,10 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         this.uf = '';
         this.ufs = new Array<string>();
         this.servico = service;
+        this.equipes = new EquipeBuilder().initializeList(new Array<Equipe>());
+        this.statuses = new Array<string>();
+        this.instantTypeFiltro = '';
+        this.filtro = '';
     }
 
     ngOnInit() {
@@ -94,6 +103,9 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         }
             
         this.getUfs();
+        this.getEquipes();
+        this.getStatus();
+        this.getRPSats();
     }
     
     getUfs() {
@@ -106,16 +118,114 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
             })
     }
     
-    selectFilter( filtro ) {
+    getStatus() {
+        this.servico.getStatusRiscoPotencial( )
+            .then( res => {
+                this.statuses = Object.keys( res.json() ).sort();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
+    getRPSats() {
+        this.servico.getStatusRPSat()
+            .then( res => {
+                this.rpsats = Object.keys( res.json() ).sort();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
+    getEquipes() {
+        this.servico.getEquipes()
+            .then( res => {
+                this.equipes = new EquipeBuilder().cloneList( res.json() );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
+    selectFilterData( filtro ) {
+        if ( this.setInstantTypeFiltro( filtro, 'data' ) ) return;
+        
+        let component = this;
         this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
-        this.riscoPotenciais.forEach(rP => {
-            if ( this.transformDate( rP.getData() ).includes( filtro.target.value ) ) {
-                this.flagRiscoPotenciais.push(rP);
-            }
+        
+        this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP =>
+            rP[this.instantTypeFiltro] != undefined && 
+                component.transformDate( rP[this.instantTypeFiltro] ).includes( filtro.target.value )
+        )
+    }
+    
+    selectFilterRPSat( filtro ) {
+        if ( this.setInstantTypeFiltro( filtro, 'statusRPSat' ) ) return;
+        
+        let component = this;
+        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+    }
+    
+    selectFilterEquipe( filtro ) {
+        if ( this.setInstantTypeFiltro( filtro, 'equipeResponsavel' ) ) return;
+        
+        let component = this;
+        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        
+        this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP => {
+            if ( rP[this.instantTypeFiltro]['nome'] != undefined && 
+                rP[this.instantTypeFiltro]['nome'].includes( filtro.target.value ) )
+                return true;
+            else return false;
         })
-        setTimeout(() => {
-            this.changeColorStatusRPSat();
-        }, 250 );
+        
+    }
+    
+    selectFilterEmpregado( filtro ) {
+        if ( this.setInstantTypeFiltro( filtro, 'empregado' ) ) return;
+        
+        let component = this;
+        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        
+        this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP => {
+            if ( rP[this.instantTypeFiltro]['pessoa']['nome'] != undefined && 
+                rP[this.instantTypeFiltro]['pessoa']['nome'].includes( filtro.target.value ) )
+                return true;
+            else return false;
+        })
+    }
+    
+    selectFilterStatus( filtro ) {
+        if ( this.setInstantTypeFiltro( filtro, 'status' ) ) return; 
+        
+        let component = this;
+        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        
+        this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP => 
+                rP[this.instantTypeFiltro] != undefined && rP[this.instantTypeFiltro].includes( filtro.target.value ) 
+        )
+        
+    }
+    
+    setInstantTypeFiltro( filtro, tipo ) {
+        if ( filtro.target.value == '' ) {
+            this.instantTypeFiltro = '';
+            this.flagRiscoPotenciais = this.riscoPotenciais;
+            return true;
+        }
+        else 
+            this.instantTypeFiltro = tipo;
+        
+        return false;
+    }
+    
+    verifyFiltro( tipo ) {
+        if ( this.instantTypeFiltro == '' )
+            return false;
+        else if ( this.instantTypeFiltro == tipo ) 
+            return false;
+        else return true;
     }
     
     selectUf() {
@@ -135,11 +245,10 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                     this.array = JSON.parse( JSON.stringify( res.json() ) ).list;
                         if ( this.array != undefined ) {
                             this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
+                            for ( let i = 0; i < this.riscoPotenciais.length; i++)
+                                this.riscoPotenciais[i].setRanking(i+1)
+                                
                             this.flagRiscoPotenciais = this.riscoPotenciais;
-                
-                            setTimeout(() => {
-                                this.changeColorStatusRPSat();
-                            }, 250 );   
                         }
                     } )
                     .catch( error => {
@@ -155,15 +264,13 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         }
     }
 
-    changeColorStatusRPSat() {
-        for ( let i = 0; i < this.riscoPotenciais.length; i++ ) {
-            if ( this.riscoPotenciais[i].getStatusRPSat() != undefined ) {
-                if ( this.riscoPotenciais[i].getStatusRPSat().includes( "IN" ) )
-                    $( ".row-risco" + i ).css( "background-color", "red" );
-                else if ( this.riscoPotenciais[i].getStatusRPSat().includes( "TOLER" ) )
-                    $( ".row-risco" + i ).css( "background-color", "yellow" );
-                else $( ".row-risco" + i ).css( "background-color", "green" );
-            }
+    changeColorStatusRPSat( campo ) {
+        if ( campo != undefined ) {
+            if ( campo.includes( "IN" ) )
+                return {'background-color':'red'};
+            else if ( campo.includes( "TOLER" ) )
+                return {'background-color':'yellow'};
+            else return {'background-color':'green'};
         }
     }
 
