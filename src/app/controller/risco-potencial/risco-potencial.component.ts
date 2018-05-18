@@ -165,6 +165,10 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         
         let component = this;
         this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        
+        this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP =>
+            rP[this.instantTypeFiltro] != undefined && rP[this.instantTypeFiltro] == filtro.target.value
+        )
     }
     
     selectFilterEquipe( filtro ) {

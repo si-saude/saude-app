@@ -29,7 +29,7 @@
 		</div>
 		<div class="row div-filter" style="width: 15%">
 			<label>Filtrar por RPSat</label>
-			<select name="rpsat" class="browser-default" [disabled]="verifyFiltro('rpsat')"
+			<select name="statusRPSat" class="browser-default" [disabled]="verifyFiltro('statusRPSat')"
 				(change)="selectFilterRPSat($event)">
 				<option selected value="">Selecione um rpsat</option>
 				<option *ngFor="let rpsat of rpsats" value="{{rpsat}}">{{rpsat}}</option>
