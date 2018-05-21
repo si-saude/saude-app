@@ -56,7 +56,6 @@ import { FichaColetaUtil } from './../../../generics/utils/ficha-coleta.util';
 export class AtendimentoFormComponent {
     private inscricao: Subscription;
     private atendimento: Atendimento;
-    private riscoPotencial: RiscoPotencial;
     private atendimentos: Array<Atendimento>;
     private usuario: Usuario;
     private profissional: Profissional;
@@ -97,7 +96,6 @@ export class AtendimentoFormComponent {
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
-        this.riscoPotencial = new RiscoPotencialBuilder().initialize( this.riscoPotencial );
         this.filaAtendimentoOcupacionais = new FilaAtendimentoOcupacionalBuilder().
             initializeList( this.filaAtendimentoOcupacionais );
         this.alive = true;
@@ -267,8 +265,6 @@ export class AtendimentoFormComponent {
                     this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
 
                     if ( this.atendimento.getId() > 0 ) {
-                        this.riscoPotencial = new RiscoPotencialBuilder()
-                            .clone(this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial());
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.existLocalizacao = true;
                         this.existAtendimento = true;

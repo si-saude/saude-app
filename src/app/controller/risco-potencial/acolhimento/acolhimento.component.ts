@@ -70,7 +70,6 @@ export class AcolhimentoComponent extends GenericFormComponent implements OnInit
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                                    this.nomeEmpregado = this.profissional.getEmpregado().getPessoa().getNome();
 
                                     this.inscricao = this.route.params.subscribe(
                                         ( params: any ) => {
@@ -81,7 +80,13 @@ export class AcolhimentoComponent extends GenericFormComponent implements OnInit
                                                 this.riscoPotencialService.getAcoes( id )
                                                     .then( res => {
                                                         this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
-                                                        this.getTriagens();
+                                                        this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
+                                                            rE.getTriagens().forEach(t => {
+                                                                this.triagens.push(t);
+                                                            })
+                                                        })
+                                                        this.triagens = new TriagemBuilder().cloneList(this.triagens);
+                                                        this.nomeEmpregado = this.riscoPotencial.getEmpregado().getPessoa().getNome();
                                                         let filaFilter: FilaEsperaOcupacionalFilter = new FilaEsperaOcupacionalFilter();
                                                         filaFilter.setRiscoPotencial( new RiscoPotencialFilter() );
                                                         filaFilter.getRiscoPotencial().setId( id );
@@ -124,12 +129,6 @@ export class AcolhimentoComponent extends GenericFormComponent implements OnInit
             console.log( "Usuario nao logada." );
             this.router.navigate( ["/login"] );
         }
-    }
-    
-    getTriagens() {
-        this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
-            this.triagens.concat(rE.getTriagens());
-        })
     }
     
     ngOnDestroy() {

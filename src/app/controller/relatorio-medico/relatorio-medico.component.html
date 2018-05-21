@@ -42,32 +42,6 @@
 		[paginas]="paginas" [listComponent]="listComponent"
 		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
 
-	<!-- Paginação
-<ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
-
-	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
-			<i class="material-icons arrow-pagination">first_page</i>
-	</a></li>
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(filter.getPageNumber()-1)"> <i
-			class="material-icons arrow-pagination">chevron_left</i>
-	</a></li>
-
-	<li [ngClass]="activePage(paginaAtual)" class="waves-effect"
-		*ngFor="let paginaAtual of paginasAtuais; let i = index"><a
-		(click)="goToPage(paginaAtual)">{{paginaAtual}} </a></li>
-
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(filter.getPageNumber()+1)"> <i
-			class="material-icons arrow-pagination">chevron_right</i>
-	</a></li>
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(paginas.length)"> <i
-			class="material-icons arrow-pagination">last_page</i>
-	</a></li>
-
-</ul>-->
-
 	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
 
 </div>
@@ -88,8 +62,8 @@
 			</div>
 
 			<div class="input-field col s2 checkbox">
-				<input type="checkbox" id="finalizado" #fin
-					(click)="changeStateFinalizado()" name="finalizado"> <label
+				<input type="checkbox" id="finalizado"
+					(click)="finalizado.changeState()" name="finalizado"> <label
 					for="finalizado">Finalizado</label>
 			</div>
 		</div>

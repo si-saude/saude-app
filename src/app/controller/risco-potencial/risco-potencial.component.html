@@ -59,8 +59,8 @@
 							</div>
 							<div style="display: inline;">
 								<a
-									[routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]"
-									class="btn btn-primary btn-ranking">Triagem</a>
+									[routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id, riscoPotencial.empregado.pessoa.nome]"
+									class="btn btn-primary btn-ranking">Planejamento</a>
 							</div>
 							<div style="display: inline;" *ngIf="verifyAcolhimento(i)">
 								<a

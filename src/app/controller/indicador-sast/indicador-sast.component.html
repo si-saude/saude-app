@@ -73,20 +73,20 @@
 	
 	<div class="row">
 		<div class="input-field col s3 checkbox">
-			<input type="checkbox" id="obrigatorio" #obrig
-				(click)="changeStateObrigatorio()" name="obrigatorio"> 
+			<input type="checkbox" id="obrigatorio"
+				(click)="obrigatorio.changeState()" name="obrigatorio"> 
 			<label for="obrigatorio">Obrigatório</label>
 		</div>
 		
 		<div class="input-field col s3 checkbox">
-			<input type="checkbox" id="inativo" #inat
-				(click)="changeStateInativo()" name="inativo"> 
+			<input type="checkbox" id="inativo"
+				(click)="inativo.changeState()" name="inativo"> 
 			<label for="inativo">Inativo</label>
 		</div>
 		
 		<div class="input-field col s5 checkbox">
 			<input type="checkbox" id="ausenteCalculoInterdisciplinar" #ausen
-				(click)="changeStateAusente()" name="ausenteCalculoInterdisciplinar"> 
+				(click)="ausente.changeState()" name="ausenteCalculoInterdisciplinar"> 
 			<label for="ausenteCalculoInterdisciplinar">Ausente do Cálculo Interdisciplinar</label>
 		</div>
 	</div>

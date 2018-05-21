@@ -49,17 +49,5 @@
 	</form>
 </div>
 
-
-<app-modal-diagnostico *ngIf="activeDiagnostico" [service]="riscoEmpregadoService" 
-	(diagnostico)="selectDiagnostico($event)" (cancelModalDiagnostico)="cancelarModalDiagnostico($event)"
-	[showModalDiagnostico]="showModalDiagnostico" [idEquipeProfissional]="idEquipeProfissional"></app-modal-diagnostico>
-
-<app-modal-intervencao *ngIf="activeIntervencao" [service]="riscoEmpregadoService" 
-	(intervencao)="selectIntervencao($event)" (cancelModalIntervencao)="cancelarModalIntervencao($event)"
-	[showModalIntervencao]="showModalIntervencao" [idEquipeProfissional]="idEquipeProfissional"></app-modal-intervencao>
-
-<app-modal-equipe (equipe)="selectEquipe($event)" [service]="riscoEmpregadoService" 
-	(cancelModalEquipe)="cancelarModalEquipe($event)" [showModalEquipe]="showModalEquipe"></app-modal-equipe>
-
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

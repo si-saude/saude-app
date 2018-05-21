@@ -23,26 +23,26 @@ export class ConvocacaoComponent extends GenericListComponent<Convocacao, Convoc
     profissiogramas: Array<Profissiograma>;
 
     constructor(service: ConvocacaoService, convocacaoGuard: ConvocacaoGuard, router: Router) {
-      super(service, new ConvocacaoFilter(), convocacaoGuard, router);
-      
-      this.tipos = new Array<string>(); 
-      this.profissiogramas = new ProfissiogramaBuilder().initializeList( Array<Profissiograma>() );
-
-      service.getTipos()
-          .then( res => {
-              this.tipos = Object.keys( res.json() );
-          } )
-          .catch( error => {
-              console.log( error );
-          } )
-      
-      service.getProfissiogramas()
-          .then( res => {
-              this.profissiogramas = new ProfissiogramaBuilder().cloneList( res.json() );
-          } )
-          .catch( error => {
-              console.log( error );
-          } )
-  }
+          super(service, new ConvocacaoFilter(), convocacaoGuard, router);
+          
+          this.tipos = new Array<string>(); 
+          this.profissiogramas = new ProfissiogramaBuilder().initializeList( Array<Profissiograma>() );
+          
+          service.getTipos()
+              .then( res => {
+                  this.tipos = Object.keys( res.json() );
+              } )
+              .catch( error => {
+                  console.log( error );
+              } )
+          
+          service.getProfissiogramas()
+              .then( res => {
+                  this.profissiogramas = new ProfissiogramaBuilder().cloneList( res.json() );
+              } )
+              .catch( error => {
+                  console.log( error );
+              } )
+    }
     
 }

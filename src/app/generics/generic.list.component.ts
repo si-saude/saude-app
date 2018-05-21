@@ -217,8 +217,5 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     }
     
     ngOnDestroy() {
-        this.closeModal();
-        this.closeModalDelete(true);
-        this.closeModalImport();
     }
 }

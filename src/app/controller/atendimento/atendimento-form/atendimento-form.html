@@ -236,7 +236,7 @@
 
 	<div id="acolhimento">
 		<div *ngIf="acolhimento">
-	 		<app-acolhimento [service]="atendimentoService" [riscoPotencial]="riscoPotencial"
+	 		<app-acolhimento [service]="atendimentoService" [riscoPotencial]="atendimento.filaEsperaOcupacional.riscoPotencial"
 	 			[triagensTodosAtendimentos]="atendimento.triagensTodosAtendimentos"></app-acolhimento>
  		</div>
 	</div>

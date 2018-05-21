@@ -63,7 +63,6 @@ export class PlanejamentoComponent{
         return false;
     }
     
-
     planejamentoBackground( triagem: Triagem ) {
         if ( triagem.getIndice() <= 2 )
             return 'red';

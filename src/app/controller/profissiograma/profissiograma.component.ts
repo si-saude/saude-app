@@ -7,6 +7,7 @@ import { ProfissiogramaService } from './profissiograma.service';
 import { ProfissiogramaFilter } from './profissiograma.filter';
 import { ProfissiogramaGuard } from './../../guards/guards-child/profissiograma.guard';
 import { GenericListComponent } from './../../generics/generic.list.component';
+import { CheckboxUtil } from './../../generics/utils/checkbox.util'; 
 
 @Component({
   selector: 'app-profissiograma',
@@ -14,37 +15,18 @@ import { GenericListComponent } from './../../generics/generic.list.component';
   styleUrls: ['./profissiograma.component.css', '../../../assets/css/list-component.css']
 })
 export class ProfissiogramaComponent extends GenericListComponent<Profissiograma, ProfissiogramaFilter, ProfissiogramaGuard> {
-    flagConcluido: number = 0;
-    concluido: HTMLInputElement;
-    @ViewChild("conc") c: ElementRef;
-
+    concluido: CheckboxUtil;
+    
     constructor(profissiogramaService: ProfissiogramaService, profissiogramaGuard: ProfissiogramaGuard, router: Router) {
         super(profissiogramaService, new ProfissiogramaFilter(), profissiogramaGuard, router);
     }
     
     ngAfterViewInit() {
-        this.concluido = this.c.nativeElement;
-        this.concluido.indeterminate = true;
-        this.concluido.checked = true;
-    }
-    
-    changeStateConcluido() {
-        if ( this.concluido.checked == false ) {
-            this.flagConcluido++;
-        }
-        if ( this.flagConcluido % 2 == 0 ) {
-            this.concluido.indeterminate = true;
-            this.concluido.checked = true;
-            this.flagConcluido = 0;
-        }
+        this.concluido = new CheckboxUtil(document.getElementById("concluido") as HTMLInputElement);
     }
     
     filtrar() {
-        if ( this.concluido.indeterminate == true )
-            this.filter.getConcluido().setValue(0);
-        else if ( this.concluido.checked == true )
-            this.filter.getConcluido().setValue(1);
-        else this.filter.getConcluido().setValue(2);
+        this.filter.getConcluido().setValue(this.concluido.getValue());
         
         this.setFilter();
     }

@@ -28,27 +28,4 @@ export class PerguntaFichaColetaComponent
       else return ( descricao.substr(0, 96) + "..." );
     }
     
-//    ngDoCheck() {
-//        if ( this.flagChange ) {
-//            setTimeout(() => {
-//                if ( this.array != undefined )
-//                    for ( let i=0; i < this.array.length; i++ ) {
-//                      $("#descricao"+i).empty();
-//                      $("#descricao"+i).append(this.shortenDescricao(this.array[i]["descricao"]));                    
-//                    }
-//            }, 500);
-//            this.flagChange = false;            
-//        }
-//    }
-//    
-//    shortenDescricao( descricao: string ) {
-//        if ( descricao.length < 100 ) return descricao;
-//        else return ( descricao.substr(0, 96) + "..." );
-//    }
-//    
-//    list() {
-//        super.list();
-//        this.flagChange = true;
-//    }
-
 }

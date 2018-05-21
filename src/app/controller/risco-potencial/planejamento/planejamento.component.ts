@@ -43,16 +43,6 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private profissional: Profissional;
     private prazos: Array<string>;
     private tabsActions;
-    
-    private flagIdTriagem: number;
-    private activeDiagnostico:boolean;
-    private activeIntervencao:boolean;
-    
-    private idEquipeProfissional: number;
-    private showModalDiagnostico: boolean;
-    private showModalIntervencao: boolean;
-    private showModalEquipe: boolean;
-    
     private planejamentoUtil: PlanejamentoUtil;
 
     constructor( private route: ActivatedRoute,
@@ -67,8 +57,6 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
         this.prazos = new Array<string>();
         
-        this.activeDiagnostico = false;
-        this.activeIntervencao = false;
         this.planejamentoUtil = new PlanejamentoUtil();
     }
 
@@ -128,9 +116,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         } else {
             console.log( "Usuario nao logada." );
             component.router.navigate( ["/login"] );
-        }
-
-        component.getPrazos();
+        }   
     }
 
     save() {
@@ -141,82 +127,6 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         }
         
         super.save( new RiscoEmpregadoBuilder().clone( this.riscoEmpregado ));
-    }
-
-    getPrazos() {
-        this.riscoEmpregadoService.getPrazos()
-            .then( res => {
-                this.prazos = Object.keys( res.json() ).sort();
-            } )
-            .catch( error => {
-                console.log( "Erro ao retornar os prazos." );
-            } )
-    }
-
-    verifyIndiceTriagem( triagem: Triagem ) {
-        if ( triagem.getIndice() > -1 ) return true;
-
-        return false;
-    }
-
-    getIndiceDescricao( triagem: Triagem ) {
-        return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
-    }
-        
-    openModalDiagnostico( triagem: Triagem ) {
-        this.activeDiagnostico = true;
-        this.activeIntervencao = false;
-        this.showModalDiagnostico = true;
-        this.flagIdTriagem = triagem.getId();
-        this.idEquipeProfissional = this.profissional.getEquipe().getId();
-    }
-
-    selectDiagnostico( diagnostico: Diagnostico ) {
-        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
-        triagem.setDiagnostico(diagnostico);
-        this.showModalDiagnostico = false; 
-    }
-    
-    cancelarModalDiagnostico() {
-        this.showModalDiagnostico = false;
-    }
-    
-    openModalIntervencao( triagem: Triagem ) {
-        this.activeDiagnostico = false;
-        this.activeIntervencao = true;
-        this.showModalIntervencao = true;
-        this.flagIdTriagem = triagem.getId();
-        this.idEquipeProfissional = this.profissional.getEquipe().getId();
-    }
-    
-    selectIntervencao( intervencao: Intervencao) {
-        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
-        triagem.setIntervencao(intervencao);
-        this.showModalIntervencao = false;
-    }
-    
-    cancelarModalIntervencao( valor ) {
-        this.showModalIntervencao = false;
-    }
-    
-    openModalEquipe( triagem: Triagem ) {
-        this.flagIdTriagem = triagem.getId();
-        this.showModalEquipe = true;
-    }
-    
-    selectEquipe( equipe: Equipe ) {
-        let triagem = this.riscoEmpregado.getTriagens().find(t => t.getId() == this.flagIdTriagem);
-        triagem.setEquipeAbordagem(equipe);
-        this.showModalEquipe = false;
-    }
-    
-    cancelarModalEquipe( valor ) {
-        this.showModalEquipe = false;
-    }
-    
-    planejamentoBackground( triagem: Triagem ) {
-        if ( triagem.getIndice() <= 2 )
-            return 'red';
     }
 
     ngOnDestroy() {
