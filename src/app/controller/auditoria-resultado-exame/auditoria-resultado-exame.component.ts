@@ -11,6 +11,7 @@ import { AuditoriaResultadoExameGuard } from './../../guards/guards-child/audito
 import { ResultadoExameService } from './../resultado-exame/resultado-exame.service';
 import { ResultadoExameImport } from './../../imports/resultado-exame.import';
 import { GenericListComponent } from './../../generics/generic.list.component';
+import { CheckboxUtil } from './../../generics/utils/checkbox.util'; 
 
 @Component({
   selector: 'app-auditoria-resultado-exame',
@@ -22,9 +23,7 @@ export class AuditoriaResultadoExameComponent
     extends GenericListComponent<EmpregadoConvocacao, EmpregadoConvocacaoFilter, AuditoriaResultadoExameGuard> {
     @ViewChild( 'arquivo' ) inputElArquivo: ElementRef;
     @ViewChild( 'arquivoTxt' ) inputElArquivoTxt: ElementRef;
-    @ViewChild("rAuditado") rAuditado: ElementRef;
-    resultadoAuditado: HTMLInputElement;
-    flagResultadoAuditado: number = 0;
+    private resultadoAuditado: CheckboxUtil;
     inicio: any;
     fim: any;
     modalConfirmImport;
@@ -40,29 +39,11 @@ export class AuditoriaResultadoExameComponent
     }
     
     ngAfterViewInit() {
-        this.resultadoAuditado = this.rAuditado.nativeElement;
-        
-        this.resultadoAuditado.indeterminate = true;
-        this.resultadoAuditado.checked = true;
-    }
-    
-    changeStateResultadoAuditado() {
-        if ( !this.resultadoAuditado.checked ) {
-            this.flagResultadoAuditado++;
-        }
-        if ( this.flagResultadoAuditado % 2 == 0 ) {
-            this.resultadoAuditado.indeterminate = true;
-            this.resultadoAuditado.checked = true;
-            this.flagResultadoAuditado = 0;
-        }
+        this.resultadoAuditado = new CheckboxUtil(document.getElementById("resultadoAuditado") as HTMLInputElement);
     }
     
     filtrar() {
-        if ( this.resultadoAuditado.indeterminate )
-            this.filter.getResultadoAuditado().setValue(0);
-        else if ( this.resultadoAuditado.checked )
-            this.filter.getResultadoAuditado().setValue(1);
-        else this.filter.getResultadoAuditado().setValue(2);
+        this.filter.getResultadoAuditado().setValue(this.resultadoAuditado.getValue());
         
         this.setFilter();
     }

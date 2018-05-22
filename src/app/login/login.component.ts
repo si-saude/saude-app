@@ -37,7 +37,8 @@ export class LoginComponent extends GenericComponent {
                 this.usuario = new UsuarioBuilder().clone(res.json());
                 localStorage.setItem( 'token', this.usuario.getToken() );
                 localStorage.setItem( 'usuario-id', this.usuario.getId().toString() );
-                if (this.usuario.getPerfis().length > 0) 
+                localStorage.setItem( 'usuario-chave', this.usuario.getChave() );
+                if (this.usuario.getPerfis().length > 0)
                     this.usuario.getPerfis().forEach( perf => {
                         perf.getPermissoes().forEach( perm => {
                             localStorage.setItem( perm.getFuncionalidade(), perm.getValor().toString() );

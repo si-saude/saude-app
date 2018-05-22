@@ -6,6 +6,7 @@ import { UsuarioService } from './usuario.service';
 import { UsuarioFilter } from './usuario.filter';
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { UsuarioGuard } from './../../guards/guards-child/usuario.guard';
+import { CheckboxUtil } from './../../generics/utils/checkbox.util'; 
 
 @Component( {
     selector: 'app-usuario',
@@ -13,38 +14,19 @@ import { UsuarioGuard } from './../../guards/guards-child/usuario.guard';
     styleUrls: ['./usuario.component.css', '../../../assets/css/list-component.css']
 } )
 export class UsuarioComponent extends GenericListComponent<Usuario, UsuarioFilter, UsuarioGuard> {
-    @ViewChild( "gCss" ) gCss: ElementRef;
-    gestorCss: HTMLInputElement;
-    flagGestorCss: number = 0;
+    private gestorCss: CheckboxUtil;
     
     constructor( service: UsuarioService, usuarioGuard: UsuarioGuard, router: Router ) {
         super( service, new UsuarioFilter(), usuarioGuard, router );
     }
 
     ngAfterViewInit() {
-        this.gestorCss = this.gCss.nativeElement;
-        this.gestorCss.indeterminate = true;
-        this.gestorCss.checked = true;
+        this.gestorCss = new CheckboxUtil(document.getElementById("gestorCss") as HTMLInputElement);
     }
-
-    changeStateGestorCss() {
-        if ( this.gestorCss.checked == false ) {
-            this.flagGestorCss++;
-        }
-        if ( this.flagGestorCss % 2 == 0 ) {
-            this.gestorCss.indeterminate = true;
-            this.gestorCss.checked = true;
-            this.flagGestorCss = 0;
-        }
-    }
-
+    
     filtrar() {
-        if ( this.gestorCss.indeterminate == true )
-            this.filter.getGestorCss().setValue( 0 );
-        else if ( this.gestorCss.checked == true )
-            this.filter.getGestorCss().setValue( 1 );
-        else this.filter.getGestorCss().setValue( 2 );
-
+        this.filter.getGestorCss().setValue(this.gestorCss.getValue());
+        
         this.setFilter();
     }
 

@@ -1,0 +1,74 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalDiagnostico">
+
+	<h5 class="title-modal title-modal-planejamento">Diagnósticos</h5>
+	
+	<!--  <div class="div-filter-diagnostico col s6 center">
+		<label for="filterDiagnostico" class="label-select-planejamento">Filtrar</label><br>
+		<input id="filterDiagnostico" type="text" class="input-filter-planejamento"
+			[(ngModel)]="filterDiagnostico" name="filterDiagnostico"
+			(ngModelChange)="fetchDiagnosticos($event)">
+	</div> -->
+	
+	<fieldset>
+		<legend> Eixo </legend>
+		<select name="selectEixoDiagnostico" class="browser-default"
+			[(ngModel)]="selectEixoId" (ngModelChange)="fetchDiagnosticos()">
+			<option disabled selected value="">Selecione um eixo</option>
+			<option *ngFor="let eixo of eixos"
+				value="{{eixo.id}}">{{eixo.titulo}}</option>
+		</select>
+	</fieldset>
+	<!-- -->
+	<table class="table table-striped table-filter-planejamento"
+		[mfData]="arrayDiagnostico | filterData : filter : typeFilter : value" #mf1="mfDataTable">
+	    <thead>
+		    <tr>
+		        <th style="width: 0.2%">
+		            <mfDefaultSorter by="codigo">Código</mfDefaultSorter>
+		            <input type="text" name="filter-diagnostico-codigo" style="width: 90%" 
+							placeholder="filtrar código"
+							(input)="selectFilter($event, 'filter-diagnostico-codigo')">
+		        </th>
+		        <th style="width: 1%">
+		            <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
+		            <input type="text" name="filter-diagnostico-descricao" style="width: 90%" 
+							placeholder="filtrar descrição"
+							(input)="selectFilter($event, 'filter-diagnostico-descricao')">
+		        </th>
+		    </tr>
+	    </thead>
+    	<tbody>
+		    <tr *ngFor="let item of mf1.data" class="tr-filter-descricao" (click)="selectDiagnostico(item)">
+		        <td style="width: 0.2%">{{item.codigo}}</td>
+		        <td style="width: 1%" class="filter-diagnostico-descricao">{{item.descricao}}</td>
+		    </tr>
+	    </tbody>
+	</table>
+ 
+	<!-- <div class="collection">
+		<div *ngFor="let a of arrayDiagnostico">
+			<div class="row row-collection select-planejamento">
+				<div class="col s12" (click)="selectDiagnostico(a)">
+					<div class="col s12">
+						<a [routerLinkActive]="['active']" class="collection-item">
+							{{a.descricao}}
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>  -->
+
+	<div class="modal-footer">
+		 <a class="waves-effect waves-green btn-flat"
+			(click)="cancelarModalDiagnostico()">Cancelar</a>
+	</div>
+
+</div>

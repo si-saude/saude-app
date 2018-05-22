@@ -34,6 +34,7 @@ import { RiscoEmpregadoService } from './../../risco-empregado/risco-empregado.s
 import { RiscoEmpregadoFilter } from './../../risco-empregado/risco-empregado.filter';
 import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.service';
 import { RiscoPotencialFilter } from './../../risco-potencial/risco-potencial.filter';
+import { TriagemUtil } from './../../../generics/utils/triagem.util';
 
 @Component({
   selector: 'app-triagem-reavaliacao',
@@ -45,6 +46,7 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
     private profissional: Profissional;
     private triagemIndices: Map<number, number>;
     private nomeEmpregado: string;
+    private triagemUtil: TriagemUtil;
     
     constructor(private route: ActivatedRoute,
             private riscoEmpregadoService: RiscoEmpregadoService,
@@ -56,6 +58,8 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
             this.riscoEmpregado = new RiscoEmpregadoBuilder().initialize(new RiscoEmpregado());
             this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
             this.triagemIndices = new Map<number, number>();
+            
+            this.triagemUtil = new TriagemUtil();
     }
 
     ngOnInit() {
@@ -138,7 +142,7 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
     
     save() {
         
-        if ( !this.verifyValidTriagens() ) {
+        if ( !this.triagemUtil.verifyValidTriagens( this.riscoEmpregado.getTriagens() ) ) {
             this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
             this.globalActions.emit( 'toast' );
             return;
@@ -153,17 +157,6 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
             .catch( error => {
                 this.processReturn( false, error );
             } )
-    }
-    
-    verifyValidTriagens() {
-        let triagem = this.riscoEmpregado.getTriagens().find( t => {
-            if ( t.getIndicadorSast().getObrigatorio() == true && t.getIndice() == -1 )
-                return true;
-            else return false;
-        } );
-
-        if ( triagem != undefined ) return false;
-        else return true;
     }
     
     verifyIndiceTriagem( triagem: Triagem ) {

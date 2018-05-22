@@ -12,6 +12,7 @@ import { TriagemComponent } from './triagem/triagem.component';
 import { TriagemReavaliacaoComponent } from './triagem-reavaliacao/triagem-reavaliacao.component';
 import { GraficosComponent } from './graficos/graficos.component';
 import { PlanoIntervencaoComponent } from './plano-intervencao/plano-intervencao.component';
+import { AcolhimentoComponent } from './acolhimento/acolhimento.component';
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 
 const riscoPotencialRoutes: Routes = [
@@ -29,6 +30,7 @@ const riscoPotencialRoutes: Routes = [
         canDeactivate: [CanDeactivateGuard]},
     { path: 'criar-plano/:id', component: CriarPlanoComponent},
     { path: 'graficos/:id', component: GraficosComponent},
+    { path: 'acolhimento/:id', component: AcolhimentoComponent},
     { path: 'plano-intervencao/:id', component: PlanoIntervencaoComponent,
         canDeactivate: [CanDeactivateGuard]}
 ];

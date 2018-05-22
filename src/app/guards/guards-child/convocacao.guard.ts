@@ -18,49 +18,6 @@ export class ConvocacaoGuard extends ChildGuard implements CanActivateChild {
         state: RouterStateSnapshot
     ): boolean | Observable<boolean> | Promise<boolean> {
         return super.activateChild("convocacao", route, state);
-        
-//        if ( state.url.includes("convocacao") ) {
-//            if ( window.localStorage.getItem("CONVOCACAO_LISTAR") !== undefined &&
-//                    window.localStorage.getItem("CONVOCACAO_LISTAR") !== null &&
-//                    window.localStorage.getItem("CONVOCACAO_LISTAR") !== '' &&
-//                    window.localStorage.getItem("CONVOCACAO_LISTAR") == "true" ) {
-//                if ( window.localStorage.getItem("CONVOCACAO_REMOVER") !== undefined &&
-//                        window.localStorage.getItem("CONVOCACAO_REMOVER") !== null &&
-//                        window.localStorage.getItem("CONVOCACAO_REMOVER") !== '' &&
-//                        window.localStorage.getItem("CONVOCACAO_REMOVER") == "true" )
-//                    this.canRemove = true;
-//                else this.canRemove = false;
-//                if ( state.url.includes("editar") ) {
-//                    if ( window.localStorage.getItem("CONVOCACAO_ALTERAR") !== undefined &&
-//                            window.localStorage.getItem("CONVOCACAO_ALTERAR") !== null &&
-//                            window.localStorage.getItem("CONVOCACAO_ALTERAR") !== '' &&
-//                            window.localStorage.getItem("CONVOCACAO_ALTERAR") == "true" ){
-//                        return true;
-//                    }
-//                    else return false;
-//                }
-//                if ( state.url.includes("detalhe") ) {
-//                    if ( window.localStorage.getItem("CONVOCACAO_DETALHE") !== undefined &&
-//                            window.localStorage.getItem("CONVOCACAO_DETALHE") !== null &&
-//                            window.localStorage.getItem("CONVOCACAO_DETALHE") !== '' &&
-//                            window.localStorage.getItem("CONVOCACAO_DETALHE") == "true" )
-//                        return true;
-//                    else return false;
-//                }
-//                if ( state.url.includes("cadastrar") ) {
-//                    if ( window.localStorage.getItem("CONVOCACAO_ADICIONAR") !== undefined &&
-//                            window.localStorage.getItem("CONVOCACAO_ADICIONAR") !== null &&
-//                            window.localStorage.getItem("CONVOCACAO_ADICIONAR") !== '' && 
-//                            window.localStorage.getItem("CONVOCACAO_ADICIONAR") == "true" ) {
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-//                }
-//                return true;
-//            } else return false;
-//        }
-//        
-//        return true;
+    
     }
 }

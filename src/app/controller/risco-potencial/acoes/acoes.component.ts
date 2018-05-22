@@ -213,7 +213,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         
         if ( this.flagIndexAcao > -1 ) {
             this.dataAcoes[triagem.getId()][this.flagIndexAcao] = this.dataTarefaAcao;
-            this.acao.getTarefa().setFim(this.parseDatePickerToDate(this.dataTarefaAcao));
+            this.acao.getTarefa().setFim(this.dateUtil.parseDatePickerToDate(this.dataTarefaAcao));
             return;
         }
         
@@ -227,7 +227,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         
         this.acao.setTarefa(new Tarefa());
         this.acao.setStatus(this.statusAcoes[0]);
-        this.acao.getTarefa().setFim(this.parseDatePickerToDate(this.dataTarefaAcao));
+        this.acao.getTarefa().setFim(this.dateUtil.parseDatePickerToDate(this.dataTarefaAcao));
         
         triagem.getAcoes().push(this.acao);
     }

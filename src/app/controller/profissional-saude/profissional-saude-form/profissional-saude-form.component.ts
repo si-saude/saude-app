@@ -43,7 +43,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     servicos: Array<Servico>;
     servicosSelecteds: Array<Servico>;
     autocompleteEmpregado;
-
+    
     //ngModel
     dataAso: any;
     dataCurriculoCursos: Array<any>;
@@ -51,7 +51,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     assinaturaSrc: any;
 
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-
+    
     constructor( private route: ActivatedRoute,
         private profissionalSaudeService: ProfissionalSaudeService,
         router: Router) {
@@ -68,7 +68,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     }
 
     ngOnInit() {
-
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if ( params['id'] !== undefined ) {
@@ -256,7 +255,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     verifyAndSetDates() {
         if ( this.dataAso !== undefined &&
             this.dataAso !== null ) {
-            this.profissionalSaude.setDataAso( this.parseDatePickerToDate( this.dataAso ) );
+            this.profissionalSaude.setDataAso( this.dateUtil.parseDatePickerToDate( this.dataAso ) );
         }
 
         if ( this.profissionalSaude.getCurriculo() !== undefined &&
@@ -268,14 +267,14 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                 if ( this.dataCurriculoCursos[i] !== undefined &&
                     this.dataCurriculoCursos[i] !== null )
                     this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].setData(
-                        this.parseDatePickerToDate( this.dataCurriculoCursos[i] ) );
+                            this.dateUtil.parseDatePickerToDate( this.dataCurriculoCursos[i] ) );
             }
         }
 
         if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
             this.profissionalSaude.getProfissionalConselho() !== null ) {
             this.profissionalSaude.getProfissionalConselho().
-                setVencimento( this.parseDatePickerToDate(
+                setVencimento( this.dateUtil.parseDatePickerToDate(
                     this.vencimentoProfissionalConselho ) );
         }
     }
@@ -283,7 +282,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     parseAndSetDates() {
         if ( this.profissionalSaude.getDataAso() !== undefined &&
             this.profissionalSaude.getDataAso() !== null ) {
-            this.dataAso = this.parseDataToObjectDatePicker( this.profissionalSaude.getDataAso() );
+            this.dataAso = this.dateUtil.parseDataToObjectDatePicker( this.profissionalSaude.getDataAso() );
         }
 
         if ( this.profissionalSaude.getCurriculo() !== undefined &&
@@ -293,7 +292,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
 
             for ( let i = 0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++ ) {
                 this.dataCurriculoCursos[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].getData() );
             }
         }
@@ -301,7 +300,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
             this.profissionalSaude.getProfissionalConselho() !== null ) {
             this.vencimentoProfissionalConselho =
-                this.parseDataToObjectDatePicker( this.profissionalSaude.getProfissionalConselho().getVencimento() );
+                this.dateUtil.parseDataToObjectDatePicker( this.profissionalSaude.getProfissionalConselho().getVencimento() );
         }
 
     }

@@ -19,48 +19,5 @@ export class GerenciaGuard extends ChildGuard implements CanActivateChild {
     ): boolean | Observable<boolean> | Promise<boolean> {
         return super.activateChild("gerencia", route, state);
         
-//        if ( state.url.includes("gerencia") ) {
-//            if ( window.localStorage.getItem("GERENCIA_LISTAR") !== undefined &&
-//                    window.localStorage.getItem("GERENCIA_LISTAR") !== null &&
-//                    window.localStorage.getItem("GERENCIA_LISTAR") !== '' &&
-//                    window.localStorage.getItem("GERENCIA_LISTAR") == "true" ) {
-//                if ( window.localStorage.getItem("GERENCIA_REMOVER") !== undefined &&
-//                        window.localStorage.getItem("GERENCIA_REMOVER") !== null &&
-//                        window.localStorage.getItem("GERENCIA_REMOVER") !== '' &&
-//                        window.localStorage.getItem("GERENCIA_REMOVER") == "true" )
-//                    this.canRemove = true;
-//                else this.canRemove = false;
-//                if ( state.url.includes("editar") ) {
-//                    if ( window.localStorage.getItem("GERENCIA_ALTERAR") !== undefined &&
-//                            window.localStorage.getItem("GERENCIA_ALTERAR") !== null &&
-//                            window.localStorage.getItem("GERENCIA_ALTERAR") !== '' &&
-//                            window.localStorage.getItem("GERENCIA_ALTERAR") == "true" ){
-//                        return true;
-//                    }
-//                    else return false;
-//                }
-//                if ( state.url.includes("detalhe") ) {
-//                    if ( window.localStorage.getItem("GERENCIA_DETALHE") !== undefined &&
-//                            window.localStorage.getItem("GERENCIA_DETALHE") !== null &&
-//                            window.localStorage.getItem("GERENCIA_DETALHE") !== '' &&
-//                            window.localStorage.getItem("GERENCIA_DETALHE") == "true" )
-//                        return true;
-//                    else return false;
-//                }
-//                if ( state.url.includes("cadastrar") ) {
-//                    if ( window.localStorage.getItem("GERENCIA_ADICIONAR") !== undefined &&
-//                            window.localStorage.getItem("GERENCIA_ADICIONAR") !== null &&
-//                            window.localStorage.getItem("GERENCIA_ADICIONAR") !== '' && 
-//                            window.localStorage.getItem("GERENCIA_ADICIONAR") == "true" ) {
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-//                }
-//                return true;
-//            } else return false;
-//        }
-//        
-//        return true;
     }
 }

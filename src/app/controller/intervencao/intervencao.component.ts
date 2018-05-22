@@ -21,31 +21,8 @@ export class IntervencaoComponent extends GenericListComponent<Intervencao, Inte
         super(intervencaoService, new IntervencaoFilter(), intervencaoGuard, router);
     }
     
-    ngDoCheck() {
-        if ( this.flagChange ) {
-            setTimeout(() => {
-                if ( this.array != undefined )
-                    for ( let i=0; i < this.array.length; i++ ) {
-                      $("#descricao"+i).append(this.shortenDescricao(this.array[i]["descricao"]));                    
-                    }
-            }, 500);
-            this.flagChange = false;            
-        }
+    getDescricao( descricao ) {
+      if ( descricao.length < 100 ) return descricao;
+      else return ( descricao.substr(0, 96) + "..." );
     }
-    
-    shortenDescricao( descricao: string ) {
-        if ( descricao.length < 100 ) return descricao;
-        else return ( descricao.substr(0, 96) + "..." );
-    }
-    
-    goToPage( index: number ) {
-        super.goToPage(index);
-        this.flagChange = true;
-    }
-    
-    list() {
-        super.list();
-        this.flagChange = true;
-    }
-
 }

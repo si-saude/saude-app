@@ -19,7 +19,7 @@
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.codigo}}</a>
 				</div>
 				<div class="col s7">
-					<a [routerLinkActive]="['active']" class="collection-item" id="descricao{{i}}"></a>
+					<a [routerLinkActive]="['active']" class="collection-item" id="descricao{{i}}">{{getDescricao(a.descricao)}}</a>
 				</div>
 				<div class="col s1">
 					<a [routerLink]="['/pergunta-ficha-coleta/detalhe', a.id]"><i
@@ -78,9 +78,9 @@
 
 </div>
 
-<app-confirm-delete [service]="service" [idDelete]="tempDelete" 
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" (cancelDelete)="closeModalDelete($event)"
 	[show]="openModalDelete"></app-confirm-delete>
-
+	
 <div class="mensagem">
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 		[msg]="msgError"></app-mensagem-form>

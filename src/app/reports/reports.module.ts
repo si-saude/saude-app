@@ -12,20 +12,20 @@ import { PanoramaComponent } from './panorama/panorama.component';
 import { PanoramaService } from './panorama/panorama.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
-import { TransformDatePipe } from './../pipes/transform-date.pipe';
+import { PipesModule } from './../controller/pipes.module';
 
 @NgModule({
     declarations: [
        EmpregadosPorGrupoComponent,
-       PanoramaComponent,
-       TransformDatePipe
+       PanoramaComponent
      ],
      imports: [
         ReportsRoutingModule,
         DataTableModule,
         SharedModule,
         MyDatePickerModule,
-        MaterializeModule
+        MaterializeModule,
+        PipesModule
      ],
      providers: [
         EmpregadosPorGrupoService,

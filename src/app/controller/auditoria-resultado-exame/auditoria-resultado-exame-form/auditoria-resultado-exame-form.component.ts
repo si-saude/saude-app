@@ -50,7 +50,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
-
+    
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
         router: Router ) {
@@ -240,10 +240,10 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             this.empregadoConvocacao.getResultadoExames() !== null ) {
             for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
                 this.empregadoConvocacao.getResultadoExames()[i].setData(
-                    this.parseDatePickerToDate( this.dataResultadoExames[i] ) );
+                        this.dateUtil.parseDatePickerToDate( this.dataResultadoExames[i] ) );
 
                 this.empregadoConvocacao.getResultadoExames()[i].setDataRecebimento(
-                    this.parseDatePickerToDate( this.dataRecebimentoExames[i] ) );
+                        this.dateUtil.parseDatePickerToDate( this.dataRecebimentoExames[i] ) );
                 
                 this.empregadoConvocacao.getResultadoExames()[i].getItemResultadoExames().forEach(iREx => {
                     if ( iREx.getCodigo() == "010") {
@@ -259,11 +259,11 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             this.empregadoConvocacao.getResultadoExames() !== null ) {
             for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
                 this.dataResultadoExames[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregadoConvocacao.getResultadoExames()[i].getData() );
 
                 this.dataRecebimentoExames[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
             }
         }

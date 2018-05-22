@@ -28,5 +28,5 @@ export class CriterioComponent extends GenericListComponent<Criterio, CriterioFi
                 console.log(error);
             })
     }
-
+ 
 }

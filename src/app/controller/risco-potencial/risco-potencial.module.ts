@@ -17,24 +17,25 @@ import { FichaColetaComponent } from './ficha-coleta/ficha-coleta.component';
 import { PlanoIntervencaoComponent } from './plano-intervencao/plano-intervencao.component';
 import { PlanejamentoComponent } from './planejamento/planejamento.component';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
+import { AcolhimentoComponent } from './acolhimento/acolhimento.component';
 import { RiscoPotencialService } from './risco-potencial.service';
 import { RiscoEmpregadoService } from './../risco-empregado/risco-empregado.service';
 import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
-import { TransformDatePipe } from './../../pipes/transform-date.pipe';
 import { SharedModule } from './../shared.module';
+import { PipesModule } from './../pipes.module';
+import { PlanejamentoModule } from './../planejamento.module';
+import { TriagemModule } from './../triagem.module';
+import { FichaColetaModule } from './../ficha-coleta.module';
+import { AcolhimentoModule } from './../acolhimento.module';
 
 @NgModule({
     declarations: [
        RiscoPotencialComponent,
-       TriagemComponent,
        AcoesComponent,
        AcompanhamentoComponent,
-       FichaColetaComponent,
        PlanoIntervencaoComponent,
-       PlanejamentoComponent,
        GraficosComponent,
        CriarPlanoComponent,
-       TransformDatePipe,
        TriagemReavaliacaoComponent
      ],
      imports: [
@@ -42,7 +43,12 @@ import { SharedModule } from './../shared.module';
         MyDatePickerModule,
         ChartsModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        PipesModule,
+        PlanejamentoModule,
+        FichaColetaModule,
+        AcolhimentoModule,
+        TriagemModule
      ],
      providers: [
         RiscoPotencialService,

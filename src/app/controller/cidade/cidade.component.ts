@@ -15,8 +15,7 @@ import { GenericListComponent } from './../../generics/generic.list.component';
 export class CidadeComponent extends GenericListComponent<Cidade, CidadeFilter, CidadeGuard> {
 
   constructor(service: CidadeService, cidadeGuard: CidadeGuard, router: Router) {
-      let cidadeFilter: CidadeFilter = new CidadeFilter();
-      super(service, cidadeFilter, cidadeGuard, router);
+      super(service, new CidadeFilter(), cidadeGuard, router);
   }
   
 }

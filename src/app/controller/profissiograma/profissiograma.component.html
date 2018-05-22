@@ -40,32 +40,6 @@
 		[paginas]="paginas" [listComponent]="listComponent"
 		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
 
-	<!-- Paginação
-<ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
-
-	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
-			<i class="material-icons arrow-pagination">first_page</i>
-	</a></li>
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(filter.getPageNumber()-1)"> <i
-			class="material-icons arrow-pagination">chevron_left</i>
-	</a></li>
-
-	<li [ngClass]="activePage(paginaAtual)" class="waves-effect"
-		*ngFor="let paginaAtual of paginasAtuais; let i = index"><a
-		(click)="goToPage(paginaAtual)">{{paginaAtual}} </a></li>
-
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(filter.getPageNumber()+1)"> <i
-			class="material-icons arrow-pagination">chevron_right</i>
-	</a></li>
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(paginas.length)"> <i
-			class="material-icons arrow-pagination">last_page</i>
-	</a></li>
-
-</ul> -->
-
 	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
 	<a [routerLink]="['/profissiograma/cadastrar']"
 		class="waves-effect waves-light btn button-add">Adicionar</a>
@@ -87,8 +61,8 @@
 
 		<div class="input-field col s2 checkbox">
 			<div class="modal-content">
-				<input type="checkbox" id="concluido" #conc
-					(click)="changeStateConcluido()" name="concluido"> <label
+				<input type="checkbox" id="concluido"
+					(click)="concluido.changeState()" name="concluido"> <label
 					for="concluido">Concluído</label>
 			</div>
 		</div>
@@ -103,7 +77,7 @@
 
 </div>
 
-<app-confirm-delete [service]="service" [idDelete]="tempDelete" 
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" (cancelDelete)="closeModalDelete($event)"
 	[show]="openModalDelete"></app-confirm-delete>
 
 <div class="mensagem">

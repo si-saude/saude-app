@@ -45,7 +45,7 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
     dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
-    
+
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
         router: Router) {
@@ -149,11 +149,11 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
                     this.empregadoConvocacao.getResultadoExames() !== null ) {
             for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
                 this.dataResultadoExames[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                     this.empregadoConvocacao.getResultadoExames()[i].getData() );
                 
                 this.dataRecebimentoExames[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
             }
         }

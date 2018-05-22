@@ -97,10 +97,15 @@
 									[routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]"
 									class="btn btn-primary btn-ranking">Triagem</a>
 							</div>
-							<div style="display: inline;" *ngIf="verifyPlanejamento(i)">
+							<div style="display: inline;">
 								<a
 									[routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id, riscoPotencial.empregado.pessoa.nome]"
 									class="btn btn-primary btn-ranking">Planejamento</a>
+							</div>
+							<div style="display: inline;" *ngIf="verifyAcolhimento(i)">
+								<a
+									[routerLink]="['/risco-potencial/acolhimento/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Acolhimento</a>
 							</div>
 							<div style="display: inline;">
 								<a

@@ -69,7 +69,7 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
     dataRemocaoHistoricos: Array<any> = new Array<any>();
 
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-
+    
     constructor( private route: ActivatedRoute,
         private empregadoService: EmpregadoService,
         router: Router) {
@@ -305,17 +305,17 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
     parseAndSetDates() {
         if ( this.empregado.getPessoa().getDataNascimento() !== null &&
             this.empregado.getPessoa().getDataNascimento() !== undefined ) {
-            this.dataNascimento = this.parseDataToObjectDatePicker( this.empregado.getPessoa().getDataNascimento() );
+            this.dataNascimento = this.dateUtil.parseDataToObjectDatePicker( this.empregado.getPessoa().getDataNascimento() );
         }
 
         if ( this.empregado.getEmpregadoVacinas() !== undefined &&
             this.empregado.getEmpregadoVacinas() !== null ) {
             for ( let i = 0; i < this.empregado.getEmpregadoVacinas().length; i++ ) {
                 this.dataVacinas[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregado.getEmpregadoVacinas()[i].getData() );
                 this.proximaDoseVacinas[i] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.empregado.getEmpregadoVacinas()[i].getProximaDose() );
             }
         }
@@ -337,7 +337,7 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
             this.empregado.getHistoricoGrupoMonitoramentos() !== null ) {
             for ( let i = 0; i < this.empregado.getHistoricoGrupoMonitoramentos().length; i++ ) {
                 this.dataRemocaoHistoricos[i] =
-                    this.parseDataToString(
+                    this.dateUtil.parseDataToString(
                         this.empregado.getHistoricoGrupoMonitoramentos()[i].getDataRemocao() );
             }
         }

@@ -65,7 +65,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     dataGerenciaConvocacaoFim: Array<any>;
     inicio: any;
     fim: any;
-
+    
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
         router: Router) {
@@ -432,24 +432,24 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         if ( this.inicio != undefined &&
             this.inicio != null )
             this.convocacao.setInicio(
-                this.parseDatePickerToDate( this.inicio ) );
+                this.dateUtil.parseDatePickerToDate( this.inicio ) );
 
         if ( this.fim != undefined &&
             this.fim != null )
             this.convocacao.setFim(
-                this.parseDatePickerToDate( this.fim ) );
+                    this.dateUtil.parseDatePickerToDate( this.fim ) );
     }
 
     parseAndSetDates() {            
         if ( this.convocacao.getInicio() != null ) {
             this.inicio =
-                this.parseDataToObjectDatePicker(
+                this.dateUtil.parseDataToObjectDatePicker(
                     this.convocacao.getInicio() );
         }
         
         if ( this.convocacao.getFim() != null ) {
             this.fim =
-                this.parseDataToObjectDatePicker(
+                this.dateUtil.parseDataToObjectDatePicker(
                     this.convocacao.getFim() );
         }
     }

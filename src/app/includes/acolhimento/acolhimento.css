@@ -1,0 +1,82 @@
+select {
+	display: inline;
+}
+
+.input-field>select {
+	display: block;
+	position: absolute;
+	width: 250px;
+	pointer-events: all;
+	height: 50px;
+	top: 0;
+	left: 20px;
+	opacity: 10;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    display: inline-table;
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+th {
+	margin-bottom: 0px;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+	display: flex !important;
+	padding: 0;
+}
+
+.container-triagem {
+	padding-top: 20px;
+	width: 100%;
+    margin-bottom: 30px;
+}
+
+.table-triagem {
+	margin-top: -40px;
+	display: inline;
+}
+
+.fieldset-planejamento-triagem {
+	background: #e6fdff;
+	margin: 20px;
+}
+
+.center-icon {
+	margin-top: 0px;
+}
+
+input {
+	margin-bottom: 0 !important;
+}
+
+.btn-add {
+	margin-top: 17px;
+    margin-left: -30px;
+}
+
+.btn-remove {
+	margin-left: 15px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
+}

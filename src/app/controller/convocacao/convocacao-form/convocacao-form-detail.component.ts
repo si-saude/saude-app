@@ -63,7 +63,7 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
 
     dataGerenciaConvocacaoInicio: Array<any>;
     dataGerenciaConvocacaoFim: Array<any>;
-
+    
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
         private empregadoService: EmpregadoService,
@@ -296,11 +296,11 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
 
             if ( this.gerenciaConvocacoes[i].getSelecionado() == true ) {
                 this.dataGerenciaConvocacaoInicio[cC] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.gerenciaConvocacoes[i].getInicio() );
 
                 this.dataGerenciaConvocacaoFim[cC] =
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                         this.gerenciaConvocacoes[i].getFim() );
             }
         }
