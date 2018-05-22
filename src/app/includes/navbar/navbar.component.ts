@@ -40,7 +40,6 @@ export class NavbarComponent {
             this.chave = '';
             this.logged = false;
         }
-        console.log(this.logged)
     }
 
     logoff() {

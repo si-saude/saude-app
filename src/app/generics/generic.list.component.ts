@@ -125,7 +125,8 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     closeModalDelete( valor ) {
         if ( valor != false )
             this.array.splice(this.array.indexOf(this.array.find( a => a['id'] == this.tempDelete )), 1);
-        this.openModalDelete = false;
+        let b: boolean = false;
+        this.openModalDelete = b;
         this.showPreload = false;
     }
 
@@ -147,7 +148,8 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     
     delete( id ) {
         this.tempDelete = id;
-        this.openModalDelete = true;
+        let b: boolean = true;
+        this.openModalDelete = b;
     }
 
     parseDataToObjectDatePicker( data ) {

@@ -70,8 +70,7 @@ import { FilterDataPipe } from './../pipes/filter-data.pipe';
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
     PaginacaoComponent,
-    TarefaComponent,
-    FilterDataPipe
+    TarefaComponent
   ],
   imports: [ 
     CommonModule,
@@ -90,8 +89,7 @@ import { FilterDataPipe } from './../pipes/filter-data.pipe';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent,
-    FilterDataPipe
+    PaginacaoComponent
   ],
   providers: [
     PerfilService,

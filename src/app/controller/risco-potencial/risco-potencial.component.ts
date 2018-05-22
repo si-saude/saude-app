@@ -325,6 +325,12 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         return false;
     }
     
+    verifyAcolhimento(i) { 
+        if ( this.profissional.getEquipe().getAbreviacao() == "ACO" )
+            return true;
+        return false;
+    }
+    
     transformDate( value: Date ): string {
         let date: string;
         let arrayDate: Array<string>;
