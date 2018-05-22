@@ -14,25 +14,24 @@
 		<div class="row">
 
 			<div class="input-field col s9">
-				<label for="nome">Nome</label>
-				<input id="nome" type="text" 
-				name="nome" [(ngModel)]="base.nome">
+				<label for="descricao" data-error="Campo obrigatório.">Descrição</label>
+				<input id="descricao" type="text" required
+				name="descricao" [(ngModel)]="agenteRisco.descricao">
 			</div>
 			
 			<div class="input-field col s3">
 				<fieldset>
-					<legend> UF </legend>
-					<select name="base.uf" required class="browser-default" [(ngModel)]="base.uf">
-						<option disabled selected value=''>Selecione um uf</option>
-						<option *ngFor="let uf of ufs" value="{{uf}}">{{uf}}</option>
+					<legend> Categoria de Agente de Risco </legend>
+					<select name="agenteRisco.categoriaAgenteRisco" required class="browser-default" [(ngModel)]="agenteRisco.categoriaAgenteRisco">
+						<option disabled selected value=''>Selecione uma Categoria</option>
+						<option *ngFor="let categoriaAgenteRisco of categoriaAgenteRiscos" value="{{categoriaAgenteRisco}}">{{categoriaAgenteRisco}}</option>
 					</select>
 				</fieldset>
-			</div>
-		
+			</div>		
 		</div>
 
-		<input id="id" name="id" type="hidden" [(ngModel)]="base.id"> 
-		<input id="version" name="version" type="hidden" [(ngModel)]="base.version">
+		<input id="id" name="id" type="hidden" [(ngModel)]="agenteRisco.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="agenteRisco.version">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
@@ -40,7 +39,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/base']"
+				<a [routerLink]="['/agente-risco']"
 					class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">

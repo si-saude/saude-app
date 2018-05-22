@@ -14,15 +14,15 @@
 		<div class="row">
 
 			<div class="input-field col s9">
-				<label for="descricao">Descrição</label>
+				<label for="descricao" data-error="Campo obrigatório.">Descrição</label>
 				<input id="descricao" type="text" required
-				name="descricao" [(ngModel)]="fonteGeradora.descricao">
+				name="descricao" [(ngModel)]="possivelDanoSaude.descricao">
 			</div>		
 		
 		</div>
 
-		<input id="id" name="id" type="hidden" [(ngModel)]="fonteGeradora.id"> 
-		<input id="version" name="version" type="hidden" [(ngModel)]="fonteGeradora.version">
+		<input id="id" name="id" type="hidden" [(ngModel)]="possivelDanoSaude.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="possivelDanoSaude.version">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
@@ -30,7 +30,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/fonte-geradora']"
+				<a [routerLink]="['/possivel-dano-saude']"
 					class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s3">

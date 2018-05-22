@@ -63,6 +63,9 @@ import { TriagemService } from './triagem/triagem.service';
 import { TarefaComponent } from './tarefa/tarefa.component';
 import { FilterDataPipe } from './../pipes/filter-data.pipe';
 import { FonteGeradoraService } from './fonte-geradora/fonte-geradora.service';
+import { CategoriaRiscoService } from './categoria-risco/categoria-risco.service';
+import { PossivelDanoSaudeService } from './possivel-dano-saude/possivel-dano-saude.service';
+import { AgenteRiscoService } from './agente-risco/agente-risco.service';
 
 @NgModule({
   declarations: [
@@ -146,7 +149,10 @@ import { FonteGeradoraService } from './fonte-geradora/fonte-geradora.service';
     RiscoPotencialService,
     TriagemService,
     CanDeactivateGuard,
-    FonteGeradoraService
+    FonteGeradoraService,
+    CategoriaRiscoService,
+    PossivelDanoSaudeService,
+    AgenteRiscoService
   ]
 })
 export class SharedModule { }

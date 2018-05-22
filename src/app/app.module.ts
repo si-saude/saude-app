@@ -77,6 +77,9 @@ import { PanoramaGuard } from './guards/panorama.guard';
 import { DeclaracaoComparecimentoGuard } from './guards/guards-child/declaracao-comparecimento.guard';
 import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento.guard';
 import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
+import { CategoriaRiscoGuard } from './guards/guards-child/categoria-risco.guard';
+import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saude.guard';
+import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
 
 
 
@@ -159,7 +162,10 @@ import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
     DeclaracaoComparecimentoGuard,
     QuadroAtendimentoGuard,
     PanoramaGuard,
-    FonteGeradoraGuard
+    FonteGeradoraGuard,
+    CategoriaRiscoGuard,
+    PossivelDanoSaudeGuard,
+    AgenteRiscoGuard
   ],
   bootstrap: [ 
     AppComponent
