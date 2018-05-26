@@ -66,6 +66,8 @@ import { FonteGeradoraService } from './fonte-geradora/fonte-geradora.service';
 import { CategoriaRiscoService } from './categoria-risco/categoria-risco.service';
 import { PossivelDanoSaudeService } from './possivel-dano-saude/possivel-dano-saude.service';
 import { AgenteRiscoService } from './agente-risco/agente-risco.service';
+import { AprhoService } from './aprho/aprho.service';
+
 
 @NgModule({
   declarations: [
@@ -152,7 +154,8 @@ import { AgenteRiscoService } from './agente-risco/agente-risco.service';
     FonteGeradoraService,
     CategoriaRiscoService,
     PossivelDanoSaudeService,
-    AgenteRiscoService
+    AgenteRiscoService,
+    AprhoService
   ]
 })
 export class SharedModule { }

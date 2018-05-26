@@ -80,6 +80,7 @@ import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
 import { CategoriaRiscoGuard } from './guards/guards-child/categoria-risco.guard';
 import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saude.guard';
 import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
+import { AprhoGuard } from './guards/guards-child/aprho.guard';
 
 
 
@@ -165,7 +166,8 @@ import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
     FonteGeradoraGuard,
     CategoriaRiscoGuard,
     PossivelDanoSaudeGuard,
-    AgenteRiscoGuard
+    AgenteRiscoGuard,
+    AprhoGuard
   ],
   bootstrap: [ 
     AppComponent

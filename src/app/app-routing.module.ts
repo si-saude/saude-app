@@ -63,6 +63,7 @@ import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
 import { CategoriaRiscoGuard } from './guards/guards-child/categoria-risco.guard';
 import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saude.guard';
 import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
+import { AprhoGuard } from './guards/guards-child/aprho.guard';
 
 
 const routes: Routes = [
@@ -207,6 +208,9 @@ const routes: Routes = [
   { path: 'agente-risco', 
       loadChildren: 'app/controller/agente-risco/agente-risco.module#AgenteRiscoModule',
       canActivateChild: [AgenteRiscoGuard]},    
+  { path: 'aprho', 
+      loadChildren: 'app/controller/aprho/aprho.module#AprhoModule',
+      canActivateChild: [AprhoGuard]},  
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }
