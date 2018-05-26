@@ -76,6 +76,8 @@ import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-gr
 import { PanoramaGuard } from './guards/panorama.guard';
 import { DeclaracaoComparecimentoGuard } from './guards/guards-child/declaracao-comparecimento.guard';
 import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento.guard';
+import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
+import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 
 @NgModule({
   declarations: [
@@ -155,7 +157,9 @@ import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento
     EmpregadosPorGrupoGuard,
     DeclaracaoComparecimentoGuard,
     QuadroAtendimentoGuard,
-    PanoramaGuard
+    PanoramaGuard,
+    TipoSolicitacaoGuard,
+    ReportSolicitacaoCentralIntegraGuard
   ],
   bootstrap: [ 
     AppComponent

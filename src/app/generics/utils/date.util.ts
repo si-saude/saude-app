@@ -45,4 +45,10 @@ export class DateUtil {
         let d: Date = new Date( s[0] + "-" + s[1] + "-" + s[2] );
         return d;
     }
+    
+    public verifyData( data ) { 
+        if ( data != null && data != undefined )
+            return true;
+        else return false;
+    }
 }

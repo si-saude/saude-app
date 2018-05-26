@@ -59,6 +59,7 @@ import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard
 import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
+import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -186,10 +187,15 @@ const routes: Routes = [
   { path: 'risco-potencial',
       loadChildren: 'app/controller/risco-potencial/risco-potencial.module#RiscoPotencialModule',
       canActivateChild: [RiscoPotencialGuard]},
+  { path: 'tipo-solicitacao',
+      loadChildren: 'app/controller/tipo-solicitacao/tipo-solicitacao.module#TipoSolicitacaoModule',
+      canActivateChild: [TipoSolicitacaoGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: 'reports',
       loadChildren: 'app/reports/reports.module#ReportsModule'},
+  { path: 'solicitacao-central-integra',
+      loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

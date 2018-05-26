@@ -8,6 +8,7 @@ import { UsuarioService } from './../controller/usuario/usuario.service';
 import { ServicoService } from './../controller/servico/servico.service';
 import { GerenciaService } from './../controller/gerencia/gerencia.service';
 import { EmpregadoService } from './../controller/empregado/empregado.service';
+import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-solicitacao.service';
 
 @Injectable()
 export class SolicitacaoServicoService {
@@ -18,7 +19,8 @@ export class SolicitacaoServicoService {
             private usuarioService: UsuarioService,
             private servicoService: ServicoService,
             private gerenciaService: GerenciaService,
-            private empregadoService: EmpregadoService) {
+            private empregadoService: EmpregadoService,
+            private tipoSolicitacaoService: TipoSolicitacaoService) {
         this.headers = new Headers( { 'Content-Type': 'application/json' } );
         this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
         this.URL = GlobalVariable.BASE_API_URL;
@@ -53,4 +55,17 @@ export class SolicitacaoServicoService {
             .post( urlSolicitacao, atendimento, { headers: this.headers } )
             .toPromise();
     }
+    
+    registrarSolicitacao( solicitacao ) {
+        let urlSolicitacao = this.URL + "/solicitacao-central-integra/registrar-solicitacao";
+        return this.http
+            .post( urlSolicitacao, solicitacao, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getTipoSolicitacoes() {
+        return this.tipoSolicitacaoService.getTipoSolicitacoes();
+    }
+    
+    
 }

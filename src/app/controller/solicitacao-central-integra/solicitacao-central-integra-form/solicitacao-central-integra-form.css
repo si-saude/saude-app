@@ -1,0 +1,49 @@
+.checkbox {
+	margin-top: 30px;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.btn-remove {
+	margin-top: -5px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
+}
+
+.nome-equipe {
+	padding-left: 0px;
+}
+
+.tempo-medio {
+	padding-left: 40px;
+}
+
+.botao-remover {
+	margin-top: -20px;
+    padding-left: 30px;
+}

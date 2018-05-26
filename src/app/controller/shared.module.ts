@@ -60,6 +60,8 @@ import { IntervencaoService } from './intervencao/intervencao.service';
 import { PerguntaFichaColetaService } from './pergunta-ficha-coleta/pergunta-ficha-coleta.service';
 import { RiscoPotencialService } from './risco-potencial/risco-potencial.service';
 import { TriagemService } from './triagem/triagem.service';
+import { TipoSolicitacaoService } from './tipo-solicitacao/tipo-solicitacao.service';
+import { SolicitacaoCentralIntegraService } from './solicitacao-central-integra/solicitacao-central-integra.service';
 import { TarefaComponent } from './tarefa/tarefa.component';
 
 @NgModule({
@@ -140,6 +142,8 @@ import { TarefaComponent } from './tarefa/tarefa.component';
     PerguntaFichaColetaService,
     RiscoPotencialService,
     TriagemService,
+    TipoSolicitacaoService,
+    SolicitacaoCentralIntegraService,
     CanDeactivateGuard
   ]
 })

@@ -71,6 +71,7 @@
 			<a [routerLink]="['/risco-ghe']" *ngIf="checkPermissao('RISCO-GHE_LISTAR')">Risco do GHE</a>
 			<a [routerLink]="['/servico']" *ngIf="checkPermissao('SERVICO_LISTAR')">Serviço</a>
 			<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('TIPO-GRUPO-MONITORAMENTO_LISTAR')">Tipo Grupo Monitoramento</a>
+			<a [routerLink]="['/tipo-solicitacao']" *ngIf="checkPermissao('TIPO_SOLICITACAO_LISTAR')">Tipo Solicitação</a>
 			<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')" (click)="closeSidenav1(); closeSidenav3();">Usuário</a> 
 			<a [routerLink]="['/vacina']" *ngIf="checkPermissao('VACINA_LISTAR')">Vacina</a>
 		</div>
@@ -123,7 +124,7 @@
 			<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
 			<a [routerLink]="['/fila-espera-ocupacional/quadro-atendimento']"
 				*ngIf="checkPermissao('QUADRO-ATENDIMENTO')">Quadro de Atendimento</a>
-			<a [routerLink]="['/fila-espera-ocupacional/quadro-atendimento']"
+			<a [routerLink]="['/fila-espera-ocupacional/declaraca-comparecimento']"
 				*ngIf="checkPermissao('DECLARACAO-COMPARECIMENTO')">Declaração de Comparecimento</a>
 		</div>
 	</li>
@@ -139,6 +140,7 @@
 		<div class="groups">
 			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
 			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>
+			<a [routerLink]="['/reports/solicitacao-central-integra']" *ngIf="checkPermissao('REPORT-SOLICITACAO-CENTRAL-INTEGRA')">Solicitação Central Integra</a>
 		</div>
 	</li>
 </ul>

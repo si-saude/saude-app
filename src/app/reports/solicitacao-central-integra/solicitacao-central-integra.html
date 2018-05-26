@@ -1,0 +1,75 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="list-container">
+	<table class="table table-striped" [mfData]="solicitacaoCentralIntegras | filterData : filter : typeFilter : value" #mf="mfDataTable">
+		<thead>
+			<tr>
+				<th style="width: 5%">
+					<mfDefaultSorter by="tipoSolicitacao">Tipo de Solicitação</mfDefaultSorter>
+						<div class="div-icon" id="tipoSolicitacao">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'tipoSolicitacao')">arrow_drop_down</i>
+						</div>
+				</th>
+				<th style="width: 5%">
+					<mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
+				</th>
+				<th style="width: 5%">
+					<mfDefaultSorter by="prazo">Prazo</mfDefaultSorter>
+					<input type="text" name="prazo" style="width: 90%" 
+							placeholder="filtrar prazo" 
+							(input)="selectFilter($event, 'prazo')">
+				</th>
+				<th style="width: 5%">
+					<div class="row">
+						<mfDefaultSorter by="status">Status</mfDefaultSorter>
+						<div class="div-icon" id="status">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'status')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 5%">
+					<mfDefaultSorter by="abertura">Abertura</mfDefaultSorter>
+					<input type="text" name="abertura" style="width: 90%" 
+						placeholder="filtrar abertura" 
+						(input)="selectFilter($event, 'abertura')">
+				</th>
+				<th style="width: 5%">
+					<mfDefaultSorter by="observacao">Observacao</mfDefaultSorter>
+				</th>
+				<th style="width: 2%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="concluido">Concluido</mfDefaultSorter>
+						<div class="div-icon" id="concluido">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'concluido')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of mf.data">
+				<td>{{item.tipoSolicitacao.nome}}</td>
+				<td (mouseover)="showTextToast(item.descricao)" (mouseleave)="closeTooltip()">
+					{{splitDescricao(item.descricao)}}
+				</td>
+				<td>{{item.prazo | transformDate}}</td>
+				<td>{{item.status}}</td>
+				<td>{{item.abertura | transformDate}}</td>
+				<td (mouseover)="showTextToast(item.observacao)" (mouseleave)="closeTooltip()">
+					{{item.observacao}}
+				</td>
+				<td>{{item.concluido}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul id='dropdown' class='dropdown-conteudo'></ul>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>
