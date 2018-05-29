@@ -60,6 +60,7 @@ import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
+import { KanbanGuard } from './guards/kanban.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -190,6 +191,9 @@ const routes: Routes = [
   { path: 'tipo-solicitacao',
       loadChildren: 'app/controller/tipo-solicitacao/tipo-solicitacao.module#TipoSolicitacaoModule',
       canActivateChild: [TipoSolicitacaoGuard]},
+  { path: 'kanban',
+      loadChildren: 'app/kanban/kanban.module#KanbanModule',
+      canActivate: [KanbanGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: 'reports',

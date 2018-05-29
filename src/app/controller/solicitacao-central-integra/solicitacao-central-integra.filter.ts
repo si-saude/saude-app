@@ -1,4 +1,5 @@
 import { TipoSolicitacaoFilter } from './../tipo-solicitacao/tipo-solicitacao.filter';
+import { TarefaFilter } from './../../controller/tarefa/tarefa.filter';
 import { DateFilter } from './../../generics/date.filter';
 import { GenericFilter } from './../../generics/generic.filter';
  
@@ -7,6 +8,7 @@ export class SolicitacaoCentralIntegraFilter extends GenericFilter {
     private status: string;
     private abertura: DateFilter;
     private prazo: DateFilter;
+    private tarefa: TarefaFilter;
     
     getTipoSolicitacao() {
         return this.tipoSolicitacao;
@@ -31,6 +33,12 @@ export class SolicitacaoCentralIntegraFilter extends GenericFilter {
     }
     setPrazo(prazo: DateFilter) {
         this.prazo = prazo;
+    }
+    getTarefa() {
+        return this.tarefa;
+    }
+    setTarefa(tarefa: TarefaFilter) {
+        this.tarefa = tarefa;
     }
     
 }

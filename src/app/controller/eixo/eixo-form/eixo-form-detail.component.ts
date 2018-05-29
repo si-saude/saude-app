@@ -6,7 +6,7 @@ import { GlobalVariable } from './../../../global';
 import { Eixo } from './../../../model/eixo';
 import { EixoBuilder } from './../eixo.builder';
 import { EixoService } from './../eixo.service';
-import { Equipe } from './../../../model/Equipe';
+import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 

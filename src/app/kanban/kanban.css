@@ -1,0 +1,53 @@
+.content-kanban {
+	display: flex;
+	margin-left: -20%;
+}
+
+.frame-kanban {
+	width: 400px;
+	min-height: 500px;
+	border: 1px solid #c0c0c0;
+	background: white;
+}
+
+.head-kanban {
+	margin: 0 auto;
+	border-bottom: 1px solid white;
+	background: #c0c0c0;
+	color: white;
+	font-weight: bolder;
+	text-align: center;
+	border-left: 1px solid white;
+}
+
+.body-kanban {
+	min-height: 500px;
+	width: 400px;
+} 
+
+.card {
+	background: #1bdee6 !important;
+	color: #0c0ccc !important;
+}
+
+.btn-home {
+	float: left;
+	margin-top: 20px;
+	margin-left: -20%;
+}
+
+.frame-aberto-planejado {
+	
+}
+
+.frame-execucao-aguardando-informacao {
+	
+}
+
+.frame-concluido-cancelado {
+	
+}
+
+.responsavel {
+	margin-bottom: 30px;
+}

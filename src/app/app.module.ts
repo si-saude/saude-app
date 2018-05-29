@@ -78,6 +78,7 @@ import { DeclaracaoComparecimentoGuard } from './guards/guards-child/declaracao-
 import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
+import { KanbanGuard } from './guards/kanban.guard';
 
 @NgModule({
   declarations: [
@@ -159,7 +160,8 @@ import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitaca
     QuadroAtendimentoGuard,
     PanoramaGuard,
     TipoSolicitacaoGuard,
-    ReportSolicitacaoCentralIntegraGuard
+    ReportSolicitacaoCentralIntegraGuard,
+    KanbanGuard
   ],
   bootstrap: [ 
     AppComponent

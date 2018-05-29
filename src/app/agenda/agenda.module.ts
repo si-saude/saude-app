@@ -10,18 +10,18 @@ import { AgendaComponent } from './agenda.component';
 import { AgendaService } from './agenda.service';
 import { AgendaRoutingModule } from './agenda.routing.module';
 import { SharedModule } from './../controller/shared.module';
-import { DateHourPipe } from './../pipes/date-hour.pipe';
+import { PipesModule } from './../controller/pipes.module';
 
 @NgModule({
     declarations: [
        AgendaComponent,
-       CalendarComponent,
-       DateHourPipe
+       CalendarComponent
      ],
      imports: [
         AgendaRoutingModule,
         SharedModule,
-        MaterializeModule
+        MaterializeModule,
+        PipesModule
      ],
      providers: [
         AgendaService

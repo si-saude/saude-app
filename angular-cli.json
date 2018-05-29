@@ -21,6 +21,7 @@
         "../node_modules/fullcalendar/dist/fullcalendar.min.css",
         "../node_modules/materialize-css/dist/css/materialize.css",
         "../node_modules/material-design-icons/iconfont/material-icons.css",
+        "../node_modules/dragula/dist/dragula.css",
         "styles.css"
       ],
       "scripts": [
