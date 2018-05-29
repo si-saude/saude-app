@@ -41,6 +41,7 @@ export class EmpregadoConvocacaoExameBuilder extends GenericBuilder {
         cloneEmpregadoConvocacaoExame.setVersion( this.getValue( empregadoConvocacaoExame, "getVersion" ) );
         cloneEmpregadoConvocacaoExame.setConforme( this.getValue( empregadoConvocacaoExame, "getConforme" ) );
         cloneEmpregadoConvocacaoExame.setPendenteRelatorio(this.getValue( empregadoConvocacaoExame, "getPendenteRelatorio" ) );
+        cloneEmpregadoConvocacaoExame.setRecebimento(this.getValue( empregadoConvocacaoExame, "getRecebimento" ) );
 
         cloneEmpregadoConvocacaoExame.setEmpregadoConvocacao( new EmpregadoConvocacao() );
 

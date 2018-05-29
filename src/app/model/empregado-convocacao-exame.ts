@@ -10,6 +10,7 @@ export class EmpregadoConvocacaoExame {
     private relatorioMedico: RelatorioMedico;
     private pendenteRelatorio: boolean;
     private version: number;
+    private recebimento: Date;
 
     getId() {
         return this.id;
@@ -65,5 +66,13 @@ export class EmpregadoConvocacaoExame {
     
     getVersion() {
         return this.version;
+    }
+    
+    getRecebimento(){
+        return this.recebimento;
+    }
+    
+    setRecebimento(recebimento: Date){
+        this.recebimento = recebimento;
     }
 }
