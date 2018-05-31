@@ -9,6 +9,8 @@ import { SolicitacaoCentralIntegra } from './../../../model/solicitacao-central-
 import { TipoSolicitacao } from './../../../model/tipo-solicitacao';
 import { TipoSolicitacaoBuilder } from './../../tipo-solicitacao/tipo-solicitacao.builder';
 import { Empregado } from './../../../model/empregado';
+import { Profissional } from './../../../model/profissional';
+import { ProfissionalSaudeBuilder } from './../../../controller/profissional-saude/profissional-saude.builder';
 import { EmpregadoBuilder } from './../../../controller/empregado/empregado.builder';
 import { EmpregadoFilter } from './../../../controller/empregado/empregado.filter';
 import { SolicitacaoCentralIntegraBuilder } from './../solicitacao-central-integra.builder';
@@ -25,11 +27,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     private tipoSolicitacoes: Array<TipoSolicitacao>;
     private inicio: any;
     private prazo: any;
-
-    private validEmpregado: string;
-    private empregados: Array<Empregado>;
-    private autocompleteEmpregado;
     
+    private showModalResponsavel: boolean;
     private showModalCliente: boolean;
     private empregadoFilter: EmpregadoFilter;
     
@@ -40,11 +39,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             this.goTo = "solicitacao-central-integra";
             this.solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().initialize(new SolicitacaoCentralIntegra());
             this.tipoSolicitacoes = new TipoSolicitacaoBuilder().initializeList(new Array<TipoSolicitacao>());
-            
-            this.empregados = new Array<Empregado>();
-            this.validEmpregado = "";
-            this.autocompleteEmpregado = [];
             this.showModalCliente = false;
+            this.showModalResponsavel = false;
     }
     
     ngOnInit() {
@@ -58,6 +54,7 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
                         .then( res => {
                             this.showPreload = false;
                             this.solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().clone(res.json());
+                            this.initializeObjects();
                             this.parseDatas();
                         } )
                         .catch( error => {
@@ -76,6 +73,12 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             .catch(error => {
                 console.log(error);
             })
+    }
+    
+    initializeObjects() {
+        if ( this.solicitacaoCentralIntegra.getTarefa().getResponsavel() == undefined )
+            this.solicitacaoCentralIntegra.getTarefa().setResponsavel(
+                    new ProfissionalSaudeBuilder().initialize(new Profissional()));
     }
     
     save() {
@@ -99,6 +102,19 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
         
         if ( this.dateUtil.verifyData( this.solicitacaoCentralIntegra.getTarefa().getInicio() ) )
             this.dateUtil.parseDataToObjectDatePicker( this.solicitacaoCentralIntegra.getTarefa().getInicio() )
+    }
+    
+    openModalResponsavel() {
+        this.showModalResponsavel = true;
+    }
+    
+    selectResponsavel(responsavel: Profissional) {
+        this.solicitacaoCentralIntegra.getTarefa().setResponsavel(responsavel);
+        this.showModalResponsavel = false;
+    }
+    
+    cancelarModalResponsavel( valor ) {
+        this.showModalResponsavel = false;
     }
     
     openModalCliente() {

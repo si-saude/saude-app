@@ -7,6 +7,7 @@ import { SolicitacaoCentralIntegraService } from './solicitacao-central-integra.
 import { SolicitacaoCentralIntegraFormComponent } from './solicitacao-central-integra-form/solicitacao-central-integra-form.component';
 import { SolicitacaoCentralIntegraRoutingModule } from './solicitacao-central-integra.routing.module';
 import { ModalEmpregadoModule } from './../modal-empregado.module';
+import { ModalProfissionalModule } from './../modal-profissional.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SharedModule } from './../shared.module';
         SharedModule,
         MyDatePickerModule,
         ReportsModule,
-        ModalEmpregadoModule
+        ModalEmpregadoModule,
+        ModalProfissionalModule
      ],
      providers: [
         SolicitacaoCentralIntegraService

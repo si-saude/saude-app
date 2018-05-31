@@ -52,6 +52,12 @@
 				[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome" name="cliente.nome">
 			</div>
 			
+			<div class="input-field col s12">
+				<label for="responsavel">Responsável</label>
+				<input id="responsavel" type="text" (click)="openModalResponsavel()"
+				[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome" name="responsavel.nome">
+			</div>
+			
 			<div class="row col s12" style="margin-left: 13%">
 
 				<div class="input-field col s4">
@@ -68,22 +74,6 @@
 				</div>
 				
 			</div>
-			
-			<!-- <div class="input-field col s12">
-				<div class="input-field col s12">
-					<label for="cliente">Responsável</label> <input required
-						type="text" materialize="autocomplete" autocomplete="off"
-						name="solicitacaoCentralIntegra.tarefa.responsavel.pessoa.nome"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
-						(blur)="getEmpregado($event)"
-						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
-						[materializeParams]="autocompleteEmpregado"> <input
-						id="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id" type="hidden"
-						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id">
-				</div>
-			</div> -->
-			
 						
 		</div>
 
@@ -110,6 +100,10 @@
 
 <app-modal-empregado [service]="solicitacaoCentralIntegraService" (empregado)="selectCliente($event)"
 	[showModalEmpregado]="showModalCliente" (cancelModalEmpregado)="cancelarModalCliente($event)"></app-modal-empregado>
+	
+<app-modal-profissional [service]="solicitacaoCentralIntegraService" (profissional)="selectResponsavel($event)"
+	[showModalProfissional]="showModalResponsavel" (cancelModalProfissional)="cancelarModalResponsavel($event)"></app-modal-profissional>
+	
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

@@ -8,6 +8,8 @@ import { SolicitacaoCentralIntegraFilter } from './solicitacao-central-integra.f
 import { TipoSolicitacaoService } from './../tipo-solicitacao/tipo-solicitacao.service';
 import { EmpregadoService } from './../empregado/empregado.service';
 import { EmpregadoFilter } from './../empregado/empregado.filter';
+import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
+import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
@@ -15,7 +17,8 @@ export class SolicitacaoCentralIntegraService extends GenericService {
 
     constructor( http: Http, router: Router,
             private tipoSolicitacaoService: TipoSolicitacaoService,
-            private empregadoService: EmpregadoService ) { 
+            private empregadoService: EmpregadoService,
+            private profissionalSaudeService: ProfissionalSaudeService ) { 
         super( http, router, "solicitacao-central-integra" );
     }
     
@@ -36,6 +39,10 @@ export class SolicitacaoCentralIntegraService extends GenericService {
     
     getEmpregados( empregadoFilter: EmpregadoFilter ) {
         return this.empregadoService.list( empregadoFilter );
+    }
+    
+    getProfissionais( profissionalFilter: ProfissionalSaudeFilter ) {
+        return this.profissionalSaudeService.list( profissionalFilter );
     }
     
     getEmpregadoByName( evento ) {
