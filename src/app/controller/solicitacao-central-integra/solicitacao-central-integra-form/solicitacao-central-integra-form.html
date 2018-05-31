@@ -33,7 +33,7 @@
 				</div>
 				
 				<div class="input-field col s4 checkbox">
-					<input type="checkbox" id="solicitacaoCentralIntegra.concluido"
+					<input type="checkbox" id="concluido" (click)="setConcluido()"
 						[(ngModel)]="solicitacaoCentralIntegra.concluido"
 						name="solicitacaoCentralIntegra.concluido">
 					<label for="solicitacaoCentralIntegra.concluido">Concluido</label>
@@ -44,6 +44,12 @@
 				<label for="descricao">Descrição</label>
 					<textarea class="materialize-textarea" id="descricao" 
 						[(ngModel)]="solicitacaoCentralIntegra.descricao" name="solicitacao.descricao"></textarea>
+			</div>
+			
+			<div class="input-field col s12">
+				<label for="observacao">Observação</label>
+					<textarea class="materialize-textarea" id="observacao" disabled	
+						[(ngModel)]="solicitacaoCentralIntegra.observacao" name="solicitacao.observacao"></textarea>
 			</div>
 			
 			<div class="input-field col s12">
@@ -58,22 +64,33 @@
 				[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome" name="responsavel.nome">
 			</div>
 			
-			<div class="row col s12" style="margin-left: 13%">
+			<div class="row col s12" >
 
-				<div class="input-field col s4">
-					<label for="inicio">Inicio</label>
-					<my-date-picker name="inicio" [options]="myDatePickerOptions"
-						[(ngModel)]="inicio" placeholder="inicio">
+				<div class="input-field col s3">
+					<label for="inicio">Abertura</label>
+					<my-date-picker name="abertura" [options]="myDatePickerOptions"
+						[(ngModel)]="abertura" placeholder="Abertura">
 					</my-date-picker>
 				</div>
-				<div class="input-field col s4">
+				<div class="input-field col s3">
 					<label for="prazo">Prazo</label>
 					<my-date-picker name="prazo" [options]="myDatePickerOptions"
 						[(ngModel)]="prazo" placeholder="Prazo">
 					</my-date-picker>
 				</div>
+				<div class="input-field col s3">
+					<label for="tempoEstimado">Tempo Estimado (min)</label>
+					<input id="tempoEstimado" type="number"
+					[(ngModel)]="solicitacaoCentralIntegra.tempoEstimado" name="tempoEstimado">
+				</div>
+				<div class="input-field col s3">
+					<label for="tempoGasto">Tempo Gasto (min)</label>
+					<input id="tempoGasto" type="number"
+					[(ngModel)]="solicitacaoCentralIntegra.tempoGasto" name="tempoGasto">
+				</div>
 				
 			</div>
+			
 						
 		</div>
 

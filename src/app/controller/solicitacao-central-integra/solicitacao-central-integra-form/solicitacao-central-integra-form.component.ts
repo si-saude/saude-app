@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MaterializeDirective,MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
+import { StatusSolicitacaoConst } from './../../../generics/consts/status-solicitacao.const';
 import { SolicitacaoCentralIntegra } from './../../../model/solicitacao-central-integra';
 import { TipoSolicitacao } from './../../../model/tipo-solicitacao';
 import { TipoSolicitacaoBuilder } from './../../tipo-solicitacao/tipo-solicitacao.builder';
@@ -25,7 +26,7 @@ import { SolicitacaoCentralIntegraService } from './../solicitacao-central-integ
 export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent implements OnInit {
     private solicitacaoCentralIntegra: SolicitacaoCentralIntegra;
     private tipoSolicitacoes: Array<TipoSolicitacao>;
-    private inicio: any;
+    private abertura: any;
     private prazo: any;
     
     private showModalResponsavel: boolean;
@@ -81,6 +82,13 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
                     new ProfissionalSaudeBuilder().initialize(new Profissional()));
     }
     
+    setConcluido() {
+        let concluido = <HTMLInputElement>document.getElementById("concluido");
+        if ( concluido.checked )
+            this.solicitacaoCentralIntegra.setStatus(StatusSolicitacaoConst.CONCLUIDO);
+        else this.solicitacaoCentralIntegra.setStatus(StatusSolicitacaoConst.ABERTO);
+    }
+    
     save() {
         this.validDatas();
         super.save(new SolicitacaoCentralIntegraBuilder().clone(this.solicitacaoCentralIntegra));
@@ -91,17 +99,17 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             this.solicitacaoCentralIntegra.setPrazo(
                     this.dateUtil.parseDatePickerToDate( this.prazo ) );
         
-        if ( this.dateUtil.verifyData( this.inicio ) )
-            this.solicitacaoCentralIntegra.getTarefa().setInicio(
-                    this.dateUtil.parseDatePickerToDate( this.inicio ) );
+        if ( this.dateUtil.verifyData( this.abertura ) )
+            this.solicitacaoCentralIntegra.setAbertura(
+                    this.dateUtil.parseDatePickerToDate( this.abertura ) );
     }
     
     parseDatas() {
         if ( this.dateUtil.verifyData( this.solicitacaoCentralIntegra.getPrazo() ) )
-            this.dateUtil.parseDataToObjectDatePicker( this.solicitacaoCentralIntegra.getPrazo() )
+            this.prazo = this.dateUtil.parseDataToObjectDatePicker( this.solicitacaoCentralIntegra.getPrazo() )
         
-        if ( this.dateUtil.verifyData( this.solicitacaoCentralIntegra.getTarefa().getInicio() ) )
-            this.dateUtil.parseDataToObjectDatePicker( this.solicitacaoCentralIntegra.getTarefa().getInicio() )
+        if ( this.dateUtil.verifyData( this.solicitacaoCentralIntegra.getAbertura() ) )
+            this.abertura = this.dateUtil.parseDataToObjectDatePicker( this.solicitacaoCentralIntegra.getAbertura() )
     }
     
     openModalResponsavel() {
