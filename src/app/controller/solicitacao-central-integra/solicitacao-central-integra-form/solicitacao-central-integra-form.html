@@ -25,7 +25,7 @@
 							</a>
 						</legend>
 						<select name="tipoSolicitacao" class="browser-default"
-							[(ngModel)]="solicitacao.tipoSolicitacao.id">
+							[(ngModel)]="solicitacaoCentralIntegra.tipoSolicitacao.id">
 							<option disabled selected value="">Selecione um tipo de solicitação</option>
 							<option *ngFor="let tipoSolicitacao of tipoSolicitacoes" value="{{tipoSolicitacao.id}}">{{tipoSolicitacao.nome}}</option>
 						</select>
@@ -43,25 +43,16 @@
 			<div class="input-field col s12">
 				<label for="descricao">Descrição</label>
 					<textarea class="materialize-textarea" id="descricao" 
-						[(ngModel)]="solicitacao.descricao" name="solicitacao.descricao"></textarea>
+						[(ngModel)]="solicitacaoCentralIntegra.descricao" name="solicitacao.descricao"></textarea>
 			</div>
 			
 			<div class="input-field col s12">
-				<div class="input-field col s8">
-					<label for="cliente">cliente</label> <input required
-						type="text" materialize="autocomplete" autocomplete="off"
-						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
-						(blur)="getEmpregado($event)"
-						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
-						[materializeParams]="autocompleteEmpregado"> <input
-						id="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id" type="hidden"
-						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id">
-				</div>
+				<label for="cliente">Cliente</label>
+				<input id="cliente" type="text" (click)="openModalCliente()"
+				[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome" name="cliente.nome">
 			</div>
 			
-			<div class="row col s12">
+			<div class="row col s12" style="margin-left: 13%">
 
 				<div class="input-field col s4">
 					<label for="inicio">Inicio</label>
@@ -78,6 +69,22 @@
 				
 			</div>
 			
+			<!-- <div class="input-field col s12">
+				<div class="input-field col s12">
+					<label for="cliente">Responsável</label> <input required
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="solicitacaoCentralIntegra.tarefa.responsavel.pessoa.nome"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
+						(blur)="getEmpregado($event)"
+						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
+						[materializeParams]="autocompleteEmpregado"> <input
+						id="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id" type="hidden"
+						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id">
+				</div>
+			</div> -->
+			
+						
 		</div>
 
 		<input id="id" name="id" type="hidden" [(ngModel)]="solicitacaoCentralIntegra.id">
@@ -91,7 +98,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/']" class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/home']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			<div class="col s6">
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
@@ -100,6 +107,9 @@
 	
 	</form>
 </div>
+
+<app-modal-empregado [service]="solicitacaoCentralIntegraService" (empregado)="selectCliente($event)"
+	[showModalEmpregado]="showModalCliente" (cancelModalEmpregado)="cancelarModalCliente($event)"></app-modal-empregado>
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

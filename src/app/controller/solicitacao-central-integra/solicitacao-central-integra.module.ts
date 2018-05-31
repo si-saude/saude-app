@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { MyDatePickerModule } from 'mydatepicker';
+
+import { ReportsModule } from './../../reports/reports.module';
 import { SolicitacaoCentralIntegraService } from './solicitacao-central-integra.service';
 import { SolicitacaoCentralIntegraFormComponent } from './solicitacao-central-integra-form/solicitacao-central-integra-form.component';
+import { SolicitacaoCentralIntegraRoutingModule } from './solicitacao-central-integra.routing.module';
+import { ModalEmpregadoModule } from './../modal-empregado.module';
 import { SharedModule } from './../shared.module';
 
 @NgModule({
@@ -12,7 +14,11 @@ import { SharedModule } from './../shared.module';
        SolicitacaoCentralIntegraFormComponent
      ],
      imports: [
-        SharedModule
+        SolicitacaoCentralIntegraRoutingModule,      
+        SharedModule,
+        MyDatePickerModule,
+        ReportsModule,
+        ModalEmpregadoModule
      ],
      providers: [
         SolicitacaoCentralIntegraService

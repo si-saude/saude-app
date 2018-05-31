@@ -18,7 +18,11 @@ export class FilterDataPipe implements PipeTransform {
 
     transform( array: any[], filter: any, tipo: string, value: string ) {
         let typeofFilter = typeof filter;
-            
+        
+        if ( value == "$*build*$" ) {
+            this.arrayFiltered = array;
+        }
+        
         if ( value == "$*all*$" ) {
             this.mapTypes = new Array<string>();
             this.arrayFiltered = array;
@@ -35,7 +39,6 @@ export class FilterDataPipe implements PipeTransform {
             
         if ( tipo != "" && filter ) {
             let arrayString: Array<string> = new Array<string>();
-            
             if ( this.mapValue[tipo] == undefined ) {
                 this.mapValue[tipo] = new Array<string>();
                 
@@ -47,7 +50,6 @@ export class FilterDataPipe implements PipeTransform {
                 this.mapTypes.push( tipo );
             } else {
                 arrayString = this.mapValue[tipo].split("$");
-                
                 if ( typeofFilter == 'string' ) {
                     if ( arrayString.find(a => a == filter) == undefined )
                         this.mapValue[tipo] += "$"+filter;
@@ -82,46 +84,38 @@ export class FilterDataPipe implements PipeTransform {
             
             this.arrayReturn = new Array<any>();
             this.previewArrayReturn = this.arrayFiltered;
+            let component = this;
             for ( let i = 0; i < this.mapTypes.length; i++ ) {
                 arrayString = this.mapValue[this.mapTypes[i]].split("$");
                 for ( let i1 = 0; i1 < arrayString.length; i1++ ) {
                     if ( i1 == 0 ) {
                         this.arrayReturn = this.previewArrayReturn.filter(a => {
-                            if ( a[this.mapTypes[i]] != undefined )
-                                return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
-                            else return false;
+                            return component.recursiveFilter(a, i, arrayString, i1);
                         })
                         this.previewArrayReturn = this.arrayReturn;
+                        
                     } else if ( i == 0 && i1 == 1 ) {
                         this.arrayReturn = this.arrayFiltered.filter(a => {
-                                    if ( a[this.mapTypes[i]] != undefined )
-                                        return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
-                                    else return false;
-                                })
+                                return component.recursiveFilter(a, i, arrayString, i1);
+                        })
                         this.previewArrayReturn = this.arrayReturn;
                     } else if ( i == 0 && i1 > 1 ) {
                         Array.prototype.push.apply(
                                 this.arrayReturn,
                                 this.arrayFiltered.filter(a => {
-                                    if ( a[this.mapTypes[i]] != undefined )
-                                        return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
-                                    else return false;
+                                    return component.recursiveFilter(a, i, arrayString, i1);
                                 })
                         );
                         this.previewArrayReturn = this.arrayReturn;
                     } else if ( i > 0 && i1 == 1 ) {
                         this.arrayReturn = this.previewArrayReturn.filter(a => {
-                            if ( a[this.mapTypes[i]] != undefined )
-                                return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
-                            else return false;
+                            return component.recursiveFilter(a, i, arrayString, i1);
                         })
                     } else if ( i > 0 && i1 > 1 ) {
                         Array.prototype.push.apply(
                                 this.arrayReturn,
                                 this.previewArrayReturn.filter(a => {
-                                    if ( a[this.mapTypes[i]] != undefined )
-                                        return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
-                                    else return false;
+                                    return component.recursiveFilter(a, i, arrayString, i1);
                                 })
                         );
                         this.previewArrayReturn = this.arrayReturn;
@@ -134,4 +128,35 @@ export class FilterDataPipe implements PipeTransform {
         this.savedArray = this.arrayReturn;
         return this.arrayReturn;
     }
+    
+    getObject( a: any, i: number ) {
+        let splitedMapTypes: Array<string> = this.mapTypes[i].split('-');
+        
+        if ( splitedMapTypes.length > 0 )
+            for ( let i1 = 0; i1 < splitedMapTypes.length; i1++ )
+                a = a + "." + splitedMapTypes[i1];
+        
+        if ( a[this.mapTypes[i]] != undefined )
+            
+            return a;
+    }
+    
+    recursiveFilter(a, i, arrayString, i1) {
+        let splitedMapTypes: Array<string> = this.mapTypes[i].split("-");
+    
+        if ( splitedMapTypes.length > 0 ) {
+            for ( let i2 = 0; i2 < splitedMapTypes.length; i2++ ) {
+                if ( a[splitedMapTypes[i2]] != undefined ) {
+                    a = a["get"+splitedMapTypes[i2].substr(0,1).toUpperCase()+splitedMapTypes[i2].substr(1)]();
+                }
+                else return false;
+            }
+            return (a.toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
+        } else return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
+    
+    }
+    
+    
+    
+    
 }

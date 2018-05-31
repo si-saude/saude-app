@@ -7,6 +7,7 @@ import { SolicitacaoCentralIntegra } from './../../model/solicitacao-central-int
 import { SolicitacaoCentralIntegraFilter } from './solicitacao-central-integra.filter';
 import { TipoSolicitacaoService } from './../tipo-solicitacao/tipo-solicitacao.service';
 import { EmpregadoService } from './../empregado/empregado.service';
+import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
@@ -31,6 +32,10 @@ export class SolicitacaoCentralIntegraService extends GenericService {
         return this.http
             .get( urlGrupo + "?filter=", { headers: this.headers } )
             .toPromise();
+    }
+    
+    getEmpregados( empregadoFilter: EmpregadoFilter ) {
+        return this.empregadoService.list( empregadoFilter );
     }
     
     getEmpregadoByName( evento ) {

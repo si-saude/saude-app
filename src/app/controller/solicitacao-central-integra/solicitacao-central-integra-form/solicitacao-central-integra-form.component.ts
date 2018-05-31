@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { TipoSolicitacao } from './../../../model/tipo-solicitacao';
 import { TipoSolicitacaoBuilder } from './../../tipo-solicitacao/tipo-solicitacao.builder';
 import { Empregado } from './../../../model/empregado';
 import { EmpregadoBuilder } from './../../../controller/empregado/empregado.builder';
+import { EmpregadoFilter } from './../../../controller/empregado/empregado.filter';
 import { SolicitacaoCentralIntegraBuilder } from './../solicitacao-central-integra.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { SolicitacaoCentralIntegraService } from './../solicitacao-central-integra.service';
@@ -29,6 +30,9 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     private empregados: Array<Empregado>;
     private autocompleteEmpregado;
     
+    private showModalCliente: boolean;
+    private empregadoFilter: EmpregadoFilter;
+    
     constructor( private route: ActivatedRoute,
             private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService,
             router: Router) { 
@@ -40,6 +44,7 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             this.empregados = new Array<Empregado>();
             this.validEmpregado = "";
             this.autocompleteEmpregado = [];
+            this.showModalCliente = false;
     }
     
     ngOnInit() {
@@ -96,68 +101,16 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             this.dateUtil.parseDataToObjectDatePicker( this.solicitacaoCentralIntegra.getTarefa().getInicio() )
     }
     
-    getEmpregado() {
-        if ( this.validEmpregado == this.solicitacaoCentralIntegra.getTarefa().getCliente().getPessoa().getNome() ) return;
-        if ( this.solicitacaoCentralIntegra.getTarefa().getCliente().getPessoa().getNome() !== undefined ) {
-            let empregado = this.empregados.find( e => {
-                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
-                    this.solicitacaoCentralIntegra.getTarefa().getCliente().getPessoa().getNome().trim() || 
-                    e.getPessoa().getNome().trim() == this.solicitacaoCentralIntegra.getTarefa().getCliente().getPessoa().getNome().trim() )
-                    return true;
-                else return false;
-            } );
-            
-            if ( empregado !== undefined ) {
-                this.solicitacaoCentralIntegra.getTarefa().setCliente( empregado );
-                this.validEmpregado = this.solicitacaoCentralIntegra.getTarefa().getCliente().getPessoa().getNome();
-            } else this.solicitacaoCentralIntegra.getTarefa().setCliente( new EmpregadoBuilder().initialize( new Empregado() ) );
-        } else this.solicitacaoCentralIntegra.getTarefa().setCliente( new EmpregadoBuilder().initialize( new Empregado() ) );
-    }
-
-    private oldNome: string;
-    selectEmpregado( evento ) {
-        if ( this.oldNome != evento ) {
-            this.oldNome = evento;
-            if ( evento.length > 4 ) {
-                this.solicitacaoCentralIntegraService.getEmpregadoByName( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    private oldNomeByChave: string;
-    selectEmpregadoByChave( evento ) {
-        if ( this.oldNomeByChave != evento ) {
-            this.oldNomeByChave = evento;
-            if ( evento.length <= 4 ) {
-                this.solicitacaoCentralIntegraService.getEmpregadoByChave(evento)
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    buildAutocompleteEmpregado( empregados ) {
-        let data = {};
-        empregados.forEach( item => {
-            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
+    openModalCliente() {
+        this.showModalCliente = true;
     }
     
+    selectCliente(cliente: Empregado) {
+        this.solicitacaoCentralIntegra.getTarefa().setCliente(cliente);
+        this.showModalCliente = false;
+    }
+    
+    cancelarModalCliente( valor ) {
+        this.showModalCliente = false;
+    }
 }

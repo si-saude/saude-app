@@ -153,6 +153,7 @@ export class KanbanComponent {
     }
     
     constructCardsSolicitacoes() {
+        let component = this;
         this.solicitacaoCentralIntegras.forEach(sCI => {
             $(".body-kanban-"+sCI.getStatus()).append("<div name='card-"+ sCI.getId() +"' class='card card-"+ sCI.getId() + "' [dragula]='card'>" + 
                     "<div class='card-content'>"+ this.showShortDescricao(sCI.getDescricao()) + "</div> " +
@@ -160,7 +161,8 @@ export class KanbanComponent {
         })
         this.solicitacaoCentralIntegras.forEach(sCI => {
             $(".card-"+sCI.getId()).dblclick(function() {
-                console.log('teste 1');
+                if ( component.verifyCoordenador() )
+                    component.router.navigate(["/solicitacao-central-integra/editar", sCI.getId()]);
             });
         })
     }
@@ -181,6 +183,10 @@ export class KanbanComponent {
         if ( this.profissional.getEquipe().getCoordenador().getId() == this.profissional.getId() )
             return true;
         else return false;
+    }
+    
+    ngOnDestroy() {
+        this.showNothing = false;
     }
 
 }
