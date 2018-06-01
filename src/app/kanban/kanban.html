@@ -5,8 +5,8 @@
 <div class="responsavel" *ngIf="verifyCoordenador()">
 	<fieldset>
 		<legend>Responsável</legend>
-		<select name="responsavel" class="browser-default" (ngModelChange)="changeResponsavel(responsavel.id)">
-			<option disabled selected value=0>Selecione um responsável</option>
+		<select name="responsavel" class="browser-default" (change)="changeResponsavel(responsavel.id)">
+			<option selected disabled value=0>Selecione um responsável</option>
 			<option *ngFor="let responsavel of responsaveis" value="{{responsavel.id}}">{{responsavel.empregado.pessoa.nome}}</option>
 		</select>
 	</fieldset>

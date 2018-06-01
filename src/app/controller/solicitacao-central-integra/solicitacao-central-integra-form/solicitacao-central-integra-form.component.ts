@@ -28,6 +28,7 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     private tipoSolicitacoes: Array<TipoSolicitacao>;
     private abertura: any;
     private prazo: any;
+    private statuses: Array<string>;
     
     private showModalResponsavel: boolean;
     private showModalCliente: boolean;
@@ -40,6 +41,7 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             this.goTo = "solicitacao-central-integra";
             this.solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().initialize(new SolicitacaoCentralIntegra());
             this.tipoSolicitacoes = new TipoSolicitacaoBuilder().initializeList(new Array<TipoSolicitacao>());
+            this.statuses = new Array<string>();
             this.showModalCliente = false;
             this.showModalResponsavel = false;
     }
@@ -64,6 +66,17 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
                 }
             } );
         this.getTipoSolicitacao();
+        this.getStatuses();
+    }
+    
+    getStatuses() {
+        this.solicitacaoCentralIntegraService.getStatusSolicitacao()
+            .then(res => {
+                this.statuses = Object.keys( res.json() ).sort();
+            })
+            .catch(error => {
+                console.log("Erro ao retornar os status");
+            })
     }
     
     getTipoSolicitacao() {

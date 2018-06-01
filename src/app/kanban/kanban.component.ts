@@ -17,6 +17,7 @@ import { ProfissionalSaudeBuilder } from './../controller/profissional-saude/pro
 import { Empregado } from './../model/empregado';
 import { EmpregadoFilter } from './../controller/empregado/empregado.filter';
 import { EmpregadoBuilder } from './../controller/empregado/empregado.builder';
+import { EquipeBuilder } from './../controller/equipe/equipe.builder';
 import { SolicitacaoCentralIntegra } from './../model/solicitacao-central-integra';
 import { SolicitacaoCentralIntegraFilter } from './../controller/solicitacao-central-integra/solicitacao-central-integra.filter';
 import { SolicitacaoCentralIntegraBuilder } from './../controller/solicitacao-central-integra/solicitacao-central-integra.builder';
@@ -69,22 +70,14 @@ export class KanbanComponent {
                     component.kanbanService.getProfissional( profissionalFilter )
                         .then( res => {
                             component.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                            let solicitacaoCentralIntegraFilter: SolicitacaoCentralIntegraFilter = new SolicitacaoCentralIntegraFilter();
-                            if ( !component.verifyCoordenador() ) {
-                                solicitacaoCentralIntegraFilter.setTarefa(new TarefaFilter());
-                                solicitacaoCentralIntegraFilter.getTarefa().setResponsavel(new ProfissionalSaudeFilter());
-                                solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId(component.profissional.getId());
-                            }
-                            solicitacaoCentralIntegraFilter.setPageSize(Math.pow(2, 31)-1);
-                            solicitacaoCentralIntegraFilter.setPageNumber(1);
-                            component.kanbanService.getSolicitacoes(solicitacaoCentralIntegraFilter)
+                            console.log(component.profissional);
+                            component.kanbanService.getEquipe(component.profissional.getEquipe().getId())
                                 .then(res => {
-                                    component.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList(res.json().list);
-                                    this.constructCardsSolicitacoes();
-                                    this.setResponsaveis();
+                                    this.profissional.setEquipe(new EquipeBuilder().clone(res.json()));
+                                    component.getSolicitacoes();
                                 })
                                 .catch(error => {
-                                    console.log("Erro ao buscar as solicitações central integra");
+                                    console.log("Erro ao buscar equipe do profissional.");
                                 })
                         } )
                         .catch( error => {
@@ -99,8 +92,6 @@ export class KanbanComponent {
         }
         
         this.setStatuses();
-        
-//        component.getStatuses();
     }
     
     setStatuses() {
@@ -113,10 +104,32 @@ export class KanbanComponent {
     }
     
     setResponsaveis() {
+        let id = $("select[name=responsavel]").val();
+        this.responsaveis = new Array<Profissional>();
         this.solicitacaoCentralIntegras.forEach(sCI => {
            if ( sCI.getTarefa().getResponsavel() != undefined )
                this.responsaveis.push(sCI.getTarefa().getResponsavel()); 
         });
+    }
+    
+    getSolicitacoes() {
+        let solicitacaoCentralIntegraFilter: SolicitacaoCentralIntegraFilter = new SolicitacaoCentralIntegraFilter();
+        if ( !this.verifyCoordenador() ) {
+            solicitacaoCentralIntegraFilter.setTarefa(new TarefaFilter());
+            solicitacaoCentralIntegraFilter.getTarefa().setResponsavel(new ProfissionalSaudeFilter());
+            solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId(this.profissional.getId());
+        }
+        solicitacaoCentralIntegraFilter.setPageSize(Math.pow(2, 31)-1);
+        solicitacaoCentralIntegraFilter.setPageNumber(1);
+        this.kanbanService.getSolicitacoes(solicitacaoCentralIntegraFilter)
+            .then(res => {
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList(res.json().list);
+                this.constructCardsSolicitacoes();
+                this.setResponsaveis();
+            })
+            .catch(error => {
+                console.log("Erro ao buscar as solicitcoes central integra");
+            })
     }
     
     getStatuses() {
@@ -130,18 +143,21 @@ export class KanbanComponent {
     }
     
     changeResponsavel( id: number ) {
+        if ( id == 0 ) {
+            this.getSolicitacoes();
+        }
         let solicitacaoCentralIntegraFilter: SolicitacaoCentralIntegraFilter = new SolicitacaoCentralIntegraFilter();
         solicitacaoCentralIntegraFilter.setTarefa(new TarefaFilter());
         solicitacaoCentralIntegraFilter.getTarefa().setResponsavel(new ProfissionalSaudeFilter());
         solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId(id);
         this.kanbanService.list(solicitacaoCentralIntegraFilter)
-        .then(res => {
-            this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList(res.json().list);
-        })
-        .catch(error => {
-            console.log("Erro ao buscar as solicitações central integra");
-        })
-        
+            .then(res => {
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList(res.json().list);
+                this.constructCardsSolicitacoes();
+            })
+            .catch(error => {
+                console.log("Erro ao buscar as solicitacoees central integra");
+            })
     }
     
     drop(valor) {
@@ -150,10 +166,12 @@ export class KanbanComponent {
         let solicitacaoCentralIntegra: SolicitacaoCentralIntegra = this.solicitacaoCentralIntegras.
             find(sCI => sCI.getId() == Number(id));
         solicitacaoCentralIntegra.setStatus(changeStatus);
+        this.kanbanService.submit(solicitacaoCentralIntegra);
     }
     
     constructCardsSolicitacoes() {
         let component = this;
+        this.removeChildres();
         this.solicitacaoCentralIntegras.forEach(sCI => {
             $(".body-kanban-"+sCI.getStatus()).append("<div name='card-"+ sCI.getId() +"' class='card card-"+ sCI.getId() + "' [dragula]='card'>" + 
                     "<div class='card-content'>"+ this.showShortDescricao(sCI.getDescricao()) + "</div> " +
@@ -163,7 +181,14 @@ export class KanbanComponent {
             $(".card-"+sCI.getId()).dblclick(function() {
                 if ( component.verifyCoordenador() )
                     component.router.navigate(["/solicitacao-central-integra/editar", sCI.getId()]);
+                else component.router.navigate(["/solicitacao-central-integra/observacao", sCI.getId()]);
             });
+        })
+    }
+    
+    removeChildres() {
+        this.statuses.forEach(s => {
+            $(".body-kanban-"+s).empty();
         })
     }
         

@@ -22,23 +22,30 @@ export class SolicitacaoCentralIntegraComponent {
     private numberScroll: number;
     private arrayObjects = [[]];
     private arrayTypes: Array<string>;
+    
     protected globalActions;
     protected toastParams;
 
-    constructor( private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService ) { 
+    constructor( private router: Router,
+            private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService ) { 
         this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().initializeList(new Array<SolicitacaoCentralIntegra>());
         this.filter = "";
         this.arrayTypes = new Array<string>();
+        
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
     }
     
-    ngOnInit() {
+    ngAfterViewInit() {
+        let component = this;
+        $(".container").get(0).style.width = "100%";
         this.solicitacaoCentralIntegraService.getSolicitacoes()
             .then(res => {
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json() );
+                this.solicitacaoCentralIntegras.forEach(x => {x.getAberturaString(); x.getPrazoString()});
                 setTimeout(() => {
-                    this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json() );
-                }, 1000);
+                    this.setClickAguardandoInformacao();
+                }, 500);
             })
             .catch(error => {
                 console.log("Erro ao pegar panoramas.")
@@ -49,14 +56,20 @@ export class SolicitacaoCentralIntegraComponent {
         });
     }
     
-    ngAfterViewChecked() {
-        $(".container").get(0).style.width = "100%";
+    setClickAguardandoInformacao() {
+        let component = this;
+        this.solicitacaoCentralIntegras.forEach( sCI => {
+            if ( sCI.getStatus().includes("AGUARDANDO INFORMA") ) {
+                $("#item-"+sCI.getId()).dblclick(function() {
+                    component.router.navigate(["/solicitacao-central-integra/descricao", sCI.getId()]);  
+                })
+            }
+        })
     }
     
     selectFilter( event, type: string ) {
         this.filter = event;
         this.typeFilter = type;
-        this.value = $('input[name='+type).val();
     }
     
     dropdown( event, tipo ) {
@@ -118,14 +131,14 @@ export class SolicitacaoCentralIntegraComponent {
     getItensDropDown( tipo ) {
         let arrayFilter: Array<any> = new Array<any>();
     
-        if ( tipo == 'tipoSolicitacao' )
+        if ( tipo == 'tipoSolicitacao-nome' ) {
             this.solicitacaoCentralIntegras.forEach(p => {
-                if ( arrayFilter.find( a => a == p[tipo]['nome']) == undefined &&
-                        p[tipo]['nome'] != "" && p[tipo]['nome'] != undefined ) {
-                        arrayFilter.push( p[tipo]['nome'] );
+                if ( arrayFilter.find( a => a == p['tipoSolicitacao']['nome']) == undefined &&
+                        p['tipoSolicitacao']['nome'] != "" && p['tipoSolicitacao']['nome'] != undefined ) {
+                        arrayFilter.push( p['tipoSolicitacao']['nome'] );
                 }
             });
-        else this.solicitacaoCentralIntegras.forEach(p => {
+        } else this.solicitacaoCentralIntegras.forEach(p => {
                 if ( arrayFilter.find( a => a == p[tipo]) == undefined &&
                         p[tipo] != "" && p[tipo] != undefined ) {
                         arrayFilter.push( p[tipo] );
@@ -135,10 +148,10 @@ export class SolicitacaoCentralIntegraComponent {
         return arrayFilter;
     }
     
-    splitDescricao( descricao: string ) {
-        if ( descricao.length > 17 )
-            return descricao.substring(0, 17)+"...";
-        else return descricao;
+    splitText( texto: string ) {
+        if ( texto != undefined && texto.length > 30 )
+            return texto.substring(0, 27)+"...";
+        else return texto;
         
     }
     
@@ -150,6 +163,10 @@ export class SolicitacaoCentralIntegraComponent {
     }
     
     closeTooltip() {
+        $(".toast").remove();
+    }
+    
+    ngOnDestroy() {
         $(".toast").remove();
     }
     

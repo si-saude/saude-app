@@ -1,8 +1,9 @@
 export const StatusSolicitacaoConst = Object.freeze({
+    '' : "",
     ABERTO: "ABERTO",
     PLANEJADO: "PLANEJADO",
-    EXECUCAO: "EXECU√á√ÉO",
-    CONCLUIDO: "CONCLU√çDO",
+    EXECUCAO: "EXECU«√O",
+    CONCLUIDO: "CONCLUÕO",
     CANCELADO: "CANCELADO",
-    AGUARDANDO_INFORMACAO: "AGUARDANDO INFORMA√á√ÉO"
+    AGUARDANDO_INFORMACAO: "AGUARDANDO INFORMA«√O"
 });

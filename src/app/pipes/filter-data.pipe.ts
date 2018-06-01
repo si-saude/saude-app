@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
+import { DateUtil } from './../generics/utils/date.util';
+
 @Pipe( { name: 'filterData' } )
 export class FilterDataPipe implements PipeTransform {
     private arrayFiltered: any[];
@@ -8,12 +10,14 @@ export class FilterDataPipe implements PipeTransform {
     private savedArray: Array<any>;
     private previewArrayReturn: Array<any>;
     private arrayReturn: Array<any>;
+    private dateUtil: DateUtil;
 
     constructor() {
         this.mapTypes = new Array<string>();
         this.savedArray = new Array<any>();
         this.previewArrayReturn = new Array<any>();
         this.arrayReturn = new Array<any>();
+        this.dateUtil = new DateUtil();
     }
 
     transform( array: any[], filter: any, tipo: string, value: string ) {
@@ -143,7 +147,7 @@ export class FilterDataPipe implements PipeTransform {
     
     recursiveFilter(a, i, arrayString, i1) {
         let splitedMapTypes: Array<string> = this.mapTypes[i].split("-");
-    
+        
         if ( splitedMapTypes.length > 0 ) {
             for ( let i2 = 0; i2 < splitedMapTypes.length; i2++ ) {
                 if ( a[splitedMapTypes[i2]] != undefined ) {
@@ -152,11 +156,17 @@ export class FilterDataPipe implements PipeTransform {
                 else return false;
             }
             return (a.toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
-        } else return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
+        } else {
+            return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
+        }
     
     }
     
-    
-    
+    convertTypeofDate(a) {
+        
+        if ( a instanceof Date )
+            return this.dateUtil.parseDataToString(a);
+        else return a;
+    }
     
 }

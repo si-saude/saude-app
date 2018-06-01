@@ -15,11 +15,10 @@
 		<div class="row">
 
 			<div class="input-field col s12">
-				<div class="input-field col s8">
+				<div class="input-field col s5">
 					<fieldset>
-						<legend>
-							Tipo da Solicitação <a
-								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+						<legend> Tipo da Solicitação 
+							<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
 								(click)="getTipoSolicitacoes()"> <i
 								class="material-icons center-icon">cached</i>
 							</a>
@@ -32,7 +31,18 @@
 					</fieldset>
 				</div>
 				
-				<div class="input-field col s4 checkbox">
+				<div class="input-field col s5">
+					<fieldset id="fieldset-status">
+						<legend> Status </legend>
+						<select name="status" class="browser-default"
+							[(ngModel)]="status">
+							<option disabled selected value="">Selecione um tipo de solicitação</option>
+							<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+						</select>
+					</fieldset>
+				</div>
+				
+				<div class="input-field col s1 checkbox">
 					<input type="checkbox" id="concluido" (click)="setConcluido()"
 						[(ngModel)]="solicitacaoCentralIntegra.concluido"
 						name="solicitacaoCentralIntegra.concluido">
@@ -48,7 +58,7 @@
 			
 			<div class="input-field col s12">
 				<label for="observacao">Observação</label>
-					<textarea class="materialize-textarea" id="observacao" disabled	
+					<textarea class="materialize-textarea" id="observacao"
 						[(ngModel)]="solicitacaoCentralIntegra.observacao" name="solicitacao.observacao"></textarea>
 			</div>
 			
@@ -105,7 +115,7 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/home']" class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/kanban']" class="btn btn-primary btn-listar">Kanban</a>
 			</div>
 			<div class="col s6">
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>

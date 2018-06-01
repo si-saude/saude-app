@@ -143,8 +143,8 @@ import { TarefaComponent } from './tarefa/tarefa.component';
     RiscoPotencialService,
     TriagemService,
     TipoSolicitacaoService,
-    SolicitacaoCentralIntegraService,
-    CanDeactivateGuard
+    CanDeactivateGuard,
+    SolicitacaoCentralIntegraService
   ]
 })
 export class SharedModule { }

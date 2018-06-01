@@ -47,3 +47,11 @@ tbody{
 	margin-top: -20px;
     padding-left: 30px;
 }
+
+#fieldset-status {
+	margin-top: 3%;
+}
+
+.checkbox {
+	margin-top: 4.5%;
+}

@@ -28,12 +28,12 @@ export class PanoramaComponent {
         this.arrayTypes = new Array<string>();
     }
     
-    ngOnInit() {
+    ngAfterViewInit() {
+        $(".container").get(0).style.width = "100%";
+        
         this.panoramaService.getPanoramas()
             .then(res => {
-                setTimeout(() => {
-                    this.panoramas = new PanoramaBuilder().cloneList(res.json());
-                }, 1000);
+                this.panoramas = new PanoramaBuilder().cloneList(res.json());
             })
             .catch(error => {
                 console.log("Erro ao pegar panoramas.")
@@ -42,10 +42,6 @@ export class PanoramaComponent {
         $('#dropdown').mouseleave(function() {
             $('#dropdown').toggleClass('show');
         });
-    }
-    
-    ngAfterViewChecked() {
-        $(".container").get(0).style.width = "100%";
     }
     
     selectFilter( event, type: string ) {

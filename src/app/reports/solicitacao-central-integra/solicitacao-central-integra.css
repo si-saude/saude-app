@@ -64,3 +64,10 @@ td {
 	display: table-cell;
 }
 
+.tr-filter {
+	cursor: pointer;
+}
+
+.tr-filter:nth-child(even) {
+	background-color: #d9d9d9;
+}

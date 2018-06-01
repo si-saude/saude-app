@@ -1,5 +1,6 @@
 import { TipoSolicitacao } from './tipo-solicitacao';
 import { Tarefa } from './tarefa';
+import { DateUtil } from './../generics/utils/date.util';
 
 export class SolicitacaoCentralIntegra {
     private id: number = 0;
@@ -15,7 +16,11 @@ export class SolicitacaoCentralIntegra {
     private concluido: boolean;
     private anexo: any;
     private anexoBase64: any;
+    private prazoString: string;
+    private aberturaString: string;
     private version: number;
+
+    private dateUtil: DateUtil = new DateUtil();
 
     getId() {
         return this.id;
@@ -127,6 +132,24 @@ export class SolicitacaoCentralIntegra {
 
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    setPrazoString(prazoString: string) {
+        this.prazoString = prazoString;
+    }
+    
+    getPrazoString() {
+        this.prazoString = this.dateUtil.parseDataToString(this.prazo);
+        return this.prazoString;
+    }
+    
+    setAberturaString(aberturaString: string) {
+        this.aberturaString = aberturaString;
+    }
+    
+    getAberturaString() {
+        this.aberturaString = this.dateUtil.parseDataToString(this.abertura);
+        return this.aberturaString;
     }
 
 }
