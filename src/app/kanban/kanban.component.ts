@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { MaterializeAction } from "angular2-materialize";
 
-import { KanbanService } from './kanban.service';
 import { Usuario } from './../model/usuario';
 import { UsuarioBuilder } from './../controller/usuario/usuario.builder';
 import { UsuarioFilter } from './../controller/usuario/usuario.filter';
@@ -21,9 +20,10 @@ import { EquipeBuilder } from './../controller/equipe/equipe.builder';
 import { SolicitacaoCentralIntegra } from './../model/solicitacao-central-integra';
 import { SolicitacaoCentralIntegraFilter } from './../controller/solicitacao-central-integra/solicitacao-central-integra.filter';
 import { SolicitacaoCentralIntegraBuilder } from './../controller/solicitacao-central-integra/solicitacao-central-integra.builder';
+import { SolicitacaoCentralIntegraService } from './../controller/solicitacao-central-integra/solicitacao-central-integra.service';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import { StatusSolicitacaoConst } from './../generics/consts/status-solicitacao.const';
-
+import { SolicitacaoCentralIntegraUtil } from './../generics/utils/solicitacao-central-integra.util';
+import { HttpUtil } from './../generics/utils/http.util';
 @Component( {
     selector: 'app-kanban',
     templateUrl: './kanban.html',
@@ -34,18 +34,18 @@ export class KanbanComponent {
     private usuario: Usuario;
     private solicitacaoCentralIntegras: Array<SolicitacaoCentralIntegra>;
     private statuses: Array<string>;
-    private showNothing: boolean;
-    private toastParams;
-    private globalActions;
     private router: any;
     private responsavel: Profissional;
     private responsaveis: Array<Profissional>;
+    private solicitacaoCentralIntegraUtil: SolicitacaoCentralIntegraUtil;
+    private httpUtil: HttpUtil;
 
-    constructor( router: Router, private kanbanService: KanbanService,
+    private showPreload: boolean;
+    private toastParams;
+    private globalActions;
+
+    constructor( router: Router, private kanbanService: SolicitacaoCentralIntegraService,
             private dragulaService: DragulaService) {
-        this.toastParams = ['', 4000];
-        this.globalActions = new EventEmitter<string | MaterializeAction>();
-        this.showNothing = true;
         this.solicitacaoCentralIntegras = new Array<SolicitacaoCentralIntegra>();
         this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
         this.statuses = new Array<string>();
@@ -55,10 +55,17 @@ export class KanbanComponent {
         dragulaService.drop.subscribe((value) => {
             this.drop(value);
           });
+        this.solicitacaoCentralIntegraUtil = new SolicitacaoCentralIntegraUtil();
+        this.httpUtil = new HttpUtil();
+        
+        this.toastParams = ['', 4000];
+        this.globalActions = new EventEmitter<string | MaterializeAction>();
+        this.showPreload = false;
     }
     
     ngOnInit() {
         let component = this;
+        this.showPreload = true;
         if ( localStorage.getItem( 'usuario-id' ) != undefined ) {
             component.kanbanService.getUsuario( Number( localStorage.getItem( 'usuario-id' ) ) )
                 .then( res => {
@@ -70,9 +77,9 @@ export class KanbanComponent {
                     component.kanbanService.getProfissional( profissionalFilter )
                         .then( res => {
                             component.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                            console.log(component.profissional);
                             component.kanbanService.getEquipe(component.profissional.getEquipe().getId())
                                 .then(res => {
+                                    this.showPreload = false;
                                     this.profissional.setEquipe(new EquipeBuilder().clone(res.json()));
                                     component.getSolicitacoes();
                                 })
@@ -90,17 +97,27 @@ export class KanbanComponent {
         } else {
             component.router.navigate( ["login"] );
         }
-        
-        this.setStatuses();
+     
     }
     
-    setStatuses() {
-        this.statuses = [StatusSolicitacaoConst.ABERTO, 
-                         StatusSolicitacaoConst.PLANEJADO, 
-                         StatusSolicitacaoConst.EXECUCAO, 
-                         StatusSolicitacaoConst.CONCLUIDO, 
-                         StatusSolicitacaoConst.CANCELADO, 
-                         StatusSolicitacaoConst.AGUARDANDO_INFORMACAO];
+    //generalizar solicitacaoCentralIntegraUtil
+    getAnexo( solicitacaoCentralIntegra: SolicitacaoCentralIntegra ) {
+        this.showPreload = true;
+        
+        this.kanbanService.getAnexo(solicitacaoCentralIntegra.getId())
+            .then(res => {
+                this.showPreload = false;
+                this.httpUtil.downloadFile(res, solicitacaoCentralIntegra.
+                        getTarefa().getCliente().getPessoa().getNome()+".zip");
+            })
+            .catch(error => {
+                this.showPreload = false;
+                if ( typeof error.text === "function") {
+                    this.toastParams = [error.text(), 6000];
+                    this.globalActions.emit('toast');
+                    return;
+                } else console.log("Erro ao buscar o anexo: "+error);
+            })
     }
     
     setResponsaveis() {
@@ -132,16 +149,6 @@ export class KanbanComponent {
             })
     }
     
-    getStatuses() {
-        this.kanbanService.getStatuses()
-            .then( res => {
-                this.statuses = Object.keys( res.json() );
-            } )
-            .catch( error => {
-                console.log( error );
-            } )
-    }
-    
     changeResponsavel( id: number ) {
         if ( id == 0 ) {
             this.getSolicitacoes();
@@ -166,15 +173,24 @@ export class KanbanComponent {
         let solicitacaoCentralIntegra: SolicitacaoCentralIntegra = this.solicitacaoCentralIntegras.
             find(sCI => sCI.getId() == Number(id));
         solicitacaoCentralIntegra.setStatus(changeStatus);
-        this.kanbanService.submit(solicitacaoCentralIntegra);
+        this.kanbanService.submit(solicitacaoCentralIntegra)
+            .then(res => {
+                solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().clone(res.json());
+            })
+            .catch(error => {
+                console.log("Erro ao atualizar a solicitação.");
+            })
+            
     }
     
     constructCardsSolicitacoes() {
         let component = this;
         this.removeChildres();
         this.solicitacaoCentralIntegras.forEach(sCI => {
-            $(".body-kanban-"+sCI.getStatus()).append("<div name='card-"+ sCI.getId() +"' class='card card-"+ sCI.getId() + "' [dragula]='card'>" + 
-                    "<div class='card-content'>"+ this.showShortDescricao(sCI.getDescricao()) + "</div> " +
+            $(".body-kanban-"+sCI.getStatus()).append(
+                    "<div style='margin-left: 5%; width: 90%;' name='card-"+ sCI.getId() +"' class='row card card-"+ sCI.getId() + "' [dragula]='card'>" + 
+                        "<div class='col s10 card-content'>"+ this.showShortDescricao(sCI.getDescricao()) + "</div> " +
+                        "<i style='cursor: pointer;' class='small material-icons icon icon-"+sCI.getId()+"'>file_download</i>"+
             		"</div> ");
         })
         this.solicitacaoCentralIntegras.forEach(sCI => {
@@ -182,6 +198,9 @@ export class KanbanComponent {
                 if ( component.verifyCoordenador() )
                     component.router.navigate(["/solicitacao-central-integra/editar", sCI.getId()]);
                 else component.router.navigate(["/solicitacao-central-integra/observacao", sCI.getId()]);
+            });
+            $(".icon-"+sCI.getId()).click(function() {
+                component.getAnexo(sCI);
             });
         })
     }
@@ -211,7 +230,6 @@ export class KanbanComponent {
     }
     
     ngOnDestroy() {
-        this.showNothing = false;
     }
 
 }

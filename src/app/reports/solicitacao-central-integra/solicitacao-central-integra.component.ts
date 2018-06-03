@@ -7,8 +7,10 @@ import { MaterializeAction } from "angular2-materialize";
 
 import { SolicitacaoCentralIntegraService } from './../../controller/solicitacao-central-integra/solicitacao-central-integra.service';
 import { SolicitacaoCentralIntegraBuilder } from './../../controller/solicitacao-central-integra/solicitacao-central-integra.builder';
+import { SolicitacaoCentralIntegraFilter } from './../../controller/solicitacao-central-integra/solicitacao-central-integra.filter';
 import { SolicitacaoCentralIntegra } from './../../model/solicitacao-central-integra';
-
+import { SolicitacaoCentralIntegraUtil } from './../../generics/utils/solicitacao-central-integra.util';
+import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-report-solicitacao-central-integra',
     templateUrl: './solicitacao-central-integra.html',
@@ -22,16 +24,22 @@ export class SolicitacaoCentralIntegraComponent {
     private numberScroll: number;
     private arrayObjects = [[]];
     private arrayTypes: Array<string>;
+    private solicitacaoCentralIntegraUtil: SolicitacaoCentralIntegraUtil;
+    private httpUtil: HttpUtil;
     
-    protected globalActions;
-    protected toastParams;
+    private showPreload: boolean;
+    private globalActions;
+    private toastParams;
 
     constructor( private router: Router,
             private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService ) { 
         this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().initializeList(new Array<SolicitacaoCentralIntegra>());
         this.filter = "";
         this.arrayTypes = new Array<string>();
+        this.solicitacaoCentralIntegraUtil = new SolicitacaoCentralIntegraUtil();
+        this.httpUtil = new HttpUtil();
         
+        this.showPreload = false;
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
     }
@@ -39,10 +47,14 @@ export class SolicitacaoCentralIntegraComponent {
     ngAfterViewInit() {
         let component = this;
         $(".container").get(0).style.width = "100%";
-        this.solicitacaoCentralIntegraService.getSolicitacoes()
+        this.solicitacaoCentralIntegraService.getSolicitacoes(new SolicitacaoCentralIntegraFilter())
             .then(res => {
-                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json() );
-                this.solicitacaoCentralIntegras.forEach(x => {x.getAberturaString(); x.getPrazoString()});
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json().list );
+                this.solicitacaoCentralIntegras.forEach(x => {
+                    x.getAberturaString(); 
+                    x.getPrazoString();
+                    x.getConcluidoString();
+                });
                 setTimeout(() => {
                     this.setClickAguardandoInformacao();
                 }, 500);
@@ -110,7 +122,7 @@ export class SolicitacaoCentralIntegraComponent {
         
         $('#dropdown').toggleClass('show');
         $('#dropdown').insertAfter("#"+tipo);
-        $('#dropdown').css("margin-left", "-"+$(".list-container").scrollLeft()+"px");
+//        $('#dropdown').css("margin-left", "-"+$(".list-container").scrollLeft()+"px");
         
         for ( let t of this.arrayTypes ) {
             this.arrayObjects[t].forEach(aO => {
@@ -144,7 +156,6 @@ export class SolicitacaoCentralIntegraComponent {
                         arrayFilter.push( p[tipo] );
                 }
             });
-        
         return arrayFilter;
     }
     
@@ -153,6 +164,26 @@ export class SolicitacaoCentralIntegraComponent {
             return texto.substring(0, 27)+"...";
         else return texto;
         
+    }
+    
+  //generalizar solicitacaoCentralIntegraUtil
+    getAnexo( solicitacaoCentralIntegra: SolicitacaoCentralIntegra ) {
+        this.showPreload = true;
+        
+        this.solicitacaoCentralIntegraService.getAnexo(solicitacaoCentralIntegra.getId())
+            .then(res => {
+                this.showPreload = false;
+                this.httpUtil.downloadFile(res, solicitacaoCentralIntegra.
+                        getTarefa().getCliente().getPessoa().getNome()+".zip");
+            })
+            .catch(error => {
+                this.showPreload = false;
+                if ( typeof error.text === "function") {
+                    this.toastParams = [error.text(), 6000];
+                    this.globalActions.emit('toast');
+                    return;
+                } else console.log("Erro ao buscar o anexo: "+error);
+            })
     }
     
     showTextToast( text ) {

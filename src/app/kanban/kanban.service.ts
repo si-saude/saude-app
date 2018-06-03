@@ -9,6 +9,7 @@ import { SolicitacaoCentralIntegraFilter } from './../controller/solicitacao-cen
 import { GenericService } from './../generics/generic.service';
 import { GlobalVariable } from './../global';
 
+//SUBSTITUIR POR SOLICITACAOCENTRALINTEGRASERVICE
 @Injectable()
 export class KanbanService extends GenericService {
 
@@ -35,11 +36,8 @@ export class KanbanService extends GenericService {
         return this.list(solicitacaoCentralIntegraFilter);
     }
     
-    getStatuses() {
-        let urlStatuses = GlobalVariable.BASE_API_URL + "/generic/status-solicitacao";
-        return this.http
-            .get( urlStatuses + "?filter=", { headers: this.headers } )
-            .toPromise();
+    getAnexo() {
+        
     }
     
 }

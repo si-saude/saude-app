@@ -18,6 +18,7 @@ export class SolicitacaoCentralIntegra {
     private anexoBase64: any;
     private prazoString: string;
     private aberturaString: string;
+    private concluidoString: string;
     private version: number;
 
     private dateUtil: DateUtil = new DateUtil();
@@ -150,6 +151,18 @@ export class SolicitacaoCentralIntegra {
     getAberturaString() {
         this.aberturaString = this.dateUtil.parseDataToString(this.abertura);
         return this.aberturaString;
+    }
+    
+    setConcluidoString(concluidoString: string) {
+        this.concluidoString = concluidoString;
+    }
+    
+    getConcluidoString() {
+        
+        if ( this.concluido == true )
+            this.concluidoString = "CONCLUIDO";
+        else this.concluidoString = "INCONCLUIDO";
+        return this.concluidoString;
     }
 
 }
