@@ -4,67 +4,75 @@
 
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+<div class="container-kanban">
 
-<div class="responsavel" *ngIf="verifyCoordenador()">
-	<fieldset>
-		<legend>Responsável</legend>
-		<select name="responsavel" class="browser-default" (change)="changeResponsavel(responsavel.id)">
-			<option selected disabled value=0>Selecione um responsável</option>
-			<option *ngFor="let responsavel of responsaveis" value="{{responsavel.id}}">{{responsavel.empregado.pessoa.nome}}</option>
-		</select>
-	</fieldset>
-</div>
-
-<div class="content-kanban">
-	<div class="frame-aberto-planejado">
-		<div class="frame-kanban" *ngIf="verifyStatus('ABERTO')">
-			<p class="head-kanban" [ngStyle]="solicitacaoCentralIntegraUtil.setColor('ABERTO')"
-				style="border-bottom: 1px solid black;">ABERTO
-			</p>
-			<div id='ABERTO' class="body-kanban body-kanban-ABERTO" [dragula]="card"></div>
-		</div>
-		<div class="frame-kanban">
-			<p class="head-kanban" [ngStyle]="solicitacaoCentralIntegraUtil.setColor('PLANEJADO')">
-				PLANEJADO
-			</p>
-			<div id='PLANEJADO' class="body-kanban body-kanban-PLANEJADO" [dragula]="card"></div>
-		</div>
-	</div>
-	<div class="frame-execucao-aguardando-informacao">
-		<div class="frame-kanban">
-			<p class="head-kanban" [ngStyle]="solicitacaoCentralIntegraUtil.setColor('EXECU')">
-				EXECUÇÃO
-			</p>
-			<div id='EXECUÇÃO' class="body-kanban body-kanban-EXECUÇÃO" [dragula]="card"></div>
-		</div>
-		<div class="frame-kanban">
-			<p class="head-kanban" 
-				[ngStyle]="solicitacaoCentralIntegraUtil.setColor('AGUARDANDO INFORMA')">
-				AGUARDANDO INFORMAÇÃO
-			</p>
-			<div id='AGUARDANDO INFORMAÇÃO' class="body-kanban body-kanban-AGUARDANDO INFORMAÇÃO" [dragula]="card"></div>
-		</div>
-	</div>
-	<div class="frame-concluido-cancelado">
-		<div class="frame-kanban">
-			<p class="head-kanban" [ngStyle]="solicitacaoCentralIntegraUtil.setColor('CONCLU')">
-				CONCLUÍDO
-			</p>
-			<div id='CONCLUÍDO' class="body-kanban body-kanban-CONCLUÍDO" [dragula]="card"></div>
-		</div>
-		<div class="frame-kanban">
-			<p class="head-kanban" [ngStyle]="solicitacaoCentralIntegraUtil.setColor('CANCELADO')">
-				CANCELADO
-			</p>
-			<div id='CANCELADO' class="body-kanban body-kanban-CANCELADO" [dragula]="card"></div>
-		</div>
+	<div class="responsavel" *ngIf="verifyCoordenador()">
+		<fieldset>
+			<legend>Responsável</legend>
+			<select name="responsavel" class="browser-default"
+				[(ngModel)]="idResponsavel" (ngModelChange)="changeResponsavel()">
+				<option selected disabled value=0>Selecione um responsável</option>
+				<option *ngFor="let responsavel of responsaveis"
+					value="{{responsavel.id}}">{{responsavel.empregado.pessoa.nome}}</option>
+			</select>
+		</fieldset>
 	</div>
 
+	<div class="content-kanban">
+		<div class="frame-aberto-planejado">
+			<div class="frame-kanban" *ngIf="verifyStatus('ABERTO')">
+				<p class="head-kanban"
+					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('ABERTO')"
+					style="border-bottom: 1px solid black;">ABERTO</p>
+				<div id='ABERTO' class="body-kanban body-kanban-ABERTO"
+					[dragula]="card"></div>
+			</div>
+			<div class="frame-kanban">
+				<p class="head-kanban"
+					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('PLANEJADO')">
+					PLANEJADO</p>
+				<div id='PLANEJADO' class="body-kanban body-kanban-PLANEJADO"
+					[dragula]="card"></div>
+			</div>
+		</div>
+		<div class="frame-execucao-aguardando-informacao">
+			<div class="frame-kanban">
+				<p class="head-kanban"
+					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('EXECU')">
+					EXECUÇÃO</p>
+				<div id='EXECUÇÃO' class="body-kanban body-kanban-EXECU"
+					[dragula]="card"></div>
+			</div>
+			<div class="frame-kanban">
+				<p class="head-kanban"
+					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('AGUARDANDO INFORMA')">
+					AGUARDANDO INFORMAÇÃO</p>
+				<div id='AGUARDANDO INFORMAÇÃO'
+					class="body-kanban body-kanban-AGUARDANDOINFORMA" [dragula]="card"></div>
+			</div>
+		</div>
+		<div class="frame-concluido-cancelado">
+			<div class="frame-kanban">
+				<p class="head-kanban"
+					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('CONCLU')">
+					CONCLUÍDO</p>
+				<div id='CONCLUÍDO' class="body-kanban body-kanban-CONCLU"
+					[dragula]="card"></div>
+			</div>
+			<div class="frame-kanban">
+				<p class="head-kanban"
+					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('CANCELADO')">
+					CANCELADO</p>
+				<div id='CANCELADO' class="body-kanban body-kanban-CANCELADO"
+					[dragula]="card"></div>
+			</div>
+		</div>
+	</div>
+	
 </div>
 
 <div class="col s6">
-	<a [routerLink]="['/home']"
-		class="btn btn-primary btn-home">Home</a>
+	<a [routerLink]="['/home']" class="btn btn-primary btn-home">Home</a>
 </div>
-<div class="tooltipped" materialize [materializeParams]="toastParams"  
+<div class="tooltipped" materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

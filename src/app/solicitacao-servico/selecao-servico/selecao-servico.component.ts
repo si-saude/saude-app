@@ -62,11 +62,6 @@ export class SelecaoServicoComponent implements OnInit {
         this.tarefa.setCliente( this.empregado );
 
         let servicoFilter: ServicoFilter = new ServicoFilter();
-        let booleanFilter: BooleanFilter = new BooleanFilter();
-        booleanFilter.setValue( 1 );
-        servicoFilter.setPublico( booleanFilter );
-
-        this.getServicos(servicoFilter);
 
         if ( localStorage.getItem( "usuario" ) != undefined ) {
             this.usuario = new UsuarioBuilder().clone( JSON.parse( localStorage.getItem( "usuario" ) ) );
@@ -118,7 +113,13 @@ export class SelecaoServicoComponent implements OnInit {
                 this.getServicos( new ServicoFilter() );
                 this.canChangeEmpregado = true;
             }
+        }else{
+            let booleanFilter: BooleanFilter = new BooleanFilter();
+            booleanFilter.setValue( 1 );
+            servicoFilter.setPublico( booleanFilter );
         }
+        
+        this.getServicos(servicoFilter);
     }
     
     getServicos( servicoFilter ) {

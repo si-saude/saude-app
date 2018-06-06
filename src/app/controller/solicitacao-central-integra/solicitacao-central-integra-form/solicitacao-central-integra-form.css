@@ -55,3 +55,7 @@ tbody{
 .checkbox {
 	margin-top: 4.5%;
 }
+
+.center-icon {
+	margin: 0 auto !important;
+}

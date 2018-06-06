@@ -26,12 +26,10 @@
 							(input)="selectFilter($event, 'prazoString')">
 				</th>
 				<th style="width: 2%">
-					<div class="row">
-						<mfDefaultSorter by="status">Status</mfDefaultSorter>
-						<div class="div-icon" id="status">
-							<i class="small material-icons icon" 
-								(click)="dropdown($event, 'status')">arrow_drop_down</i>
-						</div>
+					<mfDefaultSorter by="status">Status</mfDefaultSorter>
+					<div class="div-icon" id="status">
+						<i class="small material-icons icon" 
+							(click)="dropdown($event, 'status')">arrow_drop_down</i>
 					</div>
 				</th>
 				<th style="width: 1%">
@@ -46,9 +44,9 @@
 				<th style="width: 1%">
 					<div class="row">
 						<mfDefaultSorter class="mleft" by="concluido">Concluido</mfDefaultSorter>
-						<div class="div-icon" id="concluidoString">
+						<div class="div-icon" id="concluido">
 							<i class="small material-icons icon" 
-								(click)="dropdown($event, 'concluidoString')">arrow_drop_down</i>
+								(click)="dropdown($event, 'concluido')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
@@ -60,19 +58,22 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="tr-filter" *ngFor="let item of mf.data" 
-				id="item-{{item.id}}" [ngStyle]="solicitacaoCentralIntegraUtil.setColor(item.status)">
+			<tr class="tr-filter" *ngFor="let item of mf.data" id="item-{{item.id}}" 
+				[ngStyle]="solicitacaoCentralIntegraUtil.setColor(item.status)">
 				<td>{{item.tipoSolicitacao.nome}}</td>
 				<td (mouseover)="showTextToast(item.descricao)" (mouseleave)="closeTooltip()">
 					{{splitText(item.descricao)}}
 				</td>
-				<td>{{item.prazoString}}</td>
+				<td [ngStyle]="solicitacaoCentralIntegraUtil.setNgStyleAtrasado(item)">{{item.prazoString}}</td>
 				<td>{{item.status}}</td>
 				<td>{{item.aberturaString}}</td>
 				<td (mouseover)="showTextToast(item.observacao)" (mouseleave)="closeTooltip()">
 					{{splitText(item.observacao)}}
 				</td>
-				<td>{{item.concluidoString}}</td>
+				<td>
+					<input type="checkbox" id="item-concluido" disabled 
+						[(ngModel)]="item.concluido" name="concluido"> 
+					<label for="concluido"></label>
 				<td>
 					<i class="small material-icons icon" (click)="getAnexo(item)">file_download</i>
 				</td>

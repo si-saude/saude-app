@@ -1,6 +1,7 @@
 import { TipoSolicitacaoFilter } from './../tipo-solicitacao/tipo-solicitacao.filter';
 import { TarefaFilter } from './../../controller/tarefa/tarefa.filter';
 import { DateFilter } from './../../generics/date.filter';
+import { BooleanFilter } from './../../generics/boolean.filter';
 import { GenericFilter } from './../../generics/generic.filter';
  
 export class SolicitacaoCentralIntegraFilter extends GenericFilter { 
@@ -9,6 +10,7 @@ export class SolicitacaoCentralIntegraFilter extends GenericFilter {
     private abertura: DateFilter;
     private prazo: DateFilter;
     private tarefa: TarefaFilter;
+    private concluido: BooleanFilter;
     
     getTipoSolicitacao() {
         return this.tipoSolicitacao;
@@ -39,6 +41,12 @@ export class SolicitacaoCentralIntegraFilter extends GenericFilter {
     }
     setTarefa(tarefa: TarefaFilter) {
         this.tarefa = tarefa;
+    }
+    getConcluido() {
+        return this.concluido;
+    }
+    setConcluido(concluido: BooleanFilter) {
+        this.concluido = concluido;
     }
     
 }

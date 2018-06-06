@@ -30,7 +30,7 @@ export class SolicitacaoCentralIntegraFormDescricaoComponent extends GenericForm
             private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService,
             router: Router) { 
             super(solicitacaoCentralIntegraService, router);
-            this.goTo = "solicitacao-central-integra";
+            this.goTo = "$*close*$";
             this.solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().initialize(new SolicitacaoCentralIntegra());
     }
     
@@ -57,4 +57,7 @@ export class SolicitacaoCentralIntegraFormDescricaoComponent extends GenericForm
         super.save(new SolicitacaoCentralIntegraBuilder().clone(this.solicitacaoCentralIntegra));
     }
     
+    getMsgConfirmSave(res: any){
+        return "Salvo com sucesso.";
+    }
 }

@@ -18,7 +18,7 @@ export class SolicitacaoCentralIntegra {
     private anexoBase64: any;
     private prazoString: string;
     private aberturaString: string;
-    private concluidoString: string;
+    private atrasado: boolean;
     private version: number;
 
     private dateUtil: DateUtil = new DateUtil();
@@ -153,16 +153,12 @@ export class SolicitacaoCentralIntegra {
         return this.aberturaString;
     }
     
-    setConcluidoString(concluidoString: string) {
-        this.concluidoString = concluidoString;
+    getAtrasado() {
+        return this.atrasado;
     }
     
-    getConcluidoString() {
-        
-        if ( this.concluido == true )
-            this.concluidoString = "CONCLUIDO";
-        else this.concluidoString = "INCONCLUIDO";
-        return this.concluidoString;
+    setAtrasado(atrasado: boolean) {
+        this.atrasado = atrasado;
     }
-
+    
 }

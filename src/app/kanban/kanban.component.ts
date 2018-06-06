@@ -24,6 +24,8 @@ import { SolicitacaoCentralIntegraService } from './../controller/solicitacao-ce
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { SolicitacaoCentralIntegraUtil } from './../generics/utils/solicitacao-central-integra.util';
 import { HttpUtil } from './../generics/utils/http.util';
+import { BooleanFilter } from './../generics/boolean.filter';
+
 @Component( {
     selector: 'app-kanban',
     templateUrl: './kanban.html',
@@ -39,30 +41,31 @@ export class KanbanComponent {
     private responsaveis: Array<Profissional>;
     private solicitacaoCentralIntegraUtil: SolicitacaoCentralIntegraUtil;
     private httpUtil: HttpUtil;
+    private idResponsavel: number = 0;
 
     private showPreload: boolean;
     private toastParams;
     private globalActions;
 
     constructor( router: Router, private kanbanService: SolicitacaoCentralIntegraService,
-            private dragulaService: DragulaService) {
+        private dragulaService: DragulaService ) {
         this.solicitacaoCentralIntegras = new Array<SolicitacaoCentralIntegra>();
-        this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
-        this.statuses = new Array<string>();
+        this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.router = router;
-        this.responsavel = new ProfissionalSaudeBuilder().initialize(new Profissional());
-        this.responsaveis = new ProfissionalSaudeBuilder().initializeList(new Array<Profissional>());
-        dragulaService.drop.subscribe((value) => {
-            this.drop(value);
-          });
+        this.statuses = new Array<string>();
+        this.responsavel = new ProfissionalSaudeBuilder().initialize( new Profissional() );
+        this.responsaveis = new ProfissionalSaudeBuilder().initializeList( new Array<Profissional>() );
+        dragulaService.drop.subscribe(( value ) => {
+            this.drop( value );
+        } );
         this.solicitacaoCentralIntegraUtil = new SolicitacaoCentralIntegraUtil();
         this.httpUtil = new HttpUtil();
-        
+
         this.toastParams = ['', 4000];
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.showPreload = false;
     }
-    
+
     ngOnInit() {
         let component = this;
         this.showPreload = true;
@@ -77,15 +80,15 @@ export class KanbanComponent {
                     component.kanbanService.getProfissional( profissionalFilter )
                         .then( res => {
                             component.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                            component.kanbanService.getEquipe(component.profissional.getEquipe().getId())
-                                .then(res => {
+                            component.kanbanService.getEquipe( component.profissional.getEquipe().getId() )
+                                .then( res => {
                                     this.showPreload = false;
-                                    this.profissional.setEquipe(new EquipeBuilder().clone(res.json()));
+                                    this.profissional.setEquipe( new EquipeBuilder().clone( res.json() ) );
                                     component.getSolicitacoes();
-                                })
-                                .catch(error => {
-                                    console.log("Erro ao buscar equipe do profissional.");
-                                })
+                                } )
+                                .catch( error => {
+                                    console.log( "Erro ao buscar equipe do profissional." );
+                                } )
                         } )
                         .catch( error => {
                             console.log( "Erro no servidor ao buscar o profissional." );
@@ -97,138 +100,163 @@ export class KanbanComponent {
         } else {
             component.router.navigate( ["login"] );
         }
-     
+        
+        this.getStatuses();
+
     }
-    
+
     //generalizar solicitacaoCentralIntegraUtil
     getAnexo( solicitacaoCentralIntegra: SolicitacaoCentralIntegra ) {
         this.showPreload = true;
-        
-        this.kanbanService.getAnexo(solicitacaoCentralIntegra.getId())
-            .then(res => {
+
+        this.kanbanService.getAnexo( solicitacaoCentralIntegra.getId() )
+            .then( res => {
                 this.showPreload = false;
-                this.httpUtil.downloadFile(res, solicitacaoCentralIntegra.
-                        getTarefa().getCliente().getPessoa().getNome()+".zip");
+                this.httpUtil.downloadFile( res, solicitacaoCentralIntegra.
+                    getTarefa().getCliente().getPessoa().getNome() + ".zip" );
+            } )
+            .catch( error => {
+                this.showPreload = false;
+                if ( typeof error.text === "function" ) {
+                    this.toastParams = [error.text(), 6000];
+                    this.globalActions.emit( 'toast' );
+                    return;
+                } else console.log( "Erro ao buscar o anexo: " + error );
+            } )
+    }
+    
+    getStatuses() {
+        this.kanbanService.getStatusSolicitacao()
+            .then(res => {
+                this.statuses = Object.keys( res.json() );
             })
             .catch(error => {
-                this.showPreload = false;
-                if ( typeof error.text === "function") {
-                    this.toastParams = [error.text(), 6000];
-                    this.globalActions.emit('toast');
-                    return;
-                } else console.log("Erro ao buscar o anexo: "+error);
+                console.log("Erro ao retornar os status.");
             })
     }
-    
+
     setResponsaveis() {
-        let id = $("select[name=responsavel]").val();
+        let id = $( "select[name=responsavel]" ).val();
         this.responsaveis = new Array<Profissional>();
-        this.solicitacaoCentralIntegras.forEach(sCI => {
-           if ( sCI.getTarefa().getResponsavel() != undefined )
-               this.responsaveis.push(sCI.getTarefa().getResponsavel()); 
-        });
+        this.solicitacaoCentralIntegras.forEach( sCI => {
+            if ( sCI.getTarefa().getResponsavel() != undefined ) {
+                let solicitacao = this.responsaveis.find( r => r.getId() == sCI.getTarefa().getResponsavel().getId() );
+                if ( solicitacao == undefined )
+                    this.responsaveis.push( sCI.getTarefa().getResponsavel() );
+            }
+        } );
     }
-    
+
     getSolicitacoes() {
         let solicitacaoCentralIntegraFilter: SolicitacaoCentralIntegraFilter = new SolicitacaoCentralIntegraFilter();
+        solicitacaoCentralIntegraFilter.setConcluido(new BooleanFilter());
+        solicitacaoCentralIntegraFilter.getConcluido().setValue(2);
         if ( !this.verifyCoordenador() ) {
-            solicitacaoCentralIntegraFilter.setTarefa(new TarefaFilter());
-            solicitacaoCentralIntegraFilter.getTarefa().setResponsavel(new ProfissionalSaudeFilter());
-            solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId(this.profissional.getId());
+            solicitacaoCentralIntegraFilter.setTarefa( new TarefaFilter() );
+            solicitacaoCentralIntegraFilter.getTarefa().setResponsavel( new ProfissionalSaudeFilter() );
+            solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId( this.profissional.getId() );
         }
-        solicitacaoCentralIntegraFilter.setPageSize(Math.pow(2, 31)-1);
-        solicitacaoCentralIntegraFilter.setPageNumber(1);
-        this.kanbanService.getSolicitacoes(solicitacaoCentralIntegraFilter)
-            .then(res => {
-                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList(res.json().list);
+        solicitacaoCentralIntegraFilter.setPageSize( Math.pow( 2, 31 ) - 1 );
+        solicitacaoCentralIntegraFilter.setPageNumber( 1 );
+        this.kanbanService.getSolicitacoes( solicitacaoCentralIntegraFilter )
+            .then( res => {
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json().list );
                 this.constructCardsSolicitacoes();
                 this.setResponsaveis();
-            })
-            .catch(error => {
-                console.log("Erro ao buscar as solicitcoes central integra");
-            })
+            } )
+            .catch( error => {
+                console.log( "Erro ao buscar as solicitcoes central integra" );
+            } )
     }
-    
-    changeResponsavel( id: number ) {
-        if ( id == 0 ) {
-            this.getSolicitacoes();
-        }
+
+    changeResponsavel() {
         let solicitacaoCentralIntegraFilter: SolicitacaoCentralIntegraFilter = new SolicitacaoCentralIntegraFilter();
-        solicitacaoCentralIntegraFilter.setTarefa(new TarefaFilter());
-        solicitacaoCentralIntegraFilter.getTarefa().setResponsavel(new ProfissionalSaudeFilter());
-        solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId(id);
-        this.kanbanService.list(solicitacaoCentralIntegraFilter)
-            .then(res => {
-                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList(res.json().list);
+        solicitacaoCentralIntegraFilter.setTarefa( new TarefaFilter() );
+        solicitacaoCentralIntegraFilter.getTarefa().setResponsavel( new ProfissionalSaudeFilter() );
+        solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId( this.idResponsavel );
+        this.kanbanService.list( solicitacaoCentralIntegraFilter )
+            .then( res => {
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json().list );
                 this.constructCardsSolicitacoes();
-            })
-            .catch(error => {
-                console.log("Erro ao buscar as solicitacoees central integra");
-            })
+            } )
+            .catch( error => {
+                console.log( "Erro ao buscar as solicitacoees central integra" );
+            } )
     }
-    
-    drop(valor) {
-        let id = $(valor[1]).attr('name').split("-")[1];
-        let changeStatus = $(valor[2]).attr('id');
+
+    drop( valor ) {
+        let id = $( valor[1] ).attr( 'name' ).split( "-" )[1];
+        let changeStatus = $( valor[2] ).attr( 'id' );
         let solicitacaoCentralIntegra: SolicitacaoCentralIntegra = this.solicitacaoCentralIntegras.
-            find(sCI => sCI.getId() == Number(id));
+            find( sCI => sCI.getId() == Number( id ) );
         solicitacaoCentralIntegra.setStatus(changeStatus);
-        this.kanbanService.submit(solicitacaoCentralIntegra)
-            .then(res => {
-                solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().clone(res.json());
-            })
-            .catch(error => {
-                console.log("Erro ao atualizar a solicitação.");
-            })
-            
+        this.kanbanService.submit( solicitacaoCentralIntegra )
+            .then( res => {
+                solicitacaoCentralIntegra = this.solicitacaoCentralIntegras.find( sCI => sCI.getId() == Number( id ) );
+                let solicitacao = new SolicitacaoCentralIntegraBuilder().clone( res.json() );
+                solicitacaoCentralIntegra.setVersion(solicitacao.getVersion());
+            } )
+            .catch( error => {
+                console.log( "Erro ao atualizar a solicitacoes: "+error);
+            } )
     }
-    
+
     constructCardsSolicitacoes() {
         let component = this;
-        this.removeChildres();
-        this.solicitacaoCentralIntegras.forEach(sCI => {
-            $(".body-kanban-"+sCI.getStatus()).append(
-                    "<div style='margin-left: 5%; width: 90%;' name='card-"+ sCI.getId() +"' class='row card card-"+ sCI.getId() + "' [dragula]='card'>" + 
-                        "<div class='col s10 card-content'>"+ this.showShortDescricao(sCI.getDescricao()) + "</div> " +
-                        "<i style='cursor: pointer;' class='small material-icons icon icon-"+sCI.getId()+"'>file_download</i>"+
-            		"</div> ");
-        })
-        this.solicitacaoCentralIntegras.forEach(sCI => {
-            $(".card-"+sCI.getId()).dblclick(function() {
+        this.removeChildrens();
+        this.solicitacaoCentralIntegras.forEach( sCI => {
+            $( ".body-kanban-" + component.getShortStatus( sCI.getStatus() ) ).append(
+                "<div style='margin-left: 5%; width: 80%;"+ this.solicitacaoCentralIntegraUtil.setStyleAtrasado(sCI)+"' name='card-" + sCI.getId() + "' class='row card card-" + sCI.getId() + "' [dragula]='card'>" +
+                "<div class='col s10 card-content'>" + this.showShortDescricao( sCI.getDescricao() ) + "</div> " +
+                "<i style='cursor: pointer;' class='small material-icons icon icon-" + sCI.getId() + "'>file_download</i>" +
+                "</div> " );
+        } )
+        this.solicitacaoCentralIntegras.forEach( sCI => {
+            $( ".card-" + sCI.getId() ).dblclick( function() {
                 if ( component.verifyCoordenador() )
-                    component.router.navigate(["/solicitacao-central-integra/editar", sCI.getId()]);
-                else component.router.navigate(["/solicitacao-central-integra/observacao", sCI.getId()]);
-            });
-            $(".icon-"+sCI.getId()).click(function() {
-                component.getAnexo(sCI);
-            });
-        })
+                    window.open("/solicitacao-central-integra/editar/"+sCI.getId() );
+                else window.open("/solicitacao-central-integra/observacao/"+sCI.getId() );
+            } );
+            $( ".icon-" + sCI.getId() ).click( function() {
+                component.getAnexo( sCI );
+            } );
+        } )
     }
     
-    removeChildres() {
-        this.statuses.forEach(s => {
-            $(".body-kanban-"+s).empty();
-        })
+    getShortStatus( status: string ) {
+        if ( status.includes("EXECU") )
+            return "EXECU";
+        else if ( status.includes("CONCLU") )
+            return "CONCLU";
+        else if ( status.includes("AGUARDANDO INFORMA") )
+            return "AGUARDANDOINFORMA";
+        else return status;
     }
-        
+
+    removeChildrens() {
+        this.statuses.forEach( s => {
+            $( ".body-kanban-" + this.getShortStatus(s) ).empty();
+        } )
+    }
+
     showShortDescricao( descricao: string ) {
         if ( descricao.length > 100 )
-            return descricao.substring(0, 97)+"...";
+            return descricao.substring( 0, 97 ) + "...";
         else return descricao;
     }
-    
-    verifyStatus(status: string) {
+
+    verifyStatus( status: string ) {
         if ( status == "ABERTO" && !this.verifyCoordenador() )
             return false;
         return true;
     }
-    
+
     verifyCoordenador() {
         if ( this.profissional.getEquipe().getCoordenador().getId() == this.profissional.getId() )
             return true;
         else return false;
     }
-    
+
     ngOnDestroy() {
     }
 

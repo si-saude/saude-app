@@ -35,7 +35,7 @@
 					<fieldset id="fieldset-status">
 						<legend> Status </legend>
 						<select name="status" class="browser-default"
-							[(ngModel)]="status">
+							[(ngModel)]="solicitacaoCentralIntegra.status">
 							<option disabled selected value="">Selecione um tipo de solicitação</option>
 							<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
 						</select>

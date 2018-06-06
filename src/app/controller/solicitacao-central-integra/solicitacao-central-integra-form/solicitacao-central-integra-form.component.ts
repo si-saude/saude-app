@@ -38,10 +38,11 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService,
             router: Router) { 
             super(solicitacaoCentralIntegraService, router);
-            this.goTo = "solicitacao-central-integra";
+            this.goTo = "$*close*$";
             this.solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().initialize(new SolicitacaoCentralIntegra());
             this.tipoSolicitacoes = new TipoSolicitacaoBuilder().initializeList(new Array<TipoSolicitacao>());
             this.statuses = new Array<string>();
+            
             this.showModalCliente = false;
             this.showModalResponsavel = false;
     }
@@ -75,7 +76,7 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
                 this.statuses = Object.keys( res.json() ).sort();
             })
             .catch(error => {
-                console.log("Erro ao retornar os status");
+                console.log("Erro ao buscar statuses.");
             })
     }
     
@@ -98,9 +99,10 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     setConcluido() {
         let concluido = <HTMLInputElement>document.getElementById("concluido");
         if ( concluido.checked )
-            this.solicitacaoCentralIntegra.setStatus(StatusSolicitacaoConst.CONCLUIDO);
-        else this.solicitacaoCentralIntegra.setStatus(StatusSolicitacaoConst.ABERTO);
+            this.solicitacaoCentralIntegra.setConcluido(true);
+        else this.solicitacaoCentralIntegra.setConcluido(false);
     }
+    
     
     save() {
         this.validDatas();
@@ -149,5 +151,9 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     
     cancelarModalCliente( valor ) {
         this.showModalCliente = false;
+    }
+    
+    getMsgConfirmSave(res: any){
+        return "Salvo com sucesso.";
     }
 }

@@ -30,7 +30,7 @@ export class SolicitacaoCentralIntegraFormObservacaoComponent extends GenericFor
             private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService,
             router: Router) { 
             super(solicitacaoCentralIntegraService, router);
-            this.goTo = "solicitacao-central-integra";
+            this.goTo = "$*close*$";
             this.solicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().initialize(new SolicitacaoCentralIntegra());
     }
     

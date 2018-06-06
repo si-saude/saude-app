@@ -40,13 +40,14 @@ export class FilterDataPipe implements PipeTransform {
         } else if ( typeofFilter == 'string' && filter == '' ) {
             return this.savedArray;
         }
-            
-        if ( tipo != "" && filter ) {
+        
+        if ( tipo != "" && filter != undefined && filter != null ) {
             let arrayString: Array<string> = new Array<string>();
             if ( this.mapValue[tipo] == undefined ) {
                 this.mapValue[tipo] = new Array<string>();
-                
-                if ( typeofFilter == 'string' ) 
+                if ( typeofFilter == 'boolean' || value == "$*indeterminate*$" )
+                    this.mapValue[tipo] = "$"+filter.toString();
+                else if ( typeofFilter == 'string' ) 
                     this.mapValue[tipo] = "$"+filter;
                 else 
                     this.mapValue[tipo] = filter.target.value;
@@ -54,7 +55,9 @@ export class FilterDataPipe implements PipeTransform {
                 this.mapTypes.push( tipo );
             } else {
                 arrayString = this.mapValue[tipo].split("$");
-                if ( typeofFilter == 'string' ) {
+                if ( typeofFilter == 'boolean' || value == "$*indeterminate*$" ) {
+                    this.mapValue[tipo] = filter.toString();
+                } else if ( typeofFilter == 'string' ) {
                     if ( arrayString.find(a => a == filter) == undefined )
                         this.mapValue[tipo] += "$"+filter;
                     else {
@@ -66,60 +69,50 @@ export class FilterDataPipe implements PipeTransform {
                     }
                 } else {
                     this.mapValue[tipo] = filter.target.value;
-//                    if ( filter.data == null || filter.data == undefined ) {
-//                        for ( let i = 0; i < arrayString.length; i++ ) {
-//                            let delString = arrayString[0].length - value.length;
-//                            if ( i == 0 ) this.mapValue[tipo] = arrayString[0].substring( 0, arrayString[0].length - delString );
-//                            else this.mapValue[tipo] += "$"+arrayString[i]; 
-//                        }
-//                    }
-//                    else {
-//                        if ( filter.data == undefined )
-//                            arrayString[0] = arrayString[0] + filter.target.value;
-//                        else 
-//                            arrayString[0] = arrayString[0] + filter.data;
-//                        for ( let i = 0; i < arrayString.length; i++ ) {
-//                            if ( i == 0 ) this.mapValue[tipo] = arrayString[0];
-//                            else this.mapValue[tipo] += "$"+arrayString[i];
-//                        }
-//                    }
                 }
             }
             
             this.arrayReturn = new Array<any>();
             this.previewArrayReturn = this.arrayFiltered;
             let component = this;
+            
             for ( let i = 0; i < this.mapTypes.length; i++ ) {
                 arrayString = this.mapValue[this.mapTypes[i]].split("$");
+                
+                if ( arrayString.indexOf("") > -1 )
+                    arrayString.splice(arrayString.indexOf(""), 1);
+                if ( arrayString.length == 0 )
+                    this.arrayReturn = this.previewArrayReturn;
+                
                 for ( let i1 = 0; i1 < arrayString.length; i1++ ) {
                     if ( i1 == 0 ) {
                         this.arrayReturn = this.previewArrayReturn.filter(a => {
-                            return component.recursiveFilter(a, i, arrayString, i1);
+                            return component.recursiveFilter(a, i, arrayString, i1, value);
                         })
                         this.previewArrayReturn = this.arrayReturn;
                         
                     } else if ( i == 0 && i1 == 1 ) {
                         this.arrayReturn = this.arrayFiltered.filter(a => {
-                                return component.recursiveFilter(a, i, arrayString, i1);
+                                return component.recursiveFilter(a, i, arrayString, i1, value);
                         })
                         this.previewArrayReturn = this.arrayReturn;
                     } else if ( i == 0 && i1 > 1 ) {
                         Array.prototype.push.apply(
                                 this.arrayReturn,
                                 this.arrayFiltered.filter(a => {
-                                    return component.recursiveFilter(a, i, arrayString, i1);
+                                    return component.recursiveFilter(a, i, arrayString, i1, value);
                                 })
                         );
                         this.previewArrayReturn = this.arrayReturn;
                     } else if ( i > 0 && i1 == 1 ) {
                         this.arrayReturn = this.previewArrayReturn.filter(a => {
-                            return component.recursiveFilter(a, i, arrayString, i1);
+                            return component.recursiveFilter(a, i, arrayString, i1, value);
                         })
                     } else if ( i > 0 && i1 > 1 ) {
                         Array.prototype.push.apply(
                                 this.arrayReturn,
                                 this.previewArrayReturn.filter(a => {
-                                    return component.recursiveFilter(a, i, arrayString, i1);
+                                    return component.recursiveFilter(a, i, arrayString, i1, value);
                                 })
                         );
                         this.previewArrayReturn = this.arrayReturn;
@@ -133,21 +126,24 @@ export class FilterDataPipe implements PipeTransform {
         return this.arrayReturn;
     }
     
-    getObject( a: any, i: number ) {
-        let splitedMapTypes: Array<string> = this.mapTypes[i].split('-');
-        
-        if ( splitedMapTypes.length > 0 )
-            for ( let i1 = 0; i1 < splitedMapTypes.length; i1++ )
-                a = a + "." + splitedMapTypes[i1];
-        
-        if ( a[this.mapTypes[i]] != undefined )
-            
-            return a;
-    }
+//    getObject( a: any, i: number ) {
+//        let splitedMapTypes: Array<string> = this.mapTypes[i].split('-');
+//        
+//        if ( splitedMapTypes.length > 0 )
+//            for ( let i1 = 0; i1 < splitedMapTypes.length; i1++ )
+//                a = a + "." + splitedMapTypes[i1];
+//        
+//        if ( a[this.mapTypes[i]] != undefined )
+//            
+//            return a;
+//    }
     
-    recursiveFilter(a, i, arrayString, i1) {
-        let splitedMapTypes: Array<string> = this.mapTypes[i].split("-");
+    recursiveFilter(a, i, arrayString, i1, value) {
         
+        if(value == '$*indeterminate*$')
+            return true;
+        
+        let splitedMapTypes: Array<string> = this.mapTypes[i].split("-");
         if ( splitedMapTypes.length > 0 ) {
             for ( let i2 = 0; i2 < splitedMapTypes.length; i2++ ) {
                 if ( a[splitedMapTypes[i2]] != undefined ) {
@@ -155,18 +151,18 @@ export class FilterDataPipe implements PipeTransform {
                 }
                 else return false;
             }
-            return (a.toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
+            return (a.toString().toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
         } else {
-            return (a[this.mapTypes[i]].toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
+            return (a[this.mapTypes[i]].toString().toLowerCase().indexOf(arrayString[i1].toLowerCase()) > -1);
         }
     
     }
     
-    convertTypeofDate(a) {
-        
-        if ( a instanceof Date )
-            return this.dateUtil.parseDataToString(a);
-        else return a;
-    }
+//    convertTypeofDate(a) {
+//        
+//        if ( a instanceof Date )
+//            return this.dateUtil.parseDataToString(a);
+//        else return a;
+//    }
     
 }

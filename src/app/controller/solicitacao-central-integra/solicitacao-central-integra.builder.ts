@@ -47,6 +47,7 @@ export class SolicitacaoCentralIntegraBuilder extends GenericBuilder {
         cloneSolicitacao.setStatus(this.getValue(solicitacao,"getStatus"));
         cloneSolicitacao.setTempoEstimado(this.getValue(solicitacao,"getTempoEstimado"));
         cloneSolicitacao.setTempoGasto(this.getValue(solicitacao,"getTempoGasto"));
+        cloneSolicitacao.setAtrasado(this.getValue(solicitacao,"getAtrasado"));
         
         cloneSolicitacao.setTarefa(
                 new TarefaBuilder().clone(this.getValue(solicitacao,"getTarefa")));
