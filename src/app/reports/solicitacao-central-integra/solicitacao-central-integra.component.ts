@@ -90,9 +90,9 @@ export class SolicitacaoCentralIntegraComponent {
                     x.getPrazoString();
                 } );
 
-                setTimeout(() => {
-                    this.setClickAguardandoInformacao();
-                }, 500 );
+//                setTimeout(() => {
+//                    this.setClickAguardandoInformacao();
+//                }, 500 );
             } )
             .catch( error => {
                 console.log( "Erro ao pegar panoramas." )
@@ -101,18 +101,21 @@ export class SolicitacaoCentralIntegraComponent {
 
     setClickAguardandoInformacao() {
         let component = this;
+        
+    }
+    
+    openDescricao(id){
         this.solicitacaoCentralIntegras.forEach( sCI => {
-            if ( sCI.getStatus().includes( "AGUARDANDO INFORMA" ) ) {
-                $( "#item-" + sCI.getId() ).dblclick( function() {
-                    window.open( "/solicitacao-central-integra/descricao/" + sCI.getId() );
-                } )
+            if ( sCI.getId() == id && sCI.getStatus().includes( "AGUARDANDO INFORMA" ) ) {
+                window.open( "/solicitacao-central-integra/descricao/"+id );
             }
-        } )
+        } );
     }
 
     selectFilter( event, type: string ) {
-        this.filter = event;
+        this.filter = event.target.value;
         this.typeFilter = type;
+        this.value = type;
     }
 
     dropdown( event, tipo ) {
@@ -144,18 +147,16 @@ export class SolicitacaoCentralIntegraComponent {
                 }
                 
                 component.typeFilter = "concluido";
+                component.value = "concluido";
                 
                 if ( el.indeterminate ) {
-                    component.filter = true;
-                    component.value = "$*indeterminate*$";
+                    component.filter = undefined;
                     component.arrayObjects['concluido'] = 'indeterminate';
                 } else if ( el.checked ) {
                     component.filter = true;
-                    component.value = "$*boolean*$";
                     component.arrayObjects['concluido'] = 'true';
                 } else {
                     component.filter = false;
-                    component.value = "$*boolean*$";
                     component.arrayObjects['concluido'] = 'false';
                 }
             } );
@@ -188,6 +189,7 @@ export class SolicitacaoCentralIntegraComponent {
                 let component = this;
 
                 el.mousedown(function() {
+                    
                     if ( $(this).get(0).children.item(0).getAttribute('value') == 'false') {
                         $(this).get(0).children.item(0).setAttribute('value', 'true');
                         if ( component.arrayObjects[$(this).attr('title')] == undefined ) {
@@ -201,11 +203,14 @@ export class SolicitacaoCentralIntegraComponent {
                                 component.arrayObjects[$(this).attr('title')].indexOf($(this).attr('id')), 1);
                     }
                     
-                    component.filter = $(this).attr('id');
-                    component.typeFilter = $(this).attr('title');
+                    component.filter = this.getAttribute('id');
+                    component.typeFilter = this.getAttribute('title');
+                    component.value = undefined;
+                    
                     setTimeout(() => {
                         component.filter = "";
                         component.typeFilter = "";
+                        component.value = "timeout";
                     }, 50);
                 });
 
@@ -230,6 +235,7 @@ export class SolicitacaoCentralIntegraComponent {
     selectItemDropDown( item, tipo ) {
         this.typeFilter = tipo;
         this.filter = item;
+        this.value = undefined;
     }
 
     getItensDropDown( tipo ) {

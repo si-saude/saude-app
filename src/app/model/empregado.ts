@@ -257,4 +257,14 @@ export class Empregado {
         this.dataAdmissao = dataAdmissao;
     }
        
+    getNome(){
+        if(this.pessoa != undefined)
+            return this.pessoa.getNome();
+        return undefined;
+    }
+    
+    setNome(nome){
+        if(this.pessoa != undefined)
+            this.pessoa.setNome(nome);
+    }
 }

@@ -59,6 +59,7 @@
 		</thead>
 		<tbody>
 			<tr class="tr-filter" *ngFor="let item of mf.data" id="item-{{item.id}}" 
+				(dblclick)="openDescricao(item.id)"
 				[ngStyle]="solicitacaoCentralIntegraUtil.setColor(item.status)">
 				<td>{{item.tipoSolicitacao.nome}}</td>
 				<td (mouseover)="showTextToast(item.descricao)" (mouseleave)="closeTooltip()">

@@ -76,4 +76,8 @@ export class SolicitacaoCentralIntegraService extends GenericService {
             .toPromise();
     }
     
+    public getEmpregadoService(){
+        return this.empregadoService;
+    }
+    
 }

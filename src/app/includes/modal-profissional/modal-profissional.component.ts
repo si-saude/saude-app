@@ -79,7 +79,7 @@ export class ModalProfissionalComponent{
             this.value == "$*build*$";
         } else if ( tipo == "empregado-chave" ) {
             let chave = $('input[name=empregado-chave]').val();
-            if ( chave.length >=2 && chave.length <= 4 ) {
+            if ( chave.length <= 4 ) {
                 if ( this.arrayProfissionais.length == 0 ) {
                     this.profissionalFilter.setEmpregado(new EmpregadoFilter());
                     this.profissionalFilter.getEmpregado().setChave(event.target.value);
@@ -88,7 +88,7 @@ export class ModalProfissionalComponent{
             }
         } else {
             let nome = $('input[name=empregado-pessoa-nome').val();
-                if ( nome.length >= 4 ) {
+                if ( nome.length > 4 ) {
                     if ( this.arrayProfissionais.length == 0 ) {
                         this.profissionalFilter = new ProfissionalSaudeFilter();
                         this.profissionalFilter.setEmpregado(new EmpregadoFilter());

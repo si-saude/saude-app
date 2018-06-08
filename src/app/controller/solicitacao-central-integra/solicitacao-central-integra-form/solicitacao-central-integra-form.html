@@ -63,15 +63,43 @@
 			</div>
 			
 			<div class="input-field col s12">
-				<label for="cliente">Cliente</label>
-				<input id="cliente" type="text" (click)="openModalCliente()"
-				[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome" name="cliente.nome">
-			</div>
+				<div class="input-field col s8">
+					<label for="cliente">Nome do Cliente</label> 
+					
+					<input required
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						(blur)="autoCompleteEmp.getAutocomplete().getObj($event,solicitacaoCentralIntegra.tarefa,'setCliente','getNome')"
+						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.cliente);"
+						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()"> 
+					
+					<!-- <input required
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						(blur)="getEmpregado($event)"
+						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
+						[materializeParams]="autocompleteEmpregado"> <input
+						id="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id" type="hidden"
+						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"> -->
+				</div>
+			</div> 
 			
 			<div class="input-field col s12">
-				<label for="responsavel">Responsável</label>
-				<input id="responsavel" type="text" (click)="openModalResponsavel()"
-				[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome" name="responsavel.nome">
+				<div class="input-field col s8">
+					<label for="cliente">Nome do Responsável</label> <input required
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
+						(blur)="getProfissional($event)"
+						(ngModelChange)="selectProfissionalByChave($event); selectProfissional($event);"
+						[materializeParams]="autocompleteProfissional"> <input
+						id="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id" type="hidden"
+						name="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id">
+				</div>
 			</div>
 			
 			<div class="row col s12" >

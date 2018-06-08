@@ -36,7 +36,7 @@ export class ModalEmpregadoComponent{
         this.empregado = new EventEmitter<Empregado>();
         this.empregadoFilter = new EmpregadoFilter();
         this.cancelModalEmpregado = new EventEmitter<boolean>();
-        this.filter = "";
+        this.filter = undefined;
     }
 
     ngOnInit() { 
@@ -60,7 +60,6 @@ export class ModalEmpregadoComponent{
         this.service.getEmpregados( this.empregadoFilter )
             .then(res => {
                 this.arrayEmpregado = new EmpregadoBuilder().cloneList(res.json().list);
-                this.value = "$*build*$";
             })
             .catch(error => {
                 console.log("Erro ao buscar o empregado");
@@ -75,10 +74,10 @@ export class ModalEmpregadoComponent{
     selectFilter( event, tipo ) {
         if ( $('input[name=chave]').val() == '' && $('input[name=pessoa-nome').val() == '' ) {
             this.arrayEmpregado = [];
-            this.value == "$*build*$";
+            this.value == tipo;
         }else if ( tipo == "chave" ) {
             let chave = $('input[name=chave]').val();
-            if ( chave.length >=2 && chave.length <= 4 ) {
+            if ( chave.length <= 4 ) {
                 if ( this.arrayEmpregado.length == 0 ) {
                     this.empregadoFilter.setChave(event.target.value);
                     this.fetchEmpregado();
@@ -86,7 +85,7 @@ export class ModalEmpregadoComponent{
             }
         } else {
             let nome = $('input[name=pessoa-nome').val();
-                if ( nome.length >= 4 ) {
+                if ( nome.length > 4 ) {
                     if ( this.arrayEmpregado.length == 0 ) {
                         this.empregadoFilter = new EmpregadoFilter();
                         this.empregadoFilter.setPessoa(new PessoaFilter());
@@ -95,7 +94,7 @@ export class ModalEmpregadoComponent{
                     }
                 }
         }
-        this.filter = event;
+        this.filter = event.target.value;
         this.typeFilter = tipo;
     }
     
