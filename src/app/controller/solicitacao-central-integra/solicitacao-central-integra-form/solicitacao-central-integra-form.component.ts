@@ -13,7 +13,8 @@ import { Profissional } from './../../../model/profissional';
 import { ProfissionalSaudeBuilder } from './../../../controller/profissional-saude/profissional-saude.builder';
 import { ProfissionalSaudeFilter } from './../../../controller/profissional-saude/profissional-saude.filter';
 import { Empregado } from './../../../model/empregado';
-import { EmpregadoAutocomplete } from './../../../controller/empregado/empregado.autocomplete';
+import { EmpregadoNomeAutocomplete } from './../../../controller/empregado/empregado-nome.autocomplete';
+import { ProfissionalNomeAutocomplete } from './../../../controller/profissional-saude/profissional-nome.autocomplete';
 import { Pessoa } from './../../../model/pessoa';
 import { PessoaFilter } from './../../../controller/pessoa/pessoa.filter';
 import { EmpregadoFilter } from './../../../controller/empregado/empregado.filter';
@@ -44,7 +45,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     validProfissional: string;
     autocompleteProfissional;
     
-    private autoCompleteEmp:EmpregadoAutocomplete;
+    private autoCompleteEmp:EmpregadoNomeAutocomplete;
+    private autoCompleteProf:ProfissionalNomeAutocomplete;
     
     constructor( private route: ActivatedRoute,
             private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService,
@@ -66,8 +68,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             this.validProfissional = "";
             this.autocompleteProfissional = [];
             
-            
-            this.autoCompleteEmp = new EmpregadoAutocomplete(this.solicitacaoCentralIntegraService.getEmpregadoService());
+            this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.solicitacaoCentralIntegraService.getEmpregadoService());
+            this.autoCompleteProf = new ProfissionalNomeAutocomplete(this.solicitacaoCentralIntegraService.getProfissionalService());
     }
     
     ngOnInit() {
@@ -86,6 +88,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
                             
                             this.autoCompleteEmp.getAutocomplete().initializeLastValue(this.solicitacaoCentralIntegra
                                     .getTarefa().getCliente().getPessoa().getNome());
+                            this.autoCompleteProf.getAutocomplete().initializeLastValue(this.solicitacaoCentralIntegra
+                                    .getTarefa().getResponsavel().getEmpregado().getPessoa().getNome());
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -247,77 +251,77 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
 //        return array;
 //    }
     
-    getProfissional() {
-        if ( this.validProfissional == this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome() ) return;
-        if ( this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome() !== undefined ) {
-            let profissional = this.profissionais.find( e => {
-                if ( ( e.getEmpregado().getChave() + " - " + e.getEmpregado().getPessoa().getNome() ).trim() ==
-                    this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome().trim() || 
-                    e.getEmpregado().getPessoa().getNome().trim() == this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome().trim() )
-                    return true;
-                else return false;
-            } );
-            
-            if ( profissional !== undefined ) {
-                console.log(profissional)
-                this.solicitacaoCentralIntegra.getTarefa().setResponsavel( profissional );
-                this.validEmpregado = this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome();
-            } else this.solicitacaoCentralIntegra.getTarefa().setResponsavel( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
-        } else this.solicitacaoCentralIntegra.getTarefa().setResponsavel( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
-    }
-    
-    private oldNome: string;
-    selectProfissional( evento ) {
-        if ( this.oldNome != evento ) {
-            this.oldNome = evento;
-            if ( evento.length > 4 ) {
-                let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-                profissionalFilter.setEmpregado(new EmpregadoFilter());
-                profissionalFilter.getEmpregado().setPessoa(new PessoaFilter());
-                profissionalFilter.getEmpregado().getPessoa().setNome(evento);
-                
-                this.solicitacaoCentralIntegraService.getProfissionais( profissionalFilter )
-                    .then( res => {
-                        this.profissionais = new ProfissionalSaudeBuilder().cloneList(res.json());
-                        this.autocompleteProfissional = [this.buildAutocompleteProfissional( this.profissionais )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    private oldNomeByChave: string;
-    selectProfissionalByChave( evento ) {
-        if ( this.oldNomeByChave != evento ) {
-            this.oldNomeByChave = evento;
-            if ( evento.length <= 4 ) {
-                let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-                profissionalFilter.setEmpregado(new EmpregadoFilter());
-                profissionalFilter.getEmpregado().setChave(evento);
-                
-                this.solicitacaoCentralIntegraService.getProfissionais( profissionalFilter )
-                    .then( res => {
-                        this.profissionais = new ProfissionalSaudeBuilder().cloneList(res.json().list);
-                        this.autocompleteProfissional = [this.buildAutocompleteProfissional( this.profissionais )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    buildAutocompleteProfissional( profissionais ) {
-        let data = {};
-        profissionais.forEach( item => {
-            data[item.getEmpregado().getChave() + " - " + item.getEmpregado().getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
+//    getProfissional() {
+//        if ( this.validProfissional == this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome() ) return;
+//        if ( this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome() !== undefined ) {
+//            let profissional = this.profissionais.find( e => {
+//                if ( ( e.getEmpregado().getChave() + " - " + e.getEmpregado().getPessoa().getNome() ).trim() ==
+//                    this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome().trim() || 
+//                    e.getEmpregado().getPessoa().getNome().trim() == this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome().trim() )
+//                    return true;
+//                else return false;
+//            } );
+//            
+//            if ( profissional !== undefined ) {
+//                console.log(profissional)
+//                this.solicitacaoCentralIntegra.getTarefa().setResponsavel( profissional );
+//                this.validEmpregado = this.solicitacaoCentralIntegra.getTarefa().getResponsavel().getEmpregado().getPessoa().getNome();
+//            } else this.solicitacaoCentralIntegra.getTarefa().setResponsavel( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
+//        } else this.solicitacaoCentralIntegra.getTarefa().setResponsavel( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
+//    }
+//    
+//    private oldNome: string;
+//    selectProfissional( evento ) {
+//        if ( this.oldNome != evento ) {
+//            this.oldNome = evento;
+//            if ( evento.length > 4 ) {
+//                let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+//                profissionalFilter.setEmpregado(new EmpregadoFilter());
+//                profissionalFilter.getEmpregado().setPessoa(new PessoaFilter());
+//                profissionalFilter.getEmpregado().getPessoa().setNome(evento);
+//                
+//                this.solicitacaoCentralIntegraService.getProfissionais( profissionalFilter )
+//                    .then( res => {
+//                        this.profissionais = new ProfissionalSaudeBuilder().cloneList(res.json());
+//                        this.autocompleteProfissional = [this.buildAutocompleteProfissional( this.profissionais )];
+//                    } )
+//                    .catch( error => {
+//                        console.log( error );
+//                    } )
+//            }
+//        }
+//    }
+//
+//    private oldNomeByChave: string;
+//    selectProfissionalByChave( evento ) {
+//        if ( this.oldNomeByChave != evento ) {
+//            this.oldNomeByChave = evento;
+//            if ( evento.length <= 4 ) {
+//                let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+//                profissionalFilter.setEmpregado(new EmpregadoFilter());
+//                profissionalFilter.getEmpregado().setChave(evento);
+//                
+//                this.solicitacaoCentralIntegraService.getProfissionais( profissionalFilter )
+//                    .then( res => {
+//                        this.profissionais = new ProfissionalSaudeBuilder().cloneList(res.json().list);
+//                        this.autocompleteProfissional = [this.buildAutocompleteProfissional( this.profissionais )];
+//                    } )
+//                    .catch( error => {
+//                        console.log( error );
+//                    } )
+//            }
+//        }
+//    }
+//
+//    buildAutocompleteProfissional( profissionais ) {
+//        let data = {};
+//        profissionais.forEach( item => {
+//            data[item.getEmpregado().getChave() + " - " + item.getEmpregado().getPessoa().getNome()] = null;
+//        } );
+//
+//        let array = {};
+//        array["data"] = data;
+//
+//        return array;
+//    }
 }

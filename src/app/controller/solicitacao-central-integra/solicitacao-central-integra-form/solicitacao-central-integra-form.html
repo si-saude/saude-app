@@ -66,12 +66,12 @@
 				<div class="input-field col s8">
 					<label for="cliente">Nome do Cliente</label> 
 					
-					<input required
+					<input
 						type="text" materialize="autocomplete" autocomplete="off"
 						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
 						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
 						(blur)="autoCompleteEmp.getAutocomplete().getObj($event,solicitacaoCentralIntegra.tarefa,'setCliente','getNome')"
-						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.cliente);"
+						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.cliente, 'getNome');"
 						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()"> 
 					
 					<!-- <input required
@@ -89,16 +89,14 @@
 			
 			<div class="input-field col s12">
 				<div class="input-field col s8">
-					<label for="cliente">Nome do Responsável</label> <input required
-						type="text" materialize="autocomplete" autocomplete="off"
-						name="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
-						(blur)="getProfissional($event)"
-						(ngModelChange)="selectProfissionalByChave($event); selectProfissional($event);"
-						[materializeParams]="autocompleteProfissional"> <input
-						id="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id" type="hidden"
-						name="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.id">
+					<label for="cliente">Nome do Responsável</label> 
+						<input
+							type="text" materialize="autocomplete" autocomplete="off"
+							name="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
+							[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
+							(blur)="autoCompleteProf.getAutocomplete().getObj($event,solicitacaoCentralIntegra.tarefa,'setResponsavel','getNome')"
+							(ngModelChange)="autoCompleteProf.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.responsavel, 'getNome');"
+							[materializeParams]="autoCompleteProf.getAutocomplete().getObjAutoComplete()">
 				</div>
 			</div>
 			

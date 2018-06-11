@@ -67,5 +67,9 @@ export class SolicitacaoServicoService {
         return this.tipoSolicitacaoService.getTipoSolicitacoes();
     }
     
+    getEmpregadoService() {
+        return this.empregadoService;
+    }
+    
     
 }

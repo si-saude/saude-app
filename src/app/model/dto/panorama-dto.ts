@@ -1,3 +1,5 @@
+import { DateUtil } from './../../generics/utils/date.util';
+
 export class PanoramaDto {
     private id: number;
     private gerencia: string;
@@ -13,6 +15,10 @@ export class PanoramaDto {
     private pendencias: string;
     private gerenciaPrimeiraLinha: string;
     private statusPreClinico: string;
+    private dataAsoAnoAnteriorString: string;
+    private dataAsoAnoAtualString: string;
+    private dataRealizacaoPreClinicoString: string;
+    private dateUtil: DateUtil = new DateUtil();
     
     getId() {
         return this.id;
@@ -98,4 +104,23 @@ export class PanoramaDto {
     setStatusPreClinico(statusPreClinico: string) {
         this.statusPreClinico = statusPreClinico;
     }
+    setDataAsoAnoAnteriorString(dataAsoAnoAnteriorString) {
+        this.dataAsoAnoAnteriorString = dataAsoAnoAnteriorString;
+    }
+    getDataAsoAnoAnteriorString() {
+        return this.dateUtil.parseDataToString(this.dataAsoAnoAnterior);
+    }
+    setDataAsoAnoAtualString(dataAsoAnoAtualString) {
+        this.dataAsoAnoAtualString = dataAsoAnoAtualString;
+    }
+    getDataAsoAnoAtualString() {
+        return this.dateUtil.parseDataToString(this.dataAsoAnoAtual);
+    }
+    setDataRealizacaoPreClinicoString(dataRealizacaoPreClinicoString){
+        this.dataRealizacaoPreClinicoString = dataRealizacaoPreClinicoString;
+    }
+    getDataRealizacaoPreClinicoString(){
+        return this.dateUtil.parseDataToString(this.dataRealizacaoPreClinico);
+    } 
+    
 }

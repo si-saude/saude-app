@@ -17,33 +17,36 @@ export class AutoComplete<F extends GenericFilter> {
         this.genericAutoComplete = genericAutoComplete;
     }
     
-    public getList(obj){
+    public getList(obj, getMethod){
+        let infos = obj[getMethod]().split('-');
+        let info = infos[infos.length - 1].trim();
         
-        this.filter = this.genericAutoComplete.getFilter(obj,this.filter);
-        this.service.list(this.filter)
-            .then(res => {
-                this.array = this.builder.cloneList(res.json().list);
-                
-                if(this.array.length > 0)
-                    this.objAutoComplete = [this.buildAutocomplete()];
-                else{
-                    this.objAutoComplete = [{'data': {'': null }}]
-                }
+        if ( this.lastValue == undefined || info != this.lastValue.trim() ) { 
+            this.filter = this.genericAutoComplete.getFilter(obj,this.filter);
+            
+            this.service.list(this.filter)
+                .then(res => {
+                    this.array = this.builder.cloneList(res.json().list);
                     
-            }).catch( error => {
-                console.log( error );
-            } );
+                    if(this.array.length > 0)
+                        this.objAutoComplete = [this.buildAutocomplete()];
+                    else{
+                        this.objAutoComplete = [{'data': {'': null }}]
+                    }
+                        
+                }).catch( error => {
+                    console.log( error );
+                } );
+        }
     }
     
     public getObj(input,obj,setMethod, getMethod){
-        
         let value = obj[setMethod.replace('set','get')]()[getMethod]();
-        
+
         if(input.target.value != undefined && input.target.value.includes('-')){
-            console.log('entrou');
-            let infos = input.target.value.split('-'); 
+            let infos = input.target.value.split('-');
             let id = infos[0].trim();
-            let info = infos[infos.length - 1].trim(); 
+            let info = infos[infos.length - 1].trim();
             
             this.lastValue = info;
             obj[setMethod]( this.array.find(a => a.getId().toString() == id) );

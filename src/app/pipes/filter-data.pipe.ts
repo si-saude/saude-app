@@ -15,7 +15,7 @@ export class FilterDataPipe implements PipeTransform {
     transform( array: any[], filter: any, tipo: string, value: string ) {
         
         if(filter == ''){
-            if(this.savedArray == undefined && array.length > 0){
+            if((this.savedArray == undefined && array.length > 0) || value == 'change'){
                 this.savedArray = array;
                 this.arrayCompleted = array;
             }
@@ -37,11 +37,14 @@ export class FilterDataPipe implements PipeTransform {
             let functions: Array<any> = new Array<any>();
             
             for(let key2 of Array.from(this.mapValue.get(key1).keys())) {                
-                if( this.mapValue.get(key1).get(key2) != undefined ){
+                if( this.mapValue.get(key1).get(key2) != undefined &&
+                        this.mapValue.get(key1).get(key2).length > 0 ){
                     //INCREMENTAR A VARIÁVEL LAMBDA
-                    let filterFunction = function(obj){
-                        return pipe.doFilter(obj,key1).toString().toLowerCase()
-                                .includes(pipe.mapValue.get(key1).get(key2).toLowerCase());
+                    let filterFunction = function(obj) {
+                        if ( pipe.doFilter(obj,key1) != undefined ) {
+                            return pipe.doFilter(obj,key1).toString().toLowerCase()
+                                    .includes(pipe.mapValue.get(key1).get(key2).toLowerCase());
+                        } else return false;
                     };
                     functions.push(filterFunction);
                 }

@@ -54,3 +54,18 @@
 .content-kanban {
 	margin-bottom: 100px !important;
 }
+
+.btn-remove {
+	margin-top: 0.5%;
+}
+
+.icon-remove {
+	margin: 0 auto;
+	padding-top: 23%;
+}
+
+.responsavel {
+	width: 50%;
+    margin: 0 auto;
+    margin-bottom: 5%;
+}

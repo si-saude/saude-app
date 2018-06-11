@@ -6,15 +6,20 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 <div class="container-kanban">
 
-	<div class="responsavel" *ngIf="verifyCoordenador()">
+	<div class="responsavel col s12" *ngIf="verifyCoordenador()">
+	
 		<fieldset>
 			<legend>Responsável</legend>
-			<select name="responsavel" class="browser-default"
-				[(ngModel)]="idResponsavel" (ngModelChange)="changeResponsavel()">
-				<option selected disabled value=0>Selecione um responsável</option>
-				<option *ngFor="let responsavel of responsaveis"
-					value="{{responsavel.id}}">{{responsavel.empregado.pessoa.nome}}</option>
-			</select>
+			<div class="row">
+				<select name="responsavel" class="browser-default col s10" style="width: 77%; margin-left: 2%"
+					[(ngModel)]="idResponsavel" (ngModelChange)="changeResponsavel()">
+					<option selected disabled value=0>Selecione um responsável</option>
+					<option *ngFor="let responsavel of responsaveis"
+						value="{{responsavel.id}}">{{responsavel.empregado.pessoa.nome}}</option>
+				</select>
+				<a class="col s2 btn-remove" [ngStyle]="{'cursor': 'pointer', 'width':'10%'}" (click)="allResponsaveis()"><i
+							class="material-icons btn icon-remove">delete</i></a>
+			</div>
 		</fieldset>
 	</div>
 

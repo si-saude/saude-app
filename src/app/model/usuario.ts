@@ -74,4 +74,15 @@ export class Usuario {
     setVersion(version: number) {
         this.version = version;
     }
+    
+    getNome() {
+        if ( this.pessoa != undefined )
+            return this.pessoa.getNome()
+        return undefined;
+    }
+    
+    setNome(nome: string) {
+        if ( this.pessoa != undefined )
+            this.pessoa.setNome(nome);
+    }
 }

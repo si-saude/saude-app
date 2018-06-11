@@ -11,6 +11,7 @@ import { SolicitacaoCentralIntegraRoutingModule } from './solicitacao-central-in
 import { ModalEmpregadoModule } from './../modal-empregado.module';
 import { ModalProfissionalModule } from './../modal-profissional.module';
 import { SharedModule } from './../shared.module';
+import { KanbanModule } from './../../kanban/kanban.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { SharedModule } from './../shared.module';
         MyDatePickerModule,
         ReportsModule,
         ModalEmpregadoModule,
-        ModalProfissionalModule
+        ModalProfissionalModule,
+        KanbanModule
      ],
      providers: [
         SolicitacaoCentralIntegraService

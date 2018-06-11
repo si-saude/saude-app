@@ -6,7 +6,7 @@ import {PessoaFilter} from './../../controller/pessoa/pessoa.filter';
 
 import {AutoComplete} from './../../generics/utils/autocomplete.util'
 
-export class EmpregadoAutocomplete{
+export class EmpregadoNomeAutocomplete{
     
     private autoComplete:AutoComplete<EmpregadoFilter>;
 

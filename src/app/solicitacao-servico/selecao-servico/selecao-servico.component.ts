@@ -19,6 +19,7 @@ import { ServicoBuilder } from './../../controller/servico/servico.builder';
 import { Usuario } from './../../model/usuario';
 import { UsuarioBuilder } from './../../controller/usuario/usuario.builder';
 import { BooleanFilter } from './../../generics/boolean.filter';
+import { EmpregadoNomeAutocomplete } from './../../controller/empregado/empregado-nome.autocomplete';
 
 @Component( {
     selector: 'app-selecao-servico',
@@ -33,10 +34,8 @@ export class SelecaoServicoComponent implements OnInit {
     servicos: Array<Servico>;
     usuario: Usuario;
     canChangeEmpregado: boolean;
-    empregadoToChange: Empregado;
     empregados: Array<Empregado>;
-    autocompleteEmpregado;
-    validEmpregado;
+    private autoCompleteEmp:EmpregadoNomeAutocomplete;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private solicitacaoServicoService: SolicitacaoServicoService ) {
@@ -45,10 +44,8 @@ export class SelecaoServicoComponent implements OnInit {
         this.tarefa = new TarefaBuilder().initialize( this.tarefa );
         this.servicos = new Array<Servico>();
         this.canChangeEmpregado = false;
-        this.empregadoToChange = new EmpregadoBuilder().initialize(this.empregadoToChange);
         this.empregados = new Array<Empregado>();
-        this.autocompleteEmpregado = [];
-        this.validEmpregado = "";
+        this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.solicitacaoServicoService.getEmpregadoService());
     }
 
     ngOnInit() {
@@ -88,6 +85,8 @@ export class SelecaoServicoComponent implements OnInit {
                                     gerenciaFilter = new GerenciaFilter();
                                     gerenciaFilter.setGerente(new EmpregadoFilter());
                                     gerenciaFilter.getGerente().setMatricula( this.empregado.getMatricula() );
+                                    this.autoCompleteEmp.getAutocomplete().initializeLastValue(this.tarefa
+                                            .getCliente().getPessoa().getNome());
     
                                     this.solicitacaoServicoService.getGerencia( gerenciaFilter )
                                         .then( res => {
@@ -135,82 +134,82 @@ export class SelecaoServicoComponent implements OnInit {
             } )        
     }
     
-    getEmpregado( evento ) {
-        if ( this.empregadoToChange !== undefined ) {
-            let empregado: Empregado = this.empregados.find( e => {
-                    if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
-                        this.empregadoToChange.getPessoa().getNome().trim() || 
-                        e.getPessoa().getNome().trim() == this.empregadoToChange.getPessoa().getNome().trim() )
-                        return true;
-                    else return false;
-                });
-            
-            if ( empregado !== undefined ) {
-                this.empregadoToChange = new EmpregadoBuilder().clone(empregado);
-            } else this.empregadoToChange = new EmpregadoBuilder().initialize( this.empregadoToChange );
-        } else this.empregadoToChange = new EmpregadoBuilder().initialize( this.empregadoToChange );
-    }
-    
-    private oldNomeEmpregado: string;
-    selectEmpregado( evento: string ) {
-        if ( this.oldNomeEmpregado != evento ) {
-            this.oldNomeEmpregado = evento;
-            if ( evento.length > 4 ) {
-                let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-                empregadoFilter.getPessoa().setNome(evento);
-                
-                if ( !this.usuario.getGestorCss() ) {
-                    empregadoFilter.setGerencia(new GerenciaFilter());
-                    empregadoFilter.getGerencia().setCodigoCompleto( this.empregado.getGerencia().getCodigoCompleto() )
-                }
-                
-                this.solicitacaoServicoService.getEmpregado( empregadoFilter )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList( res.json().list ); 
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-    
-    private oldNomeByChave: string;
-    selectEmpregadoByChave( evento ) {
-        if ( this.oldNomeByChave != evento ) {
-            this.oldNomeByChave = evento;
-            
-            let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-            empregadoFilter.setChave(evento);
-            
-            if ( !this.usuario.getGestorCss() ) {
-                empregadoFilter.setGerencia(new GerenciaFilter());
-                empregadoFilter.getGerencia().setCodigoCompleto( this.empregado.getGerencia().getCodigoCompleto() )
-            }
-            
-            this.solicitacaoServicoService.getEmpregadoByChave( empregadoFilter )
-                .then( res => {
-                    this.empregados = new EmpregadoBuilder().cloneList( res.json() ); 
-                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
-        }
-    }
-    
-    buildAutocompleteEmpregado( empregados: Array<Empregado> ) {
-        let data = {};
-        empregados.forEach( item => {
-            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
+//    getEmpregado( evento ) {
+//        if ( this.empregadoToChange !== undefined ) {
+//            let empregado: Empregado = this.empregados.find( e => {
+//                    if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
+//                        this.empregadoToChange.getPessoa().getNome().trim() || 
+//                        e.getPessoa().getNome().trim() == this.empregadoToChange.getPessoa().getNome().trim() )
+//                        return true;
+//                    else return false;
+//                });
+//            
+//            if ( empregado !== undefined ) {
+//                this.empregadoToChange = new EmpregadoBuilder().clone(empregado);
+//            } else this.empregadoToChange = new EmpregadoBuilder().initialize( this.empregadoToChange );
+//        } else this.empregadoToChange = new EmpregadoBuilder().initialize( this.empregadoToChange );
+//    }
+//    
+//    private oldNomeEmpregado: string;
+//    selectEmpregado( evento: string ) {
+//        if ( this.oldNomeEmpregado != evento ) {
+//            this.oldNomeEmpregado = evento;
+//            if ( evento.length > 4 ) {
+//                let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+//                empregadoFilter.getPessoa().setNome(evento);
+//                
+//                if ( !this.usuario.getGestorCss() ) {
+//                    empregadoFilter.setGerencia(new GerenciaFilter());
+//                    empregadoFilter.getGerencia().setCodigoCompleto( this.empregado.getGerencia().getCodigoCompleto() )
+//                }
+//                
+//                this.solicitacaoServicoService.getEmpregado( empregadoFilter )
+//                    .then( res => {
+//                        this.empregados = new EmpregadoBuilder().cloneList( res.json().list ); 
+//                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+//                    } )
+//                    .catch( error => {
+//                        console.log( error );
+//                    } )
+//            }
+//        }
+//    }
+//    
+//    private oldNomeByChave: string;
+//    selectEmpregadoByChave( evento ) {
+//        if ( this.oldNomeByChave != evento ) {
+//            this.oldNomeByChave = evento;
+//            
+//            let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+//            empregadoFilter.setChave(evento);
+//            
+//            if ( !this.usuario.getGestorCss() ) {
+//                empregadoFilter.setGerencia(new GerenciaFilter());
+//                empregadoFilter.getGerencia().setCodigoCompleto( this.empregado.getGerencia().getCodigoCompleto() )
+//            }
+//            
+//            this.solicitacaoServicoService.getEmpregadoByChave( empregadoFilter )
+//                .then( res => {
+//                    this.empregados = new EmpregadoBuilder().cloneList( res.json() ); 
+//                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+//                } )
+//                .catch( error => {
+//                    console.log( error );
+//                } )
+//        }
+//    }
+//    
+//    buildAutocompleteEmpregado( empregados: Array<Empregado> ) {
+//        let data = {};
+//        empregados.forEach( item => {
+//            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
+//        } );
+//
+//        let array = {};
+//        array["data"] = data;
+//
+//        return array;
+//    }
 
     next( id ) {
         if ( id == 0 ) {
@@ -219,15 +218,12 @@ export class SelecaoServicoComponent implements OnInit {
             return;
         } else {
             if ( this.canChangeEmpregado == true ) {
-                if ( this.empregadoToChange != undefined && this.empregadoToChange.getId() > 0 )
-                    this.tarefa.setCliente(this.empregadoToChange);
-                else {
+                if ( this.tarefa.getCliente() == undefined && this.tarefa.getCliente().getId() <= 0 ) {
                     this.toastParams = ['Por favor, seleciona um empregado corretamente', 4000];
                     this.globalActions.emit( 'toast' );
                     return;
                 }
             }
-            console.log(this.tarefa);
             let servico: Servico = this.servicos.find( f => f.getId() == id );
             this.tarefa.setServico(servico);
             localStorage.setItem("tarefa", JSON.stringify(this.tarefa));

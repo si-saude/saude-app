@@ -46,19 +46,19 @@
 					<mfDefaultSorter by="dataAsoAnoAnterior">Data Aso Anterior</mfDefaultSorter>
 					<input type="text" name="dataAsoAnoAnterior" style="width: 90%" 
 							placeholder="filtrar data aso ano anterior" 
-							(input)="selectFilter($event, 'dataAsoAnoAnterior')">
+							(input)="selectFilter($event, 'dataAsoAnoAnteriorString')">
 				</th>
 				<th style="width: 1%; font-size: 13px">
 					<mfDefaultSorter by="dataRealizacaoPreClinico">Data Realização Pré-Clínico</mfDefaultSorter>
 					<input type="text" name="dataRealizacaoPreClinico" style="width: 90%" 
 							placeholder="filtrar data realização pré clínico" 
-							(input)="selectFilter($event, 'dataRealizacaoPreClinico')">
+							(input)="selectFilter($event, 'dataRealizacaoPreClinicoString')">
 				</th>
 				<th style="width: 1%">
 					<mfDefaultSorter by="dataAsoAnoAtual">Data Aso Atual</mfDefaultSorter>
 					<input type="text" name="dataAsoAnoAtual" style="width: 90%" 
 							placeholder="filtrar data aso ano atual" 
-							(input)="selectFilter($event, 'dataAsoAnoAtual')">
+							(input)="selectFilter($event, 'dataAsoAnoAtualString')">
 				</th>
 				<th style="width: 1%">
 					<div class="row">
@@ -111,9 +111,9 @@
 				<td>{{item.nome}}</td>
 				<td>{{item.mesConvocacao}}</td>
 				<td>{{item.base}}</td>
-				<td>{{item.dataAsoAnoAnterior}}</td>
-				<td>{{item.dataRealizacaoPreClinico | transformDate}}</td>
-				<td>{{item.dataAsoAnoAtual | transformDate}}</td>
+				<td>{{item.dataAsoAnoAnteriorString}}</td>
+				<td>{{item.dataRealizacaoPreClinicoString}}</td>
+				<td>{{item.dataAsoAnoAtualString}}</td>
 				<td>{{item.situacaoAso}}</td>
 				<td>{{item.asoNoPrazo}}</td>
 				<td>{{item.pendencias}}</td>

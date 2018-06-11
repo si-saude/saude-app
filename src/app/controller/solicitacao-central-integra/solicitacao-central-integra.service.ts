@@ -80,4 +80,8 @@ export class SolicitacaoCentralIntegraService extends GenericService {
         return this.empregadoService;
     }
     
+    public getProfissionalService(){
+        return this.profissionalSaudeService;
+    }
+    
 }

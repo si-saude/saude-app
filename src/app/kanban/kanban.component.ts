@@ -174,7 +174,27 @@ export class KanbanComponent {
         solicitacaoCentralIntegraFilter.setTarefa( new TarefaFilter() );
         solicitacaoCentralIntegraFilter.getTarefa().setResponsavel( new ProfissionalSaudeFilter() );
         solicitacaoCentralIntegraFilter.getTarefa().getResponsavel().setId( this.idResponsavel );
+        solicitacaoCentralIntegraFilter.setPageSize( Math.pow( 2, 31 ) - 1 );
+        solicitacaoCentralIntegraFilter.setPageNumber( 1 );
+        solicitacaoCentralIntegraFilter.setConcluido(new BooleanFilter());
+        solicitacaoCentralIntegraFilter.getConcluido().setValue(2);
         this.kanbanService.list( solicitacaoCentralIntegraFilter )
+            .then( res => {
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json().list );
+                this.constructCardsSolicitacoes();
+            } )
+            .catch( error => {
+                console.log( "Erro ao buscar as solicitacoees central integra" );
+            } )
+    }
+    
+    allResponsaveis() {
+        this.idResponsavel = 0;
+        this.getSolicitacoes();
+    }
+    
+    getListSolicitacoes( solicitacaoCentralIntegraFilter ) {
+        this.kanbanService.list( solicitacaoCentralIntegraFilter ) 
             .then( res => {
                 this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json().list );
                 this.constructCardsSolicitacoes();

@@ -103,4 +103,8 @@ export class FilaEsperaOcupacionalService extends GenericService {
             .toPromise();
     }
     
+    getEmpregadoService() {
+        return this.empregadoService;
+    }
+    
 }

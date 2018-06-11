@@ -61,7 +61,6 @@ export class EmpregadosPorGrupoComponent {
                 .catch(error => {
                     console.log("Erro ao buscar empregados por grupo monitoramento.");
                 })
-            this.value = "$*all*$";
             this.arrayObjects = [[]];
             this.arrayTypes = new Array<string>();
         }
@@ -78,15 +77,14 @@ export class EmpregadosPorGrupoComponent {
     }
     
     selectFilter( event, type: string ) {
-        this.filter = event;
+        this.filter = event.target.value;
         this.typeFilter = type;
-        this.value = $('input[name='+type).val();
+        this.value = type;
     }
     
     dropdown( event, tipo ) {
         let arrayDropDown: Array<any> = new Array<any>();
         arrayDropDown = this.getItensDropDown( tipo );
-        this.value = "";
         
         $("#dropdown").empty();
         let count = 0;
@@ -110,11 +108,14 @@ export class EmpregadosPorGrupoComponent {
                             component.arrayObjects[$(this).attr('title')].indexOf($(this).attr('id')), 1);
                 }
                 
-                component.filter = $(this).attr('id');
-                component.typeFilter = $(this).attr('title');
+                component.filter = this.getAttribute('id');
+                component.typeFilter = this.getAttribute('title');
+                component.value = undefined;
+                
                 setTimeout(() => {
                     component.filter = "";
                     component.typeFilter = "";
+                    component.value = "timeout";
                 }, 50);
             });
                 

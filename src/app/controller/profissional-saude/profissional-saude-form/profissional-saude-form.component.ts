@@ -27,6 +27,7 @@ import { ServicoBuilder } from './../../servico/servico.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
+import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 
 @Component( {
     selector: 'app-profissional-saude-form',
@@ -51,7 +52,8 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     assinaturaSrc: any;
 
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-    
+    private autoCompleteEmp:EmpregadoNomeAutocomplete;
+
     constructor( private route: ActivatedRoute,
         private profissionalSaudeService: ProfissionalSaudeService,
         router: Router) {
@@ -65,7 +67,9 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         this.autocompleteEmpregado = [];
         this.servicos = new ServicoBuilder().initializeList( this.servicos );
         this.servicosSelecteds = new Array<Servico>();
-        
+
+        this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.profissionalSaudeService.getEmpregadoService());
+
         this.validEmpregado = "";
         this.autocompleteEmpregado = [];
     }
@@ -85,6 +89,8 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                             this.validEmpregado = this.profissionalSaude.getEmpregado().getPessoa().getNome();
                             this.saveArrayEmpregado();
                             this.parseAndSetDates();
+                            this.autoCompleteEmp.getAutocomplete().initializeLastValue(this.profissionalSaude.getEmpregado()
+                                    .getPessoa().getNome());
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );

@@ -19,8 +19,8 @@
 	<fieldset>
 		<legend> Eixo </legend>
 		<select name="selectEixoDiagnostico" class="browser-default"
-			[(ngModel)]="selectEixoId" (ngModelChange)="fetchDiagnosticos()">
-			<option disabled selected value="">Selecione um eixo</option>
+			[(ngModel)]="selectEixoId" (change)="fetchDiagnosticos()">
+			<option disabled selected value=0>Selecione um eixo</option>
 			<option *ngFor="let eixo of eixos"
 				value="{{eixo.id}}">{{eixo.titulo}}</option>
 		</select>
@@ -32,15 +32,15 @@
 		    <tr>
 		        <th style="width: 0.2%">
 		            <mfDefaultSorter by="codigo">Código</mfDefaultSorter>
-		            <input type="text" name="filter-diagnostico-codigo" style="width: 90%" 
+		            <input type="text" name="codigo" style="width: 90%" 
 							placeholder="filtrar código"
-							(input)="selectFilter($event, 'filter-diagnostico-codigo')">
+							(input)="selectFilter($event, 'codigo')">
 		        </th>
 		        <th style="width: 1%">
 		            <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
-		            <input type="text" name="filter-diagnostico-descricao" style="width: 90%" 
+		            <input type="text" name="descricao" style="width: 90%" 
 							placeholder="filtrar descrição"
-							(input)="selectFilter($event, 'filter-diagnostico-descricao')">
+							(input)="selectFilter($event, 'descricao')">
 		        </th>
 		    </tr>
 	    </thead>
