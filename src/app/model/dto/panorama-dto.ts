@@ -13,6 +13,7 @@ export class PanoramaDto {
     private pendencias: string;
     private gerenciaPrimeiraLinha: string;
     private statusPreClinico: string;
+    private examesPendentes: string;
     
     getId() {
         return this.id;
@@ -97,5 +98,11 @@ export class PanoramaDto {
     }
     setStatusPreClinico(statusPreClinico: string) {
         this.statusPreClinico = statusPreClinico;
+    }
+    getExamesPendentes() {
+        return this.examesPendentes;
+    }
+    setExamesPendentes(examesPendentes: string) {
+        this.examesPendentes = examesPendentes;
     }
 }

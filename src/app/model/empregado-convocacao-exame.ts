@@ -12,9 +12,9 @@ export class EmpregadoConvocacaoExame {
     private relatorioMedico: RelatorioMedico;
     private pendenteRelatorio: boolean;
     private version: number;
-    private recebimento: Date;
+    private realizacao: Date;
 
-    private recebimentoCustomDate: CustomDate = new CustomDate(this.recebimento);
+    private realizacaoCustomDate: CustomDate = new CustomDate(this.realizacao);
 
     getId() {
         return this.id;
@@ -72,21 +72,21 @@ export class EmpregadoConvocacaoExame {
         return this.version;
     }
     
-    getRecebimento(){
-        this.recebimento = this.recebimentoCustomDate.getApiDate();
-        return this.recebimento;
+    getRealizacao(){
+        this.realizacao = this.realizacaoCustomDate.getApiDate();
+        return this.realizacao;
     }
     
-    setRecebimento(recebimento: Date){
-        this.recebimentoCustomDate.setApiDate(recebimento);
-        this.recebimento = recebimento;
+    setRealizacao(realizacao: Date){
+        this.realizacaoCustomDate.setApiDate(realizacao);
+        this.realizacao = realizacao;
     }
     
-    getRecebimentoCustomDate(){
-        return this.recebimentoCustomDate;
+    getRealizacaoCustomDate(){
+        return this.realizacaoCustomDate;
     }
     
-    setRecebimentoCustomDate(recebimentoCustomDate: CustomDate){
-        this.recebimentoCustomDate = recebimentoCustomDate;
+    setRealizacaoCustomDate(realizacaoCustomDate: CustomDate){
+        this.realizacaoCustomDate = realizacaoCustomDate;
     }
 }

@@ -68,7 +68,7 @@
 					<tr class="row col s12">
 						<th class="col s1">Código</th>
 						<th class="col s7">Descrição</th>
-						<th class="col s2">Recebimento</th>
+						<th class="col s2">Realização</th>
 						<th class="col s1">Conforme</th>
 						<th class="col s1">Excluir</th>
 					</tr>
@@ -81,10 +81,10 @@
 								<td class="col s1 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
 								<td class="col s7 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
 								<div class="input-field col s2">
-									<my-date-picker name="empregadoConvocacaoExame[{{eCE}}].recebimentoCustomDate.appDate"
+									<my-date-picker name="empregadoConvocacaoExame[{{eCE}}].realizacaoCustomDate.appDate"
 										[options]="myDatePickerOptions" 
-										[(ngModel)]="empregadoConvocacaoExame.recebimentoCustomDate.appDate"
-										placeholder="Recebimento"> </my-date-picker>
+										[(ngModel)]="empregadoConvocacaoExame.realizacaoCustomDate.appDate"
+										placeholder="Realização"> </my-date-picker>
 								</div>
 								<td class="col s1 checkbox-conforme">
 									<input [disabled]="empregadoConvocacaoExame.pendenteRelatorio"

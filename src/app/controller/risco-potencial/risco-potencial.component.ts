@@ -249,6 +249,14 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                     this.array = JSON.parse( JSON.stringify( res.json() ) ).list;
                         if ( this.array != undefined ) {
                             this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
+                            this.riscoPotenciais.sort(function(a, b){
+                                if ( a['valor'] > b['valor'] )
+                                    return -1;
+                                else if ( a['valor'] < b['valor'] )
+                                    return 1;
+                                else return 0;
+                            });                            
+                            
                             for ( let i = 0; i < this.riscoPotenciais.length; i++)
                                 this.riscoPotenciais[i].setRanking(i+1)
                                 
