@@ -1,3 +1,5 @@
+import { CustomDate} from './../generics/utils/custom-date.util';
+
 export class Ghee {
  
     private id: number = 0;
@@ -7,7 +9,10 @@ export class Ghee {
     private dataCriacao: Date;
     private dataDesativacao: Date;
     private descricao: string;
-    
+
+    private dataCriacaoCustomDate: CustomDate = new CustomDate(this.dataCriacao);
+    private dataDesativacaoCustomDate: CustomDate = new CustomDate(this.dataDesativacao);
+
     getId(): number {
         return this.id;
     }
@@ -40,20 +45,40 @@ export class Ghee {
         this.nome = nome;
     }
     
-    getDataCriacao():Date{
+    getDataCriacao() {
+        this.dataCriacao = this.dataCriacaoCustomDate.getApiDate();
         return this.dataCriacao;
     }
     
-    setDataCriacao(dC:Date){
-        this.dataCriacao = dC;
+    setDataCriacao(dataCriacao: Date) {
+        this.dataCriacaoCustomDate.setApiDate(dataCriacao);
+        this.dataCriacao = dataCriacao;
     }
     
-    getDataDesativacao():Date{
+    getDataCriacaoCustomDate(){
+        return this.dataCriacaoCustomDate;
+    }
+    
+    setDataCriacaoCustomDate(dataCriacaoCustomDate: CustomDate){
+        this.dataCriacaoCustomDate = dataCriacaoCustomDate;
+    }
+    
+    getDataDesativacao() {
+        this.dataDesativacao = this.dataDesativacaoCustomDate.getApiDate();
         return this.dataDesativacao;
     }
     
-    setDataDesativacao(dD:Date){
-        this.dataDesativacao = dD;
+    setDataDesativacao(dataDesativacao: Date) {
+        this.dataDesativacaoCustomDate.setApiDate(dataDesativacao);
+        this.dataDesativacao = dataDesativacao;
+    }
+    
+    getDataDesativacaoCustomDate(){
+        return this.dataDesativacaoCustomDate;
+    }
+    
+    setDataDesativacaoCustomDate(dataDesativacaoCustomDate: CustomDate){
+        this.dataDesativacaoCustomDate = dataDesativacaoCustomDate;
     }
     
     getDescricao():string{

@@ -1,6 +1,7 @@
 import { Profissiograma } from './profissiograma';
 import { GerenciaConvocacao } from './gerencia-convocacao';
 import { EmpregadoConvocacao } from './empregado-convocacao';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Convocacao {
     private id: number;
@@ -12,6 +13,9 @@ export class Convocacao {
     private inicio: Date;
     private fim: Date;
     private version: number;
+    
+    private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
+    private fimCustomDate: CustomDate = new CustomDate(this.fim);
 
     getId() {
         return this.id;
@@ -62,18 +66,22 @@ export class Convocacao {
     }
     
     getInicio() {
+        this.inicio = this.inicioCustomDate.getApiDate();
         return this.inicio;
     }
     
     setInicio(inicio: Date) {
+        this.inicioCustomDate.setApiDate(inicio);
         this.inicio = inicio;
     }
     
     getFim() {
+        this.fim = this.fimCustomDate.getApiDate();
         return this.fim;
     }
     
     setFim(fim: Date) {
+        this.fimCustomDate.setApiDate(fim);
         this.fim = fim;
     }
     
@@ -83,6 +91,22 @@ export class Convocacao {
     
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    getInicioCustomDate(){
+        return this.inicioCustomDate;
+    }
+    
+    setInicioCustomDate(inicioCustomDate: CustomDate){
+        this.inicioCustomDate = inicioCustomDate;
+    }
+    
+    getFimCustomDate(){
+        return this.fimCustomDate;
+    }
+    
+    setFimCustomDate(fimCustomDate: CustomDate){
+        this.fimCustomDate = fimCustomDate;
     }
     
 }

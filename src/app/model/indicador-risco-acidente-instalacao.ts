@@ -1,5 +1,6 @@
 import { IndicadorRiscoAcidente } from './indicador-risco-acidente';
 import { Instalacao } from './instalacao';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class IndicadorRiscoAcidenteInstalacao {
     private id: number;
@@ -8,6 +9,9 @@ export class IndicadorRiscoAcidenteInstalacao {
     private indicadorRisco: IndicadorRiscoAcidente;
     private dataInspecao: Date;
     private avaliacao: number;
+
+    private dataInspecaoCustomDate: CustomDate = new CustomDate(this.dataInspecao);
+
     
     getId(): number {
         return this.id;
@@ -41,12 +45,22 @@ export class IndicadorRiscoAcidenteInstalacao {
         this.indicadorRisco = indicador;
     }
     
-    getDataInspecao():Date{
+    getDataInspecao() {
+        this.dataInspecao = this.dataInspecaoCustomDate.getApiDate();
         return this.dataInspecao;
     }
     
-    setDataInspecao(dataInspecao:Date){
+    setDataInspecao(dataInspecao: Date) {
+        this.dataInspecaoCustomDate.setApiDate(dataInspecao);
         this.dataInspecao = dataInspecao;
+    }
+    
+    getDataInspecaoCustomDate(){
+        return this.dataInspecaoCustomDate;
+    }
+    
+    setDataInspecaoCustomDate(dataInspecaoCustomDate: CustomDate){
+        this.dataInspecaoCustomDate = dataInspecaoCustomDate;
     }
     
     getAvaliacao():number{

@@ -1,10 +1,17 @@
+import * as moment from 'moment';
+
 export class DateUtil {
     
     public parseDataToObjectDatePicker( data ) {
         
-        if ( data === undefined || data === null ) {
+        if ( data === undefined || data === null )
             return undefined;
+        else if ( typeof data == 'object' ) {
+            let d: Date = new Date(data)
+            let o = Object.create( { date: { year: d.getFullYear(), month: d.getMonth()+1, day: d.getDate() } } );
+            return o;
         }
+        
         let s = data.split( "T" );
         let datas = s[0].split( "-" );
         
@@ -13,7 +20,7 @@ export class DateUtil {
             datas =  [ datas[2], datas[1], datas[0] ];
         }
         
-        if ( datas[2].substring( 0, 1 ) === "0" ) {
+        if ( datas[2].substring( 0, 1 ) == "0" ) {
             datas[2] = datas[2].replace( "0", "" );
         }
         if ( datas[1].substring( 0, 1 ) === "0" ) {

@@ -11,6 +11,7 @@ import { Instalacao } from './instalacao';
 import { EmpregadoVacina } from './empregado-vacina';
 import { GrupoMonitoramento } from './grupo-monitoramento';
 import { HistoricoGrupoMonitoramento } from './historico-grupo-monitoramento';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Empregado {
     private id: number = 0;
@@ -40,6 +41,8 @@ export class Empregado {
     private pis: string;
     private dataAdmissao: Date;
     private version: number;
+    
+    private dataAdmissaoCustomDate: CustomDate = new CustomDate(this.dataAdmissao);
 
     getId(): number {
         return this.id;
@@ -250,11 +253,21 @@ export class Empregado {
     }
     
     getDataAdmissao() {
+        this.dataAdmissao = this.dataAdmissaoCustomDate.getApiDate();
         return this.dataAdmissao;
     }
     
     setDataAdmissao(dataAdmissao: Date) {
+        this.dataAdmissaoCustomDate.setApiDate(dataAdmissao);
         this.dataAdmissao = dataAdmissao;
+    }
+    
+    getDataAdmissaoCustomDate(){
+        return this.dataAdmissaoCustomDate;
+    }
+    
+    setDataAdmissaoCustomDate(dataAdmissaoCustomDate: CustomDate){
+        this.dataAdmissaoCustomDate = dataAdmissaoCustomDate;
     }
        
 }

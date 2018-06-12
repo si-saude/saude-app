@@ -1,4 +1,5 @@
 import { Profissional } from './profissional';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class ProfissionalConselho {
     private id: number = 0;
@@ -8,6 +9,8 @@ export class ProfissionalConselho {
     private vencimento: Date;
     private profissional: Profissional;
     private version:number;
+
+    private vencimentoCustomDate: CustomDate = new CustomDate(this.vencimento);
 
     getId() {
         return this.id;
@@ -42,11 +45,21 @@ export class ProfissionalConselho {
     }
 
     getVencimento() {
+        this.vencimento = this.vencimentoCustomDate.getApiDate();
         return this.vencimento;
     }
-
+    
     setVencimento(vencimento: Date) {
+        this.vencimentoCustomDate.setApiDate(vencimento);
         this.vencimento = vencimento;
+    }
+    
+    getVencimentoCustomDate(){
+        return this.vencimentoCustomDate;
+    }
+    
+    setVencimentoCustomDate(vencimentoCustomDate: CustomDate){
+        this.vencimentoCustomDate = vencimentoCustomDate;
     }
 
     getProfissional() {

@@ -80,12 +80,14 @@
 					<div class="input-field col s6">
 						<label for="inicio">Início</label>
 						<my-date-picker name="inicio" [options]="myDatePickerOptions"
-							[(ngModel)]="inicio" placeholder="Início"> </my-date-picker>
+							[(ngModel)]="convocacao.inicioCustomDate.appDate" 
+							placeholder="Início"> </my-date-picker>
 					</div>
 					<div class="input-field col s6">
 						<label for="fim">Fim</label>
 						<my-date-picker name="fim" [options]="myDatePickerOptions"
-							[(ngModel)]="fim" placeholder="Fim"> </my-date-picker>
+							[(ngModel)]="convocacao.fimCustomDate.appDate" 
+							placeholder="Fim"> </my-date-picker>
 					</div>
 				</div>
 

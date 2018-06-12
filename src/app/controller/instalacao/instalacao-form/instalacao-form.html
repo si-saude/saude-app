@@ -99,7 +99,7 @@
 									<my-date-picker
 										name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].dataInspecao"
 										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoAcidente[i]"
+										[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].dataInspecaoAcidenteCustomDate.appDate"
 										placeholder="Data de Inspeção"> </my-date-picker>
 								</div>
 
@@ -179,7 +179,7 @@
 									<my-date-picker
 										name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].dataInspecao"
 										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoAmbiental[i]"
+										[(ngModel)]="instalacao.dataInspecaoAmbiental[i].dataInspecaoAcidenteCustomDate.appDate"
 										placeholder="Data de Inspeção"> </my-date-picker>
 								</div>
 
@@ -260,7 +260,7 @@
 									<my-date-picker
 										name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].dataInspecao"
 										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoErgonomico[i]"
+										[(ngModel)]="instalacao.dataInspecaoErgonomico[i].dataInspecaoAcidenteCustomDate.appDate"
 										placeholder="Data de Inspeção"> </my-date-picker>
 								</div>
 
@@ -340,7 +340,7 @@
 									<my-date-picker
 										name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].dataInspecao"
 										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoSanitario[i]"
+										[(ngModel)]="instalacao.dataInspecaoSanitario[i].dataInspecaoAcidenteCustomDate.appDate"
 										placeholder="Data de Inspeção"> </my-date-picker>
 								</div>
 
@@ -420,7 +420,7 @@
 									<my-date-picker
 										name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].dataInspecao"
 										[options]="myDatePickerOptions"
-										[(ngModel)]="dataInspecaoSaudeAmbiental[i]"
+										[(ngModel)]="instalacao.dataInspecaoSaudeAmbiental[i].dataInspecaoAcidenteCustomDate.appDate"
 										placeholder="Data de Inspeção"> </my-date-picker>
 								</div>
 

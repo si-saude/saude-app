@@ -1,5 +1,6 @@
 import { Empregado } from './empregado';
 import { Vacina } from './vacina';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class EmpregadoVacina {
     private id: number;
@@ -12,6 +13,9 @@ export class EmpregadoVacina {
     private proximaDose: Date;
     private version: number;
     
+    private dataCustomDate: CustomDate = new CustomDate(this.data);
+    private proximaDoseCustomDate: CustomDate = new CustomDate(this.proximaDose);
+
     getId() {
         return this.id;
     }
@@ -37,11 +41,21 @@ export class EmpregadoVacina {
     }
 
     getData() {
+        this.data = this.dataCustomDate.getApiDate();
         return this.data;
     }
     
     setData(data: Date) {
+        this.dataCustomDate.setApiDate(data);
         this.data = data;
+    }
+    
+    getDataCustomDate(){
+        return this.dataCustomDate;
+    }
+    
+    setDataCustomDate(dataCustomDate: CustomDate){
+        this.dataCustomDate = dataCustomDate;
     }
     
     getLote() {
@@ -69,11 +83,21 @@ export class EmpregadoVacina {
     }
     
     getProximaDose() {
+        this.proximaDose = this.proximaDoseCustomDate.getApiDate();
         return this.proximaDose;
     }
     
     setProximaDose(proximaDose: Date) {
+        this.proximaDoseCustomDate.setApiDate(proximaDose);
         this.proximaDose = proximaDose;
+    }
+    
+    getProximaDoseCustomDate(){
+        return this.proximaDoseCustomDate;
+    }
+    
+    setProximaDoseCustomDate(proximaDoseCustomDate: CustomDate){
+        this.proximaDoseCustomDate = proximaDoseCustomDate;
     }
     
     getVersion() {

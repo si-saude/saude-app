@@ -1,5 +1,6 @@
 import { IndicadorRiscoSaudeAmbiental } from './indicador-risco-saude-ambiental';
 import { Instalacao } from './instalacao';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class IndicadorRiscoSaudeAmbientalInstalacao{
     private id: number;
@@ -8,7 +9,9 @@ export class IndicadorRiscoSaudeAmbientalInstalacao{
     private indicadorRisco: IndicadorRiscoSaudeAmbiental;
     private dataInspecao: Date;
     private avaliacao: number;
-    
+
+    private dataInspecaoCustomDate: CustomDate = new CustomDate(this.dataInspecao);
+
     getId(): number {
         return this.id;
     }
@@ -41,12 +44,22 @@ export class IndicadorRiscoSaudeAmbientalInstalacao{
         this.indicadorRisco = indicador;
     }
     
-    getDataInspecao():Date{
+    getDataInspecao() {
+        this.dataInspecao = this.dataInspecaoCustomDate.getApiDate();
         return this.dataInspecao;
     }
     
-    setDataInspecao(dataInspecao:Date){
+    setDataInspecao(dataInspecao: Date) {
+        this.dataInspecaoCustomDate.setApiDate(dataInspecao);
         this.dataInspecao = dataInspecao;
+    }
+    
+    getDataInspecaoCustomDate(){
+        return this.dataInspecaoCustomDate;
+    }
+    
+    setDataInspecaoCustomDate(dataInspecaoCustomDate: CustomDate){
+        this.dataInspecaoCustomDate = dataInspecaoCustomDate;
     }
     
     getAvaliacao():number{

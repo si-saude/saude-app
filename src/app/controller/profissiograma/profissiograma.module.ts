@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MyDatePickerModule } from 'mydatepicker';
-
 import { ProfissiogramaComponent } from './profissiograma.component';
 import { ProfissiogramaService } from './profissiograma.service';
 import { ProfissiogramaRoutingModule } from './profissiograma.routing.module';
@@ -20,7 +18,6 @@ import { ProfissiogramaFormDetailComponent } from './profissiograma-form/profiss
      ],
      imports: [
         ProfissiogramaRoutingModule,
-        MyDatePickerModule,
         SharedModule
      ],
      providers: [

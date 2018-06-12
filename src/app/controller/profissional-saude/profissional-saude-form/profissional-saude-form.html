@@ -46,7 +46,7 @@
 					<div class="input-field col s4">
 						<label for="dataAso">Data do ASO</label>
 						<my-date-picker name="dataAso" [options]="myDatePickerOptions"
-							[(ngModel)]="dataAso" placeholder="Data do ASO">
+							[(ngModel)]="profissionalSaude.dataAsoCustomDate.appDate" placeholder="Data do ASO">
 						</my-date-picker>
 					</div>
 				</div>
@@ -256,7 +256,7 @@
 										<label for="dataCurriculoCurso">Data</label>
 										<my-date-picker name="data" [options]="myDatePickerOptions"
 											name="profissionalSaude.curriculo.curriculoCursos[{{i}}].data"
-											[(ngModel)]="dataCurriculoCursos[i]" placeholder="Data">
+											[(ngModel)]="curriculoCursos.dataCustomDate.appDate" placeholder="Data">
 										</my-date-picker>
 									</div>
 
@@ -317,7 +317,7 @@
 							<label for="vencimento" maxlength="2">Vencimento</label>
 							<my-date-picker name="vencimentoProfissionalConselho"
 								[options]="myDatePickerOptions"
-								[(ngModel)]="vencimentoProfissionalConselho"
+								[(ngModel)]="profissionalSaude.profissionalConselho.vencimentoCustomDate.appDate"
 								placeholder="Vencimento"></my-date-picker>
 						</div>
 					</div>
