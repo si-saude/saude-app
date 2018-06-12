@@ -270,4 +270,14 @@ export class Empregado {
         this.dataAdmissaoCustomDate = dataAdmissaoCustomDate;
     }
        
+    getNome(){
+        if(this.pessoa != undefined)
+            return this.pessoa.getNome();
+        return undefined;
+    }
+    
+    setNome(nome){
+        if(this.pessoa != undefined)
+            this.pessoa.setNome(nome);
+    }
 }

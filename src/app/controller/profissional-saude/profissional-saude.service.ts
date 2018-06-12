@@ -102,5 +102,9 @@ export class ProfissionalSaudeService extends GenericService {
     getVacinas() {
         return this.vacinaService.getVacinas();
     }
+    
+    getEmpregadoService() {
+        return this.empregadoService;
+    }
 
 }

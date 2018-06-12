@@ -49,8 +49,6 @@ export class ModalIntervencaoComponent{
     }
     
     openModalIntervencao( ) {
-        this.value = "$*new*$";
-        this.filter = $("input[name='filter-intervencao-descricao']").val('');
         this.modalIntervencao.emit( { action: "modal", params: ['open'] } );
         this.fetchIntervencao();
     }
@@ -71,10 +69,9 @@ export class ModalIntervencaoComponent{
     }
     
     selectFilter( event, type: string ) {
-        let splitType = type.split('-');   
-        this.filter = event;
-        this.typeFilter = splitType[2];
-        this.value = $('input[name='+type).val();
+        this.filter = event.target.value;
+        this.typeFilter = type;
+        this.value = type;
     }
     
     cancelarModalIntervencao() {

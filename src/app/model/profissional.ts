@@ -120,5 +120,16 @@ export class Profissional {
     setServicos(servicos: Array<Servico>) {
         this.servicos = servicos;
     }
+    
+    getNome() {
+        if ( this.empregado != undefined && this.empregado.getPessoa() != undefined )
+            return this.empregado.getPessoa().getNome();
+        return undefined;
+    }
+    
+    setNome(nome: string) {
+        if ( this.empregado != undefined && this.empregado.getPessoa() != undefined )
+            this.empregado.getPessoa().setNome(nome);
+    }
 
 }

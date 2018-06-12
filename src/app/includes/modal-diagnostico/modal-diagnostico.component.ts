@@ -56,8 +56,6 @@ export class ModalDiagnosticoComponent{
     }
     
     openModalDiagnostico() {
-        this.value = "$*new*$";
-        $("input[name='filter-diagnostico-descricao']").val('');
         this.service.getEixosByEquipe( this.idEqpProf )
             .then(res => {
                 this.eixos = new EixoBuilder().cloneList(res.json());
@@ -69,12 +67,11 @@ export class ModalDiagnosticoComponent{
     }
     
     fetchDiagnosticos( ) {
-        this.filter = $("input[name='filter-diagnostico-descricao']").val('');
-        this.value = '$*new*$';
         if ( this.selectEixoId != "" ) {
-            this.service.getDiagnosticoByEixo( Number(this.selectEixoId), this.idEqpProf )
+            this.service.getDiagnosticoByEixo( this.selectEixoId, this.idEqpProf )
                 .then(res => {
                     this.arrayDiagnostico = new DiagnosticoBuilder().cloneList(res.json());
+                    this.value = 'change';
                 })
                 .catch(error => {
                     console.log("Erro ao buscar o diagnostico por descricao");
@@ -88,10 +85,9 @@ export class ModalDiagnosticoComponent{
     }
     
     selectFilter( event, type: string ) {
-        let splitType = type.split('-');   
-        this.filter = event;
-        this.typeFilter = splitType[2];
-        this.value = $('input[name='+type).val();
+        this.filter = event.target.value;
+        this.typeFilter = type;
+        this.value = type;
     }
     
     cancelarModalDiagnostico() {

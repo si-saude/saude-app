@@ -66,4 +66,8 @@ export class ConvocacaoService extends GenericService{
         return this.exameService.getExames();
     }
     
+    getEmpregadoService() {
+        return this.empregadoService;
+    }
+    
 }

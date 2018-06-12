@@ -14,7 +14,7 @@ import { PanoramaBuilder } from './panorama.builder';
     styleUrls: ['./panorama.css']
 } )
 export class PanoramaComponent {
-    private panoramas;
+    private panoramas: Array<PanoramaDto>;
     private filter: string;
     private typeFilter: string;
     private value: string;
@@ -28,12 +28,17 @@ export class PanoramaComponent {
         this.arrayTypes = new Array<string>();
     }
     
-    ngOnInit() {
+    ngAfterViewInit() {
+        $(".container").get(0).style.width = "100%";
+        
         this.panoramaService.getPanoramas()
             .then(res => {
-                setTimeout(() => {
-                    this.panoramas = new PanoramaBuilder().cloneList(res.json());
-                }, 1000);
+                this.panoramas = new PanoramaBuilder().cloneList(res.json());
+                this.panoramas.forEach(p => {
+                    p.getDataAsoAnoAnteriorString();
+                    p.getDataAsoAnoAtualString();
+                    p.getDataRealizacaoPreClinicoString();
+                })
             })
             .catch(error => {
                 console.log("Erro ao pegar panoramas.")
@@ -44,14 +49,10 @@ export class PanoramaComponent {
         });
     }
     
-    ngAfterViewChecked() {
-        $(".container").get(0).style.width = "100%";
-    }
-    
     selectFilter( event, type: string ) {
-        this.filter = event;
+        this.filter = event.target.value;
         this.typeFilter = type;
-        this.value = $('input[name='+type).val();
+        this.value = type;
     }
     
     dropdown( event, tipo ) {
@@ -80,11 +81,14 @@ export class PanoramaComponent {
                             component.arrayObjects[$(this).attr('title')].indexOf($(this).attr('id')), 1);
                 }
                 
-                component.filter = $(this).attr('id');
-                component.typeFilter = $(this).attr('title');
+                component.filter = this.getAttribute('id');
+                component.typeFilter = this.getAttribute('title');
+                component.value = undefined;
+                
                 setTimeout(() => {
                     component.filter = "";
                     component.typeFilter = "";
+                    component.value = "timeout";
                 }, 50);
             });
                 

@@ -66,12 +66,16 @@ export abstract class GenericFormComponent extends GenericComponent implements O
 
     processReturn( sucess: boolean, res: any ) {
         if ( sucess ) {
-            this.msgConfirmSave = res.text();
+            this.msgConfirmSave = this.getMsgConfirmSave(res);
             this.showConfirmSave = true;
         } else {
             this.catchConfiguration( res );
         }
         this.showPreload = false;
+    }
+    
+    getMsgConfirmSave(res: any){
+        return res.text();
     }
 
     isPossibleDeactivate() {

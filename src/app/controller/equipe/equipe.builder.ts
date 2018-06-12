@@ -43,7 +43,7 @@ export class EquipeBuilder extends GenericBuilder {
         cloneEquipe.setVersion( this.getValue( equipe, "getVersion" ) );
 
         if ( this.getValue( equipe, "getCoordenador" ) !== undefined ) {
-            if ( this.getValue(this.getValue( equipe, "getCoordenador" ), "getId") > 0 )
+            if ( this.idGtZero(equipe) )
                 cloneEquipe.setCoordenador(
                     new ProfissionalSaudeBuilder().clone( this.getValue( equipe, "getCoordenador" ) ) );
             else cloneEquipe.setCoordenador( undefined );
