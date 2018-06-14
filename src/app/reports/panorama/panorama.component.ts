@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 
 import { MaterializeDirective } from "angular2-materialize";
 import * as $ from 'jquery';
+import { MaterializeAction } from "angular2-materialize";
 
 import { PanoramaDto } from './../../model/dto/panorama-dto';
 import { PanoramaService } from './panorama.service';
 import { PanoramaBuilder } from './panorama.builder';
+import { HttpUtil } from './../../generics/utils/http.util';
 
 @Component( {
     selector: 'app-panorama',
@@ -21,11 +23,17 @@ export class PanoramaComponent {
     private numberScroll: number;
     private arrayObjects = [[]];
     private arrayTypes: Array<string>;
-
+    private httpUtil: HttpUtil;
+    private globalActions;
+    private toastParams;
+    
     constructor( private panoramaService: PanoramaService ) { 
         this.panoramas = new PanoramaBuilder().initializeList(new Array<PanoramaDto>());
         this.filter = "";
         this.arrayTypes = new Array<string>();
+        this.httpUtil = new HttpUtil();
+        this.globalActions = new EventEmitter<string | MaterializeAction>();
+        this.toastParams = ['', 4000];
     }
     
     ngAfterViewInit() {
@@ -119,6 +127,32 @@ export class PanoramaComponent {
             }
         });
         return arrayFilter;
+    }
+    
+    exportFile() {
+        if ( this.panoramas.length > 0 )
+            this.panoramaService.exportFile( this.panoramas )
+                .then(res => {
+                    this.httpUtil.downloadFile(res, "panorama.xlsx");
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+    }
+    
+    showTextToast( text, time = 60000 ) {
+        if ( text == "" ) return;
+
+        this.toastParams = [text, time];
+        this.globalActions.emit( 'toast' );
+    }
+
+    closeTooltip() {
+        $( ".toast" ).remove();
+    }
+    
+    ngOnDestroy() {
+        $( ".toast" ).remove();
     }
     
 }

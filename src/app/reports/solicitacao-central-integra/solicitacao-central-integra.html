@@ -6,6 +6,10 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <div class="list-container">
+	<a style="display: inherit;" (mouseover)="showTextToast('Exportar', 4000)" (mouseleave)="closeTooltip()" 
+		(click)="exportFile()"> 
+		<i class="small material-icons icon">file_download</i>
+	</a>
 	<table class="table table-striped" [mfData]="solicitacaoCentralIntegras | filterData : filter : typeFilter : value" #mf="mfDataTable">
 		<thead>
 			<tr>

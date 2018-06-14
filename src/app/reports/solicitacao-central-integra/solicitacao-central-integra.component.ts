@@ -257,11 +257,22 @@ export class SolicitacaoCentralIntegraComponent {
                 } else console.log( "Erro ao buscar o anexo: " + error );
             } )
     }
+    
+    exportFile() {
+        if ( this.solicitacaoCentralIntegras.length > 0 )
+            this.solicitacaoCentralIntegraService.exportFile( this.solicitacaoCentralIntegras )
+                .then(res => {
+                    this.httpUtil.downloadFile(res, "solicitacao-central-integra.xlsx");
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+    }
 
-    showTextToast( text ) {
+    showTextToast( text, time = 60000 ) {
         if ( text == "" ) return;
 
-        this.toastParams = [text, 60000];
+        this.toastParams = [text, time];
         this.globalActions.emit( 'toast' );
     }
 
