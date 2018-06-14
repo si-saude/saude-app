@@ -27,6 +27,7 @@ import { ServicoBuilder } from './../../servico/servico.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
+import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 
 @Component( {
     selector: 'app-profissional-saude-form',
@@ -43,7 +44,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     servicos: Array<Servico>;
     servicosSelecteds: Array<Servico>;
     autocompleteEmpregado;
-
+    
     //ngModel
     dataAso: any;
     dataCurriculoCursos: Array<any>;
@@ -51,6 +52,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     assinaturaSrc: any;
 
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+    private autoCompleteEmp:EmpregadoNomeAutocomplete;
 
     constructor( private route: ActivatedRoute,
         private profissionalSaudeService: ProfissionalSaudeService,
@@ -65,10 +67,14 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         this.autocompleteEmpregado = [];
         this.servicos = new ServicoBuilder().initializeList( this.servicos );
         this.servicosSelecteds = new Array<Servico>();
+
+        this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.profissionalSaudeService.getEmpregadoService());
+
+        this.validEmpregado = "";
+        this.autocompleteEmpregado = [];
     }
 
     ngOnInit() {
-
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if ( params['id'] !== undefined ) {
@@ -83,6 +89,8 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                             this.validEmpregado = this.profissionalSaude.getEmpregado().getPessoa().getNome();
                             this.saveArrayEmpregado();
                             this.parseAndSetDates();
+                            this.autoCompleteEmp.getAutocomplete().initializeLastValue(this.profissionalSaude.getEmpregado()
+                                    .getPessoa().getNome());
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -150,6 +158,98 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         return false;
     }
 
+    saveArrayEmpregado() {
+        if ( this.profissionalSaude.getEmpregado().getId() > 0 )
+            this.empregados.push(this.profissionalSaude.getEmpregado());
+    }
+
+    addCurriculoCurso() {
+        if ( this.profissionalSaude.getCurriculo().getCurriculoCursos() === undefined ) {
+            this.profissionalSaude.getCurriculo().setCurriculoCursos( new Array<CurriculoCurso>() );
+        }
+
+        let cc: CurriculoCurso = new CurriculoCurso();
+        cc.setCurriculo( new Curriculo() );
+        cc.setCurso( new Curso() );
+        this.profissionalSaude.getCurriculo().getCurriculoCursos().push( cc );
+    }
+    
+    removeCurriculoCurso( i: number ) {
+        this.profissionalSaude.getCurriculo().getCurriculoCursos().splice( i, 1 );
+    }
+    
+    addServico(valor: number) {
+        if ( valor != 0 ) {
+            let serv = this.servicosSelecteds.find(s => s.getId() == valor);
+            if ( serv == undefined ) {
+                let servico: Servico = this.servicos.find(s => s.getId() == valor);
+                this.servicosSelecteds.push(servico);
+                this.profissionalSaude.setServicos(this.servicosSelecteds);
+            }
+        }
+    }
+
+    removeServico(i: number) {
+        this.profissionalSaude.getServicos().splice(i, 1);
+    }
+
+    onDestroy() {
+        this.inscricao.unsubscribe();
+    }
+
+    verifyAndSetDates() {
+        if ( this.dataAso !== undefined &&
+            this.dataAso !== null ) {
+            this.profissionalSaude.setDataAso( this.dateUtil.parseDatePickerToDate( this.dataAso ) );
+        }
+
+        if ( this.profissionalSaude.getCurriculo() !== undefined &&
+            this.profissionalSaude.getCurriculo() !== null &&
+            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined &&
+            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
+
+            for ( let i = 0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++ ) {
+                if ( this.dataCurriculoCursos[i] !== undefined &&
+                    this.dataCurriculoCursos[i] !== null )
+                    this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].setData(
+                            this.dateUtil.parseDatePickerToDate( this.dataCurriculoCursos[i] ) );
+            }
+        }
+
+        if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
+            this.profissionalSaude.getProfissionalConselho() !== null ) {
+            this.profissionalSaude.getProfissionalConselho().
+                setVencimento( this.dateUtil.parseDatePickerToDate(
+                    this.vencimentoProfissionalConselho ) );
+        }
+    }
+
+    parseAndSetDates() {
+        if ( this.profissionalSaude.getDataAso() !== undefined &&
+            this.profissionalSaude.getDataAso() !== null ) {
+            this.dataAso = this.dateUtil.parseDataToObjectDatePicker( this.profissionalSaude.getDataAso() );
+        }
+
+        if ( this.profissionalSaude.getCurriculo() !== undefined &&
+            this.profissionalSaude.getCurriculo() !== null &&
+            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined &&
+            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
+
+            for ( let i = 0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++ ) {
+                this.dataCurriculoCursos[i] =
+                    this.dateUtil.parseDataToObjectDatePicker(
+                        this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].getData() );
+            }
+        }
+
+        if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
+            this.profissionalSaude.getProfissionalConselho() !== null ) {
+            this.vencimentoProfissionalConselho =
+                this.dateUtil.parseDataToObjectDatePicker( this.profissionalSaude.getProfissionalConselho().getVencimento() );
+        }
+
+    }
+    
     getEmpregado() {
         if ( this.validEmpregado == this.profissionalSaude.getEmpregado().getPessoa().getNome() ) return;
         if ( this.profissionalSaude.getEmpregado().getPessoa().getNome() !== undefined ) {
@@ -212,97 +312,5 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         array["data"] = data;
 
         return array;
-    }
-    
-    saveArrayEmpregado() {
-        if ( this.profissionalSaude.getEmpregado().getId() > 0 )
-            this.empregados.push(this.profissionalSaude.getEmpregado());
-    }
-
-    addCurriculoCurso() {
-        if ( this.profissionalSaude.getCurriculo().getCurriculoCursos() === undefined ) {
-            this.profissionalSaude.getCurriculo().setCurriculoCursos( new Array<CurriculoCurso>() );
-        }
-
-        let cc: CurriculoCurso = new CurriculoCurso();
-        cc.setCurriculo( new Curriculo() );
-        cc.setCurso( new Curso() );
-        this.profissionalSaude.getCurriculo().getCurriculoCursos().push( cc );
-    }
-    
-    removeCurriculoCurso( i: number ) {
-        this.profissionalSaude.getCurriculo().getCurriculoCursos().splice( i, 1 );
-    }
-    
-    addServico(valor: number) {
-        if ( valor != 0 ) {
-            let serv = this.servicosSelecteds.find(s => s.getId() == valor);
-            if ( serv == undefined ) {
-                let servico: Servico = this.servicos.find(s => s.getId() == valor);
-                this.servicosSelecteds.push(servico);
-                this.profissionalSaude.setServicos(this.servicosSelecteds);
-            }
-        }
-    }
-
-    removeServico(i: number) {
-        this.profissionalSaude.getServicos().splice(i, 1);
-    }
-
-    onDestroy() {
-        this.inscricao.unsubscribe();
-    }
-
-    verifyAndSetDates() {
-        if ( this.dataAso !== undefined &&
-            this.dataAso !== null ) {
-            this.profissionalSaude.setDataAso( this.parseDatePickerToDate( this.dataAso ) );
-        }
-
-        if ( this.profissionalSaude.getCurriculo() !== undefined &&
-            this.profissionalSaude.getCurriculo() !== null &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
-
-            for ( let i = 0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++ ) {
-                if ( this.dataCurriculoCursos[i] !== undefined &&
-                    this.dataCurriculoCursos[i] !== null )
-                    this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].setData(
-                        this.parseDatePickerToDate( this.dataCurriculoCursos[i] ) );
-            }
-        }
-
-        if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
-            this.profissionalSaude.getProfissionalConselho() !== null ) {
-            this.profissionalSaude.getProfissionalConselho().
-                setVencimento( this.parseDatePickerToDate(
-                    this.vencimentoProfissionalConselho ) );
-        }
-    }
-
-    parseAndSetDates() {
-        if ( this.profissionalSaude.getDataAso() !== undefined &&
-            this.profissionalSaude.getDataAso() !== null ) {
-            this.dataAso = this.parseDataToObjectDatePicker( this.profissionalSaude.getDataAso() );
-        }
-
-        if ( this.profissionalSaude.getCurriculo() !== undefined &&
-            this.profissionalSaude.getCurriculo() !== null &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
-
-            for ( let i = 0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++ ) {
-                this.dataCurriculoCursos[i] =
-                    this.parseDataToObjectDatePicker(
-                        this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].getData() );
-            }
-        }
-
-        if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
-            this.profissionalSaude.getProfissionalConselho() !== null ) {
-            this.vencimentoProfissionalConselho =
-                this.parseDataToObjectDatePicker( this.profissionalSaude.getProfissionalConselho().getVencimento() );
-        }
-
     }
 }

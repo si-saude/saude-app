@@ -18,4 +18,11 @@ export class PanoramaService extends GenericService {
             .toPromise();
     }
     
+    exportFile( array ) {
+        let urlFile = this.URL + "/get-file";
+        return this.http
+            .post( urlFile, array, { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

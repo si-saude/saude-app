@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 
 import { MaterializeDirective } from "angular2-materialize";
 import * as $ from 'jquery';
+import { MaterializeAction } from "angular2-materialize";
 
 import { PanoramaDto } from './../../model/dto/panorama-dto';
 import { PanoramaService } from './panorama.service';
 import { PanoramaBuilder } from './panorama.builder';
+import { HttpUtil } from './../../generics/utils/http.util';
 
 @Component( {
     selector: 'app-panorama',
@@ -14,26 +16,32 @@ import { PanoramaBuilder } from './panorama.builder';
     styleUrls: ['./panorama.css']
 } )
 export class PanoramaComponent {
-    private panoramas;
+    private panoramas: Array<PanoramaDto>;
     private filter: string;
     private typeFilter: string;
     private value: string;
     private numberScroll: number;
     private arrayObjects = [[]];
     private arrayTypes: Array<string>;
-
+    private httpUtil: HttpUtil;
+    private globalActions;
+    private toastParams;
+    
     constructor( private panoramaService: PanoramaService ) { 
         this.panoramas = new PanoramaBuilder().initializeList(new Array<PanoramaDto>());
         this.filter = "";
         this.arrayTypes = new Array<string>();
+        this.httpUtil = new HttpUtil();
+        this.globalActions = new EventEmitter<string | MaterializeAction>();
+        this.toastParams = ['', 4000];
     }
     
-    ngOnInit() {
+    ngAfterViewInit() {
+        $(".container").get(0).style.width = "100%";
+        
         this.panoramaService.getPanoramas()
             .then(res => {
-                setTimeout(() => {
-                    this.panoramas = new PanoramaBuilder().cloneList(res.json());
-                }, 1000);
+                this.panoramas = new PanoramaBuilder().cloneList(res.json());
             })
             .catch(error => {
                 console.log("Erro ao pegar panoramas.")
@@ -44,14 +52,10 @@ export class PanoramaComponent {
         });
     }
     
-    ngAfterViewChecked() {
-        $(".container").get(0).style.width = "100%";
-    }
-    
     selectFilter( event, type: string ) {
-        this.filter = event;
+        this.filter = event.target.value;
         this.typeFilter = type;
-        this.value = $('input[name='+type).val();
+        this.value = type;
     }
     
     dropdown( event, tipo ) {
@@ -80,11 +84,14 @@ export class PanoramaComponent {
                             component.arrayObjects[$(this).attr('title')].indexOf($(this).attr('id')), 1);
                 }
                 
-                component.filter = $(this).attr('id');
-                component.typeFilter = $(this).attr('title');
+                component.filter = this.getAttribute('id');
+                component.typeFilter = this.getAttribute('title');
+                component.value = undefined;
+                
                 setTimeout(() => {
                     component.filter = "";
                     component.typeFilter = "";
+                    component.value = "timeout";
                 }, 50);
             });
                 
@@ -120,6 +127,32 @@ export class PanoramaComponent {
             }
         });
         return arrayFilter;
+    }
+    
+    exportFile() {
+        if ( this.panoramas.length > 0 )
+            this.panoramaService.exportFile( this.panoramas )
+                .then(res => {
+                    this.httpUtil.downloadFile(res, "panorama.xlsx");
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+    }
+    
+    showTextToast( text, time = 60000 ) {
+        if ( text == "" ) return;
+
+        this.toastParams = [text, time];
+        this.globalActions.emit( 'toast' );
+    }
+
+    closeTooltip() {
+        $( ".toast" ).remove();
+    }
+    
+    ngOnDestroy() {
+        $( ".toast" ).remove();
     }
     
 }

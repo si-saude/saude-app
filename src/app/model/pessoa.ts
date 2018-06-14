@@ -1,5 +1,6 @@
 import { Endereco } from './endereco';
 import { Telefone } from './telefone';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Pessoa {
     private id: number = 0;
@@ -13,6 +14,8 @@ export class Pessoa {
     private version: number;
     private email: string;
     private idade: number;
+
+    private dataNascimentoCustomDate: CustomDate = new CustomDate(this.dataNascimento);
 
     getId(): number {
         return this.id;
@@ -54,12 +57,22 @@ export class Pessoa {
         this.cpf = cpf;
     }
     
-    getDataNascimento():Date{
+    getDataNascimento() {
+        this.dataNascimento = this.dataNascimentoCustomDate.getApiDate();
         return this.dataNascimento;
     }
     
-    setDataNascimento(dN: Date){
-        this.dataNascimento = dN;
+    setDataNascimento(dataNascimento: Date) {
+        this.dataNascimentoCustomDate.setApiDate(dataNascimento);
+        this.dataNascimento = dataNascimento;
+    }
+    
+    getDataNascimentoCustomDate(){
+        return this.dataNascimentoCustomDate;
+    }
+    
+    setDataNascimentoCustomDate(dataNascimentoCustomDate: CustomDate){
+        this.dataNascimentoCustomDate = dataNascimentoCustomDate;
     }
     
     getRg(): string{

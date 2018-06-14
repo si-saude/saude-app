@@ -1,0 +1,53 @@
+.title-modal {
+	color: #26a69a;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.title-modal-empregado {
+	margin-bottom: 30px;
+}
+
+.select-empregado {
+	cursor: pointer;
+	margin-bottom: 0px !important;
+}
+
+.label-select-empregado {
+	font-size: 1.2rem !important;
+    color: #26a69a !important;
+    margin-right: 10px !important;
+}
+
+.input-filter-empregado {
+	width: 70% !important;
+}
+
+.tr-table-modal { 
+	display: inline-table;
+}
+
+.table-filter-empregado {
+	display: block;
+}
+
+.table-filter-empregado > tbody {
+	display: block !important;
+	margin-top: 0;
+}
+
+.filter-empregado-chave {
+	padding-left: 0;
+}
+
+.filter-empregado-nome {
+	padding-left: 0;
+}
+
+.tr-filter {
+	cursor: pointer;
+}
+
+.tr-filter:nth-child(even) {
+    background-color: #d9d9d9;
+}

@@ -1,5 +1,6 @@
 import { Curso } from './curso';
 import { Curriculo } from './curriculo';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class CurriculoCurso {
     private id: number = 0;
@@ -7,6 +8,8 @@ export class CurriculoCurso {
     private curso: Curso;
     private data: Date;
     private version: number;
+
+    private dataCustomDate: CustomDate = new CustomDate(this.data);
 
     getId(): number {
         return this.id;
@@ -40,12 +43,22 @@ export class CurriculoCurso {
         this.curso = curso;
     }
     
-    getData():Date{
+    getData() {
+        this.data = this.dataCustomDate.getApiDate();
         return this.data;
     }
     
-    setData(data:Date){
+    setData(data: Date) {
+        this.dataCustomDate.setApiDate(data);
         this.data = data;
+    }
+    
+    getDataCustomDate(){
+        return this.dataCustomDate;
+    }
+    
+    setDataCustomDate(dataCustomDate: CustomDate){
+        this.dataCustomDate = dataCustomDate;
     }
 } 
 

@@ -16,8 +16,47 @@
 			<option disabled selected value=''>Selecione um uf</option>
 			<option *ngFor="let uf of ufs" value="{{uf}}">{{uf}}</option>
 		</select>
+		<button center class="btn btn-primary btn-filtrar" (click)="selectUf()">Filtrar</button>
 	</fieldset>
-	<button class="btn btn-primary btn-filtrar" (click)="selectUf()">Filtrar</button>
+</div>
+
+<div class="filtro center">
+	<div class="row">
+		<div class="row div-filter" style="width: 10%" >
+			<label>Filtrar por Data</label>
+			<input type="text" name="data" [disabled]="verifyFiltro('data')" 
+				placeholder="filtrar data" (input)="selectFilterData($event)">
+		</div>
+		<div class="row div-filter" style="width: 15%">
+			<label>Filtrar por RPSat</label>
+			<select name="statusRPSat" class="browser-default" [disabled]="verifyFiltro('statusRPSat')"
+				(change)="selectFilterRPSat($event)">
+				<option selected value="">Selecione um rpsat</option>
+				<option *ngFor="let rpsat of rpsats" value="{{rpsat}}">{{rpsat}}</option>
+			</select>
+		</div>
+		<div class="row div-filter" style="width: 25%">
+			<label>Filtrar por Gestão</label>
+			<select name="gestao" class="browser-default" [disabled]="verifyFiltro('equipeResponsavel')"
+				(change)="selectFilterEquipe($event)">
+				<option selected value="">Selecione um equipe</option>
+				<option *ngFor="let equipe of equipes" value="{{equipe.nome}}">{{equipe.nome}}</option>
+			</select>
+		</div>
+		<div class="row div-filter" style="width: 35%">
+			<label>Filtrar por Empregado</label>
+			<input type="text" name="empregado" [disabled]="verifyFiltro('empregado')" 
+				placeholder="filtrar empregado" (input)="selectFilterEmpregado($event)">
+		</div>
+		<div class="row div-filter" style="width: 15%">
+			<label>Filtrar por Status</label>
+			<select name="status" class="browser-default" [disabled]="verifyFiltro('status')"
+				(change)="selectFilterStatus($event)">
+				<option selected value="">Selecione um status</option>
+				<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+			</select>
+		</div>
+	</div>
 </div>
 
 <div class="list-container">
@@ -35,10 +74,11 @@
 					<th class="col s2">Status</th>
 				</tr>
 			</thead>
-			<div *ngFor="let riscoPotencial of riscoPotenciais;let i = index">
-				<tbody class="col s12 row-risco row-risco{{i}}">
+			<div *ngFor="let riscoPotencial of flagRiscoPotenciais;let i = index">
+				<tbody class="col s12 row-risco row-risco{{i}}" 
+					[ngStyle]="changeColorStatusRPSat(riscoPotencial.statusRPSat)">
 					<tr class="col s12" (click)="toggleButtons(i)">
-						<td class="col s1 ranking">{{i+1}}</td>
+						<td class="col s1 ranking">{{riscoPotencial.ranking}}</td>
 						<td class="col s2 rpsat">{{riscoPotencial.statusRPSat}}</td>
 						<td class="col s2 gestao">{{riscoPotencial.equipeResponsavel.nome}}</td>
 						<td class="col s3 empregado">{{riscoPotencial.empregado.pessoa.nome}}</td>
@@ -57,10 +97,15 @@
 									[routerLink]="['/risco-potencial/triagem/', riscoPotencial.id]"
 									class="btn btn-primary btn-ranking">Triagem</a>
 							</div>
-							<div style="display: inline;" *ngIf="verifyPlanejamento(i)">
+							<div style="display: inline;">
 								<a
 									[routerLink]="['/risco-potencial/planejamento/', riscoPotencial.id, riscoPotencial.empregado.pessoa.nome]"
 									class="btn btn-primary btn-ranking">Planejamento</a>
+							</div>
+							<div style="display: inline;" *ngIf="verifyAcolhimento(i)">
+								<a
+									[routerLink]="['/risco-potencial/acolhimento/', riscoPotencial.id]"
+									class="btn btn-primary btn-ranking">Acolhimento</a>
 							</div>
 							<div style="display: inline;">
 								<a

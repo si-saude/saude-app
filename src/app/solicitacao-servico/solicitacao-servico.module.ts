@@ -9,6 +9,7 @@ import { Ng2InputMaskModule } from 'ng2-input-mask';
 import { SelecaoServicoComponent } from './selecao-servico/selecao-servico.component';
 import { AutenticacaoUsuarioComponent } from './autenticacao-usuario/autenticacao-usuario.component';
 import { AtendimentoOcupacionalComponent } from './atendimento-ocupacional/atendimento-ocupacional.component';
+import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integra/solicitacao-central-integra.component';
 import { SolicitacaoServicoService } from './solicitacao-servico.service';
 import { SolicitacaoServicoRoutingModule } from './solicitacao-servico.routing.module';
 import { SharedModule } from './../controller/shared.module';
@@ -17,7 +18,8 @@ import { SharedModule } from './../controller/shared.module';
     declarations: [
        SelecaoServicoComponent,
        AutenticacaoUsuarioComponent,
-       AtendimentoOcupacionalComponent
+       AtendimentoOcupacionalComponent,
+       SolicitacaoCentralIntegraComponent
      ],
      imports: [
         SolicitacaoServicoRoutingModule,

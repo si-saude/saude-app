@@ -3,6 +3,10 @@
 </head>
 
 <div class="list-container">
+	<a style="display: inherit;" (mouseover)="showTextToast('Exportar', 4000)" (mouseleave)="closeTooltip()" 
+		(click)="exportFile()"> 
+		<i class="small material-icons icon">file_download</i>
+	</a>
 	<table class="table table-striped" [mfData]="panoramas | filterData : filter : typeFilter : value" #mf="mfDataTable">
 		<thead>
 			<tr>
@@ -112,8 +116,8 @@
 				<td>{{item.mesConvocacao}}</td>
 				<td>{{item.base}}</td>
 				<td>{{item.dataAsoAnoAnterior}}</td>
-				<td>{{item.dataRealizacaoPreClinico | transformDate}}</td>
-				<td>{{item.dataAsoAnoAtual | transformDate}}</td>
+				<td>{{item.dataRealizacaoPreClinico}}</td>
+				<td>{{item.dataAsoAnoAtual}}</td>
 				<td>{{item.situacaoAso}}</td>
 				<td>{{item.asoNoPrazo}}</td>
 				<td>{{item.pendencias}}</td>
@@ -125,3 +129,7 @@
 
 	<ul id='dropdown' class='dropdown-conteudo'></ul>
 </div>
+
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

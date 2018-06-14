@@ -1,0 +1,39 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+	
+<p style="color: #26a69a;"><b>Nome do Empregado:  {{nomeEmpregado}}</b></p>
+
+<div class="row form-container">
+
+	<ul class="tabs" materialize="tabs">
+		<li class="tab col s6"><a RouterLinkActive="active"
+			href="#fichaColeta">Ficha Coleta</a></li>
+		<li class="tab col s6"><a RouterLinkActive="active"
+			href="#acolhimento">Acolhimento</a></li>
+	</ul>
+
+	<div id="fichaColeta">
+		<app-ficha-coleta [fichaColeta]="fichaColeta"
+			[service]="riscoPotencialService" [idEquipeProfissional]="idEquipeProfissional"></app-ficha-coleta>
+	</div>
+	
+	<div id="acolhimento">
+		<app-acolhimento [service]="riscoPotencialService" [riscoPotencial]="riscoPotencial"
+	 			[triagensTodosAtendimentos]="triagens"></app-acolhimento>
+	</div>
+
+	<div class='row row-btns'>
+		<div class="col s6">
+			<a [routerLink]="['/risco-potencial']" class="btn btn-primary btn-listar">Voltar</a>
+		</div>
+	</div>
+
+</div>

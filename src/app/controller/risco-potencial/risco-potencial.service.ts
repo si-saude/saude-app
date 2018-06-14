@@ -119,6 +119,24 @@ export class RiscoPotencialService extends GenericService {
             .toPromise();
     }
     
+    getStatusRiscoPotencial() {
+        let urlRiscoPotencial = GlobalVariable.BASE_API_URL + "/generic/status-risco-potencial";
+        return this.http
+            .get( urlRiscoPotencial + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getStatusRPSat() {
+        let urlRiscoPotencial = GlobalVariable.BASE_API_URL + "/generic/status-rpsat";
+        return this.http
+            .get( urlRiscoPotencial + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEquipes( ) {
+        return this.equipeService.selectList(new EquipeFilter());
+    }
+    
     getDiagnosticoByDescricaoAndAbreviacao( descricao, abreviacaoEquipe ) {
         return this.diagnosticoService.getDiagnosticoByDescricaoAndAbreviacao(descricao, abreviacaoEquipe);
     }
@@ -133,6 +151,20 @@ export class RiscoPotencialService extends GenericService {
     
     getEquipeAbordagemByName( nome ) {
         return this.equipeService.getEquipeByName(nome);
+    }
+    
+    getStatusSimNao() {
+        let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
+        return this.http
+            .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEnums( path ) {
+        let urlEnums = GlobalVariable.BASE_API_URL + "/generic/"+path;
+        return this.http
+            .get( urlEnums + "?filter=", { headers: this.headers } )
+            .toPromise();
     }
     
 }

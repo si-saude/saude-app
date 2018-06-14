@@ -11,6 +11,7 @@ import { LocalizacaoBuilder } from './../../localizacao/localizacao.builder';
 import { FilaEsperaOcupacional } from './../../../model/fila-espera-ocupacional';
 import { FilaEsperaOcupacionalService } from './../fila-espera-ocupacional.service';
 import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional.builder';
+import { EmpregadoMatriculaAutocomplete } from './../../empregado/empregado-matricula.autocomplete';
 
 @Component( {
     selector: 'app-check-out-recepcao',
@@ -31,6 +32,7 @@ export class CheckOutRecepcaoComponent {
     reload: boolean;
     validEmpregado: string;
     autocompleteEmpregado;
+    private autoCompleteEmp:EmpregadoMatriculaAutocomplete;
 
     constructor( private route: ActivatedRoute,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
@@ -39,12 +41,14 @@ export class CheckOutRecepcaoComponent {
         this.empregado = new EmpregadoBuilder().initialize(new Empregado());
         this.empregados = new EmpregadoBuilder().cloneList(this.empregados);
         this.filaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().initialize(this.filaEsperaOcupacional);
+        this.filaEsperaOcupacional.getEmpregado().setMatricula('');
         this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
         this.localizacoes = new LocalizacaoBuilder().initializeList(this.localizacoes);
         this.showConfirmSave = false;
         this.empregado = new EmpregadoBuilder().initialize(new Empregado());
         this.validEmpregado = "";
         this.autocompleteEmpregado = [];
+        this.autoCompleteEmp = new EmpregadoMatriculaAutocomplete(this.filaEsperaOcupacionalService.getEmpregadoService());
     }
 
     ngOnInit() {
@@ -85,66 +89,66 @@ export class CheckOutRecepcaoComponent {
             })
     }
     
-    getEmpregado() {
-        if ( this.validEmpregado == this.empregado.getPessoa().getNome() ) return;
-        if ( this.empregado.getPessoa().getNome() !== undefined ) {
-            let empregado = this.empregados.find( e => {
-                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
-                    this.empregado.getPessoa().getNome().trim() || 
-                    e.getPessoa().getNome().trim() == this.empregado.getPessoa().getNome().trim() )
-                    return true;
-                else return false;
-            } );
-            
-            if ( empregado !== undefined ) {
-                this.empregado = new EmpregadoBuilder().clone(empregado);
-                this.validEmpregado = this.empregado.getPessoa().getNome();
-            } else this.empregado = new EmpregadoBuilder().initialize( new Empregado() );
-        } else this.empregado = new EmpregadoBuilder().initialize( new Empregado() );
-    }
-
-    private oldNome: string;
-    selectEmpregado( evento ) {
-        if ( this.oldNome != evento ) {
-            this.oldNome = evento;
-            if ( evento.length > 4 ) {
-                this.filaEsperaOcupacionalService.getEmpregadoByName( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    private oldNomeByChave: string;
-    selectEmpregadoByChave( evento ) {
-        if ( this.oldNomeByChave != evento ) {
-            this.oldNomeByChave = evento;
-            this.filaEsperaOcupacionalService.getEmpregadoByChave( this.empregado.getPessoa().getNome() )
-                .then( res => {
-                    this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
-        }
-    }
-    
-    buildAutocompleteEmpregado( empregados ) {
-        let data = {};
-        empregados.forEach( item => {
-            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
+//    getEmpregado() {
+//        if ( this.validEmpregado == this.empregado.getPessoa().getNome() ) return;
+//        if ( this.empregado.getPessoa().getNome() !== undefined ) {
+//            let empregado = this.empregados.find( e => {
+//                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
+//                    this.empregado.getPessoa().getNome().trim() || 
+//                    e.getPessoa().getNome().trim() == this.empregado.getPessoa().getNome().trim() )
+//                    return true;
+//                else return false;
+//            } );
+//            
+//            if ( empregado !== undefined ) {
+//                this.empregado = new EmpregadoBuilder().clone(empregado);
+//                this.validEmpregado = this.empregado.getPessoa().getNome();
+//            } else this.empregado = new EmpregadoBuilder().initialize( new Empregado() );
+//        } else this.empregado = new EmpregadoBuilder().initialize( new Empregado() );
+//    }
+//
+//    private oldNome: string;
+//    selectEmpregado( evento ) {
+//        if ( this.oldNome != evento ) {
+//            this.oldNome = evento;
+//            if ( evento.length > 4 ) {
+//                this.filaEsperaOcupacionalService.getEmpregadoByName( evento )
+//                    .then( res => {
+//                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
+//                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+//                    } )
+//                    .catch( error => {
+//                        console.log( error );
+//                    } )
+//            }
+//        }
+//    }
+//
+//    private oldNomeByChave: string;
+//    selectEmpregadoByChave( evento ) {
+//        if ( this.oldNomeByChave != evento ) {
+//            this.oldNomeByChave = evento;
+//            this.filaEsperaOcupacionalService.getEmpregadoByChave( this.empregado.getPessoa().getNome() )
+//                .then( res => {
+//                    this.empregados = new EmpregadoBuilder().cloneList(res.json());
+//                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
+//                } )
+//                .catch( error => {
+//                    console.log( error );
+//                } )
+//        }
+//    }
+//    
+//    buildAutocompleteEmpregado( empregados ) {
+//        let data = {};
+//        empregados.forEach( item => {
+//            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
+//        } );
+//
+//        let array = {};
+//        array["data"] = data;
+//
+//        return array;
+//    }
 
 }

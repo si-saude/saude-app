@@ -56,7 +56,7 @@ export class FeriadoFormDetailComponent extends GenericFormComponent implements 
     parseAndSetDates() {
         if ( this.feriado.getData() !== null &&
             this.feriado.getData() !== undefined ) {
-            this.data = this.parseDataToObjectDatePicker( this.feriado.getData() );
+            this.data = this.dateUtil.parseDataToObjectDatePicker( this.feriado.getData() );
         }
     }
     

@@ -2,6 +2,8 @@ import { EmpregadoConvocacao } from './empregado-convocacao';
 import { RelatorioMedico } from './relatorio-medico';
 import { Exame } from './exame';
 
+import { CustomDate} from './../generics/utils/custom-date.util';
+
 export class EmpregadoConvocacaoExame {
     private id: number;
     private empregadoConvocacao: EmpregadoConvocacao;
@@ -10,6 +12,9 @@ export class EmpregadoConvocacaoExame {
     private relatorioMedico: RelatorioMedico;
     private pendenteRelatorio: boolean;
     private version: number;
+    private realizacao: Date;
+
+    private realizacaoCustomDate: CustomDate = new CustomDate(this.realizacao);
 
     getId() {
         return this.id;
@@ -65,5 +70,23 @@ export class EmpregadoConvocacaoExame {
     
     getVersion() {
         return this.version;
+    }
+    
+    getRealizacao(){
+        this.realizacao = this.realizacaoCustomDate.getApiDate();
+        return this.realizacao;
+    }
+    
+    setRealizacao(realizacao: Date){
+        this.realizacaoCustomDate.setApiDate(realizacao);
+        this.realizacao = realizacao;
+    }
+    
+    getRealizacaoCustomDate(){
+        return this.realizacaoCustomDate;
+    }
+    
+    setRealizacaoCustomDate(realizacaoCustomDate: CustomDate){
+        this.realizacaoCustomDate = realizacaoCustomDate;
     }
 }

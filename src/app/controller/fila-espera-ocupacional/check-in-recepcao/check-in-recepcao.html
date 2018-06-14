@@ -28,16 +28,14 @@
 				<div class="row">
 
 					<div class="input-field col s12">
-						<label for="empregado">Chave ou Nome do Empregado</label> <input required
+						<label for="empregado">Matrícula do Empregado</label>
+						<input required
 							type="text" materialize="autocomplete" autocomplete="off"
-							name="empregado.pessoa.nome"
-							[(ngModel)]="empregado.pessoa.nome"
-							(blur)="getEmpregado()"
-							(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
-							[materializeParams]="autocompleteEmpregado"> <input
-							id="empregado.pessoa.id" type="hidden"
-							name="empregado.pessoa.id"
-							[(ngModel)]="empregado.pessoa.id">
+							name="filaEsperaOcupacional.empregado.matricula"
+							[(ngModel)]="filaEsperaOcupacional.empregado.matricula"
+							(blur)="autoCompleteEmp.getAutocomplete().getObj($event,filaEsperaOcupacional,'setEmpregado','getMatricula')"
+							(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(filaEsperaOcupacional.empregado, 'getMatricula');"
+							[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()"> 
 					</div>
 
 				</div>

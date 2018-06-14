@@ -1,0 +1,162 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s12">
+				<div class="input-field col s5">
+					<fieldset>
+						<legend> Tipo da Solicitação 
+							<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getTipoSolicitacoes()"> <i
+								class="material-icons center-icon">cached</i>
+							</a>
+						</legend>
+						<select name="tipoSolicitacao" class="browser-default"
+							[(ngModel)]="solicitacaoCentralIntegra.tipoSolicitacao.id">
+							<option disabled selected value="">Selecione um tipo de solicitação</option>
+							<option *ngFor="let tipoSolicitacao of tipoSolicitacoes" value="{{tipoSolicitacao.id}}">{{tipoSolicitacao.nome}}</option>
+						</select>
+					</fieldset>
+				</div>
+				
+				<div class="input-field col s5">
+					<fieldset id="fieldset-status">
+						<legend> Status </legend>
+						<select name="status" class="browser-default"
+							[(ngModel)]="solicitacaoCentralIntegra.status">
+							<option disabled selected value="">Selecione um tipo de solicitação</option>
+							<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+						</select>
+					</fieldset>
+				</div>
+				
+				<div class="input-field col s1 checkbox">
+					<input type="checkbox" id="concluido" (click)="setConcluido()"
+						[(ngModel)]="solicitacaoCentralIntegra.concluido"
+						name="solicitacaoCentralIntegra.concluido">
+					<label for="solicitacaoCentralIntegra.concluido">Concluido</label>
+				</div>
+			</div>
+			
+			<div class="input-field col s12">
+				<label for="descricao">Descrição</label>
+					<textarea class="materialize-textarea" id="descricao" 
+						[(ngModel)]="solicitacaoCentralIntegra.descricao" name="solicitacao.descricao"></textarea>
+			</div>
+			
+			<div class="input-field col s12">
+				<label for="observacao">Observação</label>
+					<textarea class="materialize-textarea" id="observacao"
+						[(ngModel)]="solicitacaoCentralIntegra.observacao" name="solicitacao.observacao"></textarea>
+			</div>
+			
+			<div class="input-field col s12">
+				<div class="input-field col s8">
+					<label for="cliente">Nome do Cliente</label> 
+					
+					<input
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						(blur)="autoCompleteEmp.getAutocomplete().getObj($event,solicitacaoCentralIntegra.tarefa,'setCliente','getNome')"
+						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.cliente, 'getNome');"
+						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()"> 
+					
+					<!-- <input required
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
+						(blur)="getEmpregado($event)"
+						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
+						[materializeParams]="autocompleteEmpregado"> <input
+						id="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id" type="hidden"
+						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"
+						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"> -->
+				</div>
+			</div> 
+			
+			<div class="input-field col s12">
+				<div class="input-field col s8">
+					<label for="cliente">Nome do Responsável</label> 
+						<input
+							type="text" materialize="autocomplete" autocomplete="off"
+							name="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
+							[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
+							(blur)="autoCompleteProf.getAutocomplete().getObj($event,solicitacaoCentralIntegra.tarefa,'setResponsavel','getNome')"
+							(ngModelChange)="autoCompleteProf.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.responsavel, 'getNome');"
+							[materializeParams]="autoCompleteProf.getAutocomplete().getObjAutoComplete()">
+				</div>
+			</div>
+			
+			<div class="row col s12" >
+
+				<div class="input-field col s3">
+					<label for="inicio">Abertura</label>
+					<my-date-picker name="abertura" [options]="myDatePickerOptions"
+						[(ngModel)]="abertura" placeholder="Abertura">
+					</my-date-picker>
+				</div>
+				<div class="input-field col s3">
+					<label for="prazo">Prazo</label>
+					<my-date-picker name="prazo" [options]="myDatePickerOptions"
+						[(ngModel)]="prazo" placeholder="Prazo">
+					</my-date-picker>
+				</div>
+				<div class="input-field col s3">
+					<label for="tempoEstimado">Tempo Estimado (min)</label>
+					<input id="tempoEstimado" type="number"
+					[(ngModel)]="solicitacaoCentralIntegra.tempoEstimado" name="tempoEstimado">
+				</div>
+				<div class="input-field col s3">
+					<label for="tempoGasto">Tempo Gasto (min)</label>
+					<input id="tempoGasto" type="number"
+					[(ngModel)]="solicitacaoCentralIntegra.tempoGasto" name="tempoGasto">
+				</div>
+				
+			</div>
+			
+						
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="solicitacaoCentralIntegra.id">
+		<input id="version" name="version" type="hidden"
+			[(ngModel)]="solicitacaoCentralIntegra.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/kanban']" class="btn btn-primary btn-listar">Kanban</a>
+			</div>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	
+	</form>
+</div>
+
+<app-modal-empregado [service]="solicitacaoCentralIntegraService" (empregado)="selectCliente($event)"
+	[showModalEmpregado]="showModalCliente" (cancelModalEmpregado)="cancelarModalCliente($event)"></app-modal-empregado>
+	
+<app-modal-profissional [service]="solicitacaoCentralIntegraService" (profissional)="selectResponsavel($event)"
+	[showModalProfissional]="showModalResponsavel" (cancelModalProfissional)="cancelarModalResponsavel($event)"></app-modal-profissional>
+	
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

@@ -22,13 +22,6 @@ export class FilaEsperaOcupacionalService extends GenericService {
         super(http,router,"fila-espera-ocupacional");
     }
     
-    getStatusSimNao() {
-        let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
-        return this.http
-            .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
-            .toPromise();
-    }
-    
     downloadDeclaracaoComparecimento( atendimento ) {
         let urlDeclaracaoComparecimento = this.URL + "/declaracao-comparecimento";
         return this.http
@@ -96,11 +89,22 @@ export class FilaEsperaOcupacionalService extends GenericService {
             .toPromise();
     }
     
+    getStatusSimNao() {
+        let urlStatusSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
+        return this.http
+            .get( urlStatusSimNao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
     getEnums( path ) {
         let urlEnums = GlobalVariable.BASE_API_URL + "/generic/"+path;
         return this.http
             .get( urlEnums + "?filter=", { headers: this.headers } )
             .toPromise();
+    }
+    
+    getEmpregadoService() {
+        return this.empregadoService;
     }
     
 }

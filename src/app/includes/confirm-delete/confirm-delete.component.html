@@ -4,7 +4,7 @@
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams" [materializeActions]="modalDelete">
+	[materializeParams]="[{dismissible: false}]" [materializeActions]="modalDelete">
 
 	<h5 class="title-modal-delete">Confirmação para remoção</h5>
 	<p class="paragraph-modal-delete">Deseja realmente excluir esse

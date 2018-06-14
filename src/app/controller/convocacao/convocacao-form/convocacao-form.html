@@ -80,12 +80,14 @@
 					<div class="input-field col s6">
 						<label for="inicio">Início</label>
 						<my-date-picker name="inicio" [options]="myDatePickerOptions"
-							[(ngModel)]="inicio" placeholder="Início"> </my-date-picker>
+							[(ngModel)]="convocacao.inicioCustomDate.appDate" 
+							placeholder="Início"> </my-date-picker>
 					</div>
 					<div class="input-field col s6">
 						<label for="fim">Fim</label>
 						<my-date-picker name="fim" [options]="myDatePickerOptions"
-							[(ngModel)]="fim" placeholder="Fim"> </my-date-picker>
+							[(ngModel)]="convocacao.fimCustomDate.appDate" 
+							placeholder="Fim"> </my-date-picker>
 					</div>
 				</div>
 
@@ -169,12 +171,13 @@
 
 				<div class="row">
 					<div class="input-field col s10">
-						<label for="empregado">Empregado</label> <input type="text"
-							materialize="autocomplete" name="addEmpregado"
-							(blur)="getEmpregado($event)" autocomplete="off"
-							[(ngModel)]="empregadoToAdd.pessoa.nome"
-							(ngModelChange)="selectEmpregadoByChave($event);selectEmpregado($event);"
-							[materializeParams]="autocompleteEmpregado">
+						<input
+							type="text" materialize="autocomplete" autocomplete="off"
+							name="empregadoConvocacao.empregado.pessoa.nome"
+							[(ngModel)]="empregadoConvocacao.empregado.pessoa.nome"
+							(blur)="autoCompleteEmp.getAutocomplete().getObj($event,empregadoConvocacao,'setEmpregado','getNome')"
+							(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(empregadoConvocacao.empregado, 'getNome');"
+							[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()">
 					</div>
 					<div class="input-field col s2" style="margin-top: 30px;">
 						<a

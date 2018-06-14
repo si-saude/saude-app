@@ -17,5 +17,12 @@ export class EmpregadosPorGrupoService extends GenericService {
             .get( urlEmpregadosPorGrupo + "?id=" + id, { headers: this.headers } )
             .toPromise();
     }
+    
+    exportFile( array ) {
+        let urlFile = this.URL + "/get-file";
+        return this.http
+            .post( urlFile, array, { headers: this.headers } )
+            .toPromise();
+    }
    
 }

@@ -5,14 +5,15 @@ export class PanoramaDto {
     private nome: string;
     private mesConvocacao: string;
     private base: string;
-    private dataAsoAnoAnterior: Date;
-    private dataAsoAnoAtual: Date;
-    private dataRealizacaoPreClinico: Date;
+    private dataAsoAnoAnterior: string;
+    private dataAsoAnoAtual: string;
+    private dataRealizacaoPreClinico: string;
     private situacaoAso: string;
     private asoNoPrazo: string;
     private pendencias: string;
     private gerenciaPrimeiraLinha: string;
     private statusPreClinico: string;
+    private examesPendentes: string;
     
     getId() {
         return this.id;
@@ -47,19 +48,19 @@ export class PanoramaDto {
     getDataAsoAnoAnterior() {
         return this.dataAsoAnoAnterior;
     }
-    setDataAsoAnoAnterior(dataAsoAnoAnterior: Date) {
+    setDataAsoAnoAnterior(dataAsoAnoAnterior: string) {
         this.dataAsoAnoAnterior = dataAsoAnoAnterior;
     }
     getDataAsoAnoAtual() {
         return this.dataAsoAnoAtual;
     }
-    setDataAsoAnoAtual(dataAsoAnoAtual: Date) {
+    setDataAsoAnoAtual(dataAsoAnoAtual: string) {
         this.dataAsoAnoAtual = dataAsoAnoAtual;
     }
     getDataRealizacaoPreClinico() {
         return this.dataRealizacaoPreClinico;
     }
-    setDataRealizacaoPreClinico(dataRealizacaoPreClinico: Date) {
+    setDataRealizacaoPreClinico(dataRealizacaoPreClinico: string) {
         this.dataRealizacaoPreClinico = dataRealizacaoPreClinico;
     }
     getSituacaoAso() {
@@ -98,4 +99,11 @@ export class PanoramaDto {
     setStatusPreClinico(statusPreClinico: string) {
         this.statusPreClinico = statusPreClinico;
     }
+    getExamesPendentes() {
+        return this.examesPendentes;
+    }
+    setExamesPendentes(examesPendentes: string) {
+        this.examesPendentes = examesPendentes;
+    }
+    
 }

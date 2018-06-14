@@ -28,12 +28,14 @@
 
 			<div class="row" *ngIf="canChangeEmpregado">
 				<div class="input-field col s12">
-					<label for="empregado">Empregado</label> <input type="text"
-						materialize="autocomplete" name="addEmpregado" autocomplete="off"
-						(blur)="getEmpregado($event)"
-						[(ngModel)]="empregadoToChange.pessoa.nome"
-						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
-						[materializeParams]="autocompleteEmpregado">
+					<label for="empregado">Empregado</label> 
+					<input
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="tarefa.cliente.pessoa.nome"
+						[(ngModel)]="tarefa.cliente.pessoa.nome"
+						(blur)="autoCompleteEmp.getAutocomplete().getObj($event,tarefa,'setCliente','getNome')"
+						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(tarefa.cliente, 'getNome');"
+						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()"> 
 				</div>
 			</div>
 

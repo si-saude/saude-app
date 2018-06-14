@@ -6,6 +6,7 @@ import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { RiscoPotencialService } from './../risco-potencial.service';
 import { Triagem } from './../../../model/triagem';
+import { TriagemBuilder } from './../../triagem/triagem.builder';
 import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { RiscoPotencial } from './../../../model/risco-potencial';
@@ -24,6 +25,7 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     private inicioAgendamento: any;
     private fimAgendamento: any;
     private equipesSelecteds: Array<Equipe>;
+    private triagensTodosAtendimentos: Array<Triagem>;
 
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -36,6 +38,7 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
             this.flagEquipesAbordagemTriagens = new EquipeBuilder().initializeList(new Array<Equipe>());
             this.riscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
             this.equipesSelecteds = new EquipeBuilder().initializeList(new Array<Equipe>());
+            this.triagensTodosAtendimentos = new Array<Triagem>();
     }
     
     ngOnInit() {
@@ -51,7 +54,6 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
                             this.equipesSelecteds = this.riscoPotencial.getEquipes();
                             this.getTriagensEquipeAbordagem();
-                            this.getDates();
                         } )
                         .catch( error => {
                             this.showPreload = false;
@@ -62,7 +64,6 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     }
     
     save() {
-        this.setDates();
         super.save(new RiscoPotencialBuilder().clone( this.riscoPotencial ));
     }
     
@@ -82,61 +83,15 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
         this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
             if ( rE.getAtivo() ) {
                 rE.getTriagens().forEach( t => {
-                    if ( t.getEquipeAbordagem().getId() > 0 && 
-                            this.equipesAbordagemTriagens.find( eA => eA.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
-                        
-                        if ( this.riscoPotencial.getEquipes().find( e => e.getId() == t.getEquipeAbordagem().getId() ) == undefined ) {
-                            this.flagEquipesAbordagemTriagens.push( t.getEquipeAbordagem() );
-                        } else
-                            this.equipesAbordagemTriagens.push( t.getEquipeAbordagem() );
-                        
-                        this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()] = new Array<Triagem>();
-                    }
-                    
-                    if ( t.getEquipeAbordagem().getId() > 0 )
-                        this.triagensByEquipeAbordagem[t.getEquipeAbordagem().getId()].push(t);
+                    if ( t.getEquipeAbordagem().getId() > 0 )   
+                        this.triagensTodosAtendimentos.push(t);
                 } )
             }
         })
+        this.triagensTodosAtendimentos = new TriagemBuilder().cloneList(this.triagensTodosAtendimentos);
         this.equipesAbordagemTriagens.forEach( eA => this.flagEquipesAbordagemTriagens.push( eA ) ); 
     }
     
-    addEquipe( valor: number ) { 
-        if ( valor != 0 ) {
-            let e = this.equipesSelecteds.find( c => c.getId() == valor );
-            if ( e == undefined ) {
-                let equipe: Equipe = this.flagEquipesAbordagemTriagens.find( eq => eq.getId() == valor );
-                this.equipesSelecteds.push( equipe );
-                this.riscoPotencial.setEquipes( this.equipesSelecteds );
-                this.equipesAbordagemTriagens.push( equipe );
-            }
-        }
-    }
-    
-    removeEquipe( index ) {
-        let indexEAT = this.equipesAbordagemTriagens.findIndex( i => i.getId() == this.riscoPotencial.getEquipes()[index].getId() );
-        this.riscoPotencial.getEquipes().splice( index, 1 );
-        this.equipesAbordagemTriagens.splice( indexEAT, 1 );
-    }
-    
-    getIndiceDescricao( triagem: Triagem ) {
-        return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
-    }
-    
-    setDates() {
-        if ( this.inicioAgendamento != null )
-            this.riscoPotencial.setInicioAgendamento(this.parseDatePickerToDate(this.inicioAgendamento));
-        if ( this.fimAgendamento != null )
-            this.riscoPotencial.setFimAgendamento(this.parseDatePickerToDate(this.fimAgendamento));
-    }
-    
-    getDates() {
-        if ( this.riscoPotencial.getInicioAgendamento() != undefined )
-            this.inicioAgendamento = this.parseDataToObjectDatePicker( this.riscoPotencial.getInicioAgendamento() );
-        if ( this.riscoPotencial.getFimAgendamento() != undefined )
-            this.fimAgendamento = this.parseDataToObjectDatePicker( this.riscoPotencial.getFimAgendamento() );
-    }
-
     ngOnDestroy() {
         if ( this.inscricao != undefined ) 
             this.inscricao.unsubscribe();

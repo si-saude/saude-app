@@ -31,18 +31,42 @@ tbody{
     overflow-x: hidden;
 }
 
+.filtro {
+	display: block;
+}
+
 .div-select {
-	width: 50%;
+	display: block;
+    width: 60%;
     margin: 0 auto;
+    margin-right: 10% !important;
+}
+
+.div-filter {
+	width: 100%;
+    margin: 0 auto;
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-bottom: -2% !important;
+    display: inline-block;
+}
+
+.div-filter > label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #4fc3f7;
+    text-align: left;
 }
 
 .fieldset-select {
 	padding-bottom: 2%;
+	padding: 10px;
+    margin-right: 0;
 }
 
 .btn-filtrar {
-	margin-top: 4.5%;
-    margin-left: 2%;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .empregado {

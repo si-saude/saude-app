@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../global';
-import { AuthService } from './../../login/auth.service';
 
 @Component( {
     selector: 'app-navbar-principal',
@@ -13,9 +12,7 @@ export class NavbarPrincipalComponent implements OnInit {
 
     private theme: string = GlobalVariable.THEME_API;
 
-    constructor(
-        private authService: AuthService,
-        private router: Router ) { }
+    constructor( private router: Router ) { }
 
     ngOnInit() {
     }

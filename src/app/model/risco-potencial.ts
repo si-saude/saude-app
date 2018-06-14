@@ -6,6 +6,7 @@ import { Equipe } from './equipe';
 
 export class RiscoPotencial {
     private id: number;
+    private ranking: number;
     private data: Date;
     private empregado: Empregado;
     private riscoEmpregados: Array<RiscoEmpregado>;
@@ -166,5 +167,13 @@ export class RiscoPotencial {
     
     public setAcoesDelete(acoesDelete: Array<Acao>) {
         this.acoesDelete = acoesDelete;
+    }
+    
+    public getRanking() {
+        return this.ranking;
+    }
+    
+    public setRanking(ranking: number) {
+        this.ranking = ranking;
     }
 }

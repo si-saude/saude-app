@@ -1,8 +1,12 @@
+import { CustomDate} from './../generics/utils/custom-date.util';
+
 export class Feriado {
     private id: number;
     private titulo:string;
     private data:Date;
     private version: number;
+
+    private dataCustomDate: CustomDate = new CustomDate(this.data);
 
     getId(): number {
         return this.id;
@@ -28,11 +32,21 @@ export class Feriado {
         this.titulo = titulo;
     }
     
-    getData():Date{
+    getData() {
+        this.data = this.dataCustomDate.getApiDate();
         return this.data;
     }
     
-    setData(d: Date){
-        this.data = d;
+    setData(data: Date) {
+        this.dataCustomDate.setApiDate(data);
+        this.data = data;
+    }
+    
+    getDataCustomDate(){
+        return this.dataCustomDate;
+    }
+    
+    setDataCustomDate(dataCustomDate: CustomDate){
+        this.dataCustomDate = dataCustomDate;
     }
 }

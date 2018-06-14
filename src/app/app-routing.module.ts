@@ -64,6 +64,8 @@ import { CategoriaRiscoGuard } from './guards/guards-child/categoria-risco.guard
 import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saude.guard';
 import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
 import { AprhoGuard } from './guards/guards-child/aprho.guard';
+import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
+import { KanbanGuard } from './guards/kanban.guard';
 
 
 const routes: Routes = [
@@ -192,6 +194,12 @@ const routes: Routes = [
   { path: 'risco-potencial',
       loadChildren: 'app/controller/risco-potencial/risco-potencial.module#RiscoPotencialModule',
       canActivateChild: [RiscoPotencialGuard]},
+  { path: 'tipo-solicitacao',
+      loadChildren: 'app/controller/tipo-solicitacao/tipo-solicitacao.module#TipoSolicitacaoModule',
+      canActivateChild: [TipoSolicitacaoGuard]},
+  { path: 'kanban',
+      loadChildren: 'app/kanban/kanban.module#KanbanModule',
+      canActivate: [KanbanGuard]},
   { path: 'tarefa',
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: 'reports',
@@ -211,6 +219,8 @@ const routes: Routes = [
   { path: 'aprho', 
       loadChildren: 'app/controller/aprho/aprho.module#AprhoModule',
       canActivateChild: [AprhoGuard]},  
+  { path: 'solicitacao-central-integra',
+      loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

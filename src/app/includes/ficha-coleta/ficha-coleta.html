@@ -1,0 +1,134 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="conteiner-ficha-coleta">
+
+	<div *ngFor="let grupo of gruposRespostasFichaColeta; let g = index">
+		<fieldset>
+			<legend>{{grupo}}</legend>
+
+			<div
+				*ngFor="let resposta of respostasFichaColetaByGrupo[grupo]; let r = index">
+				<p class="pergunta-descricao">{{resposta.pergunta.descricao}}</p>
+
+				<div [ngSwitch]="contains(resposta.pergunta.tipo)">
+					<div class="row resposta">
+						<div *ngSwitchCase="'DOUBLE'">
+							<div class="input-field col s5">
+								<input type="text" name="DOUBLE{{r}}"
+									class="resposta-conteudo resposta-pergunta"
+									[disabled]="verifyEquipe(resposta)"
+									[(ngModel)]="resposta.conteudo">
+							</div>
+						</div>
+
+						<div *ngSwitchCase="'INTEIRO'">
+							<div class="input-field col s5">
+								<input type="text" name="INTEIRO{{r}}"
+									class="resposta-conteudo resposta-pergunta"
+									[disabled]="verifyEquipe(resposta)"
+									[(ngModel)]="resposta.conteudo">
+							</div>
+						</div>
+
+						<div *ngSwitchCase="'TEXTO'">
+							<div class="input-field col s5">
+								<input type="text" name="TEXTO{{r}}"
+									class="resposta-conteudo resposta-pergunta"
+									[disabled]="verifyEquipe(resposta)"
+									[(ngModel)]="resposta.conteudo">
+							</div>
+						</div>
+
+						<div *ngSwitchCase="'ENUM'">
+							<div class="input-field col s4  select-sim-nao">
+								<select
+									class="browser-default resposta-conteudo resposta-pergunta"
+									[(ngModel)]="resposta.conteudo"
+									[disabled]="verifyEquipe(resposta)" name="ENUM{{r}}">
+									<option disabled selected value="">Selecione um resposta</option>
+									<option *ngFor="let enum of getEnumsPergunta(resposta)"
+										value="{{enum}}">{{enum}}</option>
+								</select>
+							</div>
+						</div>
+
+						<div *ngSwitchCase="'SIM'">
+							<div class="input-field col s4 select-sim-nao">
+								<select
+									class="browser-default resposta-conteudo resposta-pergunta"
+									name="SIM{{r}}" #statusSimNao
+									[disabled]="verifyEquipe(resposta)"
+									(change)="selectStatusSimNao(resposta.pergunta.itens, g, r, statusSimNao.value)"
+									[(ngModel)]="resposta.conteudo">
+									<option disabled selected value="">Selecione uma resposta</option>
+									<option *ngFor="let statusSimNao of statusesSimNao"
+										value="{{statusSimNao}}">{{statusSimNao}}</option>
+								</select>
+							</div>
+							<div class="col s2" *ngIf="verifyRespostaSimNao(resposta)">
+								<a *ngIf="!verifyEquipe(resposta)"
+									class="btn-floating waves-effect waves-light green btn-add"
+									(click)="addItemResposta(resposta.pergunta.itens, g, r)"> <i
+									class="material-icons center-icon">add</i>
+								</a>
+							</div>
+
+							<table class="striped" *ngIf="verifyRespostaSimNao(resposta)">
+								<thead>
+									<tr class="row col s12">
+										<div
+											*ngFor="let item of resposta.pergunta.itens; let i = index">
+											<th [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+												{{item.label}}</th>
+										</div>
+										<th class="row col s2">Remover</th>
+									</tr>
+								</thead>
+
+								<tbody class="col s12">
+									<tr class="col s12">
+										<div
+											*ngFor="let respostaItem of resposta.itens; let i = index">
+											<div class="row">
+												<div
+													*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+													<td *ngIf="verifyItemPath(resposta, rI)"
+														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+														<select class="resposta-item" [(ngModel)]="item.conteudo"
+														[disabled]="verifyEquipe(resposta)" name="resposta.item">
+															<option disabled selected value="">Selecione um resposta</option>
+															<option *ngFor="let enum of getEnumsItem(resposta, rI)"
+																value="{{enum}}">{{enum}}</option>
+													</select>
+													</td>
+													<td *ngIf="!verifyItemPath(resposta, rI)"
+														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
+														<input id="resposta.item" type="text"
+														[disabled]="verifyEquipe(resposta)" name="resposta.item"
+														class="resposta-item" [(ngModel)]="item.conteudo">
+													</td>
+												</div>
+												<td class="col s2 botao-remover"><a
+													*ngIf="!verifyEquipe(resposta)"
+													class="btn-floating waves-effect waves-light red btn-remove"
+													(click)="removeItemResposta(g, r, i)"> <i
+														class="material-icons center-icon">delete</i>
+												</a></td>
+											</div>
+										</div>
+									</tr>
+								</tbody>
+
+							</table>
+
+						</div>
+						<div *ngSwitchDefault></div>
+					</div>
+
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>

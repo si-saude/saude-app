@@ -81,7 +81,9 @@ import { CategoriaRiscoGuard } from './guards/guards-child/categoria-risco.guard
 import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saude.guard';
 import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
 import { AprhoGuard } from './guards/guards-child/aprho.guard';
-
+import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
+import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
+import { KanbanGuard } from './guards/kanban.guard';
 
 
 @NgModule({
@@ -167,7 +169,10 @@ import { AprhoGuard } from './guards/guards-child/aprho.guard';
     CategoriaRiscoGuard,
     PossivelDanoSaudeGuard,
     AgenteRiscoGuard,
-    AprhoGuard
+    AprhoGuard,
+    TipoSolicitacaoGuard,
+    ReportSolicitacaoCentralIntegraGuard,
+    KanbanGuard
   ],
   bootstrap: [ 
     AppComponent

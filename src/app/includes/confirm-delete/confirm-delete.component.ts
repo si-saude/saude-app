@@ -1,4 +1,4 @@
-import { EventEmitter, SimpleChanges, Component, Input, OnInit } from '@angular/core';
+import { EventEmitter, SimpleChanges, Component, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
@@ -14,12 +14,14 @@ export class ConfirmDeleteComponent extends GenericListComponent<null, null, nul
     @Input() service;
     @Input() show: boolean;
     @Input() idDelete: number;
+    @Output() cancelDelete: EventEmitter<boolean>;
     modalDelete;
     modelParams;
 
     constructor( router: Router ) {
         super(null,null,null,router);
         this.modalDelete = new EventEmitter<string | MaterializeAction>();
+        this.cancelDelete = new EventEmitter<boolean | MaterializeAction>();
         this.modelParams = [{
             dismissible: false,
             complete: function() { }
@@ -33,23 +35,22 @@ export class ConfirmDeleteComponent extends GenericListComponent<null, null, nul
             setTimeout(() => this.modalDelete.emit( { action: "modal", params: ["open"] } ), 1 );
     }
 
-//    confirmDel() {
-//        this.tempDelete = this.idDelete;
-//        super.confirmDelete();
-//    }
-    
     confirmDelete() {
         this.showPreload = true;
         this.service.delete( this.idDelete )
             .then( res => {
-                this.showPreload = false;
-                window.location.reload();
+                this.cancelDelete.emit(true);
             } )
             .catch( error => {
                 alert("Erro ao excluir o campo: " + error.text());
             } )
     }
-
+    
+    closeModalDelete() {
+        this.cancelDelete.emit(false);
+        this.modalDelete.emit( { action: "modal", params: ["close"] } );
+    }
+    
     onDestroy() {
         this.modalDelete.emit( { action: "modal", params: ["close"] } );
     }

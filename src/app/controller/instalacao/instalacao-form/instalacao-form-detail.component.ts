@@ -64,7 +64,6 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
                     .then( res => {
                         this.showPreload = false;
                         this.instalacao = new InstalacaoBuilder().clone(res.json());
-                        console.log(res.json());
                         this.parseAndSetDates();
                     } )
                     .catch( error => {
@@ -125,7 +124,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoAcidenteInstalacoes().length; i++) {
                 this.dataInspecaoAcidente[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoAcidenteInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -135,7 +134,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoAmbientalInstalacoes().length; i++) {
                 this.dataInspecaoAmbiental[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoAmbientalInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -145,7 +144,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoErgonomicoInstalacoes().length; i++) {
                 this.dataInspecaoErgonomico[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoErgonomicoInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -155,7 +154,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoSanitarioInstalacoes().length; i++) {
                 this.dataInspecaoSanitario[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoSanitarioInstalacoes()[i].getDataInspecao());   
             }
         }
@@ -165,7 +164,7 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
             
             for (let i=0; i < this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes().length; i++) {
                 this.dataInspecaoSaudeAmbiental[i] = 
-                    this.parseDataToObjectDatePicker(
+                    this.dateUtil.parseDataToObjectDatePicker(
                             this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes()[i].getDataInspecao());   
             }
         }

@@ -9,15 +9,17 @@ import * as $ from 'jquery';
 import { GenericService } from './generic.service';
 import { GenericComponent } from './generic.component';
 import { GlobalVariable } from './../global';
+import { DateUtil } from './utils/date.util';
 
 export abstract class GenericFormComponent extends GenericComponent implements OnInit {
-    titulo: string;
-    corTitulo: string = GlobalVariable.COLOR_TITLE;
-    inscricao: Subscription;
-    protected showPreload: boolean;
     @ViewChild( "form" ) formulario;
+    protected titulo: string;
+    protected corTitulo: string = GlobalVariable.COLOR_TITLE;
+    protected inscricao: Subscription;
+    protected showPreload: boolean;
     protected modalDeactivate;
-    canDeactivate: boolean;
+    protected canDeactivate: boolean;
+    public dateUtil: DateUtil; 
 
     constructor( protected service: GenericService, router: Router ) {
         super(router);
@@ -28,6 +30,7 @@ export abstract class GenericFormComponent extends GenericComponent implements O
         $(document).keypress(function(event){
             if (event.charCode == 13) return false; 
         });
+        this.dateUtil = new DateUtil();
     }
     
     ngOnInit() {
@@ -63,12 +66,16 @@ export abstract class GenericFormComponent extends GenericComponent implements O
 
     processReturn( sucess: boolean, res: any ) {
         if ( sucess ) {
-            this.msgConfirmSave = res.text();
+            this.msgConfirmSave = this.getMsgConfirmSave(res);
             this.showConfirmSave = true;
         } else {
             this.catchConfiguration( res );
         }
         this.showPreload = false;
+    }
+    
+    getMsgConfirmSave(res: any){
+        return res.text();
     }
 
     isPossibleDeactivate() {

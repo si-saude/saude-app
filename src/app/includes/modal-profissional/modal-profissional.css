@@ -1,0 +1,53 @@
+.title-modal {
+	color: #26a69a;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.title-modal-profissional {
+	margin-bottom: 30px;
+}
+
+.select-profissional {
+	cursor: pointer;
+	margin-bottom: 0px !important;
+}
+
+.label-select-profissional {
+	font-size: 1.2rem !important;
+    color: #26a69a !important;
+    margin-right: 10px !important;
+}
+
+.input-filter-profissional {
+	width: 70% !important;
+}
+
+.tr-table-modal { 
+	display: inline-table;
+}
+
+.table-filter-profissional {
+	display: block;
+}
+
+.table-filter-profissional > tbody {
+	display: block !important;
+	margin-top: 0;
+}
+
+.filter-profissional-chave {
+	padding-left: 0;
+}
+
+.filter-profissional-nome {
+	padding-left: 0;
+}
+
+.tr-filter {
+	cursor: pointer;
+}
+
+.tr-filter:nth-child(even) {
+    background-color: #d9d9d9;
+}

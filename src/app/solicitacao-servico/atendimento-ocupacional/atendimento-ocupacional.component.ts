@@ -10,6 +10,7 @@ import { AtendimentoBuilder } from './../../controller/atendimento/atendimento.b
 import { SolicitacaoServicoService } from './../solicitacao-servico.service';
 import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
 import { Tarefa } from './../../model/tarefa';
+import { DateUtil } from './../../generics/utils/date.util';
 
 @Component( {
     selector: 'app-atendimento-ocupacional',
@@ -26,6 +27,7 @@ export class AtendimentoOcupacionalComponent {
     msgConfirmSave: string;
     goTo: string;
     myDatePickerOptions: IMyDpOptions;
+    dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute, private router: Router,
             private solicitacaoServicoService: SolicitacaoServicoService) {
@@ -36,6 +38,7 @@ export class AtendimentoOcupacionalComponent {
         this.myDatePickerOptions = {
                 dateFormat: 'dd/mm/yyyy'
             };
+        this.dateUtil = new DateUtil();
     }
 
     ngOnInit() {
@@ -50,7 +53,7 @@ export class AtendimentoOcupacionalComponent {
     }
 
     next() {
-        this.tarefa.setInicio(this.parseDatePickerToDate(this.dataInicio));
+        this.tarefa.setInicio(this.dateUtil.parseDatePickerToDate(this.dataInicio));
         
         this.atendimento.setTarefa(this.tarefa);
         
@@ -71,13 +74,4 @@ export class AtendimentoOcupacionalComponent {
         this.router.navigate(["/solicitacao-servico/selecao-servico"]);
     }
     
-    parseDatePickerToDate( data ) {
-        if ( data === undefined || data === null ) {
-            return null;
-        } else if ( data instanceof Date ) {
-            return data;
-        }
-        let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
-        return d;
-    }
 }

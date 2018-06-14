@@ -19,48 +19,5 @@ export class ResultadoExameGuard extends ChildGuard implements CanActivateChild 
     ): boolean | Observable<boolean> | Promise<boolean> {
         return super.activateChild("resultado-exame", route, state);
         
-//        if ( state.url.includes("resultado-exame") ) {
-//            if ( window.localStorage.getItem("RESULTADO-EXAME_LISTAR") !== undefined &&
-//                    window.localStorage.getItem("RESULTADO-EXAME_LISTAR") !== null &&
-//                    window.localStorage.getItem("RESULTADO-EXAME_LISTAR") !== '' &&
-//                    window.localStorage.getItem("RESULTADO-EXAME_LISTAR") == "true" ) {
-//                if ( window.localStorage.getItem("RESULTADO-EXAME_REMOVER") !== undefined &&
-//                        window.localStorage.getItem("RESULTADO-EXAME_REMOVER") !== null &&
-//                        window.localStorage.getItem("RESULTADO-EXAME_REMOVER") !== '' &&
-//                        window.localStorage.getItem("RESULTADO-EXAME_REMOVER") == "true" )
-//                    this.canRemove = true;
-//                else this.canRemove = false;
-//                if ( state.url.includes("editar") ) {
-//                    if ( window.localStorage.getItem("RESULTADO-EXAME_ALTERAR") !== undefined &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_ALTERAR") !== null &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_ALTERAR") !== '' &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_ALTERAR") == "true" ){
-//                        return true;
-//                    }
-//                    else return false;
-//                }
-//                if ( state.url.includes("detalhe") ) {
-//                    if ( window.localStorage.getItem("RESULTADO-EXAME_DETALHE") !== undefined &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_DETALHE") !== null &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_DETALHE") !== '' &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_DETALHE") == "true" )
-//                        return true;
-//                    else return false;
-//                }
-//                if ( state.url.includes("cadastrar") ) {
-//                    if ( window.localStorage.getItem("RESULTADO-EXAME_ADICIONAR") !== undefined &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_ADICIONAR") !== null &&
-//                            window.localStorage.getItem("RESULTADO-EXAME_ADICIONAR") !== '' && 
-//                            window.localStorage.getItem("RESULTADO-EXAME_ADICIONAR") == "true" ) {
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-//                }
-//                return true;
-//            } else return false;
-//        }
-//        
-//        return true;
     }
 }

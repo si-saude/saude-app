@@ -69,22 +69,22 @@ export class GheeFormComponent extends GenericFormComponent implements OnInit {
         if (this.dataCriacao !== null && 
                 this.dataCriacao  !== undefined)
             this.ghee.setDataCriacao(
-                    this.parseDatePickerToDate(this.dataCriacao));
+                    this.dateUtil.parseDatePickerToDate(this.dataCriacao));
 
         if (this.dataDesativacao !== null && 
                 this.dataDesativacao !== undefined)
             this.ghee.setDataDesativacao(
-                    this.parseDatePickerToDate(this.dataDesativacao));
+                    this.dateUtil.parseDatePickerToDate(this.dataDesativacao));
     }
     
     parseAndSetDates() {
         if (this.ghee.getDataCriacao() !== null && 
                 this.ghee.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.parseDataToObjectDatePicker(this.ghee.getDataCriacao());
+            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataCriacao());
         }
         if (this.ghee.getDataDesativacao() !== null && 
                 this.ghee.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.parseDataToObjectDatePicker(this.ghee.getDataDesativacao());
+            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataDesativacao());
         }
         
     }

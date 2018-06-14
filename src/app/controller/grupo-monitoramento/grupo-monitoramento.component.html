@@ -97,20 +97,20 @@
 			</div>
 
 			<div class="input-field col s3 checkbox">
-				<input type="checkbox" id="recorrente" #rec
-					(click)="changeStateRecorrente()" name="recorrente"> <label
+				<input type="checkbox" id="recorrente"
+					(click)="recorrente.changeState()" name="recorrente"> <label
 					for="recorrente">Recorrente</label>
 			</div>
 
 			<div class="input-field col s3 checkbox">
-				<input type="checkbox" id="relatorio" #rel
-					(click)="changeStateRelatorio()" name="relatorio"> <label
+				<input type="checkbox" id="relatorio"
+					(click)="relatorio.changeState()" name="relatorio"> <label
 					for="relatorio">Relatório</label>
 			</div>
 
 			<div class="input-field col s3 checkbox">
-				<input type="checkbox" id="auditoriaAso" #audit
-					(click)="changeStateAuditoriaAso()" name="auditoriaAso"> <label
+				<input type="checkbox" id="auditoriaAso"
+					(click)="auditoriaAso.changeState()" name="auditoriaAso"> <label
 					for="auditoriaAso">Auditoria do ASO</label>
 			</div>
 
@@ -125,7 +125,7 @@
 
 </div>
 
-<app-confirm-delete [service]="service" [idDelete]="tempDelete" 
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" (cancelDelete)="closeModalDelete($event)"
 	[show]="openModalDelete"></app-confirm-delete>
 
 <!-- Modal Structure -->

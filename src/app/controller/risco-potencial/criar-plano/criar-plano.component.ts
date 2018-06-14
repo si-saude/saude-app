@@ -49,7 +49,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
                             this.showPreload = false;
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
                             this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
-                                this.arrayDatas.push(this.parseDataToString(rE.getData()));
+                                this.arrayDatas.push(this.dateUtil.parseDataToString(rE.getData()));
                             })
                         } )
                         .catch( error => {

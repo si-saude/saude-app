@@ -75,6 +75,7 @@
 			<a [routerLink]="['/risco-ghe']" *ngIf="checkPermissao('RISCO-GHE_LISTAR')">Risco do GHE</a>
 			<a [routerLink]="['/servico']" *ngIf="checkPermissao('SERVICO_LISTAR')">Serviço</a>
 			<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('TIPO-GRUPO-MONITORAMENTO_LISTAR')">Tipo Grupo Monitoramento</a>
+			<a [routerLink]="['/tipo-solicitacao']" *ngIf="checkPermissao('TIPO-SOLICITACAO_LISTAR')">Tipo Solicitação</a>
 			<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')" (click)="closeSidenav1(); closeSidenav3();">Usuário</a> 
 			<a [routerLink]="['/vacina']" *ngIf="checkPermissao('VACINA_LISTAR')">Vacina</a>
 		</div>
@@ -89,7 +90,6 @@
 			(click)="closeSidenavProcesso()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
-			<a [routerLink]="['/home']">Notificação</a>
 			<a [routerLink]="['/agenda']" *ngIf="checkPermissao('AGENDA')">Agenda</a>
 			<a [routerLink]="['/aprho']" *ngIf="checkPermissao('APRHO_LISTAR')">Análise Preliminar de Risco (APR-HO)</a>
 			<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
@@ -98,6 +98,7 @@
 			<a [routerLink]="['/auditoria-resultado-exame']" *ngIf="checkPermissao('AUDITORIA-RESULTADO-EXAME_LISTAR')">Auditoria De Resultados de Exames</a>
 			<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
 			<a [routerLink]="['/risco-potencial']" *ngIf="checkPermissao('RISCO-POTENCIAL_LISTAR')">Controle da SAST</a>
+			<a [routerLink]="['/kanban']" *ngIf="checkPermissao('KANBAN')">Kanban</a>
 			<li>
 			<a materialize="sideNav"
 				[materializeParams]="[{closeOnClick: true}]"
@@ -106,6 +107,7 @@
 			</a>
 			</li>
 			<a [routerLink]="['/atendimento/gerenciar']" *ngIf="checkPermissao('ATENDIMENTO_GERENCIAR')">Gerenciar Atendimentos</a>
+			<a [routerLink]="['/home']" *ngIf="checkPermissao('NOTIFICACAO')">Notificação</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		</div>
 	</li>
@@ -144,6 +146,7 @@
 		<div class="groups">
 			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
 			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>
+			<a [routerLink]="['/reports/solicitacao-central-integra']" *ngIf="checkPermissao('REPORT-SOLICITACAO-CENTRAL-INTEGRA')">Solicitação Central Integra</a>
 		</div>
 	</li>
 </ul>

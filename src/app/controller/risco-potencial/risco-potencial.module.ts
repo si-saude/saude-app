@@ -8,41 +8,51 @@ import { ChartsModule } from 'ng2-charts';
 import { DataTableModule } from "angular2-datatable";
 
 import { RiscoPotencialComponent } from './risco-potencial.component';
-import { TriagemComponent } from './triagem/triagem.component';
 import { TriagemReavaliacaoComponent } from './triagem-reavaliacao/triagem-reavaliacao.component';
 import { GraficosComponent } from './graficos/graficos.component';
-import { AcoesComponent } from './acoes/acoes.component';
-import { AcompanhamentoComponent } from './acompanhamento/acompanhamento.component';
+import { TriagemComponent } from './triagem/triagem.component';
 import { FichaColetaComponent } from './ficha-coleta/ficha-coleta.component';
-import { PlanoIntervencaoComponent } from './plano-intervencao/plano-intervencao.component';
 import { PlanejamentoComponent } from './planejamento/planejamento.component';
+import { AcoesComponent } from './acoes/acoes.component';
+import { AcolhimentoComponent } from './acolhimento/acolhimento.component';
+import { AcompanhamentoComponent } from './acompanhamento/acompanhamento.component';
+import { PlanoIntervencaoComponent } from './plano-intervencao/plano-intervencao.component';
 import { CriarPlanoComponent } from './criar-plano/criar-plano.component';
 import { RiscoPotencialService } from './risco-potencial.service';
 import { RiscoEmpregadoService } from './../risco-empregado/risco-empregado.service';
 import { RiscoPotencialRoutingModule } from './risco-potencial.routing.module';
-import { TransformDatePipe } from './../../pipes/transform-date.pipe';
 import { SharedModule } from './../shared.module';
+import { PipesModule } from './../pipes.module';
+import { PlanejamentoModule } from './../planejamento.module';
+import { TriagemModule } from './../triagem.module';
+import { FichaColetaModule } from './../ficha-coleta.module';
+import { AcolhimentoModule } from './../acolhimento.module';
 
 @NgModule({
     declarations: [
        RiscoPotencialComponent,
-       TriagemComponent,
        AcoesComponent,
        AcompanhamentoComponent,
-       FichaColetaComponent,
        PlanoIntervencaoComponent,
-       PlanejamentoComponent,
        GraficosComponent,
        CriarPlanoComponent,
-       TransformDatePipe,
-       TriagemReavaliacaoComponent
+       TriagemComponent,
+       TriagemReavaliacaoComponent,
+       FichaColetaComponent,
+       PlanejamentoComponent,
+       AcolhimentoComponent
      ],
      imports: [
+        TriagemModule,
         RiscoPotencialRoutingModule,
         MyDatePickerModule,
         ChartsModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        PipesModule,
+        PlanejamentoModule,
+        FichaColetaModule,
+        AcolhimentoModule
      ],
      providers: [
         RiscoPotencialService,

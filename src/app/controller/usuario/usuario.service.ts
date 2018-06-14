@@ -32,4 +32,8 @@ export class UsuarioService extends GenericService {
         return this.perfilService.getPerfis();
     }
     
+    getPessoaService() {
+        return this.pessoaService;
+    }
+    
 }

@@ -73,11 +73,11 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
     parseAndSetDates() {
         if (this.ghe.getDataCriacao() !== null && 
                 this.ghe.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
+            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
         }
         if (this.ghe.getDataDesativacao() !== null && 
                 this.ghe.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
+            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
         }
         
     }

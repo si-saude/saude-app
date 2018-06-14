@@ -6,6 +6,7 @@ import { ProfissionalConselho } from './profissional-conselho';
 import { ProfissionalVacina } from './profissional-vacina';
 import { Curriculo } from './curriculo';
 import { Servico } from './servico';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Profissional {
     private id: number = 0;
@@ -19,6 +20,8 @@ export class Profissional {
     private profissionalVacinas: Array<ProfissionalVacina>;
     private servicos: Array<Servico>;
     private version: number;
+
+    private dataAsoCustomDate: CustomDate = new CustomDate(this.dataAso);
 
     getId() {
         return this.id;
@@ -45,11 +48,21 @@ export class Profissional {
     }
     
     getDataAso() {
+        this.dataAso = this.dataAsoCustomDate.getApiDate();
         return this.dataAso;
     }
     
     setDataAso(dataAso: Date) {
+        this.dataAsoCustomDate.setApiDate(dataAso);
         this.dataAso = dataAso;
+    }
+    
+    getDataAsoCustomDate(){
+        return this.dataAsoCustomDate;
+    }
+    
+    setDataAsoCustomDate(dataAsoCustomDate: CustomDate){
+        this.dataAsoCustomDate = dataAsoCustomDate;
     }
     
     getLocalizacao() {
@@ -106,6 +119,17 @@ export class Profissional {
     
     setServicos(servicos: Array<Servico>) {
         this.servicos = servicos;
+    }
+    
+    getNome() {
+        if ( this.empregado != undefined && this.empregado.getPessoa() != undefined )
+            return this.empregado.getPessoa().getNome();
+        return undefined;
+    }
+    
+    setNome(nome: string) {
+        if ( this.empregado != undefined && this.empregado.getPessoa() != undefined )
+            this.empregado.getPessoa().setNome(nome);
     }
 
 }

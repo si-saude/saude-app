@@ -1,0 +1,191 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="container-triagem">
+	<div class="table-triagem">
+		<table style="width: 100%">
+			<div class="container-triagens-acolhimento">
+				<div
+					*ngFor="let equipe of equipesTriagensTodosAtendimentos; let e = index">
+					<p style="margin-left: 20px;">
+						<b>{{equipe.nome}}</b>
+					</p>
+					<div
+						*ngFor="let triagem of triagensTodosAtendimentosByEquipe[equipe.id]; let t = index">
+						<div *ngIf="verifyIndiceTriagem(triagem)">
+							<fieldset class="fieldset-planejamento-triagem">
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-indicador-acolhimento">Indicador</td>
+										<td class="col s9 indicador-acolhimento">{{triagem.indicadorSast.nome}}</td>
+									</tr>
+								</div>
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-indice-descricao-acolhimento">Índice
+											Descrição</td>
+										<td class="col s9 indice-descricao-acolhimento">{{getIndiceDescricao(triagem)}}</td>
+									</tr>
+								</div>
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-eixo-clinico-acolhimento">Eixo
+											Clínico</td>
+										<td class="col s9 eixo-clinico-acolhimento"><input
+											type="text" name="eixo-clinico-acolhimento{{t}}" disabled
+											[(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
+									</tr>
+								</div>
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-diagnostico-acolhimento">Diagnóstico</td>
+										<td class="col s9 diagnostico-acolhimento"><input
+											type="text" name="diagnostico-acolhimento{{t}}" disabled
+											[(ngModel)]="triagem.diagnostico.descricao"></td>
+									</tr>
+								</div>
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-intervencao-acolhimento">Intervenção</td>
+										<td class="col s9 intervencao-acolhimento"><input
+											type="text" name="intervencao-acolhimento{{t}}" disabled
+											[(ngModel)]="triagem.intervencao.descricao"></td>
+									</tr>
+								</div>
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-equipe-abordagem-acolhimento">Equipe
+											de Abordagem</td>
+										<td class="col s9 equipe-abordagem-acolhimento"><input
+											type="text" name="equipe-abordagem-acolhimento{{t}}" disabled
+											[(ngModel)]="triagem.equipeAbordagem.nome"></td>
+									</tr>
+								</div>
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-prazo-inicio-acolhimento">Sugestão
+											de prazo de início</td>
+										<td class="col s9 prazo-inicio-acolhimento"><input
+											type="text" name="prazo-inicio-acolhimento{{t}}" disabled
+											[(ngModel)]="triagem.prazo"></td>
+									</tr>
+								</div>
+								<div class="row">
+									<tr class="row col s12">
+										<td class="col s3 label-justificativa-acolhimento">Justificativa/Observação</td>
+										<td class="col s9 justificativa-acolhimento"><input
+											type="text" name="justificativa-acolhimento{{t}}" disabled
+											[(ngModel)]="triagem.justificativa"></td>
+									</tr>
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+				<div class="dados-acolhimento">
+					<p style="margin-left: 20px;">
+						<b>ACOLHIMENTO</b>
+					</p>
+					<fieldset class="fieldset-planejamento-triagem">
+						<div class="row">
+							<tr class="row col s12">
+								<td class="col s3 label-equipe-responsavel">Equipe
+									Responsável</td>
+								<td class="col s9 equipe-responsavel"><input type="text"
+									name="equipe-responsavel" disabled
+									[(ngModel)]="innerRiscoPotencial.equipeResponsavel.nome">
+								</td>
+							</tr>
+						</div>
+
+						<fieldset>
+							<legend>
+								Equipes <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getEquipes()"> <i
+									class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
+							<div class="row row-equipe">
+
+								<div class="input-field col s4">
+									<select class="browser-default" #equipe>
+										<option disabled selected value=0>Selecione uma equipe</option>
+										<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+									</select>
+								</div>
+								<div class="col s2">
+									<a class="btn-floating waves-effect waves-light green btn-add"
+										(click)="addEquipe(equipe.value)"> <i
+										class="material-icons center-icon">add</i>
+									</a>
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<table class="striped">
+									<thead>
+										<tr class="row col s12">
+											<th class="col s5">Nome</th>
+											<th class="col s5">Abreviação</th>
+											<th class="col s2">Remover</th>
+										</tr>
+									</thead>
+									<div
+										*ngFor="let equipe of innerRiscoPotencial.equipes;let i = index">
+										<tbody class="col s12">
+											<tr class="col s12">
+												<td class="col s5 risco-potencial-equipe-nome">{{equipe.nome}}</td>
+												<td class="col s5 risco-potencial-equipe-abreviacao">{{equipe.abreviacao}}</td>
+												<td class="col s2 botao-remover"><a
+													class="btn-floating waves-effect waves-light red btn-remove"
+													(click)="removeEquipe(i)"> <i
+														class="material-icons center-icon">delete</i>
+												</a></td>
+											</tr>
+										</tbody>
+									</div>
+								</table>
+							</div>
+
+						</fieldset>
+
+						<div class="row">
+							<tr class="row col s12">
+								<td class="col s3 label-reserva-agendamento">Reserva de
+									Agendamento</td>
+								<td class="col s4 inicio-agentamento">
+									<my-date-picker (ngModelChange)="setInicioAgendamento($event)"
+										name="inicioAgendamento" [options]="myDatePickerOptions"
+										[(ngModel)]="inicioAgendamento" placeholder="Inicio">
+									</my-date-picker></td>
+								<td class="col s4 fim-agendamento">
+									<my-date-picker (ngModelChange)="setFimAgendamento($event)"
+										name="fimAgendamento" [options]="myDatePickerOptions"
+										[(ngModel)]="fimAgendamento" placeholder="Fim">
+									</my-date-picker></td>
+							</tr>
+						</div>
+
+						<div class="row">
+							<tr class="row col s12">
+								<td class="col s3 label-conduta-percepcao">Conduta/Percepção</td>
+								<td class="col s9 conduta-percepcao"><textarea
+										class="materialize-textarea"
+										[(ngModel)]="innerRiscoPotencial.condutaPercepcao"
+										name="conduta-percepcao">
+											</textarea></td>
+							</tr>
+						</div>
+
+					</fieldset>
+
+				</div>
+			</div>
+		</table>
+	</div>
+
+</div>

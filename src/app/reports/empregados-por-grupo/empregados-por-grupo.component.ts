@@ -12,6 +12,7 @@ import { EmpregadosPorGrupoBuilder } from './empregados-por-grupo.builder';
 import { GrupoMonitoramentoFilter } from './../../controller/grupo-monitoramento/grupo-monitoramento.filter';
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { GrupoMonitoramentoGuard } from './../../guards/guards-child/grupo-monitoramento.guard';
+import { HttpUtil } from './../../generics/utils/http.util';
 
 @Component( {
     selector: 'app-empregados-por-grupo-list',
@@ -29,6 +30,7 @@ export class EmpregadosPorGrupoComponent {
     private value: string;
     private arrayObjects = [[]];
     private arrayTypes: Array<string>;
+    private httpUtil: HttpUtil;
     
     constructor(private grupoMonitoramentoService: GrupoMonitoramentoService,
             private empregadosPorGrupoService: EmpregadosPorGrupoService) {
@@ -39,6 +41,7 @@ export class EmpregadosPorGrupoComponent {
         this.toastParams = ['', 4000];
         this.filter = "";
         this.arrayTypes = new Array<string>();
+        this.httpUtil = new HttpUtil();
     }
     
     ngOnInit() {
@@ -61,7 +64,6 @@ export class EmpregadosPorGrupoComponent {
                 .catch(error => {
                     console.log("Erro ao buscar empregados por grupo monitoramento.");
                 })
-            this.value = "$*all*$";
             this.arrayObjects = [[]];
             this.arrayTypes = new Array<string>();
         }
@@ -78,15 +80,14 @@ export class EmpregadosPorGrupoComponent {
     }
     
     selectFilter( event, type: string ) {
-        this.filter = event;
+        this.filter = event.target.value;
         this.typeFilter = type;
-        this.value = $('input[name='+type).val();
+        this.value = type;
     }
     
     dropdown( event, tipo ) {
         let arrayDropDown: Array<any> = new Array<any>();
         arrayDropDown = this.getItensDropDown( tipo );
-        this.value = "";
         
         $("#dropdown").empty();
         let count = 0;
@@ -110,11 +111,14 @@ export class EmpregadosPorGrupoComponent {
                             component.arrayObjects[$(this).attr('title')].indexOf($(this).attr('id')), 1);
                 }
                 
-                component.filter = $(this).attr('id');
-                component.typeFilter = $(this).attr('title');
+                component.filter = this.getAttribute('id');
+                component.typeFilter = this.getAttribute('title');
+                component.value = undefined;
+                
                 setTimeout(() => {
                     component.filter = "";
                     component.typeFilter = "";
+                    component.value = "timeout";
                 }, 50);
             });
                 
@@ -145,6 +149,17 @@ export class EmpregadosPorGrupoComponent {
             }
         });
         return arrayFilter;
+    }
+    
+    exportFile() {
+        if ( this.empregadosPorGrupo.length > 0 )
+            this.empregadosPorGrupoService.exportFile( this.empregadosPorGrupo )
+                .then(res => {
+                    this.httpUtil.downloadFile(res, "empregados-por-grupo.xlsx");
+                })
+                .catch(error => {
+                    console.log(error);
+                })
     }
     
 }

@@ -24,7 +24,7 @@ export class GheeFormDetailComponent extends GenericFormComponent implements OnI
     dataDesativacao: any;
     
     gheeFilter: GheeFilter = new GheeFilter();
-    
+
     constructor( private route: ActivatedRoute,
         private gheeService: GheeService,
         router: Router) { 
@@ -60,11 +60,11 @@ export class GheeFormDetailComponent extends GenericFormComponent implements OnI
     parseAndSetDates() {
         if (this.ghee.getDataCriacao() !== null && 
                 this.ghee.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.parseDataToObjectDatePicker(this.ghee.getDataCriacao());
+            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataCriacao());
         }
         if (this.ghee.getDataDesativacao() !== null && 
                 this.ghee.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.parseDataToObjectDatePicker(this.ghee.getDataDesativacao());
+            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataDesativacao());
         }
         
     }

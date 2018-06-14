@@ -65,13 +65,13 @@
 						<div class="input-field col s3">
 							<label for="dataNascimento">Data de Nascimento</label>
 							<my-date-picker name="dataNascimento"
-								[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
+								[options]="myDatePickerOptions" [(ngModel)]="empregado.pessoa.dataNascimentoCustomDate.appDate"
 								placeholder="Data de Nascimento"> </my-date-picker>
 						</div>
 						<div class="input-field col s3">
 							<label for="dataAdmissao">Data de Admissão</label>
 							<my-date-picker name="dataAdmissao"
-								[options]="myDatePickerOptions" [(ngModel)]="dataAdmissao"
+								[options]="myDatePickerOptions" [(ngModel)]="empregado.dataAdmissaoCustomDate.appDate"
 								placeholder="Data de Admissão"> </my-date-picker>
 						</div>
 					</div>
@@ -583,10 +583,10 @@
 
 										<div class="input-field col s4">
 											<label for="data">Data</label>
-											<my-date-picker name="empregadoVacinas.data"
+											<my-date-picker
 												[options]="myDatePickerOptions"
-												name="empregado.empregadoVacinas[i].data"
-												[(ngModel)]="dataVacinas[i]" placeholder="Data">
+												name="empregado.empregadoVacinas[{{i}}].dataCustomDate.appDate"
+												[(ngModel)]="empregado.empregadoVacinas[i].dataCustomDate.appDate" placeholder="Data">
 											</my-date-picker>
 										</div>
 
@@ -619,10 +619,9 @@
 
 										<div class="input-field col s4">
 											<label for="proximaDose" maxlength="128">Próxima Dose</label>
-											<my-date-picker name="proximaDose"
-												[options]="myDatePickerOptions"
+											<my-date-picker [options]="myDatePickerOptions"
 												name="empregado.empregadoVacinas[{{i}}].proximaDose"
-												[(ngModel)]="proximaDoseVacinas[i]"
+												[(ngModel)]="empregado.empregadoVacinas[i].proximaDoseCustomDate.appDate"
 												placeholder="Próxima dose"> </my-date-picker>
 										</div>
 									</div>

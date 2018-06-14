@@ -31,8 +31,8 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private tipoAcoes: Array<string>;
     private statusAcoes: Array<string>;
     private tipoContatoAcoes: Array<string>;
-    private dataTarefaAcao: any;
-    private dataAcoes = [[]];
+//    private dataTarefaAcao: any;
+//    private dataAcoes = [[]];
     private flagTriagem: Triagem;
     private flagIndexAcao: number = -1;
     private modalAcao;
@@ -62,7 +62,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
                             this.showPreload = false;
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
                             this.getTriagensEquipeAbordagem();
-                            this.getDataTarefaAcoes();
+//                            this.getDataTarefaAcoes();
                         } )
                         .catch( error => {
                             this.showPreload = false;
@@ -142,31 +142,31 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         })
     }
     
-    getDataTarefaAcoes() {
-        this.riscoPotencial.getRiscoEmpregados().forEach(rE =>{
-            rE.getTriagens().forEach(t => {
-                t.getAcoes().forEach(a => {
-                    if ( this.dataAcoes[t.getId()] == undefined )
-                        this.dataAcoes[t.getId()] = new Array<any>();
-                    let data = this.addFormattedDate(a.getTarefa().getFim());
-                    this.dataAcoes[t.getId()].push(data);
-                });
-            });
-        });
-    }
+//    getDataTarefaAcoes() {
+//        this.riscoPotencial.getRiscoEmpregados().forEach(rE =>{
+//            rE.getTriagens().forEach(t => {
+//                t.getAcoes().forEach(a => {
+//                    if ( this.dataAcoes[t.getId()] == undefined )
+//                        this.dataAcoes[t.getId()] = new Array<any>();
+//                    let data = this.addFormattedDate(a.getTarefa().getFim());
+//                    this.dataAcoes[t.getId()].push(data);
+//                });
+//            });
+//        });
+//    }
+//    
+//    addFormattedDate( data: any ) {
+//        if ( data === undefined || data === null ) {
+//            return undefined;
+//        }
+//        let s = data.split( "T" );
+//        let datas = s[0].split( "-" );
+//        let st = datas[2] + "/" + datas[1] + "/" + datas[0];
+//        let o = { formatted: st };
+//        return o;
+//    }
     
-    addFormattedDate( data: any ) {
-        if ( data === undefined || data === null ) {
-            return undefined;
-        }
-        let s = data.split( "T" );
-        let datas = s[0].split( "-" );
-        let st = datas[2] + "/" + datas[1] + "/" + datas[0];
-        let o = { formatted: st };
-        return o;
-    }
-    
-    adjustDataAcoes() {
+//    adjustDataAcoes() {
 //        this.equipesAbordagemTriagens.forEach(eA => { 
 //            this.triagensByEquipeAbordagem[eA.getId()].forEach(tE => {
 //                for ( let i = 0; i < tE.length; i++ ) {
@@ -174,7 +174,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
 //                }
 //            })
 //        })
-    }
+//    }
     
     getIndiceDescricao( triagem: Triagem ) {
         return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
@@ -186,13 +186,13 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
         this.flagIndexAcao = -1;
         
-        this.dataTarefaAcao = null;
+//        this.dataTarefaAcao = null;
         this.openModal( );
     }
     
     editAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
         let triagem: Triagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
-        this.dataTarefaAcao = this.dataAcoes[triagemId][indexAcao];
+//        this.dataTarefaAcao = this.dataAcoes[triagemId][indexAcao];
         this.acao = triagem.getAcoes()[indexAcao];
         
         this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
@@ -202,7 +202,9 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     confirmAddAcao() {
-        if ( this.dataTarefaAcao == null || this.acao.getDetalhe() == "" || 
+//        if ( this.dataTarefaAcao == null || this.acao.getDetalhe() == "" || 
+//                this.acao.getTipo() == "" || this.acao.getTipoContato() == "") {
+        if ( this.acao.getDetalhe() == "" || 
                 this.acao.getTipo() == "" || this.acao.getTipoContato() == "") {
             this.toastParams = ["Por favor, informe todos os dados corretamente", 4000];
             this.globalActions.emit( 'toast' );
@@ -211,30 +213,30 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         
         let triagem: Triagem = this.flagTriagem;
         
-        if ( this.flagIndexAcao > -1 ) {
-            this.dataAcoes[triagem.getId()][this.flagIndexAcao] = this.dataTarefaAcao;
-            this.acao.getTarefa().setFim(this.parseDatePickerToDate(this.dataTarefaAcao));
-            return;
-        }
+//        if ( this.flagIndexAcao > -1 ) {
+//            this.dataAcoes[triagem.getId()][this.flagIndexAcao] = this.dataTarefaAcao;
+//            this.acao.getTarefa().setFim(this.dateUtil.parseDatePickerToDate(this.dataTarefaAcao));
+//            return;
+//        }
         
-        if ( this.dataAcoes[triagem.getId()] == undefined )
-            this.dataAcoes[triagem.getId()] = new Array<any>();
+//        if ( this.dataAcoes[triagem.getId()] == undefined )
+//            this.dataAcoes[triagem.getId()] = new Array<any>();
        
-        this.dataAcoes[triagem.getId()][this.dataAcoes[triagem.getId()].length] = this.dataTarefaAcao;
+//        this.dataAcoes[triagem.getId()][this.dataAcoes[triagem.getId()].length] = this.dataTarefaAcao;
         
         if ( triagem.getAcoes() == undefined ) 
             triagem.setAcoes(new Array<Acao>());
         
         this.acao.setTarefa(new Tarefa());
         this.acao.setStatus(this.statusAcoes[0]);
-        this.acao.getTarefa().setFim(this.parseDatePickerToDate(this.dataTarefaAcao));
+//        this.acao.getTarefa().setFim(this.dateUtil.parseDatePickerToDate(this.dataTarefaAcao));
         
         triagem.getAcoes().push(this.acao);
     }
     
     removeAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
         let triagem: Triagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
-        this.dataAcoes[triagemId].splice(indexAcao, 1);
+//        this.dataAcoes[triagemId].splice(indexAcao, 1);
         
         if ( this.riscoPotencial.getAcoesDelete() == undefined )
             this.riscoPotencial.setAcoesDelete(new AcaoBuilder().initializeList(new Array<Acao>()));

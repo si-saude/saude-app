@@ -1,0 +1,34 @@
+.form-container {
+	margin-bottom: 100px;
+}
+
+.cabecalho > h6 {
+	padding-left: 10px;
+	color: #26a69a;
+}
+
+.btn-avancar { 
+	margin-top: 50px;
+    float: right;
+}
+
+.botao-voltar {
+	margin-top: 50px;
+    float: left;
+}
+
+.btn-back {
+	
+}
+
+.row-btns {
+	
+}
+
+.right {
+	float: right;
+}
+
+.center-icon {
+	margin: 0 auto;
+}
