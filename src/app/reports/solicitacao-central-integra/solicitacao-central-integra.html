@@ -10,10 +10,10 @@
 		<thead>
 			<tr>
 				<th style="width: 3%">
-					<mfDefaultSorter by="tipoSolicitacao">Tipo de Solicitação</mfDefaultSorter>
-						<div class="div-icon" id="tipoSolicitacao-nome">
+					<mfDefaultSorter by="nome">Tipo de Solicitação</mfDefaultSorter>
+						<div class="div-icon" id="nome">
 							<i class="small material-icons icon" 
-								(click)="dropdown($event, 'tipoSolicitacao-nome')">arrow_drop_down</i>
+								(click)="dropdown($event, 'nome')">arrow_drop_down</i>
 						</div>
 				</th>
 				<th style="width: 2%">
@@ -23,7 +23,7 @@
 					<mfDefaultSorter by="prazo">Prazo</mfDefaultSorter>
 					<input type="text" name="prazo" style="width: 90%" 
 							placeholder="filtrar prazo" 
-							(input)="selectFilter($event, 'prazoString')">
+							(input)="selectFilter($event, 'prazo')">
 				</th>
 				<th style="width: 2%">
 					<mfDefaultSorter by="status">Status</mfDefaultSorter>
@@ -36,7 +36,7 @@
 					<mfDefaultSorter by="abertura">Abertura</mfDefaultSorter>
 					<input type="text" name="abertura" style="width: 90%" 
 						placeholder="filtrar abertura" 
-						(input)="selectFilter($event, 'aberturaString')">
+						(input)="selectFilter($event, 'abertura')">
 				</th>
 				<th style="width: 2%">
 					<mfDefaultSorter by="observacao">Observacao</mfDefaultSorter>
@@ -61,13 +61,13 @@
 			<tr class="tr-filter" *ngFor="let item of mf.data" id="item-{{item.id}}" 
 				(dblclick)="openDescricao(item.id)"
 				[ngStyle]="solicitacaoCentralIntegraUtil.setColor(item.status)">
-				<td>{{item.tipoSolicitacao.nome}}</td>
+				<td>{{item.nome}}</td>
 				<td (mouseover)="showTextToast(item.descricao)" (mouseleave)="closeTooltip()">
 					{{splitText(item.descricao)}}
 				</td>
-				<td [ngStyle]="solicitacaoCentralIntegraUtil.setNgStyleAtrasado(item)">{{item.prazoString}}</td>
+				<td [ngStyle]="solicitacaoCentralIntegraUtil.setNgStyleAtrasado(item)">{{item.prazo}}</td>
 				<td>{{item.status}}</td>
-				<td>{{item.aberturaString}}</td>
+				<td>{{item.abertura}}</td>
 				<td (mouseover)="showTextToast(item.observacao)" (mouseleave)="closeTooltip()">
 					{{splitText(item.observacao)}}
 				</td>

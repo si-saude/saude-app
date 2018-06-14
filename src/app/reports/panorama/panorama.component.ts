@@ -34,11 +34,6 @@ export class PanoramaComponent {
         this.panoramaService.getPanoramas()
             .then(res => {
                 this.panoramas = new PanoramaBuilder().cloneList(res.json());
-                this.panoramas.forEach(p => {
-                    p.getDataAsoAnoAnteriorString();
-                    p.getDataAsoAnoAtualString();
-                    p.getDataRealizacaoPreClinicoString();
-                })
             })
             .catch(error => {
                 console.log("Erro ao pegar panoramas.")

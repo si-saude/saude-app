@@ -42,6 +42,20 @@ export class SolicitacaoCentralIntegraService extends GenericService {
         return this.list( solicitacaoCentralIntegraFilter );
     }
     
+    getSolicitacoesReport( cpf ) {
+        let urlSolicitacoesCentralIntegra = this.URL + "/get-solicitacoes-central-integra";
+        return this.http
+            .get( urlSolicitacoesCentralIntegra + "?cpf=" + cpf, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    exportFile( array ) {
+        let urlFile = this.URL + "/get-file";
+        return this.http
+            .post( urlFile, array, { headers: this.headers } )
+            .toPromise();
+    }
+    
     getTipoSolicitacoes() {
         return this.tipoSolicitacaoService.getTipoSolicitacoes();
     }

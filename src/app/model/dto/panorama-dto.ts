@@ -1,5 +1,3 @@
-import { DateUtil } from './../../generics/utils/date.util';
-
 export class PanoramaDto {
     private id: number;
     private gerencia: string;
@@ -7,19 +5,15 @@ export class PanoramaDto {
     private nome: string;
     private mesConvocacao: string;
     private base: string;
-    private dataAsoAnoAnterior: Date;
-    private dataAsoAnoAtual: Date;
-    private dataRealizacaoPreClinico: Date;
+    private dataAsoAnoAnterior: string;
+    private dataAsoAnoAtual: string;
+    private dataRealizacaoPreClinico: string;
     private situacaoAso: string;
     private asoNoPrazo: string;
     private pendencias: string;
     private gerenciaPrimeiraLinha: string;
     private statusPreClinico: string;
     private examesPendentes: string;
-    private dataAsoAnoAnteriorString: string;
-    private dataAsoAnoAtualString: string;
-    private dataRealizacaoPreClinicoString: string;
-    private dateUtil: DateUtil = new DateUtil();
     
     getId() {
         return this.id;
@@ -54,19 +48,19 @@ export class PanoramaDto {
     getDataAsoAnoAnterior() {
         return this.dataAsoAnoAnterior;
     }
-    setDataAsoAnoAnterior(dataAsoAnoAnterior: Date) {
+    setDataAsoAnoAnterior(dataAsoAnoAnterior: string) {
         this.dataAsoAnoAnterior = dataAsoAnoAnterior;
     }
     getDataAsoAnoAtual() {
         return this.dataAsoAnoAtual;
     }
-    setDataAsoAnoAtual(dataAsoAnoAtual: Date) {
+    setDataAsoAnoAtual(dataAsoAnoAtual: string) {
         this.dataAsoAnoAtual = dataAsoAnoAtual;
     }
     getDataRealizacaoPreClinico() {
         return this.dataRealizacaoPreClinico;
     }
-    setDataRealizacaoPreClinico(dataRealizacaoPreClinico: Date) {
+    setDataRealizacaoPreClinico(dataRealizacaoPreClinico: string) {
         this.dataRealizacaoPreClinico = dataRealizacaoPreClinico;
     }
     getSituacaoAso() {
@@ -111,23 +105,5 @@ export class PanoramaDto {
     setExamesPendentes(examesPendentes: string) {
         this.examesPendentes = examesPendentes;
     }
-    setDataAsoAnoAnteriorString(dataAsoAnoAnteriorString) {
-        this.dataAsoAnoAnteriorString = dataAsoAnoAnteriorString;
-    }
-    getDataAsoAnoAnteriorString() {
-        return this.dateUtil.parseDataToString(this.dataAsoAnoAnterior);
-    }
-    setDataAsoAnoAtualString(dataAsoAnoAtualString) {
-        this.dataAsoAnoAtualString = dataAsoAnoAtualString;
-    }
-    getDataAsoAnoAtualString() {
-        return this.dateUtil.parseDataToString(this.dataAsoAnoAtual);
-    }
-    setDataRealizacaoPreClinicoString(dataRealizacaoPreClinicoString){
-        this.dataRealizacaoPreClinicoString = dataRealizacaoPreClinicoString;
-    }
-    getDataRealizacaoPreClinicoString(){
-        return this.dateUtil.parseDataToString(this.dataRealizacaoPreClinico);
-    } 
     
 }

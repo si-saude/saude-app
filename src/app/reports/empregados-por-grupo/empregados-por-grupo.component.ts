@@ -12,6 +12,7 @@ import { EmpregadosPorGrupoBuilder } from './empregados-por-grupo.builder';
 import { GrupoMonitoramentoFilter } from './../../controller/grupo-monitoramento/grupo-monitoramento.filter';
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { GrupoMonitoramentoGuard } from './../../guards/guards-child/grupo-monitoramento.guard';
+import { HttpUtil } from './../../generics/utils/http.util';
 
 @Component( {
     selector: 'app-empregados-por-grupo-list',
@@ -29,6 +30,7 @@ export class EmpregadosPorGrupoComponent {
     private value: string;
     private arrayObjects = [[]];
     private arrayTypes: Array<string>;
+    private httpUtil: HttpUtil;
     
     constructor(private grupoMonitoramentoService: GrupoMonitoramentoService,
             private empregadosPorGrupoService: EmpregadosPorGrupoService) {
@@ -39,6 +41,7 @@ export class EmpregadosPorGrupoComponent {
         this.toastParams = ['', 4000];
         this.filter = "";
         this.arrayTypes = new Array<string>();
+        this.httpUtil = new HttpUtil();
     }
     
     ngOnInit() {
@@ -146,6 +149,17 @@ export class EmpregadosPorGrupoComponent {
             }
         });
         return arrayFilter;
+    }
+    
+    exportFile() {
+        if ( this.empregadosPorGrupo.length > 0 )
+            this.empregadosPorGrupoService.exportFile( this.empregadosPorGrupo )
+                .then(res => {
+                    this.httpUtil.downloadFile(res, "empregados-por-grupo.xlsx");
+                })
+                .catch(error => {
+                    console.log(error);
+                })
     }
     
 }

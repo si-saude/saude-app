@@ -6,14 +6,9 @@ import * as $ from 'jquery';
 import { MaterializeAction } from "angular2-materialize";
 
 import { SolicitacaoCentralIntegraService } from './../../controller/solicitacao-central-integra/solicitacao-central-integra.service';
-import { SolicitacaoCentralIntegraBuilder } from './../../controller/solicitacao-central-integra/solicitacao-central-integra.builder';
-import { SolicitacaoCentralIntegraFilter } from './../../controller/solicitacao-central-integra/solicitacao-central-integra.filter';
-import { SolicitacaoCentralIntegra } from './../../model/solicitacao-central-integra';
+import { SolicitacaoCentralIntegraBuilder } from './solicitacao-central-integra.builder';
+import { SolicitacaoCentralIntegraDto } from './../../model/dto/solicitacao-central-integra-dto';
 import { SolicitacaoCentralIntegraUtil } from './../../generics/utils/solicitacao-central-integra.util';
-import { PessoaFilter } from './../../controller/pessoa/pessoa.filter';
-import { Empregado } from './../../model/empregado';
-import { EmpregadoFilter } from './../../controller/empregado/empregado.filter';
-import { TarefaFilter } from './../../controller/tarefa/tarefa.filter';
 import { Usuario } from './../../model/usuario';
 import { UsuarioBuilder } from './../../controller/usuario/usuario.builder';
 import { ProfissionalSaudeBuilder } from './../../controller/profissional-saude/profissional-saude.builder';
@@ -26,7 +21,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
     styleUrls: ['./solicitacao-central-integra.css']
 } )
 export class SolicitacaoCentralIntegraComponent {
-    private solicitacaoCentralIntegras: Array<SolicitacaoCentralIntegra>;
+    private solicitacaoCentralIntegras: Array<SolicitacaoCentralIntegraDto>;
     private filter: any;
     private typeFilter: string;
     private value: string;
@@ -44,7 +39,7 @@ export class SolicitacaoCentralIntegraComponent {
 
     constructor( private router: Router,
         private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService ) {
-        this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().initializeList( new Array<SolicitacaoCentralIntegra>() );
+        this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().initializeList( new Array<SolicitacaoCentralIntegraDto>() );
         this.filter = "";
         this.arrayTypes = new Array<string>();
         this.solicitacaoCentralIntegraUtil = new SolicitacaoCentralIntegraUtil();
@@ -75,27 +70,12 @@ export class SolicitacaoCentralIntegraComponent {
     }
 
     getSolicitacoes() {
-        let solicitacaoCentralIntegraFilter: SolicitacaoCentralIntegraFilter = new SolicitacaoCentralIntegraFilter();
-        solicitacaoCentralIntegraFilter.setTarefa( new TarefaFilter() );
-        solicitacaoCentralIntegraFilter.getTarefa().setCliente( new EmpregadoFilter() );
-        solicitacaoCentralIntegraFilter.getTarefa().getCliente().setPessoa( new PessoaFilter() );
-        solicitacaoCentralIntegraFilter.getTarefa().getCliente().getPessoa().setCpf( this.usuario.getPessoa().getCpf() );
-        solicitacaoCentralIntegraFilter.setPageSize( Math.pow( 2, 31 ) - 1 );
-        solicitacaoCentralIntegraFilter.setPageNumber( 1 );
-        this.solicitacaoCentralIntegraService.getSolicitacoes( solicitacaoCentralIntegraFilter )
+        this.solicitacaoCentralIntegraService.getSolicitacoesReport( this.usuario.getPessoa().getCpf() )
             .then( res => {
-                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json().list );
-                this.solicitacaoCentralIntegras.forEach( x => {
-                    x.getAberturaString();
-                    x.getPrazoString();
-                } );
-
-//                setTimeout(() => {
-//                    this.setClickAguardandoInformacao();
-//                }, 500 );
+                this.solicitacaoCentralIntegras = new SolicitacaoCentralIntegraBuilder().cloneList( res.json() );
             } )
             .catch( error => {
-                console.log( "Erro ao pegar panoramas." )
+                console.log( "Erro ao buscar as solicitacoes." );
             } )
     }
 
@@ -241,14 +221,7 @@ export class SolicitacaoCentralIntegraComponent {
     getItensDropDown( tipo ) {
         let arrayFilter: Array<any> = new Array<any>();
 
-        if ( tipo == 'tipoSolicitacao-nome' ) {
-            this.solicitacaoCentralIntegras.forEach( p => {
-                if ( arrayFilter.find( a => a == p['tipoSolicitacao']['nome'] ) == undefined &&
-                    p['tipoSolicitacao']['nome'] != "" && p['tipoSolicitacao']['nome'] != undefined ) {
-                    arrayFilter.push( p['tipoSolicitacao']['nome'] );
-                }
-            } );
-        } else if ( tipo == 'concluido' ) {
+        if ( tipo == 'concluido' ) {
             arrayFilter = [true, false];
         } else this.solicitacaoCentralIntegras.forEach( p => {
             if ( arrayFilter.find( a => a == p[tipo] ) == undefined &&
@@ -267,14 +240,13 @@ export class SolicitacaoCentralIntegraComponent {
     }
 
     //generalizar solicitacaoCentralIntegraUtil
-    getAnexo( solicitacaoCentralIntegra: SolicitacaoCentralIntegra ) {
+    getAnexo( solicitacaoCentralIntegra: SolicitacaoCentralIntegraDto ) {
         this.showPreload = true;
 
         this.solicitacaoCentralIntegraService.getAnexo( solicitacaoCentralIntegra.getId() )
             .then( res => {
                 this.showPreload = false;
-                this.httpUtil.downloadFile( res, solicitacaoCentralIntegra.
-                    getTarefa().getCliente().getPessoa().getNome() + ".zip" );
+                this.httpUtil.downloadFile( res, "SolicitacaoCentralIntegra.zip" );
             } )
             .catch( error => {
                 this.showPreload = false;
