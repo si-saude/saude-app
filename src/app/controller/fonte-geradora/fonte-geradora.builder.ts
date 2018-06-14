@@ -20,4 +20,14 @@ export class FonteGeradoraBuilder extends GenericBuilder {
         return cloneFonteGeradora;
     }
     
+    cloneList( fonteGeradoras: Array<FonteGeradora> ): Array<FonteGeradora> {
+        let array: Array<FonteGeradora> = new Array<FonteGeradora>();
+
+        if ( fonteGeradoras !== null && fonteGeradoras !== undefined ) {
+            for ( let fonteGeradora of fonteGeradoras ) {
+                array.push( this.clone( fonteGeradora ) );
+            }
+        }
+        return array;
+    }
 }

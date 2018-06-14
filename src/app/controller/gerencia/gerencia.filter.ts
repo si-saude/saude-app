@@ -1,5 +1,6 @@
 import { GenericFilter } from './../../generics/generic.filter';
 import { EmpregadoFilter } from './../empregado/empregado.filter';
+import { BooleanFilter } from './../../generics/boolean.filter';
 
 export class GerenciaFilter extends GenericFilter {
     private codigo: string;
@@ -8,6 +9,7 @@ export class GerenciaFilter extends GenericFilter {
     private gerente: EmpregadoFilter;
     private secretario1: EmpregadoFilter;
     private secretario2: EmpregadoFilter;
+    private ausentePeriodico: BooleanFilter = new BooleanFilter();
 
     public getCodigo() {
         return this.codigo;
@@ -55,5 +57,13 @@ export class GerenciaFilter extends GenericFilter {
     
     public setSecretario2(s:EmpregadoFilter){
         this.secretario2 = s;
+    }
+    
+    public getAusentePeriodico():BooleanFilter{
+        return this.ausentePeriodico;
+    }
+    
+    public setAusentePeriodico(ausentePeriodico:BooleanFilter){
+        this.ausentePeriodico = ausentePeriodico;
     }
 }

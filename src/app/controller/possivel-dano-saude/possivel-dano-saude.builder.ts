@@ -20,4 +20,14 @@ export class PossivelDanoSaudeBuilder extends GenericBuilder {
         return clonePossivelDanoSaude;
     }
     
+    cloneList( possivelDanoSaudes: Array<PossivelDanoSaude> ): Array<PossivelDanoSaude> {
+        let array: Array<PossivelDanoSaude> = new Array<PossivelDanoSaude>();
+
+        if ( possivelDanoSaudes !== null && possivelDanoSaudes !== undefined ) {
+            for ( let possivelDanoSaude of possivelDanoSaudes ) {
+                array.push( this.clone( possivelDanoSaude ) );
+            }
+        }
+        return array;
+    }
 }

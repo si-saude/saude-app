@@ -9,6 +9,7 @@ export class Gerencia {
     private gerente: Empregado;
     private secretario1: Empregado;
     private secretario2: Empregado;
+    private ausentePeriodico: boolean;
     private version: number;
 
     getId(): number {
@@ -81,5 +82,13 @@ export class Gerencia {
     
     setSecretario2(s:Empregado){
         this.secretario2 = s;
+    }
+    
+    getAusentePeriodico():boolean{
+        return this.ausentePeriodico;
+    }
+    
+    setAusentePeriodico(ausentePeriodico:boolean){
+        this.ausentePeriodico = ausentePeriodico;
     }
 }

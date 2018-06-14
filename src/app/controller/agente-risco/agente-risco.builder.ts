@@ -21,4 +21,14 @@ export class AgenteRiscoBuilder extends GenericBuilder {
         return cloneAgenteRisco;
     }
     
+    cloneList( agenteRiscos: Array<AgenteRisco> ): Array<AgenteRisco> {
+        let array: Array<AgenteRisco> = new Array<AgenteRisco>();
+
+        if ( agenteRiscos !== null && agenteRiscos !== undefined ) {
+            for ( let agenteRisco of agenteRiscos ) {
+                array.push( this.clone( agenteRisco ) );
+            }
+        }
+        return array;
+    }
 }

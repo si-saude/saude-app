@@ -31,6 +31,7 @@ export class GerenciaBuilder extends GenericBuilder {
         cloneGerencia.setCodigo( this.getValue( gerencia, "getCodigo" ) );
         cloneGerencia.setCodigoCompleto( this.getValue( gerencia, "getCodigoCompleto" ) );
         cloneGerencia.setDescricao( this.getValue( gerencia, "getDescricao" ) );
+        cloneGerencia.setAusentePeriodico( this.getValue( gerencia, "getAusentePeriodico" ) );
 
         if ( this.getValue( gerencia, "getGerencia" ) !== undefined ) {
             cloneGerencia.setGerencia(

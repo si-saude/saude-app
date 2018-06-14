@@ -1,4 +1,5 @@
 import { Ghe } from './ghe';
+import { AprhoItem } from './aprho-item';
 
 export class Aprho {
  
@@ -6,6 +7,7 @@ export class Aprho {
     private empresa: string;
     private data: Date;
     private ghe: Ghe;
+    private aprhoItens: Array<AprhoItem>;
     private version: number;
 
     getId(): number {
@@ -45,5 +47,13 @@ export class Aprho {
 
     public setGhe(ghe: Ghe) {
         this.ghe = ghe;
+    }
+    
+    getAprhoItens():Array<AprhoItem>{
+        return this.aprhoItens;
+    }
+    
+    setAprhoItens(aprhoItens:Array<AprhoItem>){
+        this.aprhoItens = aprhoItens;
     }
 }

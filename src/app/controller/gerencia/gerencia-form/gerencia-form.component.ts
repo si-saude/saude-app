@@ -14,7 +14,7 @@ import { GerenciaService } from './../gerencia.service';
 @Component( {
     selector: 'app-gerencia-form',
     templateUrl: './gerencia-form.html',
-    styleUrls: ['./gerencia-form.css', './../../../../assets/css/form-component.css']
+    styleUrls: ['./gerencia-form.css', './../../../../assets/css/form-component.css', './../../../../assets/css/checkbox.css']
 } )
 export class GerenciaFormComponent extends GenericFormComponent implements OnInit {
     gerencia: Gerencia;

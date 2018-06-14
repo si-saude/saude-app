@@ -18,7 +18,19 @@ export class CategoriaRiscoBuilder extends GenericBuilder {
         cloneCategoriaRisco.setDescricao(this.getValue(categoriaRisco, "getDescricao"));
         cloneCategoriaRisco.setObservacao(this.getValue(categoriaRisco, "getObservacao"));
         cloneCategoriaRisco.setVersion(this.getValue(categoriaRisco, "getVersion"));
-        return cloneCategoriaRisco;
+        return cloneCategoriaRisco; 
+               
+    }
+    
+    cloneList( categoriaRiscos: Array<CategoriaRisco> ): Array<CategoriaRisco> {
+        let array: Array<CategoriaRisco> = new Array<CategoriaRisco>();
+
+        if ( categoriaRiscos !== null && categoriaRiscos !== undefined ) {
+            for ( let categoriaRisco of categoriaRiscos ) {
+                array.push( this.clone( categoriaRisco ) );
+            }
+        }
+        return array;
     }
     
 }

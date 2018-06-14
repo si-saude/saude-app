@@ -20,6 +20,15 @@ export class GheService extends GenericService {
         return this.selectList(new GheFilter());
     }
     
+    getGhesAtivos() {
+        
+        let urlGheAtivos = this.URL + "/list-ativo";
+//        genericFilter.setPageSize(Math.pow(2, 31)-1);
+        return this.http
+            .post( urlGheAtivos, new GheFilter(), { headers: this.headers } )
+            .toPromise();
+    }
+    
     getRiscoGhes() {
         return this.riscoGheService.getRiscos();
     }

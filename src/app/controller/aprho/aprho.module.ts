@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';
+import { DataTableModule } from "angular2-datatable";
 
 import { AprhoComponent } from './aprho.component';
 import { AprhoService } from './aprho.service';
@@ -21,7 +22,8 @@ import { SharedModule } from './../shared.module';
      imports: [
         AprhoRoutingModule,
         SharedModule,
-        MyDatePickerModule
+        MyDatePickerModule,
+        DataTableModule
      ],
      providers: [
         AprhoService

@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
+import { MyDatePickerModule } from 'mydatepicker';
+
 import { GlobalVariable } from './../../../global';
 import { Aprho } from './../../../model/aprho';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
@@ -15,6 +17,7 @@ import { AprhoService } from './../aprho.service';
 } )
 export class AprhoFormDetailComponent extends GenericFormComponent implements OnInit {
     aprho: Aprho;
+    private data: any;
 
     constructor( private route: ActivatedRoute,
         private aprhoService: AprhoService,
@@ -35,6 +38,7 @@ export class AprhoFormDetailComponent extends GenericFormComponent implements On
                     .then( res => {
                         this.showPreload = false;
                         this.aprho = new AprhoBuilder().clone( res.json() );
+                        this.parseAndSetDates();
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -44,6 +48,12 @@ export class AprhoFormDetailComponent extends GenericFormComponent implements On
 
     ngOnDestroy() {
         this.inscricao.unsubscribe();
+    }
+    parseAndSetDates() {
+        if ( this.aprho.getData() !== null &&
+            this.aprho.getData() !== undefined ) {
+            this.data = this.parseDataToObjectDatePicker( this.aprho.getData() );
+        }
     }
 
 }
