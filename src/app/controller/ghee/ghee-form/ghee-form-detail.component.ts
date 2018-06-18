@@ -19,10 +19,6 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 export class GheeFormDetailComponent extends GenericFormComponent implements OnInit {
     ghee: Ghee;
     
-    //ngModel
-    dataCriacao: any;
-    dataDesativacao: any;
-    
     gheeFilter: GheeFilter = new GheeFilter();
 
     constructor( private route: ActivatedRoute,
@@ -45,7 +41,6 @@ export class GheeFormDetailComponent extends GenericFormComponent implements OnI
                     .then( res => {
                         this.showPreload = false;
                         this.ghee = new GheeBuilder().clone(res.json());
-                        this.parseAndSetDates();
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -57,15 +52,4 @@ export class GheeFormDetailComponent extends GenericFormComponent implements OnI
         this.inscricao.unsubscribe();
     }
     
-    parseAndSetDates() {
-        if (this.ghee.getDataCriacao() !== null && 
-                this.ghee.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataCriacao());
-        }
-        if (this.ghee.getDataDesativacao() !== null && 
-                this.ghee.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghee.getDataDesativacao());
-        }
-        
-    }
 }

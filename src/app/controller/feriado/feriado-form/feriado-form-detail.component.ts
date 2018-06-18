@@ -16,7 +16,6 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 } )
 export class FeriadoFormDetailComponent extends GenericFormComponent implements OnInit {
     feriado: Feriado;
-    data: any;
     
     feriadoFilter: FeriadoFilter = new FeriadoFilter();
     
@@ -40,7 +39,6 @@ export class FeriadoFormDetailComponent extends GenericFormComponent implements 
                     .then( res => {
                         this.showPreload = false;
                         this.feriado = new FeriadoBuilder().clone(res.json());
-                        this.parseAndSetDates();
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -51,13 +49,6 @@ export class FeriadoFormDetailComponent extends GenericFormComponent implements 
 
     onDestroy() {
         this.inscricao.unsubscribe();
-    }
-    
-    parseAndSetDates() {
-        if ( this.feriado.getData() !== null &&
-            this.feriado.getData() !== undefined ) {
-            this.data = this.dateUtil.parseDataToObjectDatePicker( this.feriado.getData() );
-        }
     }
     
 }

@@ -57,7 +57,7 @@
 
 		<input type="checkbox" id="selectAll"
 			[(ngModel)]="selecionarTodos"
-			(click)="selectAll()"
+			(change)="selectAll($event)"
 			name="selectAll"> <label
 			for="selectAll">Selecionar/Desselecionar todos</label>
 
@@ -80,7 +80,7 @@
 							<tr class="col s12">
 								<td class="col s1 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
 								<td class="col s7 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
-								<div class="input-field col s2">
+								<div class="input-field col s2" style="margin-top: 0">
 									<my-date-picker name="empregadoConvocacaoExame[{{eCE}}].realizacaoCustomDate.appDate"
 										[options]="myDatePickerOptions"
 										[(ngModel)]="empregadoConvocacaoExame.realizacaoCustomDate.appDate"

@@ -7,6 +7,7 @@ import 'rxjs/add/operator/toPromise';
 import { GlobalVariable } from './../../global';
 import { Gerencia } from './../../model/gerencia';
 import { GerenciaFilter } from './gerencia.filter';
+import { EmpregadoService } from './../empregado/empregado.service';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()

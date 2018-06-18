@@ -14,6 +14,7 @@ export class PanoramaDto {
     private gerenciaPrimeiraLinha: string;
     private statusPreClinico: string;
     private examesPendentes: string;
+    private existePendenciaExames: boolean;
     
     getId() {
         return this.id;
@@ -105,5 +106,10 @@ export class PanoramaDto {
     setExamesPendentes(examesPendentes: string) {
         this.examesPendentes = examesPendentes;
     }
-    
+    getExistePendenciaExames() {
+        return this.existePendenciaExames;
+    }
+    setExistePendenciaExames(existePendenciaExames: boolean) {
+        this.existePendenciaExames = existePendenciaExames;
+    }
 }

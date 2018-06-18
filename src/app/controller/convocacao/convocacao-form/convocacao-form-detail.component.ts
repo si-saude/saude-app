@@ -38,9 +38,7 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
     exames: Array<Exame>;
     gerenciaConvocacoes: Array<GerenciaConvocacao>;
     empregadoConvocacoes: Array<EmpregadoConvocacao>;
-    autocompleteGerenciaConvocacoes;
-    autocompleteEmpregado;
-
+    
     selectedGerenciaConvocacao: boolean;
     selectedGerenciaConvocacaoCC: Array<string>;
 
@@ -61,9 +59,6 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
     modalEditEmpregado;
     modalConfirmProfissiograma;
 
-    dataGerenciaConvocacaoInicio: Array<any>;
-    dataGerenciaConvocacaoFim: Array<any>;
-    
     constructor( private route: ActivatedRoute,
         private convocacaoService: ConvocacaoService,
         private empregadoService: EmpregadoService,
@@ -84,10 +79,6 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
         this.selectedGerenciaConvocacaoCC = new Array<string>();
 
         this.checkBoxSelecteds = new Array<boolean>();
-        this.dataGerenciaConvocacaoInicio = new Array<any>();
-        this.dataGerenciaConvocacaoFim = new Array<any>();
-        this.autocompleteGerenciaConvocacoes = [];
-        this.autocompleteEmpregado = [];
         this.selectedGC = null;
         this.existProfissiograma = false;
         this.modalEditEmpregado = new EventEmitter<string | MaterializeAction>();
@@ -110,7 +101,6 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
                         this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
                         this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes();
                         this.selectedsGerenciaConvocacoes();
-                        this.parseAndSetDates();
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -159,11 +149,8 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
 
                 let sG = this.selectedGerenciaConvocacaoCC.find( s => s == gerenciaConvocacao.getGerencia().getCodigoCompleto() )
 
-                if ( sG == undefined ) {
+                if ( sG == undefined )
                     this.selectedGerenciaConvocacaoCC.push( gerenciaConvocacao.getGerencia().getCodigoCompleto() );
-                    this.dataGerenciaConvocacaoInicio[gerenciaConvocacao.getGerencia().getCodigoCompleto()] = gerenciaConvocacao.getInicio();
-                    this.dataGerenciaConvocacaoFim[gerenciaConvocacao.getGerencia().getCodigoCompleto()] = gerenciaConvocacao.getFim();
-                }
 
                 let sendConvocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
                 sendConvocacao.setProfissiograma( this.convocacao.getProfissiograma() );
@@ -206,60 +193,6 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
         this.selectedGC = this.gerenciaConvocacoes[gC];
     }
 
-    getEmpregado( evento ) {
-        if ( this.empregadoToAdd !== undefined ) {
-
-            let empregado = this.empregados.find( e => {
-                if ( e.getChave() == undefined ||
-                    e.getChave() == null ||
-                    e.getChave() == '' ) {
-                    return "- " + e.getPessoa().getNome() == this.empregadoToAdd.getPessoa().getNome();
-                } else {
-                    return e.getChave() + " - " + e.getPessoa().getNome() ==
-                        this.empregadoToAdd.getPessoa().getNome();
-                }
-            } );
-
-            if ( empregado !== undefined ) {
-                this.empregadoToAdd = empregado;
-            } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
-        } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
-    }
-
-    private oldChaveEmpregado: string;
-    selectEmpregadoByChave( evento ) {
-        if ( this.oldChaveEmpregado != evento ) {
-            this.oldChaveEmpregado = evento;
-
-            this.empregadoService.getEmpregadoByChave( evento )
-                .then( res => {
-                    this.empregados = new EmpregadoBuilder().cloneList( res.json() );
-                    this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
-
-        }
-    }
-
-    private oldNomeEmpregado: string;
-    selectEmpregado( evento: string ) {
-        if ( this.oldNomeEmpregado != evento ) {
-            this.oldNomeEmpregado = evento;
-            if ( evento.length > 3 ) {
-                this.empregadoService.getEmpregadoByName( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList( res.json() );
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
     filterEmpregadoByChave( evento ) {
         if ( this.convocacao.getEmpregadoConvocacoes().length > 0 ) {
             this.empregadoConvocacoes = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
@@ -289,35 +222,7 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
             } )
         }
     }
-
-    parseAndSetDates() {
-        for ( let i = 0; i < this.gerenciaConvocacoes.length; i++ ) {
-            let cC = this.gerenciaConvocacoes[i].getGerencia().getCodigoCompleto();
-
-            if ( this.gerenciaConvocacoes[i].getSelecionado() == true ) {
-                this.dataGerenciaConvocacaoInicio[cC] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.gerenciaConvocacoes[i].getInicio() );
-
-                this.dataGerenciaConvocacaoFim[cC] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.gerenciaConvocacoes[i].getFim() );
-            }
-        }
-    }
-
-    buildAutocompleteEmpregado( empregados ) {
-        let data = {};
-        empregados.forEach( item => {
-            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
-
+    
     selectedsGerenciaConvocacoes() {
         this.gerenciaConvocacoes.forEach(gC => {
             if ( gC.getSelecionado() == true ) {
@@ -326,10 +231,3 @@ export class ConvocacaoFormDetailComponent extends GenericFormComponent implemen
         })
     }
 }
-
-
-
-
-
-
-

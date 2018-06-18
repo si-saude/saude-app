@@ -39,12 +39,6 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
     equipes: Array<Equipe>;
     cursos: Array<Curso>;
     autocompleteEmpregado;
-
-    //ngModel
-    dataAso: any;
-    dataCurriculoCursos: Array<any>;
-    vencimentoProfissionalConselho: any;
-    assinaturaSrc: any;
     
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
     
@@ -54,10 +48,8 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
         super(profissionalSaudeService, router);
         this.goTo = "profissional-saude";
         
-        this.dataCurriculoCursos = new Array<any>();
         this.empregados = new Array<Empregado>();
         this.profissionalSaude = new ProfissionalSaudeBuilder().initialize(this.profissionalSaude);
-        this.autocompleteEmpregado = [];
     }
 
     ngOnInit() {
@@ -71,7 +63,6 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
                     .then( res => {
                         this.showPreload = false;
                         this.profissionalSaude = new ProfissionalSaudeBuilder().clone(res.json());
-                        this.parseAndSetDates();
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -118,29 +109,4 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
         this.inscricao.unsubscribe();
     }
     
-    parseAndSetDates() {
-        if (this.profissionalSaude.getDataAso() !== undefined &&
-                this.profissionalSaude.getDataAso() !== null) {
-            this.dataAso = this.dateUtil.parseDataToObjectDatePicker( this.profissionalSaude.getDataAso() );
-        }
-        
-        if ( this.profissionalSaude.getCurriculo() !== undefined &&
-                this.profissionalSaude.getCurriculo() !== null &&
-                this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined && 
-                this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
-            
-            for (let i=0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++) {
-                this.dataCurriculoCursos[i] = 
-                    this.dateUtil.parseDataToObjectDatePicker(
-                            this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].getData());   
-            }
-        }
-        
-        if ( this.profissionalSaude.getProfissionalConselho() !== undefined && 
-                this.profissionalSaude.getProfissionalConselho() !== null) {
-            this.vencimentoProfissionalConselho = 
-                this.dateUtil.parseDataToObjectDatePicker(this.profissionalSaude.getProfissionalConselho().getVencimento());
-        }
-        
-    }
 }

@@ -40,8 +40,6 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
     private tipoAcoes: Array<string>;
     private statusAcoes: Array<string>;
     private tipoContatoAcoes: Array<string>;
-//    private dataTarefaAcao: any;
-//    private dataAcoes = [[]];
     private flagTriagem: Triagem;
     private flagIndexAcao: number = -1;
     private modalAcao;
@@ -90,7 +88,6 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
                                                         this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
                                                         this.riscoPotencial.setProfissional(this.profissional);
                                                         this.getTriagensEquipeAbordagem();
-//                                                        this.getDataTarefaAcoes();
                                                     } )
                                                     .catch( error => {
                                                         this.showPreload = false;
@@ -202,30 +199,6 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
             }
         } )
     }
-
-//    getDataTarefaAcoes() {
-//        this.riscoPotencial.getRiscoEmpregados().forEach( rE => {
-//            rE.getTriagens().forEach( t => {
-//                t.getAcoes().forEach( a => {
-//                    if ( this.dataAcoes[t.getId()] == undefined )
-//                        this.dataAcoes[t.getId()] = new Array<any>();
-//                    let data = this.addFormattedDate( a.getTarefa().getFim() );
-//                    this.dataAcoes[t.getId()].push( data );
-//                } );
-//            } );
-//        } );
-//    }
-
-//    addFormattedDate( data: any ) {
-//        if ( data === undefined || data === null ) {
-//            return undefined;
-//        }
-//        let s = data.split( "T" );
-//        let datas = s[0].split( "-" );
-//        let st = datas[2] + "/" + datas[1] + "/" + datas[0];
-//        let o = { formatted: st };
-//        return o;
-//    }
 
     addAcompanhamento( idEquipe, idTriagem, indexAcao ) {
         let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );

@@ -35,13 +35,6 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
     indicadoresRiscoSanitario: Array<IndicadorRiscoSanitario>;
     indicadoresRiscoSaudeAmbiental: Array<IndicadorRiscoSaudeAmbiental>;
 
-    //ngModel
-    dataInspecaoAcidente: Array<any> = new Array<any>();
-    dataInspecaoAmbiental: Array<any> = new Array<any>();
-    dataInspecaoErgonomico: Array<any> = new Array<any>();
-    dataInspecaoSanitario: Array<any> = new Array<any>();
-    dataInspecaoSaudeAmbiental: Array<any> = new Array<any>();
-
     instalacaoFilter: InstalacaoFilter = new InstalacaoFilter();
 
     constructor( private route: ActivatedRoute,
@@ -65,7 +58,6 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                         .then( res => {
                             this.showPreload = false;
                             this.instalacao = new InstalacaoBuilder().clone( res.json() );
-                            this.parseAndSetDates();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -131,7 +123,6 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
     }
 
     save() {
-        this.verifyAndSetDates();
         super.save( new InstalacaoBuilder().clone( this.instalacao ) );
     }
 
@@ -209,115 +200,4 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
         this.inscricao.unsubscribe();
     }
 
-    verifyAndSetDates() {
-
-        if ( this.instalacao.getIndicadorRiscoAcidenteInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoAcidenteInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoAcidenteInstalacoes().length; i++ ) {
-                if ( this.dataInspecaoAcidente[i] !== undefined &&
-                    this.dataInspecaoAcidente[i] !== null )
-                    this.instalacao.getIndicadorRiscoAcidenteInstalacoes()[i].setDataInspecao(
-                        this.dateUtil.parseDatePickerToDate( this.dataInspecaoAcidente[i] ) );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoAmbientalInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoAmbientalInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoAmbientalInstalacoes().length; i++ ) {
-                if ( this.dataInspecaoAmbiental[i] !== undefined &&
-                    this.dataInspecaoAmbiental[i] !== null )
-                    this.instalacao.getIndicadorRiscoAmbientalInstalacoes()[i].setDataInspecao(
-                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoAmbiental[i] ) );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoErgonomicoInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoErgonomicoInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoErgonomicoInstalacoes().length; i++ ) {
-                if ( this.dataInspecaoErgonomico[i] !== undefined &&
-                    this.dataInspecaoErgonomico[i] !== null )
-                    this.instalacao.getIndicadorRiscoErgonomicoInstalacoes()[i].setDataInspecao(
-                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoErgonomico[i] ) );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoSanitarioInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoSanitarioInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoSanitarioInstalacoes().length; i++ ) {
-                if ( this.dataInspecaoSanitario[i] !== undefined &&
-                    this.dataInspecaoSanitario[i] !== null )
-                    this.instalacao.getIndicadorRiscoSanitarioInstalacoes()[i].setDataInspecao(
-                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoSanitario[i] ) );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes().length; i++ ) {
-                if ( this.dataInspecaoSaudeAmbiental[i] !== undefined &&
-                    this.dataInspecaoSaudeAmbiental[i] !== null )
-                    this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes()[i].setDataInspecao(
-                            this.dateUtil.parseDatePickerToDate( this.dataInspecaoSaudeAmbiental[i] ) );
-            }
-        }
-
-    }
-
-    parseAndSetDates() {
-        if ( this.instalacao.getIndicadorRiscoAcidenteInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoAcidenteInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoAcidenteInstalacoes().length; i++ ) {
-                this.dataInspecaoAcidente[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.instalacao.getIndicadorRiscoAcidenteInstalacoes()[i].getDataInspecao() );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoAmbientalInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoAmbientalInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoAmbientalInstalacoes().length; i++ ) {
-                this.dataInspecaoAmbiental[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.instalacao.getIndicadorRiscoAmbientalInstalacoes()[i].getDataInspecao() );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoErgonomicoInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoErgonomicoInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoErgonomicoInstalacoes().length; i++ ) {
-                this.dataInspecaoErgonomico[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.instalacao.getIndicadorRiscoErgonomicoInstalacoes()[i].getDataInspecao() );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoSanitarioInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoSanitarioInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoSanitarioInstalacoes().length; i++ ) {
-                this.dataInspecaoSanitario[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.instalacao.getIndicadorRiscoSanitarioInstalacoes()[i].getDataInspecao() );
-            }
-        }
-
-        if ( this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes() !== undefined &&
-            this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes() !== null ) {
-
-            for ( let i = 0; i < this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes().length; i++ ) {
-                this.dataInspecaoSaudeAmbiental[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes()[i].getDataInspecao() );
-            }
-        }
-
-    }
 }

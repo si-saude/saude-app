@@ -84,4 +84,8 @@ export class EmpregadoConvocacaoService extends GenericService {
         return this.exameService.selectList( exameFilter );
     }
     
+    getExameService() {
+        return this.exameService;
+    }
+
 }

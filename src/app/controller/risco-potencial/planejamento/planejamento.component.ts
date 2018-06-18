@@ -41,7 +41,6 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
     private nomeEmpregado: string;
     private riscoEmpregado: RiscoEmpregado;
     private profissional: Profissional;
-    private prazos: Array<string>;
     private tabsActions;
     private planejamentoUtil: PlanejamentoUtil;
 
@@ -55,7 +54,6 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         this.riscoEmpregado = new RiscoEmpregadoBuilder().initialize( new RiscoEmpregado() );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
-        this.prazos = new Array<string>();
         
         this.planejamentoUtil = new PlanejamentoUtil();
     }

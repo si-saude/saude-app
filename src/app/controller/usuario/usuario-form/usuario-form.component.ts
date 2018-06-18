@@ -21,10 +21,6 @@ import { PessoaNomeAutocomplete } from './../../../controller/pessoa/pessoa-nome
 export class UsuarioFormComponent extends GenericFormComponent implements OnInit {
     usuario: Usuario;
     perfis: Array<Perfil>;
-    autocompletePessoa;
-    pessoaToAdd: Pessoa;
-    pessoas: Array<Pessoa>;
-    validPessoa: string;
     private autoCompletePessoa:PessoaNomeAutocomplete;
 
     constructor( private route: ActivatedRoute,
@@ -35,9 +31,6 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
 
         this.perfis = new PerfilBuilder().initializeList( this.perfis );
         this.usuario = new UsuarioBuilder().initialize( this.usuario );
-        this.autocompletePessoa = [];
-        this.pessoaToAdd = new PessoaBuilder().initialize( this.pessoaToAdd );
-        this.pessoas = new Array<Pessoa>();
         this.autoCompletePessoa = new PessoaNomeAutocomplete(this.usuarioService.getPessoaService());
     }
 
@@ -52,7 +45,7 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
                         .then( res => {
                             this.showPreload = false;
                             this.usuario = new UsuarioBuilder().clone( res.json() );
-                            this.saveArrayPessoa();
+                            this.autoCompletePessoa.getAutocomplete().initializeLastValue(this.usuario.getPessoa().getNome());
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -90,53 +83,6 @@ export class UsuarioFormComponent extends GenericFormComponent implements OnInit
 
     removePerfil( index ) {
         this.usuario.getPerfis().splice( index, 1 );
-    }
-
-//    getPessoa( evento ) {
-//        if ( this.validPessoa == this.usuario.getPessoa().getNome() ) return;
-//        if ( this.usuario.getPessoa() !== undefined ) {
-//
-//            let pessoa: Pessoa = this.pessoas.find( p => p.getNome().trim() == this.usuario.getPessoa().getNome().trim() );
-//
-//            if ( pessoa !== undefined ) {
-//                this.usuario.setPessoa( new PessoaBuilder().clone( pessoa ) );
-//                this.validPessoa = this.usuario.getPessoa().getNome();
-//            } else this.usuario.setPessoa( new PessoaBuilder().initialize( this.usuario.getPessoa() ) );
-//        } else this.usuario.setPessoa( new PessoaBuilder().initialize( this.usuario.getPessoa() ) );
-//    }
-//
-//    private oldNomePessoa: string;
-//    selectPessoa( evento ) {
-//        if ( this.oldNomePessoa != evento ) {
-//            this.oldNomePessoa = evento;
-//            if ( evento.length > 3 ) {
-//                this.usuarioService.getPessoasByNome( evento )
-//                    .then( res => {
-//                        this.pessoas = new PessoaBuilder().cloneList(res.json());
-//                        this.autocompletePessoa = [this.buildAutocompletePessoa( this.pessoas )];
-//                    } )
-//                    .catch( error => {
-//                        console.log( error );
-//                    } )
-//            }
-//        }
-//    }
-//
-//    buildAutocompletePessoa( pessoas: Array<Pessoa> ) {
-//        let data = {};
-//        pessoas.forEach( item => {
-//            data[item.getNome()] = null;
-//        } );
-//
-//        let array = {};
-//        array["data"] = data;
-//
-//        return array;
-//    }
-    
-    saveArrayPessoa() {
-        if ( this.usuario.getPessoa().getId() > 0 )
-            this.pessoas.push( this.usuario.getPessoa() );
     }
 
 }

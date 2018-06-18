@@ -1,6 +1,7 @@
 import { TipoSolicitacao } from './tipo-solicitacao';
 import { Tarefa } from './tarefa';
 import { DateUtil } from './../generics/utils/date.util';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class SolicitacaoCentralIntegra {
     private id: number = 0;
@@ -22,6 +23,8 @@ export class SolicitacaoCentralIntegra {
     private version: number;
 
     private dateUtil: DateUtil = new DateUtil();
+    private prazoCustomDate: CustomDate = new CustomDate(this.prazo);
+    private aberturaCustomDate: CustomDate = new CustomDate(this.abertura);
 
     getId() {
         return this.id;
@@ -88,19 +91,39 @@ export class SolicitacaoCentralIntegra {
     }
 
     getPrazo() {
+        this.prazo = this.prazoCustomDate.getApiDate();
         return this.prazo;
     }
-
+    
     setPrazo(prazo: Date) {
+        this.prazoCustomDate.setApiDate(prazo);
         this.prazo = prazo;
+    }
+    
+    getPrazoCustomDate(){
+        return this.prazo;
+    }
+    
+    setPrazoCustomDate(prazoCustomDate: CustomDate){
+        this.prazoCustomDate = prazoCustomDate;
     }
 
     getAbertura() {
+        this.abertura = this.aberturaCustomDate.getApiDate();
         return this.abertura;
     }
-
+    
     setAbertura(abertura: Date) {
+        this.aberturaCustomDate.setApiDate(abertura);
         this.abertura = abertura;
+    }
+    
+    getAberturaCustomDate(){
+        return this.abertura;
+    }
+    
+    setAberturaCustomDate(aberturaCustomDate: CustomDate){
+        this.aberturaCustomDate = aberturaCustomDate;
     }
 
     getConcluido() {

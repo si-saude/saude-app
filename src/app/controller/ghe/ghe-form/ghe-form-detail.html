@@ -60,14 +60,14 @@
 			<div class="input-field col s6">
 				<label for="dataCriacao">Data de Criação</label>
 				<my-date-picker name="dataCriacao" disabled 
-					[options]="myDatePickerOptions" [(ngModel)]="dataCriacao"
+					[options]="myDatePickerOptions" [(ngModel)]="ghe.dataCriacaoCustomDate.appDate"
 					placeholder="Data de Criação"> </my-date-picker>
 			</div>
 
 			<div class="input-field col s6">
 				<label for="dataDesativacao">Data de Desativação</label>
 				<my-date-picker name="dataDesativacao" disabled
-					[options]="myDatePickerOptions" [(ngModel)]="dataDesativacao"
+					[options]="myDatePickerOptions" [(ngModel)]="ghe.dataDesativacaoCustomDate.appDate"
 					placeholder="Data de Desativação"> </my-date-picker>
 			</div>
 		</div>

@@ -54,7 +54,7 @@
 									<label for="data">Data de Realização</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].data"
 										[options]="myDatePickerOptions" disabled
-										[(ngModel)]="dataResultadoExames[iREx]" placeholder="Data">
+										[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].dataCustomDate.appDate" placeholder="Data">
 									</my-date-picker>
 								</div>
 
@@ -138,7 +138,7 @@
 									<label for="data">Data de Recebimento</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].dataRecebimento"
 										disabled [options]="myDatePickerOptions"
-										[(ngModel)]="dataRecebimentoExames[iREx]"
+										[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].dataRecebimentoCustomDate.appDate"
 										placeholder="Data Recebimento"> </my-date-picker>
 								</div>
 							</div>

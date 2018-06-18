@@ -37,37 +37,41 @@
 
 		<div class="row">
 			<div class="input-field col s4">
-				<label for="gerente">Gerente</label> <input type="text"
-					materialize="autocomplete" name="gerencia.gerente.pessoa.nome"
-					[(ngModel)]="gerencia.gerente.pessoa.nome" autocomplete="off"
-					(blur)="getGerente($event)"
-					(ngModelChange)="selectGerenteByChave($event); selectGerente($event);"
-					[materializeParams]="autocompleteGerente"> <input
-					id="gerencia.gerente.id" type="hidden" name="gerencia.gerente.id"
+				<label for="gerente">Gerente</label> 
+				<input
+					type="text" materialize="autocomplete" autocomplete="off"
+					name="gerencia.gerente.pessoa.nome"
+					[(ngModel)]="gerencia.gerente.pessoa.nome"
+					(blur)="autoCompleteGerente.getAutocomplete().getObj($event,gerencia,'setGerente','getNome')"
+					(ngModelChange)="autoCompleteGerente.getAutocomplete().getList(gerencia.gerente, 'getNome');"
+					[materializeParams]="autoCompleteGerente.getAutocomplete().getObjAutoComplete()">
+				<input id="gerencia.gerente.id" type="hidden" name="gerencia.gerente.id"
 					[(ngModel)]="gerencia.gerente.id">
 			</div>
-
+			
 			<div class="input-field col s4">
-				<label for="secretario1">Secretário 1</label> <input type="text"
-					materialize="autocomplete" name="gerencia.secretario1.pessoa.nome"
-					[(ngModel)]="gerencia.secretario1.pessoa.nome" autocomplete="off"
-					(blur)="getSecretario1($event)"
-					(ngModelChange)="selectSecretario1ByChave($event); selectSecretario1($event);"
-					[materializeParams]="autocompleteSecretario1"> <input
-					id="gerencia.secretario1.id" type="hidden"
-					name="gerencia.secretario1.id"
+				<label for="secretario1">Secretário 1</label> 
+				<input
+					type="text" materialize="autocomplete" autocomplete="off"
+					name="gerencia.secretario1.pessoa.nome"
+					[(ngModel)]="gerencia.secretario1.pessoa.nome"
+					(blur)="autoCompleteSecretario1.getAutocomplete().getObj($event,gerencia,'setSecretario1','getNome')"
+					(ngModelChange)="autoCompleteSecretario1.getAutocomplete().getList(gerencia.secretario1, 'getNome');"
+					[materializeParams]="autoCompleteSecretario1.getAutocomplete().getObjAutoComplete()">
+				<input id="gerencia.secretario1.id" type="hidden" name="gerencia.secretario1.id"
 					[(ngModel)]="gerencia.secretario1.id">
 			</div>
 
 			<div class="input-field col s4">
-				<label for="secretario2">Secretário 2</label> <input type="text"
-					materialize="autocomplete" name="gerencia.secretario2.pessoa.nome"
-					[(ngModel)]="gerencia.secretario2.pessoa.nome" autocomplete="off"
-					(blur)="getSecretario2($event)"
-					(ngModelChange)="selectSecretario2ByChave($event); selectSecretario2($event);"
-					[materializeParams]="autocompleteSecretario2"> <input
-					id="gerencia.secretario2.id" type="hidden"
-					name="gerencia.secretario2.id"
+				<label for="secretario2">Secretário 2</label> 
+				<input
+					type="text" materialize="autocomplete" autocomplete="off"
+					name="gerencia.secretario2.pessoa.nome"
+					[(ngModel)]="gerencia.secretario2.pessoa.nome"
+					(blur)="autoCompleteSecretario2.getAutocomplete().getObj($event,gerencia,'setSecretario2','getNome')"
+					(ngModelChange)="autoCompleteSecretario2.getAutocomplete().getList(gerencia.secretario2, 'getNome');"
+					[materializeParams]="autoCompleteSecretario2.getAutocomplete().getObjAutoComplete()">
+				<input id="gerencia.secretario2.id" type="hidden" name="gerencia.secretario2.id"
 					[(ngModel)]="gerencia.secretario2.id">
 			</div>
 		</div>

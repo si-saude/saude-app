@@ -68,8 +68,6 @@ export class AtendimentoFormComponent {
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private alive: boolean;
-    private dataNascimento: any;
-    private idade: number;
     private myDatePickerOptions: IMyDpOptions;
     private globalActions;
     private toastParams;

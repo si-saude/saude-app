@@ -34,13 +34,6 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
     indicadoresRiscoErgonomico: Array<IndicadorRiscoErgonomico>;
     indicadoresRiscoSanitario: Array<IndicadorRiscoSanitario>;
     indicadoresRiscoSaudeAmbiental: Array<IndicadorRiscoSaudeAmbiental>;
-
-    //ngModel
-    dataInspecaoAcidente: Array<any> = new Array<any>();
-    dataInspecaoAmbiental: Array<any> = new Array<any>();
-    dataInspecaoErgonomico: Array<any> = new Array<any>();
-    dataInspecaoSanitario: Array<any> = new Array<any>();
-    dataInspecaoSaudeAmbiental: Array<any> = new Array<any>();
     
     instalacaoFilter: InstalacaoFilter = new InstalacaoFilter();
     
@@ -64,7 +57,6 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
                     .then( res => {
                         this.showPreload = false;
                         this.instalacao = new InstalacaoBuilder().clone(res.json());
-                        this.parseAndSetDates();
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -118,56 +110,4 @@ export class InstalacaoFormDetailComponent extends GenericFormComponent implemen
         this.inscricao.unsubscribe();
     }
     
-    parseAndSetDates() {
-        if ( this.instalacao.getIndicadorRiscoAcidenteInstalacoes() !== undefined &&
-                this.instalacao.getIndicadorRiscoAcidenteInstalacoes() !== null ) {
-            
-            for (let i=0; i < this.instalacao.getIndicadorRiscoAcidenteInstalacoes().length; i++) {
-                this.dataInspecaoAcidente[i] = 
-                    this.dateUtil.parseDataToObjectDatePicker(
-                            this.instalacao.getIndicadorRiscoAcidenteInstalacoes()[i].getDataInspecao());   
-            }
-        }
-        
-        if ( this.instalacao.getIndicadorRiscoAmbientalInstalacoes() !== undefined &&
-                this.instalacao.getIndicadorRiscoAmbientalInstalacoes() !== null ) {
-            
-            for (let i=0; i < this.instalacao.getIndicadorRiscoAmbientalInstalacoes().length; i++) {
-                this.dataInspecaoAmbiental[i] = 
-                    this.dateUtil.parseDataToObjectDatePicker(
-                            this.instalacao.getIndicadorRiscoAmbientalInstalacoes()[i].getDataInspecao());   
-            }
-        }
-        
-        if ( this.instalacao.getIndicadorRiscoErgonomicoInstalacoes() !== undefined &&
-                this.instalacao.getIndicadorRiscoErgonomicoInstalacoes() !== null ) {
-            
-            for (let i=0; i < this.instalacao.getIndicadorRiscoErgonomicoInstalacoes().length; i++) {
-                this.dataInspecaoErgonomico[i] = 
-                    this.dateUtil.parseDataToObjectDatePicker(
-                            this.instalacao.getIndicadorRiscoErgonomicoInstalacoes()[i].getDataInspecao());   
-            }
-        }
-        
-        if ( this.instalacao.getIndicadorRiscoSanitarioInstalacoes() !== undefined &&
-                this.instalacao.getIndicadorRiscoSanitarioInstalacoes() !== null ) {
-            
-            for (let i=0; i < this.instalacao.getIndicadorRiscoSanitarioInstalacoes().length; i++) {
-                this.dataInspecaoSanitario[i] = 
-                    this.dateUtil.parseDataToObjectDatePicker(
-                            this.instalacao.getIndicadorRiscoSanitarioInstalacoes()[i].getDataInspecao());   
-            }
-        }
-        
-        if ( this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes() !== undefined &&
-                this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes() !== null ) {
-            
-            for (let i=0; i < this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes().length; i++) {
-                this.dataInspecaoSaudeAmbiental[i] = 
-                    this.dateUtil.parseDataToObjectDatePicker(
-                            this.instalacao.getIndicadorRiscoSaudeAmbientalInstalacoes()[i].getDataInspecao());   
-            }
-        }
-        
-    }
 }

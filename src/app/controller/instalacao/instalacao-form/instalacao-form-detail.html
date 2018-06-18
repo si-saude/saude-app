@@ -92,7 +92,7 @@
 								<my-date-picker disabled
 									name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].dataInspecao"
 									[options]="myDatePickerOptions"
-									[(ngModel)]="dataInspecaoAcidente[i]"
+									[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].dataInspecaoCustomDate.appDate"
 									placeholder="Data de Inspeção"> </my-date-picker>
 							</div>
 
@@ -146,7 +146,7 @@
 								<my-date-picker disabled
 									name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].dataInspecao"
 									[options]="myDatePickerOptions"
-									[(ngModel)]="dataInspecaoAmbiental[i]"
+									[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate"
 									placeholder="Data de Inspeção"> </my-date-picker>
 							</div>
 
@@ -182,7 +182,7 @@
 
 							<div class="input-field col s4">
 								<fieldset>
-									<legend>Indicador de Risco Ambiental</legend>
+									<legend>Indicador de Risco Ergonomico</legend>
 	
 									<select class="browser-default" disabled
 										name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].indicadorRisco.id"
@@ -201,7 +201,7 @@
 								<my-date-picker disabled
 									name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].dataInspecao"
 									[options]="myDatePickerOptions"
-									[(ngModel)]="dataInspecaoErgonomico[i]"
+									[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].dataInspecaoCustomDate.appDate"
 									placeholder="Data de Inspeção"> </my-date-picker>
 							</div>
 
@@ -255,7 +255,7 @@
 								<my-date-picker disabled
 									name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].dataInspecao"
 									[options]="myDatePickerOptions"
-									[(ngModel)]="dataInspecaoSanitario[i]"
+									[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].dataInspecaoCustomDate.appDate"
 									placeholder="Data de Inspeção"> </my-date-picker>
 							</div>
 
@@ -309,7 +309,7 @@
 								<my-date-picker disabled
 									name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].dataInspecao"
 									[options]="myDatePickerOptions" 
-									[(ngModel)]="dataInspecaoSaudeAmbiental[i]"
+									[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate"
 									placeholder="Data de Inspeção"> </my-date-picker>
 							</div>
 

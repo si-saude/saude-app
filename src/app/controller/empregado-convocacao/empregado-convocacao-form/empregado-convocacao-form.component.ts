@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
 
+import * as $ from 'jquery';
+
 import { GlobalVariable } from './../../../global';
 import { Exame } from './../../../model/exame';
 import { ExameBuilder } from './../../exame/exame.builder';
@@ -99,12 +101,6 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
         this.empregadoConvocacao.getEmpregadoConvocacaoExames().splice(value, 1);
         this.conformList.splice(value, 1);
     }
-    
-    selectConform( value ) {
-        setTimeout(() => {
-            this.conformList[value] = this.empregadoConvocacao.getEmpregadoConvocacaoExames()[value].getConforme();
-        }, 100);
-    }
 
     verifyAuditado() {
         let ret: boolean = this.conformList.find( cL => cL == false );
@@ -115,21 +111,20 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
         }
     }
 
-    selectAll() {
-        setTimeout(() => {
-            if (this.selecionarTodos == false)
-                this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
-                    eCE.setConforme(false);
-                    for (let i=0; i<this.conformList.length; i++)
-                        this.conformList[i] = false;
-                });
-            else
-                this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
-                    eCE.setConforme(true);
-                    for (let i=0; i<this.conformList.length; i++)
-                        this.conformList[i] = true;
-                });
-        }, 100);
+    selectAll(evento) {
+        if ($("#selectAll").is(':checked') == false)
+            this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
+                eCE.setConforme(false);
+                for (let i=0; i<this.conformList.length; i++)
+                    this.conformList[i] = false;
+            });
+        else
+            this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
+                eCE.setConforme(true);
+                for (let i=0; i<this.conformList.length; i++)
+                    this.conformList[i] = true;
+            });
+    
     }
     
 }

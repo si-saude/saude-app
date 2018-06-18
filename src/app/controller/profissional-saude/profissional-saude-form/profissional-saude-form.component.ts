@@ -36,7 +36,6 @@ import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.auto
 } )
 export class ProfissionalSaudeFormComponent extends GenericFormComponent implements OnInit {
     empregados: Array<Empregado>;
-    validEmpregado: string;
     profissionalSaude: Profissional;
     localizacoes: Array<Localizacao>;
     equipes: Array<Equipe>;
@@ -45,14 +44,11 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     servicosSelecteds: Array<Servico>;
     autocompleteEmpregado;
     
-    //ngModel
-    dataAso: any;
-    dataCurriculoCursos: Array<any>;
     vencimentoProfissionalConselho: any;
     assinaturaSrc: any;
 
     profissionalSaudeFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-    private autoCompleteEmp:EmpregadoNomeAutocomplete;
+    autoCompleteEmp:EmpregadoNomeAutocomplete;
 
     constructor( private route: ActivatedRoute,
         private profissionalSaudeService: ProfissionalSaudeService,
@@ -60,18 +56,12 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         super( profissionalSaudeService, router );
         this.goTo = "profissional-saude";
 
-        this.dataCurriculoCursos = new Array<any>();
         this.empregados = new Array<Empregado>();
-        this.validEmpregado = "";
         this.profissionalSaude = new ProfissionalSaudeBuilder().initialize( this.profissionalSaude );
-        this.autocompleteEmpregado = [];
         this.servicos = new ServicoBuilder().initializeList( this.servicos );
         this.servicosSelecteds = new Array<Servico>();
 
         this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.profissionalSaudeService.getEmpregadoService());
-
-        this.validEmpregado = "";
-        this.autocompleteEmpregado = [];
     }
 
     ngOnInit() {
@@ -86,9 +76,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
                             this.showPreload = false;
                             this.profissionalSaude = new ProfissionalSaudeBuilder().clone( res.json() );
                             this.servicosSelecteds = this.profissionalSaude.getServicos();
-                            this.validEmpregado = this.profissionalSaude.getEmpregado().getPessoa().getNome();
-                            this.saveArrayEmpregado();
-                            this.parseAndSetDates();
                             this.autoCompleteEmp.getAutocomplete().initializeLastValue(this.profissionalSaude.getEmpregado()
                                     .getPessoa().getNome());
                         } )
@@ -146,7 +133,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
 
 
     save() {
-        this.verifyAndSetDates();
         this.verifyIfPessoaExist();
         super.save( new ProfissionalSaudeBuilder().clone( this.profissionalSaude ) );
     }
@@ -156,11 +142,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
             return true;
 
         return false;
-    }
-
-    saveArrayEmpregado() {
-        if ( this.profissionalSaude.getEmpregado().getId() > 0 )
-            this.empregados.push(this.profissionalSaude.getEmpregado());
     }
 
     addCurriculoCurso() {
@@ -197,120 +178,4 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         this.inscricao.unsubscribe();
     }
 
-    verifyAndSetDates() {
-        if ( this.dataAso !== undefined &&
-            this.dataAso !== null ) {
-            this.profissionalSaude.setDataAso( this.dateUtil.parseDatePickerToDate( this.dataAso ) );
-        }
-
-        if ( this.profissionalSaude.getCurriculo() !== undefined &&
-            this.profissionalSaude.getCurriculo() !== null &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
-
-            for ( let i = 0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++ ) {
-                if ( this.dataCurriculoCursos[i] !== undefined &&
-                    this.dataCurriculoCursos[i] !== null )
-                    this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].setData(
-                            this.dateUtil.parseDatePickerToDate( this.dataCurriculoCursos[i] ) );
-            }
-        }
-
-        if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
-            this.profissionalSaude.getProfissionalConselho() !== null ) {
-            this.profissionalSaude.getProfissionalConselho().
-                setVencimento( this.dateUtil.parseDatePickerToDate(
-                    this.vencimentoProfissionalConselho ) );
-        }
-    }
-
-    parseAndSetDates() {
-        if ( this.profissionalSaude.getDataAso() !== undefined &&
-            this.profissionalSaude.getDataAso() !== null ) {
-            this.dataAso = this.dateUtil.parseDataToObjectDatePicker( this.profissionalSaude.getDataAso() );
-        }
-
-        if ( this.profissionalSaude.getCurriculo() !== undefined &&
-            this.profissionalSaude.getCurriculo() !== null &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== undefined &&
-            this.profissionalSaude.getCurriculo().getCurriculoCursos() !== null ) {
-
-            for ( let i = 0; i < this.profissionalSaude.getCurriculo().getCurriculoCursos().length; i++ ) {
-                this.dataCurriculoCursos[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.profissionalSaude.getCurriculo().getCurriculoCursos()[i].getData() );
-            }
-        }
-
-        if ( this.profissionalSaude.getProfissionalConselho() !== undefined &&
-            this.profissionalSaude.getProfissionalConselho() !== null ) {
-            this.vencimentoProfissionalConselho =
-                this.dateUtil.parseDataToObjectDatePicker( this.profissionalSaude.getProfissionalConselho().getVencimento() );
-        }
-
-    }
-    
-    getEmpregado() {
-        if ( this.validEmpregado == this.profissionalSaude.getEmpregado().getPessoa().getNome() ) return;
-        if ( this.profissionalSaude.getEmpregado().getPessoa().getNome() !== undefined ) {
-            let empregado = this.empregados.find( e => {
-                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
-                    this.profissionalSaude.getEmpregado().getPessoa().getNome().trim() || 
-                    e.getPessoa().getNome().trim() == this.profissionalSaude.getEmpregado().getPessoa().getNome().trim() )
-                    return true;
-                else return false;
-            } );
-            
-            if ( empregado !== undefined ) {
-                this.profissionalSaude.setEmpregado( empregado );
-                this.validEmpregado = this.profissionalSaude.getEmpregado().getPessoa().getNome();
-            } else this.profissionalSaude.setEmpregado( new EmpregadoBuilder().initialize( new Empregado() ) );
-        } else this.profissionalSaude.setEmpregado( new EmpregadoBuilder().initialize( new Empregado() ) );
-    }
-
-    private oldNome: string;
-    selectEmpregado( evento ) {
-        if ( this.oldNome != evento ) {
-            this.oldNome = evento;
-            if ( evento.length > 4 ) {
-                this.profissionalSaudeService.getEmpregadoByName( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    private oldNomeByChave: string;
-    selectEmpregadoByChave( evento ) {
-        if ( this.oldNomeByChave != evento ) {
-            this.oldNomeByChave = evento;
-            if ( evento.length <= 4 ) {
-                this.profissionalSaudeService.getEmpregadoByChave( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    buildAutocompleteEmpregado( empregados ) {
-        let data = {};
-        empregados.forEach( item => {
-            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
 }

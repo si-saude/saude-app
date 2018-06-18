@@ -1,6 +1,7 @@
 import { EmpregadoConvocacao } from './empregado-convocacao';
 import { ItemResultadoExame } from './item-resultado-exame';
 import { Exame } from './exame';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class ResultadoExame {
     private id: number;
@@ -14,6 +15,9 @@ export class ResultadoExame {
     private acao: string = "";
     private local: string;
     private version: number;
+
+    private dataCustomDate: CustomDate = new CustomDate(this.data);
+    private dataRecebimentoCustomDate: CustomDate = new CustomDate(this.dataRecebimento);
 
     getId() {
         return this.id;
@@ -40,19 +44,39 @@ export class ResultadoExame {
     }
     
     getData() {
+        this.data = this.dataCustomDate.getApiDate();
         return this.data;
     }
-
+    
     setData(data: Date) {
+        this.dataCustomDate.setApiDate(data);
         this.data = data;
     }
     
+    getDataCustomDate(){
+        return this.dataCustomDate;
+    }
+    
+    setDataCustomDate(dataCustomDate: CustomDate){
+        this.dataCustomDate = dataCustomDate;
+    }
+    
     getDataRecebimento() {
+        this.dataRecebimento = this.dataRecebimentoCustomDate.getApiDate();
         return this.dataRecebimento;
     }
-
+    
     setDataRecebimento(dataRecebimento: Date) {
+        this.dataRecebimentoCustomDate.setApiDate(dataRecebimento);
         this.dataRecebimento = dataRecebimento;
+    }
+    
+    getDataRecebimentoCustomDate(){
+        return this.dataRecebimentoCustomDate;
+    }
+    
+    setDataRecebimentoCustomDate(dataRecebimentoCustomDate: CustomDate){
+        this.dataRecebimentoCustomDate = dataRecebimentoCustomDate;
     }
     
     getExame() {

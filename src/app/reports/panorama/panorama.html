@@ -3,9 +3,10 @@
 </head>
 
 <div class="list-container">
-	<a style="display: inherit;" (mouseover)="showTextToast('Exportar', 4000)" (mouseleave)="closeTooltip()" 
+	<a style="display: inherit;" 
 		(click)="exportFile()"> 
-		<i class="small material-icons icon">file_download</i>
+		<i class="small material-icons icon" (mouseover)="showTextToast('Exportar', 4000)" 
+			(mouseleave)="closeTooltip()">file_download</i>
 	</a>
 	<table class="table table-striped" [mfData]="panoramas | filterData : filter : typeFilter : value" #mf="mfDataTable">
 		<thead>
@@ -28,7 +29,7 @@
 							placeholder="filtrar nome" 
 							(input)="selectFilter($event, 'nome')">
 				</th>
-				<th style="width: 1%">
+				<th style="width: 1.5%">
 					<div class="row">
 						<mfDefaultSorter class="mleft" by="mesConvocacao">Mês da Convocacao</mfDefaultSorter>
 						<div class="div-icon" id="mesConvocacao">
@@ -88,7 +89,7 @@
 							placeholder="filtrar pendências" 
 							(input)="selectFilter($event, 'pendencias')">
 				</th>
-				<th style="width: 1%; font-size: 13px;">
+				<th style="width: 1.5%; font-size: 13px;">
 					<div class="row">
 						<mfDefaultSorter class="mleft" by="gerenciaPrimeiraLinha">Gerência de Primeira Linha</mfDefaultSorter>
 						<div class="div-icon" id="gerenciaPrimeiraLinha">
@@ -103,6 +104,20 @@
 						<div class="div-icon" id="statusPreClinico">
 							<i class="small material-icons icon" 
 								(click)="dropdown($event, 'statusPreClinico')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 1%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="examesPendentes">Exames Pendentes</mfDefaultSorter>
+					</div>
+				</th>
+				<th style="width: 2%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="existeExamePendenciaExames">Existe Exame Pendente</mfDefaultSorter>
+						<div class="div-icon" id="existePendenciaExames">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'existePendenciaExames')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
@@ -123,6 +138,14 @@
 				<td>{{item.pendencias}}</td>
 				<td>{{item.gerenciaPrimeiraLinha}}</td>
 				<td>{{item.statusPreClinico}}</td>
+				<td (mouseover)="showTextToast(item.examesPendentes)" (mouseleave)="closeTooltip()">
+					{{shortText(item.examesPendentes)}}
+				</td>
+				<td>
+					<input type="checkbox" id="item-existePendenciaExames" disabled 
+						[(ngModel)]="item.existePendenciaExames" name="existePendenciaExames"> 
+					<label class="existePendenciaExames" for="existePendenciaExames"></label>
+				</td>
 			</tr>
 		</tbody>
 	</table>

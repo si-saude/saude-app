@@ -62,12 +62,6 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
     fotoSrc: string;
     assinaturaSrc: any;
 
-    //ngModel
-    dataNascimento: any;
-    dataVacinas: Array<any> = new Array<any>();
-    proximaDoseVacinas: Array<any> = new Array<any>();
-    dataRemocaoHistoricos: Array<any> = new Array<any>();
-
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
     
     constructor( private route: ActivatedRoute,
@@ -106,9 +100,7 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
                         this.showPreload = false;
                         this.empregado = new EmpregadoBuilder().clone( res.json() );
                         this.verifyAndSetSelectsStrings();
-                        this.parseAndSetDates();
-                        this.verifyAndSetDatasRemocaoHistorico();
-
+                        
                         if ( this.empregado.getFotoBase64() !== undefined ) {
                             this.fotoSrc = "data:image/png;base64," + this.empregado.getFotoBase64();
                             this.fotoSrcStyle = { 'width': '500px', 'heigth': '500px' };
@@ -302,26 +294,6 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
         this.inscricao.unsubscribe();
     }
 
-    parseAndSetDates() {
-        if ( this.empregado.getPessoa().getDataNascimento() !== null &&
-            this.empregado.getPessoa().getDataNascimento() !== undefined ) {
-            this.dataNascimento = this.dateUtil.parseDataToObjectDatePicker( this.empregado.getPessoa().getDataNascimento() );
-        }
-
-        if ( this.empregado.getEmpregadoVacinas() !== undefined &&
-            this.empregado.getEmpregadoVacinas() !== null ) {
-            for ( let i = 0; i < this.empregado.getEmpregadoVacinas().length; i++ ) {
-                this.dataVacinas[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.empregado.getEmpregadoVacinas()[i].getData() );
-                this.proximaDoseVacinas[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.empregado.getEmpregadoVacinas()[i].getProximaDose() );
-            }
-        }
-
-    }
-
     verifyAndSetSelectsStrings() {
         if ( this.empregado.getPessoa().getSexo() == undefined ||
             this.empregado.getPessoa().getSexo() == null )
@@ -332,17 +304,6 @@ export class EmpregadoFormDetailComponent extends GenericFormComponent implement
             this.empregado.setStatus( "" );
     }
 
-    verifyAndSetDatasRemocaoHistorico() {
-        if ( this.empregado.getHistoricoGrupoMonitoramentos() !== undefined &&
-            this.empregado.getHistoricoGrupoMonitoramentos() !== null ) {
-            for ( let i = 0; i < this.empregado.getHistoricoGrupoMonitoramentos().length; i++ ) {
-                this.dataRemocaoHistoricos[i] =
-                    this.dateUtil.parseDataToString(
-                        this.empregado.getHistoricoGrupoMonitoramentos()[i].getDataRemocao() );
-            }
-        }
-    }
-    
     showToastGhe(evento) {
         if ( evento == 0 ) return;
         

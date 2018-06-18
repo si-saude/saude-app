@@ -21,10 +21,6 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
     riscoGhes: Array<RiscoGhe>;
     ghe: Ghe;
     
-    //ngModel
-    dataCriacao: any;
-    dataDesativacao: any;
-    
     gheFilter: GheFilter = new GheFilter();
     
     constructor( private route: ActivatedRoute,
@@ -46,7 +42,6 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
                     .then( res => {
                         this.showPreload = false;
                         this.ghe = new GheBuilder().clone(res.json());
-                        this.parseAndSetDates();
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -69,16 +64,5 @@ export class GheFormDetailComponent extends GenericFormComponent implements OnIn
     onDestroy() {
         this.inscricao.unsubscribe();
     }
-    
-    parseAndSetDates() {
-        if (this.ghe.getDataCriacao() !== null && 
-                this.ghe.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
-        }
-        if (this.ghe.getDataDesativacao() !== null && 
-                this.ghe.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
-        }
-        
-    }
+
 }

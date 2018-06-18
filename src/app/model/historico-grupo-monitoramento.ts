@@ -1,5 +1,6 @@
 import { GrupoMonitoramento } from './grupo-monitoramento';
 import { Empregado } from './empregado';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class HistoricoGrupoMonitoramento {
     private id: number;
@@ -7,6 +8,8 @@ export class HistoricoGrupoMonitoramento {
     private grupoMonitoramento: GrupoMonitoramento;
     private empregado: Empregado;
     private version: number;
+
+    private dataRemocaoCustomDate: CustomDate = new CustomDate(this.dataRemocao);
 
     getId() {
         return this.id;
@@ -17,11 +20,21 @@ export class HistoricoGrupoMonitoramento {
     }
 
     getDataRemocao() {
+        this.dataRemocao = this.dataRemocaoCustomDate.getApiDate();
         return this.dataRemocao;
     }
-
+    
     setDataRemocao(dataRemocao: Date) {
+        this.dataRemocaoCustomDate.setApiDate(dataRemocao);
         this.dataRemocao = dataRemocao;
+    }
+    
+    getDataRemocaoCustomDate(){
+        return this.dataRemocaoCustomDate;
+    }
+    
+    setDataRemocaoCustomDate(dataRemocaoCustomDate: CustomDate){
+        this.dataRemocaoCustomDate = dataRemocaoCustomDate;
     }
 
     getGrupoMonitoramento() {

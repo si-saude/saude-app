@@ -6,6 +6,8 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { MaterializeAction } from "angular2-materialize";
 import 'rxjs/Rx';
 
+import * as $ from 'jquery';
+
 import { Profissiograma } from './../../../model/profissiograma';
 import { ProfissiogramaBuilder } from './../../profissiograma/profissiograma.builder';
 import { Convocacao } from './../../../model/convocacao';
@@ -33,14 +35,11 @@ import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.auto
 export class ConvocacaoFormComponent extends GenericFormComponent implements OnInit {
     tipos: Array<string>;
     convocacao: Convocacao;
-    empregados: Array<Empregado>;
     profissiogramas: Array<Profissiograma>;
     exames: Array<Exame>;
     gerenciaConvocacoes: Array<GerenciaConvocacao>;
     empregadoConvocacoes: Array<EmpregadoConvocacao>;
-    autocompleteGerenciaConvocacoes;
     
-    selectedGerenciaConvocacao: boolean;
     selectedGerenciaConvocacaoCC: Array<string>;
     
     checkBoxSelecteds: Array<boolean>;
@@ -48,7 +47,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     filterChaveEmpregado: any;
     filterNomeEmpregado: any;
     filterGerenciaEmpregado: any;
-    validEmpregadoToAdd: string;
     empregadoDetail: EmpregadoConvocacao;
     checkEmpregados: boolean;
     pendenteRelatorio: boolean;
@@ -59,11 +57,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
 
     modalEditEmpregado;
     modalConfirmProfissiograma;
-
-    dataGerenciaConvocacaoInicio: Array<any>;
-    dataGerenciaConvocacaoFim: Array<any>;
-    inicio: any;
-    fim: any;
 
     empregadoConvocacao: EmpregadoConvocacao;
     autoCompleteEmp:EmpregadoNomeAutocomplete;
@@ -76,19 +69,14 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         this.tipos = new Array<string>();
         this.goTo = "convocacao";
         this.convocacao = new ConvocacaoBuilder().initialize( this.convocacao );
-        this.empregados = new Array<Empregado>();
         this.empregadoDetail = new EmpregadoConvocacaoBuilder().initialize( this.empregadoDetail );
         this.profissiogramas = new ProfissiogramaBuilder().initializeList( Array<Profissiograma>() );
         this.gerenciaConvocacoes = new GerenciaConvocacaoBuilder().initializeList( Array<GerenciaConvocacao>() );
         this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().initializeList( Array<EmpregadoConvocacao>() );
         
-        this.selectedGerenciaConvocacao = false;
         this.selectedGerenciaConvocacaoCC = new Array<string>();
-        this.dataGerenciaConvocacaoInicio = new Array<any>();
-        this.dataGerenciaConvocacaoFim = new Array<any>();
         
         this.checkBoxSelecteds = new Array<boolean>();
-        this.autocompleteGerenciaConvocacoes = [];
         this.selectedGC = null;
         this.existProfissiograma = false;
         this.modalEditEmpregado = new EventEmitter<string | MaterializeAction>();
@@ -115,7 +103,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
                             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(this.convocacao.getEmpregadoConvocacoes());
                             this.selectedsGerenciaConvocacoes();
-                            this.parseAndSetDates();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -161,7 +148,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     
     save() {
         this.setSelectedsGerencias();
-        this.verifyAndSetDates();
         super.save( new ConvocacaoBuilder().clone( this.convocacao ) );
     }
 
@@ -179,54 +165,49 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         this.selectedGC = this.gerenciaConvocacoes[index];
         let empsConvs: Array<EmpregadoConvocacao> = new EmpregadoConvocacaoBuilder().initializeList(new Array<EmpregadoConvocacao>());
         
-        setTimeout(() => {
-            if ( this.gerenciaConvocacoes[index].getSelecionado() == true ) {
-                
-                let sG = this.selectedGerenciaConvocacaoCC.find(s => s == gerenciaConvocacao.getGerencia().getCodigoCompleto())
-                
-                if ( sG == undefined ) {
-                    this.selectedGerenciaConvocacaoCC.push(gerenciaConvocacao.getGerencia().getCodigoCompleto());
-                    this.dataGerenciaConvocacaoInicio[gerenciaConvocacao.getGerencia().getCodigoCompleto()] = gerenciaConvocacao.getInicio();
-                    this.dataGerenciaConvocacaoFim[gerenciaConvocacao.getGerencia().getCodigoCompleto()] = gerenciaConvocacao.getFim();
-                }
-                
-                let sendConvocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
-                sendConvocacao.setProfissiograma( this.convocacao.getProfissiograma() );
-                sendConvocacao.getGerenciaConvocacoes().push(
-                    new GerenciaConvocacaoBuilder().clone( this.gerenciaConvocacoes[index] ) );
-                sendConvocacao.setId( this.convocacao.getId() );
+        if ( $("#gerenciaConvocacao"+index).is(":checked") == true ) {
+            let sG = this.selectedGerenciaConvocacaoCC.find(s => s == gerenciaConvocacao.getGerencia().getCodigoCompleto())
+            
+            if ( sG == undefined )
+                this.selectedGerenciaConvocacaoCC.push(gerenciaConvocacao.getGerencia().getCodigoCompleto());
+            
+            let sendConvocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
+            sendConvocacao.setProfissiograma( this.convocacao.getProfissiograma() );
+            sendConvocacao.getGerenciaConvocacoes().push(
+                new GerenciaConvocacaoBuilder().clone( this.gerenciaConvocacoes[index] ) );
+            sendConvocacao.setId( this.convocacao.getId() );
 
-                this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
-                    .then( res => {
-                        let c: Convocacao = new ConvocacaoBuilder().clone( res.json() );
-                        let eCs = c.getEmpregadoConvocacoes();
-                        eCs.forEach( e => {
-                            let e1 = this.convocacao.getEmpregadoConvocacoes().find( e2 => e.getEmpregado().getId() == e2.getEmpregado().getId());
-                            if ( e1 == undefined ) {
-                                this.empregadoConvocacoes.push(e);
-                                this.convocacao.getEmpregadoConvocacoes().push(e);
-                            }
-                        })
-                        
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            } else {
-                let i: number = this.selectedGerenciaConvocacaoCC.findIndex(sG => sG == gerenciaConvocacao.getGerencia().getCodigoCompleto());
-                if (i >= 0)
-                    this.selectedGerenciaConvocacaoCC.splice(i, 1);
-                
-                let empregadoConvocacoes: Array<EmpregadoConvocacao> = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
-                    return eC.getEmpregado().getGerencia().getId() == this.gerenciaConvocacoes[index].getGerencia().getId();
-                } );
+            this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
+                .then( res => {
+                    let c: Convocacao = new ConvocacaoBuilder().clone( res.json() );
+                    let eCs = c.getEmpregadoConvocacoes();
+                    eCs.forEach( e => {
+                        let e1 = this.convocacao.getEmpregadoConvocacoes().find( e2 => e.getEmpregado().getId() == e2.getEmpregado().getId());
+                        if ( e1 == undefined ) {
+                            this.empregadoConvocacoes.push(e);
+                            this.convocacao.getEmpregadoConvocacoes().push(e);
+                        }
+                    })
+                    
+                } )
+                .catch( error => {
+                    console.log( error );
+                } )
+        } else {
+            let i: number = this.selectedGerenciaConvocacaoCC.findIndex(sG => sG == gerenciaConvocacao.getGerencia().getCodigoCompleto());
+            if (i >= 0)
+                this.selectedGerenciaConvocacaoCC.splice(i, 1);
+            
+            let empregadoConvocacoes: Array<EmpregadoConvocacao> = this.convocacao.getEmpregadoConvocacoes().filter( eC => {
+                return eC.getEmpregado().getGerencia().getId() == this.gerenciaConvocacoes[index].getGerencia().getId();
+            } );
 
-                empregadoConvocacoes.forEach( eC1 => {
-                    this.empregadoConvocacoes.splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
-                    this.convocacao.getEmpregadoConvocacoes().splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
-                } )                
-            }
-        }, 50 );
+            empregadoConvocacoes.forEach( eC1 => {
+                this.empregadoConvocacoes.splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
+                this.convocacao.getEmpregadoConvocacoes().splice( this.empregadoConvocacoes.indexOf( eC1 ), 1 );
+            } )                
+        }
+        
     }
 
     choisedGerenciaConvocacao( gC: number,  gerenciaConvocacao: GerenciaConvocacao) {
@@ -238,78 +219,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     choiseGerenciaConvocacao( gC: number,  gerenciaConvocacao: GerenciaConvocacao ) {
         this.selectedGC = this.gerenciaConvocacoes[gC];   
     }
-
-//    getEmpregado( evento ) {
-//        if ( this.validEmpregadoToAdd == this.empregadoToAdd.getPessoa().getNome() ) return;
-//        if ( this.empregadoToAdd !== undefined ) {
-//            
-//            let empregado: Empregado = this.empregados.find( e => {
-//                if ( e.getChave() == undefined || 
-//                        e.getChave() == null ||
-//                        e.getChave() == '' ) {
-//                    return ( "- " + e.getPessoa().getNome() ).trim() == this.empregadoToAdd.getPessoa().getNome().trim();
-//                } else {
-//                    return ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
-//                        this.empregadoToAdd.getPessoa().getNome().trim();
-//                }
-//            } );
-//            
-//            if ( empregado !== undefined ) {
-//                this.empregadoToAdd = new EmpregadoBuilder().clone(empregado);
-//                this.validEmpregadoToAdd = this.empregadoToAdd.getPessoa().getNome();
-//            } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
-//        } else this.empregadoToAdd = new EmpregadoBuilder().initialize( this.empregadoToAdd );
-//    }
-//
-//    private oldChaveEmpregado: string;
-//    selectEmpregadoByChave( evento ) {
-//        if ( this.oldChaveEmpregado != evento ) {
-//            this.oldChaveEmpregado = evento;
-//            if ( evento.length < 4 ) {
-//                this.convocacaoService.getEmpregadoByChave( evento )
-//                    .then( res => {
-//                        let emps = new EmpregadoBuilder().cloneList( res.json() );
-//                        if (this.empregados.length == 0)
-//                            emps.forEach(e => this.empregados.push(e));
-//                        else {
-//                            emps.forEach(eps => {
-//                                let e: Empregado = this.empregados.find( es => es.getId() == eps.getId() );
-//                                if ( e == undefined ) this.empregados.push(eps); 
-//                            })
-//                        }
-//                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-//                    } )
-//                    .catch( error => {
-//                        console.log( error );
-//                    } )
-//            }
-//        }
-//    }
-//    
-//    private oldNomeEmpregado: string;
-//    selectEmpregado( evento: string ) {
-//        if ( this.oldNomeEmpregado != evento ) {
-//            this.oldNomeEmpregado = evento;
-//            if ( evento.length > 4 ) {
-//                this.convocacaoService.getEmpregadoByName( evento )
-//                    .then( res => {
-//                        let emps = new EmpregadoBuilder().cloneList( res.json() );
-//                        if (this.empregados.length == 0)
-//                            emps.forEach(e => this.empregados.push(e));
-//                        else {
-//                            emps.forEach(eps => {
-//                                let e: Empregado = this.empregados.find( es => es.getId() == eps.getId() );
-//                                if ( e == undefined ) this.empregados.push(eps); 
-//                            })
-//                        }
-//                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-//                    } )
-//                    .catch( error => {
-//                        console.log( error );
-//                    } )
-//            }
-//        }
-//    }
 
     addEmpregado() {
         if ( this.empregadoConvocacao != undefined ) {
@@ -411,54 +320,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         this.conformList.splice(value, 1);
     }
     
-    selectConform( value ) {
-        setTimeout(() => {
-            this.conformList[value] = this.empregadoDetail.getEmpregadoConvocacaoExames()[value].getConforme();
-        }, 100);
-    }
-
     verifyAuditado() {
         let ret: boolean = this.conformList.find( cL => cL == false );
         if ( ret == undefined ) return true;
         else return false;
-    }
-
-    verifyAndSetDates() {
-        if ( this.inicio != undefined &&
-            this.inicio != null )
-            this.convocacao.setInicio(
-                this.dateUtil.parseDatePickerToDate( this.inicio ) );
-
-        if ( this.fim != undefined &&
-            this.fim != null )
-            this.convocacao.setFim(
-                    this.dateUtil.parseDatePickerToDate( this.fim ) );
-    }
-
-    parseAndSetDates() {            
-        if ( this.convocacao.getInicio() != null ) {
-            this.inicio =
-                this.dateUtil.parseDataToObjectDatePicker(
-                    this.convocacao.getInicio() );
-        }
-        
-        if ( this.convocacao.getFim() != null ) {
-            this.fim =
-                this.dateUtil.parseDataToObjectDatePicker(
-                    this.convocacao.getFim() );
-        }
-    }
-
-    buildAutocompleteEmpregado( empregados ) {
-        let data = {};
-        empregados.forEach( item => {
-            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
     }
 
     openModalEditEmpregado() {
@@ -542,7 +407,6 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     this.convocacao.getTitulo() !== '' ) {
 
                     this.setSelectedsGerencias();
-                    this.verifyAndSetDates();
                     this.showPreload = true;
                     
                     let convocacaoAux:Convocacao = new ConvocacaoBuilder().clone(this.convocacao);
@@ -589,10 +453,3 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     }
     
 }
-
-
-
-
-
-
-

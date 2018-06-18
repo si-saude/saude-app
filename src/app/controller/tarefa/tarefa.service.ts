@@ -7,6 +7,7 @@ import { Tarefa } from './../../model/tarefa';
 import { TarefaFilter } from './tarefa.filter';
 import { EquipeService } from './../equipe/equipe.service';
 import { ServicoService } from './../servico/servico.service';
+import { EmpregadoService } from './../empregado/empregado.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { GenericService } from './../../generics/generic.service';
 
@@ -16,7 +17,8 @@ export class TarefaService extends GenericService {
     constructor( http: Http, router: Router,
             private profissionalSaudeService: ProfissionalSaudeService, 
             private servicoService: ServicoService,
-            private equipeService: EquipeService) { 
+            private equipeService: EquipeService,
+            private empregadoService: EmpregadoService) { 
         super(http,router,"tarefa");
     }
     
@@ -45,6 +47,10 @@ export class TarefaService extends GenericService {
     
     getProfissionalByChave(chave: string) {
         return this.profissionalSaudeService.getProfissionalByChave(chave);
+    }
+    
+    getEmpregadoService() {
+        return this.empregadoService;
     }
     
 }

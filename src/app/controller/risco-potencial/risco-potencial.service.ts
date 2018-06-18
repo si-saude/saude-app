@@ -167,4 +167,18 @@ export class RiscoPotencialService extends GenericService {
             .toPromise();
     }
     
+    getRiscoPotenciais( uf ) {
+        let urlRiscoPotenciais = this.URL + "/get-risco-potenciais";
+        return this.http
+            .get( urlRiscoPotenciais + "?uf=" + uf, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    exportFile( array ) {
+        let urlFile = this.URL + "/get-file";
+        return this.http
+            .post( urlFile, array, { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

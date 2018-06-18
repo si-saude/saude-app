@@ -1,3 +1,15 @@
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked  {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}
+
+.checkbox {
+	margin-top: 0px;
+	padding-left: 35px;
+}
+
 table {
 	border: 1px solid #c0c0c0;
     margin-top: 25px;
@@ -14,7 +26,9 @@ td > a > i {
 
 tbody{
 	margin-top: 10px;
-	border-bottom: 1px solid #c0c0c0;	
+	border-bottom: 1px solid #c0c0c0;
+	overflow: auto;
+    max-height: 500px;
 }
 
 .ranking {
@@ -25,10 +39,56 @@ tbody{
 	margin: 0 auto;
 }
 
+.content-riscos {}
+
 .list-container {
 	max-height: 500px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+td, th {
+	padding: 0px !important;
+}
+
+td {
+	border-bottom: 1px solid #c0c0c0;
+}
+
+.item-ranking {
+	padding-left: 5% !important;
+}
+
+.div-icon {
+    display: initial;
+}
+
+.div-icon > i {
+	
+}
+
+.mleft {
+    margin-left: 5%;
+}
+
+.icon {
+	cursor: pointer;
+}
+
+.dropdown-conteudo {
+	display: none;
+	margin-top: -1%;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.show {
+	display: table-cell;
 }
 
 .filtro {

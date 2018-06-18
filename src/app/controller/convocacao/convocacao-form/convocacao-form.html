@@ -122,11 +122,11 @@
 									</div>
 									<div class="input-field col s1 checkbox">
 										<input type="checkbox"
-											id="gerenciaConvocacao.selecionado[{{gC}}]"
+											id="gerenciaConvocacao{{gC}}"
 											[(ngModel)]="gerenciaConvocacao.selecionado"
 											(click)="selectGerenciaConvocacao(gC, gerenciaConvocacao)"
-											name="gerenciaConvocacao.selecionado[{{gC}}]"> <label
-											for="gerenciaConvocacao.selecionado[{{gC}}]"></label>
+											name="gerenciaConvocacao{{gC}}"> <label
+											for="gerenciaConvocacao.selecionado{{gC}}"></label>
 									</div>
 								</div>
 							</div>
@@ -171,6 +171,7 @@
 
 				<div class="row">
 					<div class="input-field col s10">
+						<label>Empregado à Adicionar</label>
 						<input
 							type="text" materialize="autocomplete" autocomplete="off"
 							name="empregadoConvocacao.empregado.pessoa.nome"

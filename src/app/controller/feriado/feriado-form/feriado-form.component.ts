@@ -17,7 +17,6 @@ import { DateUtil } from '../../../generics/utils/date.util';
 } )
 export class FeriadoFormComponent extends GenericFormComponent implements OnInit {
     feriado: Feriado;
-    data: any; 
     
     constructor( private route: ActivatedRoute,
         private feriadoService: FeriadoService,
@@ -40,7 +39,6 @@ export class FeriadoFormComponent extends GenericFormComponent implements OnInit
                         .then( res => {
                             this.showPreload = false;
                             this.feriado = new FeriadoBuilder().clone(res.json());
-                            this.parseAndSetDates();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -51,26 +49,11 @@ export class FeriadoFormComponent extends GenericFormComponent implements OnInit
     }
     
     save() {
-        this.verifyAndSetDates();
         super.save(new FeriadoBuilder().clone(this.feriado));
     }   
 
     onDestroy() {
         this.inscricao.unsubscribe();
-    }
-    
-    verifyAndSetDates() {
-        if ( this.data !== null &&
-            this.data !== undefined )
-            this.feriado.setData(
-                this.dateUtil.parseDatePickerToDate( this.data ) );
-    }
-
-    parseAndSetDates() {
-        if ( this.feriado.getData() !== null &&
-            this.feriado.getData() !== undefined ) {
-            this.data = this.dateUtil.parseDataToObjectDatePicker( this.feriado.getData() );
-        }
     }
     
 }

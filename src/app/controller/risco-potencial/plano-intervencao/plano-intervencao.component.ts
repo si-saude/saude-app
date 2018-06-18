@@ -22,8 +22,6 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     private flagEquipesAbordagemTriagens: Array<Equipe>;
     private triagensByEquipeAbordagem = [[]];
     private riscoPotencial: RiscoPotencial;
-    private inicioAgendamento: any;
-    private fimAgendamento: any;
     private equipesSelecteds: Array<Equipe>;
     private triagensTodosAtendimentos: Array<Triagem>;
 

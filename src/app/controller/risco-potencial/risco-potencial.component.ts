@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MyDatePickerModule } from 'mydatepicker';
 import * as $ from 'jquery';
+import { MaterializeAction } from "angular2-materialize";
 
-import { RiscoPotencial } from './../../model/risco-potencial';
+import { RiscoPotencialDto } from './../../model/dto/risco-potencial-dto';
 import { RiscoPotencialService } from './risco-potencial.service';
 import { RiscoPotencialFilter } from './risco-potencial.filter';
-import { RiscoPotencialBuilder } from './risco-potencial.builder';
+import { RiscoPotencialReportBuilder } from './risco-potencial-report.builder';
 import { RiscoPotencialGuard } from './../../guards/guards-child/risco-potencial.guard';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { Equipe } from './../../model/equipe';
 import { EquipeBuilder } from './../equipe/equipe.builder';
-import { GenericListComponent } from './../../generics/generic.list.component';
 import { BooleanFilter } from './../../generics/boolean.filter';
 import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
 import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-saude.filter';
@@ -23,16 +23,16 @@ import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { BaseFilter } from './../base/base.filter';
 import { PessoaFilter } from './../pessoa/pessoa.filter';
 import { FilterDataPipe } from './../../pipes/filter-data.pipe';
+import { HttpUtil } from './../../generics/utils/http.util';
 
 @Component( {
     selector: 'app-risco-potencial',
     templateUrl: './risco-potencial.component.html',
     styleUrls: ['./risco-potencial.component.css', '../../../assets/css/list-component.css']
 } )
-export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial, RiscoPotencialFilter, RiscoPotencialGuard> {
-    private riscoPotenciais: Array<RiscoPotencial>;
-    private flagRiscoPotenciais: Array<RiscoPotencial>;
-    private riscoPotencialDatas: Array<any>;
+export class RiscoPotencialComponent {
+    private riscoPotenciais: Array<RiscoPotencialDto>;
+    private flagRiscoPotenciais: Array<RiscoPotencialDto>;
     private riscoPotencialRPSats: Array<string>;
     private equipes: Array<Equipe>;
     private statuses: Array<string>;
@@ -40,30 +40,44 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     private empregado;
     private equipe;
     private profissional: Profissional;
-    private servico: RiscoPotencialService;
     private uf: string;
     private ufs: Array<string>;
     private filtro: string;
     private instantTypeFiltro: string;
+    
+    private filter: any;
+    private tipoFiltro: string;
+    private value: string;
+    private arrayObjects = [[]];
+    private arrayTypes: Array<string>;
+    private httpUtil: HttpUtil;
 
-    constructor( service: RiscoPotencialService, riscoGuard: RiscoPotencialGuard, router: Router ) {
-        super( service, new RiscoPotencialFilter(), riscoGuard, router );
-        this.riscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
-        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
-        this.riscoPotencialDatas = new Array<any>();
+    private globalActions;
+    private toastParams;
+    private showPreload: boolean;
+
+    constructor( private riscoPotencialService: RiscoPotencialService, 
+            riscoGuard: RiscoPotencialGuard, 
+            private router: Router ) {
+        this.riscoPotenciais = new RiscoPotencialReportBuilder().initializeList( new Array<RiscoPotencialDto>() );
+        this.flagRiscoPotenciais = new RiscoPotencialReportBuilder().initializeList( new Array<RiscoPotencialDto>() );
         this.riscoPotencialRPSats = new Array<string>();
         this.uf = '';
         this.ufs = new Array<string>();
-        this.servico = service;
         this.equipes = new EquipeBuilder().initializeList(new Array<Equipe>());
         this.statuses = new Array<string>();
         this.instantTypeFiltro = '';
         this.filtro = '';
+        this.filter = "";
+        this.arrayTypes = new Array<string>();
+        this.globalActions = new EventEmitter<string | MaterializeAction>();
+        this.toastParams = ['', 4000];
+        this.httpUtil = new HttpUtil();
     }
 
     ngOnInit() {
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
-            this.servico.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
+            this.riscoPotencialService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
                     let usuario: Usuario = new Usuario();
                     usuario = new UsuarioBuilder().clone( res.json() );
@@ -73,9 +87,8 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                         profissionalFilter.getEmpregado().setPessoa( new PessoaFilter() );
                         profissionalFilter.getEmpregado().getPessoa().setCpf( usuario.getPessoa().getCpf() );
 
-                        this.servico.getProfissional( profissionalFilter )
+                        this.riscoPotencialService.getProfissional( profissionalFilter )
                             .then( res => {
-                                this.canImport = true;
                                 this.showPreload = false;
                                 if ( res.json().list[0] != undefined )
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
@@ -86,7 +99,6 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                             } )
                             .catch( error => {
                                 console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
-                                this.catchConfiguration( error );
                             } )
                     } else {
                         this.router.navigate( ["/login"] );
@@ -95,7 +107,6 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
                 } )
                 .catch( error => {
                     console.log( "Erro no servidor ao buscar o usuario." );
-                    this.catchConfiguration( error );
                 } )
         } else {
             console.log( "Usuario nao logada." );
@@ -109,7 +120,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     }
     
     getUfs() {
-        this.servico.getUfs()
+        this.riscoPotencialService.getUfs()
             .then(res => {
                 this.ufs = Object.keys( res.json() ).sort();
             })
@@ -119,7 +130,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     }
     
     getStatus() {
-        this.servico.getStatusRiscoPotencial( )
+        this.riscoPotencialService.getStatusRiscoPotencial( )
             .then( res => {
                 this.statuses = Object.keys( res.json() ).sort();
             } )
@@ -129,7 +140,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     }
     
     getRPSats() {
-        this.servico.getStatusRPSat()
+        this.riscoPotencialService.getStatusRPSat()
             .then( res => {
                 this.rpsats = Object.keys( res.json() ).sort();
             } )
@@ -139,7 +150,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     }
     
     getEquipes() {
-        this.servico.getEquipes()
+        this.riscoPotencialService.getEquipes()
             .then( res => {
                 this.equipes = new EquipeBuilder().cloneList( res.json() );
             } )
@@ -152,7 +163,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         if ( this.setInstantTypeFiltro( filtro, 'data' ) ) return;
         
         let component = this;
-        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        this.flagRiscoPotenciais = new RiscoPotencialReportBuilder().initializeList( new Array<RiscoPotencialDto>() );
         
         this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP =>
             rP[this.instantTypeFiltro] != undefined && 
@@ -164,7 +175,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         if ( this.setInstantTypeFiltro( filtro, 'statusRPSat' ) ) return;
         
         let component = this;
-        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        this.flagRiscoPotenciais = new RiscoPotencialReportBuilder().initializeList( new Array<RiscoPotencialDto>() );
         
         this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP =>
             rP[this.instantTypeFiltro] != undefined && rP[this.instantTypeFiltro] == filtro.target.value
@@ -175,7 +186,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         if ( this.setInstantTypeFiltro( filtro, 'equipeResponsavel' ) ) return;
         
         let component = this;
-        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        this.flagRiscoPotenciais = new RiscoPotencialReportBuilder().initializeList( new Array<RiscoPotencialDto>() );
         
         this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP => {
             if ( rP[this.instantTypeFiltro]['nome'] != undefined && 
@@ -190,7 +201,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         if ( this.setInstantTypeFiltro( filtro, 'empregado' ) ) return;
         
         let component = this;
-        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        this.flagRiscoPotenciais = new RiscoPotencialReportBuilder().initializeList( new Array<RiscoPotencialDto>() );
         
         this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP => {
             if ( rP[this.instantTypeFiltro]['pessoa']['nome'] != undefined && 
@@ -204,7 +215,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         if ( this.setInstantTypeFiltro( filtro, 'status' ) ) return; 
         
         let component = this;
-        this.flagRiscoPotenciais = new RiscoPotencialBuilder().initializeList( new Array<RiscoPotencial>() );
+        this.flagRiscoPotenciais = new RiscoPotencialReportBuilder().initializeList( new Array<RiscoPotencialDto>() );
         
         this.flagRiscoPotenciais = this.riscoPotenciais.filter(rP => 
                 rP[this.instantTypeFiltro] != undefined && rP[this.instantTypeFiltro].includes( filtro.target.value ) 
@@ -235,41 +246,27 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     selectUf() {
         if ( this.uf != '' ) {
             this.showPreload = true;
-            this.filter.setAtual( new BooleanFilter() );
-            this.filter.getAtual().setValue( 1 );
-            this.filter.setEmpregado(new EmpregadoFilter());
-            this.filter.getEmpregado().setBase(new BaseFilter());
-            this.filter.getEmpregado().getBase().setUf(this.uf);
-            this.filter.setPageNumber(1);
-            this.filter.setPageSize(Math.pow(2, 31)-1);
-            this.servico.listAll( this.filter )
+            this.riscoPotencialService.getRiscoPotenciais( this.uf )
                 .then( res => {
                     this.showPreload = false;
-                    this.canImport = true;
-                    this.array = JSON.parse( JSON.stringify( res.json() ) ).list;
-                        if ( this.array != undefined ) {
-                            this.riscoPotenciais = new RiscoPotencialBuilder().cloneList( this.array );
-                            this.riscoPotenciais.sort(function(a, b){
-                                if ( a['valor'] > b['valor'] )
-                                    return -1;
-                                else if ( a['valor'] < b['valor'] )
-                                    return 1;
-                                else return 0;
-                            });                            
-                            
-                            for ( let i = 0; i < this.riscoPotenciais.length; i++)
-                                this.riscoPotenciais[i].setRanking(i+1)
-                                
-                            this.flagRiscoPotenciais = this.riscoPotenciais;
-                        }
+                    this.riscoPotenciais = new RiscoPotencialReportBuilder().cloneList( res.json() );
+                    this.riscoPotenciais.sort(function(a, b){
+                        if ( a['ranking'] > b['ranking'] )
+                            return -1;
+                        else if ( a['ranking'] < b['ranking'] )
+                            return 1;
+                        else return 0;
+                    });             
+                    
+                    for ( let i = 0; i < this.riscoPotenciais.length; i++)
+                        this.riscoPotenciais[i].setRanking(i+1)
+                        
+                        this.flagRiscoPotenciais = this.riscoPotenciais;
+                    
                     } )
                     .catch( error => {
                         this.showPreload = false;
-                        this.canImport = false;
-                        this.catchConfiguration( error );
                     } );
-    
-            this.parseAndSetDates();
         } else {
             this.toastParams = ['Por favor, selecione um UF', 4000];
             this.globalActions.emit( 'toast' );
@@ -286,16 +283,6 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         }
     }
 
-    parseAndSetDates() {
-        for ( let i = 0; i < this.riscoPotenciais.length; i++ ) {
-            if ( this.riscoPotenciais[i].getData() != null ) {
-                this.riscoPotencialDatas[i] =
-                    this.parseDataToObjectDatePicker(
-                        this.riscoPotenciais[i].getData() );
-            }
-        }
-    }
-
     toggleButtons( indexRisco: number ) {
         $( ".row-btns-risco" + indexRisco ).toggle( "slow" );
     }
@@ -308,7 +295,7 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
     
     verifyStatusAcao( indexRisco ) {
         if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" &&
-            this.riscoPotenciais[indexRisco].getEquipeResponsavel().getId() == this.profissional.getEquipe().getId() )
+            this.riscoPotenciais[indexRisco].getEquipeResponsavelNome() == this.profissional.getEquipe().getNome() )
             return true;
         return false;
     }
@@ -347,6 +334,107 @@ export class RiscoPotencialComponent extends GenericListComponent<RiscoPotencial
         arrayDate = arrayDate[0].split('-');
         date = arrayDate[2] + '/' + arrayDate[1] + '/' + arrayDate[0];
         return date;
+    }
+    
+    selectFilter( event, type: string ) {
+        this.filter = event.target.value;
+        this.tipoFiltro = type;
+        this.value = type;
+    }
+
+    dropdown( event, tipo ) {
+        let arrayDropDown: Array<any> = new Array<any>();
+        arrayDropDown = this.getItensDropDown( tipo );
+
+        $( "#dropdown" ).empty();
+
+        let count = 0;
+        for ( let item of arrayDropDown ) {
+            let el = $( "<li id='" + item + "' title='" + tipo + "'><input type='checkbox' id='" + item + ( ++count ) + "' value='false'>" +
+                "<label for='" + ( item + count ) + "'>" + item + "</label></li>" );
+            $( '#dropdown' ).append( el );
+            let component = this;
+
+            el.mousedown( function() {
+                if ( $( this ).get( 0 ).children.item( 0 ).getAttribute( 'value' ) == 'false' ) {
+                    $( this ).get( 0 ).children.item( 0 ).setAttribute( 'value', 'true' );
+                    if ( component.arrayObjects[$( this ).attr( 'title' )] == undefined ) {
+                        component.arrayObjects[$( this ).attr( 'title' )] = new Array<any>();
+                        component.arrayTypes.push( $( this ).attr( 'title' ) );
+                    }
+                    component.arrayObjects[$( this ).attr( 'title' )].push( $( this ).attr( 'id' ) );
+                } else {
+                    $( this ).get( 0 ).children.item( 0 ).setAttribute( 'value', 'false' );
+                    component.arrayObjects[$( this ).attr( 'title' )].splice(
+                        component.arrayObjects[$( this ).attr( 'title' )].indexOf( $( this ).attr( 'id' ) ), 1 );
+                }
+
+                component.filter = this.getAttribute( 'id' );
+                component.tipoFiltro = this.getAttribute( 'title' );
+                component.value = undefined;
+
+                setTimeout(() => {
+                    component.filter = "";
+                    component.tipoFiltro = "";
+                    component.value = "timeout";
+                }, 50 );
+            } );
+
+        }
+
+        $( '#dropdown' ).toggleClass( 'show' );
+        $( '#dropdown' ).insertAfter( "#" + tipo );
+        $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
+
+        for ( let t of this.arrayTypes ) {
+            this.arrayObjects[t].forEach( aO => {
+                if ( document.getElementById( aO ) != null && document.getElementById( aO ) != undefined ) {
+                    document.getElementById( aO ).children.item( 0 ).setAttribute( 'checked', 'true' );
+                    document.getElementById( aO ).children.item( 0 ).setAttribute( 'value', 'true' );
+                }
+            } )
+        }
+
+    }
+
+    selectItemDropDown( item, tipo ) {
+        this.tipoFiltro = tipo;
+        this.filter = item;
+    }
+
+    getItensDropDown( tipo ) {
+        let arrayFilter: Array<any> = new Array<any>()
+        
+        this.riscoPotenciais.forEach( p => {
+            if ( arrayFilter.find( a => a == p[tipo] ) == undefined &&
+                p[tipo] != "" && p[tipo] != undefined ) {
+                arrayFilter.push( p[tipo] );
+            }
+        } );
+
+        return arrayFilter;
+    }
+
+    exportFile() {
+        if ( this.riscoPotenciais.length > 0 )
+            this.riscoPotencialService.exportFile( this.riscoPotenciais )
+                .then( res => {
+                    this.httpUtil.downloadFile( res, "panorama.xlsx" );
+                } )
+                .catch( error => {
+                    console.log( error );
+                } )
+    }
+    
+    showTextToast( text, time = 60000 ) {
+        if ( text == "" ) return;
+
+        this.toastParams = [text, time];
+        this.globalActions.emit( 'toast' );
+    }
+    
+    closeTooltip() {
+        $( ".toast" ).remove();
     }
 
 }

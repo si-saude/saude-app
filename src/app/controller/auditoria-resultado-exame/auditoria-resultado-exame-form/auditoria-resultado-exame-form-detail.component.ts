@@ -38,10 +38,7 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
     selecionarTodos: boolean;
     canAuditar: boolean;
     empConv: string;
-    autocompleteEmpregadoConvocacao;
 
-    dataResultadoExames: Array<any>;
-    dataRecebimentoExames: Array<any>;
     dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
@@ -58,12 +55,9 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
         this.itemResultadoExames = new ItemResultadoExameBuilder().initializeList(this.itemResultadoExames);
         this.conformList = new Array<boolean>();
         this.canAuditar = false;
-        this.dataResultadoExames = new Array<any>();
-        this.dataRecebimentoExames = new Array<any>();
         this.dataItemResultadoExames = new Array<any>();
         this.campoExames = new CampoExameBuilder().initializeList( this.campoExames );
         this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
-        this.autocompleteEmpregadoConvocacao = [];
     }
     
     ngOnInit() {
@@ -77,7 +71,6 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
                             .then( res => {
                                 this.showPreload = false;
                                 this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().clone( res.json() );
-                                this.parseAndSetDates();
                                 this.empConv = this.empregadoConvocacao.getConvocacao().getTitulo() + " - " + this.empregadoConvocacao.getEmpregado().getPessoa().getNome();
                                 if (this.empregadoConvocacao.getResultadoExames() != undefined && 
                                         this.empregadoConvocacao.getResultadoExames() != null) {
@@ -143,20 +136,4 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
             return false;
         }
     }
-                    
-    parseAndSetDates() {
-        if ( this.empregadoConvocacao.getResultadoExames() !== undefined &&
-                    this.empregadoConvocacao.getResultadoExames() !== null ) {
-            for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
-                this.dataResultadoExames[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                    this.empregadoConvocacao.getResultadoExames()[i].getData() );
-                
-                this.dataRecebimentoExames[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
-            }
-        }
-    }
-    
 }

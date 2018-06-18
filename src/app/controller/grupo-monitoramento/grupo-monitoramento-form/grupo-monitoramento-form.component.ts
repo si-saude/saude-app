@@ -147,20 +147,6 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
         } else return "";
     }
     
-//    addExame() {
-//        let grupoMonitoramentoExame: GrupoMonitoramentoExame = new GrupoMonitoramentoExame();
-//    
-//        grupoMonitoramentoExame.setExame(new ExameBuilder().initialize(new Exame()));
-//        grupoMonitoramentoExame.setCriterios(new CriterioBuilder().initializeList(new Array<Criterio>()));
-//        grupoMonitoramentoExame.setGrupoMonitoramento(new GrupoMonitoramento());
-//        
-//        this.grupoMonitoramento.getGrupoMonitoramentoExames().push(grupoMonitoramentoExame);
-//    }
-//
-//    removeExame(i: number) {
-//        this.grupoMonitoramento.getGrupoMonitoramentoExames().splice(i, 1);
-//    }
-    
     addCriterio(valor: number) {
         if ( this.selectedExm === null ) { 
             this.toastParams = ['Por favor, escolha um exame', 4000];

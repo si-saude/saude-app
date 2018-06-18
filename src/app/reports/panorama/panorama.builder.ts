@@ -45,6 +45,7 @@ export class PanoramaBuilder extends GenericBuilder {
         clonePanoramaDto.setGerenciaPrimeiraLinha(this.getValue(panoramaDto,"getGerenciaPrimeiraLinha"));
         clonePanoramaDto.setStatusPreClinico(this.getValue(panoramaDto,"getStatusPreClinico"));
         clonePanoramaDto.setExamesPendentes(this.getValue(panoramaDto,"getExamesPendentes"));
+        clonePanoramaDto.setExistePendenciaExames(this.getValue(panoramaDto,"getExistePendenciaExames"));
         
         return clonePanoramaDto;
     }

@@ -66,13 +66,13 @@
 					<div class="input-field col s6">
 						<label for="inicio">Início</label>
 						<my-date-picker name="inicio" disabled
-							[options]="myDatePickerOptions" [(ngModel)]="inicio"
+							[options]="myDatePickerOptions" [(ngModel)]="convocacao.inicioCustomDate.appDate"
 							placeholder="Início"> </my-date-picker>
 					</div>
 					<div class="input-field col s6">
 						<label for="fim">Fim</label>
 						<my-date-picker name="fim" disabled
-							[options]="myDatePickerOptions" [(ngModel)]="fim"
+							[options]="myDatePickerOptions" [(ngModel)]="convocacao.fimCustomDate.appDate"
 							placeholder="Fim"> </my-date-picker>
 					</div>
 				</div>
@@ -118,38 +118,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- 
-				<div class="col s5 datas">
-					<div class="row-item-collection"
-						*ngFor="let selectedGerencia of selectedGerenciaConvocacaoCC; let gC = index">
-						<div class="row-item-collection">
-							<div>
-								<p>{{selectedGerencia}}</p>
-							</div>
-							<div class="gerenciaConvocacaoDatas">
-								<div class="row">
-									<div class="input-field col s8">
-										<label for="dataGerenciaConvocacaoInicio[{{gC}}]">Início</label>
-										<my-date-picker disabled
-											name="dataGerenciaConvocacaoInicio[{{gC}}]"
-											[options]="myDatePickerOptions"
-											[(ngModel)]="dataGerenciaConvocacaoInicio[selectedGerencia]"
-											placeholder="Início"> </my-date-picker>
-									</div>
-									<div class="input-field col s8">
-										<label for="dataGerenciaConvocacaoFim[{{gC}}]">Fim</label>
-										<my-date-picker disabled
-											name="dataGerenciaConvocacaoFim[{{gC}}]"
-											[options]="myDatePickerOptions"
-											[(ngModel)]="dataGerenciaConvocacaoFim[selectedGerencia]"
-											placeholder="Fim"> </my-date-picker>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				 -->
 				</div>
 
 			</div>

@@ -3,6 +3,7 @@ import { Acao } from './acao';
 import { Profissional } from './profissional';
 import { RiscoEmpregado } from './risco-empregado';
 import { Equipe } from './equipe';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class RiscoPotencial {
     private id: number;
@@ -25,6 +26,8 @@ export class RiscoPotencial {
     private acoesDelete: Array<Acao>;
     private profissional: Profissional;
 
+    private dataCustomDate: CustomDate = new CustomDate(this.data);
+
     public getId() {
         return this.id;
     }
@@ -33,12 +36,22 @@ export class RiscoPotencial {
         this.id = id;
     }
 
-    public getData() {
+    getData() {
+        this.data = this.dataCustomDate.getApiDate();
         return this.data;
     }
-
-    public setData(data: Date) {
+    
+    setData(data: Date) {
+        this.dataCustomDate.setApiDate(data);
         this.data = data;
+    }
+    
+    getDataCustomDate(){
+        return this.dataCustomDate;
+    }
+    
+    setDataCustomDate(dataCustomDate: CustomDate){
+        this.dataCustomDate = dataCustomDate;
     }
 
     public getEmpregado() {

@@ -37,7 +37,6 @@ import { HistoricoGrupoMonitoramentoBuilder } from './../../historico-grupo-moni
     styleUrls: ['./empregado-form.css', './../../../../assets/css/form-component.css']
 } )
 export class EmpregadoFormComponent extends GenericFormComponent implements OnInit {
-
     @ViewChild( 'assinatura' ) inputElAssinatura: ElementRef;
     @ViewChild( 'foto' ) inputElFoto: ElementRef;
     assinaturaSrcStyle: any;
@@ -65,13 +64,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     historicoGrupoMonitoramentos: Array<HistoricoGrupoMonitoramento>;
     fotoSrc: string;
     assinaturaSrc: any;
-
-    //ngModel
-    dataNascimento: any;
-    dataAdmissao: any;
-    dataVacinas: Array<any> = new Array<any>();
-    proximaDoseVacinas: Array<any> = new Array<any>();
-    dataRemocaoHistoricos: Array<any> = new Array<any>();
 
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
     
@@ -113,8 +105,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                             this.empregado = new EmpregadoBuilder().clone( res.json() );
                             this.instalacoesSelecteds = this.empregado.getInstalacoes();
                             this.verifyAndSetSelectsStrings();
-//                            this.parseAndSetDates();
-                            this.verifyAndSetDatasRemocaoHistorico();
 
                             if ( this.empregado.getFotoBase64() !== undefined ) {
                                 this.fotoSrc = "data:image/png;base64," + this.empregado.getFotoBase64();
@@ -371,8 +361,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     }
 
     save() {
-        this.verifyAndSetDates();
-
         let i: number = 0;
         let total: number = 0;
         let assinatura = undefined;
@@ -480,9 +468,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     }
 
     addTelefone() {
-        if ( this.empregado.getPessoa().getTelefones() === undefined ) {
+        if ( this.empregado.getPessoa().getTelefones() === undefined )
             this.empregado.getPessoa().setTelefones( new Array<Telefone>() );
-        }
         this.empregado.getPessoa().getTelefones().push( new Telefone() );
     }
 
@@ -510,54 +497,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.inscricao.unsubscribe();
     }
 
-    verifyAndSetDates() {
-        if ( this.dataNascimento !== null &&
-            this.dataNascimento !== undefined )
-            this.empregado.getPessoa().setDataNascimento(
-                this.dateUtil.parseDatePickerToDate( this.dataNascimento ) );
-        
-        if ( this.dataAdmissao !== null &&
-                this.dataAdmissao !== undefined )
-                this.empregado.setDataAdmissao(
-                        this.dateUtil.parseDatePickerToDate( this.dataAdmissao ) );
-
-        if ( this.empregado.getEmpregadoVacinas() !== undefined &&
-            this.empregado.getEmpregadoVacinas() !== null ) {
-            for ( let i = 0; i < this.empregado.getEmpregadoVacinas().length; i++ ) {
-                this.empregado.getEmpregadoVacinas()[i].setData(
-                        this.dateUtil.parseDatePickerToDate( this.dataVacinas[i] ) );
-                this.empregado.getEmpregadoVacinas()[i].setProximaDose(
-                        this.dateUtil.parseDatePickerToDate( this.proximaDoseVacinas[i] ) );
-            }
-        }
-
-    }
-
-//    parseAndSetDates() {
-//        if ( this.empregado.getPessoa().getDataNascimento() !== null &&
-//            this.empregado.getPessoa().getDataNascimento() !== undefined ) {
-//            this.dataNascimento = this.dateUtil.parseDataToObjectDatePicker( this.empregado.getPessoa().getDataNascimento() );
-//        }
-//        
-//        if ( this.empregado.getDataAdmissao() !== null &&
-//            this.empregado.getDataAdmissao() !== undefined ) {
-//            this.dataAdmissao = this.dateUtil.parseDataToObjectDatePicker( this.empregado.getDataAdmissao() );
-//        }
-//
-//        if ( this.empregado.getEmpregadoVacinas() !== undefined &&
-//            this.empregado.getEmpregadoVacinas() !== null ) {
-//            for ( let i = 0; i < this.empregado.getEmpregadoVacinas().length; i++ ) {
-//                this.dataVacinas[i] =
-//                    this.dateUtil.parseDataToObjectDatePicker(
-//                        this.empregado.getEmpregadoVacinas()[i].getData() );
-//                this.proximaDoseVacinas[i] =
-//                    this.dateUtil.parseDataToObjectDatePicker(
-//                        this.empregado.getEmpregadoVacinas()[i].getProximaDose() );
-//            }
-//        }
-//
-//    }
-
     verifyAndSetSelectsStrings() {
         if ( this.empregado.getPessoa().getSexo() == undefined ||
             this.empregado.getPessoa().getSexo() == null )
@@ -568,14 +507,4 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             this.empregado.setStatus( "" );
     }
 
-    verifyAndSetDatasRemocaoHistorico() {
-        if ( this.empregado.getHistoricoGrupoMonitoramentos() !== undefined &&
-            this.empregado.getHistoricoGrupoMonitoramentos() !== null ) {
-            for ( let i = 0; i < this.empregado.getHistoricoGrupoMonitoramentos().length; i++ ) {
-                this.dataRemocaoHistoricos[i] =
-                    this.dateUtil.parseDataToString(
-                        this.empregado.getHistoricoGrupoMonitoramentos()[i].getDataRemocao() );
-            }
-        }
-    }
 }

@@ -54,12 +54,19 @@
 							maxlength="11" [(ngModel)]="empregado.pessoa.cpf" name="cpf">
 					</div>
 
-					<div class="input-field col s4">
+					<div class="input-field col s3">
 						<label for="dataNascimento">Data de Nascimento</label>
 						<my-date-picker name="dataNascimento" disabled
-							[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
+							[options]="myDatePickerOptions" [(ngModel)]="empregado.pessoa.dataNascimentoCustomDate.appDate"
 							placeholder="Data de Nascimento"> </my-date-picker>
 					</div>
+					
+					<div class="input-field col s3">
+							<label for="dataAdmissao">Data de Admissão</label>
+							<my-date-picker name="dataAdmissao"
+								[options]="myDatePickerOptions" [(ngModel)]="empregado.dataAdmissaoCustomDate.appDate"
+								placeholder="Data de Admissão"> </my-date-picker>
+						</div>
 				</div>
 
 				<div class="row">
@@ -347,7 +354,7 @@
 						<tbody class="col s12">
 							<tr class="col s12">
 								<td class="col s8 grupo-monitoramento-nome">{{empregado.historicoGrupoMonitoramentos[i].grupoMonitoramento.nome}}</td>
-								<td class="col s4 data-remocao-historico">{{dataRemocaoHistoricos[i]}}</td>
+								<td class="col s4 data-remocao-historico">{{empregado.historicoGrupoMonitoramentos[i].dataRemocaoCustomDate.appDate}}</td>
 							</tr>
 						</tbody>
 					</div>

@@ -21,10 +21,6 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
     riscoGhes: Array<RiscoGhe>;
     ghe: Ghe;
     
-    //ngModel
-    dataCriacao: any;
-    dataDesativacao: any;
-    
     gheFilter: GheFilter = new GheFilter();
 
     constructor( private route: ActivatedRoute,
@@ -47,7 +43,6 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.ghe = new GheBuilder().clone(res.json());
-                            this.parseAndSetDates();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -69,7 +64,6 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
-        this.verifyAndSetDates();
         super.save(new GheBuilder().clone(this.ghe));
     }   
     
@@ -77,27 +71,4 @@ export class GheFormComponent extends GenericFormComponent implements OnInit {
         this.inscricao.unsubscribe();
     }
 
-    verifyAndSetDates() {
-        if (this.dataCriacao !== null && 
-                this.dataCriacao  !== undefined)
-            this.ghe.setDataCriacao(
-                    this.dateUtil.parseDatePickerToDate(this.dataCriacao));
-
-        if (this.dataDesativacao !== null && 
-                this.dataDesativacao !== undefined)
-            this.ghe.setDataDesativacao(
-                    this.dateUtil.parseDatePickerToDate(this.dataDesativacao));
-    }
-    
-    parseAndSetDates() {
-        if (this.ghe.getDataCriacao() !== null && 
-                this.ghe.getDataCriacao() !== undefined) {
-            this.dataCriacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataCriacao());
-        }
-        if (this.ghe.getDataDesativacao() !== null && 
-                this.ghe.getDataDesativacao() !== undefined) {
-            this.dataDesativacao = this.dateUtil.parseDataToObjectDatePicker(this.ghe.getDataDesativacao());
-        }
-        
-    }
 }
