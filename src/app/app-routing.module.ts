@@ -59,8 +59,14 @@ import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard
 import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
+import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
+import { CategoriaRiscoGuard } from './guards/guards-child/categoria-risco.guard';
+import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saude.guard';
+import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
+import { AprhoGuard } from './guards/guards-child/aprho.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
 import { KanbanGuard } from './guards/kanban.guard';
+
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -198,6 +204,21 @@ const routes: Routes = [
       loadChildren: 'app/controller/tarefa/tarefa.module#TarefaModule'},
   { path: 'reports',
       loadChildren: 'app/reports/reports.module#ReportsModule'},
+  { path: 'fonte-geradora', 
+      loadChildren: 'app/controller/fonte-geradora/fonte-geradora.module#FonteGeradoraModule',
+      canActivateChild: [FonteGeradoraGuard]},
+  { path: 'categoria-risco', 
+      loadChildren: 'app/controller/categoria-risco/categoria-risco.module#CategoriaRiscoModule',
+      canActivateChild: [CategoriaRiscoGuard]}, 
+  { path: 'possivel-dano-saude', 
+      loadChildren: 'app/controller/possivel-dano-saude/possivel-dano-saude.module#PossivelDanoSaudeModule',
+      canActivateChild: [PossivelDanoSaudeGuard]},
+  { path: 'agente-risco', 
+      loadChildren: 'app/controller/agente-risco/agente-risco.module#AgenteRiscoModule',
+      canActivateChild: [AgenteRiscoGuard]},    
+  { path: 'aprho', 
+      loadChildren: 'app/controller/aprho/aprho.module#AprhoModule',
+      canActivateChild: [AprhoGuard]},  
   { path: 'solicitacao-central-integra',
       loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

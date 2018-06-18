@@ -63,6 +63,19 @@ export abstract class GenericComponent {
 
     }
 
+    callToast(text: string, time: number = 4000){
+        if(text != undefined ){
+            this.toastParams = [text, time];
+            this.globalActions.emit('toast');
+        }
+    }
+    
+    shortText(text: string, time: number = 4000, qtdChar: number = 10){
+        if(text != undefined && text.length > qtdChar)
+            return text.substr(0,qtdChar);
+        else
+            return text;
+    }
 }
 
 

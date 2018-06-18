@@ -32,7 +32,7 @@ export class GheBuilder extends GenericBuilder {
 
         if ( ghe === null || ghe === undefined )
             ghe = new Ghe();
-
+        
         cloneGhe.setId( this.getValue( ghe, "getId" ) );
         cloneGhe.setVersion( this.getValue( ghe, "getVersion" ) );
         cloneGhe.setNome( this.getValue( ghe, "getNome" ) );
@@ -58,7 +58,6 @@ export class GheBuilder extends GenericBuilder {
     
     cloneList(ghes: Array<Ghe>): Array<Ghe> {
         let array:Array<Ghe> = new Array<Ghe>();
-    
         if (ghes !== null && ghes !== undefined) { 
             for (let ghe of ghes) {
                 array.push(this.clone(ghe));

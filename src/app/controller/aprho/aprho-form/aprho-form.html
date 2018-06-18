@@ -1,0 +1,283 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">		
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s4"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s4"><a RouterLinkActive="active"
+						href="#aphoItem">Informações Adicionais</a></li>
+					<li class="tab col s4"><a RouterLinkActive="active"
+						href="#aprhoEmpregado">Empregados</a></li>
+				</ul>			
+			</div>
+				<div id="dadosGerais">
+					<form #form3="ngForm" class="col s12">
+						<div class="row">
+							<div class="input-field col s9">
+								<label for="empresa">Empresa</label>
+								<input id="empresa" type="text" required
+								name="empresa" [(ngModel)]="aprho.empresa">
+							</div>		
+								<div class="input-field col s3">
+											<label for="data">Data</label>
+											<my-date-picker name="data" required
+												[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.appDate"
+												placeholder="Data"> </my-date-picker>
+								</div>
+						</div>
+						<div class="row">
+						<div class="input-field col s5">
+							<fieldset>
+								<label for="aprho.ghe" >GHE</label> 						
+								<input type="text" materialize="autocomplete" autocomplete="off"
+								name="aprho.ghe.nome"
+								[(ngModel)]="aprho.ghe.nome"
+								(blur)="autoCompleteGhe.getAutocomplete().getObj($event,aprho,'setGhe','getNome')"
+								(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(aprho.ghe, 'getNome');"
+								[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
+							</fieldset>
+						</div>	
+					</div>
+					</form>
+				</div>
+				<div id="aphoItem" >	
+				<form #form2="ngForm" class="col s12" (ngSubmit)="addAprhoItem()">
+						<div class="row">
+							<div class="input-field col s12">
+								<label for="atividade" >Atividade/Tarefa</label> 
+								<textarea id="atividade" class="materialize-textarea"
+								[(ngModel)]="aprhoItem.atividade" name="aprhoItem.atividade" required>
+							</textarea>
+							</div>							
+						</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<fieldset>
+							<label for="aprhoItem.agenteRisco" >Agente/Risco Potencial/CAS</label> 						
+							<input type="text" materialize="autocomplete" autocomplete="off"
+								name="aprhoItem.agenteRisco.descricao" required
+								[(ngModel)]="aprhoItem.agenteRisco.descricao"
+								(blur)="autoCompleteAgenteRisco.getAutocomplete().getObj($event,aprhoItem,'setAgenteRisco','getDescricao')"
+								(ngModelChange)="autoCompleteAgenteRisco.getAutocomplete().getList(aprhoItem.agenteRisco, 'getDescricao');"
+								[materializeParams]="autoCompleteAgenteRisco.getAutocomplete().getObjAutoComplete()">
+						</fieldset>
+					</div>	
+					<div class="input-field col s6">
+							<label for="local" >Local</label> 
+							<input	id="local" type="text" name="atividade" required
+									[(ngModel)]="aprhoItem.local">
+					</div>
+
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s3">
+							<label for="frequencia" >Frequência(Dias/Semanas)</label> 
+							<input	id="frequencia" type="text" name="frequencia" required
+									[(ngModel)]="aprhoItem.frequencia">
+					</div>
+					<div class="input-field col s2">
+							<label for="duracao" >Duração(min./dia)</label> 
+							<input	id="duracao" type="text" name="duracao" required
+									[(ngModel)]="aprhoItem.duracao">
+					</div>
+					<div class="input-field col s4">
+					<fieldset>
+						<label for="aprhoItem.fonteGeradora" >Fonte Geradora</label> 						
+						<input type="text" materialize="autocomplete" autocomplete="off"
+						name="aprhoItem.fonteGeradora.descricao" required
+						[(ngModel)]="aprhoItem.fonteGeradora.descricao"
+						(blur)="autoCompleteFonteGeradora.getAutocomplete().getObj($event,aprhoItem,'setFonteGeradora','getDescricao')"
+						(ngModelChange)="autoCompleteFonteGeradora.getAutocomplete().getList(aprhoItem.fonteGeradora, 'getDescricao');"
+						[materializeParams]="autoCompleteFonteGeradora.getAutocomplete().getObjAutoComplete()">
+				   </fieldset>
+					</div>
+					<div class="input-field col s3">
+						<fieldset>
+								<legend>Meio de Propagação</legend>
+									<select name="aprhoItem.meioPropagacao" class="browser-default" [(ngModel)]="aprhoItem.meioPropagacao" required>
+								<option disabled selected value=null>Selecione um Meio de Propagação</option>
+								<option *ngFor="let meioPropagacao of meioPropagacoes" value="{{meioPropagacao}}">{{meioPropagacao}}</option>
+									</select>
+						</fieldset>
+					</div>	
+				</div>				
+				<div class="row">
+					<div class="input-field col s5">
+						<fieldset>
+							<label for="aprhoItem.possivelDanoSaude" >Fonte Geradora</label> 						
+							<input type="text" materialize="autocomplete" autocomplete="off"
+							name="aprhoItem.possivelDanoSaude.descricao" required
+							[(ngModel)]="aprhoItem.possivelDanoSaude.descricao"
+							(blur)="autoCompletePossivelDanoSaude.getAutocomplete().getObj($event,aprhoItem,'setPossivelDanoSaude','getDescricao')"
+							(ngModelChange)="autoCompletePossivelDanoSaude.getAutocomplete().getList(aprhoItem.possivelDanoSaude, 'getDescricao');"
+							[materializeParams]="autoCompletePossivelDanoSaude.getAutocomplete().getObjAutoComplete()">
+					   </fieldset>
+					</div>
+					<div class="input-field col s3">
+						<fieldset>
+								<legend>Categoria de Risco</legend>								
+								<select name ="categoriaRisco"  class="browser-default" [(ngModel)]="aprhoItem.categoriaRisco.id" required>
+								<option disabled selected value=null>Selecione uma Categoria de Risco</option>
+								<option *ngFor="let categoriaRisco of categoriaRiscos" value="{{categoriaRisco.id}}">{{categoriaRisco.descricao}}</option>
+									</select>
+						</fieldset>
+					</div>				
+					<div class="input-field col s3">
+						<fieldset>
+								<legend>Medida de Controle</legend>
+									<select name="aprhoItem.medidaControle" class="browser-default" [(ngModel)]="aprhoItem.medidaControle" required>
+										<option disabled selected value=null>Selecione uma Medida de Controle</option>
+										<option *ngFor="let medidaControle of medidaControles" value="{{medidaControle}}">{{medidaControle}}</option>
+									</select>
+						</fieldset>
+					</div>	
+					<div class="col s1">
+						<button type="submit" class="btn-floating waves-effect waves-light green btn-add"><i
+						 class="material-icons center-icon">add</i></button>
+						</div>	
+				</div>		
+				<div class="row">
+
+					<table class="striped row row-full">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s1">Atividade</th>
+								<th class="col s1">Agente de Risco</th>
+								<th class="col s1">Local</th>
+								<th class="col s1">Frequência</th>
+								<th class="col s1">Duração</th>
+								<th class="col s1">Fonte</th>
+								<th class="col s1">Meio Propagação</th>
+								<th class="col s2">Possíveis Danos à Saúde</th>
+								<th class="col s1">Categoria de Risco</th>
+								<th class="col s1">Medidas de Controle</th>
+								<th class="col s1"></th>
+							</tr>
+						</thead>
+						<div *ngFor="let aprhoItem of aprho.aprhoItens;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12" >		
+										<input id="aprhoItem.version" name="aprhoItem.version" 
+										type="hidden" [(ngModel)]="aprhoItem.version">
+										<input type="hidden" [(ngModel)]="aprhoItem.id"
+										value="{{aprhoItem.id}}" name="aprhoItem.id">								
+										<td class="col s1 aprho" (mouseenter)="callToast(aprhoItem.atividade)">...</td>
+										<td class="col s1 aprho">{{aprhoItem.agenteRisco.descricao}}</td>
+										<td class="col s1 aprho" (mouseenter)="callToast(aprhoItem.local)">...</td>
+										<td class="col s1 aprho" >{{aprhoItem.frequencia}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.duracao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.fonteGeradora.descricao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.meioPropagacao}}</td>
+										<td class="col s2 aprho" >{{aprhoItem.possivelDanoSaude.descricao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.categoriaRisco.descricao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.medidaControle}}</td>
+										<td class="col s1 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeAprho(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>	
+				</form>	
+				</div>	
+				<div id="aprhoEmpregado">
+					<div class="row">
+					</div>
+					<div class="row">
+						<div class="input-field col s10">
+						
+						<fieldset>
+							<label for="aprhoEmpregado.empregado" >Empregado</label> 						
+							<input type="text" materialize="autocomplete" autocomplete="off"
+							name="aprhoEmpregado.empregado.pessoa.nome" required
+							[(ngModel)]="aprhoEmpregado.empregado.pessoa.nome"
+							(blur)="autoCompleteEmpregado.getAutocomplete().getObj($event,aprhoEmpregado,'setEmpregado','getNome')"
+							(ngModelChange)="autoCompleteEmpregado.getAutocomplete().getList(aprhoEmpregado.empregado, 'getNome');"
+							[materializeParams]="autoCompleteEmpregado.getAutocomplete().getObjAutoComplete()">
+					   </fieldset>
+						</div>
+						<div class="input-field col s2" style="margin-top: 30px;">
+							<a
+								class="btn-floating waves-effect waves-light green btn-add-autocomplete"
+								(click)="addAprhoEmpregado()"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+					</div>	
+					<div class="table-empregados ">
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s1">Chave</th>
+								<th class="col s5">Nome</th>
+								<th class="col s3">Gerência</th>
+								<th class="col s1">Atual</th>
+								<th class="col s1">Excluir</th>
+							</tr>
+						</thead>
+						<div class="container-empregado-convocacao">
+							<div
+								*ngFor="let aprhoEmpregado of aprhoEmpregados; let i = index">
+								<tbody class="col s12">
+									<tr class="col s12">
+										<td class="col s1 chave">{{aprhoEmpregado.empregado.chave}}</td>
+										<td class="col s5 nome">{{aprhoEmpregado.empregado.pessoa.nome}}</td>
+										<td class="col s3 codigo_completo">{{aprhoEmpregado.empregado.gerencia.codigoCompleto}}</td>
+										<td class="col s1 checkbox_selecionado">
+											<input
+											type="checkbox" id="aprhoEmpregado[{{i}}].atual"
+											[(ngModel)]="aprhoEmpregado.atual"
+											name="aprhoEmpregado[{{i}}].atual"> <label
+											for="aprhoEmpregado[{{i}}].atual"></label></td>
+										<td class="col s1 btn-remover"><a
+											(click)="removeAprhoEmpregado(i)"
+											[ngStyle]="{'cursor': 'pointer'}"><i
+												class="material-icons">delete</i></a></td>
+									</tr>
+								</tbody>
+							</div>
+						</div>
+					</table>
+				</div>	
+				</div>	
+			</div>
+		<input id="id" name="id" type="hidden" [(ngModel)]="aprho.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="aprho.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/aprho']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<form #form="ngForm" class="col s6" (ngSubmit)="save()">
+				<button type="submit"
+				class="btn btn-primary btn-salvar">Salvar</button>
+			</form>
+		</div>
+	
+</div>
+<div materialize [materializeParams]="toastParams" 
+	[materializeActions]="globalActions"></div>
+
+
+

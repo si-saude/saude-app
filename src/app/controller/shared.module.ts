@@ -64,6 +64,12 @@ import { TipoSolicitacaoService } from './tipo-solicitacao/tipo-solicitacao.serv
 import { SolicitacaoCentralIntegraService } from './solicitacao-central-integra/solicitacao-central-integra.service';
 import { TarefaComponent } from './tarefa/tarefa.component';
 import { FilterDataPipe } from './../pipes/filter-data.pipe';
+import { FonteGeradoraService } from './fonte-geradora/fonte-geradora.service';
+import { CategoriaRiscoService } from './categoria-risco/categoria-risco.service';
+import { PossivelDanoSaudeService } from './possivel-dano-saude/possivel-dano-saude.service';
+import { AgenteRiscoService } from './agente-risco/agente-risco.service';
+import { AprhoService } from './aprho/aprho.service';
+
 
 @NgModule({
   declarations: [
@@ -72,7 +78,9 @@ import { FilterDataPipe } from './../pipes/filter-data.pipe';
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
     PaginacaoComponent,
-    TarefaComponent
+    TarefaComponent,
+    FilterDataPipe
+    
   ],
   imports: [ 
     CommonModule,
@@ -91,7 +99,8 @@ import { FilterDataPipe } from './../pipes/filter-data.pipe';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent
+    PaginacaoComponent,
+    FilterDataPipe
   ],
   providers: [
     PerfilService,
@@ -145,6 +154,11 @@ import { FilterDataPipe } from './../pipes/filter-data.pipe';
     TriagemService,
     TipoSolicitacaoService,
     CanDeactivateGuard,
+    FonteGeradoraService,
+    CategoriaRiscoService,
+    PossivelDanoSaudeService,
+    AgenteRiscoService,
+    AprhoService,
     SolicitacaoCentralIntegraService
   ]
 })

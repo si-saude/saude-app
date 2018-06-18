@@ -1,0 +1,37 @@
+import { GenericFilter } from './../../generics/generic.filter';
+import { DateFilter } from './../../generics/date.filter';
+
+import { GheFilter } from './../ghe/ghe.filter';
+
+export class AprhoFilter extends GenericFilter {
+    private empresa: string;
+    private data: DateFilter;
+    private ghe: GheFilter;
+   
+    constructor() {
+        super();
+    }
+    
+    public getEmpresa(): string {
+        return this.empresa;
+    }
+    
+    public setEmpresa(empresa: string) {
+        this.empresa = empresa;
+    }
+    
+    public getData() {
+        return this.data;
+    }
+
+    public setData(data: DateFilter) {
+        this.data = data;
+    }
+    public getGhe() {
+        return this.ghe;
+    }
+
+    public setGhe(ghe: GheFilter) {
+        this.ghe = ghe;
+    }
+}

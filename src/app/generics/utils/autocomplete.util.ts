@@ -18,39 +18,53 @@ export class AutoComplete<F extends GenericFilter> {
     }
     
     public getList(obj, getMethod){
-        let infos = obj[getMethod]().split('-');
+        let infos = obj[getMethod]().split('||');
         let info = infos[infos.length - 1].trim();
         
         if ( this.lastValue == undefined || info != this.lastValue.trim() ) { 
             this.filter = this.genericAutoComplete.getFilter(obj,this.filter);
             
-            this.service.list(this.filter)
+            if(typeof this.genericAutoComplete['getList'] === 'function'){
+                this.genericAutoComplete.getList(this.service, this.filter)
                 .then(res => {
-                    this.array = this.builder.cloneList(res.json().list);
-                    
-                    if(this.array.length > 0)
-                        this.objAutoComplete = [this.buildAutocomplete()];
-                    else{
-                        this.objAutoComplete = [{'data': {'': null }}]
-                    }
-                        
+                    this.executeAutoComplete(res);
                 }).catch( error => {
                     console.log( error );
                 } );
+            }else{
+                this.service.list(this.filter)
+                .then(res => {
+                    this.executeAutoComplete(res);
+                }).catch( error => {
+                    console.log( error );
+                } );
+            }
+        }
+    }
+    
+    private executeAutoComplete(res){
+        this.array = this.builder.cloneList(res.json().list);
+        
+        if(this.array.length > 0)
+            this.objAutoComplete = [this.buildAutocomplete()];
+        else{
+            this.objAutoComplete = [{'data': {'': null }}]
         }
     }
     
     public getObj(input,obj,setMethod, getMethod){
         let value = obj[setMethod.replace('set','get')]()[getMethod]();
-
-        if(input.target.value != undefined && input.target.value.includes('-')){
-            let infos = input.target.value.split('-');
+        
+        if(input.target.value != undefined && input.target.value.includes('||')){
+            
+            let infos = input.target.value.split('||');
             let id = infos[0].trim();
             let info = infos[infos.length - 1].trim();
             
             this.lastValue = info;
             obj[setMethod]( this.array.find(a => a.getId().toString() == id) );
             
+            this.objAutoComplete = [{'data': {'': null }}];
         }else if(this.lastValue != undefined && this.lastValue != value){
             obj[setMethod](this.builder.initialize(undefined));
         }
@@ -65,7 +79,7 @@ export class AutoComplete<F extends GenericFilter> {
     buildAutocomplete() {
         let data = {};
         this.array.forEach( item => {
-            data[item.getId() + ' - ' + this.genericAutoComplete.getLabel(item)] = null;
+            data[item.getId() + ' || ' + this.genericAutoComplete.getLabel(item)] = null;
         } );
 
         let array = {};

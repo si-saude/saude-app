@@ -77,10 +77,16 @@
 		</div>
 
 		<div class="row">
-			<div class="input-field col s12">
+			<div class="input-field col s10">
 				<label for="descricao">Descrição</label> <input id="descricao"
 					type="text" name="gerencia.descricao"
 					[(ngModel)]="gerencia.descricao">
+			</div>
+			<div class="input-field col s2 checkbox">
+				<input type="checkbox" id="ausentePeriodico"
+					[(ngModel)]="gerencia.ausentePeriodico"
+					name="gerencia.ausentePeriodico"> <label
+					for="ausentePeriodico">Ausente do Periódico</label>
 			</div>
 		</div>
 

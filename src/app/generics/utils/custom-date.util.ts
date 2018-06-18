@@ -11,15 +11,15 @@ export class CustomDate {
     }
 
     getApiDate(){
-        
         if( this.appDate !== null && this.appDate !== undefined )
             this.apiDate = this.dateUtil.parseDatePickerToDate(this.appDate);
+        else
+            this.apiDate = undefined;
         
         return this.apiDate;
     }
     
     setApiDate(date:Date){
-        
         if(date !== null && date !== undefined)
             this.appDate = this.dateUtil.parseDataToObjectDatePicker(date);
         

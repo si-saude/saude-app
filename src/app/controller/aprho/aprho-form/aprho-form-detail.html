@@ -1,0 +1,105 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">
+		<div class="row">
+			<div class="col s12">
+				<ul class="tabs" materialize="tabs">
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s6"><a RouterLinkActive="active"
+						href="#aphoItem">Informações Adicionais</a></li>
+				</ul>			
+			</div>
+				<div id="dadosGerais">
+					<form #form3="ngForm" class="col s12">
+						<div class="row">
+							<div class="input-field col s9">
+								<label for="empresa">Empresa</label>
+								<input id="empresa" type="text" disabled
+								name="empresa" [(ngModel)]="aprho.empresa">
+							</div>		
+							<div class="input-field col s3">
+										<label for="data">Data</label>
+										<my-date-picker name="data" disabled
+											[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.AppDate"
+											placeholder="Data"> </my-date-picker>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s5">
+								<label for="aprho.ghe">Empresa</label>
+									<input id="aprho.ghe" type="text" disabled
+									name="aprho.ghe" [(ngModel)]="aprho.ghe.nome">
+							</div>	
+					    </div>
+					</form>
+				</div>
+				<div id="aphoItem" >	
+						<div class="row"></div>		
+				<div class="row">
+					<table class="striped row row-full">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s1">Atividade</th>
+								<th class="col s1">Agente de Risco</th>
+								<th class="col s1">Local</th>
+								<th class="col s1">Frequência</th>
+								<th class="col s1">Duração</th>
+								<th class="col s1">Fonte</th>
+								<th class="col s1">Meio Propagação</th>
+								<th class="col s2">Possíveis Danos à Saúde</th>
+								<th class="col s1">Categoria de Risco</th>
+								<th class="col s2">Medidas de Controle</th>
+							</tr>
+						</thead>
+						<div *ngFor="let aprhoItem of aprho.aprhoItens;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12" >		
+										<input id="aprhoItem.version" name="aprhoItem.version" 
+										type="hidden" [(ngModel)]="aprhoItem.version">
+										<input type="hidden" [(ngModel)]="aprhoItem.id"
+										value="{{aprhoItem.id}}" name="aprhoItem.id">								
+										<td class="col s1 aprho" (mouseenter)="callToast(aprhoItem.atividade)">...</td>
+										<td class="col s1 aprho">{{aprhoItem.agenteRisco.descricao}}</td>
+										<td class="col s1 aprho" (mouseenter)="callToast(aprhoItem.local)">...</td>
+										<td class="col s1 aprho" >{{aprhoItem.frequencia}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.duracao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.fonteGeradora.descricao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.meioPropagacao}}</td>
+										<td class="col s2 aprho" >{{aprhoItem.possivelDanoSaude.descricao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.categoriaRisco.descricao}}</td>
+										<td class="col s2 aprho" >{{aprhoItem.medidaControle}}</td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>	
+				</div>		
+			</div>
+		<input id="id" name="id" type="hidden" [(ngModel)]="aprho.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="aprho.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/aprho']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+		</div>
+	
+</div>
+<div materialize [materializeParams]="toastParams" 
+	[materializeActions]="globalActions"></div>

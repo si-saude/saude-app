@@ -76,9 +76,15 @@ import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-gr
 import { PanoramaGuard } from './guards/panorama.guard';
 import { DeclaracaoComparecimentoGuard } from './guards/guards-child/declaracao-comparecimento.guard';
 import { QuadroAtendimentoGuard } from './guards/guards-child/quadro-atendimento.guard';
+import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
+import { CategoriaRiscoGuard } from './guards/guards-child/categoria-risco.guard';
+import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saude.guard';
+import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
+import { AprhoGuard } from './guards/guards-child/aprho.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 import { KanbanGuard } from './guards/kanban.guard';
+
 
 @NgModule({
   declarations: [
@@ -159,6 +165,11 @@ import { KanbanGuard } from './guards/kanban.guard';
     DeclaracaoComparecimentoGuard,
     QuadroAtendimentoGuard,
     PanoramaGuard,
+    FonteGeradoraGuard,
+    CategoriaRiscoGuard,
+    PossivelDanoSaudeGuard,
+    AgenteRiscoGuard,
+    AprhoGuard,
     TipoSolicitacaoGuard,
     ReportSolicitacaoCentralIntegraGuard,
     KanbanGuard

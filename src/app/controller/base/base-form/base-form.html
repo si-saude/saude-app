@@ -22,7 +22,7 @@
 			<div class="input-field col s3">
 				<fieldset>
 					<legend> UF </legend>
-					<select name="base.uf" class="browser-default" [(ngModel)]="base.uf">
+					<select name="base.uf" required class="browser-default" [(ngModel)]="base.uf">
 						<option disabled selected value=''>Selecione um uf</option>
 						<option *ngFor="let uf of ufs" value="{{uf}}">{{uf}}</option>
 					</select>
