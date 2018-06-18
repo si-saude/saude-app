@@ -11,6 +11,7 @@ import { FonteGeradoraService } from './../fonte-geradora/fonte-geradora.service
 import { AgenteRiscoService } from './../agente-risco/agente-risco.service';
 import { CategoriaRiscoService } from './../categoria-risco/categoria-risco.service';
 import { PossivelDanoSaudeService } from './../possivel-dano-saude/possivel-dano-saude.service';
+import { EmpregadoService } from './../empregado/empregado.service';
 
 @Injectable()
 export class AprhoService extends GenericService {
@@ -20,7 +21,8 @@ export class AprhoService extends GenericService {
                  private categoriaRiscosService: CategoriaRiscoService, 
                  private fonteGeradoraService: FonteGeradoraService, 
                  private agenteRiscoService: AgenteRiscoService, 
-                 private possivelDanoSaudeService: PossivelDanoSaudeService) { 
+                 private possivelDanoSaudeService: PossivelDanoSaudeService,
+                 private empregadoService: EmpregadoService) { 
         super(http,router,"aprho");
     }
     
@@ -30,10 +32,10 @@ export class AprhoService extends GenericService {
     
     getGhes() {
         return this.gheService.getGhes();
-    }
+    } 
     
-    getGhesAtivos() {
-        return this.gheService.getGhesAtivos();
+    getGhesAtivos(filter) {
+        return this.gheService.getGhesAtivos(filter);
     }
     
     getMeioPropagacoes() {
@@ -48,24 +50,30 @@ export class AprhoService extends GenericService {
         return this.http
             .get( urlMedidaControle + "?filter=", { headers: this.headers } )
             .toPromise();
-    }
-    
-    getFonteGeradoras() {
-        return this.fonteGeradoraService.getFonteGeradoras();
-    }
-    
-    getAgenteRiscos() {
-        return this.agenteRiscoService.getAgenteRiscos();
-    }
-    
+    }   
     getCategoriaRiscos() {
         return this.categoriaRiscosService.getCategoriaRiscos();
+    }    
+    
+    getGheService() {
+        return this.gheService;
     }
     
-    getPossivelDanoSaudes() {
-        return this.possivelDanoSaudeService.getPossivelDanoSaudes();
+    
+    getFonteGeradoraService() {
+        return this.fonteGeradoraService;
     }
     
+    getAgenteRiscoService() {
+        return this.agenteRiscoService;
+    }
     
+    getPossivelDanoSaudeService() {
+        return this.possivelDanoSaudeService;
+    }
+    
+    getEmpregadoService() {
+        return this.empregadoService;
+    }
    
 }

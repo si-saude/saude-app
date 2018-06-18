@@ -38,7 +38,7 @@ export class AprhoFormDetailComponent extends GenericFormComponent implements On
                     .then( res => {
                         this.showPreload = false;
                         this.aprho = new AprhoBuilder().clone( res.json() );
-                        this.parseAndSetDates();
+                       
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -48,12 +48,6 @@ export class AprhoFormDetailComponent extends GenericFormComponent implements On
 
     ngOnDestroy() {
         this.inscricao.unsubscribe();
-    }
-    parseAndSetDates() {
-        if ( this.aprho.getData() !== null &&
-            this.aprho.getData() !== undefined ) {
-            this.data = this.parseDataToObjectDatePicker( this.aprho.getData() );
-        }
     }
 
 }

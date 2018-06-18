@@ -8,14 +8,16 @@
 <!-- Confirm Save -->
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
 
-<div class="row form-container">
+<div class="row form-container">		
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs" materialize="tabs">
-					<li class="tab col s6"><a RouterLinkActive="active"
+					<li class="tab col s4"><a RouterLinkActive="active"
 						href="#dadosGerais">Dados Gerais</a></li>
-					<li class="tab col s6"><a RouterLinkActive="active"
+					<li class="tab col s4"><a RouterLinkActive="active"
 						href="#aphoItem">Informações Adicionais</a></li>
+					<li class="tab col s4"><a RouterLinkActive="active"
+						href="#aprhoEmpregado">Empregados</a></li>
 				</ul>			
 			</div>
 				<div id="dadosGerais">
@@ -29,7 +31,7 @@
 								<div class="input-field col s3">
 											<label for="data">Data</label>
 											<my-date-picker name="data" required
-												[options]="myDatePickerOptions" [(ngModel)]="data"
+												[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.appDate"
 												placeholder="Data"> </my-date-picker>
 								</div>
 						</div>
@@ -37,10 +39,12 @@
 						<div class="input-field col s5">
 							<fieldset>
 								<label for="aprho.ghe" >GHE</label> 						
-								<input (click)="openModalGhe()" 
-					 			id="aprho.ghe.nome" type="text" required
+								<input type="text" materialize="autocomplete" autocomplete="off"
 								name="aprho.ghe.nome"
-								[(ngModel)]="aprho.ghe.nome">
+								[(ngModel)]="aprho.ghe.nome"
+								(blur)="autoCompleteGhe.getAutocomplete().getObj($event,aprho,'setGhe','getNome')"
+								(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(aprho.ghe, 'getNome');"
+								[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
 							</fieldset>
 						</div>	
 					</div>
@@ -60,10 +64,12 @@
 					<div class="input-field col s6">
 						<fieldset>
 							<label for="aprhoItem.agenteRisco" >Agente/Risco Potencial/CAS</label> 						
-							<input (click)="openModalAgenteRisco()" 
-				 			id="aprhoItem.agenteRisco.descricao" type="text" required
-							name="aprhoItem.agenteRisco.descricao"
-							[(ngModel)]="aprhoItem.agenteRisco.descricao">
+							<input type="text" materialize="autocomplete" autocomplete="off"
+								name="aprhoItem.agenteRisco.descricao" required
+								[(ngModel)]="aprhoItem.agenteRisco.descricao"
+								(blur)="autoCompleteAgenteRisco.getAutocomplete().getObj($event,aprhoItem,'setAgenteRisco','getDescricao')"
+								(ngModelChange)="autoCompleteAgenteRisco.getAutocomplete().getList(aprhoItem.agenteRisco, 'getDescricao');"
+								[materializeParams]="autoCompleteAgenteRisco.getAutocomplete().getObjAutoComplete()">
 						</fieldset>
 					</div>	
 					<div class="input-field col s6">
@@ -86,13 +92,15 @@
 									[(ngModel)]="aprhoItem.duracao">
 					</div>
 					<div class="input-field col s4">
-						<fieldset>
-							<label for="aprhoItem.fonteGeradora" >Fonte Geradora</label> 						
-								<input (click)="openModalFonteGeradora()" 
-					 			id="aprhoItem.fonteGeradora.descricao" type="text"
-								name="aprhoItem.fonteGeradora.descricao" required
-								[(ngModel)]="aprhoItem.fonteGeradora.descricao">
-						</fieldset>
+					<fieldset>
+						<label for="aprhoItem.fonteGeradora" >Fonte Geradora</label> 						
+						<input type="text" materialize="autocomplete" autocomplete="off"
+						name="aprhoItem.fonteGeradora.descricao" required
+						[(ngModel)]="aprhoItem.fonteGeradora.descricao"
+						(blur)="autoCompleteFonteGeradora.getAutocomplete().getObj($event,aprhoItem,'setFonteGeradora','getDescricao')"
+						(ngModelChange)="autoCompleteFonteGeradora.getAutocomplete().getList(aprhoItem.fonteGeradora, 'getDescricao');"
+						[materializeParams]="autoCompleteFonteGeradora.getAutocomplete().getObjAutoComplete()">
+				   </fieldset>
 					</div>
 					<div class="input-field col s3">
 						<fieldset>
@@ -107,12 +115,14 @@
 				<div class="row">
 					<div class="input-field col s5">
 						<fieldset>
-							<label for="aprhoItem.possivelDanoSaude" >Possível Dano a Saúde</label> 						
-							<input (click)="openModalPossivelDanoSaude()" 
-				 			id="aprhoItem.possivelDanoSaude.descricao" type="text" required
-							name="aprhoItem.possivelDanoSaude.descricao"
-							[(ngModel)]="aprhoItem.possivelDanoSaude.descricao">
-						</fieldset>
+							<label for="aprhoItem.possivelDanoSaude" >Fonte Geradora</label> 						
+							<input type="text" materialize="autocomplete" autocomplete="off"
+							name="aprhoItem.possivelDanoSaude.descricao" required
+							[(ngModel)]="aprhoItem.possivelDanoSaude.descricao"
+							(blur)="autoCompletePossivelDanoSaude.getAutocomplete().getObj($event,aprhoItem,'setPossivelDanoSaude','getDescricao')"
+							(ngModelChange)="autoCompletePossivelDanoSaude.getAutocomplete().getList(aprhoItem.possivelDanoSaude, 'getDescricao');"
+							[materializeParams]="autoCompletePossivelDanoSaude.getAutocomplete().getObjAutoComplete()">
+					   </fieldset>
 					</div>
 					<div class="input-field col s3">
 						<fieldset>
@@ -185,7 +195,67 @@
 
 				</div>	
 				</form>	
-				</div>		
+				</div>	
+				<div id="aprhoEmpregado">
+					<div class="row">
+					</div>
+					<div class="row">
+						<div class="input-field col s10">
+						
+						<fieldset>
+							<label for="aprhoEmpregado.empregado" >Empregado</label> 						
+							<input type="text" materialize="autocomplete" autocomplete="off"
+							name="aprhoEmpregado.empregado.pessoa.nome" required
+							[(ngModel)]="aprhoEmpregado.empregado.pessoa.nome"
+							(blur)="autoCompleteEmpregado.getAutocomplete().getObj($event,aprhoEmpregado,'setEmpregado','getNome')"
+							(ngModelChange)="autoCompleteEmpregado.getAutocomplete().getList(aprhoEmpregado.empregado, 'getNome');"
+							[materializeParams]="autoCompleteEmpregado.getAutocomplete().getObjAutoComplete()">
+					   </fieldset>
+						</div>
+						<div class="input-field col s2" style="margin-top: 30px;">
+							<a
+								class="btn-floating waves-effect waves-light green btn-add-autocomplete"
+								(click)="addAprhoEmpregado()"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+					</div>	
+					<div class="table-empregados ">
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s1">Chave</th>
+								<th class="col s5">Nome</th>
+								<th class="col s3">Gerência</th>
+								<th class="col s1">Atual</th>
+								<th class="col s1">Excluir</th>
+							</tr>
+						</thead>
+						<div class="container-empregado-convocacao">
+							<div
+								*ngFor="let aprhoEmpregado of aprhoEmpregados; let i = index">
+								<tbody class="col s12">
+									<tr class="col s12">
+										<td class="col s1 chave">{{aprhoEmpregado.empregado.chave}}</td>
+										<td class="col s5 nome">{{aprhoEmpregado.empregado.pessoa.nome}}</td>
+										<td class="col s3 codigo_completo">{{aprhoEmpregado.empregado.gerencia.codigoCompleto}}</td>
+										<td class="col s1 checkbox_selecionado">
+											<input
+											type="checkbox" id="aprhoEmpregado[{{i}}].atual"
+											[(ngModel)]="aprhoEmpregado.atual"
+											name="aprhoEmpregado[{{i}}].atual"> <label
+											for="aprhoEmpregado[{{i}}].atual"></label></td>
+										<td class="col s1 btn-remover"><a
+											(click)="removeAprhoEmpregado(i)"
+											[ngStyle]="{'cursor': 'pointer'}"><i
+												class="material-icons">delete</i></a></td>
+									</tr>
+								</tbody>
+							</div>
+						</div>
+					</table>
+				</div>	
+				</div>	
 			</div>
 		<input id="id" name="id" type="hidden" [(ngModel)]="aprho.id"> 
 		<input id="version" name="version" type="hidden" [(ngModel)]="aprho.version">
@@ -209,160 +279,5 @@
 <div materialize [materializeParams]="toastParams" 
 	[materializeActions]="globalActions"></div>
 
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams"
-	[materializeActions]="modalGhe">
-	<h5 class="title-modal">GHE</h5>
 
-	<table class="table table-striped table-filter" *ngIf="activeGhe"
-		[mfData]="arrayGhe | filterData : filter : typeFilter : value" 
-			#mf="mfDataTable" [mfRowsOnPage]="40">
-	    <thead>
-		    <tr>	
-		        <th style="width: 1%">
-		            <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
-		            <input type="text" name="filter-ghe-nome" style="width: 90%" 
-							placeholder="filtrar Nome"
-							(input)="selectFilter($event, 'filter-ghe-nome')">
-		        </th>
-		    </tr>
-	    </thead>
-    	<tbody>
-		    <tr *ngFor="let item of mf.data" class="tr-filter" (click)="selectGhe(item)">
-		        <td style="width: 1%" class="filter">{{item.nome}}</td>
-		    </tr>
-	    </tbody>
-	    <div style="width: 50%; margin: 0 auto; text-align: -webkit-center;">
-	        <tfoot>
-			    <tr>
-			        <td colspan="4">
-			            <mfBootstrapPaginator></mfBootstrapPaginator>
-			        </td>
-			    </tr>
-		    </tfoot>	    
-	    </div>
-	</table>
-	<div class="modal-footer">
-		 <a class="waves-effect waves-green btn-flat"
-			(click)="cancelarModalGhe()">Cancelar</a>
-	</div>
-
-</div>
-
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams"
-	[materializeActions]="modalPossivelDanoSaude">
-	<h5 class="title-modal">Possível Dano à Saúde</h5>
-
-	<table class="table table-striped table-filter" *ngIf="activePossivelDanoSaude"
-		[mfData]="arrayPossivelDanoSaude | filterData : filter : typeFilter : value" 
-			#mf="mfDataTable" [mfRowsOnPage]="40">
-	    <thead>
-		    <tr>	
-		        <th style="width: 1%">
-		            <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
-		            <input type="text" name="filter-possivel-dano-saude-descricao" style="width: 90%" 
-							placeholder="filtrar descrição"
-							(input)="selectFilter($event, 'filter-possivel_dano_saude-descricao')">
-		        </th>
-		    </tr>
-	    </thead>
-    	<tbody>
-		    <tr *ngFor="let item of mf.data" class="tr-filter" (click)="selectPossivelDanoSaude(item)">
-		        <td style="width: 1%" class="filter">{{item.descricao}}</td>
-		    </tr>
-	    </tbody>
-	    <div style="width: 50%; margin: 0 auto; text-align: -webkit-center;">
-	        <tfoot>
-			    <tr>
-			        <td colspan="4">
-			            <mfBootstrapPaginator></mfBootstrapPaginator>
-			        </td>
-			    </tr>
-		    </tfoot>	    
-	    </div>
-	</table>
-	<div class="modal-footer">
-		 <a class="waves-effect waves-green btn-flat"
-			(click)="cancelarModalPossivelDanoSaude()">Cancelar</a>
-	</div>
-
-</div>
-
-
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams"
-	[materializeActions]="modalAgenteRisco">
-	<h5 class="title-modal">Agente de Risco</h5>
-	<table class="table table-striped table-filter" *ngIf="activeAgenteRisco"
-		[mfData]="arrayAgenteRisco | filterData : filter : typeFilter : value" 
-			#mf="mfDataTable" [mfRowsOnPage]="40">
-	    <thead>
-		    <tr>	
-		        <th style="width: 1%">
-		            <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
-		            <input type="text" name="filter-agente-risco-descricao" style="width: 90%" 
-							placeholder="filtrar descrição"
-							(input)="selectFilter($event, 'filter-agente_risco-descricao')">
-		        </th>
-		    </tr>
-	    </thead>
-    	<tbody>
-		    <tr *ngFor="let item of mf.data" class="tr-filter" (click)="selectAgenteRisco(item)">
-		        <td style="width: 1%" class="filter">{{item.descricao}}</td>
-		    </tr>
-	    </tbody>
-	    <div style="width: 50%; margin: 0 auto; text-align: -webkit-center;">
-	        <tfoot>
-			    <tr>
-			        <td colspan="4">
-			            <mfBootstrapPaginator></mfBootstrapPaginator>
-			        </td>
-			    </tr>
-		    </tfoot>	    
-	    </div>
-	</table>
-	<div class="modal-footer">
-		 <a class="waves-effect waves-green btn-flat"
-			(click)="cancelarModalAgenteRisco()">Cancelar</a>
-	</div>
-</div>
-
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams"
-	[materializeActions]="modalFonteGeradora">
-	<h5 class="title-modal">Fonte Geradora</h5>
-	<table class="table table-striped table-filter" *ngIf="activeFonteGeradora"
-		[mfData]="arrayFonteGeradora | filterData : filter : typeFilter : value" 
-			#mf="mfDataTable" [mfRowsOnPage]="40">
-	    <thead>
-		    <tr>	
-		        <th style="width: 1%">
-		            <mfDefaultSorter by="descricao">Descrição</mfDefaultSorter>
-		            <input type="text" name="filter-fonte-geradora-descricao" style="width: 90%" 
-							placeholder="filtrar descrição"
-							(input)="selectFilter($event, 'filter-fonte_geradora-descricao')">
-		        </th>
-		    </tr>
-	    </thead>
-    	<tbody>
-		    <tr *ngFor="let item of mf.data" class="tr-filter" (click)="selectFonteGeradora(item)">
-		        <td style="width: 1%" class="filter">{{item.descricao}}</td>
-		    </tr>
-	    </tbody>
-	    <div style="width: 50%; margin: 0 auto; text-align: -webkit-center;">
-	        <tfoot>
-			    <tr>
-			        <td colspan="4">
-			            <mfBootstrapPaginator></mfBootstrapPaginator>
-			        </td>
-			    </tr>
-		    </tfoot>	    
-	    </div>
-	</table>
-	<div class="modal-footer">
-		 <a class="waves-effect waves-green btn-flat"
-			(click)="cancelarModalFonteGeradora()">Cancelar</a>
-	</div>
-</div>
 

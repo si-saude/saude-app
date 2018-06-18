@@ -20,13 +20,19 @@ import { AprhoItem } from './../../../model/aprho-item';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { AprhoBuilder } from './../aprho.builder';
 import { AprhoItemBuilder } from './../../aprho-item/aprho-item.builder';
+import { AprhoEmpregado } from './../../../model/aprho-empregado';
+import { AprhoEmpregadoBuilder } from './../../aprho-empregado/aprho-empregado.builder';
 import { GheBuilder } from './../../ghe/ghe.builder';
 import { AprhoService } from './../aprho.service';
 import { PossivelDanoSaudeBuilder } from './../../possivel-dano-saude/possivel-dano-saude.builder';
 import { AgenteRiscoBuilder } from './../../agente-risco/agente-risco.builder';
 import { FonteGeradoraBuilder } from './../../fonte-geradora/fonte-geradora.builder';
 import { CategoriaRiscoBuilder } from './../../categoria-risco/categoria-risco.builder';
-
+import { GheNomeAutocomplete } from './../../ghe/ghe-nome.autocomplete';
+import { AgenteRiscoDescricaoAutocomplete } from './../../agente-risco/agente-risco-descricao.autocomplete';
+import { FonteGeradoraDescricaoAutocomplete } from './../../fonte-geradora/fonte-geradora-descricao.autocomplete';
+import { PossivelDanoSaudeDescricaoAutocomplete } from './../../possivel-dano-saude/possivel-dano-saude-descricao.autocomplete';
+import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 
 @Component( {
     selector: 'app-aprho-form',
@@ -39,25 +45,21 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
     private aprho: Aprho;
     private data: any;
     private aprhoItem: AprhoItem;
+    private aprhoEmpregado: AprhoEmpregado;
     private flagIdGhe : number;
     private arrayGhe: Array<Ghe>;
     private modalGhe;
     private value;
     private filter;
     private typeFilter;
-    private meioPropagacoes: Array<string>;
-    private medidaControles: Array<string>;
     private categoriaRiscos: Array<CategoriaRisco>;
-    private modalPossivelDanoSaude;
-    private arrayPossivelDanoSaude: Array<PossivelDanoSaude>;
-    private modalAgenteRisco;
-    private arrayAgenteRisco: Array<AgenteRisco>;
-    private modalFonteGeradora;
-    private arrayFonteGeradora: Array<FonteGeradora>;
-    private activeAgenteRisco:boolean;
-    private activePossivelDanoSaude:boolean;
-    private activeFonteGeradora:boolean;
-    private activeGhe:boolean;
+    private meioPropagacoes: Array<string>;
+    private medidaControles: Array<string>;   
+    private autoCompleteGhe:GheNomeAutocomplete;
+    private autoCompleteAgenteRisco:AgenteRiscoDescricaoAutocomplete;
+    private autoCompleteFonteGeradora:FonteGeradoraDescricaoAutocomplete;
+    private autoCompletePossivelDanoSaude:PossivelDanoSaudeDescricaoAutocomplete;
+    private autoCompleteEmpregado:EmpregadoNomeAutocomplete;
     
     
     constructor( private route: ActivatedRoute,
@@ -69,20 +71,16 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
         this.modalGhe = new EventEmitter<string | MaterializeAction>();
         this.aprho = new AprhoBuilder().initialize( this.aprho );
         this.aprhoItem = new AprhoItemBuilder().initialize( this.aprhoItem );
+        this.aprhoEmpregado = new AprhoEmpregadoBuilder().initialize( this.aprhoEmpregado );
         this.filter = "";
         this.meioPropagacoes = new Array<string>();
         this.medidaControles = new Array<string>();
-        this.modalPossivelDanoSaude = new EventEmitter<string | MaterializeAction>();
-        this.arrayPossivelDanoSaude = new Array<PossivelDanoSaude>();
-        this.modalAgenteRisco = new EventEmitter<string | MaterializeAction>();
-        this.arrayAgenteRisco = new Array<AgenteRisco>();
-        this.modalFonteGeradora = new EventEmitter<string | MaterializeAction>();
-        this.arrayFonteGeradora = new Array<FonteGeradora>();
-        this.activeAgenteRisco = false;
-        this.activePossivelDanoSaude = false;
-        this.activeFonteGeradora = false;
-        this.activeGhe = false;
-    }
+        this.autoCompleteGhe = new GheNomeAutocomplete(this.aprhoService.getGheService());
+        this.autoCompleteAgenteRisco = new AgenteRiscoDescricaoAutocomplete(this.aprhoService.getAgenteRiscoService());
+        this.autoCompleteFonteGeradora = new FonteGeradoraDescricaoAutocomplete(this.aprhoService.getFonteGeradoraService());
+        this.autoCompletePossivelDanoSaude = new PossivelDanoSaudeDescricaoAutocomplete(this.aprhoService.getPossivelDanoSaudeService());
+        this.autoCompleteEmpregado = new EmpregadoNomeAutocomplete(this.aprhoService.getEmpregadoService());
+     }
 
     ngOnInit() {
         this.inscricao = this.route.params.subscribe(
@@ -96,7 +94,7 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.aprho = new AprhoBuilder().clone( res.json() );
-                            this.parseAndSetDates();
+                            this.autoCompleteGhe.getAutocomplete().initializeLastValue(this.aprho.getGhe().getNome());         
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -113,9 +111,23 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
         this.aprho.getAprhoItens().push(new AprhoItemBuilder().clone(this.aprhoItem));
     }
     
+    addAprhoEmpregado() {  
+       if(this.aprho.getAprhoEmpregados().find( c => c.getEmpregado().getId() === this.aprhoEmpregado.getEmpregado().getId())==undefined)
+           this.aprho.getAprhoEmpregados().push(new AprhoEmpregadoBuilder().clone(this.aprhoEmpregado));
+       else{
+           this.toastParams = ['Empregado adicionado anteriormente', 4000];
+           this.globalActions.emit( 'toast' );
+       } 
+    }
+    
      removeAprho(i: number) {
         this.aprho.getAprhoItens().splice(i, 1);
     }
+     
+     removeAprhoEmpregado(i: number) {
+         this.aprho.getAprhoEmpregados().splice(i, 1);
+     }
+     
     getMedidaControles() {
         this.aprhoService.getMedidaControles()
             .then(res => {
@@ -151,11 +163,9 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
         this.inscricao.unsubscribe();
     }
     
-    save() {        
-        
+    save() { 
         if(this.formulario.valid){
             if(this.aprho.getAprhoItens().length > 0){
-                this.verifyAndSetDates();
                 super.save(new AprhoBuilder().clone( this.aprho ));
                 
             }else{
@@ -169,150 +179,4 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
             this.globalActions.emit('toast');   
           }
     }
-    
-    verifyAndSetDates() {
-        if ( this.data !== null &&
-            this.data !== undefined )
-            this.aprho.setData(
-                this.parseDatePickerToDate( this.data ) );
-    }
-    
-    parseAndSetDates() {
-        if ( this.aprho.getData() !== null &&
-            this.aprho.getData() !== undefined ) {
-            this.data = this.parseDataToObjectDatePicker( this.aprho.getData() );
-        }
-    }
-    
-    openModalFonteGeradora() {
-        this.value = "$*new*$";
-        this.filter = $("input[name='filter-fonte-geradora-descricao']").val('');
-        this.activeAgenteRisco = false;
-        this.activePossivelDanoSaude = false;
-        this.activeGhe = false;
-        this.activeFonteGeradora = true;
-        this.fetchFonteGeradora();
-        this.modalFonteGeradora.emit( { action: "modal", params: ['open'] } );
-    }
-    
-    fetchFonteGeradora() {
-        this.aprhoService.getFonteGeradoras()
-            .then(res => {
-                this.arrayFonteGeradora = new FonteGeradoraBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log("Erro ao buscar o possivel Fonte Geradora por descricao");
-            })
-    }
-    
-    selectFonteGeradora( fonteGeradora: FonteGeradora) {       
-       this.aprhoItem.setFonteGeradora(fonteGeradora);
-       this.modalFonteGeradora.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    cancelarModalFonteGeradora() {
-        this.modalFonteGeradora.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    
-    
-    
-    openModalAgenteRisco() {
-        this.value = "$*new*$";
-        this.filter = $("input[name='filter-agente-risco-descricao']").val('');
-        this.activeAgenteRisco = true;
-        this.activePossivelDanoSaude = false;
-        this.activeFonteGeradora = false;
-        this.activeGhe = false;
-        this.fetchAgenteRisco();
-        this.modalAgenteRisco.emit( { action: "modal", params: ['open'] } );
-    }
-    
-    fetchAgenteRisco() {
-        this.aprhoService.getAgenteRiscos()
-            .then(res => {
-                this.arrayAgenteRisco = new AgenteRiscoBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log("Erro ao buscar o agente de risco por descricao");
-            })
-    }
-    
-    selectAgenteRisco( agenteRisco: AgenteRisco) {       
-       this.aprhoItem.setAgenteRisco(agenteRisco)
-       this.modalAgenteRisco.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    cancelarModalAgenteRisco() {
-        this.modalAgenteRisco.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    openModalPossivelDanoSaude() {
-        this.value = "$*new*$";
-        this.filter = $("input[name='filter-possivel-dano-saude-descricao']").val('');
-        this.activeAgenteRisco = false;
-        this.activeFonteGeradora = false;
-        this.activeGhe = false;
-        this.activePossivelDanoSaude = true;
-        this.fetchPossivelDanoSaude()
-        this.modalPossivelDanoSaude.emit( { action: "modal", params: ['open'] } );
-    }
-    
-    fetchPossivelDanoSaude() {
-        this.aprhoService.getPossivelDanoSaudes()
-            .then(res => {
-                this.arrayPossivelDanoSaude = new PossivelDanoSaudeBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log("Erro ao buscar o possivel dano à saúde por descricao");
-            })
-    }
-    
-    selectPossivelDanoSaude( possivelDanoSaude: PossivelDanoSaude) {
-       this.aprhoItem.setPossivelDanoSaude(possivelDanoSaude);
-       this.modalPossivelDanoSaude.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    cancelarModalPossivelDanoSaude() {
-        this.modalPossivelDanoSaude.emit( { action: "modal", params: ['close'] } );
-    }
-        
-    openModalGhe() {
-        this.value = "$*new*$";
-        this.filter = $("input[name='filter-ghe-descricao']").val('');
-        this.activeAgenteRisco = false;
-        this.activeFonteGeradora = false;
-        this.activePossivelDanoSaude = false;
-        this.activeGhe = true;
-        this.fetchGhe()
-        this.modalGhe.emit( { action: "modal", params: ['open'] } );
-    }
-    
-    fetchGhe() {
-        
-        this.aprhoService.getGhesAtivos()
-            .then(res => {
-                this.arrayGhe = new GheBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                console.log("Erro ao buscar o GHE por nome");
-            })
-    }
-    
-    selectGhe( ghe: Ghe ) {
-        this.aprho.setGhe(ghe);
-        this.modalGhe.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    cancelarModalGhe() {
-        this.modalGhe.emit( { action: "modal", params: ['close'] } );
-    }
-    
-    selectFilter( event, type: string ) {
-        let splitType = type.split('-');   
-        this.filter = event;
-        this.typeFilter = splitType[2];
-        this.value = $('input[name='+type).val();
-    }
-
 }

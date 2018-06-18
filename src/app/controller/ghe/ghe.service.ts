@@ -20,12 +20,12 @@ export class GheService extends GenericService {
         return this.selectList(new GheFilter());
     }
     
-    getGhesAtivos() {
+    getGhesAtivos(filter) {
         
         let urlGheAtivos = this.URL + "/list-ativo";
 //        genericFilter.setPageSize(Math.pow(2, 31)-1);
         return this.http
-            .post( urlGheAtivos, new GheFilter(), { headers: this.headers } )
+            .post( urlGheAtivos, filter, { headers: this.headers } )
             .toPromise();
     }
     

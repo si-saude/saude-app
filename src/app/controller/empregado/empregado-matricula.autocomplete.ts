@@ -24,7 +24,7 @@ export class EmpregadoMatriculaAutocomplete{
     }
     
     public getLabel(obj:any){
-        return obj.getMatricula() + " - " + obj.getPessoa().getNome();
+        return obj.getMatricula() + " || " + obj.getPessoa().getNome();
     }
     
     public getFilter(e:Empregado, eF:EmpregadoFilter){
