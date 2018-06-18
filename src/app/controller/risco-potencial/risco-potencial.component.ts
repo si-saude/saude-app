@@ -261,8 +261,9 @@ export class RiscoPotencialComponent {
                     for ( let i = 0; i < this.riscoPotenciais.length; i++)
                         this.riscoPotenciais[i].setRanking(i+1)
                         
-                        this.flagRiscoPotenciais = this.riscoPotenciais;
-                    
+                    this.flagRiscoPotenciais = this.riscoPotenciais;
+                    this.filter = "";
+                    this.value = "change";
                     } )
                     .catch( error => {
                         this.showPreload = false;
@@ -287,41 +288,41 @@ export class RiscoPotencialComponent {
         $( ".row-btns-risco" + indexRisco ).toggle( "slow" );
     }
 
-    verifyPlanejamento( indexRisco ) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() == "PLANEJAMENTO" )
+    verifyPlanejamento( item: RiscoPotencialDto ) {
+        if ( item.getStatus() == "PLANEJAMENTO" )
             return true;
         return false;
     }
     
-    verifyStatusAcao( indexRisco ) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" &&
-            this.riscoPotenciais[indexRisco].getEquipeResponsavelNome() == this.profissional.getEquipe().getNome() )
+    verifyStatusAcao( item: RiscoPotencialDto ) {
+        if ( item.getStatus() == "VALIDADO" &&
+            item.getEquipeResponsavelNome() == this.profissional.getEquipe().getNome() )
             return true;
         return false;
     }
 
-    verifyStatusPlanoIntervencao( indexRisco ) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() == "PLANEJAMENTO" && 
-                this.riscoPotenciais[indexRisco].getAbreviacaoEquipeAcolhimento() == this.profissional.getEquipe().getAbreviacao() )
+    verifyStatusPlanoIntervencao( item: RiscoPotencialDto  ) {
+        if ( item.getStatus() == "PLANEJAMENTO" && 
+                item.getAbreviacaoEquipeAcolhimento() == this.profissional.getEquipe().getAbreviacao() )
             return true;
         return false;
     }
 
-    verifyStatusCriarPlano( indexRisco ) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() == "ABERTO" && 
-                this.riscoPotenciais[indexRisco].getAbreviacaoEquipeAcolhimento() == this.profissional.getEquipe().getAbreviacao() )
+    verifyStatusCriarPlano( item: RiscoPotencialDto ) {
+        if ( item.getStatus() == "ABERTO" && 
+                item.getAbreviacaoEquipeAcolhimento() == this.profissional.getEquipe().getAbreviacao() )
             return true;
         return false;
     }
     
-    verifyStatusAcompanhamento( indexRisco ) {
-        if ( this.riscoPotenciais[indexRisco].getStatus() == "VALIDADO" )
+    verifyStatusAcompanhamento( item: RiscoPotencialDto  ) {
+        if ( item.getStatus() == "VALIDADO" )
             return true;
         return false;
     }
     
-    verifyAcolhimento(i) { 
-        if ( this.profissional.getEquipe().getAbreviacao() == "ACO" )
+    verifyAcolhimento( item: RiscoPotencialDto ) { 
+        if ( this.profissional.getEquipe().getAbreviacao() == item.getAbreviacaoEquipeAcolhimento() )
             return true;
         return false;
     }
@@ -419,7 +420,7 @@ export class RiscoPotencialComponent {
         if ( this.riscoPotenciais.length > 0 )
             this.riscoPotencialService.exportFile( this.riscoPotenciais )
                 .then( res => {
-                    this.httpUtil.downloadFile( res, "panorama.xlsx" );
+                    this.httpUtil.downloadFile( res, "risco-potencial.xlsx" );
                 } )
                 .catch( error => {
                     console.log( error );

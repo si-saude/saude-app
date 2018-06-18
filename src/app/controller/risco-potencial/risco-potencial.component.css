@@ -165,3 +165,11 @@ td {
 .div-btns-risco {
 	margin-top: 5px;
 }
+
+.head-table-riscos {
+	display: flex;
+}
+
+.div-riscos {
+	display: flex;
+}
