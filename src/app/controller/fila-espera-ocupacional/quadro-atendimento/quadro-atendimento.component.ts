@@ -113,14 +113,14 @@ export class QuadroAtendimentoComponent {
                                 if ( this.dataInicioTarefa[aT.getTarefa().getId()] == undefined ) {
                                     this.dataInicioTarefa[aT.getTarefa().getId()] = new Array<string>();
                                     this.dataInicioTarefa[aT.getTarefa().getId()].push(
-                                            this.treatString( aT.getTarefa().getInicio().toString() ));
+                                            this.treatString( aT.getTarefa().getInicio() ));
                                 }
                             } else this.dataInicioTarefa[aT.getTarefa().getId()].push("");
                             if ( aT.getTarefa().getFim() != undefined ) {
                                 if ( this.dataFimTarefa[aT.getTarefa().getId()] == undefined ) {
                                     this.dataFimTarefa[aT.getTarefa().getId()] = new Array<any>();
                                     this.dataFimTarefa[aT.getTarefa().getId()].push(
-                                            this.treatString( aT.getTarefa().getFim().toString() ));
+                                            this.treatString( aT.getTarefa().getFim() ));
                                 }
                             } else this.dataFimTarefa[aT.getTarefa().getId()].push("");
                         });
@@ -158,7 +158,8 @@ export class QuadroAtendimentoComponent {
         return o;
     }
     
-    treatString( date: string ) {
+    treatString( date ) {
+        date = JSON.stringify(date)
         let s = date.split("T");
         s = s[1].split(".");
         let hour: number = Number(s[0].substr(0, 2)) - 3;

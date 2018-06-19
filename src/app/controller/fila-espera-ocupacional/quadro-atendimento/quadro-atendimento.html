@@ -57,11 +57,11 @@
 								<td class="col s4 equipe-nome">{{tarefa.equipe.nome}}</td>
 								<td class="col s4 inicio">
 									<input name="dataInicioTarefa{{tarefa.id}}" disabled
-										type="text" [(ngModel)]="dataInicioTarefa[tarefa.id]">
+										type="text" [(ngModel)]="tarefa.inicioCustomTime.apiTime">
 									</td>
 								<td class="col s4 fim">
 									<input name="dataFimTarefa{{tarefa.id}}" disabled 
-										type="text" [(ngModel)]="dataFimTarefa[tarefa.id]">
+										type="text" [(ngModel)]="tarefa.fimCustomTime.apiTime">
 								</td>
 							</div>
 						</tr>

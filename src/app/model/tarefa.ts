@@ -3,6 +3,7 @@ import { Empregado } from './empregado';
 import { Profissional } from './profissional';
 import { Equipe } from './equipe';
 import { CustomDate} from './../generics/utils/custom-date.util';
+import { CustomTime} from './../generics/utils/custom-time.util';
 
 export class Tarefa {
     private id: number;
@@ -18,6 +19,8 @@ export class Tarefa {
 
     private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
     private fimCustomDate: CustomDate = new CustomDate(this.fim);
+    private inicioCustomTime: CustomTime = new CustomTime(this.inicio);
+    private fimCustomTime: CustomTime = new CustomTime(this.fim);
     private atualizacaoCustomDate: CustomDate = new CustomDate(this.atualizacao);
 
 
@@ -53,8 +56,17 @@ export class Tarefa {
     }
     
     setInicio(inicio: Date) {
+        this.inicioCustomTime.setApiTime(inicio);
         this.inicioCustomDate.setApiDate(inicio);
         this.inicio = inicio;
+    }
+    
+    getInicioCustomTime() {
+        return this.inicioCustomTime;
+    }
+    
+    setInicioCustomTime(inicioCustomTime: CustomTime){
+        this.inicioCustomTime = inicioCustomTime;
     }
     
     getInicioCustomDate(){
@@ -71,8 +83,17 @@ export class Tarefa {
     }
     
     setFim(fim: Date) {
+        this.fimCustomTime.setApiTime(fim);
         this.fimCustomDate.setApiDate(fim);
         this.fim = fim;
+    }
+    
+    getFimCustomTime() {
+        return this.fimCustomTime;
+    }
+    
+    setFimCustomTime(fimCustomTime: CustomTime){
+        this.fimCustomTime = fimCustomTime;
     }
     
     getFimCustomDate(){

@@ -30,7 +30,6 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
     resultadoExame: ResultadoExame;
     campoExames: Array<CampoExame>;
     empregadoConvocacoes: Array<EmpregadoConvocacao>;
-    exames: Array<Exame>;
     acoes: Array<string>;
     tipos: Array<string>;
     itemResultadoExames: Array<ItemResultadoExame>;
@@ -51,7 +50,6 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
         
         this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().initialize( this.empregadoConvocacao );
         this.resultadoExame = new ResultadoExameBuilder().initialize( this.resultadoExame );
-        this.exames = new ExameBuilder().initializeList(this.exames);
         this.itemResultadoExames = new ItemResultadoExameBuilder().initializeList(this.itemResultadoExames);
         this.conformList = new Array<boolean>();
         this.canAuditar = false;
@@ -86,8 +84,6 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
                             } )
                     }
                 } );
-
-        this.getExamesAll();
         this.getAcaoResultadoExames();
         this.getTipoResultadoExames();
     }
@@ -112,16 +108,6 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
             } )
     }
     
-    getExamesAll() {
-        this.empregadoConvocacaoService.getExamesAll()
-            .then(res => {
-                this.exames = new ExameBuilder().cloneList(res.json());
-            })
-            .catch(error => {
-                this.catchConfiguration(error);
-            })
-    }
-        
     selectConform( value ) {
         setTimeout(() => {
             this.conformList[value] = this.empregadoConvocacao.getEmpregadoConvocacaoExames()[value].getConforme();

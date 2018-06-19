@@ -24,14 +24,8 @@ export class EmpregadoConvocacaoService extends GenericService {
         return this.exameService.getExames();
     }
     
-    getExamesAll() {
-        let exameFilter: ExameFilter = new ExameFilter();
-        exameFilter.setPageSize(Math.pow(2, 31)-1);       
-        
-        let urlList = GlobalVariable.BASE_API_URL + "/exame/selectListAll";
-        return this.http
-            .post( urlList, exameFilter, { headers: this.headers } )
-            .toPromise();
+    getExameById(id) {
+        return this.exameService.get(Number(id));
     }
     
     getAcaoResultadoExames() {

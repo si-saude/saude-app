@@ -71,21 +71,22 @@
 											type="text" disabled
 											name="empregadoConvocacao.resultadoExames[{{iREx}}].exame.codigo"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.codigo">
-									</div>
 										<input class="col s8"
 											type="text" materialize="autocomplete" autocomplete="off"
 											name="exame[{{iREx}}]"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.descricao"
-											(blur)="autoCompleteExame.getAutocomplete().getObj($event,empregadoConvocacao.resultadoExames[iREx],'setExame','getDescricao')"
-											(ngModelChange)="autoCompleteExame.getAutocomplete().getList(empregadoConvocacao.resultadoExames[iREx].exame, 'getDescricao');"
-											[materializeParams]="autoCompleteExame.getAutocomplete().getObjAutoComplete()">
+											(blur)="getExame($event, iREx);"
+											(focus)="focusExame($event, iREx);"
+											(ngModelChange)="selectExameByCodigo($event, iREx); selectExameByDescricao($event, iREx);"
+											[materializeParams]="autocompleteExame">
+									</div>	
 								</div>
 
 								<div class="input-field col s3">
 									<label for="data">Data de Realização</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].data"
 										[options]="myDatePickerOptions"
-										[(ngModel)]="rEx.dataCustomDate.appDate" placeholder="Data">
+										[(ngModel)]="dataResultadoExames[iREx]" placeholder="Data">
 									</my-date-picker>
 								</div>
 
@@ -168,7 +169,7 @@
 									<label for="data">Data de Recebimento</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].dataRecebimento"
 										[options]="myDatePickerOptions"
-										[(ngModel)]="rEx.dataRecebimentoCustomDate.appDate" placeholder="Data Recebimento">
+										[(ngModel)]="dataRecebimentoExames[iREx]" placeholder="Data Recebimento">
 									</my-date-picker>
 								</div>
 							</div>

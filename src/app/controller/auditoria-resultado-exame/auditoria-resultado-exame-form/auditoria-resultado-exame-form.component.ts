@@ -18,7 +18,6 @@ import { EmpregadoConvocacaoService } from './../../empregado-convocacao/emprega
 import { EmpregadoConvocacaoFilter } from './../../empregado-convocacao/empregado-convocacao.filter';
 import { EmpregadoConvocacaoBuilder } from './../../empregado-convocacao/empregado-convocacao.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { ExameDescricaoAutocomplete } from './../../exame/exame-descricao.autocomplete';
 
 @Component( {
     selector: 'app-auditoria-resultado-exame-form',
@@ -31,7 +30,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     resultadoExame: ResultadoExame;
     campoExames: Array<CampoExame>;
     empregadoConvocacoes: Array<EmpregadoConvocacao>;
-    exames: Array<Exame>;
+    arrayExames: Array<Exame>;
     acoes: Array<string>;
     tipos: Array<string>;
     itemResultadoExames: Array<ItemResultadoExame>;
@@ -40,13 +39,17 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     canAuditar: boolean;
     empConv: string;
     examesAdded: Array<Exame>;
+    autocompleteEmpregadoConvocacao;
+    autocompleteExame;
+    data: any;
+    validExame: string;
 
+    dataResultadoExames: Array<any>;
+    dataRecebimentoExames: Array<any>;
     dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
-
-    autoCompleteExame:ExameDescricaoAutocomplete;
-
+    
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
         router: Router ) {
@@ -55,15 +58,18 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
 
         this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().initialize( this.empregadoConvocacao );
         this.resultadoExame = new ResultadoExameBuilder().initialize( this.resultadoExame );
-        this.exames = new ExameBuilder().initializeList( this.exames );
+        this.arrayExames = new ExameBuilder().initializeList( this.arrayExames );
         this.itemResultadoExames = new ItemResultadoExameBuilder().initializeList( this.itemResultadoExames );
         this.conformList = new Array<boolean>();
+        this.examesAdded = new Array<Exame>();
         this.canAuditar = false;
+        this.dataResultadoExames = new Array<any>();
+        this.dataRecebimentoExames = new Array<any>();
         this.dataItemResultadoExames = new Array<any>();
         this.campoExames = new CampoExameBuilder().initializeList( this.campoExames );
         this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
-        
-        this.autoCompleteExame = new ExameDescricaoAutocomplete(this.empregadoConvocacaoService.getExameService());
+        this.autocompleteEmpregadoConvocacao = [];
+        this.validExame = "";
     }
 
     ngOnInit() {
@@ -77,6 +83,8 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
                         .then( res => {
                             this.showPreload = false;
                             this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().clone( res.json() );
+                            this.saveArrayExames();
+                            this.parseAndSetDates();
                             this.treatDateItemResultadoExame();
                             this.empConv = this.empregadoConvocacao.getConvocacao().getTitulo() + " - " + this.empregadoConvocacao.getEmpregado().getPessoa().getNome();
                             if ( this.empregadoConvocacao.getResultadoExames() != undefined &&
@@ -94,7 +102,6 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
                 }
             } );
 
-        this.getExamesAll();
         this.getAcaoResultadoExames();
         this.getTipoResultadoExames();
     }
@@ -116,16 +123,6 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             } )
             .catch( error => {
                 console.log( error );
-            } )
-    }
-
-    getExamesAll() {
-        this.empregadoConvocacaoService.getExamesAll()
-            .then( res => {
-                this.exames = new ExameBuilder().cloneList( res.json() );
-            } )
-            .catch( error => {
-                this.catchConfiguration( error );
             } )
     }
 
@@ -200,14 +197,6 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         }
     }
 
-    selectExame( iREx, exameId ) {
-        if ( exameId == 0 ) return;
-
-        let exame = this.exames.find( e => e.getId() == exameId );
-
-        this.campoExames = exame.getCampoExames();
-    }
-
     selectAll() {
         setTimeout(() => {
             if ( this.selecionarTodos == false )
@@ -229,11 +218,32 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         if ( this.empregadoConvocacao.getResultadoExames() !== undefined &&
             this.empregadoConvocacao.getResultadoExames() !== null ) {
             for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
+                this.empregadoConvocacao.getResultadoExames()[i].setData(
+                        this.dateUtil.parseDatePickerToDate( this.dataResultadoExames[i] ) );
+
+                this.empregadoConvocacao.getResultadoExames()[i].setDataRecebimento(
+                        this.dateUtil.parseDatePickerToDate( this.dataRecebimentoExames[i] ) );
+                
                 this.empregadoConvocacao.getResultadoExames()[i].getItemResultadoExames().forEach(iREx => {
                     if ( iREx.getCodigo() == "010") {
                         iREx.setResultado( this.parseDatePickerToItemResultadoExameDate( this.dataItemResultadoExames[i] ) );
                     }
                 })
+            }
+        }
+    }
+
+    parseAndSetDates() {
+        if ( this.empregadoConvocacao.getResultadoExames() !== undefined &&
+            this.empregadoConvocacao.getResultadoExames() !== null ) {
+            for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
+                this.dataResultadoExames[i] =
+                    this.dateUtil.parseDataToObjectDatePicker(
+                        this.empregadoConvocacao.getResultadoExames()[i].getData() );
+
+                this.dataRecebimentoExames[i] =
+                    this.dateUtil.parseDataToObjectDatePicker(
+                        this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
             }
         }
     }
@@ -272,17 +282,125 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         return d;
     }
     
+    focusExame(evento, indexREx) {
+        this.validExame = this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao();
+    }
+    
+    getExame(evento, indexREx) {
+        if ( this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() == "" )
+            this.empregadoConvocacao.getResultadoExames()[indexREx] = new ResultadoExameBuilder().initialize(new ResultadoExame());
+        
+        if ( this.validExame == this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() ) return;
+        
+        if ( this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() !== undefined ) {
+            let exame = this.arrayExames.find( ex => {
+                if ( ( ex.getCodigo() + " - " + ex.getDescricao() ).trim() ==
+                     ( this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao() ).trim() ||
+                    ex.getDescricao().trim() == 
+                        this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao().trim() )
+                    return true;
+                else return false;
+            } );
+            if ( exame !== undefined ) {
+                
+                let flag = false;
+                if(this.empregadoConvocacao.getResultadoExames()[indexREx].getExame() == undefined ||
+                        this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getCodigo() != exame.getCodigo()){
+                    flag = true;
+                }
+                
+                this.empregadoConvocacao.getResultadoExames()[indexREx].setExame(exame);
+                this.validExame == this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao();
+                
+                if(flag){
+                    this.choiseCampoExame(indexREx,true);                    
+                }
+            } else this.empregadoConvocacao.getResultadoExames()[indexREx] = new ResultadoExameBuilder().initialize(new ResultadoExame()); 
+        } else this.empregadoConvocacao.getResultadoExames()[indexREx] = new ResultadoExameBuilder().initialize(new ResultadoExame());
+    }
+
+    private oldNome: string;
+    selectExameByDescricao( evento, iREx ) {
+        if ( this.oldNome != evento ) {
+            this.oldNome = evento;
+            if ( evento.length > 3 ) {
+                this.empregadoConvocacaoService.getExameByDescricao( evento )
+                    .then( res => {
+                        this.arrayExames = new ExameBuilder().cloneList( res.json() );
+                        //remove os exames que ja existe nos resultados exames
+                        this.empregadoConvocacao.getResultadoExames().forEach( rE => {
+                            let aE = this.arrayExames.find( a => a.getCodigo() == rE.getExame().getCodigo() );
+                            if ( aE != undefined)
+                                this.arrayExames.splice( this.arrayExames.indexOf(aE), 1 );    
+                        })
+                        this.autocompleteExame = [this.buildAutocompleteExame( this.arrayExames )];
+                    } )
+                    .catch( error => {
+                        console.log( error );
+                    } )
+            }
+        }
+    }
+
+    private oldNomeByCodigo: string;
+    selectExameByCodigo( evento, iREx ) {
+        if ( this.oldNomeByCodigo != evento ) {
+            this.oldNomeByCodigo = evento;
+            this.empregadoConvocacaoService.getExameByCodigo( evento )
+                .then( res => {
+                    this.arrayExames = new ExameBuilder().cloneList( res.json() );
+                  //remove os exames que ja existe nos resultados exames
+                    this.empregadoConvocacao.getResultadoExames().forEach( rE => {
+                        let aE = this.arrayExames.find( a => a.getCodigo() == rE.getExame().getCodigo() );
+                        if ( aE != undefined)
+                            this.arrayExames.splice( this.arrayExames.indexOf(aE), 1 );    
+                    })
+                    this.autocompleteExame = [this.buildAutocompleteExame( this.arrayExames )];
+                } )
+                .catch( error => {
+                    console.log( error );
+                } )
+        }
+    }
+
+    buildAutocompleteExame( exames: Array<Exame> ) {
+        let data = {};
+        exames.forEach( item => {
+            data[item.getCodigo() + " - " + item.getDescricao()] = null;
+        } );
+
+        let array = {};
+        array["data"] = data;
+
+        return array;
+    }
+    
     choiseCampoExame( indexREx, flag ) {
-        let exame = this.exames.find( e => e.getCodigo() == this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getCodigo());
-        
-        this.campoExames = exame.getCampoExames();
-        
-        if(flag){
-            this.empregadoConvocacao.getResultadoExames()[indexREx].setItemResultadoExames(new ItemResultadoExameBuilder().cloneList(new Array<ItemResultadoExame>()));
-            
-            this.campoExames.forEach( cE => {
-                this.addItemResultadoExame(indexREx, cE.getId());
-            });            
+        let exame: Exame;
+    
+        this.empregadoConvocacaoService.getExameById(this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getId())
+            .then(res => {
+                exame = new ExameBuilder().clone(res.json());
+                this.campoExames = exame.getCampoExames();
+                
+                if(flag){
+                    this.empregadoConvocacao.getResultadoExames()[indexREx].setItemResultadoExames(new ItemResultadoExameBuilder().cloneList(new Array<ItemResultadoExame>()));
+                    
+                    this.campoExames.forEach( cE => {
+                        this.addItemResultadoExame(indexREx, cE.getId());
+                    });            
+                }
+            })
+            .catch(error => {
+                console.log("Erro ao buscar o exame.");
+            })
+    }
+
+    saveArrayExames() {
+        if ( this.empregadoConvocacao.getResultadoExames().length > 0 ) {
+            this.empregadoConvocacao.getResultadoExames().forEach(rE => {
+                this.arrayExames.push( rE.getExame() );
+            })
         }
     }
 

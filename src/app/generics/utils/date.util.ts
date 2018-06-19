@@ -40,6 +40,14 @@ export class DateUtil {
         let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
         return d;
     }
+    
+    public parseDateToTime( data: Date ) {
+        if ( data === undefined || data === null ) {
+            return null;
+        }
+        let d: string = data.toString().split("T")[1].split("Z")[0].split(".")[0];
+        return d;
+    }
 
     public parseDataToString( data ) {
         if ( data === undefined || data === null ) {

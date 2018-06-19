@@ -106,6 +106,7 @@ export class PanoramaComponent {
 
             $( '#dropdown' ).toggleClass( 'show' );
             $( '#dropdown' ).insertAfter( "#" + tipo );
+//            console.log(window.scrollX)
             $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
 
             if ( component.arrayObjects['existePendenciaExames'] == 'indeterminate' ) {
