@@ -38,14 +38,12 @@ export class CheckOutRecepcaoComponent {
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.empregado = new EmpregadoBuilder().initialize(new Empregado());
         this.empregados = new EmpregadoBuilder().cloneList(this.empregados);
         this.filaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().initialize(this.filaEsperaOcupacional);
         this.filaEsperaOcupacional.getEmpregado().setMatricula('');
         this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
         this.localizacoes = new LocalizacaoBuilder().initializeList(this.localizacoes);
         this.showConfirmSave = false;
-        this.empregado = new EmpregadoBuilder().initialize(new Empregado());
         this.validEmpregado = "";
         this.autocompleteEmpregado = [];
         this.autoCompleteEmp = new EmpregadoMatriculaAutocomplete(this.filaEsperaOcupacionalService.getEmpregadoService());
@@ -56,7 +54,7 @@ export class CheckOutRecepcaoComponent {
     }
     
     checkOut( localizacaoId ) {
-        if ( this.empregado == undefined || localizacaoId == 0 ) {
+        if ( localizacaoId == 0 ) {
             this.toastParams = ['Por favor, preencha todos os campos', 4000];
             this.globalActions.emit( 'toast' );
             return;
@@ -64,7 +62,6 @@ export class CheckOutRecepcaoComponent {
 
         this.localizacao.setId(localizacaoId);
         this.filaEsperaOcupacional.setLocalizacao(this.localizacao);
-        this.filaEsperaOcupacional.setEmpregado(this.empregado);
         
         this.filaEsperaOcupacionalService.checkOut( new FilaEsperaOcupacionalBuilder().clone( this.filaEsperaOcupacional ) )
             .then(res => {
