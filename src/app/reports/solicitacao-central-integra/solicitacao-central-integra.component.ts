@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ElementRef } from '@angular/core';
+import { ViewChild, Component, EventEmitter, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MaterializeDirective } from "angular2-materialize";
@@ -21,6 +21,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
     styleUrls: ['./solicitacao-central-integra.css']
 } )
 export class SolicitacaoCentralIntegraComponent {
+    @ViewChild( "mf" ) data;
     private solicitacaoCentralIntegras: Array<SolicitacaoCentralIntegraDto>;
     private filter: any;
     private typeFilter: string;
@@ -259,8 +260,8 @@ export class SolicitacaoCentralIntegraComponent {
     }
     
     exportFile() {
-        if ( this.solicitacaoCentralIntegras.length > 0 )
-            this.solicitacaoCentralIntegraService.exportFile( this.solicitacaoCentralIntegras )
+        if ( this.data.data.length > 0 )
+            this.solicitacaoCentralIntegraService.exportFile( this.data.data )
                 .then(res => {
                     this.httpUtil.downloadFile(res, "solicitacao-central-integra.xlsx");
                 })

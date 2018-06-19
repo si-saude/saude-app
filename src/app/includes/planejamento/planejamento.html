@@ -92,11 +92,11 @@
 
 <app-modal-diagnostico *ngIf="activeDiagnostico" [service]="innerService" 
 	(diagnostico)="selectDiagnostico($event)" (cancelModalDiagnostico)="cancelarModalDiagnostico($event)"
-	[showModalDiagnostico]="showModalDiagnostico" [idEquipeProfissional]="innerIdEquipeProfissional"></app-modal-diagnostico>
+	[showModalDiagnostico]="showModalDiagnostico" [idEquipeProfissional]="innerIdEquipe"></app-modal-diagnostico>
 
-<app-modal-intervencao *ngIf="activeIntervencao" [service]="innerService" 
+<app-modal-intervencao *ngIf="activeIntervencao" [service]="innerService"
 	(intervencao)="selectIntervencao($event)" (cancelModalIntervencao)="cancelarModalIntervencao($event)"
-	[showModalIntervencao]="showModalIntervencao" [idEquipeProfissional]="innerIdEquipeProfissional"></app-modal-intervencao>
+	[showModalIntervencao]="showModalIntervencao" [idEquipeProfissional]="innerIdEquipe"></app-modal-intervencao>
 
 <app-modal-equipe (equipe)="selectEquipe($event)" [service]="innerService" 
 	(cancelModalEquipe)="cancelarModalEquipe($event)" [showModalEquipe]="showModalEquipe"></app-modal-equipe>

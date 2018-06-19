@@ -3,6 +3,7 @@ import { Equipe } from './equipe';
 import { Triagem } from './triagem';
 import { Profissional } from './profissional';
 import { RiscoPotencial } from './risco-potencial';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class RiscoEmpregado {
     private id: number;
@@ -17,6 +18,8 @@ export class RiscoEmpregado {
     private status: string;
     private statusRPSat: string;
     private ativo: boolean;
+
+    private dataCustomDate: CustomDate = new CustomDate(this.data);
 
     getId() {
         return this.id;
@@ -81,13 +84,23 @@ export class RiscoEmpregado {
     setVersion(version: number) {
         this.version = version;
     }
-    
-    getData(){
+
+    getData() {
+        this.data = this.dataCustomDate.getApiDate();
         return this.data;
     }
     
-    setData(data:Date){
+    setData(data: Date) {
+        this.dataCustomDate.setApiDate(data);
         this.data = data;
+    }
+    
+    getDataCustomDate(){
+        return this.dataCustomDate;
+    }
+    
+    setDataCustomDate(dataCustomDate: CustomDate){
+        this.dataCustomDate = dataCustomDate;
     }
     
     getStatus(){

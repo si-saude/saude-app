@@ -20,6 +20,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
     styleUrls: ['./empregados-por-grupo.css']
 } )
 export class EmpregadosPorGrupoComponent {
+    @ViewChild( "mf" ) data;
     private empregadosPorGrupo: Array<EmpregadosPorGrupoDto>;
     private grupoMonitoramento: number;
     private gruposMonitoramento: Array<GrupoMonitoramento>;
@@ -152,8 +153,8 @@ export class EmpregadosPorGrupoComponent {
     }
     
     exportFile() {
-        if ( this.empregadosPorGrupo.length > 0 )
-            this.empregadosPorGrupoService.exportFile( this.empregadosPorGrupo )
+        if ( this.data.data.length > 0 )
+            this.empregadosPorGrupoService.exportFile( this.data.data )
                 .then(res => {
                     this.httpUtil.downloadFile(res, "empregados-por-grupo.xlsx");
                 })

@@ -53,6 +53,8 @@ export class ModalDiagnosticoComponent{
             this.idEqpProf = changes["idEquipeProfissional"].currentValue; 
         if ( changes["showModalDiagnostico"] != undefined && changes["showModalDiagnostico"].currentValue === true )
             setTimeout(() => this.openModalDiagnostico(), 1 );
+        if ( changes["inner"] != undefined && changes["showModalDiagnostico"].currentValue === true )
+            setTimeout(() => this.openModalDiagnostico(), 1 );
     }
     
     openModalDiagnostico() {

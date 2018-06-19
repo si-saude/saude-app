@@ -17,15 +17,18 @@ import { Equipe } from './../../model/equipe';
 export class PlanejamentoComponent{
     @Input() triagens;
     @Input() service;
+    @Input() idEquipe;
     
     private innerTriagens;
     private innerService;
+    private innerIdEquipe;
     
     private prazos: Array<string>;
     
     private flagIdTriagem: number;
     private activeDiagnostico:boolean;
     private activeIntervencao:boolean;
+    private innerIdEquipeProfissional: number;
     
     private showModalDiagnostico: boolean;
     private showModalIntervencao: boolean;
@@ -44,6 +47,9 @@ export class PlanejamentoComponent{
         }
         if ( changes["triagens"] != undefined ) {
             this.innerTriagens = changes["triagens"].currentValue;
+        }
+        if ( changes["idEquipe"] != undefined ) {
+            this.innerIdEquipe = changes["idEquipe"].currentValue;
         }
     }
     

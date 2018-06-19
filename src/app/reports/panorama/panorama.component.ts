@@ -1,4 +1,4 @@
-import { Component, EventEmitter, ElementRef } from '@angular/core';
+import { ViewChild, Component, EventEmitter, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MaterializeDirective } from "angular2-materialize";
@@ -16,6 +16,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
     styleUrls: ['./panorama.css']
 } )
 export class PanoramaComponent {
+    @ViewChild( "mf" ) data;
     private panoramas: Array<PanoramaDto>;
     private filter: any;
     private typeFilter: string;
@@ -193,8 +194,8 @@ export class PanoramaComponent {
     }
 
     exportFile() {
-        if ( this.panoramas.length > 0 )
-            this.panoramaService.exportFile( this.panoramas )
+        if ( this.data.data.length > 0 )
+            this.panoramaService.exportFile( this.data.data )
                 .then( res => {
                     this.httpUtil.downloadFile( res, "panorama.xlsx" );
                 } )

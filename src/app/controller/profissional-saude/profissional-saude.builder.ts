@@ -95,7 +95,7 @@ export class ProfissionalSaudeBuilder extends GenericBuilder {
 
         if ( this.getValue( profissionalSaude, "getProfissionalConselho" ) !== undefined ) {
             if ( Object.keys( this.getValue( profissionalSaude, "getProfissionalConselho" ) ).length === 2 &&
-                this.getValue( this.getValue( profissionalSaude, "getProfissionalConselho" ), "getVencimento" ) === null )
+                this.getValue(this.getValue(this.getValue(profissionalSaude, "getProfissionalConselho" ), "getVencimentoCustomDate" ), "getApiDate") == undefined )
                 cloneProfissionalSaude.setProfissionalConselho( undefined );
             else cloneProfissionalSaude.setProfissionalConselho(
                 new ProfissionalConselhoBuilder().clone( this.getValue( profissionalSaude, "getProfissionalConselho" ) ) );

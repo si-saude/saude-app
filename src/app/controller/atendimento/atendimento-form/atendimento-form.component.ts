@@ -84,6 +84,7 @@ export class AtendimentoFormComponent {
     private planejamentoUtil: PlanejamentoUtil;
     private triagemUtil: TriagemUtil;
     private fichaColetaUtil: FichaColetaUtil;
+    private idEquipe: number;
     
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -140,6 +141,7 @@ export class AtendimentoFormComponent {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
                                     this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
+                                    this.idEquipe = this.profissional.getEquipe().getId();
 
                                     this.primeiraAtualizacao();
 
