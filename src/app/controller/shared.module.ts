@@ -63,7 +63,6 @@ import { TriagemService } from './triagem/triagem.service';
 import { TipoSolicitacaoService } from './tipo-solicitacao/tipo-solicitacao.service';
 import { SolicitacaoCentralIntegraService } from './solicitacao-central-integra/solicitacao-central-integra.service';
 import { TarefaComponent } from './tarefa/tarefa.component';
-import { FilterDataPipe } from './../pipes/filter-data.pipe';
 import { FonteGeradoraService } from './fonte-geradora/fonte-geradora.service';
 import { CategoriaRiscoService } from './categoria-risco/categoria-risco.service';
 import { PossivelDanoSaudeService } from './possivel-dano-saude/possivel-dano-saude.service';
@@ -78,8 +77,7 @@ import { AprhoService } from './aprho/aprho.service';
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
     PaginacaoComponent,
-    TarefaComponent,
-    FilterDataPipe
+    TarefaComponent
     
   ],
   imports: [ 
@@ -99,8 +97,7 @@ import { AprhoService } from './aprho/aprho.service';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent,
-    FilterDataPipe
+    PaginacaoComponent
   ],
   providers: [
     PerfilService,
