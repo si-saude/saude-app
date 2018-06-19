@@ -61,6 +61,7 @@ export class EmpregadosPorGrupoComponent {
             this.empregadosPorGrupoService.getEmpregadosPorGrupo( this.grupoMonitoramento )
                 .then(res => {
                     this.empregadosPorGrupo = new EmpregadosPorGrupoBuilder().cloneList(res.json());
+                    this.value = 'change';
                 })
                 .catch(error => {
                     console.log("Erro ao buscar empregados por grupo monitoramento.");
