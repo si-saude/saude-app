@@ -46,6 +46,7 @@ export class DateUtil {
             return null;
         }
         let d: string = data.toString().split("T")[1].split("Z")[0].split(".")[0];
+        d = (Number(d.split(":")[0])-3).toString()+":"+d.split(":")[1]+":"+d.split(":")[2];
         return d;
     }
 
