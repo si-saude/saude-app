@@ -11,6 +11,7 @@ import { AgendaPeriodicoDto } from './../model/dto/agenda-periodico-dto';
 import { AgendaPeriodicoBuilder } from './agenda-periodico.builder';
 import { Servico } from './../model/servico';
 import { ServicoBuilder } from './../controller/servico/servico.builder';
+import { ServicoFilter } from './../controller/servico/servico.filter';
 import { DateFilter } from './../generics/date.filter';
 import { DateUtil } from './../generics/utils/date.util';
 
@@ -87,7 +88,9 @@ export class AgendaPeriodicoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.agendaPeriodicoService.getServicos()
+        let servicoFilter: ServicoFilter = new ServicoFilter();
+        servicoFilter.setGrupo("ATENDIMENTO OCUPACIONAL");
+        this.agendaPeriodicoService.getServicoByGrupo( servicoFilter )
             .then( res => {
                 this.servicos = new ServicoBuilder().cloneList(res.json());
             } )

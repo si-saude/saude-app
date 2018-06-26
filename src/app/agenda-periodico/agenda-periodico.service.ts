@@ -18,6 +18,10 @@ export class AgendaPeriodicoService extends GenericService {
         return this.servicoService.getServicos();
     }
     
+    getServicoByGrupo( servicoFilter ) {
+        return this.servicoService.selectList(servicoFilter);
+    }
+    
     getAgendaPeriodicos(dataInicioInicio: string, dataInicioFim: string, servicoId: string) {
         let urlAgendaPeriodicos = this.URL + "/get-agenda-periodicos";
         return this.http
