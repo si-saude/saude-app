@@ -6,7 +6,7 @@ export class DiagnosticoFilter extends GenericFilter {
     private codigo: string;
     private descricao: string;
     private inativo: BooleanFilter = new BooleanFilter();
-    private eixo: EixoFilter;
+    private eixo: EixoFilter = new EixoFilter();
     
     getCodigo() {
         return this.codigo;
