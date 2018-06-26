@@ -144,8 +144,8 @@
 
 										<div class="col s10">
 											<select name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExames"
-												(click)="choiseCampoExame(iREx,false)"
-												class="browser-default" #campo>
+												class="browser-default" #campo
+												(focus)='choiseCampoExame(iREx, false)'>
 												<option disabled selected value=0>Selecione um item</option>
 												<option *ngFor="let campo of campoExames"
 													value="{{campo.id}}">

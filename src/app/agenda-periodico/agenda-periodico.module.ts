@@ -6,25 +6,25 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
 import { MaterializeModule } from 'angular2-materialize';
 
-import { AgendaComponent } from './agenda.component';
-import { AgendaService } from './agenda.service';
-import { AgendaRoutingModule } from './agenda.routing.module';
+import { AgendaPeriodicoComponent } from './agenda-periodico.component';
+import { AgendaPeriodicoService } from './agenda-periodico.service';
+import { AgendaPeriodicoRoutingModule } from './agenda-periodico.routing.module';
 import { SharedModule } from './../controller/shared.module';
 import { PipesModule } from './../controller/pipes.module';
 
 @NgModule({
     declarations: [
-       AgendaComponent,
+       AgendaPeriodicoComponent,
        CalendarComponent
      ],
      imports: [
-        AgendaRoutingModule,
+        AgendaPeriodicoRoutingModule,
         SharedModule,
         MaterializeModule,
         PipesModule
      ],
      providers: [
-        AgendaService
+        AgendaPeriodicoService
      ]
 })
-export class AgendaModule{}
+export class AgendaPeriodicoModule{}

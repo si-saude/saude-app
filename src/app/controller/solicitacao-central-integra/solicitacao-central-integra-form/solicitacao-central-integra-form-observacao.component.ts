@@ -54,7 +54,21 @@ export class SolicitacaoCentralIntegraFormObservacaoComponent extends GenericFor
     }
     
     save() {
-        super.save(new SolicitacaoCentralIntegraBuilder().clone(this.solicitacaoCentralIntegra));
+        this.salvar(new SolicitacaoCentralIntegraBuilder().clone(this.solicitacaoCentralIntegra));
+    }
+    
+    salvar( solicitacao ) {
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.solicitacaoCentralIntegraService.submit( solicitacao )
+            .then( res => {
+                this.msgConfirmSave = "Salvo com sucesso.";
+                this.showConfirmSave = true;
+                this.showPreload = true;
+            } )
+            .catch( error => {
+                super.processReturn( false, error );
+            } )
     }
     
 }

@@ -21,7 +21,15 @@
 			</div>
 						
 		</div>
-
+		
+		<div class="row">
+			<div class="input-field col s3">
+				<label for="tempoGasto">Tempo Gasto (min)</label>
+				<input id="tempoGasto" type="number"
+				[(ngModel)]="solicitacaoCentralIntegra.tempoGasto" name="tempoGasto">
+			</div>
+		</div>
+		
 		<input id="id" name="id" type="hidden" [(ngModel)]="solicitacaoCentralIntegra.id">
 		<input id="version" name="version" type="hidden"
 			[(ngModel)]="solicitacaoCentralIntegra.version">

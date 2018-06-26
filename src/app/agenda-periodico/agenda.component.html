@@ -3,6 +3,18 @@
 </head>
 
 <div class="row form-container">
+	<div class="row div-select">
+		<fieldset class="col s8 fieldset-select">
+			<legend> Serviço </legend>
+			<select name="uf" class="browser-default" [(ngModel)]="servicoId">
+				<option disabled selected value='undefined'>Selecione um serviço</option>
+				<option *ngFor="let servico of servicos" value="{{servico.id}}">{{servico.nome}}</option>
+			</select>
+			<button center class="btn btn-primary btn-filtrar"
+				(click)="selectServico()">Filtrar</button>
+		</fieldset>
+	</div>
+
 	<angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
 </div>
 

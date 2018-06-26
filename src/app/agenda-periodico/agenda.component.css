@@ -1,4 +1,14 @@
 .form-container {
-	margin-bottom: 200px;
+	margin-bottom: 35%;
 	height: 500px;
+}
+
+.div-select {
+	width: 50%;
+    margin-left: 35%;
+    margin-bottom: 5%;
+}
+
+.btn-filtrar {
+	width: 100%;
 }

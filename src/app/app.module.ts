@@ -61,6 +61,7 @@ import { SolicitacaoServicoService } from './solicitacao-servico/solicitacao-ser
 import { TransferDataService } from './solicitacao-servico/transfer-data.service';
 import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
+import { AgendaPeriodicoGuard } from './guards/agenda-periodico.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
@@ -172,7 +173,8 @@ import { KanbanGuard } from './guards/kanban.guard';
     AprhoGuard,
     TipoSolicitacaoGuard,
     ReportSolicitacaoCentralIntegraGuard,
-    KanbanGuard
+    KanbanGuard,
+    AgendaPeriodicoGuard
   ],
   bootstrap: [ 
     AppComponent

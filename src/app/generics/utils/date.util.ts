@@ -75,4 +75,14 @@ export class DateUtil {
             return true;
         else return false;
     }
+    
+    public transformDateToDateAgenda( date ) {
+        let d;
+        if ( typeof date == "string" ) {
+             d = date.split(" ");
+             date = d[0];
+        }
+
+        return date;
+    }
 }

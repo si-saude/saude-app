@@ -236,11 +236,24 @@ export class KanbanComponent {
                 if ( component.verifyCoordenador() )
                     window.open("/solicitacao-central-integra/editar/"+sCI.getId() );
                 else window.open("/solicitacao-central-integra/observacao/"+sCI.getId() );
-            } );
+            }).mouseenter(function() {
+                component.showDescricao( sCI.getDescricao() );
+            }).mouseleave(function() {
+                component.closeTooltip();
+            });
             $( ".icon-" + sCI.getId() ).click( function() {
                 component.getAnexo( sCI );
             } );
         } )
+    }
+    
+    showDescricao( descricao: string ) {
+        this.toastParams = [descricao, 60000];
+        this.globalActions.emit( 'toast' );
+    }
+    
+    closeTooltip() {
+        $(".toast").remove();
     }
     
     getShortStatus( status: string ) {

@@ -28,6 +28,7 @@ export class PanoramaComponent {
     private globalActions;
     private toastParams;
     private countCheckbox: number = 0;
+    private showNothing: boolean;
 
     constructor( private panoramaService: PanoramaService ) {
         this.panoramas = new PanoramaBuilder().initializeList( new Array<PanoramaDto>() );
@@ -36,6 +37,7 @@ export class PanoramaComponent {
         this.httpUtil = new HttpUtil();
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
+        this.showNothing = true;
     }
 
     ngAfterViewInit() {
@@ -106,9 +108,7 @@ export class PanoramaComponent {
 
             $( '#dropdown' ).toggleClass( 'show' );
             $( '#dropdown' ).insertAfter( "#" + tipo );
-//            console.log(window.scrollX)
-            $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
-
+//            $( '#dropdown' ).css( "margin-left", document.getElementById("id-list-container").scrollLeft + "px" );
             if ( component.arrayObjects['existePendenciaExames'] == 'indeterminate' ) {
                 el.indeterminate = true;
                 el.checked = true;
@@ -158,7 +158,7 @@ export class PanoramaComponent {
 
             $( '#dropdown' ).toggleClass( 'show' );
             $( '#dropdown' ).insertAfter( "#" + tipo );
-            $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
+//            $( '#dropdown' ).css( "margin-left", document.getElementById("id-list-container").scrollLeft + "px" );
 
             for ( let t of this.arrayTypes ) {
                 this.arrayObjects[t].forEach( aO => {

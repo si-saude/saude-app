@@ -117,7 +117,6 @@ export class AgendaComponent implements OnInit {
                                 component.activeEditTarefa = true;
                                 component.agendaService.list( component.tarefaFilter )
                                     .then( res => {
-                                        console.log(res.json());
                                         callback(component.buildEvents(res.json()));
                                     } )
                                     .catch( error => {

@@ -52,6 +52,7 @@ import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
 import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
 import { RiscoGheService } from './risco-ghe/risco-ghe.service';
 import { AgendaService } from './../agenda/agenda.service';
+import { AgendaPeriodicoService } from './../agenda-periodico/agenda-periodico.service';
 import { CanDeactivateGuard } from './../guards/can-deactivate.guard';
 import { IndicadorSastService } from './indicador-sast/indicador-sast.service';
 import { EixoService } from './eixo/eixo.service';
@@ -142,6 +143,7 @@ import { AprhoService } from './aprho/aprho.service';
     AuditoriaAsoService,
     RiscoGheService,
     AgendaService,
+    AgendaPeriodicoService,
     IndicadorSastService,
     IntervencaoService,
     DiagnosticoService,

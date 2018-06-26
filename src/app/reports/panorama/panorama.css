@@ -26,6 +26,7 @@ table {
 	overflow: auto;
     max-height: 500px;
     margin-bottom: 10%;
+    position: absolute;
 }
 
 td, th {
@@ -70,4 +71,8 @@ td {
 
 .existePendenciaExames{
 	margin-left: 35%;
+}
+
+.btn-home {
+	margin-left: 75px;
 }

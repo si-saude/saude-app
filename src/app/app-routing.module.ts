@@ -48,6 +48,7 @@ import { AuditoriaAsoGuard } from './guards/guards-child/auditoria-aso.guard';
 import { AtendimentoGuard } from './guards/guards-child/atendimento.guard';
 import { ServicoGuard } from './guards/guards-child/servico.guard';
 import { AgendaGuard } from './guards/guards-child/agenda.guard';
+import { AgendaPeriodicoGuard } from './guards/agenda-periodico.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { FilaEsperaOcupacionalRecepcaoGuard } from './guards/guards-child/fila-espera-ocupacional-recepcao.guard';
 import { IndicadorSastGuard } from './guards/guards-child/indicador-sast.guard';
@@ -67,7 +68,6 @@ import { AprhoGuard } from './guards/guards-child/aprho.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
 import { KanbanGuard } from './guards/kanban.guard';
 
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contato', component: ContatoComponent },
@@ -77,6 +77,8 @@ const routes: Routes = [
       canActivate: [AuthGuard]},
   { path: 'agenda', loadChildren: 'app/agenda/agenda.module#AgendaModule',
       canActivateChild: [AgendaGuard]},
+  { path: 'agenda-periodico', loadChildren: 'app/agenda-periodico/agenda-periodico.module#AgendaPeriodicoModule',
+      canActivate: [AgendaPeriodicoGuard]},
   { path: 'perfil', loadChildren: 'app/controller/perfil/perfil.module#PerfilModule',
       canActivateChild: [PerfilGuard]},
   { path: 'localizacao', loadChildren: 'app/controller/localizacao/localizacao.module#LocalizacaoModule',

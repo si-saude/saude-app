@@ -91,6 +91,7 @@
 		</a>
 		<div class="groups">
 			<a [routerLink]="['/agenda']" *ngIf="checkPermissao('AGENDA')">Agenda</a>
+			<a [routerLink]="['/agenda-periodico']" *ngIf="checkPermissao('AGENDA-PERIODICO')">Agenda Periódico</a>
 			<a [routerLink]="['/aprho']" *ngIf="checkPermissao('APRHO_LISTAR')">Análise Preliminar de Risco (APR-HO)</a>
 			<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
 			<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria De Aso</a>
