@@ -215,6 +215,7 @@ export class KanbanComponent {
                 solicitacaoCentralIntegra = this.solicitacaoCentralIntegras.find( sCI => sCI.getId() == Number( id ) );
                 let solicitacao = new SolicitacaoCentralIntegraBuilder().clone( res.json() );
                 solicitacaoCentralIntegra.setVersion(solicitacao.getVersion());
+                solicitacaoCentralIntegra.getTarefa().setVersion(solicitacao.getTarefa().getVersion());
             } )
             .catch( error => {
                 console.log( "Erro ao atualizar a solicitacoes: "+error);
