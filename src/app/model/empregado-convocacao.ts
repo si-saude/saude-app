@@ -14,6 +14,7 @@ export class EmpregadoConvocacao {
     private convocado: boolean;
     private selecionado: boolean;
     private divergente: boolean;
+    private auditadoSd2000: boolean;
     private version: number;
     
     getId() {
@@ -62,6 +63,14 @@ export class EmpregadoConvocacao {
     
     setAuditado(auditado: boolean) {
         this.auditado = auditado;
+    }
+    
+    getAuditadoSd2000() {
+        return this.auditadoSd2000;
+    }
+    
+    setAuditadoSd2000(auditadoSd2000: boolean) {
+        this.auditadoSd2000 = auditadoSd2000;
     }
     
     getResultadoAuditado() {
