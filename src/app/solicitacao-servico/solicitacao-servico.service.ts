@@ -71,5 +71,11 @@ export class SolicitacaoServicoService {
         return this.empregadoService;
     }
     
+    salvarAtestado( atestado ) {
+        let urlAtestado = this.URL + "/atestado"
+        return this.http
+            .post( urlAtestado, atestado, { headers: this.headers } )
+            .toPromise();
+    }
     
 }

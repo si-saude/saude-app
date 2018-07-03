@@ -69,7 +69,7 @@ import { CategoriaRiscoService } from './categoria-risco/categoria-risco.service
 import { PossivelDanoSaudeService } from './possivel-dano-saude/possivel-dano-saude.service';
 import { AgenteRiscoService } from './agente-risco/agente-risco.service';
 import { AprhoService } from './aprho/aprho.service';
-
+import { CatService } from './cat/cat.service';
 
 @NgModule({
   declarations: [
@@ -158,7 +158,8 @@ import { AprhoService } from './aprho/aprho.service';
     PossivelDanoSaudeService,
     AgenteRiscoService,
     AprhoService,
-    SolicitacaoCentralIntegraService
+    SolicitacaoCentralIntegraService,
+    CatService
   ]
 })
 export class SharedModule { }

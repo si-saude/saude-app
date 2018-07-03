@@ -83,6 +83,7 @@ import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saud
 import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
 import { AprhoGuard } from './guards/guards-child/aprho.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
+import { CatGuard } from './guards/guards-child/cat.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 import { KanbanGuard } from './guards/kanban.guard';
 
@@ -174,7 +175,8 @@ import { KanbanGuard } from './guards/kanban.guard';
     TipoSolicitacaoGuard,
     ReportSolicitacaoCentralIntegraGuard,
     KanbanGuard,
-    AgendaPeriodicoGuard
+    AgendaPeriodicoGuard,
+    CatGuard
   ],
   bootstrap: [ 
     AppComponent

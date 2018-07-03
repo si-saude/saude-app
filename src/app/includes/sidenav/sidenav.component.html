@@ -36,6 +36,7 @@
 			<a [routerLink]="['agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente Risco</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
 			<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
+			<a [routerLink]="['/cat']" *ngIf="checkPermissao('CAT_LISTAR')">CAT - Comunicado de Acidente de Trabalho</a>
 			<a [routerLink]="['/cidade']" *ngIf="checkPermissao('CIDADE_LISTAR')">Cidade</a>
 			<a [routerLink]="['/criterio']" *ngIf="checkPermissao('CRITERIO_LISTAR')">Critério</a>
 			<a [routerLink]="['/curso']" *ngIf="checkPermissao('CURSO_LISTAR')">Curso</a>

@@ -35,6 +35,9 @@ export class HomeComponent extends GenericListComponent<Notificacao, Notificacao
     }
     
     ngOnInit() {
+        if ( $( ".container" ).get( 0 ).style.width == "100%" )
+            window.location.reload();
+            
         setTimeout(() => {
             if ( localStorage.getItem( "usuario-id" ) != undefined ) {
                 this.notificacaoService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )

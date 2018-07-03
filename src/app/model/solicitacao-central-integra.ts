@@ -16,7 +16,7 @@ export class SolicitacaoCentralIntegra {
     private abertura: Date;
     private concluido: boolean;
     private anexo: any;
-    private anexoBase64: any;
+    private anexoBase64: string;
     private prazoString: string;
     private aberturaString: string;
     private atrasado: boolean;

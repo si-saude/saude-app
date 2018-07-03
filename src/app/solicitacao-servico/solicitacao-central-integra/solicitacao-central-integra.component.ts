@@ -12,7 +12,6 @@ import { TipoSolicitacao } from './../../model/tipo-solicitacao';
 import { TipoSolicitacaoBuilder } from './../../controller/tipo-solicitacao/tipo-solicitacao.builder';
 import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
 import { Tarefa } from './../../model/tarefa';
-import { DateUtil } from './../../generics/utils/date.util';
 
 @Component( {
     selector: 'app-reports-solicitacao-central-integra',
@@ -21,7 +20,6 @@ import { DateUtil } from './../../generics/utils/date.util';
 } )
 export class SolicitacaoCentralIntegraComponent {
     @ViewChild( 'anexo' ) inputElAnexo: ElementRef;
-    anexoSrcStyle: any;
     globalActions;
     toastParams;
     tarefa: Tarefa;
@@ -33,7 +31,6 @@ export class SolicitacaoCentralIntegraComponent {
     msgConfirmSave: string;
     goTo: string;
     myDatePickerOptions: IMyDpOptions;
-    dateUtil: DateUtil;
     
     constructor( private route: ActivatedRoute, private router: Router,
             private solicitacaoServicoService: SolicitacaoServicoService) {
@@ -46,7 +43,6 @@ export class SolicitacaoCentralIntegraComponent {
         this.myDatePickerOptions = {
                 dateFormat: 'dd/mm/yyyy'
             };
-        this.dateUtil = new DateUtil();
     }
     
     ngOnInit() {
@@ -71,7 +67,6 @@ export class SolicitacaoCentralIntegraComponent {
     }
     
     next() {
-        this.solicitacao.setPrazo(this.dateUtil.parseDatePickerToDate(this.prazo));
         this.solicitacao.setTarefa(this.tarefa);
         
         let i: number = 0;
@@ -88,6 +83,12 @@ export class SolicitacaoCentralIntegraComponent {
             let solicitacao: SolicitacaoCentralIntegra = new SolicitacaoCentralIntegraBuilder().clone( component.solicitacao );
     
             if ( anexo != undefined ) {
+                if ( anexo.name.split(".")[1] != "zip" ) {
+                    this.toastParams = ["Favor inserir um arquivo do tipo 'zip'.", 6000];
+                    this.globalActions.emit( 'toast' );
+                    return;
+                }
+                    
                 let readerAnexo = new FileReader();
     
                 readerAnexo.onload = function() {

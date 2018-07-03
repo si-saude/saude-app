@@ -66,6 +66,7 @@ import { PossivelDanoSaudeGuard } from './guards/guards-child/possivel-dano-saud
 import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
 import { AprhoGuard } from './guards/guards-child/aprho.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
+import { CatGuard } from './guards/guards-child/cat.guard';
 import { KanbanGuard } from './guards/kanban.guard';
 
 const routes: Routes = [
@@ -220,7 +221,10 @@ const routes: Routes = [
       canActivateChild: [AgenteRiscoGuard]},    
   { path: 'aprho', 
       loadChildren: 'app/controller/aprho/aprho.module#AprhoModule',
-      canActivateChild: [AprhoGuard]},  
+      canActivateChild: [AprhoGuard]},
+  { path: 'cat', 
+      loadChildren: 'app/controller/cat/cat.module#CatModule',
+      canActivateChild: [CatGuard]},
   { path: 'solicitacao-central-integra',
       loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

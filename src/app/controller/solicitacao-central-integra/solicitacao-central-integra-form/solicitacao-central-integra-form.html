@@ -19,7 +19,7 @@
 					<fieldset>
 						<legend> Tipo da Solicitação 
 							<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
-								(click)="getTipoSolicitacoes()"> <i
+								(click)="getTipoSolicitacao()"> <i
 								class="material-icons center-icon">cached</i>
 							</a>
 						</legend>
@@ -74,16 +74,6 @@
 						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.cliente, 'getNome');"
 						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()"> 
 					
-					<!-- <input required
-						type="text" materialize="autocomplete" autocomplete="off"
-						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.nome"
-						(blur)="getEmpregado($event)"
-						(ngModelChange)="selectEmpregadoByChave($event); selectEmpregado($event);"
-						[materializeParams]="autocompleteEmpregado"> <input
-						id="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id" type="hidden"
-						name="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"
-						[(ngModel)]="solicitacaoCentralIntegra.tarefa.cliente.pessoa.id"> -->
 				</div>
 			</div> 
 			

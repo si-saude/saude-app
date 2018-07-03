@@ -18,6 +18,7 @@ import { LocalizacaoBuilder } from './../../localizacao/localizacao.builder';
 import { FilaEsperaOcupacional } from './../../../model/fila-espera-ocupacional';
 import { FilaEsperaOcupacionalService } from './../fila-espera-ocupacional.service';
 import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional.builder';
+import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 
 @Component( {
     selector: 'app-declaracao-comparecimento',
@@ -26,11 +27,7 @@ import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional.build
 } )
 export class DeclaracaoComparecimentoComponent {
     atendimento: Atendimento;
-    empregado: Empregado;
-    empregados: Array<Empregado>;
     dataDeclaracao: any;
-    validEmpregado: string;
-    autocompleteEmpregado = [];
 
     globalActions;
     toastParams;
@@ -40,28 +37,24 @@ export class DeclaracaoComparecimentoComponent {
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.validEmpregado = "";
         this.atendimento = new AtendimentoBuilder().initialize(new Atendimento())
-        this.empregado = new EmpregadoBuilder().initialize( new Empregado() );
-        this.empregados = new EmpregadoBuilder().initializeList(new Array<Empregado>());
         this.myDatePickerOptions = { dateFormat: 'dd/mm/yyyy' };
     }
 
     ngOnInit() {}
     
     downloadDeclaracaoComparecimento() {
-        if ( this.dataDeclaracao == null || this.empregado.getId() == 0 ) {
+        if ( this.dataDeclaracao == null || this.atendimento.getFilaEsperaOcupacional().getEmpregado().getId() == 0 ) {
             this.toastParams = ['Por favor, preencha todos os campos da busca', 4000];
             this.globalActions.emit( 'toast' );
             return;
         }
         
-        this.atendimento.getFilaEsperaOcupacional().setEmpregado( this.empregado );
         this.atendimento.getTarefa().setInicio(this.parseDatePickerToDate(this.dataDeclaracao));
         
         this.filaEsperaOcupacionalService.downloadDeclaracaoComparecimento( this.atendimento )
             .then(res => {
-                this.downloadFile( res, this.empregado.getMatricula().trim()+".pdf" );
+                this.downloadFile( res, this.atendimento.getFilaEsperaOcupacional().getEmpregado().getMatricula().trim()+".pdf" );
             })
             .catch(error => {
                 this.toastParams = [error.text(), 4000];
@@ -78,69 +71,6 @@ export class DeclaracaoComparecimentoComponent {
         }
         let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
         return d;
-    }
-    
-    getEmpregado() {
-        if ( this.validEmpregado == this.empregado.getPessoa().getNome() ) return;
-        if ( this.empregado.getPessoa().getNome() !== undefined ) {
-            let empregado = this.empregados.find( e => {
-                if ( ( e.getChave() + " - " + e.getPessoa().getNome() ).trim() ==
-                    this.empregado.getPessoa().getNome().trim() || 
-                    e.getPessoa().getNome().trim() == this.empregado.getPessoa().getNome().trim() )
-                    return true;
-                else return false;
-            } );
-            
-            if ( empregado !== undefined ) {
-                this.empregado = new EmpregadoBuilder().clone(empregado);
-                this.validEmpregado = this.empregado.getPessoa().getNome();
-            } else this.empregado = new EmpregadoBuilder().initialize( new Empregado() );
-        } else this.empregado = new EmpregadoBuilder().initialize( new Empregado() );
-    }
-
-    private oldNome: string;
-    selectEmpregado( evento ) {
-        if ( this.oldNome != evento ) {
-            this.oldNome = evento;
-            if ( evento.length > 4 ) {
-                this.filaEsperaOcupacionalService.getEmpregadoByName( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-
-    private oldNomeByChave: string;
-    selectEmpregadoByChave( evento ) {
-        if ( this.oldNomeByChave != evento ) {
-            this.oldNomeByChave = evento;
-            if ( evento.length <= 4 ) {
-                this.filaEsperaOcupacionalService.getEmpregadoByChave( evento )
-                    .then( res => {
-                        this.empregados = new EmpregadoBuilder().cloneList(res.json());
-                        this.autocompleteEmpregado = [this.buildAutocompleteEmpregado( this.empregados )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-    
-    buildAutocompleteEmpregado( empregados: Array<Empregado> ) {
-        let data = {}, array = {};
-        empregados.forEach( item => {
-            data[item.getChave() + " - " + item.getPessoa().getNome()] = null;
-        } );
-
-        array["data"] = data;
-
-        return array;
     }
     
     downloadFile( data, fileName ) {

@@ -42,6 +42,7 @@ export class ConfirmDeleteComponent extends GenericListComponent<null, null, nul
                 this.cancelDelete.emit(true);
             } )
             .catch( error => {
+                this.cancelDelete.emit(false);
                 alert("Erro ao excluir o campo: " + error.text());
             } )
     }

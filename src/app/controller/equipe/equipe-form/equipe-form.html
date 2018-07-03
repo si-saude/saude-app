@@ -36,12 +36,13 @@
 		<div class="row">
 			<div class="input-field col s12">
 				<label for="coordenador">Coordenador</label> 
-				<input type="text" autocomplete="off" 
-					materialize="autocomplete" name="equipe.coordenador.empregado.pessoa.nome"
+				<input
+					type="text" materialize="autocomplete" autocomplete="off"
+					name="equipe.coordenador.empregado.pessoa.nome"
 					[(ngModel)]="equipe.coordenador.empregado.pessoa.nome"
-					(blur)="getCoordenador($event)" 
-					(ngModelChange)="selectCoordenadorByChave($event); selectCoordenador($event);"
-					[materializeParams]="autocompleteCoordenador">
+					(blur)="profissionalNomeAutocomplete.getAutocomplete().getObj($event,equipe,'setCoordenador','getNome')"
+					(ngModelChange)="profissionalNomeAutocomplete.getAutocomplete().getList(equipe.coordenador, 'getNome');"
+					[materializeParams]="profissionalNomeAutocomplete.getAutocomplete().getObjAutoComplete()">
 			</div>
 		</div>
 

@@ -7,9 +7,12 @@ import { Equipe } from './../../../model/equipe';
 import { Profissional } from './../../../model/profissional';
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { ProfissionalSaudeService } from './../../profissional-saude/profissional-saude.service';
-import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { Empregado } from './../../../model/empregado';
+import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { EquipeBuilder } from './../equipe.builder';
 import { EquipeService } from './../equipe.service';
+import { ProfissionalNomeAutocomplete } from './../../profissional-saude/profissional-nome.autocomplete';
+import { GenericFormComponent } from './../../../generics/generic.form.component';
 
 @Component( {
     selector: 'app-equipe-form',
@@ -18,21 +21,18 @@ import { EquipeService } from './../equipe.service';
 } )
 export class EquipeFormComponent extends GenericFormComponent implements OnInit { 
     equipe: Equipe;
-    autocompleteCoordenador;
-    coordenadores: Array<Profissional>;
-    validCoordenador: string;
-    
+    profissionalNomeAutocomplete: ProfissionalNomeAutocomplete;
+
     constructor( private route: ActivatedRoute,
             private equipeService: EquipeService,
-            private profissionalService: ProfissionalSaudeService,
+            private profissionalSaudeService: ProfissionalSaudeService,
             router: Router) { 
             super(equipeService, router);
             
             this.goTo = "equipe";
             this.equipe = new EquipeBuilder().initialize(this.equipe);
-            this.autocompleteCoordenador = [];
-            this.coordenadores = new ProfissionalSaudeBuilder().initializeList(new Array<Profissional>());
-            this.validCoordenador = ""; 
+            this.equipe.getCoordenador().setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
+            this.profissionalNomeAutocomplete = new ProfissionalNomeAutocomplete(this.profissionalSaudeService);
         }
     
     ngOnInit() {
@@ -46,7 +46,8 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
                         .then( res => {
                             this.showPreload = false;
                             this.equipe = new EquipeBuilder().clone(res.json());
-                            this.saveArrayCoordenador();
+                            this.profissionalNomeAutocomplete.getAutocomplete().initializeLastValue(
+                                    this.equipe.getCoordenador().getEmpregado().getPessoa().getNome())
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -58,76 +59,6 @@ export class EquipeFormComponent extends GenericFormComponent implements OnInit 
     
     save() {
         super.save(new EquipeBuilder().clone(this.equipe));
-    }   
-    
-    getCoordenador() {
-        if ( this.validCoordenador == this.equipe.getCoordenador().getEmpregado().getPessoa().getNome() ) return;
-        if ( this.equipe.getCoordenador().getEmpregado().getPessoa().getNome() !== undefined ) {
-
-            let coordenador = this.coordenadores.find( e => {
-                if ( ( e.getEmpregado().getChave() + " - " + e.getEmpregado().getPessoa().getNome() ).trim() ==
-                    this.equipe.getCoordenador().getEmpregado().getPessoa().getNome().trim() || 
-                    e.getEmpregado().getPessoa().getNome().trim() == this.equipe.getCoordenador().getEmpregado().getPessoa().getNome().trim() )
-                    return true;
-                else return false;
-            });
-
-            if ( coordenador !== undefined ) {
-                this.equipe.setCoordenador( coordenador );
-                this.validCoordenador = this.equipe.getCoordenador().getEmpregado().getPessoa().getNome();
-            } else this.equipe.setCoordenador( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
-        } else this.equipe.setCoordenador( new ProfissionalSaudeBuilder().initialize( new Profissional() ) );
-    }
-    
-    private oldNomeCoordenador: string;
-    selectCoordenador( evento ) {
-        if ( this.oldNomeCoordenador != evento ) {
-            this.oldNomeCoordenador = evento;
-            if ( evento.length > 4 ) {
-                this.profissionalService.getProfissionalByNameSimples( evento )
-                    .then( res => {
-                        this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
-                        this.autocompleteCoordenador = [this.buildAutocompleteCoordenador( this.coordenadores )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-    
-    private oldNomeByChave: string;
-    selectCoordenadorByChave( evento ) {
-        if ( this.oldNomeByChave != evento ) {
-            this.oldNomeByChave = evento;
-            if ( evento.length < 4 ) {
-                this.profissionalService.getProfissionalByChaveSimples( evento )
-                    .then( res => {
-                        this.coordenadores = new ProfissionalSaudeBuilder().cloneList( res.json() );
-                        this.autocompleteCoordenador = [this.buildAutocompleteCoordenador( this.coordenadores )];
-                    } )
-                    .catch( error => {
-                        console.log( error );
-                    } )
-            }
-        }
-    }
-    
-    buildAutocompleteCoordenador( coordenadores: Array<Profissional> ) {
-        let data = {};
-        coordenadores.forEach( item => {
-            data[item.getEmpregado().getChave() + " - " + item.getEmpregado().getPessoa().getNome()] = null;
-        } );
-
-        let array = {};
-        array["data"] = data;
-
-        return array;
-    }
-    
-    saveArrayCoordenador() {
-        if ( this.equipe.getCoordenador() != undefined ) 
-            this.coordenadores.push(this.equipe.getCoordenador());
     }
     
 }

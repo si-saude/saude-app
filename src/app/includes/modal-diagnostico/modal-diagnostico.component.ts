@@ -70,6 +70,9 @@ export class ModalDiagnosticoComponent{
     
     fetchDiagnosticos( ) {
         if ( this.selectEixoId != "" ) {
+            $("input[name='codigo']").val('');
+            $("input[name='descricao']").val('');
+            this.filter = '';
             this.service.getDiagnosticoByEixo( this.selectEixoId, this.idEqpProf )
                 .then(res => {
                     this.arrayDiagnostico = new DiagnosticoBuilder().cloneList(res.json());

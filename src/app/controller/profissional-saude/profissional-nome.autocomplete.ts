@@ -29,7 +29,7 @@ export class ProfissionalNomeAutocomplete{
     }
     
     public getLabel(obj:any){
-        return obj.getEmpregado().getChave() + " - " + obj.getEmpregado().getPessoa().getNome();
+        return obj.getEmpregado().getChave() + " || " + obj.getEmpregado().getPessoa().getNome();
     }
     
     public getFilter(p:Profissional, pF:ProfissionalSaudeFilter){

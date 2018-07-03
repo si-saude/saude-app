@@ -10,6 +10,7 @@ import { SelecaoServicoComponent } from './selecao-servico/selecao-servico.compo
 import { AutenticacaoUsuarioComponent } from './autenticacao-usuario/autenticacao-usuario.component';
 import { AtendimentoOcupacionalComponent } from './atendimento-ocupacional/atendimento-ocupacional.component';
 import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integra/solicitacao-central-integra.component';
+import { HomologacaoAtestadoComponent } from './homologacao-atestado/homologacao-atestado.component';
 import { SolicitacaoServicoService } from './solicitacao-servico.service';
 import { SolicitacaoServicoRoutingModule } from './solicitacao-servico.routing.module';
 import { SharedModule } from './../controller/shared.module';
@@ -19,7 +20,8 @@ import { SharedModule } from './../controller/shared.module';
        SelecaoServicoComponent,
        AutenticacaoUsuarioComponent,
        AtendimentoOcupacionalComponent,
-       SolicitacaoCentralIntegraComponent
+       SolicitacaoCentralIntegraComponent,
+       HomologacaoAtestadoComponent
      ],
      imports: [
         SolicitacaoServicoRoutingModule,

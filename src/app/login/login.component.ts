@@ -24,6 +24,9 @@ export class LoginComponent extends GenericComponent {
     }
 
     ngOnInit() {
+        if ( $( ".container" ).get( 0 ).style.width == "100%" )
+            window.location.reload();
+        
         if ( localStorage.getItem("token") !== undefined && 
                 localStorage.getItem("token") !== null && 
                 localStorage.getItem("token") !== "") 

@@ -11,7 +11,7 @@ import { LocalizacaoBuilder } from './../../localizacao/localizacao.builder';
 import { FilaEsperaOcupacional } from './../../../model/fila-espera-ocupacional';
 import { FilaEsperaOcupacionalService } from './../fila-espera-ocupacional.service';
 import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional.builder';
-import { EmpregadoMatriculaAutocomplete } from './../../empregado/empregado-matricula.autocomplete';
+import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 
 @Component( {
     selector: 'app-check-in-recepcao',
@@ -32,7 +32,7 @@ export class CheckInRecepcaoComponent {
     reload: boolean;
     autocompleteEmpregado;
     validEmpregado: string;
-    private autoCompleteEmp:EmpregadoMatriculaAutocomplete;
+    private autoCompleteEmp:EmpregadoNomeAutocomplete;
 
     constructor( private route: ActivatedRoute,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
@@ -41,13 +41,12 @@ export class CheckInRecepcaoComponent {
         this.empregado = new EmpregadoBuilder().initialize(new Empregado());
         this.empregados = new EmpregadoBuilder().cloneList(this.empregados);
         this.filaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().initialize(this.filaEsperaOcupacional);
-        this.filaEsperaOcupacional.getEmpregado().setMatricula('');
         this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
         this.localizacoes = new LocalizacaoBuilder().initializeList(this.localizacoes);
         this.autocompleteEmpregado = [];
         this.showConfirmSave = false;
         this.validEmpregado = "";
-        this.autoCompleteEmp = new EmpregadoMatriculaAutocomplete(this.filaEsperaOcupacionalService.getEmpregadoService());
+        this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.filaEsperaOcupacionalService.getEmpregadoService());
     }
 
     ngOnInit() {
