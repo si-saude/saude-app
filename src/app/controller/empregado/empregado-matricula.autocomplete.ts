@@ -1,10 +1,10 @@
-import {EmpregadoBuilder} from './../../controller/empregado/empregado.builder';
-import {EmpregadoFilter} from './../../controller/empregado/empregado.filter';
-import {EmpregadoService} from './../../controller/empregado/empregado.service';
+import {EmpregadoBuilder} from './empregado.builder';
+import {EmpregadoFilter} from './empregado.filter';
+import {EmpregadoService} from './empregado.service';
 import {Empregado} from './../../model/empregado';
 import {PessoaFilter} from './../../controller/pessoa/pessoa.filter';
 
-import {AutoComplete} from './../../generics/utils/autocomplete.util'
+import {AutoComplete} from './../../generics/utils/autocomplete.util';
 
 export class EmpregadoMatriculaAutocomplete{
     

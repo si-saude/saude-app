@@ -1,0 +1,164 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+		
+			<div class="row" *ngIf="edit">
+				<h6><b>Serviço: {{atestado.tarefa.servico.nome}} - Cliente: {{atestado.tarefa.cliente.pessoa.nome}}</b></h6>
+			</div>
+			
+			<div class="row" *ngIf="!edit">
+				<div class="input-field col s12">
+					<label for="empregado">Nome do Empregado</label> 
+					<input required
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="atestado.tarefa.cliente.pessoa.nome"
+						[(ngModel)]="atestado.tarefa.cliente.pessoa.nome"
+						(blur)="autoCompleteEmp.getAutocomplete().getObj($event,atestado.tarefa,'setCliente','getNome')"
+						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(atestado.tarefa.cliente, 'getNome');"
+						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="cid">CID</label>
+					<input id="cid" type="text" 
+					name="cid" [(ngModel)]="atestado.cid">
+				</div>
+				
+				<div class="input-field col s3">
+					<label for="numeroDias">Número de Dias</label>
+					<input id="numeroDias" type="text" 
+					name="numeroDias" [(ngModel)]="atestado.numeroDias">
+				</div>
+				
+				<div class="input-field col s3">
+					<label for="dataInicio">Início</label>
+					<my-date-picker name="inicio" [options]="myDatePickerOptions"
+						[(ngModel)]="atestado.tarefa.inicioCustomDate.appDate" placeholder="Início">
+					</my-date-picker>
+				</div>
+				
+				<div class="input-field col s3 checkbox">
+					<input type="checkbox" id="atestado.impossibilidadeLocomocao" 
+						[(ngModel)]="atestado.impossibilidadeLocomocao"
+						name="atestado.impossibilidadeLocomocao"> 
+						<label for="atestado.impossibilidadeLocomocao">Impossibilidade de Locomoção</label>
+				</div>
+			</div>
+			
+			<div class="row">
+			
+				<div class="input-field col s3">
+					<fieldset>
+						<legend> Status </legend>
+						<select name="status" class="browser-default"
+							[(ngModel)]="atestado.status">
+							<option disabled selected value="undefined">Selecione um status</option>
+							<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+						</select>
+					</fieldset>
+				</div>
+				
+				<div class="input-field col s3 checkbox">
+					<input type="checkbox" id="atestado.lancadoSap" 
+						[(ngModel)]="atestado.lancadoSap"
+						name="atestado.lancadoSap"> 
+						<label for="atestado.lancadoSap">Lançado SAP</label>
+				</div>
+				
+				<div class="input-field col s3 checkbox">
+					<input type="checkbox" id="atestado.atestadoFisicoRecebido" 
+						[(ngModel)]="atestado.atestadoFisicoRecebido"
+						name="atestado.atestadoFisicoRecebido"> 
+						<label for="atestado.atestadoFisicoRecebido">Atestado Físico Recebido</label>
+				</div>
+				
+				<div class="input-field col s3 checkbox">
+					<input type="checkbox" id="atestado.controleLicenca" 
+						[(ngModel)]="atestado.controleLicenca"
+						name="atestado.controleLicenca"> 
+						<label for="atestado.controleLicenca">Controle Licença</label>
+				</div>
+				
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="dataSolicitacao">Data de Solicitação</label>
+					<my-date-picker name="dataSolicitacao" [options]="myDatePickerOptions"
+						[(ngModel)]="atestado.dataSolicitacaoCustomDate.appDate" placeholder="Data de Solicitação">
+					</my-date-picker>
+				</div>
+				
+				<div class="input-field col s3">
+					<label for="dataAgendamento">Data de Agendamento</label>
+					<my-date-picker name="dataAgendamento" [options]="myDatePickerOptions"
+						[(ngModel)]="atestado.dataAgendamentoCustomDate.appDate" placeholder="Data de Agendamento">
+					</my-date-picker>
+				</div>
+				
+				<div class="input-field col s6">
+					<label for="empregado">Número da Cat</label> 
+					<input
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="atestado.cat.numero"
+						[(ngModel)]="atestado.cat.numero"
+						(blur)="autoCompleteCat.getAutocomplete().getObj($event,atestado,'setCat','getNumero')"
+						(ngModelChange)="autoCompleteCat.getAutocomplete().getList(atestado.cat, 'getNumero');"
+						[materializeParams]="autoCompleteCat.getAutocomplete().getObjAutoComplete()">
+				</div>
+			</div>
+			
+			<div class="row col s12" *ngIf="!edit">
+				<div class="input-field col s11">
+					<div class="row file-import">
+						<div class="file-field input-field col s12">
+							<div class="btn">
+								<span>Anexo</span> 
+								<input id="anexo" type="file" required 
+									name="anexo" accept=".zip" #anexo>
+							</div>
+							<div class="file-path-wrapper">
+								<input class="file-path validate" type="text">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="atestado.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="atestado.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/atestado']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit"
+				class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

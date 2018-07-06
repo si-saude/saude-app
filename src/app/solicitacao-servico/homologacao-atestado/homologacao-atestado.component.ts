@@ -88,7 +88,7 @@ export class HomologacaoAtestadoComponent {
     }
     
     salvar ( atestado ) {
-        this.solicitacaoServicoService.salvarAtestado( atestado )
+        this.solicitacaoServicoService.registrarAtestado(atestado)
             .then(res => {
                 this.showConfirmSave = true;
                 this.msgConfirmSave = res.text();

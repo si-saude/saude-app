@@ -1,5 +1,5 @@
-import { Base } from './../../model/base';
-import { GenericBuilder } from './../../generics/generic.builder';
+import { Base } from '../../model/base';
+import { GenericBuilder } from '../../generics/generic.builder';
 
 export class BaseBuilder extends GenericBuilder {
 

@@ -6,11 +6,15 @@ import { GlobalVariable } from './../../global';
 import { Cat } from './../../model/cat';
 import { CatFilter } from './cat.filter';
 import { GenericService } from './../../generics/generic.service';
+import { EixoService } from './../eixo/eixo.service';
+import { DiagnosticoService } from './../diagnostico/diagnostico.service';
 
 @Injectable()
 export class CatService extends GenericService {
 
-    constructor( http: Http, router: Router ) { 
+    constructor( http: Http, router: Router, 
+            private eixoService: EixoService,
+            private diagnosticoService: DiagnosticoService) { 
         super(http,router,"cat");
     }
     
@@ -18,4 +22,46 @@ export class CatService extends GenericService {
         return this.selectList(new CatFilter());
     }
     
+    getSexos() {
+        let urlSexos = GlobalVariable.BASE_API_URL + "/generic/sexo";
+        return this.http
+            .get( urlSexos + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getPartesCorpo() {
+        let urlPartesCorpo = GlobalVariable.BASE_API_URL + "/generic/partes-corpo";
+        return this.http
+            .get( urlPartesCorpo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getGravidades() {
+        let urlGravidades = GlobalVariable.BASE_API_URL + "/generic/gravidade";
+        return this.http
+            .get( urlGravidades + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getTipoAcidentes() {
+        let urlTipoAcidentes = GlobalVariable.BASE_API_URL + "/generic/tipo-acidente";
+        return this.http
+            .get( urlTipoAcidentes + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getTipoCats() {
+        let urlTipoCats = GlobalVariable.BASE_API_URL + "/generic/tipo-cat";
+        return this.http
+            .get( urlTipoCats + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEixosByEquipe( idEquipe ) {
+        return this.eixoService.getEixos();
+    }
+    
+    getDiagnosticoByEixo( idEixo, idEquipe ) {
+        return this.diagnosticoService.getDiagnosticoByEixoWithoutEquipe(idEixo)
+    }
 }

@@ -1,21 +1,23 @@
 import { Tarefa } from './tarefa';
+import { Cat } from './cat';
 import { DateUtil } from './../generics/utils/date.util';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Atestado {
     private id: number;
-    private CID: string;
+    private cid: string;
     private numeroDias: number;
     private anexo: any;
     private anexoBase64: any;
     private tarefa: Tarefa;
     private impossibilidadeLocomocao: boolean;
     private status: string;
-    private lancadoSAP: boolean;
+    private lancadoSap: boolean;
     private atestadoFisicoRecebido: boolean;
     private controleLicenca: boolean;
     private dataAgendamento: Date;
     private dataSolicitacao: Date;
+    private cat: Cat;
     private version: number;
 
     private dateUtil: DateUtil = new DateUtil();
@@ -30,12 +32,20 @@ export class Atestado {
         this.id = id;
     }
 
-    getCID() {
-        return this.CID;
+    getCid() {
+        return this.cid;
     }
 
-    setCID(CID: string) {
-        this.CID = CID;
+    setCid(cid: string) {
+        this.cid = cid;
+    }
+    
+    getCat() {
+        return this.cat;
+    }
+
+    setCat(cat: Cat) {
+        this.cat = cat;
     }
 
     getNumeroDias() {
@@ -86,12 +96,12 @@ export class Atestado {
         this.status = status;
     }
 
-    getLancadoSAP() {
-        return this.lancadoSAP;
+    getLancadoSap() {
+        return this.lancadoSap;
     }
 
-    setLancadoSAP(lancadoSAP: boolean) {
-        this.lancadoSAP = lancadoSAP;
+    setLancadoSap(lancadoSap: boolean) {
+        this.lancadoSap = lancadoSap;
     }
 
     getAtestadoFisicoRecebido() {

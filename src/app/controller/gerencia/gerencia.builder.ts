@@ -71,5 +71,17 @@ export class GerenciaBuilder extends GenericBuilder {
 
         return cloneGerencia;
     }
+    
+    cloneList(gerencias: Array<Gerencia>): Array<Gerencia> {
+        let array:Array<Gerencia> = new Array<Gerencia>();
+    
+        if (gerencias !== null && gerencias !== undefined) { 
+            for (let gerencia of gerencias) {
+                array.push(this.clone(gerencia));
+            }
+        }
+        
+        return array;
+    }
 
 }

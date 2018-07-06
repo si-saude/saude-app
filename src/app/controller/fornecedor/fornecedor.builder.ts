@@ -60,4 +60,15 @@ export class FornecedorBuilder extends GenericBuilder{
         return cloneFornecedor;
     }
     
+    cloneList(fornecedores: Array<Fornecedor>): Array<Fornecedor> {
+        let array:Array<Fornecedor> = new Array<Fornecedor>();
+    
+        if (fornecedores !== null && fornecedores !== undefined) { 
+            for (let fornecedor of fornecedores) {
+                array.push(this.clone(fornecedor));
+            }
+        }
+        
+        return array;
+    }
 }

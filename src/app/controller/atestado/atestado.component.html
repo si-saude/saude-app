@@ -15,18 +15,23 @@
 
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
-				<div class="col s4">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.numero}}</a>
+				<div class="col s6">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.tarefa.cliente.pessoa.nome}}</a>
 				</div>
-				<div class="col s5">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
+				<div class="col s2">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.tarefa.inicio | transformDate}}</a>
 				</div>
 				<div class="col s1">
-					<a [routerLink]="['/cat/detalhe', a.id]"><i
+					<a (click)="getAnexo(a)" style="cursor: pointer"> 
+						<i class="small material-icons icon">file_download</i>
+					</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/atestado/detalhe', a.id]"><i
 						class="material-icons">details</i></a>
 				</div>
 				<div class="col s1">
-					<a [routerLink]="['/cat/editar', a.id]"><i
+					<a [routerLink]="['/atestado/editar', a.id]"><i
 						class="material-icons">mode_edit</i></a>
 				</div>
 				<div class="col s1">
@@ -41,13 +46,13 @@
 	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
 		[paginas]="paginas" [listComponent]="listComponent"
 		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
-	
+
 	<div class="row bts">
 		<div class="col s6">
 			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
 		</div>
 		<div class="col s6">
-			<a [routerLink]="['/cat/cadastrar']"
+			<a [routerLink]="['/atestado/cadastrar']"
 				class="waves-effect waves-light btn button-add">Adicionar</a>
 		</div>
 	</div>
@@ -62,8 +67,8 @@
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="numero">Número</label> <input type="text" id="numero"
-					[(ngModel)]="filter.numero" name="numero">
+				<label for="nome">Nome</label> <input type="text" id="nome"
+					[(ngModel)]="filter.nome" name="nome">
 			</div>
 		</div>
 
@@ -85,34 +90,5 @@
 		[msg]="msgError"></app-mensagem-form>
 </div>
 
-<!-- Modal Structure 
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams" [materializeActions]="modalImport">
-
-	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">
-
-		<h5 class="title-modal-import">Importar Arquivo</h5>
-
-		<div class="row file-import">
-			<div class="file-field input-field col s12">
-				<div class="btn">
-					<span>File</span> <input id="arquivo" type="file" #arquivo
-						name="arquivo" accept=".xls, .xlsx">
-				</div>
-				<div class="file-path-wrapper">
-					<input class="file-path validate" type="text">
-				</div>
-			</div>
-		</div>
-
-		<div class="modal-footer">
-			<a type="submit" class="waves-effect waves-green btn-flat"
-				(click)="importFile()">Importar</a> <a
-				class="waves-effect waves-green btn-flat"
-				(click)="closeModalImport()">Fechar</a>
-		</div>
-
-	</form>
-
-</div>
--->
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

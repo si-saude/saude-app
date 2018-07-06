@@ -2,10 +2,10 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { GlobalVariable } from './../../global';
-import { Base } from './../../model/base';
-import { BaseFilter } from './base.filter';
-import { GenericService } from './../../generics/generic.service';
+import { GlobalVariable } from '../../global';
+import { Base } from '../../model/base';
+import { BaseFilter } from '../base/base.filter';
+import { GenericService } from '../../generics/generic.service';
 
 @Injectable()
 export class BaseService extends GenericService {

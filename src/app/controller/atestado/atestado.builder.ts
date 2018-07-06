@@ -1,5 +1,6 @@
 import { Atestado } from './../../model/atestado';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
+import { CatBuilder } from './../cat/cat.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class AtestadoBuilder extends GenericBuilder {
@@ -8,6 +9,7 @@ export class AtestadoBuilder extends GenericBuilder {
         atestado = new Atestado();
         
         atestado.setTarefa(new TarefaBuilder().initialize(atestado.getTarefa()));
+        atestado.setCat(new CatBuilder().initialize(atestado.getCat()))
         
         return atestado;
     }
@@ -34,19 +36,28 @@ export class AtestadoBuilder extends GenericBuilder {
         let cloneAtestado = new Atestado();
         cloneAtestado.setId(this.getValue(atestado,"getId"));
         cloneAtestado.setVersion(this.getValue(atestado,"getVersion"));
-        cloneAtestado.setCID(this.getValue(atestado,"getCID"));
+        cloneAtestado.setCid(this.getValue(atestado,"getCid"));
         cloneAtestado.setAnexoBase64(this.getValue(atestado,"getAnexoBase64"));
         cloneAtestado.setAtestadoFisicoRecebido(this.getValue(atestado,"getAtestadoFisicoRecebido"));
         cloneAtestado.setControleLicenca(this.getValue(atestado,"getControleLicenca"));
         cloneAtestado.setDataAgendamento(this.getValue(atestado,"getDataAgendamento"));
         cloneAtestado.setDataSolicitacao(this.getValue(atestado,"getDataSolicitacao"));
         cloneAtestado.setImpossibilidadeLocomocao(this.getValue(atestado,"getImpossibilidadeLocomocao"));
-        cloneAtestado.setLancadoSAP(this.getValue(atestado,"getLancadoSAP"));
+        cloneAtestado.setLancadoSap(this.getValue(atestado,"getLancadoSap"));
         cloneAtestado.setNumeroDias(this.getValue(atestado,"getNumeroDias"));
         cloneAtestado.setStatus(this.getValue(atestado,"getStatus"));
         
         cloneAtestado.setTarefa(
                 new TarefaBuilder().clone(this.getValue(atestado,"getTarefa")));
+        
+        if (this.getValue(atestado, "getCat") !== undefined) { 
+            cloneAtestado.setCat(
+                    new CatBuilder().clone(this.getValue(atestado,"getCat")));
+            if(!this.idGtZero(cloneAtestado.getCat()))
+                cloneAtestado.setCat(undefined);
+        } else {
+            cloneAtestado.setCat(new CatBuilder().initialize(null));
+        }
         
         return cloneAtestado;
     }

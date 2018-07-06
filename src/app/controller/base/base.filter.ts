@@ -1,4 +1,4 @@
-import { GenericFilter } from './../../generics/generic.filter';
+import { GenericFilter } from '../../generics/generic.filter';
 
 export class BaseFilter extends GenericFilter {
     private nome: string;

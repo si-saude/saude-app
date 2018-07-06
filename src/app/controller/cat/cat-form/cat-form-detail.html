@@ -6,29 +6,301 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <!-- Confirm Save -->
-<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
 
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
 
-			<div class="input-field col s12">
-				<label for="numero">Numero</label>
-				<input id="numero" type="text" disabled
-				name="numero" [(ngModel)]="cat.numero">
+			<ul class="tabs" materialize="tabs">
+				<li class="tab col s6"><a RouterLinkActive="active"
+					href="#dadosGerais">Dados Gerais</a></li>
+				<li class="tab col s6"><a RouterLinkActive="active"
+					href="#outrasInformacoes">Outras Informações</a></li>
+			</ul>
+
+			<div id="dadosGerais">
+
+				<div class="row">
+					<div class="input-field col s9">
+						<label for="numero">Número</label> <input id="numero" type="text" disabled
+							maxlength="16" name="numero" [(ngModel)]="cat.numero">
+					</div>
+
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="contratado"  disabled
+							[(ngModel)]="cat.contratado" name="cat.contratado"> <label
+							for="contratado">Contratado</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="empregado">Nome do Empregado</label> <input
+							type="text" disabled
+							name="autoCompleteEmpregado"
+							[(ngModel)]="cat.empregado.pessoa.nome">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s8">
+						<label for="nome">Nome</label> <input id="nome" type="text"
+							maxlength="256" disabled name="nome"
+							[(ngModel)]="cat.nome">
+					</div>
+
+					<div class="input-field col s4">
+						<label for="dataNascimento">Data de Nascimento</label>
+						<my-date-picker name="dataNascimento"
+							disabled [options]="myDatePickerOptions"
+							[(ngModel)]="cat.dataNascimentoCustomDate.appDate"
+							placeholder="Data de Nascimento"></my-date-picker>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s8">
+						<label for="cargo">Cargo</label> <input id="cargo" type="text"
+							maxlength="128" disabled name="cargo"
+							[(ngModel)]="cat.cargo">
+					</div>
+
+					<div class="input-field col s4">
+						<label for="regime">Regime</label> <input id="regime" type="text"
+							maxlength="32" disabled name="regime"
+							[(ngModel)]="cat.regime">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s8">
+						<label for="cpf">CPF</label> <input id="cpf" type="text"
+							maxlength="14" disabled [mask]="'cpf'"
+							(ngModelChange)="cat.cpf=$event" maxlength="14"
+							[ngModel]="cat.cpf | cpfMask" name="cargo">
+					</div>
+
+					<div class="input-field col s4">
+						<fieldset>
+							<legend>Sexo</legend>
+							<select name="sexo" class="browser-default" disabled
+								[(ngModel)]="cat.sexo">
+								<option disabled selected value="undefined">Selecione um sexo</option>
+								<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
+							</select>
+						</fieldset>
+					</div>
+				</div>
+
+
 			</div>
-			
+
+			<div id="outrasInformacoes">
+
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="RTA">RTA</label> <input id="RTA" type="text" disabled
+							maxlength="64" name="RTA" [(ngModel)]="cat.rta">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="instalacao">Instalação</label> <input id="instalacao" disabled
+							type="text" maxlength="128" name="instalacao"
+							[(ngModel)]="cat.instalacao">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="gerencia">Código da Gerência</label> <input
+							type="text" disabled
+							name="autoCompleteGerencia"
+							[(ngModel)]="cat.gerencia.codigoCompleto">
+					</div>
+
+					<div class="input-field col s6">
+						<fieldset>
+							<legend>Partes do Corpo</legend>
+							<select name="partesCorpo" class="browser-default" disabled
+								[(ngModel)]="cat.partesCorpo">
+								<option disabled selected value="undefined">Selecione uma parte do corpo</option>
+								<option *ngFor="let parteCorpo of partesCorpo"
+									value="{{parteCorpo}}">{{parteCorpo}}</option>
+							</select>
+						</fieldset>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="numeroSISIN">Número SISIN</label> <input disabled
+							id="numeroSISIN" type="text" maxlength="128" name="numeroSISIN"
+							[(ngModel)]="cat.numeroSisin">
+					</div>
+
+					<div class="input-field col s3">
+						<label for="diaHoraAcidente">Data/Hora do Acidente</label>
+						<my-date-picker name="diaHoraAcidente" disabled
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.diaHoraAcidenteCustomDate.appDate"
+							placeholder="Data/Hora do Acidente"></my-date-picker>
+					</div>
+
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="afastamento" disabled
+							[(ngModel)]="cat.afastamento" name="cat.afastamento"> <label
+							for="afastamento">Afastamento</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s3">
+						<label for="dataEmissaoCat">Data de Emissao da Cat</label>
+						<my-date-picker name="dataEmissaoCat" [options]="myDatePickerOptions" disabled
+							[(ngModel)]="cat.dataEmissaoCatCustomDate.appDate"
+							placeholder="Data de Emissao da Cat"></my-date-picker>
+					</div>
+				
+					<div class="input-field col s6">
+						<fieldset>
+							<legend>Gravidade</legend>
+							<select name="gravidade" class="browser-default" disabled
+								[(ngModel)]="cat.gravidade">
+								<option disabled selected value="undefined">Selecione uma gravidade</option>
+								<option *ngFor="let gravidade of gravidades"
+									value="{{gravidade}}">{{gravidade}}</option>
+							</select>
+						</fieldset>
+					</div>
+					
+					<div class="input-field col s2">
+						<label for="classificacaoSISIN">Classificação SISIN</label> <input disabled
+							id="classificacaoSISIN" type="numer" name="classificacaoSISIN"
+							[(ngModel)]="cat.classificacaoSisin">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s3">
+						<label for="dataAvaliacaoMedica">Data da Avaliacao Médica</label>
+						<my-date-picker name="dataAvaliacaoMedica" disabled
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.dataAvaliacaoMedicaCustomDate.appDate"
+							placeholder="Data da Avaliacao Médica"></my-date-picker>
+					</div>
+
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="registroSD2000" disabled
+							[(ngModel)]="cat.registroSd2000" name="cat.registroSD2000">
+						<label for="registroSD2000">Registro SD2000</label>
+					</div>
+
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="catSD2000" [(ngModel)]="cat.catSd2000" disabled
+							name="cat.catSD2000"> 
+						<label for="catSD2000">Cat SD2000</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<fieldset>
+							<legend>Tipo de Acidente</legend>
+							<select name="tipoAcidente" class="browser-default" disabled
+								[(ngModel)]="cat.tipoAcidente">
+								<option disabled selected value="undefined">Selecione uma tipo de acidente</option>
+								<option *ngFor="let tipoAcidente of tipoAcidentes"
+									value="{{tipoAcidente}}">{{tipoAcidente}}</option>
+							</select>
+						</fieldset>
+					</div>
+
+					<div class="input-field col s6">
+						<fieldset>
+							<legend>Tipo do Cat</legend>
+							<select name="tipoCat" class="browser-default" disabled
+								[(ngModel)]="cat.tipoCat">
+								<option disabled selected value="undefined">Selecione uma tipo do cat</option>
+								<option *ngFor="let tipoCat of tipoCats" value="{{tipoCat}}">{{tipoCat}}</option>
+							</select>
+						</fieldset>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="dataAvaliacaoMedica">Diagnostico</label>
+						<input disabled
+							id="cat.diagnostico.descricao" type="text"
+							name="cat.diagnostico.descricao"
+							[(ngModel)]="cat.diagnostico.descricao">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="codigoCartaSindicato">Código da Carta do Sindicato</label> 
+							<input id="codigoCartaSindicato" type="text" maxlength="16" disabled 
+								name="codigoCartaSindicato" [(ngModel)]="cat.codigoCartaSindicato">
+					</div>
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="comunicavelSUS" [(ngModel)]="cat.comunicavelSus" disabled
+							name="cat.comunicavelSUS"> 
+						<label for="comunicavelSUS">Comunicável SUS</label>
+					</div>
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="ferimentoGraveConformeANP" [(ngModel)]="cat.ferimentoGraveConformeAnp" disabled
+							name="cat.ferimentoGraveConformeANP"> 
+						<label for="ferimentoGraveConformeANP">Ferimento Grave Conforme ANP</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s4">
+						<label for="dataComunicacaoSindicato">Data de Comunicação do Sindicato</label>
+						<my-date-picker name="dataComunicacaoSindicato" disabled
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.dataComunicacaoSindicatoCustomDate.appDate"
+							placeholder="Data de Comunicação do Sindicato"></my-date-picker>
+					</div>
+					<div class="input-field col s3">
+						<label for="remuneracao">Remuneração</label> 
+							<input id="remuneracao" type="number" disabled
+								name="remuneracao" [(ngModel)]="cat.remuneracao">
+					</div>
+					
+					<div class="input-field col s5">
+						<label for="gerencia">Razão Social do Fornecedor</label> <input
+							type="text" disabled
+							name="autoCompleteEmpresa"
+							[(ngModel)]="cat.empresa.razaoSocial">
+					</div>
+					
+				</div>
+
+			</div>
+
 		</div>
 
+		<input id="id" name="id" type="hidden" [(ngModel)]="cat.id"> <input
+			id="version" name="version" type="hidden" [(ngModel)]="cat.version">
+
 		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
 		</div>
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/cat']"
-					class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/cat']" class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 	</form>

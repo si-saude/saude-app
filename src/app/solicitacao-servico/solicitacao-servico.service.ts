@@ -71,8 +71,8 @@ export class SolicitacaoServicoService {
         return this.empregadoService;
     }
     
-    salvarAtestado( atestado ) {
-        let urlAtestado = this.URL + "/atestado"
+    registrarAtestado( atestado ) {
+        let urlAtestado = this.URL + "/atestado/registrar-atestado"
         return this.http
             .post( urlAtestado, atestado, { headers: this.headers } )
             .toPromise();
