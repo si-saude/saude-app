@@ -18,6 +18,7 @@ export class AprhoItem {
     private local: string;
     private frequencia: string;
     private duracao: string;
+    private avaliacaoEficacia: string;
     private version: number;
 
     getId(): number {
@@ -114,7 +115,16 @@ export class AprhoItem {
     
     setDuracao(duracao: string) {
         this.duracao = duracao;
-    }   
+    }  
+    
+    getAvaliacaoEficacia(): string {
+        return this.avaliacaoEficacia;
+    }
+    
+    setAvaliacaoEficacia(avaliacaoEficacia: string) {
+        this.avaliacaoEficacia = avaliacaoEficacia;
+    }
+    
     getVersion(): number {
         return this.version;
     }

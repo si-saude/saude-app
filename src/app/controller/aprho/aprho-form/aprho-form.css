@@ -5,6 +5,11 @@
     height: 30px;
 }
 
+.btn-removerEmp {
+	margin-top: 3px;
+    padding-left: 2rem;
+}
+
 .row-aprho {
     margin-left: -20px;
 }
@@ -50,4 +55,21 @@ td {
 
 .botao-remover {
 	padding-left: 30px;
+}
+
+.codigo_completo { 
+	padding-left: 12px;
+}
+
+.nome {
+	padding-left: 0px;
+}
+
+.chave {
+	padding-left: 3px;
+}
+
+.checkbox_atual {
+	margin-top: 1px;
+    padding-left: 2rem;
 }

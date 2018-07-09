@@ -6,7 +6,8 @@ export class AprhoEmpregado {
     private id: number = 0;
     private aprho: Aprho;
     private empregado: Empregado;
-    private atual: boolean;
+    private atual: boolean = true;
+    private entrevistado: boolean = false;
     private version: number;
 
     getId(): number {
@@ -47,5 +48,13 @@ export class AprhoEmpregado {
     
     setAtual(atual:boolean){
         this.atual = atual;    
+    }
+    
+    getEntrevistado():boolean{
+        return this.entrevistado;
+    }
+    
+    setEntrevistado(entrevistado:boolean){
+        this.entrevistado = entrevistado;    
     }
 }
