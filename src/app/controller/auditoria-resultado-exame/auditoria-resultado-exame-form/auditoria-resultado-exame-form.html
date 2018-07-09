@@ -50,6 +50,13 @@
 								name="empregadoConvocacao.resultadoAuditado"> 
 								<label for="empregadoConvocacao.resultadoAuditado">Auditado</label>
 						</div>
+						
+						<div class="input-field col s4 checkbox">
+							<input type="checkbox" id="empregadoConvocacao.auditado"
+								[(ngModel)]="empregadoConvocacao.auditado"
+								name="empregadoConvocacao.auditado"> 
+								<label for="empregadoConvocacao.auditado">Auditado no Sd2000</label>
+						</div>
 					</div>
 					<div
 						*ngFor="let rEx of empregadoConvocacao.resultadoExames;let iREx = index">
