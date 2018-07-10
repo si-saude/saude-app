@@ -69,6 +69,9 @@ import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.gua
 import { CatGuard } from './guards/guards-child/cat.guard';
 import { KanbanGuard } from './guards/kanban.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
+import { ParteCorpoAtingidaGuard } from './guards/guards-child/parte-corpo-atingida.guard';
+import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard';
+import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -229,6 +232,15 @@ const routes: Routes = [
   { path: 'atestado', 
       loadChildren: 'app/controller/atestado/atestado.module#AtestadoModule',
       canActivateChild: [AtestadoGuard]},
+  { path: 'parte-corpo-atingida', 
+      loadChildren: 'app/controller/parte-corpo-atingida/parte-corpo-atingida.module#ParteCorpoAtingidaModule',
+      canActivateChild: [ParteCorpoAtingidaGuard]},
+  { path: 'agente-causador', 
+      loadChildren: 'app/controller/agente-causador/agente-causador.module#AgenteCausadorModule',
+      canActivateChild: [AgenteCausadorGuard]},
+  { path: 'natureza-lesao', 
+      loadChildren: 'app/controller/natureza-lesao/natureza-lesao.module#NaturezaLesaoModule',
+      canActivateChild: [NaturezaLesaoGuard]},
   { path: 'solicitacao-central-integra',
       loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

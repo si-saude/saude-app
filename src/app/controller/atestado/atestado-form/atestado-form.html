@@ -19,7 +19,7 @@
 			
 			<div class="row" *ngIf="!edit">
 				<div class="input-field col s12">
-					<label for="empregado">Nome do Empregado</label> 
+					<label for="empregado">Empregado</label> 
 					<input required
 						type="text" materialize="autocomplete" autocomplete="off"
 						name="atestado.tarefa.cliente.pessoa.nome"
@@ -39,7 +39,7 @@
 				
 				<div class="input-field col s3">
 					<label for="numeroDias">Número de Dias</label>
-					<input id="numeroDias" type="text" 
+					<input id="numeroDias" type="number" 
 					name="numeroDias" [(ngModel)]="atestado.numeroDias">
 				</div>
 				
@@ -110,7 +110,7 @@
 				</div>
 				
 				<div class="input-field col s6">
-					<label for="empregado">Número da Cat</label> 
+					<label for="empregado">Número da CAT</label> 
 					<input
 						type="text" materialize="autocomplete" autocomplete="off"
 						name="atestado.cat.numero"

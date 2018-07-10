@@ -59,16 +59,29 @@
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="row">
-
 		<div class="input-field col s12">
+			<div class="modal-content">
+				<label for="nome">Nome</label> <input type="text" id="nome"
+					[(ngModel)]="filter.nome" name="nome">
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="input-field col s6">
 			<div class="modal-content">
 				<label for="numero">Número</label> <input type="text" id="numero"
 					[(ngModel)]="filter.numero" name="numero">
 			</div>
 		</div>
-
+		<div class="input-field col s6">
+			<div class="modal-content">
+				<label for="cpf">CPF</label> <input type="text" id="cpf"
+					[(ngModel)]="filter.cpf" name="cpf">
+			</div>
+		</div>
 	</div>
-
+	
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
@@ -84,35 +97,3 @@
 	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 		[msg]="msgError"></app-mensagem-form>
 </div>
-
-<!-- Modal Structure 
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modalParams" [materializeActions]="modalImport">
-
-	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">
-
-		<h5 class="title-modal-import">Importar Arquivo</h5>
-
-		<div class="row file-import">
-			<div class="file-field input-field col s12">
-				<div class="btn">
-					<span>File</span> <input id="arquivo" type="file" #arquivo
-						name="arquivo" accept=".xls, .xlsx">
-				</div>
-				<div class="file-path-wrapper">
-					<input class="file-path validate" type="text">
-				</div>
-			</div>
-		</div>
-
-		<div class="modal-footer">
-			<a type="submit" class="waves-effect waves-green btn-flat"
-				(click)="importFile()">Importar</a> <a
-				class="waves-effect waves-green btn-flat"
-				(click)="closeModalImport()">Fechar</a>
-		</div>
-
-	</form>
-
-</div>
--->

@@ -7,7 +7,11 @@ import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integr
 import { ReportSolicitacaoCentralIntegraGuard } from './../guards/report-solicitacao-central-integra.guard';
 import { PanoramaGuard } from './../guards/panorama.guard';
 import { EmpregadosPorGrupoComponent } from './empregados-por-grupo/empregados-por-grupo.component';
+import { AtestadoComponent } from './atestado/atestado.component';
+import { CatComponent } from './cat/cat.component';
 import { EmpregadosPorGrupoGuard } from './../guards/guards-child/empregados-por-grupo.guard';
+import { ReportAtestadoGuard } from './../guards/report-atestado.guard';
+import { ReportCatGuard } from './../guards/report-cat.guard';
 
 const reportsRoutes: Routes = [
     { path: '', redirectTo: 'empregados-por-grupo', pathMatch: 'full' },
@@ -16,7 +20,11 @@ const reportsRoutes: Routes = [
     { path: 'panorama', component: PanoramaComponent, 
         canActivate: [PanoramaGuard] },
     { path: 'solicitacao-central-integra', component: SolicitacaoCentralIntegraComponent, 
-        canActivate: [ReportSolicitacaoCentralIntegraGuard] }
+        canActivate: [ReportSolicitacaoCentralIntegraGuard] },
+    { path: 'atestado', component: AtestadoComponent, 
+        canActivate: [ReportAtestadoGuard] },
+    { path: 'cat', component: CatComponent, 
+        canActivate: [ReportCatGuard] }
 ];
 
 @NgModule({

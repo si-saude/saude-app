@@ -38,7 +38,7 @@
 
 				<div class="row">
 					<div class="input-field col s12">
-						<label for="empregado">Nome do Empregado</label> <input
+						<label for="empregado">Empregado</label> <input
 							type="text" disabled
 							name="autoCompleteEmpregado"
 							[(ngModel)]="cat.empregado.pessoa.nome">
@@ -114,10 +114,32 @@
 							[(ngModel)]="cat.instalacao">
 					</div>
 				</div>
+				
+				<div class="row">
+					<div class="input-field col s4">
+						<label for="parteCorpoAtingida">Parte do Corpo Atingida</label> <input
+							type="text"
+							name="autoCompleteParteCorpoAtingida"
+							[(ngModel)]="cat.parteCorpoAtingida.descricao">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="agenteCausador">Agente Causador</label> <input
+							type="text"
+							name="autoCompleteAgenteCausador"
+							[(ngModel)]="cat.agenteCausador.descricao">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="naturezaLesao">Natureza da Lesão</label> 
+						<input id="naturezaLesao" name="naturezaLesao" type="text"
+							[(ngModel)]="cat.naturezaLesao.descricao">
+					</div>
+				</div>
 
 				<div class="row">
 					<div class="input-field col s6">
-						<label for="gerencia">Código da Gerência</label> <input
+						<label for="gerencia">Gerência</label> <input
 							type="text" disabled
 							name="autoCompleteGerencia"
 							[(ngModel)]="cat.gerencia.codigoCompleto">
@@ -137,12 +159,18 @@
 				</div>
 
 				<div class="row">
-					<div class="input-field col s6">
+					<div class="input-field col s3">
 						<label for="numeroSISIN">Número SISIN</label> <input disabled
 							id="numeroSISIN" type="text" maxlength="128" name="numeroSISIN"
 							[(ngModel)]="cat.numeroSisin">
 					</div>
 
+					<div class="input-field col s3">
+						<label for="classificacaoSISIN">Classificação SISIN</label> <input disabled
+							id="classificacaoSISIN" type="numer" name="classificacaoSISIN"
+							[(ngModel)]="cat.classificacaoSisin">
+					</div>
+					
 					<div class="input-field col s3">
 						<label for="diaHoraAcidente">Data/Hora do Acidente</label>
 						<my-date-picker name="diaHoraAcidente" disabled
@@ -160,7 +188,7 @@
 
 				<div class="row">
 					<div class="input-field col s3">
-						<label for="dataEmissaoCat">Data de Emissao da Cat</label>
+						<label for="dataEmissaoCat">Data de Emissão da CAT</label>
 						<my-date-picker name="dataEmissaoCat" [options]="myDatePickerOptions" disabled
 							[(ngModel)]="cat.dataEmissaoCatCustomDate.appDate"
 							placeholder="Data de Emissao da Cat"></my-date-picker>
@@ -177,17 +205,11 @@
 							</select>
 						</fieldset>
 					</div>
-					
-					<div class="input-field col s2">
-						<label for="classificacaoSISIN">Classificação SISIN</label> <input disabled
-							id="classificacaoSISIN" type="numer" name="classificacaoSISIN"
-							[(ngModel)]="cat.classificacaoSisin">
-					</div>
 				</div>
 
 				<div class="row">
 					<div class="input-field col s3">
-						<label for="dataAvaliacaoMedica">Data da Avaliacao Médica</label>
+						<label for="dataAvaliacaoMedica">Data da Avaliação Médica</label>
 						<my-date-picker name="dataAvaliacaoMedica" disabled
 							[options]="myDatePickerOptions"
 							[(ngModel)]="cat.dataAvaliacaoMedicaCustomDate.appDate"
@@ -203,7 +225,7 @@
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="catSD2000" [(ngModel)]="cat.catSd2000" disabled
 							name="cat.catSD2000"> 
-						<label for="catSD2000">Cat SD2000</label>
+						<label for="catSD2000">CAT SD2000</label>
 					</div>
 				</div>
 
@@ -222,7 +244,7 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Tipo do Cat</legend>
+							<legend>Tipo do CAT</legend>
 							<select name="tipoCat" class="browser-default" disabled
 								[(ngModel)]="cat.tipoCat">
 								<option disabled selected value="undefined">Selecione uma tipo do cat</option>
@@ -234,7 +256,7 @@
 				
 				<div class="row">
 					<div class="input-field col s12">
-						<label for="dataAvaliacaoMedica">Diagnostico</label>
+						<label for="dataAvaliacaoMedica">Diagnóstico</label>
 						<input disabled
 							id="cat.diagnostico.descricao" type="text"
 							name="cat.diagnostico.descricao"
@@ -275,7 +297,7 @@
 					</div>
 					
 					<div class="input-field col s5">
-						<label for="gerencia">Razão Social do Fornecedor</label> <input
+						<label for="gerencia">Fornecedor</label> <input
 							type="text" disabled
 							name="autoCompleteEmpresa"
 							[(ngModel)]="cat.empresa.razaoSocial">

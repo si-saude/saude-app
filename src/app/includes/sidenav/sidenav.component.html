@@ -33,7 +33,8 @@
 			(click)="closeSidenav3()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
-			<a [routerLink]="['agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente Risco</a>
+			<a [routerLink]="['agente-causador']" *ngIf="checkPermissao('AGENTE-CAUSADOR_LISTAR')">Agente Causador</a>
+			<a [routerLink]="['agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente de Risco</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
 			<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
 			<a [routerLink]="['/cidade']" *ngIf="checkPermissao('CIDADE_LISTAR')">Cidade</a>
@@ -62,6 +63,8 @@
 			<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
 			<a [routerLink]="['/intervencao']" *ngIf="checkPermissao('INTERVENCAO_LISTAR')">Intervenção</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
+			<a [routerLink]="['/natureza-lesao']" *ngIf="checkPermissao('NATUREZA-LESAO_LISTAR')">Natureza da Lesão</a>
+			<a [routerLink]="['/parte-corpo-atingida']" *ngIf="checkPermissao('PARTE-CORPO-ATINGIDA_LISTAR')">Parte do Corpo Atingida</a>
 			<a [routerLink]="['/perfil']" *ngIf="checkPermissao('PERFIL_LISTAR')">Perfil</a>
 			<a [routerLink]="['/pergunta-ficha-coleta']" *ngIf="checkPermissao('PERGUNTA-FICHA-COLETA_LISTAR')">Pergunta Ficha de Coleta</a>
 			<a [routerLink]="['/periodicidade']" *ngIf="checkPermissao('PERIODICIDADE_LISTAR')">Periodicidade</a>
@@ -147,6 +150,8 @@
 			(click)="closeSidenavRelatorio()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
+			<a [routerLink]="['/reports/atestado']" *ngIf="checkPermissao('REPORT-ATESTADO')">Atestado</a>
+			<a [routerLink]="['/reports/cat']" *ngIf="checkPermissao('REPORT-CAT')">CAT - Comunicado de Acidente de Trabalho</a>
 			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
 			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>
 			<a [routerLink]="['/reports/solicitacao-central-integra']" *ngIf="checkPermissao('REPORT-SOLICITACAO-CENTRAL-INTEGRA')">Solicitação Central Integra</a>

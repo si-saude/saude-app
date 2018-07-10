@@ -71,6 +71,9 @@ import { AgenteRiscoService } from './agente-risco/agente-risco.service';
 import { AprhoService } from './aprho/aprho.service';
 import { CatService } from './cat/cat.service';
 import { AtestadoService } from './atestado/atestado.service';
+import { ParteCorpoAtingidaService } from './parte-corpo-atingida/parte-corpo-atingida.service';
+import { AgenteCausadorService } from './agente-causador/agente-causador.service';
+import { NaturezaLesaoService } from './natureza-lesao/natureza-lesao.service';
 
 @NgModule({
   declarations: [
@@ -161,7 +164,10 @@ import { AtestadoService } from './atestado/atestado.service';
     AprhoService,
     SolicitacaoCentralIntegraService,
     CatService,
-    AtestadoService
+    AtestadoService,
+    ParteCorpoAtingidaService,
+    AgenteCausadorService,
+    NaturezaLesaoService
   ]
 })
 export class SharedModule { }

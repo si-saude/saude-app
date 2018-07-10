@@ -87,7 +87,11 @@ import { CatGuard } from './guards/guards-child/cat.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 import { KanbanGuard } from './guards/kanban.guard';
-
+import { ParteCorpoAtingidaGuard } from './guards/guards-child/parte-corpo-atingida.guard';
+import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard';
+import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
+import { ReportCatGuard } from './guards/report-cat.guard';
+import { ReportAtestadoGuard } from './guards/report-atestado.guard';
 
 @NgModule({
   declarations: [
@@ -178,7 +182,12 @@ import { KanbanGuard } from './guards/kanban.guard';
     KanbanGuard,
     AgendaPeriodicoGuard,
     CatGuard,
-    AtestadoGuard
+    AtestadoGuard,
+    ParteCorpoAtingidaGuard,
+    AgenteCausadorGuard,
+    NaturezaLesaoGuard,
+    ReportCatGuard,
+    ReportAtestadoGuard
   ],
   bootstrap: [ 
     AppComponent

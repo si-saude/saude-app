@@ -10,7 +10,11 @@ import { EmpregadosPorGrupoComponent } from './empregados-por-grupo/empregados-p
 import { EmpregadosPorGrupoService } from './empregados-por-grupo/empregados-por-grupo.service';
 import { PanoramaComponent } from './panorama/panorama.component';
 import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integra/solicitacao-central-integra.component';
+import { AtestadoComponent } from './atestado/atestado.component';
+import { CatComponent } from './cat/cat.component';
 import { PanoramaService } from './panorama/panorama.service';
+import { AtestadoService } from './atestado/atestado.service';
+import { CatService } from './cat/cat.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
 import { PipesModule } from './../controller/pipes.module';
@@ -19,7 +23,9 @@ import { PipesModule } from './../controller/pipes.module';
     declarations: [
        EmpregadosPorGrupoComponent,
        PanoramaComponent,
-       SolicitacaoCentralIntegraComponent 
+       SolicitacaoCentralIntegraComponent,
+       AtestadoComponent,
+       CatComponent 
      ],
      imports: [
         ReportsRoutingModule,
@@ -31,7 +37,9 @@ import { PipesModule } from './../controller/pipes.module';
      ],
      providers: [
         EmpregadosPorGrupoService,
-        PanoramaService
+        PanoramaService,
+        AtestadoService,
+        CatService
      ]
 })
 export class ReportsModule{}

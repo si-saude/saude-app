@@ -1,0 +1,292 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="list-container">
+	<table class="table table-striped" [mfData]="cats | filterData : filter : typeFilter : value" #mf="mfDataTable">
+	    <thead>
+		    <tr>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="numero">Número</mfDefaultSorter>
+		            <input type="text" name="numero" style="width: 90%" 
+							placeholder="filtrar número"
+							(input)="selectFilter($event, 'numero')">
+		        </th>
+		        <th style="width: 3%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="contratado">Contratado</mfDefaultSorter>
+						<div class="div-icon" id="contratado">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'contratado')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+		            <input type="text" name="nome" style="width: 90%" 
+							placeholder="filtrar nome"
+							(input)="selectFilter($event, 'nome')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="dataNascimento">Data de Nascimento</mfDefaultSorter>
+		            <input type="text" name="dataNascimento" style="width: 90%" 
+							placeholder="filtrar data de nascimento"
+							(input)="selectFilter($event, 'dataNascimento')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="cargo">Cargo</mfDefaultSorter>
+		            <input type="text" name="cargo" style="width: 90%" 
+							placeholder="filtrar cargo"
+							(input)="selectFilter($event, 'cargo')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="regime">Regime</mfDefaultSorter>
+		            <input type="text" name="regime" style="width: 90%" 
+							placeholder="filtrar regime"
+							(input)="selectFilter($event, 'regime')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="cpf">CPF</mfDefaultSorter>
+		            <input type="text" name="cpf" style="width: 90%" 
+							placeholder="filtrar cpf"
+							(input)="selectFilter($event, 'cpf')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="sexo">Sexo</mfDefaultSorter>
+		            <i class="small material-icons icon" style="margin-top: -10%;"
+							(click)="dropdown($event, 'sexo')">arrow_drop_down</i>
+					<div class="div-icon" id="sexo"></div>
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="rta">RTA</mfDefaultSorter>
+		            <input type="text" name="rta" style="width: 90%" 
+							placeholder="filtrar rta"
+							(input)="selectFilter($event, 'rta')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="instalacao">Instalação</mfDefaultSorter>
+		            <input type="text" name="instalacao" style="width: 90%" 
+							placeholder="filtrar instalacao"
+							(input)="selectFilter($event, 'instalacao')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="parteCorpoAtingida">Parte do Corpo Atingida</mfDefaultSorter>
+		            <input type="text" name="instalacao" style="width: 90%" 
+							placeholder="filtrar parte do corpo atingida"
+							(input)="selectFilter($event, 'parteCorpoAtingida')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="agenteCausador">Agente Causador</mfDefaultSorter>
+		            <input type="text" name="agenteCausador" style="width: 90%" 
+							placeholder="filtrar agente causador"
+							(input)="selectFilter($event, 'agenteCausador')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="naturezaLesao">Natureza da Lesão</mfDefaultSorter>
+		            <input type="text" name="naturezaLesao" style="width: 90%" 
+							placeholder="filtrar natureza da lesao"
+							(input)="selectFilter($event, 'naturezaLesao')">
+		        </th>
+				<th style="width: 3%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="gerencia">Gerência</mfDefaultSorter>
+						<div class="div-icon" id="gerencia">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 3%">
+		            <mfDefaultSorter by="classificacaoSisin">Classificação Sisin</mfDefaultSorter>
+		            <input type="text" name="classificacaoSisin" style="width: 90%" 
+							placeholder="filtrar classificação sisin"
+							(input)="selectFilter($event, 'classificacaoSisin')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="dataHoraAcidente">Data/Hora do Acidente</mfDefaultSorter>
+		            <input type="text" name="dataHoraAcidente" style="width: 90%" 
+							placeholder="filtrar data/hora do acidente"
+							(input)="selectFilter($event, 'dataHoraAcidente')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="afastamento">Afastamento</mfDefaultSorter>
+		            <input type="text" name="afastamento" style="width: 90%" 
+							placeholder="filtrar afastamento"
+							(input)="selectFilter($event, 'afastamento')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="dataEmissaoCat">Data de Emissao da Cat</mfDefaultSorter>
+		            <input type="text" name="dataEmissaoCat" style="width: 90%" 
+							placeholder="filtrar dataEmissaoCat"
+							(input)="selectFilter($event, 'dataEmissaoCat')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="gravidade">Gravidade</mfDefaultSorter>
+		            <input type="text" name="gravidade" style="width: 90%" 
+							placeholder="filtrar gravidade"
+							(input)="selectFilter($event, 'gravidade')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="dataAvaliacaoMedica">Data da Avaliação Médica</mfDefaultSorter>
+		            <input type="text" name="dataAvaliacaoMedica" style="width: 90%" 
+							placeholder="filtrar dataAvaliacaoMedica"
+							(input)="selectFilter($event, 'dataAvaliacaoMedica')">
+		        </th>
+		        <th style="width: 3%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="catSd2000">CAT SD2000</mfDefaultSorter>
+						<div class="div-icon" id="catSd2000">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'catSd2000')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 3%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="registoSd2000">Registo SD2000</mfDefaultSorter>
+						<div class="div-icon" id="registoSd2000">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'registoSd2000')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 3%">
+		            <mfDefaultSorter by="tipoAcidente">Tipo do Acidente</mfDefaultSorter>
+		            <input type="text" name="tipoAcidente" style="width: 90%" 
+							placeholder="filtrar tipo do acidente"
+							(input)="selectFilter($event, 'tipoAcidente')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="tipoCat">Tipo da CAT</mfDefaultSorter>
+		            <input type="text" name="tipoCat" style="width: 90%" 
+							placeholder="filtrar tipo da CAT"
+							(input)="selectFilter($event, 'tipoCat')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="diagnostico">Diagnóstico</mfDefaultSorter>
+		            <input type="text" name="diagnostico" style="width: 90%" 
+							placeholder="filtrar diagnostico"
+							(input)="selectFilter($event, 'diagnostico')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="codigoCartaSindicato">Código da Carta do Sindicato</mfDefaultSorter>
+		            <input type="text" name="codigoCartaSindicato" style="width: 90%" 
+							placeholder="filtrar código da carta do sindicato"
+							(input)="selectFilter($event, 'codigoCartaSindicato')">
+		        </th>
+		        <th style="width: 3%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="comunicavelSus">Comunicavel SUS</mfDefaultSorter>
+						<div class="div-icon" id="comunicavelSus">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'comunicavelSus')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 3%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="ferimentoGraveConformeAnp">Ferimento Grave Conforme ANP</mfDefaultSorter>
+						<div class="div-icon" id="ferimentoGraveConformeAnp">
+							<i class="small material-icons icon" 
+								(click)="dropdown($event, 'ferimentoGraveConformeAnp')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="dataComunicacaoSindicato">Data da Comunicação do Sindicato</mfDefaultSorter>
+		            <input type="text" name="dataComunicacaoSindicato" style="width: 90%" 
+							placeholder="filtrar data da comunicação do sindicato"
+							(input)="selectFilter($event, 'dataComunicacaoSindicato')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="remuneracao">Remuneração</mfDefaultSorter>
+		            <input type="text" name="remuneracao" style="width: 90%" 
+							placeholder="filtrar remuneração"
+							(input)="selectFilter($event, 'remuneracao')">
+		        </th>
+		        <th style="width: 3%">
+		            <mfDefaultSorter by="fornecedor">Empresa</mfDefaultSorter>
+		            <input type="text" name="fornecedor" style="width: 90%" 
+							placeholder="filtrar fornecedor"
+							(input)="selectFilter($event, 'fornecedor')">
+		        </th>
+		    </tr>
+	    </thead>
+	    <tbody>
+		    <tr *ngFor="let item of mf.data">
+		        <td>{{item.numero}}</td>
+		        <td>
+		        	<input type="checkbox" id="item-contratado" disabled 
+						[(ngModel)]="item.contratado" name="contratado"> 
+					<label for="contratado"></label>
+				</td>
+		        <td>{{item.nome}}</td>
+		        <td>{{item.dataNascimento}}</td>
+		        <td>{{item.cargo}}</td>
+		        <td>{{item.regime}}</td>
+		        <td>{{item.cpf}}</td>
+		        <td>{{item.sexo}}</td>
+		        <td>{{item.rta}}</td>
+		        <td>{{item.instalacao}}</td>
+		        <td>{{item.parteCorpoAtingida}}</td>
+		        <td>{{item.agenteCausador}}</td>
+		        <td>{{item.naturezaLesao}}</td>
+		        <td>{{item.gerencia}}</td>
+		        <td>{{item.classificacaoSisin}}</td>
+		        <td>{{item.dataHoraAcidente}}</td>
+		        <td>
+		        	<input type="checkbox" id="item-afastamento" disabled 
+						[(ngModel)]="item.afastamento" name="afastamento"> 
+					<label for="afastamento"></label>
+				</td>
+		        <td>{{item.dataEmissaoCat}}</td>
+		        <td>{{item.gravidade}}</td>
+		        <td>{{item.dataAvaliacaoMedica}}</td>
+		        <td>
+		        	<input type="checkbox" id="item-catSd2000" disabled 
+						[(ngModel)]="item.catSd2000" name="catSd2000"> 
+					<label for="catSd2000"></label>
+		        </td>
+		        <td>
+		        	<input type="checkbox" id="item-registoSd2000" disabled 
+						[(ngModel)]="item.registoSd2000" name="registoSd2000"> 
+					<label for="registoSd2000"></label>
+		        </td>
+		        <td>{{item.tipoAcidente}}</td>
+		        <td>{{item.tipoCat}}</td>
+		        <td>{{item.diagnostico}}</td>
+		        <td>{{item.codigoCartaSindicato}}</td>
+		        <td>
+		        	<input type="checkbox" id="item-comunicavelSus" disabled 
+						[(ngModel)]="item.comunicavelSus" name="comunicavelSus"> 
+					<label for="comunicavelSus"></label>
+		        </td>
+		        <td>
+		        	<input type="checkbox" id="item-ferimentoGraveConformeAnp" disabled 
+						[(ngModel)]="item.ferimentoGraveConformeAnp" name="ferimentoGraveConformeAnp"> 
+					<label for="ferimentoGraveConformeAnp"></label>
+		        </td>
+		        <td>{{item.dataComunicacaoSindicato}}</td>
+		        <td>{{item.remuneracao}}</td>
+		        <td>{{item.fornecedor}}</td>
+		    </tr>
+	    </tbody>
+	</table>
+</div>
+
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
+</div>
+
+<ul id='dropdown' class='dropdown-conteudo'></ul>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

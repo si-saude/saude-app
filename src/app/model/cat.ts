@@ -3,6 +3,9 @@ import { Empregado } from './empregado';
 import { Fornecedor } from './fornecedor';
 import { Diagnostico } from './diagnostico';
 import { CustomDate} from './../generics/utils/custom-date.util';
+import { ParteCorpoAtingida } from './parte-corpo-atingida';
+import { AgenteCausador } from './agente-causador';
+import { NaturezaLesao } from './natureza-lesao';
 
 export class Cat {
     private id: number;
@@ -38,6 +41,9 @@ export class Cat {
     private dataAvaliacaoMedica: Date;
     private dataEmissaoCat: Date;
     private diaHoraAcidente: Date;
+    private parteCorpoAtingida: ParteCorpoAtingida;
+    private agenteCausador: AgenteCausador;
+    private naturezaLesao: NaturezaLesao;
 
     private dataNascimentoCustomDate: CustomDate = new CustomDate(this.dataNascimento);
     private diaHoraAcidenteCustomDate: CustomDate = new CustomDate(this.diaHoraAcidente);
@@ -349,6 +355,30 @@ export class Cat {
 
     public setTipoCat(tipoCat) {
         this.tipoCat = tipoCat;
+    }
+    
+    public getParteCorpoAtingida() {
+        return this.parteCorpoAtingida;
+    }
+
+    public setParteCorpoAtingida(parteCorpoAtingida) {
+        this.parteCorpoAtingida = parteCorpoAtingida;
+    }
+    
+    public getAgenteCausador() {
+        return this.agenteCausador;
+    }
+
+    public setAgenteCausador(agenteCausador) {
+        this.agenteCausador = agenteCausador;
+    }
+    
+    public getNaturezaLesao() {
+        return this.naturezaLesao;
+    }
+
+    public setNaturezaLesao(naturezaLesao) {
+        this.naturezaLesao = naturezaLesao;
     }
 
     public getVersion() {

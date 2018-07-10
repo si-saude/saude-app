@@ -4,6 +4,9 @@ import { DiagnosticoBuilder } from './../diagnostico/diagnostico.builder';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { FornecedorBuilder } from './../fornecedor/fornecedor.builder';
 import { GerenciaBuilder } from './../gerencia/gerencia.builder';
+import { ParteCorpoAtingidaBuilder } from './../parte-corpo-atingida/parte-corpo-atingida.builder';
+import { AgenteCausadorBuilder } from './../agente-causador/agente-causador.builder';
+import { NaturezaLesaoBuilder } from './../natureza-lesao/natureza-lesao.builder';
 
 export class CatBuilder extends GenericBuilder {
 
@@ -14,6 +17,9 @@ export class CatBuilder extends GenericBuilder {
         cat.setEmpregado(new EmpregadoBuilder().initialize(cat.getEmpregado()));
         cat.setEmpresa(new FornecedorBuilder().initialize(cat.getEmpresa()));
         cat.setGerencia(new GerenciaBuilder().initialize(cat.getGerencia()));
+        cat.setParteCorpoAtingida(new ParteCorpoAtingidaBuilder().initialize(cat.getParteCorpoAtingida()));
+        cat.setAgenteCausador(new AgenteCausadorBuilder().initialize(cat.getAgenteCausador()));
+        cat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(cat.getNaturezaLesao()));
         
         return cat;
     }
@@ -121,6 +127,33 @@ export class CatBuilder extends GenericBuilder {
                 cloneCat.setGerencia(undefined);
         } else {
             cloneCat.setGerencia(new GerenciaBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getParteCorpoAtingida") !== undefined) { 
+            cloneCat.setParteCorpoAtingida(
+                    new ParteCorpoAtingidaBuilder().clone(this.getValue(cat,"getParteCorpoAtingida")));
+            if(!this.idGtZero(cloneCat.getParteCorpoAtingida()))
+                cloneCat.setParteCorpoAtingida(undefined);
+        } else {
+            cloneCat.setParteCorpoAtingida(new ParteCorpoAtingidaBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getAgenteCausador") !== undefined) { 
+            cloneCat.setAgenteCausador(
+                    new AgenteCausadorBuilder().clone(this.getValue(cat,"getAgenteCausador")));
+            if(!this.idGtZero(cloneCat.getAgenteCausador()))
+                cloneCat.setAgenteCausador(undefined);
+        } else {
+            cloneCat.setAgenteCausador(new AgenteCausadorBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getNaturezaLesao") !== undefined) { 
+            cloneCat.setNaturezaLesao(
+                    new NaturezaLesaoBuilder().clone(this.getValue(cat,"getNaturezaLesao")));
+            if(!this.idGtZero(cloneCat.getNaturezaLesao()))
+                cloneCat.setNaturezaLesao(undefined);
+        } else {
+            cloneCat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(null));
         }
         
         cloneCat.setVersion(this.getValue(cat, "getVersion"));
