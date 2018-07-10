@@ -40,6 +40,7 @@ export class AprhoItemBuilder extends GenericBuilder {
         cloneAprhoItem.setMedidaControle(this.getValue(aprhoItem, "getMedidaControle"));        
         cloneAprhoItem.setAtividade(this.getValue(aprhoItem, "getAtividade"));
         cloneAprhoItem.setLocal(this.getValue(aprhoItem, "getLocal"));
+        cloneAprhoItem.setAvaliacaoEficacia(this.getValue(aprhoItem, "getAvaliacaoEficacia"));
         cloneAprhoItem.setFrequencia(this.getValue(aprhoItem, "getFrequencia"));
         cloneAprhoItem.setDuracao(this.getValue(aprhoItem, "getDuracao"));
         cloneAprhoItem.setVersion(this.getValue(aprhoItem, "getVersion"));

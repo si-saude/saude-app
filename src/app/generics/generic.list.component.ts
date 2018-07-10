@@ -51,6 +51,15 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         this.listComponent = this;
     }
 
+    
+    enterFilter(event){        
+        if(event.keyCode == 13 ){
+            this.setFilter();
+            this.closeModal();
+        }
+    }
+    
+    
     ngOnInit() {
         this.list();
         
