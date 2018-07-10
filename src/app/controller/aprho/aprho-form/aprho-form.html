@@ -8,16 +8,25 @@
 <!-- Confirm Save -->
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
 
-<div class="row form-container">		
+<div class="row form-container">	
+		<div class="row">
+		<a style="display: inherit;" 
+		(click)="exportFile()"> 
+		<i class="small material-icons icon">file_download</i>
+		</a>
+</div>
+
 		<div class="row">
 			<div class="col s12">
 				<ul class="tabs" materialize="tabs">
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#dadosGerais">Dados Gerais</a></li>
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#aphoItem">Informações Adicionais</a></li>
-					<li class="tab col s4"><a RouterLinkActive="active"
+					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#aprhoEmpregado">Empregados</a></li>
+					<li class="tab col s3"><a RouterLinkActive="active"
+						href="#aprhoElaboradores">Elaboradores</a></li>
 				</ul>			
 			</div>
 				<div id="dadosGerais">
@@ -29,7 +38,7 @@
 								name="empresa" [(ngModel)]="aprho.empresa">
 							</div>		
 								<div class="input-field col s3">
-											<label for="data">Data</label>
+											<label for="data">Data de Criação</label>
 											<my-date-picker name="data" required
 												[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.appDate"
 												placeholder="Data"> </my-date-picker>
@@ -47,6 +56,31 @@
 								[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
 							</fieldset>
 						</div>	
+							<div class="input-field col s3">
+								<label for="dataRevisao">Data de Revisão</label>
+								<my-date-picker name="dataRevisao" required
+									[options]="myDatePickerOptions" [(ngModel)]="aprho.dataRevisaoCustomDate.appDate"
+									placeholder="Data de Revisão"> </my-date-picker>
+							</div>
+					</div>
+					<div class="row">
+					
+					
+				<div class="input-field col s10">
+					<label for="cliente">Aprovador</label> 
+						<input
+							type="text" materialize="autocomplete" autocomplete="off"
+							name="aprho.aprovador.empregado.pessoa.nome"
+							[(ngModel)]="aprho.aprovador.empregado.pessoa.nome"
+							(blur)="autoCompleteAprovador.getAutocomplete().getObj($event,aprho,'setAprovador','getNome')"
+							(ngModelChange)="autoCompleteAprovador.getAutocomplete().getList(aprho.aprovador, 'getNome');"
+							[materializeParams]="autoCompleteAprovador.getAutocomplete().getObjAutoComplete()">
+				</div>
+					<div class="input-field col s2">
+								<label for="revisao">Revisão</label>
+								<input id="revisao" type="text" required
+								name="revisao" [(ngModel)]="aprho.revisao">
+							</div>
 					</div>
 					</form>
 				</div>
@@ -72,12 +106,20 @@
 								[materializeParams]="autoCompleteAgenteRisco.getAutocomplete().getObjAutoComplete()">
 						</fieldset>
 					</div>	
-					<div class="input-field col s6">
+					<div class="input-field col s3">
 							<label for="local" >Local</label> 
 							<input	id="local" type="text" name="atividade" required
 									[(ngModel)]="aprhoItem.local">
 					</div>
-
+						<div class="input-field col s3">
+							<fieldset>
+									<legend>Avaliação de Eficácia</legend>
+										<select name="aprhoItem.avaliacaoEficacia" class="browser-default" [(ngModel)]="aprhoItem.avaliacaoEficacia" required>
+											<option disabled selected value=null>Selecione uma Avaliação de Eficácia</option>
+											<option *ngFor="let avaliacaoEficacia of avaliacaoEficacias" value="{{avaliacaoEficacia}}">{{avaliacaoEficacia}}</option>
+										</select>
+							</fieldset>
+						</div>	
 				</div>
 				
 				<div class="row">
@@ -115,7 +157,7 @@
 				<div class="row">
 					<div class="input-field col s5">
 						<fieldset>
-							<label for="aprhoItem.possivelDanoSaude" >Fonte Geradora</label> 						
+							<label for="aprhoItem.possivelDanoSaude" >Possíveis Danos à Saúde</label> 						
 							<input type="text" materialize="autocomplete" autocomplete="off"
 							name="aprhoItem.possivelDanoSaude.descricao" required
 							[(ngModel)]="aprhoItem.possivelDanoSaude.descricao"
@@ -159,9 +201,10 @@
 								<th class="col s1">Duração</th>
 								<th class="col s1">Fonte</th>
 								<th class="col s1">Meio Propagação</th>
-								<th class="col s2">Possíveis Danos à Saúde</th>
+								<th class="col s1">Possíveis Danos à Saúde</th>
 								<th class="col s1">Categoria de Risco</th>
 								<th class="col s1">Medidas de Controle</th>
+								<th class="col s1">Avaliação de Eficácia</th>
 								<th class="col s1"></th>
 							</tr>
 						</thead>
@@ -179,9 +222,10 @@
 										<td class="col s1 aprho" >{{aprhoItem.duracao}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.fonteGeradora.descricao}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.meioPropagacao}}</td>
-										<td class="col s2 aprho" >{{aprhoItem.possivelDanoSaude.descricao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.possivelDanoSaude.descricao}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.categoriaRisco.descricao}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.medidaControle}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.avaliacaoEficacia}}</td>
 										<td class="col s1 botao-remover"><a
 										class="btn-floating waves-effect waves-light red btn-remove"
 										(click)="removeAprho(i)"> <i
@@ -220,32 +264,44 @@
 							</a>
 						</div>
 					</div>	
-					<div class="table-empregados ">
+					<div class="table-empregados">
 					<table class="striped">
 						<thead>
 							<tr class="row col s12">
 								<th class="col s1">Chave</th>
-								<th class="col s5">Nome</th>
+								<th class="col s4">Nome</th>
 								<th class="col s3">Gerência</th>
 								<th class="col s1">Atual</th>
+								<th class="col s2">Entrevistado</th>
 								<th class="col s1">Excluir</th>
 							</tr>
 						</thead>
-						<div class="container-empregado-convocacao">
+						<div>
 							<div
-								*ngFor="let aprhoEmpregado of aprhoEmpregados; let i = index">
+								*ngFor="let aprhoEmpregado of aprho.aprhoEmpregados; let i = index">
 								<tbody class="col s12">
 									<tr class="col s12">
+										<input id="aprhoEmpregado.version" name="aprhoEmpregado.version" 
+										type="hidden" [(ngModel)]="aprhoEmpregado.version">
+										<input type="hidden" [(ngModel)]="aprhoEmpregado.id"
+										value="{{aprhoEmpregado.id}}" name="aprhoEmpregado.id">	
 										<td class="col s1 chave">{{aprhoEmpregado.empregado.chave}}</td>
-										<td class="col s5 nome">{{aprhoEmpregado.empregado.pessoa.nome}}</td>
+										<td class="col s4 nome">{{aprhoEmpregado.empregado.pessoa.nome}}</td>
 										<td class="col s3 codigo_completo">{{aprhoEmpregado.empregado.gerencia.codigoCompleto}}</td>
-										<td class="col s1 checkbox_selecionado">
+										<td class="col s1 checkbox_atual">
 											<input
-											type="checkbox" id="aprhoEmpregado[{{i}}].atual"
+											type="checkbox" id="aprhoEmpregado.atual"
 											[(ngModel)]="aprhoEmpregado.atual"
-											name="aprhoEmpregado[{{i}}].atual"> <label
-											for="aprhoEmpregado[{{i}}].atual"></label></td>
-										<td class="col s1 btn-remover"><a
+											name="aprhoEmpregado.atual"> <label
+											for="aprhoEmpregado.atual"></label></td>
+											
+										<td class="col s2 checkbox_atual">
+											<input
+											type="checkbox" id="aprhoEmpregado.entrevistado"
+											[(ngModel)]="aprhoEmpregado.entrevistado"
+											name="aprhoEmpregado.entrevistado"> <label
+											for="aprhoEmpregado.entrevistado"></label></td>	
+										<td class="col s1 btn-removerEmp"><a
 											(click)="removeAprhoEmpregado(i)"
 											[ngStyle]="{'cursor': 'pointer'}"><i
 												class="material-icons">delete</i></a></td>
@@ -255,7 +311,60 @@
 						</div>
 					</table>
 				</div>	
+				</div>
+				<div id="aprhoElaboradores">
+					<div class="row">
+					</div>
+					<div class="row">					
+						<div class="input-field col s10">
+							<label for="cliente">Elaborador</label> 
+								<input
+									type="text" materialize="autocomplete" autocomplete="off"
+									name="equipe.coordenador.empregado.pessoa.nome"
+									[(ngModel)]="equipe.coordenador.empregado.pessoa.nome"
+									(blur)="autoCompleteElaborador.getAutocomplete().getObj($event,equipe,'setCoordenador','getNome')"
+									(ngModelChange)="autoCompleteElaborador.getAutocomplete().getList(equipe.coordenador, 'getNome');"
+									[materializeParams]="autoCompleteElaborador.getAutocomplete().getObjAutoComplete()">
+						</div>
+						<div class="input-field col s2" style="margin-top: 30px;">
+							<a
+								class="btn-floating waves-effect waves-light green btn-add-autocomplete"
+								(click)="addAprhoElaborador()"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+					</div>
+					<div class="table-empregados">
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s9">Nome</th>
+								<th class="col s2">Matrícula</th>
+								<th class="col s1">Excluir</th>
+							</tr>
+						</thead>
+						<div>
+							<div
+								*ngFor="let elaborador of aprho.elaboradores; let i = index">
+								<tbody class="col s12">
+									<tr class="col s12">
+										<input id="elaborador.version" name="elaborador.version" 
+										type="hidden" [(ngModel)]="elaborador.version">
+										<input type="hidden" [(ngModel)]="elaborador.id"
+										value="{{elaborador.id}}" name="elaborador.id">	
+										<td class="col s9 nome">{{elaborador.empregado.pessoa.nome}}</td>
+										<td class="col s2 codigo_completo">{{elaborador.empregado.matricula}}</td>
+										<td class="col s1 btn-removerEmp"><a
+											(click)="removeAprhoElaborador(i)"
+											[ngStyle]="{'cursor': 'pointer'}"><i
+												class="material-icons">delete</i></a></td>
+									</tr>
+								</tbody>
+							</div>
+						</div>
+					</table>
 				</div>	
+					</div>	
 			</div>
 		<input id="id" name="id" type="hidden" [(ngModel)]="aprho.id"> 
 		<input id="version" name="version" type="hidden" [(ngModel)]="aprho.version">

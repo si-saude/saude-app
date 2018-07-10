@@ -83,7 +83,7 @@
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modelParams" [materializeActions]="modalActions">
+	[materializeParams]="modelParams" [materializeActions]="modalActions" (keypress)="enterFilter($event)">
 
 	<div class="row">
 		<div class="input-field col s12">

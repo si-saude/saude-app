@@ -25,6 +25,7 @@ export class AprhoEmpregadoBuilder extends GenericBuilder {
         let cloneAprhoEmpregado = new AprhoEmpregado();
         cloneAprhoEmpregado.setId(this.getValue(aprhoEmpregado,"getId"));
         cloneAprhoEmpregado.setAtual(this.getValue(aprhoEmpregado, "getAtual"));
+        cloneAprhoEmpregado.setEntrevistado(this.getValue(aprhoEmpregado, "getEntrevistado"));
         cloneAprhoEmpregado.setVersion(this.getValue(aprhoEmpregado, "getVersion"));
         cloneAprhoEmpregado.setEmpregado(new EmpregadoBuilder().clone(this.getValue( aprhoEmpregado, "getEmpregado" )));
         cloneAprhoEmpregado.setAprho(new AprhoBuilder().clone(this.getValue( aprhoEmpregado, "getAprho" )));

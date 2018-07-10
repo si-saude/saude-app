@@ -12,6 +12,7 @@ import { AgenteRiscoService } from './../agente-risco/agente-risco.service';
 import { CategoriaRiscoService } from './../categoria-risco/categoria-risco.service';
 import { PossivelDanoSaudeService } from './../possivel-dano-saude/possivel-dano-saude.service';
 import { EmpregadoService } from './../empregado/empregado.service';
+import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 
 @Injectable()
 export class AprhoService extends GenericService {
@@ -22,7 +23,8 @@ export class AprhoService extends GenericService {
                  private fonteGeradoraService: FonteGeradoraService, 
                  private agenteRiscoService: AgenteRiscoService, 
                  private possivelDanoSaudeService: PossivelDanoSaudeService,
-                 private empregadoService: EmpregadoService) { 
+                 private empregadoService: EmpregadoService,
+                 private profissionalSaudeService: ProfissionalSaudeService) { 
         super(http,router,"aprho");
     }
     
@@ -50,7 +52,16 @@ export class AprhoService extends GenericService {
         return this.http
             .get( urlMedidaControle + "?filter=", { headers: this.headers } )
             .toPromise();
-    }   
+    }  
+    
+    getAvaliacaoEficacias() {
+        let urlAvaliacaoEficacia = GlobalVariable.BASE_API_URL + "/generic/avaliacao-eficacia";
+        return this.http
+            .get( urlAvaliacaoEficacia + "?filter=", { headers: this.headers } )
+            .toPromise();
+    } 
+    
+    
     getCategoriaRiscos() {
         return this.categoriaRiscosService.getCategoriaRiscos();
     }    
@@ -74,6 +85,17 @@ export class AprhoService extends GenericService {
     
     getEmpregadoService() {
         return this.empregadoService;
+    }
+    
+    getProfissionalSaudeService() {
+        return this.profissionalSaudeService;
+    }
+    
+    aprhoToPdf( aprho ) {
+        let urlAprhoPdf = this.URL + "/aprho-to-pdf";
+        return this.http
+            .post( urlAprhoPdf, aprho, { headers: this.headers } )
+            .toPromise();
     }
    
 }

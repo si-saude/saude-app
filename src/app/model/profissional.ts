@@ -122,14 +122,13 @@ export class Profissional {
     }
     
     getNome() {
-        if ( this.empregado != undefined && this.empregado.getPessoa() != undefined )
-            return this.empregado.getPessoa().getNome();
+        if ( this.empregado != undefined )
+            return this.empregado.getNome();
         return undefined;
     }
     
     setNome(nome: string) {
-        if ( this.empregado != undefined && this.empregado.getPessoa() != undefined )
-            this.empregado.getPessoa().setNome(nome);
+        if ( this.empregado != undefined )
+            this.empregado.setNome(nome);
     }
-
 }
