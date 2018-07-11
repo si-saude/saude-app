@@ -9,18 +9,11 @@
 
 	<h5 class="title-modal title-modal-planejamento">Diagnósticos</h5>
 	
-	<!--  <div class="div-filter-diagnostico col s6 center">
-		<label for="filterDiagnostico" class="label-select-planejamento">Filtrar</label><br>
-		<input id="filterDiagnostico" type="text" class="input-filter-planejamento"
-			[(ngModel)]="filterDiagnostico" name="filterDiagnostico"
-			(ngModelChange)="fetchDiagnosticos($event)">
-	</div> -->
-	
 	<fieldset>
 		<legend> Eixo </legend>
 		<select name="selectEixoDiagnostico" class="browser-default"
 			[(ngModel)]="selectEixoId" (change)="fetchDiagnosticos()">
-			<option disabled selected value=0>Selecione um eixo</option>
+			<option disabled selected value="undefined">Selecione um eixo</option>
 			<option *ngFor="let eixo of eixos"
 				value="{{eixo.id}}">{{eixo.titulo}}</option>
 		</select>
