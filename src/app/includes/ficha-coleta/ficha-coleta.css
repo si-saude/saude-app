@@ -80,3 +80,16 @@ select {
 .center-icon {
 	margin-top: 0px;
 }
+
+.title-modal {
+	text-align: center;
+	color: #26a69a;
+}
+
+.label-conteudo {
+	color: #26a69a;
+}
+
+.btn-flat {
+    margin-top: 2% !important	;
+}

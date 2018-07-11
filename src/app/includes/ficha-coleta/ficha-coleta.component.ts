@@ -33,13 +33,22 @@ export class FichaColetaComponent{
     private listPathsEnumItem: Array<string>;
     private listEnumsByPathItem = [[]];
     private cssUtil: CssUtil;
-
+    private modalConteudoItem;
+    private modalConteudoResposta;
+    private conteudoItem: string;
+    private conteudoResposta: string;
+    private dadosItemResposta: Array<any>;
+    private resposta: RespostaFichaColeta;
+    
     constructor( router: Router ) {
         this.gruposRespostasFichaColeta = new Array<string>();
         this.quantidadeItemRespostasByGrupo = new Array<number>();
         this.listPathsEnumItem = new Array<string>();
         this.listPathsEnumPergunta = new Array<string>();
         this.cssUtil = new CssUtil();
+        this.modalConteudoItem = new EventEmitter<string | MaterializeAction>();
+        this.modalConteudoResposta = new EventEmitter<string | MaterializeAction>(); 
+        this.dadosItemResposta = new Array<any>();
     }
     
     ngOnInit() {
@@ -279,6 +288,48 @@ export class FichaColetaComponent{
             return true;
         
         return false;
+    }
+    
+    showModalConteudoItem(resposta: RespostaFichaColeta, respostaItem: ItemRespostaFichaColeta, 
+            indexItemResposta: number, indexItemItem: number) {
+        this.modalConteudoItem.emit( { action: "modal", params: ['open'] } );
+        $("#conteudo-item").val("");
+        this.dadosItemResposta = [ resposta, respostaItem, indexItemResposta, indexItemItem ];
+    }
+    
+    confirmarModalConteudoItem() {
+        this.modalConteudoItem.emit( { action: "modal", params: ['close'] } );
+        let resposta = this.dadosItemResposta[0];
+        let respostaItem = this.dadosItemResposta[1];
+        let indexItemResposta = this.dadosItemResposta[2];
+        let indexItemItem = this.dadosItemResposta[3];
+        
+        let resp = this.innerFichaColeta.getRespostaFichaColetas().find(r => r.getId() == resposta.getId());
+        let itemResposta: ItemRespostaFichaColeta = resp.getItens()[indexItemResposta];
+        let itemItem: ItemRespostaFichaColeta = itemResposta; 
+        for ( let i = 0; i < indexItemItem; i++ )
+            itemItem = itemResposta.getItem();
+        itemItem.setConteudo(this.conteudoItem);
+    }
+    
+    cancelarModalConteudoItem() {
+        this.modalConteudoItem.emit( { action: "modal", params: ['close'] } );
+    }
+    
+    showModalConteudoResposta(resposta) {
+        this.modalConteudoResposta.emit( { action: "modal", params: ['open'] } );
+        $("#conteudo-resposta").val("");
+        this.resposta = resposta;
+    }
+    
+    confirmModalConteudoResposta() {
+        this.modalConteudoResposta.emit( { action: "modal", params: ['close'] } );
+        let resp = this.innerFichaColeta.getRespostaFichaColetas().find(r => r.getId() == this.resposta.getId());
+        resp.setConteudo(this.conteudoResposta);
+    }
+    
+    cancelarModalConteudoResposta() {
+        this.modalConteudoResposta.emit( { action: "modal", params: ['close'] } );
     }
     
 }

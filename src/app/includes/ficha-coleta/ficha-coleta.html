@@ -16,7 +16,7 @@
 					<div class="row resposta">
 						<div *ngSwitchCase="'DOUBLE'">
 							<div class="input-field col s5">
-								<input type="text" name="DOUBLE{{r}}"
+								<input type="text" name="DOUBLE{{r}}" (click)="showModalConteudoResposta(resposta)"
 									class="resposta-conteudo resposta-pergunta"
 									[disabled]="verifyEquipe(resposta)"
 									[(ngModel)]="resposta.conteudo">
@@ -25,7 +25,7 @@
 
 						<div *ngSwitchCase="'INTEIRO'">
 							<div class="input-field col s5">
-								<input type="text" name="INTEIRO{{r}}"
+								<input type="text" name="INTEIRO{{r}}" (click)="showModalConteudoResposta(resposta)"
 									class="resposta-conteudo resposta-pergunta"
 									[disabled]="verifyEquipe(resposta)"
 									[(ngModel)]="resposta.conteudo">
@@ -34,7 +34,7 @@
 
 						<div *ngSwitchCase="'TEXTO'">
 							<div class="input-field col s5">
-								<input type="text" name="TEXTO{{r}}"
+								<input type="text" name="TEXTO{{r}}" (click)="showModalConteudoResposta(resposta)"
 									class="resposta-conteudo resposta-pergunta"
 									[disabled]="verifyEquipe(resposta)"
 									[(ngModel)]="resposta.conteudo">
@@ -89,11 +89,9 @@
 
 								<tbody class="col s12">
 									<tr class="col s12">
-										<div
-											*ngFor="let respostaItem of resposta.itens; let i = index">
+										<div *ngFor="let respostaItem of resposta.itens; let i = index">
 											<div class="row">
-												<div
-													*ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
+												<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
 													<td *ngIf="verifyItemPath(resposta, rI)"
 														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
 														<select class="resposta-item" [(ngModel)]="item.conteudo"
@@ -105,8 +103,9 @@
 													</td>
 													<td *ngIf="!verifyItemPath(resposta, rI)"
 														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-														<textarea class="materialize-textarea" id="resposta.item" type="text"
-															[disabled]="verifyEquipe(resposta)" name="resposta.item"
+														<textarea class="materialize-textarea" id="resposta.item" 
+															(click)="showModalConteudoItem(resposta, respostaItem, i, rI)"
+															type="text" [disabled]="verifyEquipe(resposta)" name="resposta.item"
 															class="resposta-item" [(ngModel)]="item.conteudo"></textarea>
 													</td>
 												</div>
@@ -131,4 +130,48 @@
 			</div>
 		</fieldset>
 	</div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalConteudoItem">
+
+	<h5 class="title-modal">Conteúdo</h5>
+	
+	<div class="div-conteudo col s6 center">
+		<label for="conteudo" class="label-conteudo">Conteúdo</label><br>
+		<textarea id="conteudo-item" type="text" [(ngModel)]="conteudoItem"
+			class="materialize-textarea input-conteudo resposta-item" name="conteudo"></textarea>
+	</div>
+ 
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat btn"
+			(click)="confirmarModalConteudoItem()">Confirmar</a>
+		<a class="waves-effect waves-green btn-flat btn"
+			(click)="cancelarModalConteudoItem()">Cancelar</a>
+	</div>
+
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalConteudoResposta">
+
+	<h5 class="title-modal">Conteúdo</h5>
+	
+	<div class="div-conteudo col s6 center">
+		<label for="conteudo" class="label-conteudo">Conteúdo</label><br>
+		<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudoResposta"
+			class="materialize-textarea input-conteudo resposta-item" name="conteudo"></textarea>
+	</div>
+ 
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat btn"
+			(click)="confirmarModalConteudoResposta()">Confirmar</a>
+		<a class="waves-effect waves-green btn-flat btn"
+			(click)="cancelarModalConteudoResposta()">Cancelar</a>
+	</div>
+
 </div>
