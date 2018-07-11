@@ -105,9 +105,9 @@
 													</td>
 													<td *ngIf="!verifyItemPath(resposta, rI)"
 														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-														<input id="resposta.item" type="text"
-														[disabled]="verifyEquipe(resposta)" name="resposta.item"
-														class="resposta-item" [(ngModel)]="item.conteudo">
+														<textarea class="materialize-textarea" id="resposta.item" type="text"
+															[disabled]="verifyEquipe(resposta)" name="resposta.item"
+															class="resposta-item" [(ngModel)]="item.conteudo"></textarea>
 													</td>
 												</div>
 												<td class="col s2 botao-remover"><a

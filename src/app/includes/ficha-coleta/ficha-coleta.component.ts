@@ -11,6 +11,7 @@ import { RespostaFichaColeta } from './../../model/resposta-ficha-coleta';
 import { Equipe } from './../../model/equipe';
 import { ItemRespostaFichaColeta } from './../../model/item-resposta-ficha-coleta';
 import { ItemRespostaFichaColetaBuilder } from './../../controller/item-resposta-ficha-coleta/item-resposta-ficha-coleta.builder';
+import { CssUtil } from './../../generics/utils/css.util';
 
 @Component( {
     selector: 'app-ficha-coleta',
@@ -31,17 +32,20 @@ export class FichaColetaComponent{
     private listEnumsByPathPergunta = [[]];
     private listPathsEnumItem: Array<string>;
     private listEnumsByPathItem = [[]];
+    private cssUtil: CssUtil;
 
     constructor( router: Router ) {
-    }
-    
-    ngOnInit() { 
         this.gruposRespostasFichaColeta = new Array<string>();
         this.quantidadeItemRespostasByGrupo = new Array<number>();
         this.listPathsEnumItem = new Array<string>();
         this.listPathsEnumPergunta = new Array<string>();
+        this.cssUtil = new CssUtil();
+    }
+    
+    ngOnInit() {
         this.getRespostasFichaColeta();
         this.getStatusSimNao();
+        this.cssUtil.overflowTextarea(".resposta-item");
     }
     
     ngOnChanges( changes: SimpleChanges ) {
