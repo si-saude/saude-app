@@ -23,4 +23,15 @@ export class CargoBuilder extends GenericBuilder {
         
         return cloneCargo;
     }
+    
+    cloneList(cargos: Array<Cargo>): Array<Cargo> {
+        let array:Array<Cargo> = new Array<Cargo>();
+        if (cargos !== null && cargos !== undefined) { 
+            for (let cargo of cargos) {
+                array.push(this.clone(cargo));
+            }
+        }
+        
+        return array;
+    }
 }
