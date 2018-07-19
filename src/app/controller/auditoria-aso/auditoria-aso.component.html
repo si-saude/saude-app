@@ -14,15 +14,18 @@
 
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
-				<div class="col s4">
+				<div class="col s3">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregado.pessoa.nome}}</a>
 				</div>
-				<div class="col s4">
+				<div class="col s3">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.atendimento.tarefa.servico.nome}}</a>
 				</div>
 				<div class="col s3">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.status}}</a>
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.data  |transformDate}} - {{a.validade  |transformDate}}</a>
 				</div>
+				<div class="col s2">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.status}}</a>
+				</div>				
 				<div class="col s1">
 					<a [routerLink]="['/auditoria-aso/editar', a.id]"><i
 						class="material-icons">mode_edit</i></a>

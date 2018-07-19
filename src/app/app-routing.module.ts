@@ -69,6 +69,7 @@ import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.gua
 import { CatGuard } from './guards/guards-child/cat.guard';
 import { KanbanGuard } from './guards/kanban.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
+import { MudancaFuncaoGuard } from './guards/guards-child/mudanca-funcao.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -229,6 +230,9 @@ const routes: Routes = [
   { path: 'atestado', 
       loadChildren: 'app/controller/atestado/atestado.module#AtestadoModule',
       canActivateChild: [AtestadoGuard]},
+  { path: 'mudanca-funcao', 
+      loadChildren: 'app/controller/mudanca-funcao/mudanca-funcao.module#MudancaFuncaoModule',
+      canActivateChild: [MudancaFuncaoGuard]},
   { path: 'solicitacao-central-integra',
       loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

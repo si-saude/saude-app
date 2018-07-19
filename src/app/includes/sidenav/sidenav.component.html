@@ -102,6 +102,7 @@
 			<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
 			<a [routerLink]="['/risco-potencial']" *ngIf="checkPermissao('RISCO-POTENCIAL_LISTAR')">Controle da SAST</a>
 			<a [routerLink]="['/kanban']" *ngIf="checkPermissao('KANBAN')">Kanban</a>
+			<a [routerLink]="['/mudanca-funcao']" *ngIf="checkPermissao('MUDANCA-FUNCAO_LISTAR')">Mudança de Função</a>
 			<li>
 			<a materialize="sideNav"
 				[materializeParams]="[{closeOnClick: true}]"

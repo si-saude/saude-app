@@ -5,11 +5,12 @@ import { Ghee } from './ghee';
 import { Regime } from './regime';
 import { Gerencia } from './gerencia';
 import { Base } from './base';
+import { Profissional } from './profissional';
 import { Tarefa } from './tarefa';
 import { DateUtil } from './../generics/utils/date.util';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
-export class MudancaFuncao {
+export class MudancaFuncao { 
     private id: number = 0;
     private cargo: Cargo;
     private funcao: Funcao;
@@ -18,6 +19,9 @@ export class MudancaFuncao {
     private regime: Regime;
     private gerencia: Gerencia;
     private base: Base;
+    private abertura: Date;
+    private cliente: Profissional;
+    private status: string;
     private tarefas: Array<Tarefa>;
     private version: number;
 
@@ -29,7 +33,30 @@ export class MudancaFuncao {
         this.id = id;
     }
 
-  
+    getAbertura() {
+        return this.abertura;
+    }
+
+    setAbertura(abertura: Date) {
+        this.abertura = abertura;
+    }
+    
+    getStatus():string {
+        return this.status;
+    }
+
+    setStatus(status: string) {
+        this.status = status;
+    }   
+    
+    getProfissional() {
+        return this.cliente;
+    }
+
+    setProfissional(cliente: Profissional) {
+        this.cliente = cliente;
+    }
+    
     getCargo() {
         return this.cargo;
     }

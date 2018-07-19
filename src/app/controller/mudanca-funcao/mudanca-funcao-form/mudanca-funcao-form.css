@@ -1,0 +1,47 @@
+.btn-remove {
+	margin-top: -5px;
+    margin-bottom: 3px;
+	width: 30px;
+    height: 30px;
+}
+
+.btn-removerEmp {
+	margin-top: 3px;
+    padding-left: 2rem;
+}
+
+.row-mudancaFuncao {
+    margin-left: -20px;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+td {
+	word-wrap:break-word;	
+}
+div h6 {
+	padding-left: 10px;
+	color: #26a69a;
+}

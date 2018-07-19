@@ -71,6 +71,7 @@ import { AgenteRiscoService } from './agente-risco/agente-risco.service';
 import { AprhoService } from './aprho/aprho.service';
 import { CatService } from './cat/cat.service';
 import { AtestadoService } from './atestado/atestado.service';
+import { MudancaFuncaoService } from './mudanca-funcao/mudanca-funcao.service';
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import { AtestadoService } from './atestado/atestado.service';
     AprhoService,
     SolicitacaoCentralIntegraService,
     CatService,
-    AtestadoService
+    AtestadoService,
+    MudancaFuncaoService
   ]
 })
 export class SharedModule { }

@@ -87,6 +87,7 @@ import { CatGuard } from './guards/guards-child/cat.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 import { KanbanGuard } from './guards/kanban.guard';
+import { MudancaFuncaoGuard } from './guards/guards-child/mudanca-funcao.guard';
 
 
 @NgModule({
@@ -178,7 +179,8 @@ import { KanbanGuard } from './guards/kanban.guard';
     KanbanGuard,
     AgendaPeriodicoGuard,
     CatGuard,
-    AtestadoGuard
+    AtestadoGuard,
+    MudancaFuncaoGuard
   ],
   bootstrap: [ 
     AppComponent
