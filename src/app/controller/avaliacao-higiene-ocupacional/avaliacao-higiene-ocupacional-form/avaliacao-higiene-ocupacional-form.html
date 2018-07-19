@@ -1,0 +1,217 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+		
+			<ul class="tabs" materialize="tabs">
+				<li class="tab col s6"><a RouterLinkActive="active"
+					href="#dadosGerais">Dados Gerais</a></li>
+				<li class="tab col s6"><a RouterLinkActive="active"
+					href="#ensaioVedacao">Ensaio de Vedação</a></li>
+			</ul>
+		
+			<div class="groups">
+				<div id="dadosGerais">
+
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="empregado">Empregado</label> 
+							<input required
+								type="text" materialize="autocomplete" autocomplete="off"
+								name="avaliacaoHigieneOcupacional.empregado.pessoa.nome"
+								[(ngModel)]="avaliacaoHigieneOcupacional.empregado.pessoa.nome"
+								(blur)="empregadoNomeAutocomplete.getAutocomplete().getObj($event,avaliacaoHigieneOcupacional,'setEmpregado','getNome')"
+								(ngModelChange)="empregadoNomeAutocomplete.getAutocomplete().getList(avaliacaoHigieneOcupacional.empregado, 'getNome');"
+								[materializeParams]="empregadoNomeAutocomplete.getAutocomplete().getObjAutoComplete()">
+						</div>
+					</div>
+									
+					<div class="row">
+						<div class="input-field col s6">
+							<fieldset>
+								<legend> Localização <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getLocalizacoes()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
+								<select name="local" class="browser-default"
+									[(ngModel)]="avaliacaoHigieneOcupacional.local.id">
+									<option disabled selected value="0">Selecione uma localização</option>
+									<option *ngFor="let localizacao of localizacoes" value="{{localizacao.id}}">{{localizacao.nome}}</option>
+								</select>
+							</fieldset>
+						</div>
+						
+						<div class="input-field col s3">
+							<label for="data">Data</label>
+							<my-date-picker name="data"
+								[options]="myDatePickerOptions" [(ngModel)]="avaliacaoHigieneOcupacional.dataCustomDate.appDate"
+								placeholder="Data"> </my-date-picker>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="input-field col s6">
+							<label for="inicio">Início</label>
+							<div>
+								<div class="input-field col s6">
+									<my-date-picker name="inicio"
+										[options]="myDatePickerOptions"
+										[(ngModel)]="avaliacaoHigieneOcupacional.inicioCustomTime.appDate"
+										placeholder="Início"></my-date-picker>
+								</div>
+								<div class="input-field col s6">
+						            <input id="inicio" name="inicio" 
+						            	[(ngModel)]="avaliacaoHigieneOcupacional.inicioCustomTime.appTime"
+					                    materialize="pickatime" 
+					                    [materializeActions]="inicioTimeActions"
+					                    [materializeParams]="[{twelvehour: false}]"
+					                    placeholder="00:00" class="validate" type="text">
+					            </div>
+				            </div>
+						</div>
+						
+						<div class="input-field col s6">
+							<label for="fim">Fim</label>
+							<div>
+								<div class="input-field col s6">
+									<my-date-picker name="fim"
+										[options]="myDatePickerOptions"
+										[(ngModel)]="avaliacaoHigieneOcupacional.fimCustomTime.appDate"
+										placeholder="Fim"></my-date-picker>
+								</div>
+								<div class="input-field col s6">
+						            <input id="fim" name="fim" 
+						            	[(ngModel)]="avaliacaoHigieneOcupacional.fimCustomTime.appTime"
+					                    materialize="pickatime" 
+					                    [materializeActions]="fimTimeActions"
+					                    [materializeParams]="[{twelvehour: false}]"
+					                    placeholder="00:00" class="validate" type="text">
+					            </div>
+				            </div>
+						</div>
+					
+					</div>
+		
+				</div>
+				
+				<div id="ensaioVedacao">
+				
+					<table>
+						<tr class="tr-ensaio-vedacao" style="height: 50px">
+							<div class="input-field col s4 checkbox">
+								<input type="checkbox" id="recorrente"
+									[(ngModel)]="avaliacaoHigieneOcupacional.brigada"
+									name="avaliacaoHigieneOcupacional.brigada"> <label
+									for="brigada">BRIGADA</label>
+							</div>
+							<div class="input-field col s4 checkbox">
+								<input type="checkbox" id="espaco-confinado"
+									[(ngModel)]="avaliacaoHigieneOcupacional.espacoConfinado"
+									name="avaliacaoHigieneOcupacional.espacoConfinado"> <label
+									for="espaco-confinado">ESPAÇO CONFINADO</label>
+							</div>
+							<div class="input-field col s4 checkbox">
+								<input type="checkbox" id="uso-voluntario"
+									[(ngModel)]="avaliacaoHigieneOcupacional.usoVoluntario"
+									name="avaliacaoHigieneOcupacional.usoVoluntario"> <label
+									for="uso-voluntario">USO VOLUNTÁRIO PR</label>
+							</div>
+						</tr>
+						<tr class="tr-ensaio-vedacao" style="height: 45px">
+							<div class="input-field col s4">
+								<p style="margin-top: 4%; color: #4fc3f7;"><b><span>O ensaio de vedação foi realizado?</span></b></p>
+							</div>
+							<div class="input-field col s1">
+								<p>
+									<input class="radio" name="group1" type="radio" id="ensaioVedacao.sim"
+										[ngModel]="getEnsaioVedacao()" (ngModelChange)="setEnsaioVedacao('sim')"
+										value="sim"/> 
+									<label for="ensaioVedacao.sim">SIM</label>
+								</p>
+							</div>
+							<div class="input-field col s1">
+								<p>
+									<input class="radio" name="group1" type="radio" id="ensaioVedacao.nao"
+										[ngModel]="getEnsaioVedacao()" (ngModelChange)="setEnsaioVedacao('nao')"
+										value="nao"/> 
+									<label for="ensaioVedacao.nao">NÃO</label>
+								</p>
+							</div>
+							<div class="input-field col s3">
+								<p>
+									<input class="radio" name="group1" type="radio" id="ensaioVedacao.naoAplicavel"
+										[ngModel]="getEnsaioVedacao()" (ngModelChange)="setEnsaioVedacao('naoAplicavel')"
+										value="naoAplicavel"/>
+									<label for="ensaioVedacao.naoAplicavel">NÃO APLICÁVEL</label>
+								</p>
+							</div>
+						</tr>
+						<tr class="tr-ensaio-vedacao" style="height: 130px">
+							<div class="input-field col s12">
+								<p style="color: #4fc3f7;"><b><span> Justificativa:</span></b></p>
+							</div>
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="nao-barbeado"
+									[(ngModel)]="avaliacaoHigieneOcupacional.naoBarbeado"
+									name="avaliacaoHigieneOcupacional.naoBarbeado"> <label
+									for="nao-barbeado">NÃO ESTAVA DEVIDAMENTE BARBEADO</label>
+							</div>
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="nao-utiliza-mascara"
+									[(ngModel)]="avaliacaoHigieneOcupacional.naoUtilizaMascara"
+									name="avaliacaoHigieneOcupacional.naoUtilizaMascara"> <label
+									for="nao-utiliza-mascara">DECLAROU QUE NÃO UTILIZA MÁSCARA SEMI FACILA</label>
+							</div>
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="teste-sensibilidade-insatisfatorio"
+									[(ngModel)]="avaliacaoHigieneOcupacional.testeSensibilidadeInsatisfatorio"
+									name="avaliacaoHigieneOcupacional.testeSensibilidadeInsatisfatorio"> <label
+									for="teste-sensibilidade-insatisfatorio">TESTE DE SENSIBILIDADE COM RESULTADO INSATISFATÓRIO</label>
+							</div>
+						</tr>
+						<tr class="tr-ensaio-vedacao" style="height: 50px">
+							<div class="input-field col s12 checkbox">
+								<label>Observação:</label>
+								<textarea class="materialize-textarea" id="observacao"
+									[(ngModel)]="avaliacaoHigieneOcupacional.observacao" maxlength="512"
+									name="avaliacaoHigieneOcupacional.observacao"></textarea>
+							</div>
+						</tr>
+					</table>
+					
+				</div>
+			</div>
+			
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="avaliacaoHigieneOcupacional.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="avaliacaoHigieneOcupacional.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/avaliacao-higiene-ocupacional']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit"
+				class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	</form>
+</div>

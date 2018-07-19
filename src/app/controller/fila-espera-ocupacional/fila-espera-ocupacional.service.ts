@@ -10,6 +10,8 @@ import { EmpregadoService } from './../empregado/empregado.service';
 import { AtendimentoService } from './../atendimento/atendimento.service';
 import { RegraAtendimentoService } from './../regra-atendimento/regra-atendimento.service';
 import { RegraAtendimentoFilter } from './../regra-atendimento/regra-atendimento.filter';
+import { UsuarioService } from './../usuario/usuario.service';
+import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 
 @Injectable()
 export class FilaEsperaOcupacionalService extends GenericService {
@@ -18,7 +20,9 @@ export class FilaEsperaOcupacionalService extends GenericService {
             private localizacaoService: LocalizacaoService,
             private regraAtendimentoService: RegraAtendimentoService,
             private atendimentoService: AtendimentoService,
-            private empregadoService: EmpregadoService) { 
+            private empregadoService: EmpregadoService,
+            private usuarioService: UsuarioService,
+            private profissionalService: ProfissionalSaudeService) { 
         super(http,router,"fila-espera-ocupacional");
     }
     
@@ -105,6 +109,21 @@ export class FilaEsperaOcupacionalService extends GenericService {
     
     getEmpregadoService() {
         return this.empregadoService;
+    }
+    
+    getUsuario(id) {
+        return this.usuarioService.get(id);
+    }
+    
+    getProfissional(profissionalFilter) {
+        return this.profissionalService.list(profissionalFilter);
+    }
+    
+    getGruposPerguntaFichaColeta() {
+        let urlGrupoPerguntaFichaColeta = GlobalVariable.BASE_API_URL + "/generic/grupo-pergunta-ficha-coleta";
+        return this.http
+            .get( urlGrupoPerguntaFichaColeta + "?filter=", { headers: this.headers } )
+            .toPromise();
     }
     
 }

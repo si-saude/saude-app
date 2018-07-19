@@ -1,4 +1,3 @@
-<head>
 <meta charset="utf-8">
 </head>
 
@@ -178,6 +177,12 @@
 							</select>
 						</fieldset>
 					</div>
+					
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="afastamento"
+							[(ngModel)]="cat.afastamento" name="cat.afastamento"> <label
+							for="afastamento">Afastamento</label>
+					</div>
 				</div>
 
 				<div class="row">
@@ -193,18 +198,24 @@
 							[(ngModel)]="cat.classificacaoSisin">
 					</div>
 
-					<div class="input-field col s3">
+					<div class="input-field col s6">
 						<label for="diaHoraAcidente">Dia/Hora do Acidente</label>
-						<my-date-picker name="diaHoraAcidente"
-							[options]="myDatePickerOptions"
-							[(ngModel)]="cat.diaHoraAcidenteCustomDate.appDate"
-							placeholder="Dia/Hora do Acidente"></my-date-picker>
-					</div>
-
-					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="afastamento"
-							[(ngModel)]="cat.afastamento" name="cat.afastamento"> <label
-							for="afastamento">Afastamento</label>
+						<div>
+							<div class="input-field col s6">
+								<my-date-picker name="diaHoraAcidente"
+									[options]="myDatePickerOptions"
+									[(ngModel)]="cat.diaHoraAcidenteCustomTime.appDate"
+									placeholder="Dia/Hora do Acidente"></my-date-picker>
+							</div>
+							<div class="input-field col s6">
+					            <input id="diaHoraAcidente" name="diaHoraAcidente" 
+					            	[(ngModel)]="cat.diaHoraAcidenteCustomTime.appTime"
+				                    materialize="pickatime" 
+				                    [materializeActions]="diaHoraAcidenteTimeActions"
+				                    [materializeParams]="[{twelvehour: false}]"
+				                    placeholder="00:00" class="validate" type="text">
+				            </div>
+			            </div>
 					</div>
 				</div>
 

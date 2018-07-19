@@ -1,6 +1,5 @@
 import { Tarefa } from './tarefa';
 import { Cat } from './cat';
-import { DateUtil } from './../generics/utils/date.util';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Atestado {
@@ -20,7 +19,6 @@ export class Atestado {
     private cat: Cat;
     private version: number;
 
-    private dateUtil: DateUtil = new DateUtil();
     private dataAgendamentoCustomDate: CustomDate = new CustomDate(this.dataAgendamento);
     private dataSolicitacaoCustomDate: CustomDate = new CustomDate(this.dataSolicitacao);
 

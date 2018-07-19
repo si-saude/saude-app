@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
+import { MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
 import { Diagnostico } from './../../../model/diagnostico';
@@ -39,6 +40,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private tipoCats: Array<string>;
     private showModalDiagnostico: boolean;
     private innerIdEquipe: number = 0;
+    private diaHoraAcidente: string;
+    private diaHoraAcidenteTimeActions;
 
     private autoCompleteGerencia: GerenciaCodigoCompletoAutocomplete;
     private autoCompleteEmpregado: EmpregadoNomeAutocomplete;
@@ -68,6 +71,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.gravidades = new Array<string>();
         this.tipoAcidentes = new Array<string>();
         this.tipoCats = new Array<string>();
+        this.diaHoraAcidenteTimeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {
@@ -182,6 +186,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
+        console.log(this.cat);
         this.cat.setCpf(this.cat.getCpf().replace(".","").replace(".","").replace("-", ""));
         super.save( new CatBuilder().clone( this.cat ) );
     }

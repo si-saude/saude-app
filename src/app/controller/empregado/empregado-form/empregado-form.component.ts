@@ -9,6 +9,8 @@ import { GlobalVariable } from './../../../global';
 import { Empregado } from './../../../model/empregado';
 import { EmpregadoService } from './../empregado.service';
 import { EmpregadoFilter } from './../empregado.filter';
+import { Enfase } from './../../../model/enfase';
+import { EnfaseBuilder } from './../../enfase/enfase.builder';
 import { Cargo } from './../../../model/cargo';
 import { Funcao } from './../../../model/funcao';
 import { Regime } from './../../../model/regime';
@@ -17,6 +19,7 @@ import { Base } from './../../../model/base';
 import { Ghe } from './../../../model/ghe';
 import { GheBuilder } from './../../ghe/ghe.builder';
 import { Ghee } from './../../../model/ghee';
+import { IndicadorRiscoAcidenteInstalacao } from './../../../model/indicador-risco-acidente-instalacao';
 import { GheeBuilder } from './../../ghee/ghee.builder';
 import { Cidade } from './../../../model/cidade';
 import { Instalacao } from './../../../model/instalacao';
@@ -28,8 +31,10 @@ import { GrupoMonitoramento } from './../../../model/grupo-monitoramento';
 import { HistoricoGrupoMonitoramento } from './../../../model/historico-grupo-monitoramento';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { EmpregadoBuilder } from './../empregado.builder';
+import { IndicadorRiscoAcidenteInstalacaoBuilder } from './../../indicador-risco-acidente-instalacao/indicador-risco-acidente-instalacao.builder';
 import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-monitoramento.builder';
 import { HistoricoGrupoMonitoramentoBuilder } from './../../historico-grupo-monitoramento/historico-grupo-monitoramento.builder';
+import { InstalacaoNomeAutocomplete } from './../../instalacao/instalacao-nome.autocomplete';
 
 @Component( {
     selector: 'app-empregado-form',
@@ -59,13 +64,17 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     cidades: Array<Cidade>;
     vacinas: Array<Vacina>;
     instalacoes: Array<Instalacao>;
+    enfases: Array<Enfase>;
     instalacoesSelecteds: Array<Instalacao>;
     gruposMonitoramento: Array<GrupoMonitoramento>;
     historicoGrupoMonitoramentos: Array<HistoricoGrupoMonitoramento>;
     fotoSrc: string;
     assinaturaSrc: any;
+    instalacao: IndicadorRiscoAcidenteInstalacao; 
 
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+    
+    autoCompleteInstalacao: InstalacaoNomeAutocomplete;
     
     constructor( private route: ActivatedRoute,
         private empregadoService: EmpregadoService,
@@ -76,6 +85,11 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.assinaturaSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.fotoSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.empregado = new EmpregadoBuilder().initialize( this.empregado );
+        this.instalacao = new IndicadorRiscoAcidenteInstalacaoBuilder().initialize( this.instalacao );
+        
+        this.enfases = new EnfaseBuilder().initializeList(new Array<Enfase>());
+        
+        this.autoCompleteInstalacao = new InstalacaoNomeAutocomplete(this.empregadoService.getInstalacaoService());
     }
 
     ngOnInit() {
@@ -115,7 +129,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                                 this.assinaturaSrc = "data:image/png;base64," + this.empregado.getAssinaturaBase64();
                                 this.assinaturaSrcStyle = { 'width': '500px', 'heigth': '500px' };
                             }
-
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -140,8 +153,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.getVacinas();
         this.getInstalacoes();
         this.getGruposMonitoramento();
-        
-//        this.showToastGhe();
+        this.getEnfases();
     }
 
     getStatuses() {
@@ -218,6 +230,16 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.empregadoService.getRegimes()
             .then( res => {
                 this.regimes = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
+    getEnfases() {
+        this.empregadoService.getEnfases()
+            .then( res => {
+                this.enfases = new EnfaseBuilder().cloneList(res.json());
             } )
             .catch( error => {
                 console.log( error );
@@ -477,15 +499,20 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.empregado.getPessoa().getTelefones().splice( i, 1 );
     }
 
-    addInstalacao( valor ) {
-        if ( valor != 0 ) {
-            let i: Instalacao = this.instalacoesSelecteds.find( i => i.getId() == valor );
-
-            if ( i == undefined ) {
-                let instalacao: Instalacao = this.instalacoes.find( i => i.getId() == valor );
-                this.instalacoesSelecteds.push( instalacao );
-                this.empregado.setInstalacoes( this.instalacoesSelecteds );
+    addInstalacao() {
+        if ( this.instalacao.getInstalacao().getId() > 0 ) {
+            console.log(this.instalacao)
+            console.log(this.instalacoesSelecteds)
+            if ( this.instalacoesSelecteds.find( i => i.getId() == this.instalacao.getInstalacao().getId() ) != undefined ) {
+                this.toastParams = ["Valor adicionado anteriormente.", 4000];
+                this.globalActions.emit('toast');
+                return;
             }
+            this.instalacoesSelecteds.push( new InstalacaoBuilder().clone(this.instalacao.getInstalacao()) );
+            this.empregado.setInstalacoes( this.instalacoesSelecteds );
+        } else {
+            this.toastParams = ["Nenhum valor correto selecionado.", 4000];
+            this.globalActions.emit('toast');
         }
     }
 

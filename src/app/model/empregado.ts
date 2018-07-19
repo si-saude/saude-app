@@ -6,6 +6,7 @@ import { Gerencia } from './gerencia';
 import { Base } from './base';
 import { Ghe } from './ghe';
 import { Ghee } from './ghee';
+import { Enfase } from './enfase';
 import { Endereco } from './endereco';
 import { Instalacao } from './instalacao';
 import { EmpregadoVacina } from './empregado-vacina';
@@ -30,6 +31,7 @@ export class Empregado {
     private base: Base;
     private ghe: Ghe;
     private ghee: Ghee;
+    private enfase: Enfase;
     private instalacoes: Array<Instalacao>;
     private empregadoVacinas: Array<EmpregadoVacina>;
     private grupoMonitoramentos: Array<GrupoMonitoramento>;
@@ -122,6 +124,14 @@ export class Empregado {
     
     setPessoa(pessoa: Pessoa) {
         this.pessoa = pessoa;
+    }
+    
+    getEnfase(): Enfase {
+        return this.enfase;
+    }
+    
+    setEnfase(enfase: Enfase) {
+        this.enfase = enfase;
     }
     
     getCargo(): Cargo{

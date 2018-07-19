@@ -92,6 +92,8 @@ import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard
 import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
 import { ReportCatGuard } from './guards/report-cat.guard';
 import { ReportAtestadoGuard } from './guards/report-atestado.guard';
+import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
+import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 
 @NgModule({
   declarations: [
@@ -187,7 +189,9 @@ import { ReportAtestadoGuard } from './guards/report-atestado.guard';
     AgenteCausadorGuard,
     NaturezaLesaoGuard,
     ReportCatGuard,
-    ReportAtestadoGuard
+    ReportAtestadoGuard,
+    AvaliacaoHigieneOcupacionalGuard,
+    EnfaseGuard
   ],
   bootstrap: [ 
     AppComponent

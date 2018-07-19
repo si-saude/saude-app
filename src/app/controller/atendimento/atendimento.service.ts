@@ -191,4 +191,11 @@ export class AtendimentoService extends GenericService {
             .toPromise();
     }
     
+    getGruposPerguntaFichaColeta() {
+        let urlGrupoPerguntaFichaColeta = GlobalVariable.BASE_API_URL + "/generic/grupo-pergunta-ficha-coleta";
+        return this.http
+            .get( urlGrupoPerguntaFichaColeta + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

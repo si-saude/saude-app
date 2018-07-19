@@ -25,7 +25,7 @@ const riscoPotencialRoutes: Routes = [
         canDeactivate: [CanDeactivateGuard]},
     { path: 'acompanhamento/:id', component: AcompanhamentoComponent,
         canDeactivate: [CanDeactivateGuard]},
-    { path: 'ficha-coleta/:id', component: FichaColetaComponent},
+    { path: 'ficha-coleta/:id/:empregado', component: FichaColetaComponent},
     { path: 'planejamento/:id/:empregado', component: PlanejamentoComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'criar-plano/:id', component: CriarPlanoComponent},

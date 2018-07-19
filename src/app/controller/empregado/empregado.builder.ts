@@ -11,6 +11,7 @@ import { InstalacaoBuilder } from './../instalacao/instalacao.builder';
 import { RegimeBuilder } from './../regime/regime.builder';
 import { GrupoMonitoramentoBuilder } from './../grupo-monitoramento/grupo-monitoramento.builder';
 import { HistoricoGrupoMonitoramentoBuilder } from './../historico-grupo-monitoramento/historico-grupo-monitoramento.builder';
+import { EnfaseBuilder } from './../enfase/enfase.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class EmpregadoBuilder extends GenericBuilder{
@@ -19,6 +20,7 @@ export class EmpregadoBuilder extends GenericBuilder{
         empregado = new Empregado();
         
         empregado.setPessoa(new PessoaBuilder().initialize(empregado.getPessoa()));
+        empregado.setEnfase(new EnfaseBuilder().initialize(empregado.getEnfase()));
         empregado.setFuncao(new FuncaoBuilder().initialize(empregado.getFuncao()));
         empregado.setGerencia(new GerenciaBuilder().initialize(empregado.getGerencia()));
         empregado.setBase(new BaseBuilder().initialize(empregado.getBase()));
@@ -157,6 +159,15 @@ export class EmpregadoBuilder extends GenericBuilder{
                 cloneEmpregado.setRegime(undefined);
         } else {
             cloneEmpregado.setRegime(new RegimeBuilder().initialize(null));            
+        }
+        
+        if (this.getValue(empregado, "getEnfase") !== undefined) { 
+            cloneEmpregado.setEnfase(
+                    new EnfaseBuilder().clone(this.getValue(empregado,"getEnfase")));
+            if(!this.idGtZero(cloneEmpregado.getEnfase()))
+                cloneEmpregado.setEnfase(undefined);
+        } else {
+            cloneEmpregado.setEnfase(new EnfaseBuilder().initialize(null));            
         }
         
         cloneEmpregado.setGrupoMonitoramentos(

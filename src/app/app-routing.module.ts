@@ -72,6 +72,8 @@ import { AtestadoGuard } from './guards/guards-child/atestado.guard';
 import { ParteCorpoAtingidaGuard } from './guards/guards-child/parte-corpo-atingida.guard';
 import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard';
 import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
+import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
+import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -241,6 +243,12 @@ const routes: Routes = [
   { path: 'natureza-lesao', 
       loadChildren: 'app/controller/natureza-lesao/natureza-lesao.module#NaturezaLesaoModule',
       canActivateChild: [NaturezaLesaoGuard]},
+  { path: 'avaliacao-higiene-ocupacional', 
+      loadChildren: 'app/controller/avaliacao-higiene-ocupacional/avaliacao-higiene-ocupacional.module#AvaliacaoHigieneOcupacionalModule',
+      canActivateChild: [AvaliacaoHigieneOcupacionalGuard]},
+  { path: 'enfase', 
+      loadChildren: 'app/controller/enfase/enfase.module#EnfaseModule',
+      canActivateChild: [EnfaseGuard]},
   { path: 'solicitacao-central-integra',
       loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

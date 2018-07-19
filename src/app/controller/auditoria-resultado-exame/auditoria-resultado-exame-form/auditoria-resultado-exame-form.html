@@ -71,10 +71,10 @@
 							</legend>
 
 							<div class="row">
-								<div class="input-field col s6">
+								<div class="input-field col s12">
 									<label for="empregado">Exame</label>
 									<div>
-										<input class="col s3" 
+										<input class="col s4" 
 											type="text" disabled
 											name="empregadoConvocacao.resultadoExames[{{iREx}}].exame.codigo"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.codigo">
@@ -88,7 +88,9 @@
 											[materializeParams]="autocompleteExame">
 									</div>	
 								</div>
-
+							</div>
+							
+							<div class="row">
 								<div class="input-field col s3">
 									<label for="data">Data de Realização</label>
 									<my-date-picker name="resultadoExame[{{iREx}}].data"
@@ -103,7 +105,13 @@
 										name="resultadoExame[{{iREx}}].conforme"> <label
 										for="resultadoExame[{{iREx}}].conforme"></label> <label>Conforme</label>
 								</div>
-
+								
+								<div class="input-field col s3 checkbox particular">
+									<input type="checkbox" id="resultadoExame[{{iREx}}].particular"
+										[(ngModel)]="rEx.particular"
+										name="resultadoExame[{{iREx}}].particular"> <label
+										for="resultadoExame[{{iREx}}].particular"></label> <label>Particular</label>
+								</div>
 							</div>
 
 							<div class="row">

@@ -74,6 +74,9 @@ import { AtestadoService } from './atestado/atestado.service';
 import { ParteCorpoAtingidaService } from './parte-corpo-atingida/parte-corpo-atingida.service';
 import { AgenteCausadorService } from './agente-causador/agente-causador.service';
 import { NaturezaLesaoService } from './natureza-lesao/natureza-lesao.service';
+import { AvaliacaoHigieneOcupacionalService } from './avaliacao-higiene-ocupacional/avaliacao-higiene-ocupacional.service';
+import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
+import { EnfaseService } from './enfase/enfase.service';
 
 @NgModule({
   declarations: [
@@ -167,7 +170,10 @@ import { NaturezaLesaoService } from './natureza-lesao/natureza-lesao.service';
     AtestadoService,
     ParteCorpoAtingidaService,
     AgenteCausadorService,
-    NaturezaLesaoService
+    NaturezaLesaoService,
+    AvaliacaoHigieneOcupacionalService,
+    FichaColetaService,
+    EnfaseService
   ]
 })
 export class SharedModule { }

@@ -53,6 +53,10 @@ tbody{
 	margin-top: 25px;
 }
 
+.particular {
+	margin-top: 25px;
+}
+
 fieldset {
 	border: 1px solid #4fc3f7 !important;
 }

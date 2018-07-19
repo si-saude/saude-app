@@ -44,6 +44,7 @@ export class ResultadoExameBuilder extends GenericBuilder {
         cloneResultadoExame.setId( this.getValue( resultadoExame, "getId" ) );
         cloneResultadoExame.setVersion( this.getValue( resultadoExame, "getVersion" ) );
         cloneResultadoExame.setConforme(this.getValue( resultadoExame, "getConforme" ) );
+        cloneResultadoExame.setParticular(this.getValue( resultadoExame, "getParticular" ) );
         cloneResultadoExame.setData(this.getValue( resultadoExame, "getData" ) );
         cloneResultadoExame.setDataRecebimento(this.getValue( resultadoExame, "getDataRecebimento" ) );
         cloneResultadoExame.setLocal(this.getValue( resultadoExame, "getLocal" ) );

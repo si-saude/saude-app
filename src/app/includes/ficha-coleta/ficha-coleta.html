@@ -3,175 +3,105 @@
 </head>
 
 <div class="conteiner-ficha-coleta">
-
-	<div *ngFor="let grupo of gruposRespostasFichaColeta; let g = index">
+	
+	<div *ngFor="let grupo of gruposPerguntaFichaColeta">
 		<fieldset>
 			<legend>{{grupo}}</legend>
-
-			<div
-				*ngFor="let resposta of respostasFichaColetaByGrupo[grupo]; let r = index">
-				<p class="pergunta-descricao">{{resposta.pergunta.descricao}}</p>
-
-				<div [ngSwitch]="contains(resposta.pergunta.tipo)">
-					<div class="row resposta">
-						<div *ngSwitchCase="'DOUBLE'">
-							<div class="input-field col s5">
-								<input type="text" name="DOUBLE{{r}}" (click)="showModalConteudoResposta(resposta)"
-									class="resposta-conteudo resposta-pergunta"
-									[disabled]="verifyEquipe(resposta)"
-									[(ngModel)]="resposta.conteudo">
-							</div>
-						</div>
-
-						<div *ngSwitchCase="'INTEIRO'">
-							<div class="input-field col s5">
-								<input type="text" name="INTEIRO{{r}}" (click)="showModalConteudoResposta(resposta)"
-									class="resposta-conteudo resposta-pergunta"
-									[disabled]="verifyEquipe(resposta)"
-									[(ngModel)]="resposta.conteudo">
-							</div>
-						</div>
-
-						<div *ngSwitchCase="'TEXTO'">
-							<div class="input-field col s5">
-								<input type="text" name="TEXTO{{r}}" (click)="showModalConteudoResposta(resposta)"
-									class="resposta-conteudo resposta-pergunta"
-									[disabled]="verifyEquipe(resposta)"
-									[(ngModel)]="resposta.conteudo">
-							</div>
-						</div>
-
-						<div *ngSwitchCase="'ENUM'">
-							<div class="input-field col s4  select-sim-nao">
-								<select
-									class="browser-default resposta-conteudo resposta-pergunta"
-									[(ngModel)]="resposta.conteudo"
-									[disabled]="verifyEquipe(resposta)" name="ENUM{{r}}">
-									<option disabled selected value="">Selecione um resposta</option>
-									<option *ngFor="let enum of getEnumsPergunta(resposta)"
-										value="{{enum}}">{{enum}}</option>
-								</select>
-							</div>
-						</div>
-
-						<div *ngSwitchCase="'SIM'">
-							<div class="input-field col s4 select-sim-nao">
-								<select
-									class="browser-default resposta-conteudo resposta-pergunta"
-									name="SIM{{r}}" #statusSimNao
-									[disabled]="verifyEquipe(resposta)"
-									(change)="selectStatusSimNao(resposta.pergunta.itens, g, r, statusSimNao.value)"
-									[(ngModel)]="resposta.conteudo">
-									<option disabled selected value="">Selecione uma resposta</option>
-									<option *ngFor="let statusSimNao of statusesSimNao"
-										value="{{statusSimNao}}">{{statusSimNao}}</option>
-								</select>
-							</div>
-							<div class="col s2" *ngIf="verifyRespostaSimNao(resposta)">
-								<a *ngIf="!verifyEquipe(resposta)"
-									class="btn-floating waves-effect waves-light green btn-add"
-									(click)="addItemResposta(resposta.pergunta.itens, g, r)"> <i
-									class="material-icons center-icon">add</i>
-								</a>
-							</div>
-
-							<table class="striped" *ngIf="verifyRespostaSimNao(resposta)">
-								<thead>
-									<tr class="row col s12">
-										<div
-											*ngFor="let item of resposta.pergunta.itens; let i = index">
-											<th [ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-												{{item.label}}</th>
-										</div>
-										<th class="row col s2">Remover</th>
-									</tr>
-								</thead>
-
-								<tbody class="col s12">
-									<tr class="col s12">
-										<div *ngFor="let respostaItem of resposta.itens; let i = index">
-											<div class="row">
-												<div *ngFor="let item of getArrayItensResposta(respostaItem); let rI = index">
-													<td *ngIf="verifyItemPath(resposta, rI)"
-														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-														<select class="resposta-item" [(ngModel)]="item.conteudo"
-														[disabled]="verifyEquipe(resposta)" name="resposta.item">
-															<option disabled selected value="">Selecione um resposta</option>
-															<option *ngFor="let enum of getEnumsItem(resposta, rI)"
-																value="{{enum}}">{{enum}}</option>
-													</select>
-													</td>
-													<td *ngIf="!verifyItemPath(resposta, rI)"
-														[ngClass]="getGridItensPergunta(resposta.pergunta.itens)">
-														<textarea class="materialize-textarea" id="resposta.item" 
-															(click)="showModalConteudoItem(resposta, respostaItem, i, rI)"
-															type="text" [disabled]="verifyEquipe(resposta)" name="resposta.item"
-															class="resposta-item" [(ngModel)]="item.conteudo"></textarea>
-													</td>
-												</div>
-												<td class="col s2 botao-remover"><a
-													*ngIf="!verifyEquipe(resposta)"
-													class="btn-floating waves-effect waves-light red btn-remove"
-													(click)="removeItemResposta(g, r, i)"> <i
-														class="material-icons center-icon">delete</i>
-												</a></td>
-											</div>
-										</div>
-									</tr>
-								</tbody>
-
-							</table>
-
-						</div>
-						<div *ngSwitchDefault></div>
+			
+			<div *ngFor="let resposta of getRespostasByGrupo(grupo)" class="pergunta col s12" >
+				<p><b>{{resposta.pergunta.descricao}}</b></p>
+				
+				<div class="resposta-select col s12" *ngIf="isEnumOrSimNao(resposta)">
+				
+					<div class="div-resposta-select col s4">
+						<select name="resposta-conteudo" [disabled]="isDisabledResposta(resposta)" (change)="autoAddItem(resposta)"
+							class="browser-default" [(ngModel)]="resposta.conteudo">
+							<option disabled selected value="">Selecione uma resposta</option>
+							<option *ngFor="let value of getConteudoEnumOrSimNao(resposta)" value="{{value}}">{{value}}</option>
+						</select>
 					</div>
-
+					
+					<div class="add-item col s2" *ngIf="isPossibleAddItem(resposta)">
+						<a class="btn-floating waves-effect waves-light green btn-add"
+							(click)="addItemResposta(resposta)"> 
+							<i class="material-icons center-icon">add</i>
+						</a>
+					</div>
+					
+					<div class="resposta-itens col s12" *ngIf="existItem(resposta)">
+					
+						<div *ngFor="let item of resposta.pergunta.itens" 
+							[class]="getClassItensResposta(resposta)" class="pergunta-label-item">
+							<p><b>{{item.label}}</b></p>
+						</div>
+						
+						<div *ngFor="let item of resposta.itens; let i = index" class="resposta-item col s12">
+						
+							<div *ngFor="let itemDoItem of getItensDoItem(item); let ii = index" [class]="getClassItensResposta(resposta)">
+							
+								<div *ngIf="!itemHasPath(resposta, i, ii)">
+									<textarea (click)="openModalConteudoItem(resposta, i, ii)"
+										[(ngModel)]="itemDoItem.conteudo" [disabled]="isDisabledResposta(resposta)"></textarea>
+								</div>
+								
+								<div *ngIf="itemHasPath(resposta, i, ii)">
+									<select name="resposta-conteudo" [disabled]="isDisabledResposta(resposta)"
+										class="browser-default" [(ngModel)]="itemDoItem.conteudo">
+										<option disabled selected value="">Selecione uma resposta</option>
+										<option *ngFor="let value of getItensResposta(resposta,ii)" value="{{value}}">{{value}}</option>
+									</select>
+								</div>
+								
+							</div>
+							
+							<a class="btn-floating waves-effect waves-light red btn-remove" *ngIf="!isDisabledResposta(resposta)" 
+								(click)="removeItemResposta(resposta,i)"> 
+								<i class="material-icons center-icon">delete</i>
+							</a>
+								
+						</div>
+						
+					</div>
+					
 				</div>
+				
+				<div class="resposta" *ngIf="!isEnumOrSimNao(resposta)">
+				
+					<textarea (click)="openModalConteudoResposta(resposta)" 
+						[disabled]="isDisabledResposta(resposta)"
+						[(ngModel)]="resposta.conteudo">
+					</textarea>
+					
+				</div>
+				
 			</div>
 		</fieldset>
-	</div>
+	</div>	
 </div>
 
 <!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
+<div id="modal" class="modal" materialize="modal" 
 	[materializeParams]="[{dismissible: false}]"
-	[materializeActions]="modalConteudoItem">
+	[materializeActions]="modalConteudo">
 
-	<h5 class="title-modal">Conteúdo</h5>
-	
-	<div class="div-conteudo col s6 center">
-		<label for="conteudo" class="label-conteudo">Conteúdo</label><br>
-		<textarea id="conteudo-item" type="text" [(ngModel)]="conteudoItem"
-			class="materialize-textarea input-conteudo resposta-item" name="conteudo"></textarea>
+	<div class="modal-content">
+		<h5 class="title-modal">Conteúdo</h5>
+		
+		<div class="div-conteudo col s12 center">
+			<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudo"
+				class="materialize-textarea conteudo" name="conteudo"></textarea>
+		</div>
+		
+		<div class="error-pattern" *ngIf="pattern != ''">
+			<p><b>{{errorPattern}}</b></p>
+		</div>
 	</div>
  
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat btn"
-			(click)="confirmarModalConteudoItem()">Confirmar</a>
+			(click)="confirmarModalConteudo()">Confirmar</a>
 		<a class="waves-effect waves-green btn-flat btn"
-			(click)="cancelarModalConteudoItem()">Cancelar</a>
-	</div>
-
-</div>
-
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="[{dismissible: false}]"
-	[materializeActions]="modalConteudoResposta">
-
-	<h5 class="title-modal">Conteúdo</h5>
-	
-	<div class="div-conteudo col s6 center">
-		<label for="conteudo" class="label-conteudo">Conteúdo</label><br>
-		<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudoResposta"
-			class="materialize-textarea input-conteudo resposta-item" name="conteudo"></textarea>
-	</div>
- 
-	<div class="modal-footer">
-		<a class="waves-effect waves-green btn-flat btn"
-			(click)="confirmarModalConteudoResposta()">Confirmar</a>
-		<a class="waves-effect waves-green btn-flat btn"
-			(click)="cancelarModalConteudoResposta()">Cancelar</a>
+			(click)="cancelarModalConteudo()">Cancelar</a>
 	</div>
 
 </div>

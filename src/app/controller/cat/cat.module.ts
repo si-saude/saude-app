@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MyDatePickerModule } from 'mydatepicker';
 import { Ng2InputMaskModule } from 'ng2-input-mask';
+import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 
 import { CatComponent } from './cat.component';
 import { CatService } from './cat.service';
@@ -27,7 +28,8 @@ import { PlanejamentoModule } from './../planejamento.module';
         CatRoutingModule,
         SharedModule,
         Ng2InputMaskModule,
-        PlanejamentoModule
+        PlanejamentoModule,
+        NKDatetimeModule
      ],
      providers: [
         CatService

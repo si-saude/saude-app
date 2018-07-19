@@ -13,6 +13,7 @@ import { SharedModule } from './../shared.module';
 import { EmpregadoFormComponent } from './empregado-form/empregado-form.component';
 import { EmpregadoFormDetailComponent } from './empregado-form/empregado-form-detail.component';
 import { CpfPipe } from './../../pipes/cpf.pipe';
+import { PipesModule } from './../pipes.module';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { CpfPipe } from './../../pipes/cpf.pipe';
         EmpregadoRoutingModule,
         MyDatePickerModule,
         Ng2InputMaskModule,
-        SharedModule
+        SharedModule,
+        PipesModule
      ],
      providers: [
         EmpregadoService
