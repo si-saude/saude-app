@@ -1,5 +1,7 @@
 import { Instalacao } from './../../model/instalacao';
 
+import { BaseBuilder } from './../base/base.builder';
+import { Base } from './../../model/base';
 import { IndicadorRiscoAcidenteInstalacaoBuilder } from './../indicador-risco-acidente-instalacao/indicador-risco-acidente-instalacao.builder';
 import { IndicadorRiscoAmbientalInstalacaoBuilder } from './../indicador-risco-ambiental-instalacao/indicador-risco-ambiental-instalacao.builder';
 import { IndicadorRiscoErgonomicoInstalacaoBuilder } from './../indicador-risco-ergonomico-instalacao/indicador-risco-ergonomico-instalacao.builder';
@@ -11,6 +13,8 @@ export class InstalacaoBuilder extends GenericBuilder{
     
     initialize(instalacao: Instalacao): Instalacao {
         instalacao = new Instalacao();
+        
+        instalacao.setBase(new BaseBuilder().initialize(new Base()));
         
         instalacao.setIndicadorRiscoAcidenteInstalacoes(
                 new IndicadorRiscoAcidenteInstalacaoBuilder().initializeList(
@@ -79,7 +83,15 @@ export class InstalacaoBuilder extends GenericBuilder{
         
         cloneInstalacao.setIndicadorRiscoSaudeAmbientalInstalacoes(
                 new IndicadorRiscoSaudeAmbientalInstalacaoBuilder().cloneList(
-                        this.getValue(instalacao, "getIndicadorRiscoSaudeAmbientalInstalacoes")));
+                        this.getValue(instalacao, "getIndicadorRiscoSaudeAmbientalInstalacoes")));        
+        
+        if (this.getValue(instalacao, "getBase") !== undefined) { 
+            cloneInstalacao.setBase(
+                new BaseBuilder().clone(this.getValue(instalacao,"getBase")));
+            if(!this.idGtZero(cloneInstalacao.getBase())){
+                cloneInstalacao.setBase(undefined);                
+            }
+        }
         
         return cloneInstalacao;
     }

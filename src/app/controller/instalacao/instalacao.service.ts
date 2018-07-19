@@ -9,17 +9,22 @@ import { IndicadorRiscoErgonomicoService } from './../indicador-risco-ergonomico
 import { IndicadorRiscoSanitarioService } from './../indicador-risco-sanitario/indicador-risco-sanitario.service';
 import { IndicadorRiscoSaudeAmbientalService } from './../indicador-risco-saude-ambiental/indicador-risco-saude-ambiental.service';
 import { GenericService } from './../../generics/generic.service';
-
+import { BaseService } from './../base/base.service';
 @Injectable()
 export class InstalacaoService extends GenericService {
     
     constructor( http: Http, router: Router,
+            private baseService: BaseService,
             private indicadorRiscoAcidenteService: IndicadorRiscoAcidenteService,
             private indicadorRiscoAmbientalService: IndicadorRiscoAmbientalService,
             private indicadorRiscoErgonomicoService: IndicadorRiscoErgonomicoService,
             private indicadorRiscoSanitarioService: IndicadorRiscoSanitarioService,
             private indicadorRiscoSaudeAmbientalService: IndicadorRiscoSaudeAmbientalService) { 
         super( http, router, "instalacao" );
+    }
+    
+    getBases() {
+        return this.baseService.getBases();
     }
     
     getInstalacoes() {

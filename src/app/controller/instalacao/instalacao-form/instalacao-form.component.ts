@@ -6,6 +6,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 import { GlobalVariable } from './../../../global';
 import { Instalacao } from './../../../model/instalacao';
+import { Base } from './../../../model/base';
 import { InstalacaoService } from './../instalacao.service';
 import { InstalacaoFilter } from './../instalacao.filter';
 import { InstalacaoBuilder } from './../instalacao.builder';
@@ -34,6 +35,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
     indicadoresRiscoErgonomico: Array<IndicadorRiscoErgonomico>;
     indicadoresRiscoSanitario: Array<IndicadorRiscoSanitario>;
     indicadoresRiscoSaudeAmbiental: Array<IndicadorRiscoSaudeAmbiental>;
+    bases: Array<Base>;
 
     instalacaoFilter: InstalacaoFilter = new InstalacaoFilter();
 
@@ -65,6 +67,7 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
                 }
             } );
 
+        this.getBases();
         this.getAcidentes();
         this.getAmbientais();
         this.getErgonomicos();
@@ -72,6 +75,16 @@ export class InstalacaoFormComponent extends GenericFormComponent implements OnI
         this.getSaudeAmbientais();
     }
 
+    getBases() {
+        this.instalacaoService.getBases()
+            .then( res => {
+                this.bases = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
     getAcidentes() {
         this.instalacaoService.getIndicadoresRiscoAcidente()
             .then( res => {

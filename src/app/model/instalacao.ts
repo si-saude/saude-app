@@ -3,6 +3,7 @@ import { IndicadorRiscoAmbientalInstalacao } from './indicador-risco-ambiental-i
 import { IndicadorRiscoErgonomicoInstalacao } from './indicador-risco-ergonomico-instalacao';
 import { IndicadorRiscoSanitarioInstalacao } from './indicador-risco-sanitario-instalacao';
 import { IndicadorRiscoSaudeAmbientalInstalacao } from './indicador-risco-saude-ambiental-instalacao';
+import { Base } from './base';
 
 export class Instalacao {
     private id: number = 0;
@@ -15,6 +16,7 @@ export class Instalacao {
     private indicadorRiscoErgonomicoInstalacoes: Array<IndicadorRiscoErgonomicoInstalacao>;
     private indicadorRiscoSanitarioInstalacoes: Array<IndicadorRiscoSanitarioInstalacao>;
     private indicadorRiscoSaudeAmbientalInstalacoes: Array<IndicadorRiscoSaudeAmbientalInstalacao>;
+    private base: Base;
 
     getId(): number {
         return this.id;
@@ -22,6 +24,15 @@ export class Instalacao {
     
     setId(id: number) {
         this.id = id;
+    }
+    
+
+    getBase() {
+        return this.base;
+    }
+
+    setBase(base: Base) {
+        this.base = base;
     }
     
     getVersion(): number {
