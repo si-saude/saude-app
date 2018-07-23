@@ -92,6 +92,7 @@ import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard
 import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
 import { ReportCatGuard } from './guards/report-cat.guard';
 import { ReportAtestadoGuard } from './guards/report-atestado.guard';
+import { ReportAvaliacaoHigieneOcupacionalGuard } from './guards/report-avaliacao-higiene-ocupacional.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 
@@ -191,7 +192,8 @@ import { EnfaseGuard } from './guards/guards-child/enfase.guard';
     ReportCatGuard,
     ReportAtestadoGuard,
     AvaliacaoHigieneOcupacionalGuard,
-    EnfaseGuard
+    EnfaseGuard,
+    ReportAvaliacaoHigieneOcupacionalGuard
   ],
   bootstrap: [ 
     AppComponent

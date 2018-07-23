@@ -1,3 +1,4 @@
+import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { BooleanFilter } from './../../generics/boolean.filter';
 import { GenericFilter } from './../../generics/generic.filter';
 
@@ -10,6 +11,13 @@ export class AvaliacaoHigieneOcupacionalFilter extends GenericFilter {
     private naoUtilizaMascara: BooleanFilter;
     private testeSensibilidadeInsatisfatorio: BooleanFilter;
     private ensaioVedacao: BooleanFilter;
+    private empregado: EmpregadoFilter;
+    public getEmpregado() {
+        return this.empregado;
+    }
+    public setEmpregado(empregado: EmpregadoFilter) {
+        this.empregado = empregado;
+    }
     public getEnsaioVedacao() {
         return this.ensaioVedacao;
     }

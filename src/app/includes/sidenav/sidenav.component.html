@@ -169,6 +169,9 @@
 		</a>
 		<div class="groups">
 			<a [routerLink]="['/reports/atestado']" *ngIf="checkPermissao('REPORT-ATESTADO')">Atestado</a>
+			<a [routerLink]="['/reports/avaliacao-higiene-ocupacional']" *ngIf="checkPermissao('REPORT-AVALIACAO-HIGIENE-OCUPACIONAL')">
+				Avaliação de Higiene Ocupacional
+			</a>
 			<a [routerLink]="['/reports/cat']" *ngIf="checkPermissao('REPORT-CAT')">CAT - Comunicado de Acidente de Trabalho</a>
 			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
 			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>

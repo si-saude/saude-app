@@ -20,6 +20,12 @@ export class AvaliacaoHigieneOcupacional {
     private naoUtilizaMascara: boolean;
     private testeSensibilidadeInsatisfatorio: boolean;
     private observacao: string;
+    private concordaDescricaoAprhoGhe: boolean;
+    private naoConcordaAgentesRiscos: boolean;
+    private naoConcordaAtividades: boolean;
+    private naoConcordaFrequenciaExposicaoRiscos: boolean;
+    private naoConcordaCategoriaRiscos: boolean;
+    private motivoAnalisePreliminar: string;
     private version: number;
 
     private dataCustomDate: CustomDate = new CustomDate(this.data);
@@ -184,4 +190,52 @@ export class AvaliacaoHigieneOcupacional {
         this.version = version;
     }
     
+    public getConcordaDescricaoAprhoGhe() {
+        return this.concordaDescricaoAprhoGhe;
+    }
+
+    public setConcordaDescricaoAprhoGhe(concordaDescricaoAprhoGhe: boolean) {
+        this.concordaDescricaoAprhoGhe = concordaDescricaoAprhoGhe;
+    }
+    
+    public getNaoConcordaAgentesRiscos() {
+        return this.naoConcordaAgentesRiscos;
+    }
+
+    public setNaoConcordaAgentesRiscos(naoConcordaAgentesRiscos: boolean) {
+        this.naoConcordaAgentesRiscos = naoConcordaAgentesRiscos;
+    }
+    
+    public getNaoConcordaAtividades() {
+        return this.naoConcordaAtividades;
+    }
+
+    public setNaoConcordaAtividades(naoConcordaAtividades: boolean) {
+        this.naoConcordaAtividades = naoConcordaAtividades;
+    }
+    
+    public getNaoConcordaFrequenciaExposicaoRiscos() {
+        return this.naoConcordaFrequenciaExposicaoRiscos;
+    }
+
+    public setNaoConcordaFrequenciaExposicaoRiscos(naoConcordaFrequenciaExposicaoRiscos: boolean) {
+        this.naoConcordaFrequenciaExposicaoRiscos = naoConcordaFrequenciaExposicaoRiscos;
+    }
+    
+    public getNaoConcordaCategoriaRiscos() {
+        return this.naoConcordaCategoriaRiscos;
+    }
+
+    public setNaoConcordaCategoriaRiscos(naoConcordaCategoriaRiscos: boolean) {
+        this.naoConcordaCategoriaRiscos = naoConcordaCategoriaRiscos;
+    }
+    
+    public getMotivoAnalisePreliminar() {
+        return this.motivoAnalisePreliminar;
+    }
+
+    public setMotivoAnalisePreliminar(motivoAnalisePreliminar: string) {
+        this.motivoAnalisePreliminar = motivoAnalisePreliminar;
+    }
+        
 }

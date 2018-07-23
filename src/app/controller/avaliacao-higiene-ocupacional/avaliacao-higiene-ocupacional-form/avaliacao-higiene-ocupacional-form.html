@@ -14,9 +14,11 @@
 		<div class="row">
 		
 			<ul class="tabs" materialize="tabs">
-				<li class="tab col s6"><a RouterLinkActive="active"
+				<li class="tab col s4"><a RouterLinkActive="active"
 					href="#dadosGerais">Dados Gerais</a></li>
-				<li class="tab col s6"><a RouterLinkActive="active"
+				<li class="tab col s4"><a RouterLinkActive="active"
+					href="#analisePreliminar">Análise Preliminar</a></li>
+				<li class="tab col s4"><a RouterLinkActive="active"
 					href="#ensaioVedacao">Ensaio de Vedação</a></li>
 			</ul>
 		
@@ -104,6 +106,60 @@
 					
 					</div>
 		
+				</div>
+				
+				<div id="analisePreliminar">
+				
+					<table>
+						<tr class="tr-ensaio-vedacao" style="height: 50px">
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="concorda-descricao-aprho-ghe"
+									[(ngModel)]="avaliacaoHigieneOcupacional.concordaDescricaoAprhoGhe"
+									name="avaliacaoHigieneOcupacional.concordaDescricaoAprhoGhe"> 
+								<label for="concorda-descricao-aprho-ghe">
+									O empregado concorda com as descrições contidas na APR-HO do seu respectivo GHE?
+								</label>
+							</div>
+						</tr>
+						<tr class="tr-ensaio-vedacao" style="height: 150px">
+							<div class="input-field col s12">
+								<p style="color: #4fc3f7;"><b><span> Justificativa:</span></b></p>
+							</div>
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="nao-concorda-agentes-riscos"
+									[(ngModel)]="avaliacaoHigieneOcupacional.naoConcordaAgentesRiscos"
+									name="avaliacaoHigieneOcupacional.naoConcordaAgentesRiscos"> <label
+									for="nao-concorda-agentes-riscos">Não concorda com os agentes de riscos levantados.</label>
+							</div>
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="nao-concorda-atividades"
+									[(ngModel)]="avaliacaoHigieneOcupacional.naoConcordaAtividades"
+									name="avaliacaoHigieneOcupacional.naoConcordaAtividades"> <label
+									for="nao-concorda-atividades">Não concorda com as atividades descritas.</label>
+							</div>
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="nao-concorda-frequencia-exposicao-riscos"
+									[(ngModel)]="avaliacaoHigieneOcupacional.naoConcordaFrequenciaExposicaoRiscos"
+									name="avaliacaoHigieneOcupacional.naoConcordaFrequenciaExposicaoRiscos"> <label
+									for="nao-concorda-frequencia-exposicao-riscos">Não concorda com a frequência e/ou duração da exposição aos riscos.</label>
+							</div>
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="nao-concorda-categoria-riscos"
+									[(ngModel)]="avaliacaoHigieneOcupacional.naoConcordaCategoriaRiscos"
+									name="avaliacaoHigieneOcupacional.naoConcordaCategoriaRiscos"> <label
+									for="nao-concorda-categoria-riscos">Não concorda com as categorias atribuídas aos riscos.</label>
+							</div>
+						</tr>
+						<tr class="tr-ensaio-vedacao" style="height: 50px">
+							<div class="input-field col s12 checkbox">
+								<label>Motivo:</label>
+								<textarea class="materialize-textarea" id="motivo-analise-preliminar"
+									[(ngModel)]="avaliacaoHigieneOcupacional.motivoAnalisePreliminar" maxlength="512"
+									name="avaliacaoHigieneOcupacional.motivoAnalisePreliminar"></textarea>
+							</div>
+						</tr>
+					</table>
+					
 				</div>
 				
 				<div id="ensaioVedacao">

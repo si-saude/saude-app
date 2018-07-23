@@ -1,0 +1,12 @@
+.title-modal {
+	text-align: center;
+	color: #2bbbad;
+}
+
+.tr-item {
+	cursor: pointer;
+}
+
+.tr-item:nth-child(even) {
+    background-color: #d9d9d9;
+}

@@ -49,4 +49,11 @@ export class AvaliacaoHigieneOcupacionalService extends GenericService {
         return this.empregadoService;
     }
     
+    downloadRelatorioAvaliacao(avaliacaoHigieneOcupacional: AvaliacaoHigieneOcupacional) { 
+        let urlDownloadRelatorio =  this.URL + "/download-relatorio";
+        return this.http
+            .post( urlDownloadRelatorio, avaliacaoHigieneOcupacional, { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

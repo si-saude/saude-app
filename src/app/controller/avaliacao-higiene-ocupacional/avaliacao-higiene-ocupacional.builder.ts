@@ -19,6 +19,20 @@ export class AvaliacaoHigieneOcupacionalBuilder extends GenericBuilder {
         return avaliacaoHigieneOcupacional;
     }
     
+    initializeList(avaliacaoHigieneOcupacionals: Array<AvaliacaoHigieneOcupacional>) {
+        
+        let array:Array<AvaliacaoHigieneOcupacional> = new Array<AvaliacaoHigieneOcupacional>();
+        
+        if(avaliacaoHigieneOcupacionals === null || avaliacaoHigieneOcupacionals === undefined)
+            avaliacaoHigieneOcupacionals = new Array<AvaliacaoHigieneOcupacional>();
+        
+        for (let avaliacaoHigieneOcupacional of avaliacaoHigieneOcupacionals) {
+            array.push(this.initialize(avaliacaoHigieneOcupacional));
+        }
+        
+        return array;
+    }
+    
     clone(avaliacaoHigieneOcupacional: AvaliacaoHigieneOcupacional): AvaliacaoHigieneOcupacional {
         
         if (avaliacaoHigieneOcupacional === null || avaliacaoHigieneOcupacional === undefined)
@@ -39,6 +53,13 @@ export class AvaliacaoHigieneOcupacionalBuilder extends GenericBuilder {
         cloneAvaliacaoHigieneOcupacional.setEnsaioVedacao(this.getValue(avaliacaoHigieneOcupacional,"getEnsaioVedacao"));
         cloneAvaliacaoHigieneOcupacional.setVersion(this.getValue(avaliacaoHigieneOcupacional, "getVersion"));
         
+        cloneAvaliacaoHigieneOcupacional.setConcordaDescricaoAprhoGhe(this.getValue(avaliacaoHigieneOcupacional,"getConcordaDescricaoAprhoGhe"));
+        cloneAvaliacaoHigieneOcupacional.setNaoConcordaAgentesRiscos(this.getValue(avaliacaoHigieneOcupacional,"getNaoConcordaAgentesRiscos"));
+        cloneAvaliacaoHigieneOcupacional.setNaoConcordaAtividades(this.getValue(avaliacaoHigieneOcupacional,"getNaoConcordaAtividades"));
+        cloneAvaliacaoHigieneOcupacional.setNaoConcordaFrequenciaExposicaoRiscos(this.getValue(avaliacaoHigieneOcupacional,"getNaoConcordaFrequenciaExposicaoRiscos"));
+        cloneAvaliacaoHigieneOcupacional.setNaoConcordaCategoriaRiscos(this.getValue(avaliacaoHigieneOcupacional,"getNaoConcordaCategoriaRiscos"));
+        cloneAvaliacaoHigieneOcupacional.setMotivoAnalisePreliminar(this.getValue(avaliacaoHigieneOcupacional,"getMotivoAnalisePreliminar"));
+        
         cloneAvaliacaoHigieneOcupacional.setTecnico(new ProfissionalSaudeBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getTecnico")));
         cloneAvaliacaoHigieneOcupacional.setEmpregado(new EmpregadoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getEmpregado")));
         
@@ -53,6 +74,18 @@ export class AvaliacaoHigieneOcupacionalBuilder extends GenericBuilder {
         
         
         return cloneAvaliacaoHigieneOcupacional;
+    }
+    
+    cloneList(avaliacaoHigieneOcupacionals: Array<AvaliacaoHigieneOcupacional>): Array<AvaliacaoHigieneOcupacional> {
+        let array:Array<AvaliacaoHigieneOcupacional> = new Array<AvaliacaoHigieneOcupacional>();
+    
+        if (avaliacaoHigieneOcupacionals !== null && avaliacaoHigieneOcupacionals !== undefined) { 
+            for (let avaliacaoHigieneOcupacional of avaliacaoHigieneOcupacionals) {
+                array.push(this.clone(avaliacaoHigieneOcupacional));
+            }
+        }
+        
+        return array;
     }
     
 }

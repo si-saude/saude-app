@@ -1,0 +1,26 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="row">
+
+	<div class="input-field col s10">
+		<label for="avaliacao">Avaliação Higiene Ocupacional</label>
+		<input id="avaliacao" type="text" (click)="openModalAvaliacao()" 
+			name="avaliacao" [(ngModel)]="avaliacao.empregado.pessoa.nome">
+	</div>
+	<div class="col s2 icon-download">
+		<a (click)="downloadAvaliacao()"> 
+			<i class="small material-icons icon" style="cursor: pointer">file_download</i>
+		</a>
+	</div>
+	
+</div>
+
+<app-modal-avaliacao-higiene-ocupacional [service]="avaliacaoHigieneOcupacionalService" [showModalAvaliacao]="showModalAvaliacao" 
+	(cancelModalAvaliacao)="cancelarModalAvaliacao($event)" (avaliacao)="selectAvaliacao($event)">
+</app-modal-avaliacao-higiene-ocupacional>
+
