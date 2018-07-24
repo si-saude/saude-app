@@ -95,7 +95,6 @@ export class QuadroAtendimentoComponent {
                     } else if ( a.getFilaEsperaOcupacional().getEmpregado().getId() == empregado.getIdEmpregado() ) {
                         empregado.getTarefas().push(a.getTarefa());
                     }
-                    console.log(this.empregadoTarefas);
                 })
             })
             .catch(error => {
