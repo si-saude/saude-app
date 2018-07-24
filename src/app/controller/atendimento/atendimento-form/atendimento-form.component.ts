@@ -59,11 +59,8 @@ export class AtendimentoFormComponent {
     private atendimentos: Array<Atendimento>;
     private usuario: Usuario;
     private profissional: Profissional;
-    private nomeProfissional: String;
-    private statusProfissional: String;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
-    private existLocalizacao: boolean;
     private acolhimento: boolean;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
@@ -88,8 +85,6 @@ export class AtendimentoFormComponent {
     
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
-        this.nomeProfissional = "";
-        this.statusProfissional = "";
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.localizacao = new LocalizacaoBuilder().initialize( this.localizacao );
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
@@ -105,7 +100,6 @@ export class AtendimentoFormComponent {
         this.toastParams = ['', 4000];
         this.tabsActions = new EventEmitter<string | MaterializeAction>();
         this.modalConfirmLocalizacao = new EventEmitter<string | MaterializeAction>();
-        this.existLocalizacao = false;
         this.audio = new Audio();
         this.disabledTab = 'disabled';
         this.existAtendimento = false;
@@ -140,7 +134,6 @@ export class AtendimentoFormComponent {
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                                    this.nomeProfissional = this.profissional.getEmpregado().getPessoa().getNome();
                                     this.idEquipe = this.profissional.getEquipe().getId();
 
                                     this.primeiraAtualizacao();
@@ -149,7 +142,6 @@ export class AtendimentoFormComponent {
                                         .takeWhile(() => this.alive )
                                         .subscribe(() => {
                                             this.atualizar();
-                                            this.atualizarLista();
                                         } );
                                     if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) {
                                         this.acolhimento = true;
@@ -196,16 +188,21 @@ export class AtendimentoFormComponent {
         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
         this.atendimento.setFilaAtendimentoOcupacional( this.filaAtendimentoOcupacional );
-        this.existLocalizacao = true;
         this.closeModalConfirmLocalizacao();
     }
 
     cancelarLocalizacao() {
-        this.existLocalizacao = false;
         this.localizacao.setId( 0 );
         this.closeModalConfirmLocalizacao();
     }
 
+    verifyLocalizacao() {
+        if ( this.filaAtendimentoOcupacional != undefined && 
+                this.filaAtendimentoOcupacional.getLocalizacao().getId() > 0 )
+            return true;
+        return false;
+    }
+    
     primeiraAtualizacao() {
         if ( this.profissional != undefined ) {
             this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
@@ -215,13 +212,12 @@ export class AtendimentoFormComponent {
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     
-                    this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
                         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
                         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
-                        this.existLocalizacao = true;
+                        this.atualizarLista();
                     } else {
                         this.filaAtendimentoOcupacional = undefined;
                     }
@@ -237,6 +233,7 @@ export class AtendimentoFormComponent {
     }
 
     atualizar() {
+        this.atualizarLista();
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
             this.atendimentoService.atualizar( this.atendimento )
@@ -262,11 +259,8 @@ export class AtendimentoFormComponent {
                         this.disabledTab = '';
                     else this.disabledTab = 'disabled';
                     
-                    this.statusProfissional = this.atendimento.getFilaAtendimentoOcupacional().getStatus();
-
                     if ( this.atendimento.getId() > 0 ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
-                        this.existLocalizacao = true;
                         this.existAtendimento = true;
 
                         for ( let i = 0; i < $( ".tab" ).children().length; i++ ) {
@@ -371,12 +365,12 @@ export class AtendimentoFormComponent {
     }
 
     encerrar() {
+        this.localizacao.setId(0);
         if ( this.filaAtendimentoOcupacional != undefined ) {
-            let filaAtendimentoOcupacional: FilaAtendimentoOcupacional = new FilaAtendimentoOcupacional();
-            filaAtendimentoOcupacional.setProfissional( this.profissional );
-            filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
-            this.atendimentoService.encerrar( filaAtendimentoOcupacional )
+            this.filaAtendimentoOcupacional.getLocalizacao().setId(0);
+            this.atendimentoService.encerrar( this.filaAtendimentoOcupacional )
                 .then( res => {
+                    this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().clone(new FilaAtendimentoOcupacional());
                     this.toastParams = ["Fila de atendimento encerrada", 4000];
                     this.globalActions.emit( 'toast' );
                     this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
@@ -572,7 +566,6 @@ export class AtendimentoFormComponent {
         } else {
             this.toastParams = ["Por favor, selecione um local.", 4000];
             this.globalActions.emit( 'toast' );
-            this.existLocalizacao = false;
             this.closeModalConfirmLocalizacao();
         }
     }

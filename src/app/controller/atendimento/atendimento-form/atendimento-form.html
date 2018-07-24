@@ -7,10 +7,10 @@
 
 <div class="row infos-profissional">
 	<p class="nome-profissional">
-		<b>Profissional: {{nomeProfissional}}</b>
+		<b>Profissional: {{profissional?.empregado.pessoa.nome}}</b>
 	</p>
 	<p class="status-profissional">
-		<b>Status: {{statusProfissional}}</b>
+		<b>Status: {{atendimento?.filaAtendimentoOcupacional.status}}</b>
 	</p>
 </div>
 
@@ -41,7 +41,7 @@
 					</a>
 				</legend>
 				<select name="localizacao" class="browser-default"
-					[disabled]="existLocalizacao" [(ngModel)]="localizacao.id"
+					[disabled]="verifyLocalizacao()" [(ngModel)]="localizacao.id"
 					(ngModelChange)="openModalConfirmLocalizacao()">
 					<option disabled selected value=0>Selecione uma localização</option>
 					<option *ngFor="let localizacao of localizacoes"
