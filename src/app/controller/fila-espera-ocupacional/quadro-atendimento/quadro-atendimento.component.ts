@@ -18,6 +18,7 @@ import { LocalizacaoBuilder } from './../../localizacao/localizacao.builder';
 import { FilaEsperaOcupacional } from './../../../model/fila-espera-ocupacional';
 import { FilaEsperaOcupacionalService } from './../fila-espera-ocupacional.service';
 import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional.builder';
+import { DateUtil } from './../../../generics/utils/date.util';
 
 @Component( {
     selector: 'app-quadro-atendimento',
@@ -28,14 +29,13 @@ export class QuadroAtendimentoComponent {
     atendimento: Atendimento;
     atendimentos: Array<Atendimento>;
     empregados: Array<Empregado>;
-    tarefas = [[]];
     dataTarefas: any;
-    dataInicioTarefa = [[]];
-    dataFimTarefa = [[]];
     localizacoes: Array<Localizacao>;
     globalActions;
     toastParams;
     myDatePickerOptions: IMyDpOptions;
+    dateUtil: DateUtil;
+    empregadoTarefas: Array<EmpregadoTarefas>;
 
     constructor( private route: ActivatedRoute,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
@@ -46,8 +46,8 @@ export class QuadroAtendimentoComponent {
         this.empregados = new EmpregadoBuilder().initializeList( this.empregados );
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.myDatePickerOptions = { dateFormat: 'dd/mm/yyyy' };
-        this.dataInicioTarefa = new Array<any>();
-        this.dataFimTarefa = new Array<any>();
+        this.dateUtil = new DateUtil();
+        this.empregadoTarefas = new Array<EmpregadoTarefas>();
     }
 
     ngOnInit() {
@@ -74,88 +74,33 @@ export class QuadroAtendimentoComponent {
         let localizacao = this.localizacoes.find(l => l.getId() == localizacaoId);
         
         this.atendimento.getFilaEsperaOcupacional().setLocalizacao( localizacao );
-        this.atendimento.getTarefa().setInicio( this.parseDatePickerToDate( this.dataTarefas ) );
+        this.atendimento.getTarefa().setInicio( this.dateUtil.parseDatePickerToDate( this.dataTarefas ) );
         
         this.filaEsperaOcupacionalService.buscarQuadroAtendimento( this.atendimento )
             .then(res => {
                 this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
-                this.dataInicioTarefa = [[]];
-                this.dataFimTarefa = [[]];
-                this.tarefas = [[]];
-                this.empregados = new EmpregadoBuilder().initializeList(new Array<Empregado>());
+                this.empregadoTarefas = new Array<EmpregadoTarefas>();
                 
                 this.atendimentos.forEach(a => {
-                    if ( this.empregados.find(e =>
-                        a.getFilaEsperaOcupacional().getEmpregado().getId() == e.getId() ) == undefined )
-                        this.empregados.push( a.getFilaEsperaOcupacional().getEmpregado() );
-                });
-                
-                this.empregados.forEach(e => {
-                    let flagServico: boolean;
-                    if ( this.tarefas[ e.getId() ] == undefined ) { 
-                        this.tarefas[ e.getId() ] = new TarefaBuilder().initializeList(new Array<Tarefa>());
-                        flagServico = true;
+                    let empregado = this.empregadoTarefas.find(eT => a.getFilaEsperaOcupacional().getEmpregado().getId() == eT.getIdEmpregado() );
+                    
+                    if ( empregado == undefined ) {
+                        let eTarefas = new EmpregadoTarefas();
+                        eTarefas.setIdEmpregado(a.getFilaEsperaOcupacional().getEmpregado().getId());
+                        eTarefas.setNomeEmpregado(a.getFilaEsperaOcupacional().getEmpregado().getPessoa().getNome());
+                        eTarefas.setServico(a.getTarefa().getServico().getNome());
+                        eTarefas.setStatusFila(a.getFilaEsperaOcupacional().getStatus());
+                        eTarefas.getTarefas().push(a.getTarefa());
+                        this.empregadoTarefas.push(eTarefas);
+                    } else if ( a.getFilaEsperaOcupacional().getEmpregado().getId() == empregado.getIdEmpregado() ) {
+                        empregado.getTarefas().push(a.getTarefa());
                     }
-                    this.atendimentos.filter( a => a.getFilaEsperaOcupacional().getEmpregado().getId() == e.getId() )
-                        .forEach( aT => {
-                            
-                            if ( flagServico ) {
-                                setTimeout(() => {
-                                    $("."+e.getId()).append(" - " 
-                                            + aT.getTarefa().getServico().getNome() + " - " 
-                                            + aT.getFilaEsperaOcupacional().getStatus() );
-                                }, 300);
-                                flagServico = false;
-                            }
-                            
-                            this.tarefas[ e.getId() ].push( aT.getTarefa() )
-                            if ( aT.getTarefa().getInicio() != undefined ) {
-                                if ( this.dataInicioTarefa[aT.getTarefa().getId()] == undefined ) {
-                                    this.dataInicioTarefa[aT.getTarefa().getId()] = new Array<string>();
-                                    this.dataInicioTarefa[aT.getTarefa().getId()].push(
-                                            this.treatString( aT.getTarefa().getInicio() ));
-                                }
-                            } else this.dataInicioTarefa[aT.getTarefa().getId()].push("");
-                            if ( aT.getTarefa().getFim() != undefined ) {
-                                if ( this.dataFimTarefa[aT.getTarefa().getId()] == undefined ) {
-                                    this.dataFimTarefa[aT.getTarefa().getId()] = new Array<any>();
-                                    this.dataFimTarefa[aT.getTarefa().getId()].push(
-                                            this.treatString( aT.getTarefa().getFim() ));
-                                }
-                            } else this.dataFimTarefa[aT.getTarefa().getId()].push("");
-                        });
-                });
-                this.tarefas.splice(0, 1);
+                    console.log(this.empregadoTarefas);
+                })
             })
             .catch(error => {
                 console.log("Erro ao retornar os atendimentos."+error);
             })
-    }
-    
-    parseDatePickerToDate( data ) {
-        if ( data === undefined || data === null ) {
-            return null;
-        } else if ( data instanceof Date ) {
-            return data;
-        }
-        let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
-        return d;
-    }
-    
-    parseDataToObjectDatePicker( data ) {
-        if ( data === undefined || data === null ) {
-            return undefined;
-        }
-        let s = data.split( "T" );
-        let datas = s[0].split( "-" );
-        if ( datas[2].substring( 0, 1 ) === "0" ) {
-            datas[2] = datas[2].replace( "0", "" );
-        }
-        if ( datas[1].substring( 0, 1 ) === "0" ) {
-            datas[1] = datas[1].replace( "0", "" );
-        }
-        let o = Object.create( { date: { year: datas[0], month: datas[1], day: datas[2] } } );
-        return o;
     }
     
     treatString( date ) {
@@ -167,4 +112,52 @@ export class QuadroAtendimentoComponent {
         return ret;
     }
     
+}
+
+class EmpregadoTarefas {
+    private idEmpregado: number;
+    private nomeEmpregado: string;
+    private statusFila: string;
+    private servico: string;
+    private tarefas: Array<Tarefa> = new Array<Tarefa>();
+
+    getIdEmpregado() {
+        return this.idEmpregado;
+    }
+    
+    setIdEmpregado(idEmpregado: number) {
+        this.idEmpregado = idEmpregado;
+    }
+
+    getServico() {
+        return this.servico;
+    }
+    
+    setServico(servico: string) {
+        this.servico = servico;
+    }
+    
+    getNomeEmpregado() {
+        return this.nomeEmpregado;
+    }
+    
+    setNomeEmpregado(nomeEmpregado: string) {
+        this.nomeEmpregado = nomeEmpregado;
+    }
+    
+    getStatusFila() {
+        return this.statusFila;
+    }
+    
+    setStatusFila(statusFila: string) {
+        this.statusFila = statusFila;
+    }
+    
+    getTarefas() {
+        return this.tarefas;
+    }
+    
+    setTarefas(tarefas: Array<Tarefa>) {
+        this.tarefas = tarefas;
+    }
 }

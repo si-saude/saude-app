@@ -39,10 +39,12 @@
 
 	<div class="row content-tarefas">
 
-		<div *ngFor="let empregado of empregados; let e = index">
+		<div *ngFor="let empregadoTarefa of empregadoTarefas; let e = index">
 
 			<fieldset>
-				<legend class="{{empregado.id}}">{{empregado.pessoa.nome}}</legend>
+				<legend>
+					{{empregadoTarefa.nomeEmpregado}} - {{empregadoTarefa.servico}} - {{empregadoTarefa.statusFila}} 
+				</legend>
 				<table class="striped">
 					<thead>
 						<tr class="row col s12 table-fila-espera">
@@ -53,15 +55,15 @@
 					</thead>
 					<tbody class="col s12">
 						<tr class="col s12">
-							<div *ngFor="let tarefa of tarefas[empregado.id-1]; let t = index">
+							<div *ngFor="let tarefa of empregadoTarefa.tarefas; let t = index">
 								<td class="col s4 equipe-nome">{{tarefa.equipe.nome}}</td>
 								<td class="col s4 inicio">
 									<input name="dataInicioTarefa{{tarefa.id}}" disabled
-										type="text" [(ngModel)]="tarefa.inicioCustomTime.apiTime">
+										type="text" [(ngModel)]="tarefa.inicioCustomTime.appTime">
 									</td>
 								<td class="col s4 fim">
 									<input name="dataFimTarefa{{tarefa.id}}" disabled 
-										type="text" [(ngModel)]="tarefa.fimCustomTime.apiTime">
+										type="text" [(ngModel)]="tarefa.fimCustomTime.appTime">
 								</td>
 							</div>
 						</tr>
