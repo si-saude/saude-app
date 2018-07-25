@@ -49,7 +49,6 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
     private profissional: Profissional;
     regimes: Array<Regime>;
     mudancaFuncao: MudancaFuncao;
-    dataInicio: any;
         
     constructor( private route: ActivatedRoute,
         private mudancaFuncaoService: MudancaFuncaoService,     

@@ -47,6 +47,7 @@ import { PessoaService } from './pessoa/pessoa.service';
 import { ServicoService } from './servico/servico.service';
 import { RegraAtendimentoService } from './regra-atendimento/regra-atendimento.service';
 import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional/fila-espera-ocupacional.service';
+import { FilaAtendimentoOcupacionalService } from './fila-atendimento-ocupacional/fila-atendimento-ocupacional.service';
 import { AtendimentoService } from './atendimento/atendimento.service';
 import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
 import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
@@ -140,6 +141,7 @@ import { MudancaFuncaoService } from './mudanca-funcao/mudanca-funcao.service';
     ServicoService,
     RegraAtendimentoService,
     FilaEsperaOcupacionalService,
+    FilaAtendimentoOcupacionalService,
     AtendimentoService,
     RequisitoAsoService,
     AuditoriaAsoService,

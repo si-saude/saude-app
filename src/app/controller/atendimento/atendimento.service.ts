@@ -12,6 +12,8 @@ import { EixoService } from './../eixo/eixo.service';
 import { LocalizacaoFilter } from './../localizacao/localizacao.filter';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { GenericService } from './../../generics/generic.service';
+import { FilaAtendimentoOcupacionalService } from './../fila-atendimento-ocupacional/fila-atendimento-ocupacional.service';
+import { FilaEsperaOcupacionalService } from './../fila-espera-ocupacional/fila-espera-ocupacional.service';
 
 @Injectable()
 export class AtendimentoService extends GenericService {
@@ -20,6 +22,8 @@ export class AtendimentoService extends GenericService {
             private usuarioService: UsuarioService,
             private profissionalService: ProfissionalSaudeService,
             private localizacaoService: LocalizacaoService,
+            private filaAtendimentoOcupacionalService: FilaAtendimentoOcupacionalService,
+//            private filaEsperaOcupacionalService: FilaEsperaOcupacionalService,
             private diagnosticoService: DiagnosticoService,
             private intervencaoService: IntervencaoService,
             private equipeService: EquipeService,
@@ -52,6 +56,14 @@ export class AtendimentoService extends GenericService {
             .post( urlAtualizarLista, filaAtendimentoOcupacional, { headers: this.headers } )
             .toPromise();
     }
+        
+    getListFilaAtendimentoOcupacional( filaAtendimentoOcupacionalFilter ) {
+        return this.filaAtendimentoOcupacionalService.list( filaAtendimentoOcupacionalFilter );
+    }
+    
+//    getListFilaEsperaOcupacional( filaEsperaOcupacionalFilter ) {
+//        return this.filaEsperaOcupacionalService.list( filaEsperaOcupacionalFilter );
+//    }
     
     entrar( filaAtendimentoOcupacional ) {
         let urlEntrar = this.URL + "/entrar";

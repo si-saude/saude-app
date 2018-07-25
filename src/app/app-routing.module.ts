@@ -70,6 +70,7 @@ import { CatGuard } from './guards/guards-child/cat.guard';
 import { KanbanGuard } from './guards/kanban.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
 import { MudancaFuncaoGuard } from './guards/guards-child/mudanca-funcao.guard';
+import { AtendimentoAvulsoGuard } from './guards/guards-child/atendimento-avulso.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -233,6 +234,9 @@ const routes: Routes = [
   { path: 'mudanca-funcao', 
       loadChildren: 'app/controller/mudanca-funcao/mudanca-funcao.module#MudancaFuncaoModule',
       canActivateChild: [MudancaFuncaoGuard]},
+  { path: 'atendimento-avulso', 
+      loadChildren: 'app/controller/atendimento-avulso/atendimento-avulso.module#AtendimentoAvulsoModule',
+      canActivateChild: [AtendimentoAvulsoGuard]},
   { path: 'solicitacao-central-integra',
       loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
   { path: '', pathMatch: 'full', redirectTo: '/home'},

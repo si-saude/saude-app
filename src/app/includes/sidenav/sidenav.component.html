@@ -94,6 +94,7 @@
 			<a [routerLink]="['/agenda-periodico']" *ngIf="checkPermissao('AGENDA-PERIODICO')">Agenda Periódico</a>
 			<a [routerLink]="['/aprho']" *ngIf="checkPermissao('APRHO_LISTAR')">Análise Preliminar de Risco (APR-HO)</a>
 			<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
+			<a [routerLink]="['/atendimento-avulso']" *ngIf="checkPermissao('ATENDIMENTO-AVULSO_LISTAR')">Atendimento Avulso</a>
 			<a [routerLink]="['/atestado']" *ngIf="checkPermissao('ATESTADO_LISTAR')">Atestado</a>
 			<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria De Aso</a>
 			<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Guia de Exame</a>
