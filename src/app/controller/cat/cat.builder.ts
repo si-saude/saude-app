@@ -69,6 +69,10 @@ export class CatBuilder extends GenericBuilder {
         cloneCat.setRegistroSd2000(this.getValue(cat, "getRegistroSd2000"));
         cloneCat.setRemuneracao(this.getValue(cat, "getRemuneracao"));
         cloneCat.setRta(this.getValue(cat, "getRta"));
+        cloneCat.setNumeroBeneficio(this.getValue(cat, "getNumeroBeneficio"));
+        cloneCat.setInicioBeneficio(this.getValue(cat, "getInicioBeneficio"));
+        cloneCat.setUltimoDiaTrabalho(this.getValue(cat, "getUltimoDiaTrabalho"));
+        cloneCat.setRetornoTrabalho(this.getValue(cat, "getRetornoTrabalho"));
         
         if(this.getValue(cat, "getSexo") == ( "" || undefined ))
             cloneCat.setSexo(undefined);

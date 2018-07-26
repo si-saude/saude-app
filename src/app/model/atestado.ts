@@ -1,3 +1,4 @@
+import { Profissional } from './profissional';
 import { Tarefa } from './tarefa';
 import { Cat } from './cat';
 import { CustomDate} from './../generics/utils/custom-date.util';
@@ -17,10 +18,18 @@ export class Atestado {
     private dataAgendamento: Date;
     private dataSolicitacao: Date;
     private cat: Cat;
-    private version: number;
 
+    private tipoBeneficio: string;
+    private causaAfastamento: string; 
+    private profissionalRealizouVisita: Profissional;
+    private ultimoContato: string;
+    private proximoContato: string;
+    private situacaoEmpregado: string;
+    
     private dataAgendamentoCustomDate: CustomDate = new CustomDate(this.dataAgendamento);
     private dataSolicitacaoCustomDate: CustomDate = new CustomDate(this.dataSolicitacao);
+
+    private version: number;
 
     getId() {
         return this.id;
@@ -152,6 +161,54 @@ export class Atestado {
     
     setDataSolicitacaoCustomDate(dataSolicitacaoCustomDate: CustomDate){
         this.dataSolicitacaoCustomDate = dataSolicitacaoCustomDate;
+    }
+
+    getTipoBeneficio() {
+        return this.tipoBeneficio;
+    }
+
+    setTipoBeneficio(tipoBeneficio: string) {
+        this.tipoBeneficio = tipoBeneficio;
+    }
+
+    getCausaAfastamento() {
+        return this.causaAfastamento;
+    }
+
+    setCausaAfastamento(causaAfastamento: string) {
+        this.causaAfastamento = causaAfastamento;
+    }
+
+    getProfissionalRealizouVisita() {
+        return this.profissionalRealizouVisita;
+    }
+
+    setProfissionalRealizouVisita(profissionalRealizouVisita: Profissional) {
+        this.profissionalRealizouVisita = profissionalRealizouVisita;
+    }
+
+    getUltimoContato() {
+        return this.ultimoContato;
+    }
+
+    setUltimoContato(ultimoContato: string) {
+        this.ultimoContato = ultimoContato;
+    }
+
+    getProximoContato() {
+        return this.proximoContato;
+    }
+
+    setProximoContato(proximoContato: string) {
+        this.proximoContato = proximoContato;
+    }
+
+    getSituacaoEmpregado() {
+        return this.situacaoEmpregado;
+    }
+
+    setSituacaoEmpregado(situacaoEmpregado: string) {
+        this.situacaoEmpregado = situacaoEmpregado;
     }
 
     getVersion() {

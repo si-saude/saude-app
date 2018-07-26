@@ -17,7 +17,7 @@ export class AutoComplete<F extends GenericFilter> {
         this.genericAutoComplete = genericAutoComplete;
     }
     
-    public getList(obj, getMethod){
+    public getList(obj, getMethod: string){
         let infos = obj[getMethod]().split('||');
         let info = infos[infos.length - 1].trim();
         

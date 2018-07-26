@@ -49,7 +49,7 @@ export class Cat {
     private base: Base;
     private inicioBeneficio: Date;
     private ultimoDiaTrabalho: Date;
-    private retornoTrabalho: Date;    
+    private retornoTrabalho: Date;
     private numeroBeneficio: string;
 
     private inicioBeneficioCustomDate: CustomDate = new CustomDate(this.inicioBeneficio);

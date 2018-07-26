@@ -8,13 +8,17 @@ import { AtestadoFilter } from './atestado.filter';
 import { GenericService } from '../../generics/generic.service';
 import { EmpregadoService } from './../empregado/empregado.service';
 import { CatService } from './../cat/cat.service';
+import { DiagnosticoService } from './../diagnostico/diagnostico.service';
+import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 
 @Injectable()
 export class AtestadoService extends GenericService {
 
     constructor( http: Http, router: Router,
             private empregadoService: EmpregadoService,
-            private catService: CatService) { 
+            private catService: CatService,
+            private diagnosticoService: DiagnosticoService,
+            private profissionalService: ProfissionalSaudeService) { 
         super(http,router,"atestado");
     }
     
@@ -36,12 +40,27 @@ export class AtestadoService extends GenericService {
             .toPromise();
     }
     
+    getSituacaoEmpregado() {
+        let urlSituacaoEmpregado = GlobalVariable.BASE_API_URL + "/generic/situacao-empregado";
+        return this.http
+            .get( urlSituacaoEmpregado+"?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
     getEmpregadoService() {
         return this.empregadoService;
     }
     
     getCatService() {
         return this.catService;
+    }
+    
+    getDiagnosticoService() {
+        return this.diagnosticoService;
+    }
+    
+    getProfissionalService() {
+        return this.profissionalService;
     }
     
 }

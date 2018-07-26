@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
+import { MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
 import { Diagnostico } from './../../../model/diagnostico';
@@ -34,7 +35,8 @@ export class CatFormDetailComponent extends GenericFormComponent implements OnIn
     private tipoCats: Array<string>;
     private showModalDiagnostico: boolean;
     private innerIdEquipe: number = 0;
-
+    private diaHoraAcidenteTimeActions;
+    
     constructor( private route: ActivatedRoute,
         private catService: CatService,
         router: Router) {
@@ -47,6 +49,7 @@ export class CatFormDetailComponent extends GenericFormComponent implements OnIn
         this.gravidades = new Array<string>();
         this.tipoAcidentes = new Array<string>();
         this.tipoCats = new Array<string>();
+        this.diaHoraAcidenteTimeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {
