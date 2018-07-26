@@ -102,6 +102,12 @@
 													value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
 											</select>
 										</div>
+										<div class="col s1">
+											<input type="checkbox" id="opcional{{grupoMonitoramentoExame.id}}{{gME}}"
+												[(ngModel)]="grupoMonitoramentoExame.opcional"  disabled
+												name="grupoMonitoramentoExame.opcional{{grupoMonitoramentoExame.id}}{{gME}}"> 
+											<label for="opcional{{grupoMonitoramentoExame.id}}{{gME}}"></label>
+										</div>
 									</div>
 								</div>
 							</fieldset>

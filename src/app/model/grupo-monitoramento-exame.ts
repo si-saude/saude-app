@@ -9,6 +9,7 @@ export class GrupoMonitoramentoExame {
     private periodicidade: Periodicidade;
     private grupoMonitoramento: GrupoMonitoramento;
     private criterios: Array<Criterio>;
+    private opcional: boolean; 
     private version: number;
 
     getId() {
@@ -49,6 +50,14 @@ export class GrupoMonitoramentoExame {
     
     setCriterios(criterios: Array<Criterio>) {
         this.criterios = criterios;
+    }
+    
+    setOpcional(opcional: boolean) {
+        this.opcional = opcional;
+    }
+    
+    getOpcional() {
+        return this.opcional;
     }
     
     getVersion() {

@@ -42,7 +42,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
 
     constructor( private route: ActivatedRoute,
         private profissiogramaService: ProfissiogramaService,
-        router: Router) {
+        router: Router ) {
         super( profissiogramaService, router );
         this.goTo = "profissiograma";
 
@@ -96,7 +96,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
                 console.log( error );
             } )
     }
-    
+
     getCriterios() {
         this.profissiogramaService.getCriterios()
             .then( res => {
@@ -106,7 +106,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
                 console.log( error );
             } )
     }
-    
+
     getPeriodicidades() {
         this.profissiogramaService.getPeriodicidade()
             .then( res => {
@@ -117,97 +117,97 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
             } )
     }
 
-save() {
-    super.save( new ProfissiogramaBuilder().clone( this.profissiograma ) );
-}
-
-addGrupoMonitoramento( valor: number ) {
-    if ( valor == 0 ) {
-        this.toastParams = ['Por favor, selecione um grupo monitoramento', 4000];
-        this.globalActions.emit( 'toast' );
-    } else {
-        this.profissiogramaService.getGrupoMonitoramentoById( valor )
-            .then( res => {
-                let grupoMonitoramento = res.json();
-                this.profissiograma.getGrupoMonitoramentos().push( new GrupoMonitoramentoBuilder().clone( grupoMonitoramento ) );
-            } )
-            .catch( error => {
-                console.log( error );
-            } )
+    save() {
+        super.save( new ProfissiogramaBuilder().clone( this.profissiograma ) );
     }
-}
 
-
-removeGrupoMonitoramento( i: number ) {
-    this.profissiograma.getGrupoMonitoramentos().splice( i, 1 );
-}
-
-selectGrupoMonitoramento( index: number ) {
-    this.selectedGM = this.gruposMonitoramento[index];
-    this.gruposMonitoramentoExame = this.profissiograma.getGrupoMonitoramentos()[index].getGrupoMonitoramentoExames();
-    this.arrayCriterio = new Array<Criterio>();
-    this.selectedExm = null;
-}
-
-addExame( valor: number ) {
-    if ( this.selectedGM === null ) {
-        this.toastParams = ['Por favor, escolha um grupo monitoramento', 4000];
-        this.globalActions.emit( 'toast' );
-    } else {
-        let exame = this.exames.find( o => o["id"] == valor );
-        let grupoMonitoramentoExame = new GrupoMonitoramentoExameBuilder().initialize( new GrupoMonitoramentoExame() );
-        grupoMonitoramentoExame.setExame( new ExameBuilder().clone( exame ) );
-        grupoMonitoramentoExame.setCriterios( new CriterioBuilder().initializeList( new Array<Criterio>() ) );
-
-        this.gruposMonitoramentoExame.push( grupoMonitoramentoExame );
+    addGrupoMonitoramento( valor: number ) {
+        if ( valor == 0 ) {
+            this.toastParams = ['Por favor, selecione um grupo monitoramento', 4000];
+            this.globalActions.emit( 'toast' );
+        } else {
+            this.profissiogramaService.getGrupoMonitoramentoById( valor )
+                .then( res => {
+                    let grupoMonitoramento = res.json();
+                    this.profissiograma.getGrupoMonitoramentos().push( new GrupoMonitoramentoBuilder().clone( grupoMonitoramento ) );
+                } )
+                .catch( error => {
+                    console.log( error );
+                } )
+        }
     }
-}
 
-removeExame( i: number ) {
-    this.gruposMonitoramentoExame.splice( i, 1 );
-}
 
-selectExame( index: number ) {
-    this.selectedExm = this.gruposMonitoramentoExame[index].getExame();
-    this.arrayCriterio = this.gruposMonitoramentoExame[index].getCriterios();
-}
-
-addCriterio( valor: number ) {
-    if ( this.selectedExm === null ) {
-        this.toastParams = ['Por favor, escolha um exame', 4000];
-        this.globalActions.emit( 'toast' );
-    } else {
-        let criterio = this.criterios.find( o => o["id"] == valor );
-        this.arrayCriterio.push( criterio );
+    removeGrupoMonitoramento( i: number ) {
+        this.profissiograma.getGrupoMonitoramentos().splice( i, 1 );
     }
-}
 
-removeCriterio( i: number ) {
-    this.arrayCriterio.splice( i, 1 );
-}
+    selectGrupoMonitoramento( index: number ) {
+        this.selectedGM = this.gruposMonitoramento[index];
+        this.gruposMonitoramentoExame = this.profissiograma.getGrupoMonitoramentos()[index].getGrupoMonitoramentoExames();
+        this.arrayCriterio = new Array<Criterio>();
+        this.selectedExm = null;
+    }
 
-selectedGrupoMonitoramento( gM: number ) {
-    if ( this.gruposMonitoramento != undefined ) {
-        if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
-            return "active";
-        } else return "";
-    } else {
-        setTimeout(() => {
+    addExame( valor: number ) {
+        if ( this.selectedGM === null ) {
+            this.toastParams = ['Por favor, escolha um grupo monitoramento', 4000];
+            this.globalActions.emit( 'toast' );
+        } else {
+            let exame = this.exames.find( o => o["id"] == valor );
+            let grupoMonitoramentoExame = new GrupoMonitoramentoExameBuilder().initialize( new GrupoMonitoramentoExame() );
+            grupoMonitoramentoExame.setExame( new ExameBuilder().clone( exame ) );
+            grupoMonitoramentoExame.setCriterios( new CriterioBuilder().initializeList( new Array<Criterio>() ) );
+
+            this.gruposMonitoramentoExame.push( grupoMonitoramentoExame );
+        }
+    }
+
+    removeExame( i: number ) {
+        this.gruposMonitoramentoExame.splice( i, 1 );
+    }
+
+    selectExame( index: number ) {
+        this.selectedExm = this.gruposMonitoramentoExame[index].getExame();
+        this.arrayCriterio = this.gruposMonitoramentoExame[index].getCriterios();
+    }
+
+    addCriterio( valor: number ) {
+        if ( this.selectedExm === null ) {
+            this.toastParams = ['Por favor, escolha um exame', 4000];
+            this.globalActions.emit( 'toast' );
+        } else {
+            let criterio = this.criterios.find( o => o["id"] == valor );
+            this.arrayCriterio.push( criterio );
+        }
+    }
+
+    removeCriterio( i: number ) {
+        this.arrayCriterio.splice( i, 1 );
+    }
+
+    selectedGrupoMonitoramento( gM: number ) {
+        if ( this.gruposMonitoramento != undefined ) {
             if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
                 return "active";
             } else return "";
-        }, 500 );
+        } else {
+            setTimeout(() => {
+                if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
+                    return "active";
+                } else return "";
+            }, 500 );
+        }
     }
-}
 
-selectedExame( e: number ) {
-    if ( this.gruposMonitoramentoExame[e].getExame() === this.selectedExm ) {
-        return "active";
-    } else return "";
-}
+    selectedExame( e: number ) {
+        if ( this.gruposMonitoramentoExame[e].getExame() === this.selectedExm ) {
+            return "active";
+        } else return "";
+    }
 
-onDestroy() {
-    this.inscricao.unsubscribe();
-}
+    onDestroy() {
+        this.inscricao.unsubscribe();
+    }
 
 }
