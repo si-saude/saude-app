@@ -237,14 +237,21 @@
 								<tbody class="col s12">
 									<tr class="col s12">
 										<td class="col s1 chave">{{empregadoConvocacao.empregado.chave}}</td>
-										<td class="col s5 nome">{{empregadoConvocacao.empregado.pessoa.nome}}</td>
-										<td class="col s3 codigo_completo">{{empregadoConvocacao.empregado.gerencia.codigoCompleto}}</td>
-										<td class="col s1 checkbox_selecionado"
-											*ngIf="empregadoConvocacao.auditado"><input
-											type="checkbox" id="empregadoConvocacao[{{eC}}].selecionado"
-											[(ngModel)]="empregadoConvocacao.selecionado"
-											name="empregadoConvocacao[{{eC}}].selecionado"> <label
-											for="empregadoConvocacao[{{eC}}].selecionado"></label></td>
+										<td class="col s4 nome">{{empregadoConvocacao.empregado.pessoa.nome}}</td>
+										<td class="col s2 codigo_completo">{{empregadoConvocacao.empregado.gerencia.codigoCompleto}}</td>
+										<td class="col s2 data_convocacao{{eC}}">
+											<my-date-picker name="dataConvocacao{{eC}}" [disabled]="!empregadoConvocacao.selecionado" 
+												[options]="myDatePickerOptions"
+												[(ngModel)]="empregadoConvocacao.dataConvocacaoCustomDate.appDate" 
+												placeholder="Data da Convocação"></my-date-picker>
+										</td>
+										<td class="col s1 checkbox_selecionado" *ngIf="empregadoConvocacao.auditado">
+											<input type="checkbox" id="empregadoConvocacao[{{eC}}].selecionado"
+												[(ngModel)]="empregadoConvocacao.selecionado" 
+												(click)="setDataConvocacao(empregadoConvocacao)"
+												name="empregadoConvocacao[{{eC}}].selecionado"> 
+											<label for="empregadoConvocacao[{{eC}}].selecionado"></label>
+										</td>
 										<td class="col s1 checkbox_selecionado"
 											*ngIf="!empregadoConvocacao.auditado"><input
 											type="checkbox" disabled

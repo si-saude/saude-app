@@ -411,7 +411,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     
                     let convocacaoAux:Convocacao = new ConvocacaoBuilder().clone(this.convocacao);
                     convocacaoAux.setEmpregadoConvocacoes(this.empregadoConvocacoes);
-                    
+                    console.log(convocacaoAux);
                     this.convocacaoService.getConvocacao( convocacaoAux )
                         .then( res => {
                             this.downloadFile( res, convocacaoAux.getTitulo()+".zip" )
@@ -450,6 +450,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                 this.selectedGerenciaConvocacaoCC.push(gC.getGerencia().getCodigoCompleto());
             }
         })
+    }
+    
+    setDataConvocacao(empregadoConvocacao: EmpregadoConvocacao) {
+        empregadoConvocacao.setDataConvocacao(new Date());
     }
     
 }
