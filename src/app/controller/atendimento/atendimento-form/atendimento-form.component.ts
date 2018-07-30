@@ -61,7 +61,6 @@ export class AtendimentoFormComponent {
     private profissional: Profissional;
     private localizacoes: Array<Localizacao>;
     private localizacao: Localizacao;
-    private acolhimento: boolean;
     private filaAtendimentoOcupacionais: Array<FilaAtendimentoOcupacional>;
     private filaAtendimentoOcupacional: FilaAtendimentoOcupacional;
     private alive: boolean;
@@ -143,9 +142,6 @@ export class AtendimentoFormComponent {
                                         .subscribe(() => {
                                             this.atualizar();
                                         } );
-                                    if ( this.profissional.getEquipe().getAbreviacao() == "ACO" ) {
-                                        this.acolhimento = true;
-                                    } else this.acolhimento = false;
                                 } else {
                                     this.router.navigate( ["/home"] );
                                     return;
@@ -590,6 +586,13 @@ export class AtendimentoFormComponent {
         }, 500 );
     }
 
+    isAcolhimento() {
+        if ( this.profissional.getEquipe().getAbreviacao() == 
+            this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getAbreviacaoEquipeAcolhimento())
+            return true
+        else return false;
+    }
+    
     ngOnDestroy() {
         this.alive = false;
         if ( this.inscricao != undefined )

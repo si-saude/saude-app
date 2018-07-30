@@ -40,7 +40,7 @@
 							<div *ngFor="let itemDoItem of getItensDoItem(item); let ii = index" [class]="getClassItensResposta(resposta)">
 							
 								<div *ngIf="!itemHasPath(resposta, i, ii)">
-									<textarea (click)="openModalConteudoItem(resposta, i, ii)"
+									<textarea
 										[(ngModel)]="itemDoItem.conteudo" [disabled]="isDisabledResposta(resposta)"></textarea>
 								</div>
 								
@@ -67,7 +67,7 @@
 				
 				<div class="resposta" *ngIf="!isEnumOrSimNao(resposta)">
 				
-					<textarea (click)="openModalConteudoResposta(resposta)" 
+					<textarea 
 						[disabled]="isDisabledResposta(resposta)"
 						[(ngModel)]="resposta.conteudo">
 					</textarea>
