@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
 import { Profissional } from './../../../model/profissional';
+import { MaterializeAction } from "angular2-materialize";
 
 import { FilaAtendimentoOcupacional } from './../../../model/fila-atendimento-ocupacional';
 import { GlobalVariable } from './../../../global';
@@ -34,6 +35,7 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
     private localizacoes: Array<Localizacao>;
     private usuario: Usuario;
     private profissional: Profissional;
+    private diaHoraTarefaInicioTimeActions;
 
     @ViewChild( ModalFilaAtendimentoOcupacionalComponent ) modalFilaAtendimento: ModalFilaAtendimentoOcupacionalComponent;
     @ViewChild( ModalFilaEsperaOcupacionalComponent ) modalFilaEspera: ModalFilaEsperaOcupacionalComponent;
@@ -49,6 +51,7 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
+        this.diaHoraTarefaInicioTimeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {
