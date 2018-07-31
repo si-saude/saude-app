@@ -72,8 +72,17 @@ import { AgenteRiscoService } from './agente-risco/agente-risco.service';
 import { AprhoService } from './aprho/aprho.service';
 import { CatService } from './cat/cat.service';
 import { AtestadoService } from './atestado/atestado.service';
+<<<<<<< HEAD
 import { MudancaFuncaoService } from './mudanca-funcao/mudanca-funcao.service';
 import { TarefaService } from './tarefa/tarefa.service';
+=======
+import { ParteCorpoAtingidaService } from './parte-corpo-atingida/parte-corpo-atingida.service';
+import { AgenteCausadorService } from './agente-causador/agente-causador.service';
+import { NaturezaLesaoService } from './natureza-lesao/natureza-lesao.service';
+import { AvaliacaoHigieneOcupacionalService } from './avaliacao-higiene-ocupacional/avaliacao-higiene-ocupacional.service';
+import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
+import { EnfaseService } from './enfase/enfase.service';
+>>>>>>> refs/heads/master
 
 @NgModule({
   declarations: [
@@ -166,8 +175,17 @@ import { TarefaService } from './tarefa/tarefa.service';
     SolicitacaoCentralIntegraService,
     CatService,
     AtestadoService,
+<<<<<<< HEAD
     MudancaFuncaoService,
     TarefaService
+=======
+    ParteCorpoAtingidaService,
+    AgenteCausadorService,
+    NaturezaLesaoService,
+    AvaliacaoHigieneOcupacionalService,
+    FichaColetaService,
+    EnfaseService
+>>>>>>> refs/heads/master
   ]
 })
 export class SharedModule { }

@@ -8,6 +8,20 @@ export class BaseBuilder extends GenericBuilder {
         return base;
     }
     
+    initializeList(bases: Array<Base>) {
+        
+        let array:Array<Base> = new Array<Base>();
+        
+        if(bases === null || bases === undefined)
+            bases = new Array<Base>();
+        
+        for (let base of bases) {
+            array.push(this.initialize(base));
+        }
+        
+        return array;
+    }
+    
     clone(base: Base): Base {
         
         if (base === null || base === undefined)
@@ -23,6 +37,7 @@ export class BaseBuilder extends GenericBuilder {
     
     cloneList(bases: Array<Base>): Array<Base> {
         let array:Array<Base> = new Array<Base>();
+<<<<<<< HEAD
         if (bases !== null && bases !== undefined) { 
             for (let base of bases) {
                 array.push(this.clone(base));
@@ -31,4 +46,16 @@ export class BaseBuilder extends GenericBuilder {
         
         return array;
     }
+=======
+    
+        if (bases !== null && bases !== undefined) { 
+            for (let base of bases) {
+                array.push(this.clone(base));
+            }
+        }
+        
+        return array;
+    }
+    
+>>>>>>> refs/heads/master
 }

@@ -1,0 +1,41 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalAvaliacao">
+
+	<h5 class="title-modal">Avaliações Higiene Ocupacional</h5>
+	
+	<table class="table table-striped">
+        <tr>
+	        <td>
+	            <label by="chave">Chave</label>
+	            <input type="text" name="chave" style="width: 90%" [(ngModel)]="chave" 
+						placeholder="filtrar chave" (input)="selectFilter()">
+	        </td>
+	        <td>
+	            <label by="matricula">Matricula</label>
+	            <input type="text" name="matricula" style="width: 90%" [(ngModel)]="matricula" 
+						placeholder="filtrar matricula" (input)="selectFilter()">
+	        </td>
+	        <td>
+	            <label by="nome">Nome</label>
+	            <input type="text" name="nome" style="width: 90%" [(ngModel)]="nome"
+						placeholder="filtrar nome" (input)="selectFilter()">
+	        </td>
+	    </tr>
+	    <tr *ngFor="let item of arrayAvaliacao" class="tr-item" (click)="selectAvaliacao(item)">
+	        <td colspan="2">{{item.empregado.pessoa.nome}}</td>
+	        <td>{{item.data | transformDate }}</td>
+	    </tr>
+	</table>
+ 
+	<div class="modal-footer">
+		 <a class="waves-effect waves-green btn-flat"
+			(click)="cancelarModalDiagnostico()">Cancelar</a>
+	</div>
+
+</div>

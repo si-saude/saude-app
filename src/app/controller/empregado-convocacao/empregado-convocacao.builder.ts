@@ -49,6 +49,7 @@ export class EmpregadoConvocacaoBuilder extends GenericBuilder{
         cloneEmpregadoConvocacao.setConvocado(this.getValue(empregadoConvocacao, "getConvocado"));
         cloneEmpregadoConvocacao.setDivergente(this.getValue(empregadoConvocacao, "getDivergente"));
         cloneEmpregadoConvocacao.setSelecionado(this.getValue(empregadoConvocacao, "getSelecionado"));
+        cloneEmpregadoConvocacao.setDataConvocacao(this.getValue(empregadoConvocacao, "getDataConvocacao"));
         
         cloneEmpregadoConvocacao.setConvocacao(new ConvocacaoBuilder().clone(this.getValue(empregadoConvocacao, "getConvocacao")));
         

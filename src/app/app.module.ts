@@ -89,6 +89,15 @@ import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitaca
 import { KanbanGuard } from './guards/kanban.guard';
 import { MudancaFuncaoGuard } from './guards/guards-child/mudanca-funcao.guard';
 import { AtendimentoAvulsoGuard } from './guards/guards-child/atendimento-avulso.guard';
+import { ParteCorpoAtingidaGuard } from './guards/guards-child/parte-corpo-atingida.guard';
+import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard';
+import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
+import { ReportCatGuard } from './guards/report-cat.guard';
+import { ReportAtestadoGuard } from './guards/report-atestado.guard';
+import { ReportAvaliacaoHigieneOcupacionalGuard } from './guards/report-avaliacao-higiene-ocupacional.guard';
+import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisitos-agendamento.guard';
+import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
+import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 
 
 @NgModule({
@@ -182,7 +191,16 @@ import { AtendimentoAvulsoGuard } from './guards/guards-child/atendimento-avulso
     CatGuard,
     AtestadoGuard,
     MudancaFuncaoGuard,
-    AtendimentoAvulsoGuard
+    AtendimentoAvulsoGuard,
+    ParteCorpoAtingidaGuard,
+    AgenteCausadorGuard,
+    NaturezaLesaoGuard,
+    ReportCatGuard,
+    ReportAtestadoGuard,
+    AvaliacaoHigieneOcupacionalGuard,
+    EnfaseGuard,
+    ReportAvaliacaoHigieneOcupacionalGuard,
+    ReportPreRequisitosAgendamentoGuard
   ],
   bootstrap: [ 
     AppComponent

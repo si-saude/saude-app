@@ -21,6 +21,8 @@ import { EmpregadoFilter } from './../../../controller/empregado/empregado.filte
 import { SolicitacaoCentralIntegraBuilder } from './../solicitacao-central-integra.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { SolicitacaoCentralIntegraService } from './../solicitacao-central-integra.service';
+import { CssUtil } from './../../../generics/utils/css.util';
+import { HttpUtil } from './../../../generics/utils/http.util';
 
 @Component( {
     selector: 'app-solicitacao-central-integra-form',
@@ -46,6 +48,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     private autoCompleteEmp:EmpregadoNomeAutocomplete;
     private autoCompleteProf:ProfissionalNomeAutocomplete;
     
+    private cssUtil: CssUtil;
+    
     constructor( private route: ActivatedRoute,
             private solicitacaoCentralIntegraService: SolicitacaoCentralIntegraService,
             router: Router) { 
@@ -68,6 +72,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             
             this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.solicitacaoCentralIntegraService.getEmpregadoService());
             this.autoCompleteProf = new ProfissionalNomeAutocomplete(this.solicitacaoCentralIntegraService.getProfissionalService());
+            
+            this.cssUtil = new CssUtil();
     }
     
     ngOnInit() {
@@ -95,6 +101,8 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
             } );
         this.getTipoSolicitacao();
         this.getStatuses();
+        this.cssUtil.overflowTextarea("#descricao");
+        this.cssUtil.overflowTextarea("#observacao");
     }
     
     getStatuses() {

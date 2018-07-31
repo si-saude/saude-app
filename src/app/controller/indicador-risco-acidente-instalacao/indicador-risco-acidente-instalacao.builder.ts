@@ -1,5 +1,6 @@
 import { IndicadorRiscoAcidenteInstalacao } from './../../model/indicador-risco-acidente-instalacao';
 import { Instalacao } from './../../model/instalacao';
+import { InstalacaoBuilder } from './../instalacao/instalacao.builder';
 import { IndicadorRiscoAcidenteBuilder } from './../indicador-risco-acidente/indicador-risco-acidente.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
@@ -8,6 +9,7 @@ export class IndicadorRiscoAcidenteInstalacaoBuilder extends GenericBuilder {
     initialize(indicadorRiscoAcidenteInstalacao: IndicadorRiscoAcidenteInstalacao) {
         indicadorRiscoAcidenteInstalacao = new IndicadorRiscoAcidenteInstalacao();
         
+        indicadorRiscoAcidenteInstalacao.setInstalacao(new InstalacaoBuilder().initialize(new Instalacao()));
         indicadorRiscoAcidenteInstalacao.setIndicadorRisco(
             new IndicadorRiscoAcidenteBuilder().initialize(
                     indicadorRiscoAcidenteInstalacao.getIndicadorRisco()));

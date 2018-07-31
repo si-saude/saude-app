@@ -11,6 +11,7 @@ export class ResultadoExame {
     private data: Date;
     private dataRecebimento: Date;
     private conforme: boolean;
+    private particular: boolean;
     private tipo: string = "";
     private acao: string = "";
     private local: string;
@@ -41,6 +42,14 @@ export class ResultadoExame {
 
     setConforme(conforme: boolean) {
         this.conforme = conforme;
+    }
+    
+    getParticular() {
+        return this.particular;
+    }
+
+    setParticular(particular: boolean) {
+        this.particular = particular;
     }
     
     getData() {

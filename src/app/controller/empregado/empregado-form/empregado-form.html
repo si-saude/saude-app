@@ -108,7 +108,6 @@
 							<label for="ramal">Ramal</label> <input id="ramal" type="text"
 								maxlength="16" [(ngModel)]="empregado.ramal" name="ramal">
 						</div>
-
 					</div>
 
 					<div class="row">
@@ -231,7 +230,12 @@
 					</div>
 
 					<div class="row">
+<<<<<<< HEAD
 						<div class="input-field col s6">
+=======
+
+						<div class="input-field col s4">
+>>>>>>> refs/heads/master
 							<fieldset>
 								<legend>
 									Regime <a
@@ -247,7 +251,12 @@
 								</select>
 							</fieldset>
 						</div>
+<<<<<<< HEAD
 						<div class="input-field col s6">
+=======
+
+						<div class="input-field col s4">
+>>>>>>> refs/heads/master
 							<fieldset>
 								<legend>
 									Gerência <a
@@ -261,6 +270,23 @@
 									<option disabled selected value=0>Selecione uma gerencia</option>
 									<option *ngFor="let gerencia of gerencias"
 										value="{{gerencia.id}}">{{gerencia.codigoCompleto}}</option>
+								</select>
+							</fieldset>
+						</div>
+						
+						<div class="input-field col s4">
+							<fieldset>
+								<legend> Ênfase 
+									<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getEnfases()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
+								<select name="enfase" class="browser-default"
+									[(ngModel)]="empregado.enfase.id">
+									<option disabled selected value="undefined">Selecione uma ênfase</option>
+									<option *ngFor="let enfase of enfases"
+										value="{{enfase.id}}">{{enfase.descricao}}</option>
 								</select>
 							</fieldset>
 						</div>
@@ -449,7 +475,7 @@
 							<tbody class="col s12">
 								<tr class="col s12">
 									<td class="col s8 grupo-monitoramento-nome">{{empregado.historicoGrupoMonitoramentos[i].grupoMonitoramento.nome}}</td>
-									<td class="col s4 data-remocao-historico">{{empregado.historicoGrupoMonitoramentos[i].dataRemocaoCustomDate.appDate}}</td>
+									<td class="col s4 data-remocao-historico">{{empregado.historicoGrupoMonitoramentos[i].dataRemocao | transformDate}}</td>
 								</tr>
 							</tbody>
 						</div>
@@ -683,28 +709,29 @@
 					<div class="input-field col s12 instalacoes">
 
 						<fieldset>
-							<legend>
-								Instalações <a
-									class="btn-floating waves-effect waves-light green btn-add-fieldset"
-									(click)="getInstalacoes()"> <i
-									class="material-icons center-icon">cached</i>
+							<legend> Instalações 
+								<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getInstalacoes()"> 
+									<i class="material-icons center-icon">cached</i>
 								</a>
 							</legend>
 
 							<div class="row row-curso">
 
-								<div class="input-field col s4">
-									<select class="browser-default" #instalacao>
-										<option disabled selected value=0>Selecione uma instalação</option>
-										<option *ngFor="let instalacao of instalacoes"
-											value="{{instalacao.id}}">{{instalacao.nome}}</option>
-
-									</select>
+								<div class="input-field col s8">
+									<label for="instalacao">Instalação</label> 
+									<input
+										type="text" materialize="autocomplete" autocomplete="off"
+										name="instalacao.nome"
+										[(ngModel)]="instalacao.instalacao.nome"
+										(blur)="autoCompleteInstalacao.getAutocomplete().getObj($event,instalacao,'setInstalacao','getNome')"
+										(ngModelChange)="autoCompleteInstalacao.getAutocomplete().getList(instalacao.instalacao, 'getNome');"
+										[materializeParams]="autoCompleteInstalacao.getAutocomplete().getObjAutoComplete()">
 								</div>
 
 								<div class="col s2">
 									<a class="btn-floating waves-effect waves-light green btn-add"
-										(click)="addInstalacao(instalacao.value)"> <i
+										(click)="addInstalacao()"> <i
 										class="material-icons center-icon">add</i>
 									</a>
 								</div>

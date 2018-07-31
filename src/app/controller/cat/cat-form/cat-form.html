@@ -24,10 +24,15 @@
 			<div id="dadosGerais">
 
 				<div class="row">
-					<div class="input-field col s9">
+					<div class="input-field col s5">
 						<label for="numero">Número</label> <input id="numero" type="text"
 							maxlength="16" name="numero" [(ngModel)]="cat.numero">
 					</div>
+					
+						<div class="input-field col s4">
+							<label for="numeroBeneficio">Número do Benefício</label> <input id="numeroBeneficio" type="text"
+								maxlength="32" name="numeroBeneficio" [(ngModel)]="cat.numeroBeneficio">
+						</div>
 
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="contratado" (change)="setContratado()"
@@ -38,12 +43,12 @@
 
 				<div class="row">
 					<div class="input-field col s12">
-						<label for="empregado">Nome do Empregado</label> <input
+						<label for="empregado">Empregado</label> <input
 							type="text" [disabled]="!verifyContratado()"
 							materialize="autocomplete" autocomplete="off"
 							name="autoCompleteEmpregado"
 							[(ngModel)]="cat.empregado.pessoa.nome"
-							(blur)="autoCompleteEmpregado.getAutocomplete().getObj($event,cat,'setEmpregado','getNome'); setDataEmpregado()"
+							(blur)="autoCompleteEmpregado.getAutocomplete().getObj($event,cat,'setEmpregado','getNome'); setDadosEmpregado()"
 							(ngModelChange)="autoCompleteEmpregado.getAutocomplete().getList(cat.empregado, 'getNome');"
 							[materializeParams]="autoCompleteEmpregado.getAutocomplete().getObjAutoComplete()">
 					</div>
@@ -51,14 +56,14 @@
 
 				<div class="row">
 					<div class="input-field col s8">
-						<label for="nome">Nome</label> <input id="nome" type="text"
+						<label for="nome">Nome</label> <input id="nome" type="text" [required]="!verifyContratado()"
 							maxlength="256" [disabled]="verifyContratado()" name="nome"
 							[(ngModel)]="cat.nome">
 					</div>
 
 					<div class="input-field col s4">
 						<label for="dataNascimento">Data de Nascimento</label>
-						<my-date-picker name="dataNascimento"
+						<my-date-picker name="dataNascimento" [required]="!verifyContratado()"
 							[disabled]="verifyContratado()" [options]="myDatePickerOptions"
 							[(ngModel)]="cat.dataNascimentoCustomDate.appDate"
 							placeholder="Data de Nascimento"></my-date-picker>
@@ -66,11 +71,21 @@
 				</div>
 
 				<div class="row">
-					<div class="input-field col s8">
+					<div class="input-field col s4">
 						<label for="cargo">Cargo</label> 
 						<input id="cargo" type="text" maxlength="128" 
 						[disabled]="verifyContratado()" name="cargo"
 							[(ngModel)]="cat.cargo">
+					</div>
+
+					<div class="input-field col s4">
+						<label for="gerencia">Gerência</label> <input [required]="!verifyContratado()"
+							type="text" materialize="autocomplete" autocomplete="off" [disabled]="verifyContratado()"
+							name="autoCompleteGerencia"
+							[(ngModel)]="cat.gerencia.codigoCompleto"
+							(blur)="autoCompleteGerencia.getAutocomplete().getObj($event,cat,'setGerencia','getCodigoCompleto')"
+							(ngModelChange)="autoCompleteGerencia.getAutocomplete().getList(cat.gerencia, 'getCodigoCompleto');"
+							[materializeParams]="autoCompleteGerencia.getAutocomplete().getObjAutoComplete()">
 					</div>
 
 					<div class="input-field col s4">
@@ -81,19 +96,30 @@
 				</div>
 
 				<div class="row">
-					<div class="input-field col s8">
+					<div class="input-field col s4">
 						<label for="cpf">CPF</label> 
-						<input id="cpf" type="text"
+						<input id="cpf" type="text" [required]="!verifyContratado()"
 							maxlength="14" [disabled]="verifyContratado()" [mask]="'cpf'"
 							(ngModelChange)="cat.cpf=$event" maxlength="14"
 							[ngModel]="cat.cpf | cpfMask" name="cpf">
+					</div>
+					
+					<div class="input-field col s4">
+						<fieldset>
+							<legend>Base</legend>
+							<select name="base" class="browser-default" [disabled]="verifyContratado()"  
+								[required]="!verifyContratado()" [(ngModel)]="cat.base.id">
+								<option disabled selected value="undefined">Selecione um base</option>
+								<option *ngFor="let base of bases" value="{{base.id}}">{{base.nome}}</option>
+							</select>
+						</fieldset>
 					</div>
 
 					<div class="input-field col s4">
 						<fieldset>
 							<legend>Sexo</legend>
-							<select name="sexo" class="browser-default" [disabled]="verifyContratado()"
-								[(ngModel)]="cat.sexo">
+							<select name="sexo" class="browser-default" [disabled]="verifyContratado()"  
+								[required]="!verifyContratado()" [(ngModel)]="cat.sexo">
 								<option disabled selected value="undefined">Selecione um sexo</option>
 								<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
 							</select>
@@ -107,31 +133,77 @@
 			<div id="outrasInformacoes">
 
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s6">
 						<label for="RTA">RTA</label> <input id="RTA" type="text"
 							maxlength="64" name="RTA" [(ngModel)]="cat.rta">
 					</div>
-				</div>
 
-				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s6">
 						<label for="instalacao">Instalação</label> <input id="instalacao"
 							type="text" maxlength="128" name="instalacao"
 							[(ngModel)]="cat.instalacao">
 					</div>
 				</div>
-
+				
 				<div class="row">
-					<div class="input-field col s6">
-						<label for="gerencia">Código da Gerência</label> <input
-							type="text" materialize="autocomplete" autocomplete="off"
-							name="autoCompleteGerencia"
-							[(ngModel)]="cat.gerencia.codigoCompleto"
-							(blur)="autoCompleteGerencia.getAutocomplete().getObj($event,cat,'setGerencia','getCodigoCompleto')"
-							(ngModelChange)="autoCompleteGerencia.getAutocomplete().getList(cat.gerencia, 'getCodigoCompleto');"
-							[materializeParams]="autoCompleteGerencia.getAutocomplete().getObjAutoComplete()">
+					<div class="input-field col s4">
+						<my-date-picker name="inicioBeneficio"
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.inicioBeneficioCustomDate.appDate"
+							placeholder="Início do Benefício"></my-date-picker>
 					</div>
-
+					
+					<div class="input-field col s4">
+						<my-date-picker name="ultimoDiaTrabalho"
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.ultimoDiaTrabalhoCustomDate.appDate"
+							placeholder="Último Dia de Trabalho"></my-date-picker>
+					</div>
+					
+					<div class="input-field col s4">
+						<my-date-picker name="retornoTrabalho"
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.retornoTrabalhoCustomDate.appDate"
+							placeholder="Retorno ao Trabalho"></my-date-picker>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s4">
+						<label for="parteCorpoAtingida">Parte do Corpo Atingida</label> <input
+							type="text"
+							materialize="autocomplete" autocomplete="off"
+							name="autoCompleteParteCorpoAtingida"
+							[(ngModel)]="cat.parteCorpoAtingida.descricao"
+							(blur)="autoCompleteParteCorpoAtingida.getAutocomplete().getObj($event,cat,'setParteCorpoAtingida','getDescricao')"
+							(ngModelChange)="autoCompleteParteCorpoAtingida.getAutocomplete().getList(cat.parteCorpoAtingida, 'getDescricao');"
+							[materializeParams]="autoCompleteParteCorpoAtingida.getAutocomplete().getObjAutoComplete()">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="agenteCausador">Agente Causador</label> <input
+							type="text"
+							materialize="autocomplete" autocomplete="off"
+							name="autoCompleteAgenteCausador"
+							[(ngModel)]="cat.agenteCausador.descricao"
+							(blur)="autoCompleteAgenteCausador.getAutocomplete().getObj($event,cat,'setAgenteCausador','getDescricao')"
+							(ngModelChange)="autoCompleteAgenteCausador.getAutocomplete().getList(cat.agenteCausador, 'getDescricao');"
+							[materializeParams]="autoCompleteAgenteCausador.getAutocomplete().getObjAutoComplete()">
+					</div>
+					
+					<div class="input-field col s4">
+						<label for="naturezaLesao">Natureza da Lesão</label> <input
+							type="text"
+							materialize="autocomplete" autocomplete="off"
+							name="autoCompleteNaturezaLesao"
+							[(ngModel)]="cat.naturezaLesao.descricao"
+							(blur)="autoCompleteNaturezaLesao.getAutocomplete().getObj($event,cat,'setNaturezaLesao','getDescricao')"
+							(ngModelChange)="autoCompleteNaturezaLesao.getAutocomplete().getList(cat.naturezaLesao, 'getDescricao');"
+							[materializeParams]="autoCompleteNaturezaLesao.getAutocomplete().getObjAutoComplete()">
+					</div>
+				</div>
+				
+				<div class="row">
 					<div class="input-field col s6">
 						<fieldset>
 							<legend>Partes do Corpo</legend>
@@ -143,23 +215,7 @@
 							</select>
 						</fieldset>
 					</div>
-				</div>
-
-				<div class="row">
-					<div class="input-field col s6">
-						<label for="numeroSISIN">Número SISIN</label> <input
-							id="numeroSISIN" type="text" maxlength="128" name="numeroSISIN"
-							[(ngModel)]="cat.numeroSisin">
-					</div>
-
-					<div class="input-field col s3">
-						<label for="diaHoraAcidente">Data/Hora do Acidente</label>
-						<my-date-picker name="diaHoraAcidente"
-							[options]="myDatePickerOptions"
-							[(ngModel)]="cat.diaHoraAcidenteCustomDate.appDate"
-							placeholder="Data/Hora do Acidente"></my-date-picker>
-					</div>
-
+					
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="afastamento"
 							[(ngModel)]="cat.afastamento" name="cat.afastamento"> <label
@@ -169,10 +225,44 @@
 
 				<div class="row">
 					<div class="input-field col s3">
-						<label for="dataEmissaoCat">Data de Emissao da Cat</label>
+						<label for="numeroSISIN">Número SISIN</label> <input
+							id="numeroSISIN" type="text" maxlength="128" name="numeroSISIN"
+							[(ngModel)]="cat.numeroSisin">
+					</div>
+					
+					<div class="input-field col s3">
+						<label for="classificacaoSISIN">Classificação SISIN</label> <input
+							id="classificacaoSISIN" type="number" name="classificacaoSISIN"
+							[(ngModel)]="cat.classificacaoSisin">
+					</div>
+
+					<div class="input-field col s6">
+						<label for="diaHoraAcidente">Dia/Hora do Acidente</label>
+						<div>
+							<div class="input-field col s6">
+								<my-date-picker name="diaHoraAcidente"
+									[options]="myDatePickerOptions"
+									[(ngModel)]="cat.diaHoraAcidenteCustomTime.appDate"
+									placeholder="Dia/Hora do Acidente"></my-date-picker>
+							</div>
+							<div class="input-field col s6">
+					            <input id="diaHoraAcidente" name="diaHoraAcidente" 
+					            	[(ngModel)]="cat.diaHoraAcidenteCustomTime.appTime"
+				                    materialize="pickatime" 
+				                    [materializeActions]="diaHoraAcidenteTimeActions"
+				                    [materializeParams]="[{twelvehour: false}]"
+				                    placeholder="00:00" class="validate" type="text">
+				            </div>
+			            </div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s3">
+						<label for="dataEmissaoCat">Data de Emissão da CAT</label>
 						<my-date-picker name="dataEmissaoCat" [options]="myDatePickerOptions"
 							[(ngModel)]="cat.dataEmissaoCatCustomDate.appDate"
-							placeholder="Data de Emissao da Cat"></my-date-picker>
+							placeholder="Data de Emissao da CAT"></my-date-picker>
 					</div>
 				
 					<div class="input-field col s6">
@@ -186,17 +276,11 @@
 							</select>
 						</fieldset>
 					</div>
-					
-					<div class="input-field col s2">
-						<label for="classificacaoSISIN">Classificação SISIN</label> <input
-							id="classificacaoSISIN" type="numer" name="classificacaoSISIN"
-							[(ngModel)]="cat.classificacaoSisin">
-					</div>
 				</div>
 
 				<div class="row">
 					<div class="input-field col s3">
-						<label for="dataAvaliacaoMedica">Data da Avaliacao Médica</label>
+						<label for="dataAvaliacaoMedica">Data da Avaliação Médica</label>
 						<my-date-picker name="dataAvaliacaoMedica"
 							[options]="myDatePickerOptions"
 							[(ngModel)]="cat.dataAvaliacaoMedicaCustomDate.appDate"
@@ -212,7 +296,7 @@
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="catSD2000" [(ngModel)]="cat.catSd2000"
 							name="cat.catSD2000"> 
-						<label for="catSD2000">Cat SD2000</label>
+						<label for="catSD2000">CAT SD2000</label>
 					</div>
 				</div>
 
@@ -231,10 +315,10 @@
 
 					<div class="input-field col s6">
 						<fieldset>
-							<legend>Tipo do Cat</legend>
+							<legend>Tipo do CAT</legend>
 							<select name="tipoCat" class="browser-default"
 								[(ngModel)]="cat.tipoCat">
-								<option disabled selected value="undefined">Selecione uma tipo do cat</option>
+								<option disabled selected value="undefined">Selecione uma tipo do CAT</option>
 								<option *ngFor="let tipoCat of tipoCats" value="{{tipoCat}}">{{tipoCat}}</option>
 							</select>
 						</fieldset>
@@ -243,7 +327,7 @@
 				
 				<div class="row">
 					<div class="input-field col s12">
-						<label for="dataAvaliacaoMedica">Diagnostico</label>
+						<label for="dataAvaliacaoMedica">Diagnóstico</label>
 						<input (click)="openModalDiagnostico()"
 							id="cat.diagnostico.descricao" type="text"
 							name="cat.diagnostico.descricao"
@@ -284,7 +368,7 @@
 					</div>
 					
 					<div class="input-field col s5">
-						<label for="gerencia">Razão Social do Fornecedor</label> <input
+						<label for="gerencia">Empresa</label> <input
 							type="text" materialize="autocomplete" autocomplete="off"
 							name="autoCompleteEmpresa"
 							[(ngModel)]="cat.empresa.razaoSocial"

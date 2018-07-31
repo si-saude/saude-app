@@ -1,6 +1,7 @@
 import { Atestado } from './../../model/atestado';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { CatBuilder } from './../cat/cat.builder';
+import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class AtestadoBuilder extends GenericBuilder {
@@ -10,6 +11,7 @@ export class AtestadoBuilder extends GenericBuilder {
         
         atestado.setTarefa(new TarefaBuilder().initialize(atestado.getTarefa()));
         atestado.setCat(new CatBuilder().initialize(atestado.getCat()))
+        atestado.setProfissionalRealizouVisita(new ProfissionalSaudeBuilder().initialize(atestado.getProfissionalRealizouVisita()));
         
         return atestado;
     }
@@ -46,9 +48,25 @@ export class AtestadoBuilder extends GenericBuilder {
         cloneAtestado.setLancadoSap(this.getValue(atestado,"getLancadoSap"));
         cloneAtestado.setNumeroDias(this.getValue(atestado,"getNumeroDias"));
         cloneAtestado.setStatus(this.getValue(atestado,"getStatus"));
+        cloneAtestado.setTipoBeneficio(this.getValue(atestado,"getTipoBeneficio"));
+        cloneAtestado.setCausaAfastamento(this.getValue(atestado,"getCausaAfastamento"));
+        cloneAtestado.setUltimoContato(this.getValue(atestado,"getUltimoContato"));
+        cloneAtestado.setProximoContato(this.getValue(atestado,"getProximoContato"));
+        cloneAtestado.setSituacaoEmpregado(this.getValue(atestado,"getSituacaoEmpregado"));
         
         cloneAtestado.setTarefa(
                 new TarefaBuilder().clone(this.getValue(atestado,"getTarefa")));
+        
+        cloneAtestado.setProfissionalRealizouVisita(this.getValue(atestado,"getProfissionalRealizouVisita"));
+        
+        if (this.getValue(atestado, "getProfissionalRealizouVisita") !== undefined) { 
+            cloneAtestado.setProfissionalRealizouVisita(
+                    new ProfissionalSaudeBuilder().clone(this.getValue(atestado,"getProfissionalRealizouVisita")));
+            if(!this.idGtZero(cloneAtestado.getProfissionalRealizouVisita()))
+                cloneAtestado.setProfissionalRealizouVisita(undefined);
+        } else {
+            cloneAtestado.setProfissionalRealizouVisita(new ProfissionalSaudeBuilder().initialize(null));
+        }
         
         if (this.getValue(atestado, "getCat") !== undefined) { 
             cloneAtestado.setCat(

@@ -19,7 +19,7 @@
 				<a (click)="verifyActive(r)" class="collection-item item-collection{{r}}">{{riscoEmpregado.equipe.nome}}</a>
 			</div>
 			<div class="col s2">
-				<p>{{riscoEmpregado.dataCustomDate.appDate}}</p>
+				<p>{{riscoEmpregado.data | transformDate}}</p>
 			</div>
 		</div>
 		

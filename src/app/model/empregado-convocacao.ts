@@ -2,6 +2,7 @@ import { Empregado } from './empregado';
 import { Convocacao } from './convocacao';
 import { EmpregadoConvocacaoExame } from './empregado-convocacao-exame';
 import { ResultadoExame } from './resultado-exame';
+import { CustomDate } from './../generics/utils/custom-date.util';
 
 export class EmpregadoConvocacao {
     private id: number;
@@ -15,8 +16,11 @@ export class EmpregadoConvocacao {
     private selecionado: boolean;
     private divergente: boolean;
     private auditadoSd2000: boolean;
+    private dataConvocacao: Date;
     private version: number;
-    
+
+    private dataConvocacaoCustomDate: CustomDate = new CustomDate(this.dataConvocacao);
+
     getId() {
         return this.id;
     }
@@ -103,6 +107,24 @@ export class EmpregadoConvocacao {
     
     setDivergente(divergente: boolean) {
         this.divergente = divergente;
+    }
+    
+    getDataConvocacao() {
+        this.dataConvocacao = this.dataConvocacaoCustomDate.getApiDate();
+        return this.dataConvocacao;
+    }
+    
+    setDataConvocacao(dataConvocacao: Date) {
+        this.dataConvocacaoCustomDate.setApiDate(dataConvocacao);
+        this.dataConvocacao = dataConvocacao;
+    }
+    
+    getDataConvocacaoCustomDate(){
+        return this.dataConvocacaoCustomDate;
+    }
+    
+    setDataConvocacaoCustomDate(dataConvocacaoCustomDate: CustomDate){
+        this.dataConvocacaoCustomDate = dataConvocacaoCustomDate;
     }
     
     getVersion() {

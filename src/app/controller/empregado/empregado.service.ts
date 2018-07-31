@@ -16,6 +16,7 @@ import { CidadeService } from './../cidade/cidade.service';
 import { InstalacaoService } from './../instalacao/instalacao.service';
 import { VacinaService } from './../vacina/vacina.service';
 import { GrupoMonitoramentoService } from './../grupo-monitoramento/grupo-monitoramento.service';
+import { EnfaseService } from './../enfase/enfase.service';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
@@ -32,7 +33,8 @@ export class EmpregadoService extends GenericService {
             private instalacaoService: InstalacaoService,
             private vacinaService: VacinaService,
             private cidadeService: CidadeService,
-            private grupoMonitoramentoService: GrupoMonitoramentoService) { 
+            private grupoMonitoramentoService: GrupoMonitoramentoService,
+            private enfaseService: EnfaseService,) { 
         super(http, router, "empregado");
     }
     
@@ -135,6 +137,14 @@ export class EmpregadoService extends GenericService {
     
     getGrupoMonitoramentoById(id) {
         return this.grupoMonitoramentoService.getGrupoMonitoramentoById(id);
+    }
+    
+    getInstalacaoService() {
+        return this.instalacaoService;
+    }
+    
+    getEnfases() {
+        return this.enfaseService.getEnfases();
     }
     
 }

@@ -19,7 +19,7 @@
 			
 			<div class="row" *ngIf="!edit">
 				<div class="input-field col s12">
-					<label for="empregado">Nome do Empregado</label> 
+					<label for="empregado">Empregado</label> 
 					<input required
 						type="text" materialize="autocomplete" autocomplete="off"
 						name="atestado.tarefa.cliente.pessoa.nome"
@@ -31,44 +31,11 @@
 			</div>
 			
 			<div class="row">
-				<div class="input-field col s3">
-					<label for="cid">CID</label>
-					<input id="cid" type="text" 
-					name="cid" [(ngModel)]="atestado.cid">
-				</div>
-				
-				<div class="input-field col s3">
-					<label for="numeroDias">Número de Dias</label>
-					<input id="numeroDias" type="text" 
-					name="numeroDias" [(ngModel)]="atestado.numeroDias">
-				</div>
-				
-				<div class="input-field col s3">
-					<label for="dataInicio">Início</label>
-					<my-date-picker name="inicio" [options]="myDatePickerOptions"
-						[(ngModel)]="atestado.tarefa.inicioCustomDate.appDate" placeholder="Início">
-					</my-date-picker>
-				</div>
-				
 				<div class="input-field col s3 checkbox">
 					<input type="checkbox" id="atestado.impossibilidadeLocomocao" 
 						[(ngModel)]="atestado.impossibilidadeLocomocao"
 						name="atestado.impossibilidadeLocomocao"> 
 						<label for="atestado.impossibilidadeLocomocao">Impossibilidade de Locomoção</label>
-				</div>
-			</div>
-			
-			<div class="row">
-			
-				<div class="input-field col s3">
-					<fieldset>
-						<legend> Status </legend>
-						<select name="status" class="browser-default"
-							[(ngModel)]="atestado.status">
-							<option disabled selected value="undefined">Selecione um status</option>
-							<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
-						</select>
-					</fieldset>
 				</div>
 				
 				<div class="input-field col s3 checkbox">
@@ -95,6 +62,44 @@
 			</div>
 			
 			<div class="row">
+			
+				<div class="input-field col s3">
+					<label for="cid">CID</label> 
+					<input required
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="encapsulatorDiagnostico.diagnostico.codigo"
+						[(ngModel)]="atestado.cid"
+						(blur)="proxyAutocompleteDiagnostico.setCid(atestado, $event)"
+						(ngModelChange)="proxyAutocompleteDiagnostico.changeDiagnostico($event)"
+						[materializeParams]="proxyAutocompleteDiagnostico.autocompleteDiagnostico.getAutocomplete().getObjAutoComplete()">
+				</div>
+				
+				<div class="input-field col s2">
+					<label for="numeroDias">Número de Dias</label>
+					<input id="numeroDias" type="number" 
+					name="numeroDias" [(ngModel)]="atestado.numeroDias">
+				</div>
+				
+				<div class="input-field col s3">
+					<label for="dataInicio">Início</label>
+					<my-date-picker name="inicio" [options]="myDatePickerOptions"
+						[(ngModel)]="atestado.tarefa.inicioCustomDate.appDate" placeholder="Início">
+					</my-date-picker>
+				</div>
+				<div class="input-field col s4">
+					<fieldset>
+						<legend> Status </legend>
+						<select name="status" class="browser-default"
+							[(ngModel)]="atestado.status">
+							<option disabled selected value="undefined">Selecione um status</option>
+							<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+						</select>
+					</fieldset>
+				</div>
+				
+			</div>
+			
+			<div class="row">
 				<div class="input-field col s3">
 					<label for="dataSolicitacao">Data de Solicitação</label>
 					<my-date-picker name="dataSolicitacao" [options]="myDatePickerOptions"
@@ -110,7 +115,7 @@
 				</div>
 				
 				<div class="input-field col s6">
-					<label for="empregado">Número da Cat</label> 
+					<label for="numeroCat">Número da CAT</label> 
 					<input
 						type="text" materialize="autocomplete" autocomplete="off"
 						name="atestado.cat.numero"
@@ -118,6 +123,62 @@
 						(blur)="autoCompleteCat.getAutocomplete().getObj($event,atestado,'setCat','getNumero')"
 						(ngModelChange)="autoCompleteCat.getAutocomplete().getList(atestado.cat, 'getNumero');"
 						[materializeParams]="autoCompleteCat.getAutocomplete().getObjAutoComplete()">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s8">
+					<label for="profissional">Profissional que Realizou a Visita</label> 
+					<input
+						type="text" materialize="autocomplete" autocomplete="off"
+						name="atestado.profissional"
+						[(ngModel)]="atestado.profissionalRealizouVisita.empregado.pessoa.nome"
+						(blur)="autoCompleteProfissional.getAutocomplete().getObj($event,atestado,'setProfissionalRealizouVisita','getNome')"
+						(ngModelChange)="autoCompleteProfissional.getAutocomplete().getList(atestado.profissionalRealizouVisita, 'getNome');"
+						[materializeParams]="autoCompleteProfissional.getAutocomplete().getObjAutoComplete()">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s4">
+					<label for="tipoBeneficio">Tipo do Benefício</label>
+					<input id="tipoBeneficio" type="text" 
+						name="tipoBeneficio" [(ngModel)]="atestado.tipoBeneficio">
+				</div>
+				
+				<div class="input-field col s4">
+					<label for="causaAfastamento">Causa do Afastamento</label>
+					<input id="causaAfastamento" type="text" 
+						name="causaAfastamento" [(ngModel)]="atestado.causaAfastamento">
+				</div>
+				
+				<div class="input-field col s4">
+					<fieldset>
+						<legend> Situação do Empregado </legend>
+						<select name="situacaoEmpregado" class="browser-default"
+							[(ngModel)]="atestado.situacaoEmpregado">
+							<option disabled selected value="undefined">Selecione uma Situação do Empregado</option>
+							<option *ngFor="let situacaoEmpregado of situacaoEmpregados" value="{{situacaoEmpregado}}">
+								{{situacaoEmpregado}}
+							</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="ultimoContato">Último Contato</label>
+					<textarea class="materialize-textarea" id="descricao"
+						[(ngModel)]="atestado.ultimoContato" name="atestado.ultimoContato"></textarea>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="proximoContato">Próximo Contato</label>
+					<textarea class="materialize-textarea" id="descricao"
+						[(ngModel)]="atestado.proximoContato" name="atestado.proximoContato"></textarea>
 				</div>
 			</div>
 			

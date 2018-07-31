@@ -8,13 +8,21 @@ import { CatFilter } from './cat.filter';
 import { GenericService } from './../../generics/generic.service';
 import { EixoService } from './../eixo/eixo.service';
 import { DiagnosticoService } from './../diagnostico/diagnostico.service';
+import { ParteCorpoAtingidaService } from './../parte-corpo-atingida/parte-corpo-atingida.service';
+import { AgenteCausadorService } from './../agente-causador/agente-causador.service';
+import { NaturezaLesaoService } from './../natureza-lesao/natureza-lesao.service';
+import { BaseService } from './../base/base.service';
 
 @Injectable()
 export class CatService extends GenericService {
 
-    constructor( http: Http, router: Router, 
+    constructor( http: Http, router: Router,
+            private baseService: BaseService,
             private eixoService: EixoService,
-            private diagnosticoService: DiagnosticoService) { 
+            private diagnosticoService: DiagnosticoService,
+            private parteCorpoAtingidaService: ParteCorpoAtingidaService,
+            private agenteCausadorService: AgenteCausadorService,
+            private naturezaLesaoService: NaturezaLesaoService) { 
         super(http,router,"cat");
     }
     
@@ -63,5 +71,21 @@ export class CatService extends GenericService {
     
     getDiagnosticoByEixo( idEixo, idEquipe ) {
         return this.diagnosticoService.getDiagnosticoByEixoWithoutEquipe(idEixo)
+    }
+    
+    getParteCorpoAtingidaService() {
+        return this.parteCorpoAtingidaService;
+    }
+    
+    getAgenteCausadorService() {
+        return this.agenteCausadorService;
+    }
+    
+    getNaturezaLesaoService() {
+        return this.naturezaLesaoService;
+    }
+    
+    getBases() {
+        return this.baseService.getBases();
     }
 }

@@ -11,6 +11,7 @@ import { RespostaFichaColeta } from './../../model/resposta-ficha-coleta';
 import { Equipe } from './../../model/equipe';
 import { ItemRespostaFichaColeta } from './../../model/item-resposta-ficha-coleta';
 import { ItemRespostaFichaColetaBuilder } from './../../controller/item-resposta-ficha-coleta/item-resposta-ficha-coleta.builder';
+import { CssUtil } from './../../generics/utils/css.util';
 
 @Component( {
     selector: 'app-ficha-coleta',
@@ -22,259 +23,276 @@ export class FichaColetaComponent{
     @Input() service;
     @Input() idEquipeProfissional;
     private innerFichaColeta: FichaColeta;
-    private gruposRespostasFichaColeta: Array<string>;
-    private respostasFichaColetaByGrupo = [[]];
-    private quantidadeItemRespostasByGrupo: Array<number>;
-    private statusesSimNao: Array<string>;
     private innerIdEquipeProfissional: number;
-    private listPathsEnumPergunta: Array<string>;
-    private listEnumsByPathPergunta = [[]];
-    private listPathsEnumItem: Array<string>;
-    private listEnumsByPathItem = [[]];
-
+    
+    private simNao: Array<string>;
+    private gruposPerguntaFichaColeta;
+    private conteudoEnumOrSimNao: Map<number, Array<string>> = new Map<number, Array<string>>();
+    private itensResposta: Map<string, Array<string>> = new Map<string, Array<string>>();
+    private fuma: RespostaFichaColeta;
+    
+    private modalConteudo;
+    private conteudo: string;
+    private idElemento: number;
+    private dadosElemento: Array<any>;
+    private pattern: string;
+    private errorPattern: string;
+    
     constructor( router: Router ) {
     }
     
-    ngOnInit() { 
-        this.gruposRespostasFichaColeta = new Array<string>();
-        this.quantidadeItemRespostasByGrupo = new Array<number>();
-        this.listPathsEnumItem = new Array<string>();
-        this.listPathsEnumPergunta = new Array<string>();
-        this.getRespostasFichaColeta();
-        this.getStatusSimNao();
+    ngOnInit() {
+        this.fuma = new RespostaFichaColeta();
+        this.modalConteudo = new EventEmitter<string | MaterializeAction>();
+        this.getGrupoPerguntaFichaColeta();
+        this.dadosElemento = new Array<any>();
     }
     
     ngOnChanges( changes: SimpleChanges ) {
         if ( changes["fichaColeta"] != undefined ) {
             this.innerFichaColeta = changes["fichaColeta"].currentValue;
-            this.getRespostasFichaColeta();
+            this.getFuma();
+            this.getStatusSimNao();
         }
         if ( changes["idEquipeProfissional"] != undefined ) {
             this.innerIdEquipeProfissional = changes["idEquipeProfissional"].currentValue;
         }
     }
     
+    getFuma() {
+        this.fuma = this.innerFichaColeta.getRespostaFichaColetas().find(rFC => {
+            if ( rFC.getPergunta().getCodigo() == "0008" && rFC.getPergunta().getGrupo() == "ANAMNESE" )
+                return true;
+            return false;
+        });
+    }
+    
     getStatusSimNao() {
         this.service.getStatusSimNao()
-            .then( res => {
-                this.statusesSimNao = Object.keys( res.json() ).sort();
-            } )
-            .catch( error => {
-                console.log( "Erro ao retornar os status." );
-            } )
+            .then(res => {
+                this.simNao = Object.keys(res.json());
+                this.seachPathsConteudoPerguntas();
+            })
+            .catch(error => {
+                console.log("Erro ao buscar sim nao");
+            })
     }
     
-    getRespostasFichaColeta() {
-        this.gruposRespostasFichaColeta = new Array<string>();
-        this.respostasFichaColetaByGrupo = [[]];
-        let countIndexGrupo = -1;
-        let qtdItens = 1;
-        
-        this.innerFichaColeta.getRespostaFichaColetas().forEach( r => {
-            if ( this.gruposRespostasFichaColeta.find( e => e == r.getPergunta().getGrupo() ) == undefined ) {
-                this.gruposRespostasFichaColeta.push( r.getPergunta().getGrupo() );
-                countIndexGrupo++;
-                qtdItens = 1;
+    seachPathsConteudoPerguntas() {
+        this.innerFichaColeta.getRespostaFichaColetas().forEach(rFC => {
+            if ( rFC.getPergunta().getTipo().includes("SIM") ) {
+                this.conteudoEnumOrSimNao.set(rFC.getId(), this.simNao);
+                this.constructItensRespostaMap(rFC);
             }
-            
-            if ( this.respostasFichaColetaByGrupo[r.getPergunta().getGrupo()] == undefined ) {
-                this.respostasFichaColetaByGrupo[r.getPergunta().getGrupo()] = new Array<Triagem>();
-            }
-
-            this.respostasFichaColetaByGrupo[r.getPergunta().getGrupo()].push( r );
-            this.quantidadeItemRespostasByGrupo[countIndexGrupo] = qtdItens++; 
-        } )
+            else if ( rFC.getPergunta().getTipo() == "ENUM" )
+                this.service.getEnums( rFC.getPergunta().getPath() )
+                    .then(res => {
+                        this.conteudoEnumOrSimNao.set(rFC.getId(), Object.keys(res.json()));
+                        this.constructItensRespostaMap(rFC);
+                    })
+                    .catch(error => {
+                        console.log("Erro ao buscar path resposta");
+                    })
+        })
     }
     
-    getGridItensPergunta( itens: Array<ItemPerguntaFichaColeta> ) {
-        let s: number = Math.floor( 10 / itens.length );
-        return "col s" + s.toString();
+    constructItensRespostaMap(resposta: RespostaFichaColeta) {
+        for ( let i=0; i < resposta.getPergunta().getItens().length; i++ ) {
+            if ( resposta.getPergunta().getItens()[i].getPath() != undefined 
+                    && resposta.getPergunta().getItens()[i].getPath() != "" )
+                
+                this.service.getEnums( resposta.getPergunta().getItens()[i].getPath() )
+                    .then(res => {
+                        this.itensResposta.set(resposta.getId()+""+i, Object.keys(res.json()));
+                    })
+                    .catch(error => {
+                        console.log("Erro ao buscar path itens respostas")
+                    })
+        }
     }
-
-    getGridItensResposta( itens: Array<ItemRespostaFichaColeta> ) {
-        let s: number = Math.floor( 10 / itens.length );
-        return "col s" + s.toString();
+    
+    getGrupoPerguntaFichaColeta() {
+        this.service.getGruposPerguntaFichaColeta()
+            .then(res => {
+                this.gruposPerguntaFichaColeta = Object.keys(res.json()).sort();
+                let flag = this.gruposPerguntaFichaColeta[4];
+                this.gruposPerguntaFichaColeta[4] = this.gruposPerguntaFichaColeta[5];
+                this.gruposPerguntaFichaColeta[5] = flag;
+            })
+            .catch(error => {
+                console.log("Erro ao buscar os grupos pergunta ficha coleta.");
+            })
     }
-
-    getArrayItensResposta( item: ItemRespostaFichaColeta ) {
-        let ret = [];
+    
+    getRespostasByGrupo(grupo) {
+        let respostas = this.innerFichaColeta.getRespostaFichaColetas().filter( rFC =>
+            ( rFC.getPergunta().getGrupo() == grupo ) && !rFC.getPergunta().getInativo() );
+        respostas.sort(function(a,b) {
+            if ( a.getPergunta().getCodigo() > b.getPergunta().getCodigo() )
+                return 1;
+            if ( a.getPergunta().getCodigo() < b.getPergunta().getCodigo() )
+                return -1;
+            return 0;
+        });
+        return respostas;
+    }
+    
+    isEnumOrSimNao(resposta: RespostaFichaColeta) {
+        if ( resposta.getPergunta().getTipo() == "ENUM" || resposta.getPergunta().getTipo().includes("SIM") )
+            return true;
+        return false;
+    }
+    
+    autoAddItem(resposta: RespostaFichaColeta) {
+        if ( resposta.getPergunta().getTipo().includes("SIM") ) {
+            if ( resposta.getConteudo().includes("N") )
+                resposta.setItens(undefined);
+            else if ( resposta.getItens() == undefined || resposta.getItens().length == 0 ) {
+                let addItem: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
+                let item = addItem;
+                for ( let i = 0; i < resposta.getPergunta().getItens().length - 1; i++ ) {
+                    addItem.setItem(new ItemRespostaFichaColeta());
+                    addItem = item.getItem();
+                }
+                if ( resposta.getItens() == undefined ) resposta.setItens(new Array<ItemRespostaFichaColeta>())
+                resposta.getItens().push(item);
+            }
+                    
+        }
+    }
+    
+    existItem(resposta: RespostaFichaColeta) {
+        if ( resposta.getConteudo() == "SIM" && resposta.getPergunta().getItens().length > 0 && resposta.getItens().length > 0 )
+            return true;
+        return false;
+    }
+    
+    getClassItensResposta(resposta: RespostaFichaColeta) {
+        let numCol = resposta.getPergunta().getItens().length;
+        return "col s"+Math.floor((10/numCol));
+    }
+    
+    getItensDoItem(item: ItemRespostaFichaColeta) {
+        let itens: Array<ItemRespostaFichaColeta> = new Array<ItemRespostaFichaColeta>();
         
-        while ( item != null && item != undefined ) {
-            ret.push( item );
+        while ( item != undefined ) {
+            itens.push(item);
             item = item.getItem();
         }
-
+        
+        return itens;
+    }
+    
+    isDisabledResposta(resposta: RespostaFichaColeta) {
+        let ret: boolean = true;
+        let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);
+        
+        if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
+            if ( this.fuma.getConteudo() == "SIM" && 
+                    equipe != undefined )
+                ret = false;
+            else ret = true;
+        } else {
+            if ( equipe != undefined ) ret = false;
+            else ret = true;
+        }
+        
         return ret;
     }
-
-    verifyExistItemResposta( itens ) {
-        if ( itens != null ) return true;
+    
+    getConteudoEnumOrSimNao(resposta: RespostaFichaColeta) {
+        return this.conteudoEnumOrSimNao.get( resposta.getId() );
+    }
+    
+    getItensResposta(resposta: RespostaFichaColeta, indexItemDoItem: number) {
+        return this.itensResposta.get( resposta.getId()+""+indexItemDoItem );
+    }
+    
+    isPossibleAddItem(resposta: RespostaFichaColeta) {
+        if ( !this.isDisabledResposta(resposta) && 
+                resposta.getPergunta().getItens().length > 0 &&
+                resposta.getPergunta().getTipo().includes("SIM") &&
+                resposta.getConteudo() == "SIM" )
+                    return true;
         return false;
     }
-
-    contains( texto: string ) {
-        let ret: string = "";
-        if ( texto == undefined ) return;
-        if ( texto.includes( "SIM" ) ) ret = "SIM";
-        else if ( texto.includes( "ANAMNESE" ) ) ret = "ANAMNESE";
-        else if ( texto.includes( "DOUBLE" ) ) ret = "DOUBLE";
-        else if ( texto.includes( "INTEIRO" ) ) ret = "INTEIRO";
-        else if ( texto.includes( "TEXTO" ) ) ret = "TEXTO";
-        else if ( texto.includes( "ENUM" ) ) ret = "ENUM";
-        else if ( texto.includes( "EXAME F" ) ) ret = "EXAMEF";
-        else if ( texto.includes( "EXAME ODONTOL" ) ) ret = "EXAMEODONTOL";
-        else if ( texto.includes( "BITOS ALIMENTARES" ) ) ret = "BITOSALIMENTARES";
-        else if ( texto.includes( "TESTE DE FAGERSTR" ) ) ret = "TESTEDEFAGERSTR";
-        else if ( texto.includes( "VEL DE ESTRESSE" ) ) ret = "VELDEESTRESSE";
-        return ret;
-    }
-
-    selectStatusSimNao( itens, indexGrupo, indexRespostaByGrupo, status ) {
-        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
+    
+    addItemResposta(resposta: RespostaFichaColeta) {
+        let itens = resposta.getPergunta().getItens();
+        let addItem: ItemRespostaFichaColeta = new ItemRespostaFichaColeta;
+        let item = addItem;
+        let i: number = 0;
         
-        if ( status == "SIM" ) {
-            this.innerFichaColeta.getRespostaFichaColetas()[indexResposta]
-                .setItens( [] );
-            this.addItemResposta( itens, indexGrupo, indexRespostaByGrupo );
-        } else { 
-            this.innerFichaColeta.getRespostaFichaColetas()[indexResposta]
-                .setItens( [] );
+        for (; i < itens.length - 1; i++) {
+            addItem.setItem(new ItemRespostaFichaColeta());
+            addItem = addItem.getItem();
         }
+         
+        resposta.getItens().push(item);
     }
     
-    addItemResposta( itens: Array<ItemPerguntaFichaColeta>, indexGrupo, indexRespostaByGrupo ) {
-        let quantidadeItens = itens.length;
-        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
+    removeItemResposta(resposta: RespostaFichaColeta, i: number) {
+        if ( resposta.getItens().length == 1 ) return;
+        resposta.getItens().splice(i, 1);
+    }
+    
+    openModalConteudoItem(resposta: RespostaFichaColeta, indexItem: number, indexItemDoItem: number) {
+        let elemento = resposta.getItens()[indexItem];
         
-        if ( quantidadeItens == 0 ) 
+        this.modalConteudo.emit( { action: "modal", params: ['open'] } );
+        
+        for ( let i = 0; i < indexItemDoItem; i++ )
+            elemento = elemento.getItem();
+        
+        this.conteudo = elemento["conteudo"];
+        this.dadosElemento = ["item", resposta, indexItem, indexItemDoItem];
+        this.pattern = "";
+    }
+    
+    openModalConteudoResposta( resposta: RespostaFichaColeta ) {
+        this.modalConteudo.emit( { action: "modal", params: ['open'] } );
+        this.dadosElemento = ["resposta", resposta];
+        this.conteudo = resposta.getConteudo();
+        
+        if ( resposta.getPergunta().getTipo() == "INTEIRO" )
+            this.pattern = "^[0-9]+$";
+        else if ( resposta.getPergunta().getTipo() == "DOUBLE" )
+            this.pattern = "^[0-9]+\,?[0-9]*$";
+        else this.pattern = "*";
+    }
+    
+    confirmarModalConteudo() {
+        let re = new RegExp(this.pattern);
+        let r: RespostaFichaColeta = this.innerFichaColeta.getRespostaFichaColetas().find(rFC => 
+            rFC.getId() == this.dadosElemento[1]["id"] );
+        
+        if ( !re.test(this.conteudo) ) {
+            console.log(this.pattern);
+            this.errorPattern = "Caracteres incorretos.";
             return;
-        else if ( quantidadeItens == 1 ) {
-            this.innerFichaColeta.getRespostaFichaColetas()[indexResposta]
-                .getItens().push( new ItemRespostaFichaColeta() );
-            return;
+        } else this.errorPattern = "";
+        if ( this.dadosElemento[0] == "resposta" ) {
+            r.setConteudo(this.conteudo);
+        } else {
+            let item: ItemRespostaFichaColeta = r.getItens()[this.dadosElemento[2]];
+            for( let i = 0; i < this.dadosElemento[3]; i++ )
+                item = item.getItem();
+            item.setConteudo(this.conteudo);
         }
         
-        let item: ItemRespostaFichaColeta =
-            new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
-        let itemRespostaFichaColeta: ItemRespostaFichaColeta;
-        
-        if ( item.getItem() != undefined ) {
-            
-            itemRespostaFichaColeta = item.getItem();
-        
-            for ( let i = 0; i < quantidadeItens-2; i++ ) {
-                itemRespostaFichaColeta.setItem(new ItemRespostaFichaColeta());
-                itemRespostaFichaColeta = itemRespostaFichaColeta.getItem(); 
-            }
-        }
-                
-        this.innerFichaColeta.getRespostaFichaColetas()[indexResposta]
-            .getItens().push( item );
+        this.modalConteudo.emit( { action: "modal", params: ['close'] } );
     }
     
-    constructItemRespostaFichaColeta( quantidadeItens: number, itemRespostaFichaColeta: ItemRespostaFichaColeta ) {
-        if ( quantidadeItens <= 3 ) return;
-        quantidadeItens--;
-        
-        let item: ItemRespostaFichaColeta =
-            new ItemRespostaFichaColetaBuilder().initialize( new ItemRespostaFichaColeta() );
-
-        itemRespostaFichaColeta.setItem( item );
-        this.constructItemRespostaFichaColeta( quantidadeItens, item );
+    cancelarModalConteudo() {
+        this.errorPattern = "";
+        this.modalConteudo.emit( { action: "modal", params: ['close'] } );
     }
     
-    removeItemResposta( indexGrupo, indexRespostaByGrupo, itemIndex ) {
-        let indexResposta = this.getIndexRespostaByGrupo(indexGrupo, indexRespostaByGrupo);
-        
-        if ( this.innerFichaColeta.getRespostaFichaColetas()[indexResposta].getItens().length == 1 ) return;
-
-        this.innerFichaColeta.getRespostaFichaColetas()[indexResposta].getItens().splice( itemIndex, 1 );
-    }
-    
-    verifyRespostaSimNao( resposta: RespostaFichaColeta ) {
-        if ( resposta.getItens() != undefined && resposta.getItens().length > 0 )
+    itemHasPath(resposta: RespostaFichaColeta, indexItem: number, indexItemDoItem: number) {
+        if ( resposta.getPergunta().getItens()[indexItemDoItem].getPath() != undefined && 
+                resposta.getPergunta().getItens()[indexItemDoItem].getPath() != "" )
             return true;
-        else return false;
-    }
-    
-    getIndexRespostaByGrupo( indexGrupo, itemIndex ) {
-        let quantidadeItensAnteriores = this.getQuantidadeItensAnteriores( indexGrupo );
-        
-        return quantidadeItensAnteriores + itemIndex;
-    }
-    
-    getQuantidadeItensAnteriores( indexGrupo ) {
-        let qtdItens = 0;
-        for ( let i=0; i < indexGrupo; i++ )
-            qtdItens += this.quantidadeItemRespostasByGrupo[i];
-        
-        return qtdItens;
-    }
-    
-    verifyEquipe( resposta: RespostaFichaColeta ) {
-        let resp: RespostaFichaColeta = this.innerFichaColeta.getRespostaFichaColetas()
-            .find( r => r.getPergunta().getGrupo() == 'ANAMNESE' && r.getPergunta().getCodigo() == '0008' &&
-                        r.getConteudo() == 'SIM');
-        
-        let e: Equipe = resposta.getPergunta().getEquipes()
-            .find( e => e.getId() == this.innerIdEquipeProfissional );
-    
-        if(resposta.getPergunta().getGrupo().includes( "TESTE DE FAGERSTR" )){
-            if(e != undefined && resp != undefined) return false;
-        }else{
-            if(e != undefined) return false;
-        }
-
-        return true;
-    }
-    
-    getEnumsPergunta( resposta: RespostaFichaColeta ) {
-        let path = resposta.getPergunta().getPath();
-        
-        if ( this.listPathsEnumPergunta.find(l => l == path) == undefined ) {
-            this.service.getEnums(path)
-                .then(res => {
-                    this.listPathsEnumPergunta.push(path);
-                    this.listEnumsByPathPergunta[path] = new Array<string>();
-                    this.listEnumsByPathPergunta[path] = Object.keys( res.json() ).sort();
-                })
-                .catch(error => {
-                    console.log("Erro ao retornar enums");
-                    return [];
-                })
-        }
-
-        return this.listEnumsByPathPergunta[path];
-    }
-
-    getEnumsItem( resposta: RespostaFichaColeta, indexPath: number ) {
-        let path = resposta.getPergunta().getItens()[indexPath].getPath();
-        
-        if ( this.listPathsEnumItem.find(l => l == path) == undefined ) {
-            this.service.getEnums(path)
-                .then(res => {
-                    this.listPathsEnumItem.push(path);
-                    this.listEnumsByPathItem[path] = new Array<string>();
-                    this.listEnumsByPathItem[path] = Object.keys( res.json() ).sort();
-                })
-                .catch(error => {
-                    console.log("Erro ao retornar enums");
-                    return [];
-                })
-        } 
-
-        return this.listEnumsByPathItem[path];
-    }
-    
-    verifyItemPath( resposta: RespostaFichaColeta, indexPath: number ) {
-        if ( resposta.getPergunta().getItens()[indexPath] == undefined ) return;
-        
-        let path = resposta.getPergunta().getItens()[indexPath].getPath();
-        
-        if ( path != undefined && path != '' )
-            return true;
-        
-        return false;
+        return false;   
     }
     
 }

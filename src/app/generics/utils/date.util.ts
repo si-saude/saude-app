@@ -85,4 +85,22 @@ export class DateUtil {
 
         return date;
     }
+    
+    parseTimePickerToDate( date: Date, time: string ) {
+        let t = time.split(":");
+        let m = moment(date);
+        m.hours(Number(t[0]));
+        m.minutes(Number(t[1]));
+        m.seconds(0);
+        return m.toDate();
+    }
+    
+    parseDateToObjectTimePicker(date) {
+        let m;
+        if ( typeof date == 'object') {
+            return date.getHours()+":"+date.getMinutes();
+        } else m = moment(date,"YYYY-MM-DDTHH:mm:ssZ[UTC]");
+        
+        return m.hours()+":"+m.minutes();
+    }
 }

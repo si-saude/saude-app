@@ -1,0 +1,134 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="pre-requisitos-agendamento-content">
+
+	<div class="list-container" id="id-list-container">
+		
+		<div class="row">
+			<div class="col s1">
+				<a (click)="exportFile()"> 
+					<i class="small material-icons icon" (mouseover)="showTextToast('Exportar', 4000)" 
+						(mouseleave)="closeTooltip()">file_download</i>
+				</a>
+			</div>
+			<div class="col s1">
+				<a [routerLink]="['/home']"
+					class="btn btn-primary btn-home">Home</a>
+			</div>
+		</div>
+		
+		<table class="table table-striped" [mfData]="preRequisitosAgendamentos | filterData : filter : typeFilter : value" #mf="mfDataTable">
+			<thead>
+				<tr>
+					<th style="width: 1%">
+						<mfDefaultSorter by="agendado">Agendado</mfDefaultSorter>
+						<input type="text" name="agendado" style="width: 90%" 
+								placeholder="filtrar agendado"
+								(input)="selectFilter($event, 'agendado')">
+					</th>
+					<th style="width: 1%">
+						<mfDefaultSorter class="mleft" by="base">Base</mfDefaultSorter>
+							<div class="div-icon" id="base">
+								<i class="small material-icons icon" 
+									(click)="dropdown($event, 'base')">arrow_drop_down</i>
+							</div>
+					</th>
+					<th style="width: 1%">
+						<mfDefaultSorter by="chave">Chave</mfDefaultSorter>
+						<input type="text" name="chave" style="width: 90%" 
+								placeholder="filtrar chave" 
+								(input)="selectFilter($event, 'chave')">
+					</th>
+					<th style="width: 1.5%">
+						<div class="row">
+							<mfDefaultSorter class="mleft" by="datasPreclinico">Datas do Pre-Clínico</mfDefaultSorter>
+							<input type="text" name="datasPreclinico" style="width: 90%" 
+								placeholder="filtrar Datas do Preclinico" 
+								(input)="selectFilter($event, 'datasPreclinico')">
+						</div>
+					</th>
+					<th style="width: 1%">
+						<div class="row">
+							<mfDefaultSorter class="mleft" by="examesPendentes">Exames Pendentes</mfDefaultSorter>
+							<input type="text" name="examesPendentes" style="width: 90%" 
+								placeholder="filtrar Exames Pendentes" 
+								(input)="selectFilter($event, 'examesPendentes')">
+						</div>
+					</th>
+					<th style="width: 1%">
+						<div class="row">
+							<mfDefaultSorter class="mleft" by="gerencia">Gerência</mfDefaultSorter>
+							<div class="div-icon" id="gerencia">
+								<i class="small material-icons icon" 
+									(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
+							</div>
+						</div>
+					</th>
+					<th style="width: 1%; font-size: 13px">
+						<mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
+						<input type="text" name="matricula" style="width: 90%" 
+								placeholder="filtrar matricula" 
+								(input)="selectFilter($event, 'matricula')">
+					</th>
+					<th style="width: 1%">
+						<mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+						<input type="text" name="nome" style="width: 90%" 
+								placeholder="filtrar nome" 
+								(input)="selectFilter($event, 'nome')">
+					</th>
+					<th style="width: 1%">
+						<div class="row">
+							<mfDefaultSorter class="mleft" by="resultadoAuditado">Resultado Auditado</mfDefaultSorter>
+							<div class="div-icon" id="resultadoAuditado">
+								<i class="small material-icons icon" 
+									(click)="dropdown($event, 'resultadoAuditado')">arrow_drop_down</i>
+							</div>
+						</div>
+					</th>
+					<th style="width: 1%">
+						<div class="row">
+							<mfDefaultSorter class="mleft" by="statusPreclinico">Status Pre-Clínico</mfDefaultSorter>
+							<div class="div-icon" id="statusPreclinico">
+								<i class="small material-icons icon" 
+									(click)="dropdown($event, 'statusPreclinico')">arrow_drop_down</i>
+							</div>
+						</div>
+					</th>
+					<th style="width: 1%">
+						<mfDefaultSorter by="titulo">Título</mfDefaultSorter>
+						<input type="text" name="titulo" style="width: 90%" 
+								placeholder="filtrar titulo" 
+								(input)="selectFilter($event, 'titulo')">
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of mf.data">
+					<td>{{item.agendado}}</td>
+					<td>{{item.base}}</td>
+					<td>{{item.chave}}</td>
+					<td>{{item.datasPreclinico}}</td>
+					<td>{{item.examesPendentes}}</td>
+					<td>{{item.gerencia}}</td>
+					<td>{{item.matricula}}</td>
+					<td>{{item.nome}}</td>
+					<td>
+						<input type="checkbox" id="item-resultadoAuditado" disabled 
+							[(ngModel)]="item.resultadoAuditado" name="resultadoAuditado"> 
+						<label class="resultadoAuditado" for="resultadoAuditado"></label>
+					</td>
+					<td>{{item.statusPreclinico}}</td>
+					<td>{{item.titulo}}</td>
+				</tr>
+			</tbody>
+		</table>
+	
+		<ul id='dropdown' class='dropdown-conteudo'></ul>
+	</div>
+
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

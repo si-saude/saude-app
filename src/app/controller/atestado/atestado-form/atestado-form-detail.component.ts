@@ -18,6 +18,7 @@ export class AtestadoFormDetailComponent extends GenericFormComponent implements
     private atestado: Atestado;
     private statuses: Array<string>;
     private httpUtil: HttpUtil;
+    private situacaoEmpregados: Array<string>;
 
     constructor( private route: ActivatedRoute,
         private atestadoService: AtestadoService,
@@ -28,6 +29,7 @@ export class AtestadoFormDetailComponent extends GenericFormComponent implements
         this.atestado = new AtestadoBuilder().initialize( this.atestado );
         this.statuses = new Array<string>();
         this.httpUtil = new HttpUtil();
+        this.situacaoEmpregados = new Array<string>();
     }
 
     ngOnInit() {
@@ -46,6 +48,17 @@ export class AtestadoFormDetailComponent extends GenericFormComponent implements
                     } )
             } );
         this.getStatuses();
+        this.getSituacaoEmpregados();
+    }
+    
+    getSituacaoEmpregados() {
+        this.atestadoService.getSituacaoEmpregado()
+            .then(res => {
+                this.situacaoEmpregados = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                console.log("Erro ao buscar a situacao do empregado");
+            })
     }
     
     getStatuses() {
