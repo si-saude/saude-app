@@ -212,8 +212,6 @@ export class AtendimentoService extends GenericService {
             .get( urlEnums + "?filter=", { headers: this.headers } )
             .toPromise();
     }
-<<<<<<< HEAD
-
 
     saveAtendimentoAvulso( formulario: any ) {
         let urlSubmit = this.URL + "/salvar-atendimento-avulso";
@@ -221,7 +219,6 @@ export class AtendimentoService extends GenericService {
             .post( urlSubmit, formulario, { headers: this.headers } )
             .toPromise();
     }
-=======
     
     getGruposPerguntaFichaColeta() {
         let urlGrupoPerguntaFichaColeta = GlobalVariable.BASE_API_URL + "/generic/grupo-pergunta-ficha-coleta";
@@ -229,6 +226,4 @@ export class AtendimentoService extends GenericService {
             .get( urlGrupoPerguntaFichaColeta + "?filter=", { headers: this.headers } )
             .toPromise();
     }
-    
->>>>>>> refs/heads/master
 }
