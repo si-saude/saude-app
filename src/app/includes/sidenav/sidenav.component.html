@@ -40,14 +40,14 @@
 			</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
 			<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
+			<a [routerLink]="['/categoria-risco']" *ngIf="checkPermissao('CATEGORIA-RISCO_LISTAR')">Categoria de Risco</a>
 			<a [routerLink]="['/cidade']" *ngIf="checkPermissao('CIDADE_LISTAR')">Cidade</a>
 			<a [routerLink]="['/criterio']" *ngIf="checkPermissao('CRITERIO_LISTAR')">Critério</a>
 			<a [routerLink]="['/curso']" *ngIf="checkPermissao('CURSO_LISTAR')">Curso</a>
-			<a [routerLink]="['/categoria-risco']" *ngIf="checkPermissao('CATEGORIA-RISCO_LISTAR')">Categoria de Risco</a>
 			<a [routerLink]="['/diagnostico']" *ngIf="checkPermissao('DIAGNOSTICO_LISTAR')">Diagnóstico</a>
 			<a [routerLink]="['/eixo']" *ngIf="checkPermissao('EIXO_LISTAR')">Eixo</a>
-			<a [routerLink]="['/enfase']" *ngIf="checkPermissao('ENFASE_LISTAR')">Ênfase</a>
 			<a [routerLink]="['/empregado']" *ngIf="checkPermissao('EMPREGADO_LISTAR')">Empregado</a>
+			<a [routerLink]="['/enfase']" *ngIf="checkPermissao('ENFASE_LISTAR')">Ênfase</a>
 			<a [routerLink]="['/equipe']" *ngIf="checkPermissao('EQUIPE_LISTAR')">Equipe</a>
 			<a [routerLink]="['/exame']" *ngIf="checkPermissao('EXAME_LISTAR')">Exame</a>
 			<a [routerLink]="['/feriado']" *ngIf="checkPermissao('FERIADO_LISTAR')">Feriado</a>
@@ -120,17 +120,17 @@
 			<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Guia de Exame</a>
 			<a [routerLink]="['/auditoria-resultado-exame']" *ngIf="checkPermissao('AUDITORIA-RESULTADO-EXAME_LISTAR')">Auditoria De Resultados de Exames</a>
 			<a [routerLink]="['/cat']" *ngIf="checkPermissao('CAT_LISTAR')">CAT - Comunicado de Acidente de Trabalho</a>
-			<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
 			<a [routerLink]="['/risco-potencial']" *ngIf="checkPermissao('RISCO-POTENCIAL_LISTAR')">Controle da SAST</a>
-			<a [routerLink]="['/kanban']" *ngIf="checkPermissao('KANBAN')">Kanban</a>
-			<li>
-			<a materialize="sideNav"
-				[materializeParams]="[{closeOnClick: true}]"
-				[materializeActions]="sidenavActionsFilaEspera" data-activates="slide-out-fila-espera"
-				(click)="closeSidenavFilaEspera()">Fila de Espera<i class="material-icons" style="float: right; margin-left:">chevron_right</i>
-			</a>
-			</li>
+			<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
 			<a [routerLink]="['/atendimento/gerenciar']" *ngIf="checkPermissao('ATENDIMENTO_GERENCIAR')">Gerenciar Atendimentos</a>
+			<li>
+				<a materialize="sideNav"
+					[materializeParams]="[{closeOnClick: true}]"
+					[materializeActions]="sidenavActionsFilaEspera" data-activates="slide-out-fila-espera"
+					(click)="closeSidenavFilaEspera()">Fila de Espera<i class="material-icons" style="float: right; margin-left:">chevron_right</i>
+				</a>
+			</li>
+			<a [routerLink]="['/kanban']" *ngIf="checkPermissao('KANBAN')">Kanban</a>
 			<a [routerLink]="['/home']" *ngIf="checkPermissao('NOTIFICACAO')">Notificação</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		</div>
@@ -151,11 +151,11 @@
 			<a [routerLink]="['/fila-espera-ocupacional/check-out']">Check-out</a>
 			<a [routerLink]="['/fila-espera-ocupacional-recepcao/check-out']" 
 				*ngIf="checkPermissao('FILA-ESPERA-OCUPACIONAL-RECEPCAO')">Check-out (Recepção)</a>
+			<a [routerLink]="['/fila-espera-ocupacional/declaracao-comparecimento']"
+				*ngIf="checkPermissao('DECLARACAO-COMPARECIMENTO')">Declaração de Comparecimento</a>
 			<a [routerLink]="['/fila-espera-ocupacional/fila']">Fila</a>
 			<a [routerLink]="['/fila-espera-ocupacional/quadro-atendimento']"
 				*ngIf="checkPermissao('QUADRO-ATENDIMENTO')">Quadro de Atendimento</a>
-			<a [routerLink]="['/fila-espera-ocupacional/declaracao-comparecimento']"
-				*ngIf="checkPermissao('DECLARACAO-COMPARECIMENTO')">Declaração de Comparecimento</a>
 		</div>
 	</li>
 </ul>
