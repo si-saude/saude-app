@@ -20,6 +20,8 @@ import { LocalizacaoBuilder } from './../../localizacao/localizacao.builder';
 import { AtendimentoService } from './../../atendimento/atendimento.service';
 import { Localizacao } from './../../../model/localizacao';
 import { ModalFilaAtendimentoOcupacionalComponent } from './../../../includes/modal-fila-atendimento-ocupacional/modal-fila-atendimento-ocupacional.component';
+import { ModalTarefaComponent } from './../../../includes/modal-tarefa/modal-tarefa.component';
+import { ModalFilaEsperaOcupacionalComponent } from './../../../includes/modal-fila-espera-ocupacional/modal-fila-espera-ocupacional.component';
 
 @Component( {
     selector: 'app-atendimento-avulso-form',
@@ -28,13 +30,15 @@ import { ModalFilaAtendimentoOcupacionalComponent } from './../../../includes/mo
 } )
 export class AtendimentoAvulsoFormComponent extends GenericFormComponent implements OnInit {
 
-
     atendimento: Atendimento;
     private localizacoes: Array<Localizacao>;
     private usuario: Usuario;
     private profissional: Profissional;
 
     @ViewChild( ModalFilaAtendimentoOcupacionalComponent ) modalFilaAtendimento: ModalFilaAtendimentoOcupacionalComponent;
+    @ViewChild( ModalFilaEsperaOcupacionalComponent ) modalFilaEspera: ModalFilaEsperaOcupacionalComponent;
+    @ViewChild( ModalTarefaComponent ) modalTarefa: ModalTarefaComponent;
+
 
     constructor( private route: ActivatedRoute,
         private atendimentoService: AtendimentoService,
@@ -64,22 +68,6 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                                    this.inscricao = this.route.params.subscribe(
-                                        ( params: any ) => {
-                                            if ( params['id'] !== undefined ) {
-                                                let id = params['id'];
-                                                this.showPreload = true;
-
-                                                this.atendimentoService.get( id )
-                                                    .then( res => {
-                                                        this.showPreload = false;
-                                                        this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                                                    } )
-                                                    .catch( error => {
-                                                        this.catchConfiguration( error );
-                                                    } )
-                                            }
-                                        } );
                                 } else {
                                     this.router.navigate( ["/home"] );
                                     return;
@@ -106,7 +94,15 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
     }
 
     save() {
-        super.save( new AtendimentoBuilder().clone( this.atendimento ) );
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.atendimentoService.saveAtendimentoAvulso( new AtendimentoBuilder().clone( this.atendimento ) )
+            .then( res => {
+                this.processReturn( true, res );
+            } )
+            .catch( error => {
+                this.processReturn( false, error );
+            } )
     }
 
 }

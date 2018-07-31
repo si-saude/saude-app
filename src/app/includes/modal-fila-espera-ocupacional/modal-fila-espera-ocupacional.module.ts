@@ -7,12 +7,12 @@ import { RouterModule } from '@angular/router';
 import { DataTableModule } from "angular2-datatable";
 import { MyDatePickerModule } from 'mydatepicker';
 
-import { ModalFilaAtendimentoOcupacionalComponent } from './modal-fila-atendimento-ocupacional.component';
+import { ModalFilaEsperaOcupacionalComponent } from './modal-fila-espera-ocupacional.component';
 import { PipesModule } from './../../controller/pipes.module';
 
 @NgModule({
   declarations: [
-    ModalFilaAtendimentoOcupacionalComponent
+    ModalFilaEsperaOcupacionalComponent
   ],
   imports: [
     PipesModule,
@@ -24,7 +24,7 @@ import { PipesModule } from './../../controller/pipes.module';
     RouterModule
   ],
   exports: [
-    ModalFilaAtendimentoOcupacionalComponent
+    ModalFilaEsperaOcupacionalComponent
   ]
 })
-export class ModalFilaAtendimentoOcupacionalModule { }
+export class ModalFilaEsperaOcupacionalModule { }

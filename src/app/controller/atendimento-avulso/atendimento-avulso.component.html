@@ -16,7 +16,7 @@
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
 				<div class="col s12">
-					<div class="col s4">
+					<div class="col s5">
 						<a [routerLinkActive]="['active']" class="collection-item">
 							{{a.filaEsperaOcupacional.empregado.pessoa.nome}}
 						</a>
@@ -34,10 +34,6 @@
 				<div class="col s1">
 					<a [routerLink]="['/atendimento-avulso/detalhe', a.id]"><i
 						class="material-icons">details</i></a>
-				</div>
-				<div class="col s1">
-					<a [ngStyle]="{'atendimento-avulso': 'pointer'}" (click)="delete(a.id)"><i
-						class="material-icons">delete</i></a>
 				</div>
 				</div>
 			</div>
