@@ -173,8 +173,9 @@
 				Avaliação de Higiene Ocupacional
 			</a>
 			<a [routerLink]="['/reports/cat']" *ngIf="checkPermissao('REPORT-CAT')">CAT - Comunicado de Acidente de Trabalho</a>
-			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
 			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>
+			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
+			<a [routerLink]="['/reports/pre-requisitos-agendamento']" *ngIf="checkPermissao('REPORT-PRE-REQUISITOS-AGENDAMENTO')">Pré Requisitos Agendamento</a>
 			<a [routerLink]="['/reports/solicitacao-central-integra']" *ngIf="checkPermissao('REPORT-SOLICITACAO-CENTRAL-INTEGRA')">Solicitação Central Integra</a>
 		</div>
 	</li>

@@ -13,9 +13,11 @@ import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integr
 import { AtestadoComponent } from './atestado/atestado.component';
 import { CatComponent } from './cat/cat.component';
 import { AvaliacaoHigieneOcupacionalComponent } from './avaliacao-higiene-ocupacional/avaliacao-higiene-ocupacional.component';
+import { PreRequisitosAgendamentoComponent } from './pre-requisitos-agendamento/pre-requisitos-agendamento.component';
 import { PanoramaService } from './panorama/panorama.service';
 import { AtestadoService } from './atestado/atestado.service';
 import { CatService } from './cat/cat.service';
+import { PreRequisitosAgendamentoService } from './pre-requisitos-agendamento/pre-requisitos-agendamento.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
 import { PipesModule } from './../controller/pipes.module';
@@ -28,7 +30,8 @@ import { ModalAvaliacaoHigieneOcupacionalModule } from './../controller/modal-av
        SolicitacaoCentralIntegraComponent,
        AtestadoComponent,
        CatComponent,
-       AvaliacaoHigieneOcupacionalComponent
+       AvaliacaoHigieneOcupacionalComponent,
+       PreRequisitosAgendamentoComponent
      ],
      imports: [
         ReportsRoutingModule,
@@ -43,7 +46,8 @@ import { ModalAvaliacaoHigieneOcupacionalModule } from './../controller/modal-av
         EmpregadosPorGrupoService,
         PanoramaService,
         AtestadoService,
-        CatService
+        CatService,
+        PreRequisitosAgendamentoService
      ]
 })
 export class ReportsModule{}

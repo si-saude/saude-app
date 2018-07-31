@@ -29,7 +29,7 @@ export class GerenciaComponent  extends GenericListComponent<Gerencia, GerenciaF
   }
   
   filtrar() {
-      this.filter.getAusentePeriodico().setValue(this.ausentePeriodico.getValue());           
+      this.filter.getAusentePeriodico().setValue(this.ausentePeriodico.getValue());
       this.setFilter();
   }
   
