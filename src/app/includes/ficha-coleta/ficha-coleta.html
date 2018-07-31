@@ -66,11 +66,9 @@
 				</div>
 				
 				<div class="resposta" *ngIf="!isEnumOrSimNao(resposta)">
-				
 					<textarea [disabled]="isDisabledResposta(resposta)"
 						[(ngModel)]="resposta.conteudo">
 					</textarea>
-					
 				</div>
 				
 			</div>

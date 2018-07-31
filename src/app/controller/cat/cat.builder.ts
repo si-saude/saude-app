@@ -7,6 +7,7 @@ import { GerenciaBuilder } from './../gerencia/gerencia.builder';
 import { ParteCorpoAtingidaBuilder } from './../parte-corpo-atingida/parte-corpo-atingida.builder';
 import { AgenteCausadorBuilder } from './../agente-causador/agente-causador.builder';
 import { NaturezaLesaoBuilder } from './../natureza-lesao/natureza-lesao.builder';
+import { BaseBuilder } from './../base/base.builder';
 
 export class CatBuilder extends GenericBuilder {
 
@@ -20,6 +21,7 @@ export class CatBuilder extends GenericBuilder {
         cat.setParteCorpoAtingida(new ParteCorpoAtingidaBuilder().initialize(cat.getParteCorpoAtingida()));
         cat.setAgenteCausador(new AgenteCausadorBuilder().initialize(cat.getAgenteCausador()));
         cat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(cat.getNaturezaLesao()));
+        cat.setBase(new BaseBuilder().initialize(cat.getBase()));
         
         return cat;
     }
@@ -67,6 +69,10 @@ export class CatBuilder extends GenericBuilder {
         cloneCat.setRegistroSd2000(this.getValue(cat, "getRegistroSd2000"));
         cloneCat.setRemuneracao(this.getValue(cat, "getRemuneracao"));
         cloneCat.setRta(this.getValue(cat, "getRta"));
+        cloneCat.setNumeroBeneficio(this.getValue(cat, "getNumeroBeneficio"));
+        cloneCat.setInicioBeneficio(this.getValue(cat, "getInicioBeneficio"));
+        cloneCat.setUltimoDiaTrabalho(this.getValue(cat, "getUltimoDiaTrabalho"));
+        cloneCat.setRetornoTrabalho(this.getValue(cat, "getRetornoTrabalho"));
         
         if(this.getValue(cat, "getSexo") == ( "" || undefined ))
             cloneCat.setSexo(undefined);
@@ -154,6 +160,15 @@ export class CatBuilder extends GenericBuilder {
                 cloneCat.setNaturezaLesao(undefined);
         } else {
             cloneCat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getBase") !== undefined) { 
+            cloneCat.setBase(
+                    new BaseBuilder().clone(this.getValue(cat,"getBase")));
+            if(!this.idGtZero(cloneCat.getBase()))
+                cloneCat.setBase(undefined);
+        } else {
+            cloneCat.setBase(new BaseBuilder().initialize(null));
         }
         
         cloneCat.setVersion(this.getValue(cat, "getVersion"));

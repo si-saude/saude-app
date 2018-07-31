@@ -4,11 +4,17 @@ import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Atestado } from './../../../model/atestado';
+import { Diagnostico } from './../../../model/diagnostico';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { AtestadoBuilder } from './../atestado.builder';
 import { AtestadoService } from './../atestado.service';
 import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 import { CatNumeroAutocomplete } from './../../cat/cat-numero.autocomplete';
+import { DiagnosticoAtestadoAutocomplete } from './../../diagnostico/diagnostico-atestado.autocomplete';
+import { EquipeFilter } from './../../equipe/equipe.filter';
+import { DiagnosticoFilter } from './../../diagnostico/diagnostico.filter';
+import { DiagnosticoBuilder } from './../../diagnostico/diagnostico.builder';
+import { ProfissionalNomeAutocomplete } from './../../profissional-saude/profissional-nome.autocomplete';
 
 @Component( {
     selector: 'app-atestado-form',
@@ -22,7 +28,10 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     private edit: boolean = false;
     private autoCompleteEmp: EmpregadoNomeAutocomplete;
     private autoCompleteCat: CatNumeroAutocomplete;
-
+    private proxyAutocompleteDiagnostico: ProxyAutocompleteDiagnostico;
+    private autoCompleteProfissional: ProfissionalNomeAutocomplete;
+    private situacaoEmpregados: Array<string>;
+    
     constructor( private route: ActivatedRoute,
         private atestadoService: AtestadoService,
         router: Router ) {
@@ -33,6 +42,9 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
         this.statuses = new Array<string>();
         this.autoCompleteEmp = new EmpregadoNomeAutocomplete( this.atestadoService.getEmpregadoService() );
         this.autoCompleteCat = new CatNumeroAutocomplete( this.atestadoService.getCatService() );
+        this.proxyAutocompleteDiagnostico = new ProxyAutocompleteDiagnostico( atestadoService );
+        this.autoCompleteProfissional = new ProfissionalNomeAutocomplete(this.atestadoService.getProfissionalService())
+        this.situacaoEmpregados = new Array<string>();
     }
 
     ngOnInit() {
@@ -46,6 +58,30 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                         .then( res => {
                             this.showPreload = false;
                             this.atestado = new AtestadoBuilder().clone( res.json() );
+                            
+                            if ( this.atestado.getCid() != undefined && this.atestado.getCid() != "" ) {
+                                this.proxyAutocompleteDiagnostico.getAutocompleteDiagnostico()
+                                        .getAutocomplete().initializeLastValue( this.atestado.getCid() );
+                                let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
+                                diagnosticoFilter.getEixo().setEquipe(new EquipeFilter());
+                                diagnosticoFilter.getEixo().getEquipe().setAbreviacao("MED");
+                                diagnosticoFilter.getInativo().setValue(2);
+                                diagnosticoFilter.setCodigo(this.atestado.getCid());
+                                this.atestadoService.getDiagnosticoService().list(diagnosticoFilter)
+                                    .then(res => {
+                                        this.proxyAutocompleteDiagnostico.getEncapsulatorDiagnostico().setDiagnostico(
+                                                new DiagnosticoBuilder().clone(res.json().list));
+                                    })
+                                    .catch(error => {
+                                        console.log("Erro ao buscar diagnostico.");
+                                    })
+                                
+                            }
+                            if ( this.atestado.getProfissionalRealizouVisita() != undefined ) {
+                                this.autoCompleteProfissional.getAutocomplete().initializeLastValue(
+                                        this.atestado.getProfissionalRealizouVisita().getEmpregado().getPessoa().getNome() )
+                            }
+                            
                             this.edit = true;
                         } )
                         .catch( error => {
@@ -55,8 +91,19 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
             } );
 
         this.getStatuses();
+        this.getSituacaoEmpregados();
     }
 
+    getSituacaoEmpregados() {
+        this.atestadoService.getSituacaoEmpregado()
+            .then(res => {
+                this.situacaoEmpregados = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                console.log("Erro ao buscar a situacao do empregado");
+            })
+    }
+    
     getStatuses() {
         this.atestadoService.getStatuses()
             .then( res => {
@@ -126,5 +173,60 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
 
     closeTooltip() {
         $( ".toast" ).remove();
+    }
+}
+
+class ProxyAutocompleteDiagnostico {
+    private autocompleteDiagnostico: DiagnosticoAtestadoAutocomplete;
+    private encapsulatorDiagnostico: EncapsulatorDiagnostico;
+
+    constructor(private atestadoService: AtestadoService) {
+        this.autocompleteDiagnostico = new DiagnosticoAtestadoAutocomplete(atestadoService.getDiagnosticoService());
+        this.encapsulatorDiagnostico = new EncapsulatorDiagnostico();
+    }
+
+    getAutocompleteDiagnostico() {
+        return this.autocompleteDiagnostico;
+    }
+    
+    setAutocompleteDiagnostico(autocompleteDiagnostico: DiagnosticoAtestadoAutocomplete) {
+        this.autocompleteDiagnostico = autocompleteDiagnostico;
+    }
+    
+    changeDiagnostico(evento) {
+        this.encapsulatorDiagnostico.getDiagnostico().setCodigo(evento);
+        this.autocompleteDiagnostico.getAutocomplete().getList(this.encapsulatorDiagnostico.getDiagnostico(), 'getCodigo');
+    }
+    
+    setCid(atestado: Atestado, evento) {
+        this.autocompleteDiagnostico.getAutocomplete().getObj(
+                evento, this.encapsulatorDiagnostico,'setDiagnostico','getCodigo');
+        atestado.setCid(this.encapsulatorDiagnostico.getDiagnostico().getCodigo());
+    }
+    
+    getCid() {
+        if ( this.encapsulatorDiagnostico.getDiagnostico().getId() > 0 )
+            this.encapsulatorDiagnostico.getDiagnostico().getCodigo();
+        else return "";
+    }
+    
+    getEncapsulatorDiagnostico() {
+        return this.encapsulatorDiagnostico;
+    }
+}
+
+class EncapsulatorDiagnostico {
+    private diagnostico: Diagnostico;
+
+    constructor() {
+        this.diagnostico = new Diagnostico();
+    }
+
+    getDiagnostico() {
+        return this.diagnostico;
+    }
+    
+    setDiagnostico( diagnostico: Diagnostico ) {
+        this.diagnostico = diagnostico;
     }
 }

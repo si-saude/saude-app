@@ -11,11 +11,13 @@ import { DiagnosticoService } from './../diagnostico/diagnostico.service';
 import { ParteCorpoAtingidaService } from './../parte-corpo-atingida/parte-corpo-atingida.service';
 import { AgenteCausadorService } from './../agente-causador/agente-causador.service';
 import { NaturezaLesaoService } from './../natureza-lesao/natureza-lesao.service';
+import { BaseService } from './../base/base.service';
 
 @Injectable()
 export class CatService extends GenericService {
 
-    constructor( http: Http, router: Router, 
+    constructor( http: Http, router: Router,
+            private baseService: BaseService,
             private eixoService: EixoService,
             private diagnosticoService: DiagnosticoService,
             private parteCorpoAtingidaService: ParteCorpoAtingidaService,
@@ -81,5 +83,9 @@ export class CatService extends GenericService {
     
     getNaturezaLesaoService() {
         return this.naturezaLesaoService;
+    }
+    
+    getBases() {
+        return this.baseService.getBases();
     }
 }

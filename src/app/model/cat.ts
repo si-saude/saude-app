@@ -5,6 +5,7 @@ import { Diagnostico } from './diagnostico';
 import { ParteCorpoAtingida } from './parte-corpo-atingida';
 import { AgenteCausador } from './agente-causador';
 import { NaturezaLesao } from './natureza-lesao';
+import { Base } from './base';
 import { CustomDate } from './../generics/utils/custom-date.util';
 import { CustomTime } from './../generics/utils/custom-time.util';
 
@@ -45,7 +46,15 @@ export class Cat {
     private parteCorpoAtingida: ParteCorpoAtingida;
     private agenteCausador: AgenteCausador;
     private naturezaLesao: NaturezaLesao;
+    private base: Base;
+    private inicioBeneficio: Date;
+    private ultimoDiaTrabalho: Date;
+    private retornoTrabalho: Date;
+    private numeroBeneficio: string;
 
+    private inicioBeneficioCustomDate: CustomDate = new CustomDate(this.inicioBeneficio);
+    private ultimoDiaTrabalhoCustomDate: CustomDate = new CustomDate(this.ultimoDiaTrabalho);
+    private retornoTrabalhoCustomDate: CustomDate = new CustomDate(this.retornoTrabalho);
     private dataNascimentoCustomDate: CustomDate = new CustomDate(this.dataNascimento);
     private diaHoraAcidenteCustomTime: CustomTime = new CustomTime(this.diaHoraAcidente);
     private dataEmissaoCatCustomDate: CustomDate = new CustomDate(this.dataEmissaoCat);
@@ -381,6 +390,77 @@ export class Cat {
     public setNaturezaLesao(naturezaLesao) {
         this.naturezaLesao = naturezaLesao;
     }
+    
+    public getBase() {
+        return this.base;
+    }
+
+    public setBase(base: Base) {
+        this.base = base;
+    }
+    
+    public getInicioBeneficio() {
+        this.inicioBeneficio = this.inicioBeneficioCustomDate.getApiDate();
+        return this.inicioBeneficio;
+    }
+
+    public setInicioBeneficio(inicioBeneficio: Date) {
+        this.inicioBeneficioCustomDate.setApiDate(inicioBeneficio);
+        this.inicioBeneficio = inicioBeneficio;
+    }
+    
+    public getInicioBeneficioCustomDate(){
+        return this.inicioBeneficioCustomDate;
+    }
+    
+    public setInicioBeneficioCustomDate(inicioBeneficioCustomDate: CustomDate){
+        this.inicioBeneficioCustomDate = inicioBeneficioCustomDate;
+    }
+
+    public getUltimoDiaTrabalho() {
+        this.ultimoDiaTrabalho = this.ultimoDiaTrabalhoCustomDate.getApiDate();
+        return this.ultimoDiaTrabalho;
+    }
+
+    public setUltimoDiaTrabalho(ultimoDiaTrabalho: Date) {
+        this.ultimoDiaTrabalhoCustomDate.setApiDate(ultimoDiaTrabalho);
+        this.ultimoDiaTrabalho = ultimoDiaTrabalho;
+    }
+    
+    public getUltimoDiaTrabalhoCustomDate(){
+        return this.ultimoDiaTrabalhoCustomDate;
+    }
+    
+    public setUltimoDiaTrabalhoCustomDate(ultimoDiaTrabalhoCustomDate: CustomDate){
+        this.ultimoDiaTrabalhoCustomDate = ultimoDiaTrabalhoCustomDate;
+    }
+    
+    public getRetornoTrabalho() {
+        this.retornoTrabalho = this.retornoTrabalhoCustomDate.getApiDate();
+        return this.retornoTrabalho;
+    }
+
+    public setRetornoTrabalho(retornoTrabalho: Date) {
+        this.retornoTrabalhoCustomDate.setApiDate(retornoTrabalho);
+        this.retornoTrabalho = retornoTrabalho;
+    }
+    
+    public getRetornoTrabalhoCustomDate(){
+        return this.retornoTrabalhoCustomDate;
+    }
+    
+    public setRetornoTrabalhoCustomDate(retornoTrabalhoCustomDate: CustomDate){
+        this.retornoTrabalhoCustomDate = retornoTrabalhoCustomDate;
+    }
+    
+    public getNumeroBeneficio() {
+        return this.numeroBeneficio;
+    }
+
+    public setNumeroBeneficio(numeroBeneficio: string) {
+        this.numeroBeneficio = numeroBeneficio;
+    }
+    
 
     public getVersion() {
         return this.version;

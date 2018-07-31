@@ -8,6 +8,8 @@ import { MaterializeAction } from "angular2-materialize";
 import { GlobalVariable } from './../../../global';
 import { Diagnostico } from './../../../model/diagnostico';
 import { Cat } from './../../../model/cat';
+import { Base } from './../../../model/base';
+import { BaseBuilder } from './../../base/base.builder';
 import { Empregado } from './../../../model/empregado';
 import { Gerencia } from './../../../model/gerencia';
 import { CatBuilder } from './../cat.builder';
@@ -32,6 +34,7 @@ import { NaturezaLesaoDescricaoAutocomplete } from './../../natureza-lesao/natur
 } )
 export class CatFormComponent extends GenericFormComponent implements OnInit {
     private cat: Cat;
+    private bases: Array<Base>;
     private ufs: Array<string>;
     private sexos: Array<string>;
     private partesCorpo: Array<string>;
@@ -66,6 +69,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.autoCompleteParteCorpoAtingida = new ParteCorpoAtingidaDescricaoAutocomplete(this.catService.getParteCorpoAtingidaService())
         this.autoCompleteAgenteCausador = new AgenteCausadorDescricaoAutocomplete(this.catService.getAgenteCausadorService())
         this.autoCompleteNaturezaLesao = new NaturezaLesaoDescricaoAutocomplete(this.catService.getNaturezaLesaoService())
+        this.bases = new BaseBuilder().initializeList(new Array<Base>());
         this.sexos = new Array<string>();
         this.partesCorpo = new Array<string>();
         this.gravidades = new Array<string>();
@@ -110,6 +114,17 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.getGravidades();
         this.getTipoAcidentes();
         this.getTipoCats();
+        this.getBases();
+    }
+    
+    getBases() {
+        this.catService.getBases()
+            .then( res => {
+                this.bases = new BaseBuilder().cloneList(res.json());
+            })
+            .catch( erro => {
+                console.log("Erro ao buscar as bases.");
+            })
     }
     
     getSexos() {
@@ -178,6 +193,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                     this.cat.setCpf(this.cat.getEmpregado().getPessoa().getCpf());
                     this.cat.setSexo(this.cat.getEmpregado().getPessoa().getSexo());
                     this.cat.setGerencia(this.cat.getEmpregado().getGerencia());
+                    this.cat.setBase(this.cat.getEmpregado().getBase());
                 })
                 .catch(error => {
                     console.log("Erro ao retornar o Empregado.");

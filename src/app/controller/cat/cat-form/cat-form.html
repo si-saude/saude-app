@@ -1,3 +1,4 @@
+<head>
 <meta charset="utf-8">
 </head>
 
@@ -23,10 +24,15 @@
 			<div id="dadosGerais">
 
 				<div class="row">
-					<div class="input-field col s9">
+					<div class="input-field col s5">
 						<label for="numero">Número</label> <input id="numero" type="text"
 							maxlength="16" name="numero" [(ngModel)]="cat.numero">
 					</div>
+					
+						<div class="input-field col s4">
+							<label for="numeroBeneficio">Número do Benefício</label> <input id="numeroBeneficio" type="text"
+								maxlength="32" name="numeroBeneficio" [(ngModel)]="cat.numeroBeneficio">
+						</div>
 
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="contratado" (change)="setContratado()"
@@ -90,12 +96,23 @@
 				</div>
 
 				<div class="row">
-					<div class="input-field col s8">
+					<div class="input-field col s4">
 						<label for="cpf">CPF</label> 
 						<input id="cpf" type="text" [required]="!verifyContratado()"
 							maxlength="14" [disabled]="verifyContratado()" [mask]="'cpf'"
 							(ngModelChange)="cat.cpf=$event" maxlength="14"
 							[ngModel]="cat.cpf | cpfMask" name="cpf">
+					</div>
+					
+					<div class="input-field col s4">
+						<fieldset>
+							<legend>Base</legend>
+							<select name="base" class="browser-default" [disabled]="verifyContratado()"  
+								[required]="!verifyContratado()" [(ngModel)]="cat.base.id">
+								<option disabled selected value="undefined">Selecione um base</option>
+								<option *ngFor="let base of bases" value="{{base.id}}">{{base.nome}}</option>
+							</select>
+						</fieldset>
 					</div>
 
 					<div class="input-field col s4">
@@ -116,17 +133,38 @@
 			<div id="outrasInformacoes">
 
 				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s6">
 						<label for="RTA">RTA</label> <input id="RTA" type="text"
 							maxlength="64" name="RTA" [(ngModel)]="cat.rta">
 					</div>
-				</div>
 
-				<div class="row">
-					<div class="input-field col s12">
+					<div class="input-field col s6">
 						<label for="instalacao">Instalação</label> <input id="instalacao"
 							type="text" maxlength="128" name="instalacao"
 							[(ngModel)]="cat.instalacao">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s4">
+						<my-date-picker name="inicioBeneficio"
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.inicioBeneficioCustomDate.appDate"
+							placeholder="Início do Benefício"></my-date-picker>
+					</div>
+					
+					<div class="input-field col s4">
+						<my-date-picker name="ultimoDiaTrabalho"
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.ultimoDiaTrabalhoCustomDate.appDate"
+							placeholder="Último Dia de Trabalho"></my-date-picker>
+					</div>
+					
+					<div class="input-field col s4">
+						<my-date-picker name="retornoTrabalho"
+							[options]="myDatePickerOptions"
+							[(ngModel)]="cat.retornoTrabalhoCustomDate.appDate"
+							placeholder="Retorno ao Trabalho"></my-date-picker>
 					</div>
 				</div>
 				
