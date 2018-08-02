@@ -13,6 +13,15 @@ export class AtestadoDto {
     private dataAgendamento: string;
     private numeroCat: string;
 
+    private matricula: string;
+    private gerencia: string;
+    private base: string;
+    
+    private prazoRecebimento: number;
+    private recebidoNoPrazo: boolean;
+    private mesRecebimento: string;
+    private fim: string;
+
     public getId() {
         return this.id;
     }
@@ -90,5 +99,47 @@ export class AtestadoDto {
     }
     public setNumeroCat(numeroCat) {
         this.numeroCat = numeroCat;
+    }
+    public getMatricula() {
+        return this.matricula;
+    }
+    public setMatricula(matricula: string) {
+        this.matricula = matricula;
+    }
+    public getGerencia() {
+        return this.gerencia;
+    }
+    public setGerencia(gerencia: string) {
+        this.gerencia = gerencia;
+    }
+    public getBase() {
+        return this.base;
+    }
+    public setBase(base: string) {
+        this.base = base;
+    }
+    public getPrazoRecebimento() {
+        return this.prazoRecebimento;
+    }
+    public setPrazoRecebimento(prazoRecebimento: number) {
+        this.prazoRecebimento = prazoRecebimento;
+    }
+    public getRecebidoNoPrazo() {
+        return this.recebidoNoPrazo;
+    }
+    public setRecebidoNoPrazo(recebidoNoPrazo: boolean) {
+        this.recebidoNoPrazo = recebidoNoPrazo;
+    }
+    public getMesRecebimento() {
+        return this.mesRecebimento;
+    }
+    public setMesRecebimento(mesRecebimento: string) {
+        this.mesRecebimento = mesRecebimento;
+    }
+    public getFim() {
+        return this.fim;
+    }
+    public setFim(fim: string) {
+        this.fim = fim;
     }
 }

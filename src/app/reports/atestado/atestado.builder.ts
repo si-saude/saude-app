@@ -42,6 +42,13 @@ export class AtestadoBuilder extends GenericBuilder {
         cloneAtestadoDto.setNumeroCat(this.getValue(atestado, "getNumeroCat"));
         cloneAtestadoDto.setNumeroDias(this.getValue(atestado, "getNumeroDias"));
         cloneAtestadoDto.setStatus(this.getValue(atestado, "getStatus"));
+        cloneAtestadoDto.setMatricula(this.getValue(atestado, "getMatricula"));
+        cloneAtestadoDto.setGerencia(this.getValue(atestado, "getGerencia"));
+        cloneAtestadoDto.setBase(this.getValue(atestado, "getBase"));
+        cloneAtestadoDto.setPrazoRecebimento(this.getValue(atestado, "getPrazoRecebimento"));
+        cloneAtestadoDto.setRecebidoNoPrazo(this.getValue(atestado, "getRecebidoNoPrazo"));
+        cloneAtestadoDto.setMesRecebimento(this.getValue(atestado, "getMesRecebimento"));
+        cloneAtestadoDto.setFim(this.getValue(atestado, "getFim"));
                 
         return cloneAtestadoDto;
     }

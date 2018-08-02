@@ -27,6 +27,7 @@ export class AtestadoComponent {
     private arrayTypes: Array<string>;
     private httpUtil: HttpUtil;
     private countCheckbox: number = 0;
+    private showNothing: boolean;
 
     constructor(private atestadoService: AtestadoService) {
         this.atestados = new AtestadoBuilder().initializeList(this.atestados);
@@ -35,6 +36,7 @@ export class AtestadoComponent {
         this.filter = "";
         this.arrayTypes = new Array<string>();
         this.httpUtil = new HttpUtil();
+        this.showNothing = true;
     }
     
     ngAfterViewInit() {
@@ -44,14 +46,15 @@ export class AtestadoComponent {
         $('#dropdown').mouseleave(function() {
             $('#dropdown').toggleClass('show');
         });
-        
         this.getAtestados();
     }
     
     getAtestados() {
         this.atestadoService.getAtestados( )
             .then( res => {
+                console.log(res.json());
                 this.atestados = new AtestadoBuilder().cloneList( res.json() );
+                console.log(this.atestados);
             } )
             .catch( error => {
                 console.log( "Erro ao buscar os atestados." );
@@ -70,7 +73,7 @@ export class AtestadoComponent {
         $( "#dropdown" ).empty();
 
         if ( tipo == "impossibilidadeLocomocao" || tipo == "lancadoSap" || tipo == "atestadoFisicoRecebido" ||
-                tipo == "controleLicenca" ) {
+                tipo == "controleLicenca" || tipo == "recebidoNoPrazo") {
             let component = this;
             if ( component.arrayObjects.get(tipo) == undefined )
                 component.arrayObjects.set(tipo, new Array<any>());

@@ -21,9 +21,9 @@ table {
 }
 
 .list-container {
-	overflow: auto;
+	/* overflow: auto;
     max-height: 500px;
-    margin-bottom: 10%;
+    margin-bottom: 10%; */
 }
 
 td, th {
