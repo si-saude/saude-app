@@ -14,28 +14,32 @@
 	        <td>
 	            <label by="chave">Chave</label>
 	            <input type="text" name="chave" style="width: 90%" [(ngModel)]="chave" 
-						placeholder="filtrar chave" (input)="selectFilter()">
+						placeholder="filtrar chave">
 	        </td>
 	        <td>
 	            <label by="matricula">Matricula</label>
 	            <input type="text" name="matricula" style="width: 90%" [(ngModel)]="matricula" 
-						placeholder="filtrar matricula" (input)="selectFilter()">
+						placeholder="filtrar matricula">
 	        </td>
 	        <td>
 	            <label by="nome">Nome</label>
 	            <input type="text" name="nome" style="width: 90%" [(ngModel)]="nome"
-						placeholder="filtrar nome" (input)="selectFilter()">
+						placeholder="filtrar nome">
 	        </td>
+	        <td>
+	            <a class="waves-effect waves-light btn" (click)="selectFilter()">Buscar</a>
+	        </td>	        
 	    </tr>
+	    
 	    <tr *ngFor="let item of arrayAvaliacao" class="tr-item" (click)="selectAvaliacao(item)">
-	        <td colspan="2">{{item.empregado.pessoa.nome}}</td>
+	        <td colspan="3">{{item.empregado.pessoa.nome}}</td>
 	        <td>{{item.data | transformDate }}</td>
 	    </tr>
 	</table>
  
 	<div class="modal-footer">
 		 <a class="waves-effect waves-green btn-flat"
-			(click)="cancelarModalDiagnostico()">Cancelar</a>
+			(click)="cancelarModalAvaliacao()">Cancelar</a>
 	</div>
 
 </div>

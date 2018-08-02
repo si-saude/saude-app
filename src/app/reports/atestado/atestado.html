@@ -10,6 +10,15 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <div class="list-container">
+
+	<div class="row">
+		<div class="col s1">
+			<a (click)="exportFile()"> 
+				<i class="small material-icons icon" (mouseover)="showTextToast('Exportar', 4000)" 
+					(mouseleave)="closeTooltip()">file_download</i>
+			</a>
+		</div>
+	</div>
 	<table class="table table-striped" [mfData]="atestados | filterData : filter : typeFilter : value" #mf="mfDataTable">
 	    <thead>
 		    <tr>
