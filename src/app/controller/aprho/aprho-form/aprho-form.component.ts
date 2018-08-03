@@ -103,6 +103,7 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
 
                     this.service.get( id )
                         .then( res => {
+                            
                             this.showPreload = false;
                             this.aprho = new AprhoBuilder().clone( res.json() );
                             this.autoCompleteGhe.getAutocomplete().initializeLastValue(this.aprho.getGhe().getNome());         
@@ -113,21 +114,29 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
                         } )
                 }
             } );
+        
+        
         this.getMeioPropagacoes();
         this.getMedidaControles();
         this.getAvaliacaoEficacias();
         this.getCategoriaRiscos();
     } 
     
-    addAprhoItem() {     
-        this.aprhoItem.setCategoriaRisco(this.categoriaRiscos.find(c => c.getId() == this.aprhoItem.getCategoriaRisco().getId()));            
-        this.aprho.getAprhoItens().push(new AprhoItemBuilder().clone(this.aprhoItem));
+    addAprhoItem() {
+        
+        if(this.aprhoItem.getCategoriaRisco().getId() > 0 )
+            this.aprhoItem.setCategoriaRisco(this.categoriaRiscos.find(c => c.getId() == this.aprhoItem.getCategoriaRisco().getId()));            
+        
+       let aprhoItemAux= new AprhoItemBuilder().clone(this.aprhoItem);
+           aprhoItemAux = new AprhoItemBuilder().clone(aprhoItemAux);
+        this.aprho.getAprhoItens().push(aprhoItemAux);
+            
     }
     
     addAprhoEmpregado() {  
        if(this.aprhoEmpregado.getEmpregado().getId() !=0){
-           if(this.aprho.getAprhoEmpregados().find( c => c.getEmpregado().getId() === this.aprhoEmpregado.getEmpregado().getId())==undefined){
-               this.aprho.getAprhoEmpregados().push(new AprhoEmpregadoBuilder().clone(this.aprhoEmpregado));
+           if(this.aprho.getAprhoEmpregados().find( c => c.getEmpregado().getId() === this.aprhoEmpregado.getEmpregado().getId())==undefined){ 
+              this.aprho.getAprhoEmpregados().push(new AprhoEmpregadoBuilder().clone(new AprhoEmpregadoBuilder().clone(this.aprhoEmpregado)));
            }
            else{
                this.toastParams = ['Empregado adicionado anteriormente', 4000];
@@ -149,7 +158,7 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
          if(this.equipe.getCoordenador().getId() != 0){
              
              if(this.aprho.getElaboradores().find( c => c.getId() === this.equipe.getCoordenador().getId())==undefined){
-                 this.aprho.getElaboradores().push(new ProfissionalSaudeBuilder().clone(this.equipe.getCoordenador()));
+                this.aprho.getElaboradores().push(new ProfissionalSaudeBuilder().clone(new ProfissionalSaudeBuilder().clone(this.equipe.getCoordenador())));
              }
              else{
                  this.toastParams = ['Elaborador adicionado anteriormente', 4000];
@@ -171,19 +180,21 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
          this.aprho.getAprhoEmpregados().splice(i, 1);
      }
      
-     exportFile(){         
-         this.aprhoService.aprhoToPdf(new AprhoBuilder().clone(this.aprho))
-         .then(res => {             
-             var w= window.open('', '_blank', 'top=0,left=0,height=1px,width=1px');
-             w.document.write(res.text());
-             w.print();
-             w.close();
-         })
-         .catch(error => {
-             this.toastParams = [error.text(), 4000];
-             this.globalActions.emit( 'toast' );
-             console.log("Erro ao retornar o pdf."+error);
-         })
+     exportFile(){     
+         if(this.verificarForm()){             
+             this.aprhoService.aprhoToPdf(new AprhoBuilder().clone(this.aprho))
+             .then(res => {                         
+                 var w= window.open('', '_blank', 'top=0,left=0,height=1px,width=1px');
+                 w.document.write(res.text());
+                 w.print();
+                 w.close();
+             })
+             .catch(error => {
+                 this.toastParams = [error.text(), 4000];
+                 this.globalActions.emit( 'toast' );
+                 console.log("Erro ao retornar o pdf."+error);
+             })
+         }
      }
     getMedidaControles() {
         this.aprhoService.getMedidaControles()
@@ -231,21 +242,29 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
     }
     
     save() { 
+        if(this.verificarForm()){
+            super.save(new AprhoBuilder().clone( this.aprho ));
+        }
+    }
+    
+    verificarForm(){
         
         if(this.formulario.valid){
-//            
-            if(this.aprho.getAprhoItens().length > 0 && this.aprho.getAprhoEmpregados().length > 0 ){                
-                super.save(new AprhoBuilder().clone( this.aprho ));
-                
-            }else{
-                
-                this.toastParams = ["Por favor, adicione pelo menos um Agente de Risco, Empregado e Elaborador nas listas", 4000];
-                this.globalActions.emit('toast');            
-            }
-        }else
-          {
-            this.toastParams = ["Por favor, Preencha todos os campos", 4000];
-            this.globalActions.emit('toast');   
+//          
+          if(this.aprho.getAprhoItens().length > 0 && this.aprho.getAprhoEmpregados().length > 0 ){                
+              return true;
+              
+          }else{
+              
+              this.toastParams = ["Por favor, adicione pelo menos um Agente de Risco, Empregado e Elaborador nas listas", 4000];
+              this.globalActions.emit('toast');      
+              return false;
           }
+      }else
+        {
+          this.toastParams = ["Por favor, Preencha todos os campos", 4000];
+          this.globalActions.emit('toast');  
+          return false;
+        }        
     }
 }
