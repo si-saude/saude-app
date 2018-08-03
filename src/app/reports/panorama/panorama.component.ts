@@ -28,7 +28,6 @@ export class PanoramaComponent {
     private globalActions;
     private toastParams;
     private countCheckbox: number = 0;
-    private showNothing: boolean;
 
     constructor( private panoramaService: PanoramaService ) {
         this.panoramas = new PanoramaBuilder().initializeList( new Array<PanoramaDto>() );
@@ -37,7 +36,6 @@ export class PanoramaComponent {
         this.httpUtil = new HttpUtil();
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.showNothing = true;
     }
 
     ngAfterViewInit() {
@@ -224,6 +222,7 @@ export class PanoramaComponent {
 
     ngOnDestroy() {
         $( ".toast" ).remove();
+        $( ".container" ).get( 0 ).style.width = "70%";
     }
 
 }

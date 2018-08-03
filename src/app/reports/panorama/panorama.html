@@ -13,10 +13,6 @@
 						(mouseleave)="closeTooltip()">file_download</i>
 				</a>
 			</div>
-			<div class="col s1">
-				<a [routerLink]="['/home']"
-					class="btn btn-primary btn-home">Home</a>
-			</div>
 		</div>
 		
 		<table class="table table-striped" [mfData]="panoramas | filterData : filter : typeFilter : value" #mf="mfDataTable">

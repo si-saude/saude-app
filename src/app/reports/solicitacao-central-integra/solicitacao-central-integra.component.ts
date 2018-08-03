@@ -283,6 +283,7 @@ export class SolicitacaoCentralIntegraComponent {
 
     ngOnDestroy() {
         $( ".toast" ).remove();
+        $( ".container" ).get( 0 ).style.width = "70%";
     }
 
 }
