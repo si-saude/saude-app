@@ -42,6 +42,24 @@ export class AtestadoBuilder extends GenericBuilder {
         cloneAtestadoDto.setNumeroCat(this.getValue(atestado, "getNumeroCat"));
         cloneAtestadoDto.setNumeroDias(this.getValue(atestado, "getNumeroDias"));
         cloneAtestadoDto.setStatus(this.getValue(atestado, "getStatus"));
+        
+        cloneAtestadoDto.setMatricula(this.getValue(atestado, "getMatricula"));
+        cloneAtestadoDto.setGerencia(this.getValue(atestado, "getGerencia"));
+        cloneAtestadoDto.setBase(this.getValue(atestado, "getBase"));
+        
+        cloneAtestadoDto.setPrazoRecebimento(this.getValue(atestado, "getPrazoRecebimento"));
+        cloneAtestadoDto.setRecebidoNoPrazo(this.getValue(atestado, "getRecebidoNoPrazo"));
+        cloneAtestadoDto.setMesRecebimento(this.getValue(atestado, "getMesRecebimento"));
+        cloneAtestadoDto.setFim(this.getValue(atestado, "getFim"));
+        
+        cloneAtestadoDto.setDataHomologacao(this.getValue(atestado, "getDataHomologacao"));
+        cloneAtestadoDto.setDataEntrega(this.getValue(atestado, "getDataEntrega"));
+        cloneAtestadoDto.setPrazoHomologacao(this.getValue(atestado, "getPrazoHomologacao"));
+        cloneAtestadoDto.setHomologacaoNoPrazo(this.getValue(atestado, "getHomologacaoNoPrazo"));
+        cloneAtestadoDto.setMesHomologacao(this.getValue(atestado, "getMesHomologacao"));
+        cloneAtestadoDto.setMedicoOdonto(this.getValue(atestado, "getMedicoOdonto"));
+        cloneAtestadoDto.setNomeProfissionalHomologacao(this.getValue(atestado, "getNomeProfissionalHomologacao"));
+        cloneAtestadoDto.setObservacao(this.getValue(atestado, "getObservacao"));
                 
         return cloneAtestadoDto;
     }

@@ -24,6 +24,7 @@ import { ProfissionalNomeAutocomplete } from './../../profissional-saude/profiss
 export class AtestadoFormComponent extends GenericFormComponent implements OnInit {
     private atestado: Atestado;
     private statuses: Array<string>;
+    private statusesHomologacaoAtestado: Array<string>;
     @ViewChild( 'anexo' ) inputElAnexo: ElementRef;
     private edit: boolean = false;
     private autoCompleteEmp: EmpregadoNomeAutocomplete;
@@ -40,6 +41,7 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
         this.goTo = "atestado";
         this.atestado = new AtestadoBuilder().initialize( this.atestado );
         this.statuses = new Array<string>();
+        this.statusesHomologacaoAtestado = new Array<string>();
         this.autoCompleteEmp = new EmpregadoNomeAutocomplete( this.atestadoService.getEmpregadoService() );
         this.autoCompleteCat = new CatNumeroAutocomplete( this.atestadoService.getCatService() );
         this.proxyAutocompleteDiagnostico = new ProxyAutocompleteDiagnostico( atestadoService );
@@ -57,6 +59,7 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                     this.service.get( id )
                         .then( res => {
                             this.showPreload = false;
+                            console.log(res.json());
                             this.atestado = new AtestadoBuilder().clone( res.json() );
                             
                             if ( this.atestado.getCid() != undefined && this.atestado.getCid() != "" ) {
@@ -113,12 +116,18 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                 console.log( "Erro ao retornar status." );
             } )
     }
-
+    
     ngOnDestroy() {
         this.inscricao.unsubscribe();
     }
 
     save() {
+        if ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate().getTime() > 
+                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate().getTime() ) {
+            this.showTextToast("Erro: data da entrega maior do que data da homologacao.", 5000);
+            return;
+        }
+
         if ( !this.edit ) {
             let i: number = 0;
             let total: number = 0;
@@ -146,10 +155,13 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                     readerAnexo.readAsArrayBuffer( new Blob( [anexo] ) );
                 }
             } else {
+                console.log(this.atestado)
+                console.log(new AtestadoBuilder().clone( this.atestado ));
                 this.salvar( new AtestadoBuilder().clone( this.atestado ) );
             }
         } else {
-            console.log('teste1');
+            console.log(this.atestado)
+            console.log(new AtestadoBuilder().clone( this.atestado ));
             this.salvar( new AtestadoBuilder().clone( this.atestado ) );
         }
     }

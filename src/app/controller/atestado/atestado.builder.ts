@@ -2,6 +2,7 @@ import { Atestado } from './../../model/atestado';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { CatBuilder } from './../cat/cat.builder';
 import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
+import { HomologacaoAtestadoBuilder } from './../homologacao-atestado/homologacao-atestado.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class AtestadoBuilder extends GenericBuilder {
@@ -12,6 +13,7 @@ export class AtestadoBuilder extends GenericBuilder {
         atestado.setTarefa(new TarefaBuilder().initialize(atestado.getTarefa()));
         atestado.setCat(new CatBuilder().initialize(atestado.getCat()))
         atestado.setProfissionalRealizouVisita(new ProfissionalSaudeBuilder().initialize(atestado.getProfissionalRealizouVisita()));
+        atestado.setHomologacaoAtestado(new HomologacaoAtestadoBuilder().initialize(atestado.getHomologacaoAtestado()));
         
         return atestado;
     }
@@ -75,6 +77,13 @@ export class AtestadoBuilder extends GenericBuilder {
                 cloneAtestado.setCat(undefined);
         } else {
             cloneAtestado.setCat(new CatBuilder().initialize(null));
+        }
+        
+        if (this.getValue(atestado, "getHomologacaoAtestado") !== undefined) { 
+            cloneAtestado.setHomologacaoAtestado(
+                    new HomologacaoAtestadoBuilder().clone(this.getValue(atestado,"getHomologacaoAtestado")));
+        } else {
+            cloneAtestado.setHomologacaoAtestado(new HomologacaoAtestadoBuilder().initialize(null));
         }
         
         return cloneAtestado;

@@ -2,6 +2,16 @@ export class AtestadoDto {
     private id: number;
     private nomeEmpregado: string;
     private cid: string;
+
+    private matricula: string;
+    private gerencia: string;
+    private base: string;
+
+    private prazoRecebimento: number;
+    private recebidoNoPrazo: boolean;
+    private mesRecebimento: string;
+    private fim: string;
+
     private numeroDias: number;
     private inicio: string;
     private impossibilidadeLocomocao: boolean;
@@ -12,6 +22,15 @@ export class AtestadoDto {
     private dataSolicitacao: string;
     private dataAgendamento: string;
     private numeroCat: string;
+
+    private dataHomologacao: string;
+    private dataEntrega: string;
+    private prazoHomologacao: number;
+    private homologacaoNoPrazo: boolean;
+    private mesHomologacao: string;
+    private medicoOdonto: string;
+    private nomeProfissionalHomologacao: string;
+    private observacao: string;
 
     public getId() {
         return this.id;
@@ -90,5 +109,98 @@ export class AtestadoDto {
     }
     public setNumeroCat(numeroCat) {
         this.numeroCat = numeroCat;
+    }
+    
+    public getMatricula() {
+        return this.matricula;
+    }
+    public setMatricula(matricula) {
+        this.matricula = matricula;
+    }
+    public getGerencia() {
+        return this.gerencia;
+    }
+    public setGerencia(gerencia) {
+        this.gerencia = gerencia;
+    }
+    public getBase() {
+        return this.base;
+    }
+    public setBase(base) {
+        this.base = base;
+    }
+    
+    public getPrazoRecebimento() {
+        return this.prazoRecebimento;
+    }
+    public setPrazoRecebimento(prazoRecebimento) {
+        this.prazoRecebimento = prazoRecebimento;
+    }
+    public getRecebidoNoPrazo() {
+        return this.recebidoNoPrazo;
+    }
+    public setRecebidoNoPrazo(recebidoNoPrazo) {
+        this.recebidoNoPrazo = recebidoNoPrazo;
+    }
+    public getMesRecebimento() {
+        return this.mesRecebimento;
+    }
+    public setMesRecebimento(mesRecebimento) {
+        this.mesRecebimento = mesRecebimento;
+    }
+    public getFim() {
+        return this.fim;
+    }
+    public setFim(fim) {
+        this.fim = fim;
+    }
+    
+    public getDataHomologacao() {
+        return this.dataHomologacao;
+    }
+    public setDataHomologacao(dataHomologacao) {
+        this.dataHomologacao = dataHomologacao;
+    }
+    public getDataEntrega() {
+        return this.dataEntrega;
+    }
+    public setDataEntrega(dataEntrega) {
+        this.dataEntrega = dataEntrega;
+    }
+    public getPrazoHomologacao() {
+        return this.prazoHomologacao;
+    }
+    public setPrazoHomologacao(prazoHomologacao) {
+        this.prazoHomologacao = prazoHomologacao;
+    }
+    public getHomologacaoNoPrazo() {
+        return this.homologacaoNoPrazo;
+    }
+    public setHomologacaoNoPrazo(homologacaoNoPrazo) {
+        this.homologacaoNoPrazo = homologacaoNoPrazo;
+    }
+    public getMesHomologacao() {
+        return this.mesHomologacao;
+    }
+    public setMesHomologacao(mesHomologacao) {
+        this.mesHomologacao = mesHomologacao;
+    }
+    public getMedicoOdonto() {
+        return this.medicoOdonto;
+    }
+    public setMedicoOdonto(medicoOdonto) {
+        this.medicoOdonto = medicoOdonto;
+    }
+    public getNomeProfissionalHomologacao() {
+        return this.nomeProfissionalHomologacao;
+    }
+    public setNomeProfissionalHomologacao(nomeProfissionalHomologacao) {
+        this.nomeProfissionalHomologacao = nomeProfissionalHomologacao;
+    }
+    public getObservacao() {
+        return this.observacao;
+    }
+    public setObservacao(observacao) {
+        this.observacao = observacao;
     }
 }

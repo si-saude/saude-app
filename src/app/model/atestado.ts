@@ -1,6 +1,7 @@
 import { Profissional } from './profissional';
 import { Tarefa } from './tarefa';
 import { Cat } from './cat';
+import { HomologacaoAtestado } from './homologacao-atestado';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Atestado {
@@ -18,6 +19,7 @@ export class Atestado {
     private dataAgendamento: Date;
     private dataSolicitacao: Date;
     private cat: Cat;
+    private homologacaoAtestado: HomologacaoAtestado;
 
     private tipoBeneficio: string;
     private causaAfastamento: string; 
@@ -217,6 +219,14 @@ export class Atestado {
 
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    getHomologacaoAtestado() {
+        return this.homologacaoAtestado;
+    }
+
+    setHomologacaoAtestado(homologacaoAtestado: HomologacaoAtestado) {
+        this.homologacaoAtestado = homologacaoAtestado;
     }
     
 }

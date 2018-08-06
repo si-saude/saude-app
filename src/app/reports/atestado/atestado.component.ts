@@ -44,18 +44,20 @@ export class AtestadoComponent {
         $('#dropdown').mouseleave(function() {
             $('#dropdown').toggleClass('show');
         });
-        
+    }
+    
+    ngOnInit() {
         this.getAtestados();
     }
     
     getAtestados() {
-        this.atestadoService.getAtestados( )
-            .then( res => {
-                this.atestados = new AtestadoBuilder().cloneList( res.json() );
-            } )
-            .catch( error => {
-                console.log( "Erro ao buscar os atestados." );
-            } )
+        this.atestadoService.getAtestados()
+            .then(res => {
+                this.atestados = new AtestadoBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                console.log("Erro ao buscar os atestados."+error);
+            })
     }
     
     selectFilter( event, type: string ) {
@@ -110,7 +112,7 @@ export class AtestadoComponent {
 
             $( '#dropdown' ).toggleClass( 'show' );
             $( '#dropdown' ).insertAfter( "#" + tipo );
-            $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
+//            $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
             
             if ( component.arrayObjects.get(tipo) == 'indeterminate' ) {
                 el.indeterminate = true;
@@ -165,7 +167,7 @@ export class AtestadoComponent {
 
             $( '#dropdown' ).toggleClass( 'show' );
             $( '#dropdown' ).insertAfter( "#" + tipo );
-            $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
+//            $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
 
             for ( let t of this.arrayTypes ) {
                 this.arrayObjects.get(t).forEach( aO => {
