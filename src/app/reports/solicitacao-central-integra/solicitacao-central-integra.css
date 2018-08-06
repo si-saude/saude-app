@@ -24,8 +24,11 @@ table {
 
 .list-container {
 	overflow: auto;
-    max-height: 500px;
+	max-width: 95%;
+    max-height: 60%;
     margin-bottom: 10%;
+    position: absolute;
+    width: 100%;
 }
 
 td, th {

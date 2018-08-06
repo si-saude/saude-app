@@ -12,6 +12,7 @@ import { AprhoFormComponent } from './aprho-form/aprho-form.component';
 import { AprhoFormDetailComponent } from './aprho-form/aprho-form-detail.component';
 import { AprhoRoutingModule } from './aprho.routing.module';
 import { SharedModule } from './../shared.module';
+import { PipesModule } from './../pipes.module';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { SharedModule } from './../shared.module';
         AprhoRoutingModule,
         SharedModule,
         MyDatePickerModule,
-        DataTableModule
+        DataTableModule,
+        PipesModule
      ],
      providers: [
         AprhoService

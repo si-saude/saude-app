@@ -71,7 +71,7 @@ export class ModalAvaliacaoHigieneOcupacionalComponent{
             })
     }
     
-    selectFilter( event, type: string ) {
+    selectFilter() {
         let flagSearch: boolean;
         if ( this.chave.length > 3 ) {
             this.avaliacaoFilter.getEmpregado().setChave(this.chave);
