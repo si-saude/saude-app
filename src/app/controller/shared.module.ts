@@ -77,6 +77,7 @@ import { NaturezaLesaoService } from './natureza-lesao/natureza-lesao.service';
 import { AvaliacaoHigieneOcupacionalService } from './avaliacao-higiene-ocupacional/avaliacao-higiene-ocupacional.service';
 import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
 import { EnfaseService } from './enfase/enfase.service';
+import { ImovelService } from './imovel/imovel.service';
 
 @NgModule({
   declarations: [
@@ -173,7 +174,8 @@ import { EnfaseService } from './enfase/enfase.service';
     NaturezaLesaoService,
     AvaliacaoHigieneOcupacionalService,
     FichaColetaService,
-    EnfaseService
+    EnfaseService,
+    ImovelService
   ]
 })
 export class SharedModule { }

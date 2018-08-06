@@ -74,6 +74,7 @@ import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard
 import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
+import { ImovelGuard } from './guards/guards-child/imovel.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -251,6 +252,9 @@ const routes: Routes = [
       canActivateChild: [EnfaseGuard]},
   { path: 'solicitacao-central-integra',
       loadChildren: 'app/controller/solicitacao-central-integra/solicitacao-central-integra.module#SolicitacaoCentralIntegraModule'},
+  { path: 'imovel', 
+      loadChildren: 'app/controller/imovel/imovel.module#ImovelModule',
+      canActivateChild: [ImovelGuard]},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

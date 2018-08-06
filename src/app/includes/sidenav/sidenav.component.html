@@ -35,9 +35,6 @@
 		<div class="groups">
 			<a [routerLink]="['/agente-causador']" *ngIf="checkPermissao('AGENTE-CAUSADOR_LISTAR')">Agente Causador</a>
 			<a [routerLink]="['/agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente de Risco</a>
-			<a [routerLink]="['/avaliacao-higiene-ocupacional']" *ngIf="checkPermissao('AVALIACAO-HIGIENE-OCUPACIONAL_LISTAR')">
-				Avaliação Higiene Ocupacional
-			</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
 			<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
 			<a [routerLink]="['/categoria-risco']" *ngIf="checkPermissao('CATEGORIA-RISCO_LISTAR')">Categoria de Risco</a>
@@ -58,6 +55,7 @@
 			<a [routerLink]="['/ghe']" *ngIf="checkPermissao('GHE_LISTAR')">GHE</a>
 			<a [routerLink]="['/ghee']" *ngIf="checkPermissao('GHEE_LISTAR')">GHEE</a>
 			<a [routerLink]="['/grupo-monitoramento']" *ngIf="checkPermissao('GRUPO-MONITORAMENTO_LISTAR')">Grupo Monitoramento</a>
+			<a [routerLink]="['/imovel']" *ngIf="checkPermissao('IMOVEL_LISTAR')">Imóvel</a>
 			<a [routerLink]="['/indicador-risco-acidente']" *ngIf="checkPermissao('INDICADOR-RISCO-ACIDENTE_LISTAR')">
 				Indicador de Risco Acidente
 			</a>
@@ -119,6 +117,9 @@
 			<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria De Aso</a>
 			<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Guia de Exame</a>
 			<a [routerLink]="['/auditoria-resultado-exame']" *ngIf="checkPermissao('AUDITORIA-RESULTADO-EXAME_LISTAR')">Auditoria De Resultados de Exames</a>
+			<a [routerLink]="['/avaliacao-higiene-ocupacional']" *ngIf="checkPermissao('AVALIACAO-HIGIENE-OCUPACIONAL_LISTAR')">
+				Avaliação Higiene Ocupacional
+			</a>
 			<a [routerLink]="['/cat']" *ngIf="checkPermissao('CAT_LISTAR')">CAT - Comunicado de Acidente de Trabalho</a>
 			<a [routerLink]="['/risco-potencial']" *ngIf="checkPermissao('RISCO-POTENCIAL_LISTAR')">Controle da SAST</a>
 			<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
