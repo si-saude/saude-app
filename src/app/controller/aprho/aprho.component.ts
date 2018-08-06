@@ -18,4 +18,10 @@ export class AprhoComponent extends GenericListComponent<Aprho, AprhoFilter, Apr
         super( service, new AprhoFilter(), aprhoGuard, router );
     }
     
+    setFilter() {
+        this.formateDateFilter(this.filter.getDataRevisao());
+        super.setFilter();
+    }
+    
+    
 }

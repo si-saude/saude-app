@@ -137,7 +137,7 @@
 					<fieldset>
 						<label for="aprhoItem.fonteGeradora" >Fonte Geradora</label> 						
 						<input type="text" materialize="autocomplete" autocomplete="off"
-						name="aprhoItem.fonteGeradora.descricao" required
+						name="aprhoItem.fonteGeradora.descricao"
 						[(ngModel)]="aprhoItem.fonteGeradora.descricao"
 						(blur)="autoCompleteFonteGeradora.getAutocomplete().getObj($event,aprhoItem,'setFonteGeradora','getDescricao')"
 						(ngModelChange)="autoCompleteFonteGeradora.getAutocomplete().getList(aprhoItem.fonteGeradora, 'getDescricao');"
@@ -147,8 +147,8 @@
 					<div class="input-field col s3">
 						<fieldset>
 								<legend>Meio de Propagação</legend>
-									<select name="aprhoItem.meioPropagacao" class="browser-default" [(ngModel)]="aprhoItem.meioPropagacao" required>
-								<option disabled selected value=null>Selecione um Meio de Propagação</option>
+									<select name="aprhoItem.meioPropagacao" class="browser-default" [(ngModel)]="aprhoItem.meioPropagacao">
+								<option selected value=""></option>
 								<option *ngFor="let meioPropagacao of meioPropagacoes" value="{{meioPropagacao}}">{{meioPropagacao}}</option>
 									</select>
 						</fieldset>
@@ -169,8 +169,8 @@
 					<div class="input-field col s3">
 						<fieldset>
 								<legend>Categoria de Risco</legend>								
-								<select name ="categoriaRisco"  class="browser-default" [(ngModel)]="aprhoItem.categoriaRisco.id" required>
-								<option disabled selected value=null>Selecione uma Categoria de Risco</option>
+								<select name ="categoriaRisco"  class="browser-default" [(ngModel)]="aprhoItem.categoriaRisco.id">
+								<option selected value=0></option>
 								<option *ngFor="let categoriaRisco of categoriaRiscos" value="{{categoriaRisco.id}}">{{categoriaRisco.descricao}}</option>
 									</select>
 						</fieldset>
@@ -178,8 +178,8 @@
 					<div class="input-field col s3">
 						<fieldset>
 								<legend>Medida de Controle</legend>
-									<select name="aprhoItem.medidaControle" class="browser-default" [(ngModel)]="aprhoItem.medidaControle" required>
-										<option disabled selected value=null>Selecione uma Medida de Controle</option>
+									<select name="aprhoItem.medidaControle" class="browser-default" [(ngModel)]="aprhoItem.medidaControle">
+										<option selected value=""></option>
 										<option *ngFor="let medidaControle of medidaControles" value="{{medidaControle}}">{{medidaControle}}</option>
 									</select>
 						</fieldset>
@@ -223,7 +223,7 @@
 										<td class="col s1 aprho" >{{aprhoItem.fonteGeradora.descricao}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.meioPropagacao}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.possivelDanoSaude.descricao}}</td>
-										<td class="col s1 aprho" >{{aprhoItem.categoriaRisco.descricao}}</td>
+										<td class="col s1 aprho" >{{aprhoItem.categoriaRisco?.descricao}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.medidaControle}}</td>
 										<td class="col s1 aprho" >{{aprhoItem.avaliacaoEficacia}}</td>
 										<td class="col s1 botao-remover"><a
@@ -290,17 +290,17 @@
 										<td class="col s3 codigo_completo">{{aprhoEmpregado.empregado.gerencia.codigoCompleto}}</td>
 										<td class="col s1 checkbox_atual">
 											<input
-											type="checkbox" id="aprhoEmpregado.atual"
+											type="checkbox" id="aprho.aprhoEmpregados[{{i}}].atual"
 											[(ngModel)]="aprhoEmpregado.atual"
-											name="aprhoEmpregado.atual"> <label
-											for="aprhoEmpregado.atual"></label></td>
+											name="aprho.aprhoEmpregados[{{i}}].atual"> <label
+											for="aprho.aprhoEmpregados[{{i}}].atual"></label></td>
 											
 										<td class="col s2 checkbox_atual">
 											<input
-											type="checkbox" id="aprhoEmpregado.entrevistado"
+											type="checkbox" id="aprho.aprhoEmpregados[{{i}}].entrevistado"
 											[(ngModel)]="aprhoEmpregado.entrevistado"
-											name="aprhoEmpregado.entrevistado"> <label
-											for="aprhoEmpregado.entrevistado"></label></td>	
+											name="aprho.aprhoEmpregados[{{i}}].entrevistado"> <label
+											for="aprho.aprhoEmpregados[{{i}}].entrevistado"></label></td>	
 										<td class="col s1 btn-removerEmp"><a
 											(click)="removeAprhoEmpregado(i)"
 											[ngStyle]="{'cursor': 'pointer'}"><i

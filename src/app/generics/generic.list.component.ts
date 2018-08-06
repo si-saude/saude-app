@@ -161,6 +161,26 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
         this.openModalDelete = b;
     }
 
+    
+    isNullOrUndefined(object){
+        if ( object === undefined || object === null ) 
+            return true; 
+        else
+            return false;
+    }
+    
+    formateDateFilter(data){
+        if (this.isNullOrUndefined(data) ) 
+            return undefined;
+        else{
+            if(!this.isNullOrUndefined(data.inicio))            
+               data.inicio = this.parseDatePickerToDate(data.inicio);
+            if(!this.isNullOrUndefined(data.fim))            
+               data.fim = this.parseDatePickerToDate(data.fim);     
+        }
+    }
+    
+    
     parseDataToObjectDatePicker( data ) {
         if ( data === undefined || data === null ) {
             return undefined;
@@ -188,7 +208,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
     }
 
     list() {
-        this.service.list( this.filter )
+        this.service.list( this.filter )        
             .then( res => {
                 this.canImport = true;
                 this.showPreload = false;
