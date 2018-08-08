@@ -70,6 +70,10 @@ export class AutoComplete<F extends GenericFilter> {
         }
     }
     
+    pressEnter(input,obj,setMethod, getMethod) {
+        setTimeout(() => { this.getObj(input,obj,setMethod, getMethod) }, 1);
+    }
+    
     public initializeLastValue(lastValue){
         if(this.lastValue == undefined){
             this.lastValue = lastValue;  

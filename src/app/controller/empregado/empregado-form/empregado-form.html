@@ -715,6 +715,7 @@
 										[(ngModel)]="instalacao.instalacao.nome"
 										(blur)="autoCompleteInstalacao.getAutocomplete().getObj($event,instalacao,'setInstalacao','getNome')"
 										(ngModelChange)="autoCompleteInstalacao.getAutocomplete().getList(instalacao.instalacao, 'getNome');"
+										(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,instalacao,'setInstalacao','getNome');"
 										[materializeParams]="autoCompleteInstalacao.getAutocomplete().getObjAutoComplete()">
 								</div>
 

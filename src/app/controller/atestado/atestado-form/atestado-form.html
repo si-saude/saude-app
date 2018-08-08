@@ -26,6 +26,7 @@
 						[(ngModel)]="atestado.tarefa.cliente.pessoa.nome"
 						(blur)="autoCompleteEmp.getAutocomplete().getObj($event,atestado.tarefa,'setCliente','getNome')"
 						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(atestado.tarefa.cliente, 'getNome');"
+						(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atestado.tarefa,'setCliente','getNome');"
 						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()">
 				</div>
 			</div>
@@ -122,6 +123,7 @@
 						[(ngModel)]="atestado.cat.numero"
 						(blur)="autoCompleteCat.getAutocomplete().getObj($event,atestado,'setCat','getNumero')"
 						(ngModelChange)="autoCompleteCat.getAutocomplete().getList(atestado.cat, 'getNumero');"
+						(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atestado,'setCat','getNumero');"
 						[materializeParams]="autoCompleteCat.getAutocomplete().getObjAutoComplete()">
 				</div>
 			</div>
@@ -135,6 +137,7 @@
 						[(ngModel)]="atestado.profissionalRealizouVisita.empregado.pessoa.nome"
 						(blur)="autoCompleteProfissional.getAutocomplete().getObj($event,atestado,'setProfissionalRealizouVisita','getNome')"
 						(ngModelChange)="autoCompleteProfissional.getAutocomplete().getList(atestado.profissionalRealizouVisita, 'getNome');"
+						(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atestado,'setProfissionalRealizouVisita','getNome');"
 						[materializeParams]="autoCompleteProfissional.getAutocomplete().getObjAutoComplete()">
 				</div>
 			</div>

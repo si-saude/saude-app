@@ -22,6 +22,7 @@ export class FichaColetaComponent{
     @Input() fichaColeta;
     @Input() service;
     @Input() idEquipeProfissional;
+    @Input() statusFila;
     private innerFichaColeta: FichaColeta;
     private innerIdEquipeProfissional: number;
     
@@ -46,6 +47,7 @@ export class FichaColetaComponent{
         this.modalConteudo = new EventEmitter<string | MaterializeAction>();
         this.getGrupoPerguntaFichaColeta();
         this.dadosElemento = new Array<any>();
+        this.statusFila = "";
     }
     
     ngOnChanges( changes: SimpleChanges ) {
@@ -186,15 +188,17 @@ export class FichaColetaComponent{
     isDisabledResposta(resposta: RespostaFichaColeta) {
         let ret: boolean = true;
         let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);
-        
-        if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
-            if ( this.fuma.getConteudo() == "SIM" && 
-                    equipe != undefined )
-                ret = false;
-            else ret = true;
-        } else {
-            if ( equipe != undefined ) ret = false;
-            else ret = true;
+    
+        if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
+            if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
+                if ( this.fuma.getConteudo() == "SIM" && 
+                        equipe != undefined )
+                    ret = false;
+                else ret = true;
+            } else {
+                if ( equipe != undefined ) ret = false;
+                else ret = true;
+            }
         }
         
         return ret;

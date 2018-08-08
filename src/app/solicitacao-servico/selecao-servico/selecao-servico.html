@@ -35,6 +35,7 @@
 						[(ngModel)]="tarefa.cliente.pessoa.nome"
 						(blur)="autoCompleteEmp.getAutocomplete().getObj($event,tarefa,'setCliente','getNome')"
 						(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(tarefa.cliente, 'getNome');"
+						(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,tarefa,'setCliente','getNome');"
 						[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()"> 
 				</div>
 			</div>

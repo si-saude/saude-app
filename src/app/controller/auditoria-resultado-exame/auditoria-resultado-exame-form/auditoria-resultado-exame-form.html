@@ -79,8 +79,7 @@
 											name="empregadoConvocacao.resultadoExames[{{iREx}}].exame.codigo"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.codigo">
 										<input class="col s8"
-											type="text" materialize="autocomplete" autocomplete="off"
-											name="exame[{{iREx}}]"
+											type="text" materialize="autocomplete" autocomplete="off" name="exame[{{iREx}}]"
 											[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].exame.descricao"
 											(blur)="getExame($event, iREx);"
 											(focus)="focusExame($event, iREx);"

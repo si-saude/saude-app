@@ -53,6 +53,7 @@
 								[(ngModel)]="aprho.ghe.nome"
 								(blur)="autoCompleteGhe.getAutocomplete().getObj($event,aprho,'setGhe','getNome')"
 								(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(aprho.ghe, 'getNome');"
+								(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,aprho,'setGhe','getNome');"
 								[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
 							</fieldset>
 						</div>	
@@ -74,6 +75,7 @@
 							[(ngModel)]="aprho.aprovador.empregado.pessoa.nome"
 							(blur)="autoCompleteAprovador.getAutocomplete().getObj($event,aprho,'setAprovador','getNome')"
 							(ngModelChange)="autoCompleteAprovador.getAutocomplete().getList(aprho.aprovador, 'getNome');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,aprho,'setAprovador','getNome');"
 							[materializeParams]="autoCompleteAprovador.getAutocomplete().getObjAutoComplete()">
 				</div>
 					<div class="input-field col s2">
@@ -103,6 +105,7 @@
 								[(ngModel)]="aprhoItem.agenteRisco.descricao"
 								(blur)="autoCompleteAgenteRisco.getAutocomplete().getObj($event,aprhoItem,'setAgenteRisco','getDescricao')"
 								(ngModelChange)="autoCompleteAgenteRisco.getAutocomplete().getList(aprhoItem.agenteRisco, 'getDescricao');"
+								(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,aprhoItem,'setAgenteRisco','getDescricao');"
 								[materializeParams]="autoCompleteAgenteRisco.getAutocomplete().getObjAutoComplete()">
 						</fieldset>
 					</div>	
@@ -141,6 +144,7 @@
 						[(ngModel)]="aprhoItem.fonteGeradora.descricao"
 						(blur)="autoCompleteFonteGeradora.getAutocomplete().getObj($event,aprhoItem,'setFonteGeradora','getDescricao')"
 						(ngModelChange)="autoCompleteFonteGeradora.getAutocomplete().getList(aprhoItem.fonteGeradora, 'getDescricao');"
+						(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,aprhoItem,'setFonteGeradora','getDescricao');"
 						[materializeParams]="autoCompleteFonteGeradora.getAutocomplete().getObjAutoComplete()">
 				   </fieldset>
 					</div>
@@ -163,6 +167,7 @@
 							[(ngModel)]="aprhoItem.possivelDanoSaude.descricao"
 							(blur)="autoCompletePossivelDanoSaude.getAutocomplete().getObj($event,aprhoItem,'setPossivelDanoSaude','getDescricao')"
 							(ngModelChange)="autoCompletePossivelDanoSaude.getAutocomplete().getList(aprhoItem.possivelDanoSaude, 'getDescricao');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,aprhoItem,'setPossivelDanoSaude','getDescricao');"
 							[materializeParams]="autoCompletePossivelDanoSaude.getAutocomplete().getObjAutoComplete()">
 					   </fieldset>
 					</div>
@@ -253,6 +258,7 @@
 							[(ngModel)]="aprhoEmpregado.empregado.pessoa.nome"
 							(blur)="autoCompleteEmpregado.getAutocomplete().getObj($event,aprhoEmpregado,'setEmpregado','getNome')"
 							(ngModelChange)="autoCompleteEmpregado.getAutocomplete().getList(aprhoEmpregado.empregado, 'getNome');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,aprhoEmpregado,'setEmpregado','getNome');"
 							[materializeParams]="autoCompleteEmpregado.getAutocomplete().getObjAutoComplete()">
 					   </fieldset>
 						</div>
@@ -324,6 +330,7 @@
 									[(ngModel)]="equipe.coordenador.empregado.pessoa.nome"
 									(blur)="autoCompleteElaborador.getAutocomplete().getObj($event,equipe,'setCoordenador','getNome')"
 									(ngModelChange)="autoCompleteElaborador.getAutocomplete().getList(equipe.coordenador, 'getNome');"
+									(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,equipe,'setCoordenador','getNome');"
 									[materializeParams]="autoCompleteElaborador.getAutocomplete().getObjAutoComplete()">
 						</div>
 						<div class="input-field col s2" style="margin-top: 30px;">
@@ -383,10 +390,6 @@
 				class="btn btn-primary btn-salvar">Salvar</button>
 			</form>
 		</div>
-	
 </div>
 <div materialize [materializeParams]="toastParams" 
 	[materializeActions]="globalActions"></div>
-
-
-

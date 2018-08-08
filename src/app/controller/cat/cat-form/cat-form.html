@@ -85,6 +85,7 @@
 							[(ngModel)]="cat.gerencia.codigoCompleto"
 							(blur)="autoCompleteGerencia.getAutocomplete().getObj($event,cat,'setGerencia','getCodigoCompleto')"
 							(ngModelChange)="autoCompleteGerencia.getAutocomplete().getList(cat.gerencia, 'getCodigoCompleto');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,cat,'setGerencia','getCodigoCompleto');"
 							[materializeParams]="autoCompleteGerencia.getAutocomplete().getObjAutoComplete()">
 					</div>
 
@@ -177,6 +178,7 @@
 							[(ngModel)]="cat.parteCorpoAtingida.descricao"
 							(blur)="autoCompleteParteCorpoAtingida.getAutocomplete().getObj($event,cat,'setParteCorpoAtingida','getDescricao')"
 							(ngModelChange)="autoCompleteParteCorpoAtingida.getAutocomplete().getList(cat.parteCorpoAtingida, 'getDescricao');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,cat,'setParteCorpoAtingida','getDescricao');"
 							[materializeParams]="autoCompleteParteCorpoAtingida.getAutocomplete().getObjAutoComplete()">
 					</div>
 					
@@ -188,6 +190,7 @@
 							[(ngModel)]="cat.agenteCausador.descricao"
 							(blur)="autoCompleteAgenteCausador.getAutocomplete().getObj($event,cat,'setAgenteCausador','getDescricao')"
 							(ngModelChange)="autoCompleteAgenteCausador.getAutocomplete().getList(cat.agenteCausador, 'getDescricao');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,cat,'setAgenteCausador','getDescricao');"
 							[materializeParams]="autoCompleteAgenteCausador.getAutocomplete().getObjAutoComplete()">
 					</div>
 					
@@ -199,6 +202,7 @@
 							[(ngModel)]="cat.naturezaLesao.descricao"
 							(blur)="autoCompleteNaturezaLesao.getAutocomplete().getObj($event,cat,'setNaturezaLesao','getDescricao')"
 							(ngModelChange)="autoCompleteNaturezaLesao.getAutocomplete().getList(cat.naturezaLesao, 'getDescricao');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,cat,'setNaturezaLesao','getDescricao');"
 							[materializeParams]="autoCompleteNaturezaLesao.getAutocomplete().getObjAutoComplete()">
 					</div>
 				</div>
@@ -374,6 +378,7 @@
 							[(ngModel)]="cat.empresa.razaoSocial"
 							(blur)="autoCompleteEmpresa.getAutocomplete().getObj($event,cat,'setEmpresa','getRazaoSocial')"
 							(ngModelChange)="autoCompleteEmpresa.getAutocomplete().getList(cat.empresa, 'getRazaoSocial');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,cat,'setEmpresa','getRazaoSocial');"
 							[materializeParams]="autoCompleteEmpresa.getAutocomplete().getObjAutoComplete()">
 					</div>
 					

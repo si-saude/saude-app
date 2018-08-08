@@ -136,12 +136,7 @@ export class AtendimentoFormComponent {
                                     this.idEquipe = this.profissional.getEquipe().getId();
 
                                     this.primeiraAtualizacao();
-
-                                    this.inscricao = TimerObservable.create( 0, 33000 )
-                                        .takeWhile(() => this.alive )
-                                        .subscribe(() => {
-                                            this.atualizar();
-                                        } );
+                                    this.atualizar();
                                 } else {
                                     this.router.navigate( ["/home"] );
                                     return;
@@ -213,6 +208,7 @@ export class AtendimentoFormComponent {
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
                         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
                         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
+                        
                         this.atualizarLista();
                     } else {
                         this.filaAtendimentoOcupacional = undefined;
@@ -257,17 +253,28 @@ export class AtendimentoFormComponent {
                     
                     if ( this.atendimento.getId() > 0 ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
+                        
+                        if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("DISPON") )
+                            this.alive = true;
+                        else this.alive = false;
+                        
                         this.existAtendimento = true;
 
                         for ( let i = 0; i < $( ".tab" ).children().length; i++ ) {
                             if ( $( ".tab" ).children()[0].className == "active" )
                                 this.tabsActions.emit( { action: "tabs", params: ['select_tab', 'atendimento'] } );
                         }
-
+                        
                         if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().length == 20 ) {
                             this.audio.load();
                             this.audio.play();
                         }
+                    }
+                    
+                    if ( this.atendimento.getFilaAtendimentoOcupacional() == undefined || 
+                            ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("DISPON") && 
+                            !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("IN") ) ) {
+                        setTimeout(() => { this.atualizar() }, 33000);
                     }
                     this.showPreload = false;
                 } )

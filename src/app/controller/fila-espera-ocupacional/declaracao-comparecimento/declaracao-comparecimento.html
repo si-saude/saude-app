@@ -30,6 +30,7 @@
 							[(ngModel)]="filaEsperaOcupacional.empregado.pessoa.nome"
 							(blur)="autoCompleteEmp.getAutocomplete().getObj($event,atendimento.filaEsperaOcupacional,'setEmpregado','getNome')"
 							(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(atendimento.filaEsperaOcupacional.empregado, 'getNome');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atendimento.filaEsperaOcupacional,'setEmpregado','getNome');"
 							[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()">
 					</div>
 

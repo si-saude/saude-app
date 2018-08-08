@@ -178,6 +178,7 @@
 							[(ngModel)]="empregadoConvocacao.empregado.pessoa.nome"
 							(blur)="autoCompleteEmp.getAutocomplete().getObj($event,empregadoConvocacao,'setEmpregado','getNome')"
 							(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(empregadoConvocacao.empregado, 'getNome');"
+							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,empregadoConvocacao,'setEmpregado','getNome');"
 							[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()">
 					</div>
 					<div class="input-field col s2" style="margin-top: 30px;">
