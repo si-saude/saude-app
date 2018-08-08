@@ -13,7 +13,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-atestado-report',
     templateUrl: './atestado.html',
-    styleUrls: ['./atestado.css']
+    styleUrls: ['./atestado.css', './../../../assets/css/report-component.css']
 } )
 export class AtestadoComponent {
     @ViewChild( "mf" ) data;
@@ -27,7 +27,6 @@ export class AtestadoComponent {
     private arrayTypes: Array<string>;
     private httpUtil: HttpUtil;
     private countCheckbox: number = 0;
-    private showNothing: boolean;
 
     constructor(private atestadoService: AtestadoService) {
         this.atestados = new AtestadoBuilder().initializeList(this.atestados);
@@ -36,7 +35,6 @@ export class AtestadoComponent {
         this.filter = "";
         this.arrayTypes = new Array<string>();
         this.httpUtil = new HttpUtil();
-        this.showNothing = true;
     }
     
     ngAfterViewInit() {

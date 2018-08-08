@@ -9,7 +9,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-avaliacao-higiene-ocupacional-report',
     templateUrl: './avaliacao-higiene-ocupacional.html',
-    styleUrls: ['./avaliacao-higiene-ocupacional.css']
+    styleUrls: ['./avaliacao-higiene-ocupacional.css', './../../../assets/css/report-component.css']
 } )
 export class AvaliacaoHigieneOcupacionalComponent {
     private avaliacao: AvaliacaoHigieneOcupacional;

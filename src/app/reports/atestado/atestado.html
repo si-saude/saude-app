@@ -13,196 +13,177 @@
 
 	<div class="row">
 		<div class="col s1">
-			<a [routerLink]="['/home']"
-				class="btn btn-primary btn-home">Home</a>
+			<a (click)="exportFile()"> <i class="small material-icons icon"
+				(mouseover)="showTextToast('Exportar', 4000)"
+				(mouseleave)="closeTooltip()">file_download</i>
+			</a>
 		</div>
 	</div>
-	<table class="table table-striped" [mfData]="atestados | filterData : filter : typeFilter : value" #mf="mfDataTable">
-	    <thead>
-		    <tr>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="empregado">Empregado</mfDefaultSorter>
-		            <input type="text" name="nome" style="width: 90%" 
-							placeholder="filtrar empregado"
-							(input)="selectFilter($event, 'nomeEmpregado')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
-		            <input type="text" name="matricula" style="width: 90%" 
-							placeholder="filtrar matricula"
-							(input)="selectFilter($event, 'matricula')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="cid">CID</mfDefaultSorter>
-		            <input type="text" name="cid" style="width: 90%" 
-							placeholder="filtrar cid"
-							(input)="selectFilter($event, 'cid')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="numeroDias">Número de Dias</mfDefaultSorter>
-		            <input type="text" name="numeroDias" style="width: 90%" 
-							placeholder="filtrar número de dias"
-							(input)="selectFilter($event, 'numeroDias')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="inicio">Início</mfDefaultSorter>
-		            <input type="text" name="inicio" style="width: 90%" 
-							placeholder="filtrar início"
-							(input)="selectFilter($event, 'inicio')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="fim">Fim</mfDefaultSorter>
-		            <input type="text" name="fim" style="width: 90%" 
-							placeholder="filtrar fim"
-							(input)="selectFilter($event, 'fim')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="fim">Prazo de Recebimento</mfDefaultSorter>
-		            <input type="text" name="prazoRecebimento" style="width: 90%" 
-							placeholder="filtrar Prazo de Recebimento"
-							(input)="selectFilter($event, 'prazoRecebimento')">
-		        </th>
-		        <th style="width: 8%">
+	<table class="table table-striped"
+		[mfData]="atestados | filterData : filter : typeFilter : value"
+		#mf="mfDataTable">
+		<thead>
+			<tr>
+				<th style="width: 8%"><mfDefaultSorter by="empregado">Empregado</mfDefaultSorter>
+					<input type="text" name="nome" style="width: 90%"
+					placeholder="filtrar empregado"
+					(input)="selectFilter($event, 'nomeEmpregado')"></th>
+				<th style="width: 4%"><mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
+					<input type="text" name="matricula" style="width: 90%"
+					placeholder="filtrar matricula"
+					(input)="selectFilter($event, 'matricula')"></th>
+				<th style="width: 3%"><mfDefaultSorter by="cid">CID</mfDefaultSorter>
+					<input type="text" name="cid" style="width: 90%"
+					placeholder="filtrar cid" (input)="selectFilter($event, 'cid')">
+				</th>
+				<th style="width: 3%"><mfDefaultSorter by="numeroDias">Número
+					de Dias</mfDefaultSorter> <input type="text" name="numeroDias" style="width: 90%"
+					placeholder="filtrar número de dias"
+					(input)="selectFilter($event, 'numeroDias')"></th>
+				<th style="width: 3%"><mfDefaultSorter by="inicio">Início</mfDefaultSorter>
+					<input type="text" name="inicio" style="width: 90%"
+					placeholder="filtrar início"
+					(input)="selectFilter($event, 'inicio')"></th>
+				<th style="width: 3%"><mfDefaultSorter by="fim">Fim</mfDefaultSorter>
+					<input type="text" name="fim" style="width: 90%"
+					placeholder="filtrar fim" (input)="selectFilter($event, 'fim')">
+				</th>
+				<th style="width: 4%"><mfDefaultSorter by="fim">Prazo
+					de Recebimento</mfDefaultSorter> <input type="text" name="prazoRecebimento"
+					style="width: 90%" placeholder="filtrar Prazo de Recebimento"
+					(input)="selectFilter($event, 'prazoRecebimento')"></th>
+				<th style="width: 4%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="recebidoNoPrazo">Recebido no Prazo</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="recebidoNoPrazo">Recebido
+						no Prazo</mfDefaultSorter>
 						<div class="div-icon" id="recebidoNoPrazo">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'recebidoNoPrazo')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
-				<th style="width: 8%">
+				<th style="width: 5%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="mesRecebimento">Mês do Recebimento</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="mesRecebimento">Mês
+						do Recebimento</mfDefaultSorter>
 						<div class="div-icon" id="mesRecebimento">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'mesRecebimento')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
-		        <th style="width: 8%">
+				<th style="width: 6%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="impossibilidadeLocomocao">Impossibilidade de Locomoção</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="impossibilidadeLocomocao">Impossibilidade
+						de Locomoção</mfDefaultSorter>
 						<div class="div-icon" id="impossibilidadeLocomocao">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'impossibilidadeLocomocao')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
-				<th style="width: 8%">
+				<th style="width: 5%">
 					<div class="row">
 						<mfDefaultSorter class="mleft" by="gerencia">Gerência</mfDefaultSorter>
 						<div class="div-icon" id="gerencia">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
-				<th style="width: 8%">
+				<th style="width: 5%">
 					<div class="row">
 						<mfDefaultSorter class="mleft" by="base">Base</mfDefaultSorter>
 						<div class="div-icon" id="base">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'base')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="status">Status</mfDefaultSorter>
-		            <i class="small material-icons icon" style="margin-top: -10%;"
-							(click)="dropdown($event, 'status')">arrow_drop_down</i>
-					<div class="div-icon" id="status"></div>
-		        </th>
-		        <th style="width: 8%">
+				<th style="width: 5%"><mfDefaultSorter by="status">Status</mfDefaultSorter>
+					<i class="small material-icons icon" style="margin-top: -10%;"
+					(click)="dropdown($event, 'status')">arrow_drop_down</i>
+					<div class="div-icon" id="status"></div></th>
+				<th style="width: 5%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="lancadoSap">Lançado SAP</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="lancadoSap">Lançado
+						SAP</mfDefaultSorter>
 						<div class="div-icon" id="lancadoSap">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'lancadoSap')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
 				<th style="width: 8%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="atestadoFisicoRecebido">Atestado Físico Recebido</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="atestadoFisicoRecebido">Atestado
+						Físico Recebido</mfDefaultSorter>
 						<div class="div-icon" id="atestadoFisicoRecebido">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'atestadoFisicoRecebido')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
 				<th style="width: 8%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="controleLicenca">Controle da Licença</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="controleLicenca">Controle
+						da Licença</mfDefaultSorter>
 						<div class="div-icon" id="controleLicenca">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'controleLicenca')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
 				<th style="width: 8%">
-		            <mfDefaultSorter by="dataSolicitacao">Data da Solicitação</mfDefaultSorter>
-		            <input type="text" name="dataSolicitacao" style="width: 90%" 
-							placeholder="filtrar data da solicitação"
-							(input)="selectFilter($event, 'dataSolicitacao')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="dataAgendamento">Data do Agendamento</mfDefaultSorter>
-		            <input type="text" name="dataAgendamento" style="width: 90%" 
-							placeholder="filtrar data do agendamento"
-							(input)="selectFilter($event, 'dataAgendamento')">
-		        </th>
-		        <th style="width: 8%">
-		            <mfDefaultSorter by="numeroCat">Número da CAT</mfDefaultSorter>
-		            <input type="text" name="numeroCat" style="width: 90%" 
-							placeholder="filtrar número da CAT"
-							(input)="selectFilter($event, 'numeroCat')">
-		        </th>
-		    </tr>
-	    </thead>
-	    <tbody>
-		    <tr *ngFor="let item of mf.data">
-		        <td>{{item.nomeEmpregado}}</td>
-		        <td>{{item.matricula}}</td>
-		        <td>{{item.cid}}</td>
-		        <td>{{item.numeroDias}}</td>
-		        <td>{{item.inicio}}</td>
-		        <td>{{item.fim}}</td>
-		        <td>{{item.prazoRecebimento}}</td>
-		        <td>
-		        	<input type="checkbox" id="item-recebidoNoPrazo" disabled 
-						[(ngModel)]="item.recebidoNoPrazo" name="recebidoNoPrazo"> 
-					<label for="recebidoNoPrazo"></label>
-		        </td>
-		        <td>{{item.mesRecebimento}}</td>
-		        <td>
-		        	<input type="checkbox" id="item-impossibilidadeLocomocao" disabled 
-						[(ngModel)]="item.impossibilidadeLocomocao" name="impossibilidadeLocomocao"> 
-					<label for="impossibilidadeLocomocao"></label>
-		        </td>
-		        <td>{{item.gerencia}}</td>
-		        <td>{{item.base}}</td>
-		        <td>{{item.status}}</td>
-		        <td>
-		        	<input type="checkbox" id="item-lancadoSap" disabled 
-						[(ngModel)]="item.lancadoSap" name="lancadoSap"> 
-					<label for="lancadoSap"></label>
-		        </td>
-		        <td>
-		        	<input type="checkbox" id="item-atestadoFisicoRecebido" disabled 
-						[(ngModel)]="item.atestadoFisicoRecebido" name="atestadoFisicoRecebido"> 
-					<label for="atestadoFisicoRecebido"></label>
-		        </td>
-		        <td>
-		        	<input type="checkbox" id="item-controleLicenca" disabled 
-						[(ngModel)]="item.controleLicenca" name="controleLicenca"> 
-					<label for="controleLicenca"></label>
-		        </td>
-		        <td>{{item.dataSolicitacao}}</td>
-		        <td>{{item.dataAgendamento}}</td>
-		        <td>{{item.numeroCat}}</td>
-		    </tr>
-	    </tbody>
+					<mfDefaultSorter by="dataSolicitacao">Data da Solicitação</mfDefaultSorter> 
+					<input type="text" name="dataSolicitacao" style="width: 90%" placeholder="filtrar data da solicitação"
+					(input)="selectFilter($event, 'dataSolicitacao')">
+				</th>
+				<th style="width: 8%"><mfDefaultSorter by="dataAgendamento">Data do Agendamento</mfDefaultSorter> 
+					<input type="text" name="dataAgendamento" style="width: 90%" placeholder="filtrar data do agendamento"
+					(input)="selectFilter($event, 'dataAgendamento')">
+				</th>
+				<th style="width: 8%"><mfDefaultSorter by="numeroCat">Número da CAT</mfDefaultSorter> 
+					<input type="text" name="numeroCat" style="width: 90%" placeholder="filtrar número da CAT"
+					(input)="selectFilter($event, 'numeroCat')">
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of mf.data">
+				<td>{{item.nomeEmpregado}}</td>
+				<td>{{item.matricula}}</td>
+				<td>{{item.cid}}</td>
+				<td>{{item.numeroDias}}</td>
+				<td>{{item.inicio}}</td>
+				<td>{{item.fim}}</td>
+				<td>{{item.prazoRecebimento}}</td>
+				<td><input type="checkbox" id="item-recebidoNoPrazo" disabled
+					[(ngModel)]="item.recebidoNoPrazo" name="recebidoNoPrazo">
+					<label for="recebidoNoPrazo"></label></td>
+				<td>{{item.mesRecebimento}}</td>
+				<td><input type="checkbox" id="item-impossibilidadeLocomocao"
+					disabled [(ngModel)]="item.impossibilidadeLocomocao"
+					name="impossibilidadeLocomocao"> <label
+					for="impossibilidadeLocomocao"></label></td>
+				<td>{{item.gerencia}}</td>
+				<td>{{item.base}}</td>
+				<td>{{item.status}}</td>
+				<td><input type="checkbox" id="item-lancadoSap" disabled
+					[(ngModel)]="item.lancadoSap" name="lancadoSap"> <label
+					for="lancadoSap"></label></td>
+				<td><input type="checkbox" id="item-atestadoFisicoRecebido"
+					disabled [(ngModel)]="item.atestadoFisicoRecebido"
+					name="atestadoFisicoRecebido"> <label
+					for="atestadoFisicoRecebido"></label></td>
+				<td><input type="checkbox" id="item-controleLicenca" disabled
+					[(ngModel)]="item.controleLicenca" name="controleLicenca">
+					<label for="controleLicenca"></label></td>
+				<td>{{item.dataSolicitacao}}</td>
+				<td>{{item.dataAgendamento}}</td>
+				<td>{{item.numeroCat}}</td>
+			</tr>
+		</tbody>
 	</table>
 </div>
 

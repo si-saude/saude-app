@@ -13,7 +13,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-panorama',
     templateUrl: './panorama.html',
-    styleUrls: ['./panorama.css']
+    styleUrls: ['./panorama.css', './../../../assets/css/report-component.css']
 } )
 export class PanoramaComponent {
     @ViewChild( "mf" ) data;
@@ -28,7 +28,6 @@ export class PanoramaComponent {
     private globalActions;
     private toastParams;
     private countCheckbox: number = 0;
-    private showNothing: boolean;
 
     constructor( private panoramaService: PanoramaService ) {
         this.panoramas = new PanoramaBuilder().initializeList( new Array<PanoramaDto>() );
@@ -37,7 +36,6 @@ export class PanoramaComponent {
         this.httpUtil = new HttpUtil();
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.showNothing = true;
     }
 
     ngAfterViewInit() {
