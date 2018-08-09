@@ -30,8 +30,9 @@
 								[(ngModel)]="mudancaFuncao.cargo.nome"
 								(blur)="autoCompleteCargo.getAutocomplete().getObj($event,mudancaFuncao,'setCargo','getNome')"
 								(ngModelChange)="autoCompleteCargo.getAutocomplete().getList(mudancaFuncao.cargo, 'getNome');"
+								(keydown.enter)="autoCompleteCargo.getAutocomplete().pressEnter($event,mudancaFuncao,'setCargo','getNome')"
 								[materializeParams]="autoCompleteCargo.getAutocomplete().getObjAutoComplete()">
-								</fieldset>
+						</fieldset>
 			    </div>
 			    <div class="input-field col s6">
 						<fieldset>
@@ -41,8 +42,9 @@
 								[(ngModel)]="mudancaFuncao.funcao.nome"
 								(blur)="autoCompleteFuncao.getAutocomplete().getObj($event,mudancaFuncao,'setFuncao','getNome')"
 								(ngModelChange)="autoCompleteFuncao.getAutocomplete().getList(mudancaFuncao.funcao, 'getNome');"
+								(keydown.enter)="autoCompleteFuncao.getAutocomplete().pressEnter($event,mudancaFuncao,'setFuncao','getNome')"
 								[materializeParams]="autoCompleteFuncao.getAutocomplete().getObjAutoComplete()">
-								</fieldset>
+						</fieldset>
 			    </div>
 				</div>
 				<div class="row col s12">
@@ -54,6 +56,7 @@
 								[(ngModel)]="mudancaFuncao.ghe.nome"
 								(blur)="autoCompleteGhe.getAutocomplete().getObj($event,mudancaFuncao,'setGhe','getNome')"
 								(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(mudancaFuncao.ghe, 'getNome');"
+								(keydown.enter)="autoCompleteGhe.getAutocomplete().pressEnter($event,mudancaFuncao,'setGhe','getNome')"
 								[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
 							</fieldset>
 				</div>
@@ -65,6 +68,7 @@
 								[(ngModel)]="mudancaFuncao.ghee.nome"
 								(blur)="autoCompleteGhee.getAutocomplete().getObj($event,mudancaFuncao,'setGhee','getNome')"
 								(ngModelChange)="autoCompleteGhee.getAutocomplete().getList(mudancaFuncao.ghee, 'getNome');"
+								(keydown.enter)="autoCompleteGhee.getAutocomplete().pressEnter($event,mudancaFuncao,'setGhee','getNome')"
 								[materializeParams]="autoCompleteGhee.getAutocomplete().getObjAutoComplete()">
 								</fieldset>
 			    </div>	
@@ -78,6 +82,7 @@
 								[(ngModel)]="mudancaFuncao.gerencia.codigoCompleto"
 								(blur)="autoCompleteGerencia.getAutocomplete().getObj($event,mudancaFuncao,'setGerencia','getCodigoCompleto')"
 								(ngModelChange)="autoCompleteGerencia.getAutocomplete().getList(mudancaFuncao.gerencia, 'getCodigoCompleto');"
+								(keydown.enter)="autoCompleteGerencia.getAutocomplete().pressEnter($event,mudancaFuncao,'setGerencia','getCodigoCompleto')"
 								[materializeParams]="autoCompleteGerencia.getAutocomplete().getObjAutoComplete()">
 								</fieldset>
 			       </div>
@@ -89,6 +94,7 @@
 								[(ngModel)]="mudancaFuncao.base.nome"
 								(blur)="autoCompleteBase.getAutocomplete().getObj($event,mudancaFuncao,'setBase','getNome')"
 								(ngModelChange)="autoCompleteBase.getAutocomplete().getList(mudancaFuncao.base, 'getNome');"
+								(keydown.enter)="autoCompleteBase.getAutocomplete().pressEnter($event,mudancaFuncao,'setBase','getNome')"
 								[materializeParams]="autoCompleteBase.getAutocomplete().getObjAutoComplete()">
 								</fieldset>
 			    </div>

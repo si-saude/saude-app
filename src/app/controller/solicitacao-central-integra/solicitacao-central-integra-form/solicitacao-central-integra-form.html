@@ -87,7 +87,7 @@
 							[(ngModel)]="solicitacaoCentralIntegra.tarefa.responsavel.empregado.pessoa.nome"
 							(blur)="autoCompleteProf.getAutocomplete().getObj($event,solicitacaoCentralIntegra.tarefa,'setResponsavel','getNome')"
 							(ngModelChange)="autoCompleteProf.getAutocomplete().getList(solicitacaoCentralIntegra.tarefa.responsavel, 'getNome');"
-							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,solicitacaoCentralIntegra.tarefa,'setResponsavel','getNome');"
+							(keydown.enter)="autoCompleteProf.getAutocomplete().pressEnter($event,solicitacaoCentralIntegra.tarefa,'setResponsavel','getNome');"
 							[materializeParams]="autoCompleteProf.getAutocomplete().getObjAutoComplete()">
 				</div>
 			</div>

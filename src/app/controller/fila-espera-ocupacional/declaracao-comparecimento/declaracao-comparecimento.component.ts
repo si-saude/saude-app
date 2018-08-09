@@ -28,6 +28,7 @@ import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.auto
 export class DeclaracaoComparecimentoComponent {
     atendimento: Atendimento;
     dataDeclaracao: any;
+    autoCompleteEmp: EmpregadoNomeAutocomplete; 
 
     globalActions;
     toastParams;
@@ -39,6 +40,7 @@ export class DeclaracaoComparecimentoComponent {
         this.toastParams = ['', 4000];
         this.atendimento = new AtendimentoBuilder().initialize(new Atendimento())
         this.myDatePickerOptions = { dateFormat: 'dd/mm/yyyy' };
+        this.autoCompleteEmp = new EmpregadoNomeAutocomplete(filaEsperaOcupacionalService.getEmpregadoService()); 
     }
 
     ngOnInit() {}

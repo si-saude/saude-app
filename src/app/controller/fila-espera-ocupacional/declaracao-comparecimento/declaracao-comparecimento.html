@@ -27,7 +27,7 @@
 						<input
 							type="text" materialize="autocomplete" autocomplete="off"
 							name="empregadoConvocacao.empregado.pessoa.nome"
-							[(ngModel)]="filaEsperaOcupacional.empregado.pessoa.nome"
+							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.nome"
 							(blur)="autoCompleteEmp.getAutocomplete().getObj($event,atendimento.filaEsperaOcupacional,'setEmpregado','getNome')"
 							(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(atendimento.filaEsperaOcupacional.empregado, 'getNome');"
 							(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atendimento.filaEsperaOcupacional,'setEmpregado','getNome');"
