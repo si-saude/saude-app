@@ -34,7 +34,7 @@
 								[(ngModel)]="avaliacaoHigieneOcupacional.empregado.pessoa.nome"
 								(blur)="empregadoNomeAutocomplete.getAutocomplete().getObj($event,avaliacaoHigieneOcupacional,'setEmpregado','getNome')"
 								(ngModelChange)="empregadoNomeAutocomplete.getAutocomplete().getList(avaliacaoHigieneOcupacional.empregado, 'getNome');"
-								(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,avaliacaoHigieneOcupacional,'setEmpregado','getNome');"
+								(keydown.enter)="empregadoNomeAutocomplete.getAutocomplete().pressEnter($event,avaliacaoHigieneOcupacional,'setEmpregado','getNome');"
 								[materializeParams]="empregadoNomeAutocomplete.getAutocomplete().getObjAutoComplete()">
 						</div>
 					</div>

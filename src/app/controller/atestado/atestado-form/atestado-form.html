@@ -84,7 +84,7 @@
 				<div class="input-field col s3">
 					<label for="dataInicio">Início</label>
 					<my-date-picker name="inicio" [options]="myDatePickerOptions"
-						[(ngModel)]="atestado.tarefa.inicioCustomDate.appDate" placeholder="Início">
+						[(ngModel)]="atestado.tarefa.inicioCustomTime.appDate" placeholder="Início">
 					</my-date-picker>
 				</div>
 				<div class="input-field col s4">
@@ -123,7 +123,7 @@
 						[(ngModel)]="atestado.cat.numero"
 						(blur)="autoCompleteCat.getAutocomplete().getObj($event,atestado,'setCat','getNumero')"
 						(ngModelChange)="autoCompleteCat.getAutocomplete().getList(atestado.cat, 'getNumero');"
-						(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atestado,'setCat','getNumero');"
+						(keydown.enter)="autoCompleteCat.getAutocomplete().pressEnter($event,atestado,'setCat','getNumero');"
 						[materializeParams]="autoCompleteCat.getAutocomplete().getObjAutoComplete()">
 				</div>
 			</div>
@@ -137,7 +137,7 @@
 						[(ngModel)]="atestado.profissionalRealizouVisita.empregado.pessoa.nome"
 						(blur)="autoCompleteProfissional.getAutocomplete().getObj($event,atestado,'setProfissionalRealizouVisita','getNome')"
 						(ngModelChange)="autoCompleteProfissional.getAutocomplete().getList(atestado.profissionalRealizouVisita, 'getNome');"
-						(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atestado,'setProfissionalRealizouVisita','getNome');"
+						(keydown.enter)="autoCompleteProfissional.getAutocomplete().pressEnter($event,atestado,'setProfissionalRealizouVisita','getNome');"
 						[materializeParams]="autoCompleteProfissional.getAutocomplete().getObjAutoComplete()">
 				</div>
 			</div>
