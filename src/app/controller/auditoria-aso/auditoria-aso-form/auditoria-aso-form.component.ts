@@ -80,7 +80,7 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
     getRequisitosNaoConformes() {
         let conteudoRequisito: string = "";
         this.requisitosAso.forEach(rA => {
-            if ( rA.getConforme() == false )
+            if ( rA.getConforme() == false && !rA.getConteudo().includes("(OPCIONAL)") )
                 conteudoRequisito += rA.getConteudo() + "/";
         })
         

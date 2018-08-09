@@ -13,7 +13,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-cat-report',
     templateUrl: './cat.html',
-    styleUrls: ['./cat.css']
+    styleUrls: ['./cat.css', './../../../assets/css/report-component.css']
 } )
 export class CatComponent {
     @ViewChild( "mf" ) data;

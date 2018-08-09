@@ -52,3 +52,7 @@ tbody{
 #grupoMonitoramento {
 	margin-top: 20px;
 }
+div h6 {
+	padding-left: 10px;
+	color: #26a69a;
+}

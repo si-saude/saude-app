@@ -40,6 +40,7 @@
 						[(ngModel)]="usuario.pessoa.nome"
 						(blur)="autoCompletePessoa.getAutocomplete().getObj($event,usuario,'setPessoa','getNome')"
 						(ngModelChange)="autoCompletePessoa.getAutocomplete().getList(usuario.pessoa, 'getNome');"
+						(keydown.enter)="autoCompletePessoa.getAutocomplete().pressEnter($event,usuario,'setPessoa','getNome');"
 						[materializeParams]="autoCompletePessoa.getAutocomplete().getObjAutoComplete()"> 
 						
 				<!-- <input type="text"

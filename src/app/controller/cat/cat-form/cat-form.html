@@ -85,6 +85,7 @@
 							[(ngModel)]="cat.gerencia.codigoCompleto"
 							(blur)="autoCompleteGerencia.getAutocomplete().getObj($event,cat,'setGerencia','getCodigoCompleto')"
 							(ngModelChange)="autoCompleteGerencia.getAutocomplete().getList(cat.gerencia, 'getCodigoCompleto');"
+							(keydown.enter)="autoCompleteGerencia.getAutocomplete().pressEnter($event,cat,'setGerencia','getCodigoCompleto');"
 							[materializeParams]="autoCompleteGerencia.getAutocomplete().getObjAutoComplete()">
 					</div>
 
@@ -147,6 +148,7 @@
 				
 				<div class="row">
 					<div class="input-field col s4">
+						<label for="inicioBeneficio">Início do Benefício</label>
 						<my-date-picker name="inicioBeneficio"
 							[options]="myDatePickerOptions"
 							[(ngModel)]="cat.inicioBeneficioCustomDate.appDate"
@@ -154,6 +156,7 @@
 					</div>
 					
 					<div class="input-field col s4">
+						<label for="ultimoDiaTrabalho">Último Dia de Trabalho</label>
 						<my-date-picker name="ultimoDiaTrabalho"
 							[options]="myDatePickerOptions"
 							[(ngModel)]="cat.ultimoDiaTrabalhoCustomDate.appDate"
@@ -161,6 +164,7 @@
 					</div>
 					
 					<div class="input-field col s4">
+						<label for="retornoTrabalho">Retorno ao Trabalho</label>
 						<my-date-picker name="retornoTrabalho"
 							[options]="myDatePickerOptions"
 							[(ngModel)]="cat.retornoTrabalhoCustomDate.appDate"
@@ -177,6 +181,7 @@
 							[(ngModel)]="cat.parteCorpoAtingida.descricao"
 							(blur)="autoCompleteParteCorpoAtingida.getAutocomplete().getObj($event,cat,'setParteCorpoAtingida','getDescricao')"
 							(ngModelChange)="autoCompleteParteCorpoAtingida.getAutocomplete().getList(cat.parteCorpoAtingida, 'getDescricao');"
+							(keydown.enter)="autoCompleteParteCorpoAtingida.getAutocomplete().pressEnter($event,cat,'setParteCorpoAtingida','getDescricao');"
 							[materializeParams]="autoCompleteParteCorpoAtingida.getAutocomplete().getObjAutoComplete()">
 					</div>
 					
@@ -188,6 +193,7 @@
 							[(ngModel)]="cat.agenteCausador.descricao"
 							(blur)="autoCompleteAgenteCausador.getAutocomplete().getObj($event,cat,'setAgenteCausador','getDescricao')"
 							(ngModelChange)="autoCompleteAgenteCausador.getAutocomplete().getList(cat.agenteCausador, 'getDescricao');"
+							(keydown.enter)="autoCompleteAgenteCausador.getAutocomplete().pressEnter($event,cat,'setAgenteCausador','getDescricao');"
 							[materializeParams]="autoCompleteAgenteCausador.getAutocomplete().getObjAutoComplete()">
 					</div>
 					
@@ -199,6 +205,7 @@
 							[(ngModel)]="cat.naturezaLesao.descricao"
 							(blur)="autoCompleteNaturezaLesao.getAutocomplete().getObj($event,cat,'setNaturezaLesao','getDescricao')"
 							(ngModelChange)="autoCompleteNaturezaLesao.getAutocomplete().getList(cat.naturezaLesao, 'getDescricao');"
+							(keydown.enter)="autoCompleteNaturezaLesao.getAutocomplete().pressEnter($event,cat,'setNaturezaLesao','getDescricao');"
 							[materializeParams]="autoCompleteNaturezaLesao.getAutocomplete().getObjAutoComplete()">
 					</div>
 				</div>
@@ -374,6 +381,7 @@
 							[(ngModel)]="cat.empresa.razaoSocial"
 							(blur)="autoCompleteEmpresa.getAutocomplete().getObj($event,cat,'setEmpresa','getRazaoSocial')"
 							(ngModelChange)="autoCompleteEmpresa.getAutocomplete().getList(cat.empresa, 'getRazaoSocial');"
+							(keydown.enter)="autoCompleteEmpresa.getAutocomplete().pressEnter($event,cat,'setEmpresa','getRazaoSocial');"
 							[materializeParams]="autoCompleteEmpresa.getAutocomplete().getObjAutoComplete()">
 					</div>
 					

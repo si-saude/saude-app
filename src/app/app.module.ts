@@ -87,6 +87,8 @@ import { CatGuard } from './guards/guards-child/cat.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 import { KanbanGuard } from './guards/kanban.guard';
+import { MudancaFuncaoGuard } from './guards/guards-child/mudanca-funcao.guard';
+import { AtendimentoAvulsoGuard } from './guards/guards-child/atendimento-avulso.guard';
 import { ParteCorpoAtingidaGuard } from './guards/guards-child/parte-corpo-atingida.guard';
 import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard';
 import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
@@ -96,6 +98,8 @@ import { ReportAvaliacaoHigieneOcupacionalGuard } from './guards/report-avaliaca
 import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisitos-agendamento.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
+import { ImovelGuard } from './guards/guards-child/imovel.guard';
+
 
 @NgModule({
   declarations: [
@@ -187,6 +191,8 @@ import { EnfaseGuard } from './guards/guards-child/enfase.guard';
     AgendaPeriodicoGuard,
     CatGuard,
     AtestadoGuard,
+    MudancaFuncaoGuard,
+    AtendimentoAvulsoGuard,
     ParteCorpoAtingidaGuard,
     AgenteCausadorGuard,
     NaturezaLesaoGuard,
@@ -195,7 +201,8 @@ import { EnfaseGuard } from './guards/guards-child/enfase.guard';
     AvaliacaoHigieneOcupacionalGuard,
     EnfaseGuard,
     ReportAvaliacaoHigieneOcupacionalGuard,
-    ReportPreRequisitosAgendamentoGuard
+    ReportPreRequisitosAgendamentoGuard,
+    ImovelGuard
   ],
   bootstrap: [ 
     AppComponent

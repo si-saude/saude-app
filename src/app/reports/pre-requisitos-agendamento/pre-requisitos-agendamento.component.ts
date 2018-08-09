@@ -13,7 +13,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-pre-requisitos-agendamento',
     templateUrl: './pre-requisitos-agendamento.html',
-    styleUrls: ['./pre-requisitos-agendamento.css']
+    styleUrls: ['./pre-requisitos-agendamento.css', './../../../assets/css/report-component.css']
 } )
 export class PreRequisitosAgendamentoComponent {
     @ViewChild( "mf" ) data;
@@ -28,7 +28,6 @@ export class PreRequisitosAgendamentoComponent {
     private globalActions;
     private toastParams;
     private countCheckbox: number = 0;
-    private showNothing: boolean;
 
     constructor( private preRequisitosAgendamentoService: PreRequisitosAgendamentoService ) {
         this.preRequisitosAgendamentos = new PreRequisitosAgendamentoBuilder().initializeList( new Array<PreRequisitosAgendamentoDto>() );
@@ -37,7 +36,6 @@ export class PreRequisitosAgendamentoComponent {
         this.httpUtil = new HttpUtil();
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.showNothing = true;
     }
 
     ngAfterViewInit() {

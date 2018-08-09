@@ -44,6 +44,7 @@
 					[(ngModel)]="gerencia.gerente.pessoa.nome"
 					(blur)="autoCompleteGerente.getAutocomplete().getObj($event,gerencia,'setGerente','getNome')"
 					(ngModelChange)="autoCompleteGerente.getAutocomplete().getList(gerencia.gerente, 'getNome');"
+					(keydown.enter)="autoCompleteGerente.getAutocomplete().pressEnter($event,gerencia,'setGerente','getNome');"
 					[materializeParams]="autoCompleteGerente.getAutocomplete().getObjAutoComplete()">
 				<input id="gerencia.gerente.id" type="hidden" name="gerencia.gerente.id"
 					[(ngModel)]="gerencia.gerente.id">
@@ -57,6 +58,7 @@
 					[(ngModel)]="gerencia.secretario1.pessoa.nome"
 					(blur)="autoCompleteSecretario1.getAutocomplete().getObj($event,gerencia,'setSecretario1','getNome')"
 					(ngModelChange)="autoCompleteSecretario1.getAutocomplete().getList(gerencia.secretario1, 'getNome');"
+					(keydown.enter)="autoCompleteSecretario1.getAutocomplete().pressEnter($event,gerencia,'setSecretario1','getNome');"
 					[materializeParams]="autoCompleteSecretario1.getAutocomplete().getObjAutoComplete()">
 				<input id="gerencia.secretario1.id" type="hidden" name="gerencia.secretario1.id"
 					[(ngModel)]="gerencia.secretario1.id">
@@ -70,6 +72,7 @@
 					[(ngModel)]="gerencia.secretario2.pessoa.nome"
 					(blur)="autoCompleteSecretario2.getAutocomplete().getObj($event,gerencia,'setSecretario2','getNome')"
 					(ngModelChange)="autoCompleteSecretario2.getAutocomplete().getList(gerencia.secretario2, 'getNome');"
+					(keydown.enter)="autoCompleteSecretario2.getAutocomplete().pressEnter($event,gerencia,'setSecretario2','getNome');"
 					[materializeParams]="autoCompleteSecretario2.getAutocomplete().getObjAutoComplete()">
 				<input id="gerencia.secretario2.id" type="hidden" name="gerencia.secretario2.id"
 					[(ngModel)]="gerencia.secretario2.id">

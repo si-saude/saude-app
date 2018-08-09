@@ -8,6 +8,7 @@ import { AuditoriaAsoService } from './auditoria-aso.service';
 import { AuditoriaAsoFormComponent } from './auditoria-aso-form/auditoria-aso-form.component';
 import { AuditoriaAsoRoutingModule } from './auditoria-aso.routing.module';
 import { SharedModule } from './../shared.module';
+import { PipesModule } from './../pipes.module';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { SharedModule } from './../shared.module';
      ],
      imports: [
         AuditoriaAsoRoutingModule,
-        SharedModule
+        SharedModule,
+        PipesModule
      ],
      providers: [
         AuditoriaAsoService

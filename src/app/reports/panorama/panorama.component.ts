@@ -13,7 +13,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-panorama',
     templateUrl: './panorama.html',
-    styleUrls: ['./panorama.css']
+    styleUrls: ['./panorama.css', './../../../assets/css/report-component.css']
 } )
 export class PanoramaComponent {
     @ViewChild( "mf" ) data;

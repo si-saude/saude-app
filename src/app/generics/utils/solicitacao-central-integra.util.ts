@@ -14,13 +14,13 @@ export class SolicitacaoCentralIntegraUtil {
                 ret = {'background': 'blue'};
                 return ret;
             case "CONCLU":
-                ret = {'background': 'black', 'color': 'white'};
+                ret = {'background': 'green', 'color': 'white'};
                 return ret;
             case "CANCELADO":
                 ret = {'background': 'red'};
                 return ret;
             case "EXECU":
-                ret = {'background': 'green'};
+                ret = {'background': 'yellow'};
                 return ret;
             case "AGUARDANDOINFORMA":
                 ret = {'background': 'orange'};

@@ -60,7 +60,7 @@ export class AtestadoBuilder extends GenericBuilder {
         cloneAtestadoDto.setMedicoOdonto(this.getValue(atestado, "getMedicoOdonto"));
         cloneAtestadoDto.setNomeProfissionalHomologacao(this.getValue(atestado, "getNomeProfissionalHomologacao"));
         cloneAtestadoDto.setObservacao(this.getValue(atestado, "getObservacao"));
-                
+        
         return cloneAtestadoDto;
     }
     

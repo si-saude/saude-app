@@ -1,0 +1,85 @@
+.title-modal {
+	color: #26a69a;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.title-modal-filaAtendimentoOcupacional {
+	margin-bottom: 30px;
+}
+
+.title-modal-filaAtendimentoOcupacional {
+	margin-bottom: 30px;
+}
+
+.select-filaAtendimentoOcupacional {
+	cursor: pointer;
+	margin-bottom: 0px !important;
+}
+
+.label-select-filaAtendimentoOcupacional {
+	font-size: 1.2rem !important;
+    color: #26a69a !important;
+    margin-right: 10px !important;
+}
+
+.input-filter-filaAtendimentoOcupacional {
+	width: 70% !important;
+}
+
+.tr-table-modal { 
+	display: inline-table;
+}
+
+.table-filter-filaAtendimentoOcupacional {
+	display: block;
+}
+
+.table-filter-filaAtendimentoOcupacional > tbody {
+	display: block !important;
+	margin-top: 0;
+}
+
+.filter-diagnostico-descricao {
+	padding-left: 0;
+}
+
+.tr-filter-descricao {
+	cursor: pointer;
+}
+
+.tr-filter-descricao:nth-child(even) {
+    background-color: #d9d9d9;
+}
+
+.row-localizacao {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+select {
+	display: inline;
+}
+
+.input-field>select {
+	display: block;
+	position: absolute;
+	width: 250px;
+	pointer-events: all;
+	height: 50px;
+	top: 0;
+	left: 20px;
+	opacity: 10;
+}
+
+.btn-add-fieldset {
+	margin-left: 15px;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+.center-icon {
+	margin-top: 0px;
+}

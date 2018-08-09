@@ -26,4 +26,15 @@ export class FuncaoBuilder extends GenericBuilder {
         return cloneFuncao;
     }
     
+    cloneList(funcoes: Array<Funcao>): Array<Funcao> {
+        let array:Array<Funcao> = new Array<Funcao>();
+        if (funcoes !== null && funcoes !== undefined) { 
+            for (let funcao of funcoes) {
+                array.push(this.clone(funcao));
+            }
+        }
+        
+        return array;
+    }
+    
 }

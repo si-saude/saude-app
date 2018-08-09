@@ -42,6 +42,7 @@
 					[(ngModel)]="equipe.coordenador.empregado.pessoa.nome"
 					(blur)="profissionalNomeAutocomplete.getAutocomplete().getObj($event,equipe,'setCoordenador','getNome')"
 					(ngModelChange)="profissionalNomeAutocomplete.getAutocomplete().getList(equipe.coordenador, 'getNome');"
+					(keydown.enter)="profissionalNomeAutocomplete.getAutocomplete().pressEnter($event,equipe,'setCoordenador','getNome');"
 					[materializeParams]="profissionalNomeAutocomplete.getAutocomplete().getObjAutoComplete()">
 			</div>
 		</div>

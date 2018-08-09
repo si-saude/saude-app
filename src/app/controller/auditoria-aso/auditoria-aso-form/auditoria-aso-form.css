@@ -45,3 +45,7 @@ tbody{
 .requisito {
 	padding-left: 0px;
 }
+
+textarea {
+	overflow: auto;
+}

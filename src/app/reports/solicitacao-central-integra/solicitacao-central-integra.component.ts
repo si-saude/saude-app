@@ -18,7 +18,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-report-solicitacao-central-integra',
     templateUrl: './solicitacao-central-integra.html',
-    styleUrls: ['./solicitacao-central-integra.css']
+    styleUrls: ['./solicitacao-central-integra.css', './../../../assets/css/report-component.css']
 } )
 export class SolicitacaoCentralIntegraComponent {
     @ViewChild( "mf" ) data;

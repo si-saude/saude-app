@@ -110,7 +110,6 @@ export class AtestadoDto {
     public setNumeroCat(numeroCat) {
         this.numeroCat = numeroCat;
     }
-    
     public getMatricula() {
         return this.matricula;
     }
@@ -129,7 +128,6 @@ export class AtestadoDto {
     public setBase(base) {
         this.base = base;
     }
-    
     public getPrazoRecebimento() {
         return this.prazoRecebimento;
     }
@@ -154,7 +152,6 @@ export class AtestadoDto {
     public setFim(fim) {
         this.fim = fim;
     }
-    
     public getDataHomologacao() {
         return this.dataHomologacao;
     }

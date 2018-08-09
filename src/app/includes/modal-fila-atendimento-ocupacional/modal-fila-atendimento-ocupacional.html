@@ -1,0 +1,81 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalFilaAtendimentoOcupacional">
+
+	<h5 class="title-modal title-modal-filaAtendimentoOcupacional">Fila
+		de Atendimento</h5>
+	<div class="row">
+		<div class="input-field col s12">
+			<fieldset class="select-localizacao">
+				<legend>
+					Localizacao <a
+						class="btn-floating waves-effect waves-light green btn-add-fieldset"
+						(click)="getLocalizacoes()"> <i
+						class="material-icons center-icon">cached</i>
+					</a>
+				</legend>
+				<select name="localizacao" class="browser-default"
+					[ngModel]="filter.localizacao?.id"
+					(ngModelChange)="filter.localizacao.id=$event">
+					<option disabled selected value=0>Selecione uma localização</option>
+					<option *ngFor="let localizacao of localizacoes"
+						value="{{localizacao.id}}">{{localizacao.nome}}</option>
+				</select>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="input-field col s3"></div>
+		<div class="input-field col s3">
+			<label for="inicio">Período Inicial</label>
+			<my-date-picker name="inicio" [options]="myDatePickerOptions"
+				[(ngModel)]="filter.inicio.inicio" placeholder="Data Inicio">
+			</my-date-picker>
+		</div>
+		<div class="input-field col s3">
+		<label for="inicio">Período Final</label>
+			<my-date-picker name="fim" [options]="myDatePickerOptions"
+				[(ngModel)]="filter.inicio.fim" placeholder="Data Fim"> </my-date-picker>
+		</div>
+	</div>
+		<table class="table table-striped table-filter-planejamento"
+				[mfData]="arrayFilaAtendimentoOcupacional " 
+				#mf="mfDataTable" [mfRowsOnPage]=10>
+			 <thead>
+			    <tr>
+			        <th style="width: 0.2%">
+			           <mfDefaultSorter by="profissional">Profissional</mfDefaultSorter>
+			        </th>
+			        <th style="width: 1%">
+			           <mfDefaultSorter by="dataFim">Data Início</mfDefaultSorter>
+			        </th>
+			        <th style="width: 1%">
+			           <mfDefaultSorter by="dataFim">Data Fim</mfDefaultSorter>
+			        </th>
+			        <th style="width: 1%">
+			           <mfDefaultSorter by="status">Status</mfDefaultSorter>
+			        </th>
+			    </tr>
+		    </thead>
+	    	<tbody>
+			    <tr *ngFor="let item of arrayFilaAtendimentoOcupacional" class="tr-filter-descricao" (click)="selectFilaAtendimentoOcupacional(item)">
+			        <td>{{item.profissional.empregado.pessoa.nome}}</td>
+			        <td>{{item.inicio  |transformDate}}</td>
+			        <td>{{item.fim  |transformDate}}</td>
+			        <td>{{item.status}}</td>			        
+			    </tr>
+		    </tbody>
+		</table>
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat"
+			(click)="buscarFilaAtendimentosOcupacionais()">Buscar</a>
+		<a class="waves-effect waves-green btn-flat"
+			(click)="cancelarModalFilaAtendimentoOcupacional()">Cancelar</a>
+	</div>
+
+</div>

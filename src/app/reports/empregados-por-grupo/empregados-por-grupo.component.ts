@@ -17,7 +17,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-empregados-por-grupo-list',
     templateUrl: './empregados-por-grupo.html',
-    styleUrls: ['./empregados-por-grupo.css']
+    styleUrls: ['./empregados-por-grupo.css', './../../../assets/css/report-component.css']
 } )
 export class EmpregadosPorGrupoComponent {
     @ViewChild( "mf" ) data;

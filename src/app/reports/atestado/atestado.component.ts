@@ -13,7 +13,7 @@ import { HttpUtil } from './../../generics/utils/http.util';
 @Component( {
     selector: 'app-atestado-report',
     templateUrl: './atestado.html',
-    styleUrls: ['./atestado.css']
+    styleUrls: ['./atestado.css', './../../../assets/css/report-component.css']
 } )
 export class AtestadoComponent {
     @ViewChild( "mf" ) data;
@@ -72,7 +72,7 @@ export class AtestadoComponent {
         $( "#dropdown" ).empty();
 
         if ( tipo == "impossibilidadeLocomocao" || tipo == "lancadoSap" || tipo == "atestadoFisicoRecebido" ||
-                tipo == "controleLicenca" ) {
+                tipo == "controleLicenca" || tipo == "recebidoNoPrazo") {
             let component = this;
             if ( component.arrayObjects.get(tipo) == undefined )
                 component.arrayObjects.set(tipo, new Array<any>());

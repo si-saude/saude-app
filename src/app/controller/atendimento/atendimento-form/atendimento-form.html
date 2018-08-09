@@ -223,7 +223,7 @@
 	</div>
 
 	<div id="fichaColeta" disabled>
-		<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta"
+		<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta" [statusFila]="atendimento?.filaAtendimentoOcupacional.status"
 			[service]="atendimentoService" [idEquipeProfissional]="profissional.equipe.id"></app-ficha-coleta>
 	</div>
 

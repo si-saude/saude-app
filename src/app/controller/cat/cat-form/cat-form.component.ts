@@ -202,8 +202,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
-        console.log(this.cat);
-        this.cat.setCpf(this.cat.getCpf().replace(".","").replace(".","").replace("-", ""));
+        if ( this.cat.getCpf() != undefined )
+            this.cat.setCpf(this.cat.getCpf().replace(".","").replace(".","").replace("-", ""));
         super.save( new CatBuilder().clone( this.cat ) );
     }
     

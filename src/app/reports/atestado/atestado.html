@@ -13,9 +13,9 @@
 
 	<div class="row">
 		<div class="col s1">
-			<a (click)="exportFile()"> 
-				<i class="small material-icons icon" (mouseover)="showTextToast('Exportar', 4000)" 
-					(mouseleave)="closeTooltip()">file_download</i>
+			<a (click)="exportFile()"> <i class="small material-icons icon"
+				(mouseover)="showTextToast('Exportar', 4000)"
+				(mouseleave)="closeTooltip()">file_download</i>
 			</a>
 		</div>
 	</div>
@@ -96,9 +96,30 @@
 		        </th>
 		        <th style="width: 3%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="impossibilidadeLocomocao">Impossibilidade de Locomoção</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="recebidoNoPrazo">Recebido
+						no Prazo</mfDefaultSorter>
+						<div class="div-icon" id="recebidoNoPrazo">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'recebidoNoPrazo')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 5%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="mesRecebimento">Mês
+						do Recebimento</mfDefaultSorter>
+						<div class="div-icon" id="mesRecebimento">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'mesRecebimento')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 6%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="impossibilidadeLocomocao">Impossibilidade
+						de Locomoção</mfDefaultSorter>
 						<div class="div-icon" id="impossibilidadeLocomocao">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'impossibilidadeLocomocao')">arrow_drop_down</i>
 						</div>
 					</div>
@@ -111,27 +132,52 @@
 		        </th>
 		        <th style="width: 3%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="lancadoSap">Lançado SAP</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="gerencia">Gerência</mfDefaultSorter>
+						<div class="div-icon" id="gerencia">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 5%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="base">Base</mfDefaultSorter>
+						<div class="div-icon" id="base">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'base')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 5%"><mfDefaultSorter by="status">Status</mfDefaultSorter>
+					<i class="small material-icons icon" style="margin-top: -10%;"
+					(click)="dropdown($event, 'status')">arrow_drop_down</i>
+					<div class="div-icon" id="status"></div></th>
+				<th style="width: 5%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="lancadoSap">Lançado
+						SAP</mfDefaultSorter>
 						<div class="div-icon" id="lancadoSap">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'lancadoSap')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
 				<th style="width: 4%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="atestadoFisicoRecebido">Atestado Físico Recebido</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="atestadoFisicoRecebido">Atestado
+						Físico Recebido</mfDefaultSorter>
 						<div class="div-icon" id="atestadoFisicoRecebido">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'atestadoFisicoRecebido')">arrow_drop_down</i>
 						</div>
 					</div>
 				</th>
 				<th style="width: 3%">
 					<div class="row">
-						<mfDefaultSorter class="mleft" by="controleLicenca">Controle da Licença</mfDefaultSorter>
+						<mfDefaultSorter class="mleft" by="controleLicenca">Controle
+						da Licença</mfDefaultSorter>
 						<div class="div-icon" id="controleLicenca">
-							<i class="small material-icons icon" 
+							<i class="small material-icons icon"
 								(click)="dropdown($event, 'controleLicenca')">arrow_drop_down</i>
 						</div>
 					</div>

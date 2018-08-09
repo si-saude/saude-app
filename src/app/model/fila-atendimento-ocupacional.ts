@@ -1,6 +1,7 @@
 import { Profissional } from './profissional';
 import { Localizacao } from './localizacao';
 import { FilaAtendimentoOcupacionalAtualizacao } from './fila-atendimento-ocupacional-atualizacao';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class FilaAtendimentoOcupacional {
     private id: number;
@@ -12,6 +13,8 @@ export class FilaAtendimentoOcupacional {
     private status: string;
     private atualizacoes: Array<FilaAtendimentoOcupacionalAtualizacao>;
     private version: number;
+
+    private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
 
     getId() {
         return this.id;
@@ -35,16 +38,26 @@ export class FilaAtendimentoOcupacional {
 
     setLocalizacao(localizacao: Localizacao) {
         this.localizacao = localizacao;
-    }
-
+    } 
+    
     getInicio() {
+        this.inicio = this.inicioCustomDate.getApiDate();
         return this.inicio;
     }
-
+    
     setInicio(inicio: Date) {
+        this.inicioCustomDate.setApiDate(inicio);
         this.inicio = inicio;
     }
-
+    
+    getInicioCustomDate(){
+        return this.inicioCustomDate;
+    }
+    
+    setInicioCustomDate(inicioCustomDate: CustomDate){
+        this.inicioCustomDate = inicioCustomDate;
+    }
+    
     getAtualizacao() {
         return this.atualizacao;
     }
