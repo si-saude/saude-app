@@ -2,165 +2,161 @@
 <meta charset="utf-8">
 </head>
 
-<div class="panorama-content">
 
-	<div class="list-container" id="id-list-container">
-		
-		<div class="row">
-			<div class="col s1">
-				<a (click)="exportFile()"> 
-					<i class="small material-icons icon" (mouseover)="showTextToast('Exportar', 4000)" 
-						(mouseleave)="closeTooltip()">file_download</i>
-				</a>
-			</div>
+<div class="list-container" id="id-list-container">
+
+	<div class="row">
+		<div class="col s1">
+			<a (click)="exportFile()"> <i class="small material-icons icon"
+				(mouseover)="showTextToast('Exportar', 4000)"
+				(mouseleave)="closeTooltip()">file_download</i>
+			</a>
 		</div>
-		
-		<table class="table table-striped" [mfData]="panoramas | filterData : filter : typeFilter : value" #mf="mfDataTable">
-			<thead>
-				<tr>
-					<th style="width: 1%">
-						<mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
-						<i class="small material-icons icon" 
-								(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
-						<div class="div-icon" id="gerencia"></div>
-					</th>
-					<th style="width: 1%">
-						<mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
-						<input type="text" name="matricula" style="width: 90%" 
-								placeholder="filtrar matrícula"
-								(input)="selectFilter($event, 'matricula')">
-					</th>
-					<th style="width: 1%">
-						<mfDefaultSorter by="nome">Nome</mfDefaultSorter>
-						<input type="text" name="nome" style="width: 90%" 
-								placeholder="filtrar nome" 
-								(input)="selectFilter($event, 'nome')">
-					</th>
-					<th style="width: 1.5%">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="mesConvocacao">Mês da Convocacao</mfDefaultSorter>
-							<div class="div-icon" id="mesConvocacao">
-								<i class="small material-icons icon" 
-									(click)="dropdown($event, 'mesConvocacao')">arrow_drop_down</i>
-							</div>
-						</div>
-					</th>
-					<th style="width: 1%">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="base">Base</mfDefaultSorter>
-							<div class="div-icon" id="base">
-								<i class="small material-icons icon" 
-									(click)="dropdown($event, 'base')">arrow_drop_down</i>
-							</div>
-						</div>
-					</th>
-					<th style="width: 1%">
-						<mfDefaultSorter by="dataAsoAnoAnterior">Data Aso Anterior</mfDefaultSorter>
-						<input type="text" name="dataAsoAnoAnterior" style="width: 90%" 
-								placeholder="filtrar data aso ano anterior" 
-								(input)="selectFilter($event, 'dataAsoAnoAnterior')">
-					</th>
-					<th style="width: 1%; font-size: 13px">
-						<mfDefaultSorter by="dataRealizacaoPreClinico">Data Realização Pré-Clínico</mfDefaultSorter>
-						<input type="text" name="dataRealizacaoPreClinico" style="width: 90%" 
-								placeholder="filtrar data realização pré clínico" 
-								(input)="selectFilter($event, 'dataRealizacaoPreClinico')">
-					</th>
-					<th style="width: 1%">
-						<mfDefaultSorter by="dataAsoAnoAtual">Data Aso Atual</mfDefaultSorter>
-						<input type="text" name="dataAsoAnoAtual" style="width: 90%" 
-								placeholder="filtrar data aso ano atual" 
-								(input)="selectFilter($event, 'dataAsoAnoAtual')">
-					</th>
-					<th style="width: 1%">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="situacaoAso">Situação Aso</mfDefaultSorter>
-							<div class="div-icon" id="situacaoAso">
-								<i class="small material-icons icon" 
-									(click)="dropdown($event, 'situacaoAso')">arrow_drop_down</i>
-							</div>
-						</div>
-					</th>
-					<th style="width: 1%">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="asoNoPrazo">Aso no Prazo</mfDefaultSorter>
-							<div class="div-icon" id="asoNoPrazo">
-								<i class="small material-icons icon" 
-									(click)="dropdown($event, 'asoNoPrazo')">arrow_drop_down</i>
-							</div>
-						</div>
-					</th>
-					<th style="width: 1%">
-						<mfDefaultSorter by="pendencias">Pendências</mfDefaultSorter>
-						<input type="text" name="pendencias" style="width: 90%" 
-								placeholder="filtrar pendências" 
-								(input)="selectFilter($event, 'pendencias')">
-					</th>
-					<th style="width: 1.5%; font-size: 13px;">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="gerenciaPrimeiraLinha">Gerência de Primeira Linha</mfDefaultSorter>
-							<div class="div-icon" id="gerenciaPrimeiraLinha">
-								<i class="small material-icons icon" 
-									(click)="dropdown($event, 'gerenciaPrimeiraLinha')">arrow_drop_down</i>
-							</div>
-						</div>
-					</th>
-					<th style="width: 1%">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="statusPreClinico">Status Pré-Clínico</mfDefaultSorter>
-							<div class="div-icon" id="statusPreClinico">
-								<i class="small material-icons icon" 
-									(click)="dropdown($event, 'statusPreClinico')">arrow_drop_down</i>
-							</div>
-						</div>
-					</th>
-					<th style="width: 1%">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="examesPendentes">Exames Pendentes</mfDefaultSorter>
-						</div>
-					</th>
-					<th style="width: 2%">
-						<div class="row">
-							<mfDefaultSorter class="mleft" by="existeExamePendenciaExames">Existe Exame Pendente</mfDefaultSorter>
-							<div class="div-icon" id="existePendenciaExames">
-								<i class="small material-icons icon" 
-									(click)="dropdown($event, 'existePendenciaExames')">arrow_drop_down</i>
-							</div>
-						</div>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let item of mf.data">
-					<td>{{item.gerencia}}</td>
-					<td>{{item.matricula}}</td>
-					<td>{{item.nome}}</td>
-					<td>{{item.mesConvocacao}}</td>
-					<td>{{item.base}}</td>
-					<td>{{item.dataAsoAnoAnterior}}</td>
-					<td>{{item.dataRealizacaoPreClinico}}</td>
-					<td>{{item.dataAsoAnoAtual}}</td>
-					<td>{{item.situacaoAso}}</td>
-					<td>{{item.asoNoPrazo}}</td>
-					<td>{{item.pendencias}}</td>
-					<td>{{item.gerenciaPrimeiraLinha}}</td>
-					<td>{{item.statusPreClinico}}</td>
-					<td (mouseover)="showTextToast(item.examesPendentes, 5000)" (mouseleave)="closeTooltip()">
-						{{shortText(item.examesPendentes)}}
-					</td>
-					<td>
-						<input type="checkbox" id="item-existePendenciaExames" disabled 
-							[(ngModel)]="item.existePendenciaExames" name="existePendenciaExames"> 
-						<label class="existePendenciaExames" for="existePendenciaExames"></label>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	
-		<ul id='dropdown' class='dropdown-conteudo'></ul>
 	</div>
 
+	<table class="table table-striped"
+		[mfData]="panoramas | filterData : filter : typeFilter : value"
+		#mf="mfDataTable">
+		<thead>
+			<tr>
+				<th style="width: 1%"><mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
+					<div class="div-icon" id="gerencia"></div></th>
+				<th style="width: 1%"><mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
+					<input type="text" name="matricula" style="width: 90%"
+					placeholder="filtrar matrícula"
+					(input)="selectFilter($event, 'matricula')"></th>
+				<th style="width: 1%"><mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+					<input type="text" name="nome" style="width: 90%"
+					placeholder="filtrar nome" (input)="selectFilter($event, 'nome')">
+				</th>
+				<th style="width: 1.5%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="mesConvocacao">Mês
+						da Convocacao</mfDefaultSorter>
+						<div class="div-icon" id="mesConvocacao">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'mesConvocacao')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 1%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="base">Base</mfDefaultSorter>
+						<div class="div-icon" id="base">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'base')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataAsoAnoAnterior">Data
+					Aso Anterior</mfDefaultSorter> <input type="text" name="dataAsoAnoAnterior"
+					style="width: 90%" placeholder="filtrar data aso ano anterior"
+					(input)="selectFilter($event, 'dataAsoAnoAnterior')"></th>
+				<th style="width: 1%; font-size: 13px"><mfDefaultSorter
+						by="dataRealizacaoPreClinico">Data Realização
+					Pré-Clínico</mfDefaultSorter> <input type="text" name="dataRealizacaoPreClinico"
+					style="width: 90%"
+					placeholder="filtrar data realização pré clínico"
+					(input)="selectFilter($event, 'dataRealizacaoPreClinico')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataAsoAnoAtual">Data
+					Aso Atual</mfDefaultSorter> <input type="text" name="dataAsoAnoAtual"
+					style="width: 90%" placeholder="filtrar data aso ano atual"
+					(input)="selectFilter($event, 'dataAsoAnoAtual')"></th>
+				<th style="width: 1%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="situacaoAso">Situação
+						Aso</mfDefaultSorter>
+						<div class="div-icon" id="situacaoAso">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'situacaoAso')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 1%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="asoNoPrazo">Aso
+						no Prazo</mfDefaultSorter>
+						<div class="div-icon" id="asoNoPrazo">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'asoNoPrazo')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="pendencias">Pendências</mfDefaultSorter>
+					<input type="text" name="pendencias" style="width: 90%"
+					placeholder="filtrar pendências"
+					(input)="selectFilter($event, 'pendencias')"></th>
+				<th style="width: 1.5%; font-size: 13px;">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="gerenciaPrimeiraLinha">Gerência
+						de Primeira Linha</mfDefaultSorter>
+						<div class="div-icon" id="gerenciaPrimeiraLinha">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'gerenciaPrimeiraLinha')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 1%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="statusPreClinico">Status
+						Pré-Clínico</mfDefaultSorter>
+						<div class="div-icon" id="statusPreClinico">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'statusPreClinico')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 1%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="examesPendentes">Exames
+						Pendentes</mfDefaultSorter>
+					</div>
+				</th>
+				<th style="width: 2%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="existeExamePendenciaExames">Existe
+						Exame Pendente</mfDefaultSorter>
+						<div class="div-icon" id="existePendenciaExames">
+							<i class="small material-icons icon"
+								(click)="dropdown($event, 'existePendenciaExames')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of mf.data">
+				<td>{{item.gerencia}}</td>
+				<td>{{item.matricula}}</td>
+				<td>{{item.nome}}</td>
+				<td>{{item.mesConvocacao}}</td>
+				<td>{{item.base}}</td>
+				<td>{{item.dataAsoAnoAnterior}}</td>
+				<td>{{item.dataRealizacaoPreClinico}}</td>
+				<td>{{item.dataAsoAnoAtual}}</td>
+				<td>{{item.situacaoAso}}</td>
+				<td>{{item.asoNoPrazo}}</td>
+				<td>{{item.pendencias}}</td>
+				<td>{{item.gerenciaPrimeiraLinha}}</td>
+				<td>{{item.statusPreClinico}}</td>
+				<td (mouseover)="showTextToast(item.examesPendentes, 5000)"
+					(mouseleave)="closeTooltip()">
+					{{shortText(item.examesPendentes)}}</td>
+				<td><input type="checkbox" id="item-existePendenciaExames"
+					disabled [(ngModel)]="item.existePendenciaExames"
+					name="existePendenciaExames"> <label
+					class="existePendenciaExames" for="existePendenciaExames"></label>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul id='dropdown' class='dropdown-conteudo'></ul>
 </div>
+
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

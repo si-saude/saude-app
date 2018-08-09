@@ -1,3 +1,7 @@
+/deep/ body {
+	overflow: hidden;
+}
+
 .row {
 	margin-bottom: 0px;
 }
@@ -19,6 +23,9 @@ table {
 }
 
 .list-container {
+	max-height: 65vh;
+	max-width: 99%;
+	overflow: auto;
     margin-bottom: 10%;
 }
 
