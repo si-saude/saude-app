@@ -193,6 +193,17 @@ export class AtestadoComponent {
         return arrayFilter;
     }
     
+    showTextToast( text, time = 60000 ) {
+        if ( text == "" ) return;
+
+        this.toastParams = [text, time];
+        this.globalActions.emit( 'toast' );
+    }
+    
+    closeTooltip() {
+        $( ".toast" ).remove();
+    }
+    
     exportFile() {
         if ( this.data.data.length > 0 )
             this.atestadoService.exportFile( this.data.data )
@@ -204,4 +215,8 @@ export class AtestadoComponent {
                 })
     }
     
+    ngOnDestroy() {
+        $( ".toast" ).remove();
+        $( ".container" ).get( 0 ).style.width = "70%";
+    }
 }

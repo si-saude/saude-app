@@ -36,19 +36,101 @@ export class AprhoItemBuilder extends GenericBuilder {
         
         let cloneAprhoItem = new AprhoItem();
         cloneAprhoItem.setId(this.getValue(aprhoItem,"getId"));
-        cloneAprhoItem.setMeioPropagacao(this.getValue(aprhoItem, "getMeioPropagacao"));
-        cloneAprhoItem.setMedidaControle(this.getValue(aprhoItem, "getMedidaControle"));        
-        cloneAprhoItem.setAtividade(this.getValue(aprhoItem, "getAtividade"));
-        cloneAprhoItem.setLocal(this.getValue(aprhoItem, "getLocal"));
-        cloneAprhoItem.setAvaliacaoEficacia(this.getValue(aprhoItem, "getAvaliacaoEficacia"));
-        cloneAprhoItem.setFrequencia(this.getValue(aprhoItem, "getFrequencia"));
-        cloneAprhoItem.setDuracao(this.getValue(aprhoItem, "getDuracao"));
-        cloneAprhoItem.setVersion(this.getValue(aprhoItem, "getVersion"));
-        cloneAprhoItem.setFonteGeradora(new FonteGeradoraBuilder().clone(this.getValue( aprhoItem, "getFonteGeradora" )));
+        cloneAprhoItem.setVersion(this.getValue(aprhoItem, "getVersion"));    
+        
         cloneAprhoItem.setAprho(new AprhoBuilder().clone(this.getValue( aprhoItem, "getAprho" )));
-        cloneAprhoItem.setAgenteRisco(new AgenteRiscoBuilder().clone(this.getValue( aprhoItem, "getAgenteRisco" )));
-        cloneAprhoItem.setCategoriaRisco(new CategoriaRiscoBuilder().clone(this.getValue( aprhoItem, "getCategoriaRisco" )));
-        cloneAprhoItem.setPossivelDanoSaude(new PossivelDanoSaudeBuilder().clone(this.getValue( aprhoItem, "getPossivelDanoSaude" )));
+        
+        if(this.getValue(aprhoItem, "getMeioPropagacao") == "")
+            cloneAprhoItem.setMeioPropagacao(undefined);
+        else if (this.getValue(aprhoItem, "getMeioPropagacao") == undefined )
+            cloneAprhoItem.setMeioPropagacao("");
+        else
+            cloneAprhoItem.setMeioPropagacao(this.getValue(aprhoItem, "getMeioPropagacao"));
+        
+        
+        if(this.getValue(aprhoItem, "getMedidaControle") == "")
+            cloneAprhoItem.setMedidaControle(undefined);
+        else if (this.getValue(aprhoItem, "getMedidaControle") == undefined )
+            cloneAprhoItem.setMedidaControle("");
+        else
+            cloneAprhoItem.setMedidaControle(this.getValue(aprhoItem, "getMedidaControle"));
+        
+        
+        if(this.getValue(aprhoItem, "getAtividade") == "")
+            cloneAprhoItem.setAtividade(undefined);
+        else if (this.getValue(aprhoItem, "getAtividade") == undefined )
+            cloneAprhoItem.setAtividade("");
+        else
+            cloneAprhoItem.setAtividade(this.getValue(aprhoItem, "getAtividade"));
+        
+        
+        if(this.getValue(aprhoItem, "getLocal") == "")
+            cloneAprhoItem.setLocal(undefined);
+        else if (this.getValue(aprhoItem, "getLocal") == undefined )
+            cloneAprhoItem.setLocal("");
+        else
+            cloneAprhoItem.setLocal(this.getValue(aprhoItem, "getLocal"));
+        
+        
+        if(this.getValue(aprhoItem, "getFrequencia") == "")
+            cloneAprhoItem.setFrequencia(undefined);
+        else if (this.getValue(aprhoItem, "getFrequencia") == undefined )
+            cloneAprhoItem.setFrequencia("");
+        else
+            cloneAprhoItem.setFrequencia(this.getValue(aprhoItem, "getFrequencia"));
+        
+        
+        if(this.getValue(aprhoItem, "getAvaliacaoEficacia") == "")
+            cloneAprhoItem.setAvaliacaoEficacia(undefined);
+        else if (this.getValue(aprhoItem, "getAvaliacaoEficacia") == undefined )
+            cloneAprhoItem.setAvaliacaoEficacia("");
+        else
+            cloneAprhoItem.setAvaliacaoEficacia(this.getValue(aprhoItem, "getAvaliacaoEficacia"));
+        
+        
+        if(this.getValue(aprhoItem, "getDuracao") == "")
+            cloneAprhoItem.setDuracao(undefined);
+        else if (this.getValue(aprhoItem, "getDuracao") == undefined )
+            cloneAprhoItem.setDuracao("");
+        else
+            cloneAprhoItem.setDuracao(this.getValue(aprhoItem, "getDuracao"));     
+        
+         
+        if (this.getValue(aprhoItem, "getAgenteRisco") !== undefined) { 
+            cloneAprhoItem.setAgenteRisco(
+                    new AgenteRiscoBuilder().clone(this.getValue(aprhoItem,"getAgenteRisco")));
+            if(!this.idGtZero(cloneAprhoItem.getAgenteRisco()))
+                cloneAprhoItem.setAgenteRisco(undefined);
+        } else {
+            cloneAprhoItem.setAgenteRisco(new AgenteRiscoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(aprhoItem, "getFonteGeradora") !== undefined) { 
+            cloneAprhoItem.setFonteGeradora(
+                    new FonteGeradoraBuilder().clone(this.getValue(aprhoItem,"getFonteGeradora")));
+            if(!this.idGtZero(cloneAprhoItem.getFonteGeradora()))
+                cloneAprhoItem.setFonteGeradora(undefined);
+        } else {
+            cloneAprhoItem.setFonteGeradora(new FonteGeradoraBuilder().initialize(null));
+        }        
+        
+        if (this.getValue(aprhoItem, "getCategoriaRisco") !== undefined) { 
+            cloneAprhoItem.setCategoriaRisco(
+                    new CategoriaRiscoBuilder().clone(this.getValue(aprhoItem,"getCategoriaRisco")));
+            if(!this.idGtZero(cloneAprhoItem.getCategoriaRisco()))
+                cloneAprhoItem.setCategoriaRisco(undefined);
+        } else {
+            cloneAprhoItem.setCategoriaRisco(new CategoriaRiscoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(aprhoItem, "getPossivelDanoSaude") !== undefined) { 
+            cloneAprhoItem.setPossivelDanoSaude(
+                    new PossivelDanoSaudeBuilder().clone(this.getValue(aprhoItem,"getPossivelDanoSaude")));
+            if(!this.idGtZero(cloneAprhoItem.getPossivelDanoSaude()))
+                cloneAprhoItem.setPossivelDanoSaude(undefined);
+        } else {
+            cloneAprhoItem.setPossivelDanoSaude(new PossivelDanoSaudeBuilder().initialize(null));
+        }
         
         return cloneAprhoItem;
     }

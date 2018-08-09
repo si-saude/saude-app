@@ -8,7 +8,8 @@ export class AutoComplete<F extends GenericFilter> {
     private filter:F;
     private array:Array<any> = new Array<any>();
     private genericAutoComplete;
-    private lastValue;
+    private lastValue = "";
+    private lastInfo:string = "";
     
     constructor(filter, genericAutoComplete, service:GenericService,builder:any){
         this.filter = filter;
@@ -21,23 +22,29 @@ export class AutoComplete<F extends GenericFilter> {
         let infos = obj[getMethod]().split('||');
         let info = infos[infos.length - 1].trim();
         
-        if ( this.lastValue == undefined || info != this.lastValue.trim() ) { 
-            this.filter = this.genericAutoComplete.getFilter(obj,this.filter);
+        
+        if(this.lastInfo != info){
             
-            if(typeof this.genericAutoComplete['getList'] === 'function'){
-                this.genericAutoComplete.getList(this.service, this.filter)
-                .then(res => {
-                    this.executeAutoComplete(res);
-                }).catch( error => {
-                    console.log( error );
-                } );
-            }else{
-                this.service.list(this.filter)
-                .then(res => {
-                    this.executeAutoComplete(res);
-                }).catch( error => {
-                    console.log( error );
-                } );
+            this.lastInfo = info;
+        
+            if ( this.lastValue == undefined || info != this.lastValue.trim() ) { 
+                this.filter = this.genericAutoComplete.getFilter(obj,this.filter);
+
+                if(typeof this.genericAutoComplete['getList'] === 'function'){
+                    this.genericAutoComplete.getList(this.service, this.filter)
+                    .then(res => {
+                        this.executeAutoComplete(res);
+                    }).catch( error => {
+                        console.log( error );
+                    } );
+                }else{
+                    this.service.list(this.filter)
+                    .then(res => {
+                        this.executeAutoComplete(res);
+                    }).catch( error => {
+                        console.log( error );
+                    } );
+                }
             }
         }
     }
@@ -60,7 +67,6 @@ export class AutoComplete<F extends GenericFilter> {
             let infos = input.target.value.split('||');
             let id = infos[0].trim();
             let info = infos[infos.length - 1].trim();
-            
             this.lastValue = info;
             obj[setMethod]( this.array.find(a => a.getId().toString() == id) );
             

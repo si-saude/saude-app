@@ -1,0 +1,103 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s12">
+				<label for="nome" data-error="Campo obrigatório.">Profissional</label>
+				<input
+					(click)="modalFilaAtendimento.openModalFilaAtendimentoOcupacional()"
+					id="filaAtendimentoOcupacional.profissional.empregado.pessoa.nome"
+					type="text"
+					name="filaAtendimentoOcupacional.profissional.empregado.pessoa.nome"
+					[(ngModel)]="atendimento.filaAtendimentoOcupacional.profissional.empregado.pessoa.nome">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="nome" data-error="Campo obrigatório.">Empregado</label>
+				<input [disabled]="!(atendimento.filaAtendimentoOcupacional.id > 0)"
+					(click)="modalFilaEspera.openModalFilaEsperaOcupacional()"
+					id="filaEsperaOcupacional.empregado.pessoa.nome" type="text"
+					name="filaEsperaOcupacional.empregado.pessoa.nome"
+					[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.nome">
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="atendimento.tarefa.inicio">Agendamento</label>
+				<my-date-picker name="atendimento.tarefa.inicio"
+					[disabled]="!(atendimento.filaEsperaOcupacional.id > 0)"
+					[options]="myDatePickerOptions"
+					(click)="atendimento.filaEsperaOcupacional.id > 0 ? modalTarefa.openModalTarefa() : false "
+					[(ngModel)]="atendimento.tarefa.inicioCustomTime.appDate"
+					placeholder="Data Atendimento"> </my-date-picker>
+			</div>
+		</div>
+				<div class="input-field col s6">
+					<label for="diaHoraAcidente">Dia/Hora Inicio Tarefa</label>
+					<div>
+						<div class="input-field col s6">
+							<my-date-picker name="diaHoraTarefa"
+								[options]="myDatePickerOptions"
+								[(ngModel)]="atendimento.tarefa.inicioCustomTime.appDate"
+								placeholder="Dia/Hora da Tarefa"></my-date-picker>
+						</div>
+						<div class="input-field col s6">
+							<input id="diaHoraTarefa" name="diaHoraTarefa"
+								[(ngModel)]="atendimento.tarefa.inicioCustomTime.appTime"
+								materialize="pickatime"
+								[materializeActions]="diaHoraTarefaInicioTimeActions"
+								[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+								class="validate" type="text">
+						</div>
+					</div>
+				</div>
+		<!-- </div> -->
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/atendimento-avulso']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<app-modal-fila-atendimento-ocupacional [service]="atendimentoService"
+	[model]="atendimento" [profissional]="profissional"
+	[showModalFilaAtendimentoOcupacional]="modalFilaAtendimento.showModalFilaAtendimentoOcupacional">
+</app-modal-fila-atendimento-ocupacional>
+
+
+<app-modal-fila-espera-ocupacional [service]="atendimentoService"
+	[model]="atendimento"
+	[periodo]="atendimento.filaAtendimentoOcupacional.inicio"
+	[localizacaoFilter]="modalFilaAtendimento.filter.localizacao"
+	[showModalFilaEsperaOcupacional]="modalFilaEspera.showModalFilaEsperaOcupacional">
+</app-modal-fila-espera-ocupacional>
+
+<app-modal-tarefa [service]="atendimentoService" [model]="atendimento"
+	[servicoId]="atendimento.filaEsperaOcupacional.servico.id"
+	[empregadoId]="atendimento.filaEsperaOcupacional.empregado.id"
+	[equipeId]="profissional.equipe.id"
+	[showModalTarefa]="modalTarefa.showModalTarefa"> </app-modal-tarefa>

@@ -8,6 +8,12 @@ import { UsuarioService } from './../controller/usuario/usuario.service';
 import { ServicoService } from './../controller/servico/servico.service';
 import { GerenciaService } from './../controller/gerencia/gerencia.service';
 import { EmpregadoService } from './../controller/empregado/empregado.service';
+import { GheService } from './../controller/ghe/ghe.service';
+import { GheeService } from './../controller/ghee/ghee.service';
+import { CargoService } from './../controller/cargo/cargo.service';
+import { FuncaoService } from './../controller/funcao/funcao.service';
+import { RegimeService } from './../controller/regime/regime.service';
+import { BaseService } from './../controller/base/base.service';
 import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-solicitacao.service';
 
 @Injectable()
@@ -19,6 +25,12 @@ export class SolicitacaoServicoService {
             private usuarioService: UsuarioService,
             private servicoService: ServicoService,
             private gerenciaService: GerenciaService,
+            private gheService: GheService,
+            private cargoService: CargoService,
+            private funcaoService: FuncaoService,
+            private regimeService: RegimeService,
+            private gheeService: GheeService,
+            private baseService: BaseService,
             private empregadoService: EmpregadoService,
             private tipoSolicitacaoService: TipoSolicitacaoService) {
         this.headers = new Headers( { 'Content-Type': 'application/json' } );
@@ -56,6 +68,13 @@ export class SolicitacaoServicoService {
             .toPromise();
     }
     
+    registrarMudancaFuncao( mudancaFuncao ) {
+        let urlMudancaFuncao = this.URL + "/mudanca-funcao/registrar-mudanca-funcao";
+        return this.http
+            .post( urlMudancaFuncao, mudancaFuncao, { headers: this.headers } )
+            .toPromise();
+    }
+    
     registrarSolicitacao( solicitacao ) {
         let urlSolicitacao = this.URL + "/solicitacao-central-integra/registrar-solicitacao";
         return this.http
@@ -77,5 +96,34 @@ export class SolicitacaoServicoService {
             .post( urlAtestado, atestado, { headers: this.headers } )
             .toPromise();
     }
+    
+    getGheService() {
+        return this.gheService;
+    }
+    
+    getGerenciaService() {
+        return this.gerenciaService;
+    }
+    
+    getCargoService() {
+        return this.cargoService;
+    }
+    
+    getFuncaoService() {
+        return this.funcaoService;
+    }
+    
+    getGheeService() {
+        return this.gheeService;
+    }
+    
+    getBaseService() {
+        return this.baseService;
+    }
+    
+    getRegimes() {
+        return this.regimeService.getRegimes();
+    }
+    
     
 }

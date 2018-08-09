@@ -69,6 +69,8 @@ import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.gua
 import { CatGuard } from './guards/guards-child/cat.guard';
 import { KanbanGuard } from './guards/kanban.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
+import { MudancaFuncaoGuard } from './guards/guards-child/mudanca-funcao.guard';
+import { AtendimentoAvulsoGuard } from './guards/guards-child/atendimento-avulso.guard';
 import { ParteCorpoAtingidaGuard } from './guards/guards-child/parte-corpo-atingida.guard';
 import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard';
 import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
@@ -235,6 +237,12 @@ const routes: Routes = [
   { path: 'atestado', 
       loadChildren: 'app/controller/atestado/atestado.module#AtestadoModule',
       canActivateChild: [AtestadoGuard]},
+  { path: 'mudanca-funcao', 
+      loadChildren: 'app/controller/mudanca-funcao/mudanca-funcao.module#MudancaFuncaoModule',
+      canActivateChild: [MudancaFuncaoGuard]},
+  { path: 'atendimento-avulso', 
+      loadChildren: 'app/controller/atendimento-avulso/atendimento-avulso.module#AtendimentoAvulsoModule',
+      canActivateChild: [AtendimentoAvulsoGuard]},
   { path: 'parte-corpo-atingida', 
       loadChildren: 'app/controller/parte-corpo-atingida/parte-corpo-atingida.module#ParteCorpoAtingidaModule',
       canActivateChild: [ParteCorpoAtingidaGuard]},

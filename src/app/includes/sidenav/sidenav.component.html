@@ -89,13 +89,9 @@
 			<a [routerLink]="['/requisito-aso']" *ngIf="checkPermissao('REQUISITO-ASO_LISTAR')">Requisito Aso</a>
 			<a [routerLink]="['/risco-ghe']" *ngIf="checkPermissao('RISCO-GHE_LISTAR')">Risco do GHE</a>
 			<a [routerLink]="['/servico']" *ngIf="checkPermissao('SERVICO_LISTAR')">Serviço</a>
-			<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('TIPO-GRUPO-MONITORAMENTO_LISTAR')">
-				Tipo Grupo Monitoramento
-			</a>
+			<a [routerLink]="['/tipo-grupo-monitoramento']" *ngIf="checkPermissao('TIPO-GRUPO-MONITORAMENTO_LISTAR')">Tipo Grupo Monitoramento</a>
 			<a [routerLink]="['/tipo-solicitacao']" *ngIf="checkPermissao('TIPO-SOLICITACAO_LISTAR')">Tipo Solicitação</a>
-			<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')" (click)="closeSidenav1(); closeSidenav3();">
-				Usuário
-			</a> 
+			<a [routerLink]="['/usuario']" *ngIf="checkPermissao('USUARIO_LISTAR')" (click)="closeSidenav1(); closeSidenav3();">Usuário</a> 
 			<a [routerLink]="['/vacina']" *ngIf="checkPermissao('VACINA_LISTAR')">Vacina</a>
 		</div>
 	</li>
@@ -113,6 +109,7 @@
 			<a [routerLink]="['/agenda-periodico']" *ngIf="checkPermissao('AGENDA-PERIODICO')">Agenda Periódico</a>
 			<a [routerLink]="['/aprho']" *ngIf="checkPermissao('APRHO_LISTAR')">Análise Preliminar de Risco (APR-HO)</a>
 			<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
+			<a [routerLink]="['/atendimento-avulso']" *ngIf="checkPermissao('ATENDIMENTO-AVULSO_LISTAR')">Atendimento Avulso</a>
 			<a [routerLink]="['/atestado']" *ngIf="checkPermissao('ATESTADO_LISTAR')">Atestado</a>
 			<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria De Aso</a>
 			<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Guia de Exame</a>
@@ -123,15 +120,16 @@
 			<a [routerLink]="['/cat']" *ngIf="checkPermissao('CAT_LISTAR')">CAT - Comunicado de Acidente de Trabalho</a>
 			<a [routerLink]="['/risco-potencial']" *ngIf="checkPermissao('RISCO-POTENCIAL_LISTAR')">Controle da SAST</a>
 			<a [routerLink]="['/convocacao']" *ngIf="checkPermissao('CONVOCACAO_LISTAR')">Convocação</a>
-			<a [routerLink]="['/atendimento/gerenciar']" *ngIf="checkPermissao('ATENDIMENTO_GERENCIAR')">Gerenciar Atendimentos</a>
 			<li>
-				<a materialize="sideNav"
-					[materializeParams]="[{closeOnClick: true}]"
-					[materializeActions]="sidenavActionsFilaEspera" data-activates="slide-out-fila-espera"
-					(click)="closeSidenavFilaEspera()">Fila de Espera<i class="material-icons" style="float: right; margin-left:">chevron_right</i>
-				</a>
+			<a materialize="sideNav"
+				[materializeParams]="[{closeOnClick: true}]"
+				[materializeActions]="sidenavActionsFilaEspera" data-activates="slide-out-fila-espera"
+				(click)="closeSidenavFilaEspera()">Fila de Espera<i class="material-icons" style="float: right; margin-left:">chevron_right</i>
+			</a>
 			</li>
-			<a [routerLink]="['/kanban']" *ngIf="checkPermissao('KANBAN')">Kanban</a>
+			<a [routerLink]="['/atendimento/gerenciar']" *ngIf="checkPermissao('ATENDIMENTO_GERENCIAR')">Gerenciar Atendimentos</a>
+			<a [routerLink]="['/kanban']" *ngIf="checkPermissao('KANBAN')">Kanban</a>			
+			<a [routerLink]="['/mudanca-funcao']" *ngIf="checkPermissao('MUDANCA-FUNCAO_LISTAR')">Mudança de Função</a>
 			<a [routerLink]="['/home']" *ngIf="checkPermissao('NOTIFICACAO')">Notificação</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		</div>

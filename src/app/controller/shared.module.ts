@@ -47,6 +47,7 @@ import { PessoaService } from './pessoa/pessoa.service';
 import { ServicoService } from './servico/servico.service';
 import { RegraAtendimentoService } from './regra-atendimento/regra-atendimento.service';
 import { FilaEsperaOcupacionalService } from './fila-espera-ocupacional/fila-espera-ocupacional.service';
+import { FilaAtendimentoOcupacionalService } from './fila-atendimento-ocupacional/fila-atendimento-ocupacional.service';
 import { AtendimentoService } from './atendimento/atendimento.service';
 import { RequisitoAsoService } from './requisito-aso/requisito-aso.service';
 import { AuditoriaAsoService } from './auditoria-aso/auditoria-aso.service';
@@ -71,6 +72,8 @@ import { AgenteRiscoService } from './agente-risco/agente-risco.service';
 import { AprhoService } from './aprho/aprho.service';
 import { CatService } from './cat/cat.service';
 import { AtestadoService } from './atestado/atestado.service';
+import { MudancaFuncaoService } from './mudanca-funcao/mudanca-funcao.service';
+import { TarefaService } from './tarefa/tarefa.service';
 import { ParteCorpoAtingidaService } from './parte-corpo-atingida/parte-corpo-atingida.service';
 import { AgenteCausadorService } from './agente-causador/agente-causador.service';
 import { NaturezaLesaoService } from './natureza-lesao/natureza-lesao.service';
@@ -146,6 +149,7 @@ import { ImovelService } from './imovel/imovel.service';
     ServicoService,
     RegraAtendimentoService,
     FilaEsperaOcupacionalService,
+    FilaAtendimentoOcupacionalService,
     AtendimentoService,
     RequisitoAsoService,
     AuditoriaAsoService,
@@ -169,6 +173,8 @@ import { ImovelService } from './imovel/imovel.service';
     SolicitacaoCentralIntegraService,
     CatService,
     AtestadoService,
+    MudancaFuncaoService,
+    TarefaService,
     ParteCorpoAtingidaService,
     AgenteCausadorService,
     NaturezaLesaoService,

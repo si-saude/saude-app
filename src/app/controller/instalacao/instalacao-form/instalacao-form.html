@@ -44,13 +44,31 @@
 				<div class="row">
 					<div class="input-field col s6">
 						<label for="latitude">Latitude</label> <input id="latitude"
-							type="text" [(ngModel)]="instalacao.latitude" name="latitude">
+							type="number" [(ngModel)]="instalacao.latitude" name="latitude">
 					</div>
 
 					<div class="input-field col s6">
 						<label for="longitude">Longitude</label> <input id="longitude"
-							type="text" [(ngModel)]="instalacao.longitude" name="longitude">
+							type="number" [(ngModel)]="instalacao.longitude" name="longitude">
 					</div>
+				</div>
+				<div class="row">
+				<div class="input-field col s4">
+							<fieldset>
+								<legend>
+									Base <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getBases()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
+								<select name="base" class="browser-default"
+									[(ngModel)]="instalacao.base.id">
+									<option disabled selected value=0>Selecione uma base</option>
+									<option *ngFor="let base of bases" value="{{base.id}}">{{base.nome}}</option>
+								</select>
+							</fieldset>
+						</div>
 				</div>
 
 			</div>
