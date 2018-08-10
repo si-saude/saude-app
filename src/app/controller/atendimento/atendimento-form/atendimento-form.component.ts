@@ -81,6 +81,7 @@ export class AtendimentoFormComponent {
     private triagemUtil: TriagemUtil;
     private fichaColetaUtil: FichaColetaUtil;
     private idEquipe: number;
+    private timeout: Subscription;
     
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
@@ -136,7 +137,6 @@ export class AtendimentoFormComponent {
                                     this.idEquipe = this.profissional.getEquipe().getId();
 
                                     this.primeiraAtualizacao();
-                                    this.atualizar();
                                 } else {
                                     this.router.navigate( ["/home"] );
                                     return;
@@ -202,22 +202,23 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
                         this.filaAtendimentoOcupacional.setProfissional( this.profissional );
                         this.filaAtendimentoOcupacional.setLocalizacao( this.localizacao );
                         
-                        this.atualizarLista();
+                        this.atualizar();
                     } else {
                         this.filaAtendimentoOcupacional = undefined;
                     }
+                    
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
                     this.filaAtendimentoOcupacional = undefined;
-                    console.log( "Erro ao atualizar primeira vez: " + error );
+                    console.log( "Erro ao atualizar primeira vez: " + error.text() );
+                    this.showPreload = false;
                 } )
         } else {
             console.log( "Profissional nao setado." )
@@ -225,12 +226,16 @@ export class AtendimentoFormComponent {
     }
 
     atualizar() {
+        console.log("atualizar");
         this.atualizarLista();
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
+            console.log(this.atendimento);
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    console.log("atendimento");
+                    console.log(this.atendimento)
                     
                     if ( this.atendimento.getTriagens() != undefined )
                         this.atendimento.getTriagens().forEach(t => {
@@ -270,12 +275,12 @@ export class AtendimentoFormComponent {
                             this.audio.play();
                         }
                     }
-                    
-                    if ( this.atendimento.getFilaAtendimentoOcupacional() == undefined || 
+                    if ( this.atendimento.getFilaAtendimentoOcupacional().getId() == 0 || 
                             ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("DISPON") && 
                             !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("IN") ) ) {
-                        setTimeout(() => { this.atualizar() }, 33000);
+                        this.timeout = Observable.timer(33000).subscribe(() => this.atualizar()); 
                     }
+                    
                     this.showPreload = false;
                 } )
                 .catch( error => {
@@ -604,6 +609,8 @@ export class AtendimentoFormComponent {
         this.alive = false;
         if ( this.inscricao != undefined )
             this.inscricao.unsubscribe();
+        if ( this.timeout != undefined )
+            this.timeout.unsubscribe();
     }
     
 }

@@ -59,7 +59,6 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                     this.service.get( id )
                         .then( res => {
                             this.showPreload = false;
-                            console.log(res.json());
                             this.atestado = new AtestadoBuilder().clone( res.json() );
                             
                             if ( this.atestado.getCid() != undefined && this.atestado.getCid() != "" ) {
@@ -122,9 +121,11 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-        if ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate().getTime() > 
-                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate().getTime() ) {
-            this.showTextToast("Erro: data da entrega maior do que data da homologacao.", 5000);
+        if ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate() != undefined && 
+                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate() != undefined && 
+                ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate().getTime() > 
+                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate().getTime() ) ) {
+            this.showTextToast("Erro: datas incondizentes.", 5000);
             return;
         }
 
@@ -155,13 +156,9 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                     readerAnexo.readAsArrayBuffer( new Blob( [anexo] ) );
                 }
             } else {
-                console.log(this.atestado)
-                console.log(new AtestadoBuilder().clone( this.atestado ));
                 this.salvar( new AtestadoBuilder().clone( this.atestado ) );
             }
         } else {
-            console.log(this.atestado)
-            console.log(new AtestadoBuilder().clone( this.atestado ));
             this.salvar( new AtestadoBuilder().clone( this.atestado ) );
         }
     }
