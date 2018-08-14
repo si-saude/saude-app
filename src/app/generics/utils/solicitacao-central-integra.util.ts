@@ -2,7 +2,7 @@ import { SolicitacaoCentralIntegra } from './../../model/solicitacao-central-int
 
 export class SolicitacaoCentralIntegraUtil {
     
-    setColor( value: string ) {
+    public setColor( value: string ) {
         let c = value.valueOf();
         c = this.transform(c)
         let ret;
@@ -31,7 +31,7 @@ export class SolicitacaoCentralIntegraUtil {
         }
     }
     
-    transform( value: string ) {
+    public transform( value: string ) {
         if ( value.includes("EXECU") )
             return "EXECU";
         else if ( value.includes("AGUARDANDO INFORMA") )
@@ -41,13 +41,13 @@ export class SolicitacaoCentralIntegraUtil {
         else return value;
     }
     
-    setStyleAtrasado( solicitacao: SolicitacaoCentralIntegra ) {
+    public setStyleAtrasado( solicitacao: SolicitacaoCentralIntegra ) {
         if ( solicitacao.getAtrasado() )
             return 'background : #f78181';
         return '#fff';
     }
     
-    setNgStyleAtrasado( solicitacao: SolicitacaoCentralIntegra ) {
+    public setNgStyleAtrasado( solicitacao: SolicitacaoCentralIntegra ) {
         if ( solicitacao.getAtrasado() )
             return {'background' : '#f78181'};
         return {'background' : ''};

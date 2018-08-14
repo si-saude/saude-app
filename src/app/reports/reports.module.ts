@@ -6,18 +6,18 @@ import { DataTableModule } from "angular2-datatable";
 import { MaterializeModule } from "angular2-materialize";
 import { MyDatePickerModule } from 'mydatepicker';
 
-import { EmpregadosPorGrupoComponent } from './empregados-por-grupo/empregados-por-grupo.component';
-import { EmpregadosPorGrupoService } from './empregados-por-grupo/empregados-por-grupo.service';
-import { PanoramaComponent } from './panorama/panorama.component';
-import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integra/solicitacao-central-integra.component';
-import { AtestadoComponent } from './atestado/atestado.component';
-import { CatComponent } from './cat/cat.component';
-import { AvaliacaoHigieneOcupacionalComponent } from './avaliacao-higiene-ocupacional/avaliacao-higiene-ocupacional.component';
-import { PreRequisitosAgendamentoComponent } from './pre-requisitos-agendamento/pre-requisitos-agendamento.component';
-import { PanoramaService } from './panorama/panorama.service';
-import { AtestadoService } from './atestado/atestado.service';
-import { CatService } from './cat/cat.service';
-import { PreRequisitosAgendamentoService } from './pre-requisitos-agendamento/pre-requisitos-agendamento.service';
+import { EmpregadosPorGrupoReportComponent } from './empregados-por-grupo-report/empregados-por-grupo-report.component';
+import { EmpregadosPorGrupoReportService } from './empregados-por-grupo-report/empregados-por-grupo-report.service';
+import { PanoramaReportComponent } from './panorama-report/panorama-report.component';
+import { SolicitacaoCentralIntegraReportComponent } from './solicitacao-central-integra-report/solicitacao-central-integra-report.component';
+import { AtestadoReportComponent } from './atestado-report/atestado-report.component';
+import { CatReportComponent } from './cat-report/cat-report.component';
+import { AvaliacaoHigieneOcupacionalReportComponent } from './avaliacao-higiene-ocupacional-report/avaliacao-higiene-ocupacional-report.component';
+import { PreRequisitosAgendamentoReportComponent } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.component';
+import { PanoramaReportService } from './panorama-report/panorama-report.service';
+import { AtestadoReportService } from './atestado-report/atestado-report.service';
+import { CatReportService } from './cat-report/cat-report.service';
+import { PreRequisitosAgendamentoReportService } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
 import { PipesModule } from './../controller/pipes.module';
@@ -25,13 +25,13 @@ import { ModalAvaliacaoHigieneOcupacionalModule } from './../controller/modal-av
 
 @NgModule({
     declarations: [
-       EmpregadosPorGrupoComponent,
-       PanoramaComponent,
-       SolicitacaoCentralIntegraComponent,
-       AtestadoComponent,
-       CatComponent,
-       AvaliacaoHigieneOcupacionalComponent,
-       PreRequisitosAgendamentoComponent
+       EmpregadosPorGrupoReportComponent,
+       PanoramaReportComponent,
+       SolicitacaoCentralIntegraReportComponent,
+       AtestadoReportComponent,
+       CatReportComponent,
+       AvaliacaoHigieneOcupacionalReportComponent,
+       PreRequisitosAgendamentoReportComponent
      ],
      imports: [
         ReportsRoutingModule,
@@ -43,11 +43,11 @@ import { ModalAvaliacaoHigieneOcupacionalModule } from './../controller/modal-av
         ModalAvaliacaoHigieneOcupacionalModule
      ],
      providers: [
-        EmpregadosPorGrupoService,
-        PanoramaService,
-        AtestadoService,
-        CatService,
-        PreRequisitosAgendamentoService
+        EmpregadosPorGrupoReportService,
+        PanoramaReportService,
+        AtestadoReportService,
+        CatReportService,
+        PreRequisitosAgendamentoReportService
      ]
 })
 export class ReportsModule{}

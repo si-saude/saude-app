@@ -13,9 +13,10 @@ import { ProfissionalSaudeFilter } from './../profissional-saude/profissional-sa
 import { UsuarioService } from './../usuario/usuario.service';
 import { EquipeService } from './../equipe/equipe.service';
 import { GenericService } from './../../generics/generic.service';
+import { InterfaceServiceReport } from './../../interfaces/interface.service.report';
 
 @Injectable()
-export class SolicitacaoCentralIntegraService extends GenericService {
+export class SolicitacaoCentralIntegraService extends GenericService implements InterfaceServiceReport {
 
     constructor( http: Http, router: Router,
             private usuarioService: UsuarioService,
@@ -40,6 +41,13 @@ export class SolicitacaoCentralIntegraService extends GenericService {
     
     getSolicitacoes( solicitacaoCentralIntegraFilter: SolicitacaoCentralIntegraFilter ) {
         return this.list( solicitacaoCentralIntegraFilter );
+    }
+    
+    getEntities() {
+        let urlSolicitacoesCentralIntegra = this.URL + "/get-solicitacoes-central-integra";
+        return this.http
+            .get( urlSolicitacoesCentralIntegra + "?cpf=" + 0, { headers: this.headers } )
+            .toPromise();
     }
     
     getSolicitacoesReport( cpf ) {

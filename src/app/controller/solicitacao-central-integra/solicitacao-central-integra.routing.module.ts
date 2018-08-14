@@ -3,7 +3,6 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { KanbanComponent } from './../../kanban/kanban.component';
-import { SolicitacaoCentralIntegraComponent } from './../../reports/solicitacao-central-integra/solicitacao-central-integra.component'
 import { SolicitacaoCentralIntegraFormComponent } from './solicitacao-central-integra-form/solicitacao-central-integra-form.component';
 import { SolicitacaoCentralIntegraFormObservacaoComponent } from './solicitacao-central-integra-form/solicitacao-central-integra-form-observacao.component';
 import { SolicitacaoCentralIntegraFormDescricaoComponent } from './solicitacao-central-integra-form/solicitacao-central-integra-form-descricao.component';

@@ -38,12 +38,10 @@ export class DeclaracaoComparecimentoComponent {
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.atendimento = new AtendimentoBuilder().initialize(new Atendimento())
+        this.atendimento = new AtendimentoBuilder().initialize(new Atendimento());
         this.myDatePickerOptions = { dateFormat: 'dd/mm/yyyy' };
         this.autoCompleteEmp = new EmpregadoNomeAutocomplete(filaEsperaOcupacionalService.getEmpregadoService()); 
     }
-
-    ngOnInit() {}
     
     downloadDeclaracaoComparecimento() {
         if ( this.dataDeclaracao == null || this.atendimento.getFilaEsperaOcupacional().getEmpregado().getId() == 0 ) {
