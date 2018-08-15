@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import * as $ from 'jquery';
 import { MaterializeAction } from "angular2-materialize";
+import { DragulaService } from 'ng2-dragula';
 
 import { Usuario } from './../model/usuario';
 import { UsuarioBuilder } from './../controller/usuario/usuario.builder';
@@ -21,10 +22,10 @@ import { SolicitacaoCentralIntegra } from './../model/solicitacao-central-integr
 import { SolicitacaoCentralIntegraFilter } from './../controller/solicitacao-central-integra/solicitacao-central-integra.filter';
 import { SolicitacaoCentralIntegraBuilder } from './../controller/solicitacao-central-integra/solicitacao-central-integra.builder';
 import { SolicitacaoCentralIntegraService } from './../controller/solicitacao-central-integra/solicitacao-central-integra.service';
-import { DragulaService } from 'ng2-dragula/ng2-dragula';
 import { SolicitacaoCentralIntegraUtil } from './../generics/utils/solicitacao-central-integra.util';
 import { HttpUtil } from './../generics/utils/http.util';
 import { BooleanFilter } from './../generics/boolean.filter';
+import { TextUtil } from './../generics/utils/text.util';
 
 @Component( {
     selector: 'app-kanban',
@@ -44,25 +45,26 @@ export class KanbanComponent {
     private idResponsavel: number = 0;
 
     private showPreload: boolean;
-    private toastParams;
-    private globalActions;
+    private textUtil: TextUtil;
 
     constructor( router: Router, private kanbanService: SolicitacaoCentralIntegraService,
         private dragulaService: DragulaService ) {
+        dragulaService.setOptions('card', {
+            revertOnSpill: true
+        } );
+        dragulaService.drop.subscribe(( value ) => {
+            this.drop( value );
+        } );
         this.solicitacaoCentralIntegras = new Array<SolicitacaoCentralIntegra>();
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.router = router;
         this.statuses = new Array<string>();
         this.responsavel = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.responsaveis = new ProfissionalSaudeBuilder().initializeList( new Array<Profissional>() );
-        dragulaService.drop.subscribe(( value ) => {
-            this.drop( value );
-        } );
         this.solicitacaoCentralIntegraUtil = new SolicitacaoCentralIntegraUtil();
         this.httpUtil = new HttpUtil();
-
-        this.toastParams = ['', 4000];
-        this.globalActions = new EventEmitter<string | MaterializeAction>();
+        this.textUtil = new TextUtil();
+        
         this.showPreload = false;
     }
 
@@ -118,8 +120,7 @@ export class KanbanComponent {
             .catch( error => {
                 this.showPreload = false;
                 if ( typeof error.text === "function" ) {
-                    this.toastParams = [error.text(), 6000];
-                    this.globalActions.emit( 'toast' );
+                    this.textUtil.showTextToast(error.text(), 6000);
                     return;
                 } else console.log( "Erro ao buscar o anexo: " + error );
             } )
@@ -205,6 +206,7 @@ export class KanbanComponent {
     }
 
     drop( valor ) {
+        let component = this;
         let id = $( valor[1] ).attr( 'name' ).split( "-" )[1];
         let changeStatus = $( valor[2] ).attr( 'id' );
         let solicitacaoCentralIntegra: SolicitacaoCentralIntegra = this.solicitacaoCentralIntegras.
@@ -212,14 +214,25 @@ export class KanbanComponent {
         solicitacaoCentralIntegra.setStatus(changeStatus);
         this.kanbanService.submit( solicitacaoCentralIntegra )
             .then( res => {
-                solicitacaoCentralIntegra = this.solicitacaoCentralIntegras.find( sCI => sCI.getId() == Number( id ) );
                 let solicitacao = new SolicitacaoCentralIntegraBuilder().clone( res.json() );
+                solicitacaoCentralIntegra = this.solicitacaoCentralIntegras.
+                    find( sCI => sCI.getId() == Number( id ) );
                 solicitacaoCentralIntegra.setVersion(solicitacao.getVersion());
                 solicitacaoCentralIntegra.getTarefa().setVersion(solicitacao.getTarefa().getVersion());
+                solicitacaoCentralIntegra.getTarefa().setInicio(solicitacao.getTarefa().getInicio());
+                solicitacaoCentralIntegra.getTarefa().setStatus(solicitacao.getTarefa().getStatus());
             } )
             .catch( error => {
-                console.log( "Erro ao atualizar a solicitacoes: "+error);
+                let previewStatus = $( valor[3] ).attr( 'id' );
+                component.textUtil.showTextToast(error.text(), 4000);
+                solicitacaoCentralIntegra.setStatus(previewStatus);
+                component.autoChangeStatusCard(valor);
+                console.log("Erro ao atualizar a solicitacoes: "+error.text());
             } )
+    }
+    
+    autoChangeStatusCard(valor) {
+        $( ".body-kanban-" + this.getShortStatus($(valor[3]).attr('id')) ).append($(valor[1]));
     }
 
     constructCardsSolicitacoes() {
@@ -228,7 +241,7 @@ export class KanbanComponent {
         this.solicitacaoCentralIntegras.forEach( sCI => {
             $( ".body-kanban-" + component.getShortStatus( sCI.getStatus() ) ).append(
                 "<div style='margin-left: 5%; width: 80%;"+ this.solicitacaoCentralIntegraUtil.setStyleAtrasado(sCI)+"' name='card-" + sCI.getId() + "' class='row card card-" + sCI.getId() + "' [dragula]='card'>" +
-                "<div class='col s10 card-content'>" + this.showShortDescricao( sCI.getDescricao() ) + "</div> " +
+                "<div class='col s10 card-content'>" + this.textUtil.shortText( sCI.getDescricao() ) + "</div> " +
                 "<i style='cursor: pointer;' class='small material-icons icon icon-" + sCI.getId() + "'>file_download</i>" +
                 "</div> " );
         } )
@@ -238,23 +251,14 @@ export class KanbanComponent {
                     window.open("/solicitacao-central-integra/editar/"+sCI.getId() );
                 else window.open("/solicitacao-central-integra/observacao/"+sCI.getId() );
             }).mouseenter(function() {
-                component.showDescricao( sCI.getDescricao() );
+                component.textUtil.showTextToast(sCI.getDescricao(), 60000);
             }).mouseleave(function() {
-                component.closeTooltip();
+                component.textUtil.closeTooltip();
             });
             $( ".icon-" + sCI.getId() ).click( function() {
                 component.getAnexo( sCI );
             } );
         } )
-    }
-    
-    showDescricao( descricao: string ) {
-        this.toastParams = [descricao, 60000];
-        this.globalActions.emit( 'toast' );
-    }
-    
-    closeTooltip() {
-        $(".toast").remove();
     }
     
     getShortStatus( status: string ) {
@@ -273,12 +277,6 @@ export class KanbanComponent {
         } )
     }
 
-    showShortDescricao( descricao: string ) {
-        if ( descricao.length > 100 )
-            return descricao.substring( 0, 97 ) + "...";
-        else return descricao;
-    }
-
     verifyStatus( status: string ) {
         if ( status == "ABERTO" && !this.verifyCoordenador() )
             return false;
@@ -290,8 +288,4 @@ export class KanbanComponent {
             return true;
         else return false;
     }
-
-    ngOnDestroy() {
-    }
-
 }
