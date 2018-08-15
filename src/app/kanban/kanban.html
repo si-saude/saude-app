@@ -30,14 +30,14 @@
 				<p class="head-kanban"
 					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('ABERTO')"
 					style="border-bottom: 1px solid black;">ABERTO</p>
-				<div id='ABERTO' class="body-kanban body-kanban-ABERTO"
+				<div id='ABERTO' class="body-kanban body-kanban-ABERTO" [(dragulaModel)]="aberto"
 					[dragula]="card"></div>
 			</div>
 			<div class="frame-kanban">
 				<p class="head-kanban"
 					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('PLANEJADO')">
 					PLANEJADO</p>
-				<div id='PLANEJADO' class="body-kanban body-kanban-PLANEJADO"
+				<div id='PLANEJADO' class="body-kanban body-kanban-PLANEJADO" [(dragulaModel)]="planejado"
 					[dragula]="card"></div>
 			</div>
 		</div>
@@ -46,14 +46,14 @@
 				<p class="head-kanban"
 					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('EXECU')">
 					EXECUÇÃO</p>
-				<div id='EXECUÇÃO' class="body-kanban body-kanban-EXECU"
+				<div id='EXECUÇÃO' class="body-kanban body-kanban-EXECU" [(dragulaModel)]="execucao"
 					[dragula]="card"></div>
 			</div>
 			<div class="frame-kanban">
 				<p class="head-kanban"
 					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('AGUARDANDO INFORMA')">
 					AGUARDANDO INFORMAÇÃO</p>
-				<div id='AGUARDANDO INFORMAÇÃO'
+				<div id='AGUARDANDO INFORMAÇÃO' [(dragulaModel)]="aguardandoInformacao"
 					class="body-kanban body-kanban-AGUARDANDOINFORMA" [dragula]="card"></div>
 			</div>
 		</div>
@@ -62,14 +62,14 @@
 				<p class="head-kanban"
 					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('CONCLU')">
 					CONCLUÍDO</p>
-				<div id='CONCLUÍDO' class="body-kanban body-kanban-CONCLU"
+				<div id='CONCLUÍDO' class="body-kanban body-kanban-CONCLU" [(dragulaModel)]="concluido"
 					[dragula]="card"></div>
 			</div>
 			<div class="frame-kanban">
 				<p class="head-kanban"
 					[ngStyle]="solicitacaoCentralIntegraUtil.setColor('CANCELADO')">
 					CANCELADO</p>
-				<div id='CANCELADO' class="body-kanban body-kanban-CANCELADO"
+				<div id='CANCELADO' class="body-kanban body-kanban-CANCELADO" [(dragulaModel)]="cancelado"
 					[dragula]="card"></div>
 			</div>
 		</div>
@@ -77,5 +77,5 @@
 	
 </div>
 
-<div materialize [materializeParams]="toastParams"
-	[materializeActions]="globalActions"></div>
+<div materialize [materializeParams]="textUtil.toastParams"
+	[materializeActions]="textUtil.globalActions"></div>
