@@ -146,7 +146,7 @@
 
 								<div class="input-field col s4">
 									<label for="local">Local</label> <input id="local" type="text"
-										name="empregadoConvocacao.resultadoExames[{{iREx}}].local"
+										name="empregadoConvocacao.resultadoExames[{{iREx}}].local" maxlength="64"
 										[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].local">
 								</div>
 
@@ -216,6 +216,7 @@
 														<div *ngSwitchDefault>
 															<textarea id="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
 																name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+																maxlength="2048"
 																[(ngModel)]="itemResultadoExame.resultado"></textarea>
 														</div>
 													</div>

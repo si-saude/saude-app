@@ -26,8 +26,9 @@
 		<div id="dadosGerais">
 			<div class="row">
 				<div class="input-field col s12">
-					<label for="nome" data-error="Campo obrigatório.">Nome</label> <input
-						id="nome" type="text" required name="localizacao.nome"
+					<label for="nome" data-error="Campo obrigatório.">Nome</label> 
+					<input id="nome" type="text" required maxlength="50" 
+						name="localizacao.nome"
 						[(ngModel)]="localizacao.nome">
 				</div>
 			</div>

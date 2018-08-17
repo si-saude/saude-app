@@ -29,7 +29,7 @@
 				</th>
 				<th style="width: 1%">
 					<mfDefaultSorter by="prazo">Prazo</mfDefaultSorter>
-					<input type="text" name="prazo" style="width: 90%"
+					<input type="text" name="prazo" style="width: 90%" maxlength="10"
 						placeholder="filtrar prazo" (input)="selectFilter($event, 'prazo')">
 				</th>
 				<th style="width: 2%">
@@ -40,7 +40,7 @@
 					</div></th>
 				<th style="width: 1%">
 					<mfDefaultSorter by="abertura">Abertura</mfDefaultSorter>
-					<input type="text" name="abertura" style="width: 90%"
+					<input type="text" name="abertura" style="width: 90%" maxlength="10"
 						placeholder="filtrar abertura" (input)="selectFilter($event, 'abertura')"></th>
 				<th style="width: 2%"><mfDefaultSorter by="observacao">Observacao</mfDefaultSorter>
 				</th>

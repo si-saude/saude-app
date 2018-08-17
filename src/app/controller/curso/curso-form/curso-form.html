@@ -15,7 +15,8 @@
 
 			<div class="input-field col s12">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label>
-				<input id="nome" type="text" required name="curso.nome" [(ngModel)]="curso.nome">
+				<input id="nome" type="text" required maxlength="120" 
+					name="curso.nome" [(ngModel)]="curso.nome">
 			</div>
 			
 		</div>
@@ -24,7 +25,8 @@
 		
 			<div class="input-field col s8">
 				<label for="descricao">Descricao</label>
-				<input id="descricao" type="text" name="curso.descricao" [(ngModel)]="curso.descricao">
+				<input id="descricao" type="text" maxlength="1024" 
+					name="curso.descricao" [(ngModel)]="curso.descricao">
 			</div>
 
 			<div class="input-field col s4">

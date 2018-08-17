@@ -29,7 +29,7 @@
 
 					<div class="input-field col s12">
 						<label for="cpf">CPF</label> 
-						<input id="cpf" type="text" [mask]="'cpf'"
+						<input id="cpf" type="text" [mask]="'cpf'" maxlength="16"
 							name="cpf" [(ngModel)]="cpf">
 					</div>
 
@@ -38,7 +38,8 @@
 				<div class="row">
 
 					<div class="input-field col s12">
-						<label for="matricula">Matricula</label> <input id="matricula"
+						<label for="matricula">Matricula</label> 
+						<input id="matricula" maxlength="32"
 							type="text" name="matricula" [(ngModel)]="matricula">
 					</div>
 
@@ -47,7 +48,8 @@
 				<div class="row">
 
 					<div class="input-field col s12">
-						<label for="chave">Chave</label> <input id="chave" type="text"
+						<label for="chave">Chave</label> 
+						<input id="chave" type="text" maxlength="16"
 							name="chave" [(ngModel)]="chave">
 					</div>
 

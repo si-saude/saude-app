@@ -16,7 +16,7 @@
 
 			<div class="input-field col s10">
 				<label for="codigo" data-error="Campo obrigatório.">Código</label> <input
-					id="codigo" type="text" required name="diagnostico.codigo"
+					id="codigo" type="text" required name="diagnostico.codigo" maxlength="16"
 					[(ngModel)]="diagnostico.codigo">
 			</div>
 			
@@ -32,7 +32,7 @@
 
 			<div class="input-field col s12">
 				<label for="descricao">Descrição</label> 
-				<textarea id="descricao" class="materialize-textarea" 
+				<textarea id="descricao" class="materialize-textarea" maxlength="300"
 					required name="diagnostico.descricao" [(ngModel)]="diagnostico.descricao"></textarea>
 			</div>
 

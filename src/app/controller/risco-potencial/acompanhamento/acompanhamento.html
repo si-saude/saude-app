@@ -136,7 +136,7 @@
 																			<td class="col s9 descricao">
 																				<textarea [disabled]="!verifyAcompanhamento(acao)"
 																					class="materialize-textarea acompanhamento-descricao" 
-																					[(ngModel)]="acompanhamento.descricao"
+																					[(ngModel)]="acompanhamento.descricao" maxlength="1024"
 																					name="acompanhamento{{e}}_{{t}}_{{a}}_{{acmp}}.descricao">
 																				</textarea>
 																			</td>

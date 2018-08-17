@@ -15,13 +15,13 @@
 
 			<div class="input-field col s8">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label>
-				<input id="nome" type="text" required 
+				<input id="nome" type="text" required maxlength="50"
 				[(ngModel)]="cidade.nome" name="cidade.nome">
 			</div>
 		
 			<div class="input-field col s4">
 				<label for="uf">UF</label>
-				<input id="uf" type="text"
+				<input id="uf" type="text" maxlength="2"
 				[(ngModel)]="cidade.uf" name="cidade.uf">
 			</div>
 	

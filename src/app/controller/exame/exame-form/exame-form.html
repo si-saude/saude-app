@@ -28,7 +28,7 @@
 				<div class="row">
 
 					<div class="input-field col s10">
-						<label for="codigo">Código</label> <input id="codigo" type="text"
+						<label for="codigo">Código</label> <input id="codigo" type="text" maxlength="10"
 							[(ngModel)]="exame.codigo" name="exame.codigo">
 					</div>
 					
@@ -44,7 +44,7 @@
 
 					<div class="input-field col s12">
 						<label for="descricao">Descrição</label>
-						<textarea class="materialize-textarea" id="descricao"
+						<textarea class="materialize-textarea" id="descricao" maxlength="150"
 							[(ngModel)]="exame.descricao" name="exame.descricao"></textarea>
 					</div>
 
@@ -60,13 +60,13 @@
 
 						<div class="input-field col s3">
 							<label for="codigoCampo[indexCampoExame]">Código</label> 
-							<input id="codigoCampo[indexCampoExame]" type="text"
+							<input id="codigoCampo[indexCampoExame]" type="text" maxlength="3"
 								[(ngModel)]="codigoCampo[indexCampoExame]" name="codigoCampo[indexCampoExame]">
 						</div>
 						
 						<div class="input-field col s4">
 							<label for="tituloCampo[indexCampoExame]">Título</label> 
-							<input id="tituloCampo[indexCampoExame]" type="text"
+							<input id="tituloCampo[indexCampoExame]" type="text" maxlength="150"
 								[(ngModel)]="tituloCampo[indexCampoExame]" name="tituloCampo[indexCampoExame]">
 						</div>
 						

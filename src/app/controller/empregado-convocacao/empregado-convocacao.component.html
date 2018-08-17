@@ -45,7 +45,8 @@
 
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<label for="matricula">Matricula</label> <input type="text"
+			<label for="matricula">Matricula</label> 
+			<input type="text" maxlength="32"
 				id="matricula" [(ngModel)]="filter.empregado.matricula"
 				name="matricula">
 		</div>
@@ -53,7 +54,8 @@
 
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<label for="chave">Chave</label> <input type="text" id="chave"
+			<label for="chave">Chave</label> 
+			<input type="text" id="chave" maxlength="16"
 				[(ngModel)]="filter.empregado.chave" name="chave">
 		</div>
 	</div>

@@ -15,13 +15,13 @@
 
 			<div class="input-field col s12">
 				<label for="codigo">Código</label>
-				<input id="codigo" type="text" required
+				<input id="codigo" type="text" required maxlength="32"
 				name="codigo" [(ngModel)]="agenteCausador.codigo">
 			</div>
 			
 			<div class="input-field col s12">
 				<label for="descricao">Descrição</label>
-				<input id="descricao" type="text" required 
+				<input id="descricao" type="text" required maxlength="256" 
 				name="descricao" [(ngModel)]="agenteCausador.descricao">
 			</div>
 			

@@ -81,36 +81,40 @@
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="nome">Nome do Empregado</label> <input type="text"
+				<label for="nome">Nome do Empregado</label> 
+				<input type="text" maxlength="400"
 					id="nome" [(ngModel)]="filter.empregado.pessoa.nome" name="nome">
 			</div>
 		</div>
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="chave">Chave do Empregado</label> <input type="text"
+				<label for="chave">Chave do Empregado</label> 
+				<input type="text" maxlength="4"
 					id="chave" [(ngModel)]="filter.empregado.chave" name="chave">
 			</div>
 		</div>
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="matricula">Matricula do Empregado</label> <input
-					type="text" id="matricula" [(ngModel)]="filter.empregado.matricula"
-					name="matricula">
+				<label for="matricula">Matricula do Empregado</label> 
+				<input type="text" id="matricula" maxlength="32"
+					[(ngModel)]="filter.empregado.matricula" name="matricula">
 			</div>
 		</div>
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="status">Status</label> <input type="text" id="status"
+				<label for="status">Status</label> 
+				<input type="text" id="status" maxlength="32"
 					[(ngModel)]="filter.status" name="status">
 			</div>
 		</div>
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="servico">Nome do Serviço</label> <input type="text"
+				<label for="servico">Nome do Serviço</label> 
+				<input type="text" maxlength="128"
 					id="servico" [(ngModel)]="filter.atendimento.tarefa.servico.nome"
 					name="servico">
 			</div>

@@ -24,10 +24,10 @@
 					<div class="div-icon" id="gerencia"></div></th>
 				<th style="width: 1%"><mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
 					<input type="text" name="matricula" style="width: 90%"
-					placeholder="filtrar matrícula"
+					placeholder="filtrar matrícula" maxlength="32"
 					(input)="selectFilter($event, 'matricula')"></th>
 				<th style="width: 1%"><mfDefaultSorter by="nome">Nome</mfDefaultSorter>
-					<input type="text" name="nome" style="width: 90%"
+					<input type="text" name="nome" style="width: 90%" maxlength="400"
 					placeholder="filtrar nome" (input)="selectFilter($event, 'nome')">
 				</th>
 				<th style="width: 1.5%">
@@ -51,18 +51,18 @@
 				</th>
 				<th style="width: 1%"><mfDefaultSorter by="dataAsoAnoAnterior">Data
 					Aso Anterior</mfDefaultSorter> <input type="text" name="dataAsoAnoAnterior"
-					style="width: 90%" placeholder="filtrar data aso ano anterior"
+					style="width: 90%" placeholder="filtrar data aso ano anterior" maxlength="10"
 					(input)="selectFilter($event, 'dataAsoAnoAnterior')"></th>
 				<th style="width: 1%; font-size: 13px"><mfDefaultSorter
 						by="dataRealizacaoPreClinico">Data Realização
 					Pré-Clínico</mfDefaultSorter> <input type="text" name="dataRealizacaoPreClinico"
-					style="width: 90%"
+					style="width: 90%" maxlength="10"
 					placeholder="filtrar data realização pré clínico"
 					(input)="selectFilter($event, 'dataRealizacaoPreClinico')">
 				</th>
 				<th style="width: 1%"><mfDefaultSorter by="dataAsoAnoAtual">Data
 					Aso Atual</mfDefaultSorter> <input type="text" name="dataAsoAnoAtual"
-					style="width: 90%" placeholder="filtrar data aso ano atual"
+					style="width: 90%" placeholder="filtrar data aso ano atual" maxlength="10"
 					(input)="selectFilter($event, 'dataAsoAnoAtual')"></th>
 				<th style="width: 1%">
 					<div class="row">
@@ -86,7 +86,7 @@
 				</th>
 				<th style="width: 1%"><mfDefaultSorter by="pendencias">Pendências</mfDefaultSorter>
 					<input type="text" name="pendencias" style="width: 90%"
-					placeholder="filtrar pendências"
+					placeholder="filtrar pendências" maxlength="1024"
 					(input)="selectFilter($event, 'pendencias')"></th>
 				<th style="width: 1.5%; font-size: 13px;">
 					<div class="row">

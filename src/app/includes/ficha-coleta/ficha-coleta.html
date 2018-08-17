@@ -40,7 +40,7 @@
 							<div *ngFor="let itemDoItem of getItensDoItem(item); let ii = index" [class]="getClassItensResposta(resposta)">
 							
 								<div *ngIf="!itemHasPath(resposta, i, ii)">
-									<textarea
+									<textarea maxlength="2048"
 										[(ngModel)]="itemDoItem.conteudo" [disabled]="isDisabledResposta(resposta)"></textarea>
 								</div>
 								

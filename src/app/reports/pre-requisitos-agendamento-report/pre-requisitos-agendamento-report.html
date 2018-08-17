@@ -20,7 +20,7 @@
 			<tr>
 				<th style="width: 0.2%"><mfDefaultSorter by="agendado">Agendado</mfDefaultSorter>
 					<input type="text" name="agendado" style="width: 90%"
-					placeholder="filtrar agendado"
+					placeholder="filtrar agendado" maxlength="16"
 					(input)="selectFilter($event, 'agendado')"></th>
 				<th style="width: 0.4%"><mfDefaultSorter class="mleft"
 						by="base">Base</mfDefaultSorter>
@@ -29,7 +29,7 @@
 							(click)="dropdown(false, 'base')">arrow_drop_down</i>
 					</div></th>
 				<th style="width: 0.4%"><mfDefaultSorter by="chave">Chave</mfDefaultSorter>
-					<input type="text" name="chave" style="width: 100%"
+					<input type="text" name="chave" style="width: 100%" maxlength="16"
 					placeholder="filtrar chave" (input)="selectFilter($event, 'chave')">
 				</th>
 				<th style="width: 0.5%">
@@ -37,7 +37,7 @@
 						<mfDefaultSorter class="mleft" by="datasPreclinico">Datas
 						do Pre-Clínico</mfDefaultSorter>
 						<input type="text" name="datasPreclinico" style="width: 90%"
-							placeholder="filtrar Datas do Preclinico"
+							placeholder="filtrar Datas do Preclinico" maxlength="10"
 							(input)="selectFilter($event, 'datasPreclinico')">
 					</div>
 				</th>
@@ -46,7 +46,7 @@
 						<mfDefaultSorter class="mleft" by="examesPendentes">Exames
 						Pendentes</mfDefaultSorter>
 						<input type="text" name="examesPendentes" style="width: 90%"
-							placeholder="filtrar Exames Pendentes"
+							placeholder="filtrar Exames Pendentes" maxlength="1024"
 							(input)="selectFilter($event, 'examesPendentes')">
 					</div>
 				</th>
@@ -61,10 +61,10 @@
 				</th>
 				<th style="width: 0.4%"><mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
 					<input type="text" name="matricula" style="width: 90%"
-					placeholder="filtrar matricula"
+					placeholder="filtrar matricula" maxlength="32"
 					(input)="selectFilter($event, 'matricula')"></th>
 				<th style="width: 1%"><mfDefaultSorter by="nome">Nome</mfDefaultSorter>
-					<input type="text" name="nome" style="width: 100%"
+					<input type="text" name="nome" style="width: 100%" maxlength="400"
 					placeholder="filtrar nome" (input)="selectFilter($event, 'nome')">
 				</th>
 				<th style="width: 0.5%">
@@ -89,7 +89,7 @@
 				</th>
 				<th style="width: 1%"><mfDefaultSorter by="titulo">Título</mfDefaultSorter>
 					<input type="text" name="titulo" style="width: 100%"
-					placeholder="filtrar titulo"
+					placeholder="filtrar titulo" maxlength="128"
 					(input)="selectFilter($event, 'titulo')"></th>
 			</tr>
 		</thead>

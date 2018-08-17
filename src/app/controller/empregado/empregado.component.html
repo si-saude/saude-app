@@ -40,32 +40,6 @@
 		[paginas]="paginas" [listComponent]="listComponent"
 		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
 
-	<!-- Paginação
-<ul class="pagination center-align" *ngIf="!verifyEmptyPaginas">
-
-	<li><a [ngStyle]="{'cursor': 'pointer'}" (click)="goToPage(1)">
-			<i class="material-icons arrow-pagination">first_page</i>
-	</a></li>
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(filter.getPageNumber()-1)"> <i
-			class="material-icons arrow-pagination">chevron_left</i>
-	</a></li>
-
-	<li [ngClass]="activePage(paginaAtual)" class="waves-effect"
-		*ngFor="let paginaAtual of paginasAtuais; let i = index"><a
-		(click)="goToPage(paginaAtual)">{{paginaAtual}} </a></li>
-
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(filter.getPageNumber()+1)"> <i
-			class="material-icons arrow-pagination">chevron_right</i>
-	</a></li>
-	<li><a [ngStyle]="{'cursor': 'pointer'}"
-		(click)="goToPage(paginas.length)"> <i
-			class="material-icons arrow-pagination">last_page</i>
-	</a></li>
-
-</ul> -->
-
 	<div class="row">
 		<div class="col s4">
 			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
@@ -88,7 +62,8 @@
 	<div class="row">
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="nome">Nome</label> <input type="text" id="nome"
+				<label for="nome">Nome</label> 
+				<input type="text" id="nome" maxlength="400"
 					[(ngModel)]="filter.pessoa.nome" name="nome">
 			</div>
 		</div>
@@ -127,21 +102,24 @@
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="chave">Chave</label> <input type="text" id="chave"
+				<label for="chave">Chave</label> 
+				<input type="text" id="chave" maxlength="16"
 					[(ngModel)]="filter.chave" name="chave">
 			</div>
 		</div>
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="matricula">Matricula</label> <input type="text"
+				<label for="matricula">Matricula</label> 
+				<input type="text" maxlength="32"
 					id="matricula" [(ngModel)]="filter.matricula" name="matricula">
 			</div>
 		</div>
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="ramal">Ramal</label> <input type="text" id="ramal"
+				<label for="ramal">Ramal</label> 
+				<input type="text" id="ramal" maxlength="16"
 					[(ngModel)]="filter.ramal" name="ramal">
 			</div>
 		</div>
@@ -182,8 +160,9 @@
 		
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="gerencia.codigoCompleto">Gerência</label> <input type="text"
-					id="gerencia.codigoCompleto" [(ngModel)]="filter.gerencia.codigoCompleto" name="gerencia.codigoCompleto">
+				<label for="gerencia.codigoCompleto">Gerência</label> 
+				<input type="text" maxlength="64" id="gerencia.codigoCompleto" 
+				[(ngModel)]="filter.gerencia.codigoCompleto" name="gerencia.codigoCompleto">
 			</div>
 		</div>
 		<!--

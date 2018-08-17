@@ -33,7 +33,7 @@
 				
 				<div class="input-field col s6">
 					<label for="path">Path</label> <input id="path" type="text"
-						name="perguntaFichaColeta.path"
+						name="perguntaFichaColeta.path" maxlength="128"
 						[(ngModel)]="perguntaFichaColeta.path">
 				</div>
 
@@ -79,7 +79,7 @@
 					<div class="input-field col s12">
 						<label for="descricao">Descrição</label>
 						<textarea id="descricao" class="materialize-textarea" required
-							name="perguntaFichaColeta.descricao"
+							name="perguntaFichaColeta.descricao" maxlength="1024"
 							[(ngModel)]="perguntaFichaColeta.descricao"></textarea>
 					</div>	
 				</div>
@@ -145,7 +145,8 @@
 				<div class="row row-labels">
 
 					<div class="input-field col s10">
-						<label for="label">Título</label> <input id="label" type="text"
+						<label for="label">Título</label> 
+						<input id="label" type="text" maxlength="64"
 							name="label" #label>
 					</div>
 					<div class="col s2">
@@ -172,7 +173,8 @@
 								<tr class="col s12">
 									<td class="col s5 label">{{item.label}}</td>
 									<td class="col s5 path">
-										<input type='text' name="path{{p}}" [(ngModel)]="item.path">
+										<input type='text' name="path{{p}}" maxlength="64" 
+										[(ngModel)]="item.path">
 									</td>
 									<td class="col s2 botao-remover"><a
 										class="btn-floating waves-effect waves-light red btn-remove"

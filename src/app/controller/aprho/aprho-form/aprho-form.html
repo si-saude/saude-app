@@ -34,14 +34,14 @@
 						<div class="row">
 							<div class="input-field col s9">
 								<label for="empresa">Empresa</label>
-								<input id="empresa" type="text" required
-								name="empresa" [(ngModel)]="aprho.empresa">
+								<input id="empresa" type="text" required maxlength="1024"
+									name="empresa" [(ngModel)]="aprho.empresa">
 							</div>		
 								<div class="input-field col s3">
-											<label for="data">Data de Criação</label>
-											<my-date-picker name="data" required
-												[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.appDate"
-												placeholder="Data"> </my-date-picker>
+									<label for="data">Data de Criação</label>
+									<my-date-picker name="data" required
+										[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.appDate"
+										placeholder="Data"> </my-date-picker>
 								</div>
 						</div>
 						<div class="row">
@@ -49,12 +49,12 @@
 							<fieldset>
 								<label for="aprho.ghe" >GHE</label> 						
 								<input type="text" materialize="autocomplete" autocomplete="off"
-								name="aprho.ghe.nome"
-								[(ngModel)]="aprho.ghe.nome"
-								(blur)="autoCompleteGhe.getAutocomplete().getObj($event,aprho,'setGhe','getNome')"
-								(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(aprho.ghe, 'getNome');"
-								(keydown.enter)="autoCompleteGhe.getAutocomplete().pressEnter($event,aprho,'setGhe','getNome');"
-								[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
+									name="aprho.ghe.nome"
+									[(ngModel)]="aprho.ghe.nome"
+									(blur)="autoCompleteGhe.getAutocomplete().getObj($event,aprho,'setGhe','getNome')"
+									(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(aprho.ghe, 'getNome');"
+									(keydown.enter)="autoCompleteGhe.getAutocomplete().pressEnter($event,aprho,'setGhe','getNome');"
+									[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
 							</fieldset>
 						</div>	
 							<div class="input-field col s3">
@@ -80,7 +80,7 @@
 				</div>
 					<div class="input-field col s2">
 								<label for="revisao">Revisão</label>
-								<input id="revisao" type="text" required
+								<input id="revisao" type="text" required maxlength="16"
 								name="revisao" [(ngModel)]="aprho.revisao">
 							</div>
 					</div>
@@ -91,7 +91,7 @@
 						<div class="row">
 							<div class="input-field col s12">
 								<label for="atividade" >Atividade/Tarefa</label> 
-								<textarea id="atividade" class="materialize-textarea"
+								<textarea id="atividade" class="materialize-textarea" maxlength="128"
 								[(ngModel)]="aprhoItem.atividade" name="aprhoItem.atividade" required>
 							</textarea>
 							</div>							
@@ -111,7 +111,7 @@
 					</div>	
 					<div class="input-field col s3">
 							<label for="local" >Local</label> 
-							<input	id="local" type="text" name="atividade" required
+							<input	id="local" type="text" name="atividade" required maxlength="128"
 									[(ngModel)]="aprhoItem.local">
 					</div>
 						<div class="input-field col s3">
@@ -128,12 +128,12 @@
 				<div class="row">
 					<div class="input-field col s3">
 							<label for="frequencia" >Frequência(Dias/Semanas)</label> 
-							<input	id="frequencia" type="text" name="frequencia" required
+							<input	id="frequencia" type="text" name="frequencia" required maxlength="32"
 									[(ngModel)]="aprhoItem.frequencia">
 					</div>
 					<div class="input-field col s2">
 							<label for="duracao" >Duração(min./dia)</label> 
-							<input	id="duracao" type="text" name="duracao" required
+							<input	id="duracao" type="text" name="duracao" required maxlength="32"
 									[(ngModel)]="aprhoItem.duracao">
 					</div>
 					<div class="input-field col s4">

@@ -16,7 +16,7 @@
 
 			<div class="input-field col s7">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label> <input
-					id="nome" type="text" required [(ngModel)]="ghe.nome"
+					id="nome" type="text" required [(ngModel)]="ghe.nome" maxlength="64"
 					name="ghe.nome">
 			</div>
 			
@@ -45,7 +45,7 @@
 		<div class="row">
 
 			<div class="input-field col s8">
-				<label for="codigo">Código</label> <input id="codigo" type="text"
+				<label for="codigo">Código</label> <input id="codigo" type="text" maxlength="64"
 					[(ngModel)]="ghe.codigo" name="ghe.codigo">
 			</div>
 
@@ -76,26 +76,26 @@
 		
 		<div class="row">
 			<div class="input-field col s12">
-				<label for="descricao" maxlength="1024">Descrição</label>
-				<textarea id="descricao" class="materialize-textarea"
+				<label for="descricao">Descrição</label>
+				<textarea id="descricao" class="materialize-textarea" maxlength="1024"
 					[(ngModel)]="ghe.descricao" name="ghe.descricao"></textarea>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="input-field col s12">
-				<label for="descricaoAmbiente" maxlength="1024">Descrição do
+				<label for="descricaoAmbiente">Descrição do
 					Ambiente</label>
-				<textarea id="descricaoAmbiente" class="materialize-textarea"
+				<textarea id="descricaoAmbiente" class="materialize-textarea" maxlength="1024"
 					[(ngModel)]="ghe.descricaoAmbiente" name="ghe.descricaoAmbiente"></textarea>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="input-field col s12">
-				<label for="descricaoTarefas" maxlength="1024">Descrição das
+				<label for="descricaoTarefas">Descrição das
 					Tarefas</label>
-				<textarea id="descricaoTarefas" class="materialize-textarea"
+				<textarea id="descricaoTarefas" class="materialize-textarea" maxlength="1024"
 					[(ngModel)]="ghe.descricaoTarefas" name="ghe.descricaoTarefas"></textarea>
 			</div>
 		</div>

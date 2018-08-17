@@ -15,7 +15,7 @@
 		<div class="row">
 			<div class="input-field col s8">
 				<label for="codigo" data-error="Campo obrigatório.">Codigo</label> <input
-					id="codigo" type="text" required name="gerencia.codigo"
+					id="codigo" type="text" required name="gerencia.codigo" maxlength="10"
 					[(ngModel)]="gerencia.codigo">
 			</div>
 
@@ -82,7 +82,7 @@
 		<div class="row">
 			<div class="input-field col s10">
 				<label for="descricao">Descrição</label> <input id="descricao"
-					type="text" name="gerencia.descricao"
+					type="text" name="gerencia.descricao" maxlength="200"
 					[(ngModel)]="gerencia.descricao">
 			</div>
 			<div class="input-field col s2 checkbox">

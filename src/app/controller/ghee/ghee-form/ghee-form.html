@@ -16,7 +16,7 @@
 
 			<div class="input-field col s12">
 				<label for="nome" data-error="Campo obrigatório.">Nome</label> <input
-					id="nome" type="text" required [(ngModel)]="ghee.nome"
+					id="nome" type="text" required [(ngModel)]="ghee.nome" maxlength="64"
 					name="ghee.nome">
 			</div>
 
@@ -24,7 +24,7 @@
 		<div class="row">
 
 			<div class="input-field col s12">
-				<label for="codigo">Código</label> <input id="codigo" type="text"
+				<label for="codigo">Código</label> <input id="codigo" type="text" maxlength="64"
 					[(ngModel)]="ghee.codigo" name="ghee.codigo">
 			</div>
 
@@ -51,8 +51,8 @@
 		
 		<div class="row">
 			<div class="input-field col s12">
-				<label for="descricao" maxlength="1024">Descrição</label>
-				<textarea id="descricao" class="materialize-textarea"
+				<label for="descricao">Descrição</label>
+				<textarea id="descricao" class="materialize-textarea" maxlength="1024"
 					[(ngModel)]="ghee.descricao" name="ghee.descricao"></textarea>
 			</div>
 		</div>

@@ -27,7 +27,7 @@
 				<div class="row">
 
 					<div class="input-field col s9">
-						<label for="nome">Nome</label> <input id="nome" type="text"
+						<label for="nome">Nome</label> <input id="nome" type="text" maxlength="128"
 							name="nome" [(ngModel)]="servico.nome">
 					</div>
 					
@@ -42,12 +42,12 @@
 				<div class="row">
 
 					<div class="input-field col s4">
-						<label for="codigo">Código</label> <input id="codigo" type="text"
+						<label for="codigo">Código</label> <input id="codigo" type="text" maxlength="4"
 							name="codigo" [(ngModel)]="servico.codigo">
 					</div>
 
 					<div class="input-field col s4">
-						<label for="url">URL</label> <input id="url" type="text"
+						<label for="url">URL</label> <input id="url" type="text" maxlength="256"
 							name="url" [(ngModel)]="servico.url">
 					</div>
 					

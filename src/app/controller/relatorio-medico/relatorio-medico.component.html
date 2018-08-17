@@ -55,8 +55,9 @@
 		<div class="row">
 			<div class="input-field col s9">
 				<div class="modal-content">
-					<label for="medicoPrestador">Médico Prestador</label> <input
-						id="medicoPrestador" type="text" name="medicoPrestador"
+					<label for="medicoPrestador">Médico Prestador</label> 
+					<input id="medicoPrestador" maxlength="256" 
+						type="text" name="medicoPrestador"
 						[(ngModel)]="filter.medicoPrestador">
 				</div>
 			</div>
@@ -71,7 +72,7 @@
 		<div class="input-field col s12">
 			<div class="modal-content">
 				<label for="resumo">Resumo</label>
-				<textarea class="materialize-textarea" id="resumo"
+				<textarea class="materialize-textarea" id="resumo" maxlength="1024"
 					[(ngModel)]="filter.resumo" name="resumo"></textarea>
 			</div>
 		</div>
@@ -79,7 +80,7 @@
 		<div class="input-field col s12">
 			<div class="modal-content">
 				<label for="questionamentos">Questionamentos</label>
-				<textarea class="materialize-textarea" id="questionamentos"
+				<textarea class="materialize-textarea" id="questionamentos" maxlength="1024"
 					[(ngModel)]="filter.questionamentos" name="questionamentos"></textarea>
 			</div>
 		</div>

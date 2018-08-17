@@ -65,14 +65,16 @@
 
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="codigo">Código</label> <input type="text" id="codigo"
+				<label for="codigo">Código</label> 
+				<input type="text" id="codigo" maxlength="32"
 					[(ngModel)]="filter.codigo" name="codigo">
 			</div>
 		</div>
 		
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="descricao">Descrição</label> <input type="text" id="descricao"
+				<label for="descricao">Descrição</label> 
+				<input type="text" id="descricao" maxlength="256"
 					[(ngModel)]="filter.descricao" name="descricao">
 			</div>
 		</div>

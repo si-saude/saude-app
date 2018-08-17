@@ -58,7 +58,8 @@
 <div class="row">
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<label for="codigoCompleto">Código Completo</label> <input type="text" id="codigoCompleto"
+			<label for="codigoCompleto">Código Completo</label> 
+			<input type="text" id="codigoCompleto" maxlength="64"
 				[(ngModel)]="filter.codigoCompleto" name="codigoCompleto">
 		</div>
 	</div>
@@ -73,7 +74,8 @@
 <div class="row">
 	<div class="input-field col s8">
 		<div class="modal-content">
-			<label for="descricao">Descrição</label> <input type="text"
+			<label for="descricao">Descrição</label> 
+			<input type="text" maxlength="200"
 				id="descricao" [(ngModel)]="filter.descricao" name="descricao">
 		</div>
 	</div>

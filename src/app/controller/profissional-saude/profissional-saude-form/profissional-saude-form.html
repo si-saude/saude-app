@@ -193,18 +193,18 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="input-field col s12">
-							<label for="historico" maxlength="4096">Histórico</label>
+							<label for="historico">Histórico</label>
 							<textarea id="historico" class="materialize-textarea"
 								[(ngModel)]="profissionalSaude.curriculo.historico"
-								name="curriculo.historico"
+								name="curriculo.historico" maxlength="4096"
 								date-error="É necessário informar um histórico."></textarea>
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="input-field col s12">
-							<label for="formacao" maxlength="512">Formação</label>
-							<textarea id="formacao" class="materialize-textarea"
+							<label for="formacao">Formação</label>
+							<textarea id="formacao" class="materialize-textarea" maxlength="512"
 								[(ngModel)]="profissionalSaude.curriculo.formacao"
 								name="curriculo.formacao"></textarea>
 						</div>
@@ -212,8 +212,8 @@
 
 					<div class="row">
 						<div class="input-field col s12">
-							<label for="atuacao" maxlength="512">Atuação</label>
-							<textarea id="atuacao" class="materialize-textarea"
+							<label for="atuacao">Atuação</label>
+							<textarea id="atuacao" class="materialize-textarea" maxlength="512"
 								[(ngModel)]="profissionalSaude.curriculo.atuacao"
 								name="curriculo.atuacao"></textarea>
 						</div>
@@ -290,8 +290,8 @@
 				<div class="form-group">
 					<div class="row">
 						<div class="input-field col s12">
-							<label for="conselho" maxlength="200">Conselho</label> <input
-								id="conselho" type="text"
+							<label for="conselho">Conselho</label> <input
+								id="conselho" type="text" maxlength="200"
 								name="profissionalSaude.profissionalConselho.conselho"
 								name="profissionalConselho.conselho"
 								[(ngModel)]="profissionalSaude.profissionalConselho.conselho">
@@ -300,22 +300,22 @@
 
 					<div class="row">
 						<div class="input-field col s4">
-							<label for="numero" maxlength="26">Numero</label> <input
-								id="numero" type="text"
+							<label for="numero">Numero</label> <input
+								id="numero" type="text" maxlength="26"
 								name="profissionalSaude.profissionalConselho.numero"
 								[(ngModel)]="profissionalSaude.profissionalConselho.numero">
 						</div>
 
 						<div class="input-field col s4">
-							<label for="uf" maxlength="2">UF</label> <input id="uf"
+							<label for="uf">UF</label> <input id="uf" maxlength="2"
 								type="text" name="profissionalSaude.profissionalConselho.uf"
 								[(ngModel)]="profissionalSaude.profissionalConselho.uf">
 						</div>
 
 						<div class="input-field col s4">
-							<label for="vencimento" maxlength="2">Vencimento</label>
+							<label for="vencimento">Vencimento</label>
 							<my-date-picker name="vencimentoProfissionalConselho"
-								[options]="myDatePickerOptions"
+								[options]="myDatePickerOptions" maxlength="2"
 								[(ngModel)]="profissionalSaude.profissionalConselho.vencimentoCustomDate.appDate"
 								placeholder="Vencimento"></my-date-picker>
 						</div>

@@ -35,19 +35,19 @@
 		        <th style="width: 1%">
 		            <mfDefaultSorter by="nome">Nome</mfDefaultSorter>
 		            <input type="text" name="nome" style="width: 90%" 
-							placeholder="filtrar nome"
+							placeholder="filtrar nome" maxlength="400"
 							(input)="selectFilter($event, 'nome')">
 		        </th>
 		        <th style="width: 1%">
 		            <mfDefaultSorter by="chave">Chave</mfDefaultSorter>
 		            <input type="text" name="chave" style="width: 90%" 
-							placeholder="filtrar chave"
+							placeholder="filtrar chave" maxlength="16"
 							(input)="selectFilter($event, 'chave')">
 		        </th>
 		        <th style="width: 1%">
 		            <mfDefaultSorter by="matricula">Matrícula</mfDefaultSorter>
 		            <input type="text" name="matricula" style="width: 90%" 
-							placeholder="filtrar matrícula"
+							placeholder="filtrar matrícula" maxlength="32"
 							(input)="selectFilter($event, 'matricula')">
 		        </th>
 		        <th style="width: 1%">

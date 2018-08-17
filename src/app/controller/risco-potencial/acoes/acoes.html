@@ -38,42 +38,48 @@
 									<tr class="row col s12">
 										<td class="col s3 label-eixo-clinico-acolhimento">Eixo
 											Clínico</td>
-										<td class="col s9 eixo-clinico-acolhimento"><input
-											type="text" name="eixo-clinico-acolhimento{{e}}{{t}}"
-											disabled [(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
+										<td class="col s9 eixo-clinico-acolhimento">
+											<input type="text" maxlength="256" 
+												name="eixo-clinico-acolhimento{{e}}{{t}}"
+												disabled [(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
 									</tr>
 									<tr class="row col s12">
 										<td class="col s3 label-diagnostico-acolhimento">Diagnóstico</td>
-										<td class="col s9 diagnostico-acolhimento"><input
-											type="text" name="diagnostico-acolhimento{{e}}{{t}}" disabled
-											[(ngModel)]="triagem.diagnostico.descricao"></td>
+										<td class="col s9 diagnostico-acolhimento">
+											<input maxlength="300"
+												type="text" name="diagnostico-acolhimento{{e}}{{t}}" disabled
+												[(ngModel)]="triagem.diagnostico.descricao"></td>
 									</tr>
 									<tr class="row col s12">
 										<td class="col s3 label-intervencao-acolhimento">Intervenção</td>
-										<td class="col s9 intervencao-acolhimento"><input
-											type="text" name="intervencao-acolhimento{{e}}{{t}}" disabled
-											[(ngModel)]="triagem.intervencao.descricao"></td>
+										<td class="col s9 intervencao-acolhimento">
+											<input maxlength="50"
+												type="text" name="intervencao-acolhimento{{e}}{{t}}" disabled
+												[(ngModel)]="triagem.intervencao.descricao"></td>
 									</tr>
 									<tr class="row col s12">
 										<td class="col s3 label-equipe-abordagem-acolhimento">Equipe
 											de Abordagem</td>
-										<td class="col s9 equipe-abordagem-acolhimento"><input
-											type="text" name="equipe-abordagem-acolhimento{{e}}{{t}}"
-											disabled [(ngModel)]="triagem.equipeAbordagem.nome">
+										<td class="col s9 equipe-abordagem-acolhimento">
+										    <input maxlength="50"
+												type="text" name="equipe-abordagem-acolhimento{{e}}{{t}}"
+												disabled [(ngModel)]="triagem.equipeAbordagem.nome">
 										</td>
 									</tr>
 									<tr class="row col s12">
 										<td class="col s3 label-prazo-inicio-acolhimento">Sugestão
 											de prazo de início</td>
-										<td class="col s9 prazo-inicio-acolhimento"><input
-											type="text" name="prazo-inicio-acolhimento{{e}}{{t}}"
-											disabled [(ngModel)]="triagem.prazo"></td>
+										<td class="col s9 prazo-inicio-acolhimento">
+											<input maxlength="16"
+												type="text" name="prazo-inicio-acolhimento{{e}}{{t}}"
+												disabled [(ngModel)]="triagem.prazo"></td>
 									</tr>
 									<tr class="row col s12">
 										<td class="col s3 label-justificativa-acolhimento">Justificativa/Observação</td>
-										<td class="col s9 justificativa-acolhimento"><input
-											type="text" name="justificativa-acolhimento{{e}}{{t}}"
-											disabled [(ngModel)]="triagem.justificativa"></td>
+										<td class="col s9 justificativa-acolhimento">
+											<input maxlength="2048"
+												type="text" name="justificativa-acolhimento{{e}}{{t}}"
+												disabled [(ngModel)]="triagem.justificativa"></td>
 									</tr>
 									<tr class="row col s12">
 										<td class="col s3 label-ignorar-acoes">Ignorar Ações</td>
@@ -216,7 +222,7 @@
 
 		<div class="input-field col s12">
 			<label for="acao.detalhe">Detalhe</label>
-			<textarea class="materialize-textarea" [(ngModel)]="acao.detalhe"
+			<textarea class="materialize-textarea" [(ngModel)]="acao.detalhe" maxlength="2048"
 				name="acao.detalhe"></textarea>
 		</div>
 

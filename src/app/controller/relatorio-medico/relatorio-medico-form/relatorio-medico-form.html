@@ -60,7 +60,7 @@
 			<div class="input-field col s12">
 				<label for="relatorioMedico.medicoPrestador">Médico
 					Prestador</label> <input id="relatorioMedico.medicoPrestador" type="text"
-					name="relatorioMedico.medicoPrestador"
+					name="relatorioMedico.medicoPrestador" maxlength="256"
 					[(ngModel)]="relatorioMedico.medicoPrestador">
 			</div>
 			<!-- 
@@ -73,13 +73,13 @@
 		 -->
 			<div class="input-field col s12">
 				<label for="relatorioMedico.resumo">Resumo</label>
-				<textarea class="materialize-textarea" id="relatorioMedico.resumo"
+				<textarea class="materialize-textarea" id="relatorioMedico.resumo" maxlength="1024"
 					[(ngModel)]="relatorioMedico.resumo" name="relatorioMedico.resumo"></textarea>
 			</div>
 
 			<div class="input-field col s12">
 				<label for="relatorioMedico.questionamentos">Questionamentos</label>
-				<textarea class="materialize-textarea"
+				<textarea class="materialize-textarea" maxlength="1024"
 					id="relatorioMedico.questionamentos"
 					[(ngModel)]="relatorioMedico.questionamentos"
 					name="relatorioMedico.questionamentos"></textarea>

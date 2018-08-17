@@ -28,7 +28,7 @@
 
 					<div class="input-field col s8">
 						<label for="fornecedor.razaoSocial">Razão Social</label> <input
-							id="fornecedor.razaoSocial" type="text"
+							id="fornecedor.razaoSocial" type="text" maxlength="64"
 							[(ngModel)]="fornecedor.razaoSocial"
 							name="fornecedor.razaoSocial">
 					</div>
@@ -50,13 +50,13 @@
 
 					<div class="input-field col s6">
 						<label for="fornecedor.cpfCnpj">CPF/CNPJ</label> 
-						<input type="text" id="fornecedor.cpfCnpj"
+						<input type="text" id="fornecedor.cpfCnpj" maxlength="14"
 							[(ngModel)]="fornecedor.cpfCnpj" name="fornecedor.cpfCnpj">
 					</div>
 
 					<div class="input-field col s6">
 						<label for="fornecedor.codigoSap">Código SAP</label> <input
-							type="text" id="fornecedor.codigoSap"
+							type="text" id="fornecedor.codigoSap" maxlength="32"
 							[(ngModel)]="fornecedor.codigoSap" name="fornecedor.codigoSap">
 					</div>
 
@@ -66,7 +66,7 @@
 
 					<div class="input-field col s12">
 						<label for="fornecedor.email">Email</label> 
-						<input type="email" id="fornecedor.email" 
+						<input type="email" id="fornecedor.email" maxlength="128" 
 						[(ngModel)]="fornecedor.email" name="fornecedor.email">
 					</div>
 
