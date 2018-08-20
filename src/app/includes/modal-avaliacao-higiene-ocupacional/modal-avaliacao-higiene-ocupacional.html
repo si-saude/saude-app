@@ -13,18 +13,21 @@
         <tr>
 	        <td>
 	            <label by="chave">Chave</label>
-	            <input type="text" name="chave" style="width: 90%" [(ngModel)]="chave" 
-						placeholder="filtrar chave">
+	            <input type="text" name="chave" maxlength="16" 
+	            	style="width: 90%" [(ngModel)]="chave" 
+					placeholder="filtrar chave">
 	        </td>
 	        <td>
 	            <label by="matricula">Matricula</label>
-	            <input type="text" name="matricula" style="width: 90%" [(ngModel)]="matricula" 
-						placeholder="filtrar matricula">
+	            <input type="text" name="matricula" maxlength="32" 
+	            	style="width: 90%" [(ngModel)]="matricula" 
+					placeholder="filtrar matricula">
 	        </td>
 	        <td>
 	            <label by="nome">Nome</label>
-	            <input type="text" name="nome" style="width: 90%" [(ngModel)]="nome"
-						placeholder="filtrar nome">
+	            <input type="text" name="nome" maxlength="400" 
+	            	style="width: 90%" [(ngModel)]="nome"
+					placeholder="filtrar nome">
 	        </td>
 	        <td>
 	            <a class="waves-effect waves-light btn" (click)="selectFilter()">Buscar</a>

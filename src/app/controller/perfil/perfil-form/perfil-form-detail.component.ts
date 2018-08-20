@@ -12,53 +12,42 @@ import { PerfilService } from './../perfil.service';
 import { PermissaoBuilder } from './../../permissao/permissao.builder';
 
 @Component( {
-    selector: 'app-perfil-form-detail',
-    templateUrl: './perfil-form-detail.html',
-    styleUrls: ['./perfil-form.css', './../../../../assets/css/form-component.css']
+    selector: 'app-perfil-form',
+    templateUrl: './perfil-form.html',
+    styleUrls: ['./../../../../assets/css/form-component.css', './perfil-form.css']
 } )
 export class PerfilFormDetailComponent extends GenericFormComponent implements OnInit {
     perfil: Perfil;
-    funcionalidades: Array<string>;
-    
-    perfilFilter: PerfilFilter = new PerfilFilter();
     
     constructor( private route: ActivatedRoute,
         private perfilService: PerfilService,
-        router: Router) { 
-        super(perfilService, router);
+        router: Router) {
+        super( perfilService, router );
         this.goTo = "perfil";
-        
-        this.funcionalidades = new Array<string>();
-        this.perfil = new PerfilBuilder().initialize(this.perfil);
+
+        this.perfil = new PerfilBuilder().initialize( this.perfil );
     }
 
     ngOnInit() {
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
-                let id = params['id'];
-                this.showPreload = true;
-
-                this.perfilService.get( id )
-                    .then( res => {
-                        this.showPreload = false;
-                        this.perfil = new PerfilBuilder().clone(res.json());
-                    } )
-                    .catch( error => {
-                        this.catchConfiguration( error );
-                    } )
+                if ( params['id'] !== undefined ) {
+                    let id = params['id'];
+                    this.showPreload = true;
+                    this.perfilService.getAll( id )
+                        .then( res => {
+                            this.perfil = new PerfilBuilder().clone( res.json() );
+                            this.perfil.getPermissoes().sort((a,b) => ( a.getFuncionalidade() > b.getFuncionalidade() ) ? 1 : -1);
+                            this.showPreload = false;
+                        } )
+                        .catch( error => {
+                            this.catchConfiguration( error );
+                        } )
+                }
             } );
-        
-        this.perfilService.getFuncionalidades()
-            .then(res => {
-                this.funcionalidades = Object.keys(res.json());
-            })
-            .catch(error => {
-                console.log(error.text());
-            })
-                  
     }
-    
-    onDestroy() { 
+
+    onDestroy() {
         this.inscricao.unsubscribe();
     }
 }

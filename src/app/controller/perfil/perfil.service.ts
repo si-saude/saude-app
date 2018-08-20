@@ -15,6 +15,13 @@ export class PerfilService extends GenericService {
     constructor( http: Http, router: Router ) {
         super( http, router, "perfil" );
     }
+    
+    getAll(id) {
+        let urlGetAll = this.URL + "/get-all";
+        return this.http
+            .get( urlGetAll + "?id=" + id, { headers: this.headers } )
+            .toPromise();
+    }
 
     getFuncionalidades() {
         let urlLogin = GlobalVariable.BASE_API_URL + "/generic/funcionalidade?filter=";

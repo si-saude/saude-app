@@ -18,7 +18,6 @@ import { PermissaoBuilder } from './../../permissao/permissao.builder';
 } )
 export class PerfilFormComponent extends GenericFormComponent implements OnInit {
     perfil: Perfil;
-    perfilGet: Perfil;
     funcionalidades: Array<string>;
     select: boolean;
 
@@ -41,13 +40,10 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
                 if ( params['id'] !== undefined ) {
                     let id = params['id'];
                     this.showPreload = true;
-                    this.perfilService.get( id )
+                    this.perfilService.getAll( id )
                         .then( res => {
-                            this.perfilGet = new PerfilBuilder().clone( res.json() );
-                            this.perfil.setVersion(this.perfilGet.getVersion());
-                            this.perfil.setId(this.perfilGet.getId());
-                            this.perfil.setTitulo( this.perfilGet.getTitulo() );
-                            this.getFuncionalidades();
+                            this.perfil = new PerfilBuilder().clone( res.json() );
+                            this.perfil.getPermissoes().sort((a,b) => ( a.getFuncionalidade() > b.getFuncionalidade() ) ? 1 : -1);
                             this.showPreload = false;
                         } )
                         .catch( error => {
@@ -59,46 +55,28 @@ export class PerfilFormComponent extends GenericFormComponent implements OnInit 
             } );
     }
 
+    save() {
+        super.save( new PerfilBuilder().clone( this.perfil ) );
+    }
+    
     getFuncionalidades() {
         this.perfilService.getFuncionalidades()
-            .then( res => {
-                this.funcionalidades = Object.keys( res.json() ).sort();
-                this.initializeFuncionalidades();
-                this.perfil.getPermissoes().forEach(p => {
-                    if ( this.perfilGet.getPermissoes().
-                            find( pGet => p.getFuncionalidade() == pGet.getFuncionalidade() ) != undefined )
-                        p.setValor(true);
-                })
-            } )
-            .catch( error => {
-                console.log( error.text() );
-            } )
+            .then(res => {
+                this.funcionalidades = Object.keys(res.json()).sort();
+                this.setPermissoesPerfil();
+            })
+            .catch(error => {
+                console.log("Erro ao buscar funcionalidades.");
+            })
     }
-
-    save() {
-        let perfilSave: Perfil = new PerfilBuilder().initialize(new Perfil());
-        this.perfil.getPermissoes().forEach(p => {
-            if ( p.getValor() == true ) {
-                perfilSave.getPermissoes().push(p);
-            }
-        })
-        perfilSave.setTitulo(this.perfil.getTitulo());
-        perfilSave.setId(this.perfil.getId());
-        perfilSave.setVersion(this.perfil.getVersion());
-        super.save( new PerfilBuilder().clone( perfilSave ) );
-    }
-
-    initializeFuncionalidades() {
+    
+    setPermissoesPerfil() {
         this.funcionalidades.forEach(f => {
             let permissao: Permissao = new Permissao();
             permissao.setFuncionalidade(f);
             permissao.setValor(false);
             this.perfil.getPermissoes().push(permissao);
         })
-    }
-    
-    editFuncionalidades() {
-        this.initializeFuncionalidades();
     }
     
     selectAll() {

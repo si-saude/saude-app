@@ -14,9 +14,9 @@
 
 		<div class="row">
 			<div class="input-field col s12">
-				<label for="titulo">Titulo</label> <input
-					id="titulo" type="text" disabled name="perfil.titulo"
-					[(ngModel)]="perfil.titulo">
+				<label for="titulo" data-error="Campo obrigatório.">Titulo</label> 
+				<input id="titulo" type="text" disabled 
+					name="perfil.titulo" maxlength="60" [(ngModel)]="perfil.titulo">
 			</div>
 		</div>
 
@@ -35,8 +35,8 @@
 							<tr class="col s12">
 								<td class="col s10 funcionalidade">{{permissao.funcionalidade}}</td>
 								<td class="col s2 checkbox-valor">
-									<input type="checkbox" id="valor[{{f}}]" disabled 
-									[(ngModel)]="permissao.valor" name="valor[{{f}}]"> 
+									<input type="checkbox" id="valor[{{f}}]" [(ngModel)]="permissao.valor" 
+										name="valor[{{f}}]" disabled> 
 									<label for="valor[{{f}}]"></label>
 								</td>
 							</tr>
@@ -45,7 +45,12 @@
 				</div>
 			</table>
 		</div>
-
+		
+		
+		<input id="id" name="id" type="hidden" name="perfil.id"
+			[(ngModel)]="perfil.id"> <input id="version" name="version"
+			type="hidden" name="perfil.version" [(ngModel)]="perfil.version">
+			
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 				[msg]="msgError"></app-mensagem-form>
@@ -53,8 +58,10 @@
 
 		<div class='row row-btns'>
 			<div class="col s6">
-				<a [routerLink]="['/perfil']"
-					class="btn btn-primary btn-listar">Listar</a>
+				<a [routerLink]="['/perfil']" class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 

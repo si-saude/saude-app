@@ -20,10 +20,6 @@
 			</div>
 		</div>
 
-		<input id="id" name="id" type="hidden" name="perfil.id"
-			[(ngModel)]="perfil.id"> <input id="version" name="version"
-			type="hidden" name="perfil.version" [(ngModel)]="perfil.version">
-			
 		<input class="checkbox-select-all" id="select" type="checkbox" 
 			[(ngModel)]="select" (click)="selectAll()" name="select"> 
 		<label for="select">Selecionar/deselecionar todos</label>
@@ -52,66 +48,12 @@
 				</div>
 			</table>
 		</div>
-
-
-		<!--  <fieldset>
-			<legend class="legend-permissoes">
-				Permissões <a
-					class="btn-floating waves-effect waves-light green btn-add-fieldset"
-					(click)="addPermissao()"> <i class="material-icons center-icon">add</i>
-				</a>
-			</legend>
-			<div class="form-group">
-				<div *ngFor="let permissao of perfil.permissoes;let i = index">
-
-					<div class="row">
-
-						<div class="input-field col s4">
-							<fieldset>
-								<legend>
-									Funcionalidade <a
-										class="btn-floating waves-effect waves-light green btn-add-fieldset"
-										(click)="getFuncionalidades()"> <i
-										class="material-icons center-icon">cached</i>
-									</a>
-								</legend>
-								<select class="browser-default"
-									name="permissao.funcionalidade{{i}}"
-									[(ngModel)]="permissao.funcionalidade">
-									<option disabled selected value>Selecione uma funcionalidade</option>
-									<option *ngFor="let funcionalidade of funcionalidades"
-										value="{{funcionalidade}}">{{funcionalidade}}</option>
-								</select>
-							</fieldset>
-						</div>
-
-						<div class="col s3 permissao-valor">
-							<input name="valor{{i}}" id="valor{{i}}" type="checkbox"
-								name="permissao.valor{{i}}" [(ngModel)]="permissao.valor" /> <label
-								for="valor{{i}}">Valor</label>
-						</div>
-
-						<div class="col s2">
-							<a class="btn-floating waves-effect waves-light red btn-remove"
-								(click)="removePermissao(i)"> <i
-								class="material-icons center-icon">delete</i>
-							</a>
-						</div>
-
-					</div>
-
-					<input id="id{{i}}" type="hidden" name="permissao.id{{i}}"
-						[(ngModel)]="permissao.id"> <input id="version{{i}}"
-						type="hidden" name="permissao.version{{i}}"
-						[(ngModel)]="permissao.version">
-
-				</div>
-
-			</div>
-
-		</fieldset>
--->
-
+		
+		
+		<input id="id" name="id" type="hidden" name="perfil.id"
+			[(ngModel)]="perfil.id"> <input id="version" name="version"
+			type="hidden" name="perfil.version" [(ngModel)]="perfil.version">
+			
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 				[msg]="msgError"></app-mensagem-form>
