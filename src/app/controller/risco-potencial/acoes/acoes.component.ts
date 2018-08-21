@@ -174,7 +174,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         if ( triagem.getAcoes() == undefined ) 
             triagem.setAcoes(new Array<Acao>());
         
-        this.acao.setTarefa(new Tarefa());
+//        this.acao.setTarefa(new Tarefa());
         this.acao.setStatus(this.statusAcoes[0]);
         
         triagem.getAcoes().push(this.acao);
