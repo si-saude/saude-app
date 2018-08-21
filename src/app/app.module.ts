@@ -99,7 +99,7 @@ import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisi
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
-
+import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
 
 @NgModule({
   declarations: [
@@ -202,7 +202,8 @@ import { ImovelGuard } from './guards/guards-child/imovel.guard';
     EnfaseGuard,
     ReportAvaliacaoHigieneOcupacionalGuard,
     ReportPreRequisitosAgendamentoGuard,
-    ImovelGuard
+    ImovelGuard,
+    MotivoRecusaAtestadoGuard
   ],
   bootstrap: [ 
     AppComponent

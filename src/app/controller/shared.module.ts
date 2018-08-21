@@ -81,6 +81,7 @@ import { AvaliacaoHigieneOcupacionalService } from './avaliacao-higiene-ocupacio
 import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
 import { EnfaseService } from './enfase/enfase.service';
 import { ImovelService } from './imovel/imovel.service';
+import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-recusa-atestado.service';
 
 @NgModule({
   declarations: [
@@ -181,7 +182,8 @@ import { ImovelService } from './imovel/imovel.service';
     AvaliacaoHigieneOcupacionalService,
     FichaColetaService,
     EnfaseService,
-    ImovelService
+    ImovelService,
+    MotivoRecusaAtestadoService
   ]
 })
 export class SharedModule { }

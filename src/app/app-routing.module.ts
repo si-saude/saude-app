@@ -77,6 +77,7 @@ import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
+import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -263,6 +264,9 @@ const routes: Routes = [
   { path: 'imovel', 
       loadChildren: 'app/controller/imovel/imovel.module#ImovelModule',
       canActivateChild: [ImovelGuard]},
+  { path: 'motivo-recusa-atestado', 
+      loadChildren: 'app/controller/motivo-recusa-atestado/motivo-recusa-atestado.module#MotivoRecusaAtestadoModule',
+      canActivateChild: [MotivoRecusaAtestadoGuard]},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }
