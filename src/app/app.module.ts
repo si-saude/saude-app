@@ -112,7 +112,7 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
     SidenavComponent,
     PageNotFoundComponent
   ],
-  imports: [
+  imports: [    
     BrowserModule,
     MaterializeModule,
     HttpModule,
@@ -120,6 +120,7 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
     ContatoModule,
     SharedModule,
     AppRoutingModule
+    
   ],
   providers: [ 
     { provide: LOCALE_ID, useValue: 'pt-BR' },

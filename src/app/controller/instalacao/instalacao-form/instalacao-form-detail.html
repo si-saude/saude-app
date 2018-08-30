@@ -96,11 +96,9 @@
 
 							<div class="input-field col s3">
 								<label for="dataInspecaoAcidente">Data de Inspeção</label>
-								<my-date-picker disabled
-									name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].dataInspecao"
-									[options]="myDatePickerOptions"
-									[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].dataInspecaoCustomDate.appDate"
-									placeholder="Data de Inspeção"> </my-date-picker>
+								<input name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].dataInspecao"
+										   [(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].dataInspecaoCustomDate.appDate" disabled
+										   type="text" />
 							</div>
 
 							<div class="input-field col s3">
@@ -150,11 +148,9 @@
 
 							<div class="input-field col s3">
 								<label for="dataInspecaoAmbiental">Data de Inspeção</label>
-								<my-date-picker disabled
-									name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].dataInspecao"
-									[options]="myDatePickerOptions"
-									[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate"
-									placeholder="Data de Inspeção"> </my-date-picker>
+								 <input name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].dataInspecao"
+											   [(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate" disabled
+											   type="text" />
 							</div>
 
 							<div class="input-field col s3">
@@ -205,11 +201,9 @@
 
 							<div class="input-field col s3">
 								<label for="dataInspecaoErgonomico">Data de Inspeção</label>
-								<my-date-picker disabled
-									name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].dataInspecao"
-									[options]="myDatePickerOptions"
-									[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].dataInspecaoCustomDate.appDate"
-									placeholder="Data de Inspeção"> </my-date-picker>
+								<input name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].dataInspecao"
+											   [(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].dataInspecaoCustomDate.appDate" disabled
+											   type="text" />
 							</div>
 
 							<div class="input-field col s3">
@@ -259,11 +253,9 @@
 
 							<div class="input-field col s3">
 								<label for="dataInspecaoSanitario">Data de Inspeção</label>
-								<my-date-picker disabled
-									name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].dataInspecao"
-									[options]="myDatePickerOptions"
-									[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].dataInspecaoCustomDate.appDate"
-									placeholder="Data de Inspeção"> </my-date-picker>
+								<input name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].dataInspecao"
+										   [(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].dataInspecaoCustomDate.appDate" disabled
+										   type="text" />
 							</div>
 
 							<div class="input-field col s3">
@@ -313,13 +305,11 @@
 
 							<div class="input-field col s3">
 								<label for="dataInspecaoSaudeAmbiental">Data de Inspeção</label>
-								<my-date-picker disabled
-									name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].dataInspecao"
-									[options]="myDatePickerOptions" 
-									[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate"
-									placeholder="Data de Inspeção"> </my-date-picker>
+								
+								<input name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].dataInspecao"
+											   [(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate" disabled
+											   type="text" />
 							</div>
-
 							<div class="input-field col s3">
 								<label for="indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].avaliacao">Avaliação</label>
 								<input type="number" min="0" max="5" disabled

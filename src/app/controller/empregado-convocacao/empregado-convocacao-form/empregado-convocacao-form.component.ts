@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+import { MaterializeAction } from "angular2-materialize";
 import { MyDatePickerModule } from 'mydatepicker';
 
 import * as $ from 'jquery';

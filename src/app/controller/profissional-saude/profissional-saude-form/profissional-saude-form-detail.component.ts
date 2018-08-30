@@ -63,6 +63,8 @@ export class ProfissionalSaudeFormDetailComponent extends GenericFormComponent i
                     .then( res => {
                         this.showPreload = false;
                         this.profissionalSaude = new ProfissionalSaudeBuilder().clone(res.json());
+                        console.log( this.profissionalSaude);
+                    
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );

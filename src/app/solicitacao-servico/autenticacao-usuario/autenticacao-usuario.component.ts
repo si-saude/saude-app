@@ -2,8 +2,8 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
-import { MyDatePickerModule } from 'mydatepicker';
-import { IMyDpOptions } from 'mydatepicker';
+import { GlobalVariable } from './../../global';
+import { Util } from './../../generics/utils/util';
 
 import { Empregado } from './../../model/empregado/';
 import { EmpregadoFilter } from './../../controller/empregado/empregado.filter';
@@ -25,6 +25,9 @@ import { PessoaBuilder } from './../../controller/pessoa/pessoa.builder';
     styleUrls: ['./autenticacao-usuario.css']
 } )
 export class AutenticacaoUsuarioComponent {
+    
+    
+    
     cpf: string;
     matricula: string;
     chave: string;
@@ -35,15 +38,13 @@ export class AutenticacaoUsuarioComponent {
     usuario: Usuario;
     pessoa: Pessoa;
     empregado: Empregado;
-    myDatePickerOptions: IMyDpOptions;
+    empregadoFilter: EmpregadoFilter;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private solicitacaoServicoService: SolicitacaoServicoService ) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.myDatePickerOptions = {
-                dateFormat: 'dd/mm/yyyy'
-            };
+        this.empregadoFilter = new EmpregadoFilter();
     }
 
     ngOnInit() {
@@ -76,33 +77,33 @@ export class AutenticacaoUsuarioComponent {
                     console.log( "Erro no servidor ao buscar o usuario." );
                 } )
         }
-
+    }
+    
+    teste(){
+        console.log("PRESS");
     }
 
     next() {
-        let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
-        let pessoaFilter: PessoaFilter = new PessoaFilter();
-        let dateFilter: DateFilter = new DateFilter();
-        let tarefa: Tarefa = new Tarefa();
+        
+        
+//        let empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
+//        let pessoaFilter: PessoaFilter = new PessoaFilter();
+//        let dateFilter: DateFilter = new DateFilter();
+//        let tarefa: Tarefa = new Tarefa();
+//
+//        if ( ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == undefined ||
+//            ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == "" ) {
+//            this.toastParams = ['Por favor, preencha todos os campos', 4000];
+//            this.globalActions.emit( 'toast' );
+//            return;
+//        }
+//
 
-        if ( ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == undefined ||
-            ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == "" ) {
-            this.toastParams = ['Por favor, preencha todos os campos', 4000];
-            this.globalActions.emit( 'toast' );
-            return;
-        }
-
-        let data: Date = this.parseDatePickerToDate( this.dataNascimento );
-
-        pessoaFilter.setCpf( this.treatCpf(this.cpf) );
-        dateFilter.setInicio( data );
-        dateFilter.setTypeFilter( "IGUAL" );
-        pessoaFilter.setDataNascimento( dateFilter );
-
-        empregadoFilter.setPessoa( pessoaFilter );
-        empregadoFilter.setChave( this.chave )
-        empregadoFilter.setMatricula( this.matricula );
-        this.solicitacaoServicoService.getEmpregado( empregadoFilter )
+          this.empregadoFilter.getPessoa().setCpf( Util.treatCpf(this.cpf));
+          this.empregadoFilter.getPessoa().getDataNascimento().setTypeFilter( "IGUAL" );
+          this.empregadoFilter.getPessoa().getDataNascimento().getInicio();
+          console.log(this.empregadoFilter);
+          this.solicitacaoServicoService.getEmpregado( this.empregadoFilter )
             .then( res => {
                 if ( res.json().list[0] != undefined ) {
                     localStorage.setItem( "empregado", JSON.stringify( res.json().list[0] ) );
@@ -116,31 +117,6 @@ export class AutenticacaoUsuarioComponent {
                 console.log( "Erro no servidor." + error );
             } )
     }
+    
 
-    parseDatePickerToDate( data ) {
-        if ( data === undefined || data === null ) {
-            return null;
-        } else if ( data instanceof Date ) {
-            return data;
-        }
-        let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
-        return d;
-    }
-    
-    treatCpf( cpf: string ) {
-        let s: string;
-    
-        if ( cpf != undefined ) {
-            if ( cpf.length > 11 ) { 
-                s = cpf.substring(0, 3);
-                s += cpf.substring(4, 7);
-                s += cpf.substring(8, 11);
-                s += cpf.substring(12, 14);
-                return s;
-            } else if ( cpf.length > 0 && cpf.length < 14 ) {
-                return cpf;
-            }
-        } return undefined;
-        
-    }
 }

@@ -24,8 +24,10 @@
 
 			<div class="input-field col s3 dataTarefas">
 				<label for="dataTarefas">Data das Tarefas</label>
-				<my-date-picker name="dataTarefas" [options]="myDatePickerOptions"
-					[(ngModel)]="dataTarefas" placeholder="Data"> </my-date-picker>
+				<app-date-picker [nome]="'atendimento.tarefa.inicio'" 
+									[customDate]="atendimento.tarefa.inicioCustomDate" 									
+									[legenda]="'Data'"									
+									></app-date-picker>
 			</div>
 
 			<div class="col s2 btn-buscar">
@@ -59,11 +61,11 @@
 								<td class="col s4 equipe-nome">{{tarefa.equipe.nome}}</td>
 								<td class="col s4 inicio">
 									<input name="dataInicioTarefa{{tarefa.id}}" disabled
-										type="text" [(ngModel)]="tarefa.inicioCustomTime.appTime">
+										type="text" [(ngModel)]="tarefa.inicioCustomDate.appTime">
 									</td>
 								<td class="col s4 fim">
 									<input name="dataFimTarefa{{tarefa.id}}" disabled 
-										type="text" [(ngModel)]="tarefa.fimCustomTime.appTime">
+										type="text" [(ngModel)]="tarefa.fimCustomDate.appTime">
 								</td>
 							</div>
 						</tr>

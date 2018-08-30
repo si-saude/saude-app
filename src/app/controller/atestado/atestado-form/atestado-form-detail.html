@@ -63,9 +63,9 @@
 				
 				<div class="input-field col s3">
 					<label for="dataInicio">Início</label>
-					<my-date-picker name="inicio" [options]="myDatePickerOptions" disabled
-						[(ngModel)]="atestado.tarefa.inicioCustomDate.appDate" placeholder="Início">
-					</my-date-picker>
+					<input name="inicio"
+						   [(ngModel)]="atestado.tarefa.inicioCustomDate.appDate" disabled
+						   type="text" />
 				</div>
 				<div class="input-field col s4">
 					<fieldset>
@@ -83,16 +83,16 @@
 			<div class="row">
 				<div class="input-field col s3">
 					<label for="dataSolicitacao">Data de Solicitação</label>
-					<my-date-picker name="dataSolicitacao" [options]="myDatePickerOptions" disabled
-						[(ngModel)]="atestado.dataSolicitacaoCustomDate.appDate" placeholder="Data de Solicitação">
-					</my-date-picker>
+					<input name="dataSolicitacao"
+							   [(ngModel)]="atestado.dataSolicitacaoCustomDate.appDate" disabled
+							   type="text" />
 				</div>
 				
 				<div class="input-field col s3">
 					<label for="dataAgendamento">Data de Agendamento</label>
-					<my-date-picker name="dataAgendamento" [options]="myDatePickerOptions" disabled
-						[(ngModel)]="atestado.dataAgendamentoCustomDate.appDate" placeholder="Data de Agendamento">
-					</my-date-picker>
+					<input name="dataAgendamento"
+							   [(ngModel)]="atestado.dataAgendamentoCustomDate.appDate" disabled
+							   type="text" />
 				</div>
 				<div class="input-field col s6">
 					<label for="numeroCat">Número da CAT</label>

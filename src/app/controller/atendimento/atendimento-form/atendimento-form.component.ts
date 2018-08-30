@@ -93,9 +93,6 @@ export class AtendimentoFormComponent {
         this.filaAtendimentoOcupacionais = new FilaAtendimentoOcupacionalBuilder().
             initializeList( this.filaAtendimentoOcupacionais );
         this.alive = true;
-        this.myDatePickerOptions = {
-            dateFormat: 'dd/mm/yyyy'
-        };
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
         this.tabsActions = new EventEmitter<string | MaterializeAction>();

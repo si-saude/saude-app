@@ -14,6 +14,7 @@ import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { Acao } from './../../../model/acao';
 import { AcaoBuilder } from './../../acao/acao.builder';
 import { Tarefa } from './../../../model/tarefa';
+import { TarefaBuilder } from './../../tarefa/tarefa.builder';
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 import { RiscoPotencialFilter } from './../risco-potencial.filter';
@@ -27,7 +28,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private equipesAbordagemTriagens: Array<Equipe>;
     private triagensByEquipeAbordagem = [[]];
     private riscoPotencial: RiscoPotencial;
-    private acao: Acao;
+    private flagAcao: Acao;
     private tipoAcoes: Array<string>;
     private statusAcoes: Array<string>;
     private tipoContatoAcoes: Array<string>;
@@ -45,7 +46,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             this.equipesAbordagemTriagens = new EquipeBuilder().initializeList(new Array<Equipe>());
             this.riscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
             this.modalAcao = new EventEmitter<string | MaterializeAction>();
-            this.acao = new AcaoBuilder().initialize(new Acao());
+            this.flagAcao = new AcaoBuilder().initialize(new Acao());
     }
     
     ngOnInit() {
@@ -144,7 +145,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     addAcao(equipeId, indexTriagem) {
-        this.acao = new AcaoBuilder().initialize( new Acao( ) );
+        this.flagAcao = new AcaoBuilder().initialize( new Acao( ) );
         
         this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
         this.flagIndexAcao = -1;
@@ -154,7 +155,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     
     editAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
         let triagem: Triagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
-        this.acao = triagem.getAcoes()[indexAcao];
+        this.flagAcao = new AcaoBuilder().clone(triagem.getAcoes()[indexAcao]);
         
         this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
         this.flagIndexAcao = indexAcao;
@@ -163,21 +164,18 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     confirmAddAcao() {
-        if ( this.acao.getDetalhe() == "" || this.acao.getTipo() == "" || this.acao.getTipoContato() == "") {
+        if ( this.flagAcao.getDetalhe() == "" || this.flagAcao.getTipo() == "" || this.flagAcao.getTipoContato() == "") {
             this.toastParams = ["Por favor, informe todos os dados corretamente", 4000];
             this.globalActions.emit( 'toast' );
             return;
-        }
-        
+        }        
         let triagem: Triagem = this.flagTriagem;
        
         if ( triagem.getAcoes() == undefined ) 
             triagem.setAcoes(new Array<Acao>());
+        this.flagAcao.setStatus(this.statusAcoes[0]);
         
-        this.acao.setTarefa(new Tarefa());
-        this.acao.setStatus(this.statusAcoes[0]);
-        
-        triagem.getAcoes().push(this.acao);
+        triagem.getAcoes().push(this.flagAcao);
     }
     
     removeAcao( equipeId, indexTriagem, triagemId, indexAcao ) {

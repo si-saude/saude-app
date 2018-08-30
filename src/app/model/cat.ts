@@ -7,7 +7,6 @@ import { AgenteCausador } from './agente-causador';
 import { NaturezaLesao } from './natureza-lesao';
 import { Base } from './base';
 import { CustomDate } from './../generics/utils/custom-date.util';
-import { CustomTime } from './../generics/utils/custom-time.util';
 
 export class Cat {
     private id: number;
@@ -56,7 +55,7 @@ export class Cat {
     private ultimoDiaTrabalhoCustomDate: CustomDate = new CustomDate(this.ultimoDiaTrabalho);
     private retornoTrabalhoCustomDate: CustomDate = new CustomDate(this.retornoTrabalho);
     private dataNascimentoCustomDate: CustomDate = new CustomDate(this.dataNascimento);
-    private diaHoraAcidenteCustomTime: CustomTime = new CustomTime(this.diaHoraAcidente);
+    private diaHoraAcidenteCustomDate: CustomDate = new CustomDate(this.diaHoraAcidente);
     private dataEmissaoCatCustomDate: CustomDate = new CustomDate(this.dataEmissaoCat);
     private dataAvaliacaoMedicaCustomDate: CustomDate = new CustomDate(this.dataAvaliacaoMedica);
     private dataComunicacaoSindicatoCustomDate: CustomDate = new CustomDate(this.dataComunicacaoSindicato);
@@ -144,21 +143,21 @@ export class Cat {
     }
     
     getDiaHoraAcidente() {
-        this.diaHoraAcidente = this.diaHoraAcidenteCustomTime.getApiDate();
+        this.diaHoraAcidente = this.diaHoraAcidenteCustomDate.getApiDate();
         return this.diaHoraAcidente;
     }
     
     setDiaHoraAcidente(diaHoraAcidente:Date) {
-        this.diaHoraAcidenteCustomTime.setApiDate(diaHoraAcidente);
+        this.diaHoraAcidenteCustomDate.setApiDate(diaHoraAcidente);
         this.diaHoraAcidente = diaHoraAcidente;
     }
     
-    getDiaHoraAcidenteCustomTime(){
-        return this.diaHoraAcidenteCustomTime;
+    getDiaHoraAcidenteCustomDate(){
+        return this.diaHoraAcidenteCustomDate;
     }
     
-    setDiaHoraAcidenteCustomTime(diaHoraAcidenteCustomTime: CustomTime){
-        this.diaHoraAcidenteCustomTime = diaHoraAcidenteCustomTime;
+    setDiaHoraAcidenteCustomDate(diaHoraAcidenteCustomDate: CustomDate){
+        this.diaHoraAcidenteCustomDate = diaHoraAcidenteCustomDate;
     }
     
     getDataEmissaoCat() {

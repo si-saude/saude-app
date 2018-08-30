@@ -95,9 +95,11 @@
 
 						<div class="input-field col s3">
 							<label for="dataInicio">Início</label>
-							<my-date-picker name="inicio" [options]="myDatePickerOptions"
-								[(ngModel)]="atestado.tarefa.inicioCustomTime.appDate"
-								placeholder="Início"> </my-date-picker>
+							<app-date-picker [nome]="'inicio'" 
+									[customDate]="atestado.tarefa.inicioCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Início'"									
+									></app-date-picker>
 						</div>
 						<div class="input-field col s4">
 							<fieldset>
@@ -115,18 +117,20 @@
 					<div class="row">
 						<div class="input-field col s3">
 							<label for="dataSolicitacao">Data de Solicitação</label>
-							<my-date-picker name="dataSolicitacao"
-								[options]="myDatePickerOptions"
-								[(ngModel)]="atestado.dataSolicitacaoCustomDate.appDate"
-								placeholder="Data de Solicitação"> </my-date-picker>
+							<app-date-picker [nome]="'dataSolicitacao'" 
+									[customDate]="atestado.dataSolicitacaoCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Solicitação'"									
+									></app-date-picker>
 						</div>
 
 						<div class="input-field col s3">
 							<label for="dataAgendamento">Data de Agendamento</label>
-							<my-date-picker name="dataAgendamento"
-								[options]="myDatePickerOptions"
-								[(ngModel)]="atestado.dataAgendamentoCustomDate.appDate"
-								placeholder="Data de Agendamento"> </my-date-picker>
+							<app-date-picker [nome]="'dataAgendamento'" 
+									[customDate]="atestado.dataAgendamentoCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Agendamento'"									
+									></app-date-picker>
 						</div>
 
 						<div class="input-field col s6">
@@ -220,19 +224,21 @@
 
 					<div class="row" center>
 						<div class="input-field col s3">
-							<label for="dataEntrega">Data da Entrega</label>
-							<my-date-picker name="dataEntrega"
-								[options]="myDatePickerOptions"
-								[(ngModel)]="atestado.homologacaoAtestado.dataEntregaCustomTime.appDate"
-								placeholder="Data de Entrega"> </my-date-picker>
+							<label for="dataEntrega">Data da Entrega</label>							
+							<app-date-picker [nome]="'dataEntrega'" 
+									[customDate]="atestado.homologacaoAtestado.dataEntregaCustomTime" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Entrega'"									
+									></app-date-picker>
 						</div>
 
 						<div class="input-field col s3">
 							<label for="dataHomologacao">Data da Homologação</label>
-							<my-date-picker name="dataHomologacao"
-								[options]="myDatePickerOptions"
-								[(ngModel)]="atestado.homologacaoAtestado.dataHomologacaoCustomTime.appDate"
-								placeholder="Data da Homologacao"> </my-date-picker>
+							<app-date-picker [nome]="'dataHomologacao'" 
+									[customDate]="atestado.homologacaoAtestado.dataHomologacaoCustomTime" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data da Homologacao'"									
+									></app-date-picker>
 						</div>
 
 					</div>

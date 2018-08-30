@@ -16,8 +16,6 @@ import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
 
-
-
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { MudancaFuncao } from './../../../model/mudanca-funcao';
@@ -150,16 +148,15 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
             })
     }
 
-    setarResponsalvel(i: number) {
+    setarResponsavel(i: number) {
         this.mudancaFuncao.getTarefas()[i].setResponsavel(this.profissional);
-       console.log(this.mudancaFuncao.getTarefas()[i].getResponsavel());
     }
     ngOnDestroy() {
         this.inscricao.unsubscribe();
     }
     
     save() {
-        
+//       new MudancaFuncaoBuilder().clone( this.mudancaFuncao ).getTarefas()[0].getInicio();
         super.save( new MudancaFuncaoBuilder().clone( this.mudancaFuncao ) );
     }
 }

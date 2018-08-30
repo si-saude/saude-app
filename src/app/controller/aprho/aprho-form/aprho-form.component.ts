@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 
 import { MaterializeDirective} from "angular2-materialize";
 import { MaterializeAction } from "angular2-materialize";
-import { MyDatePickerModule } from 'mydatepicker';
 
 import { PossivelDanoSaude } from './../../../model/possivel-dano-saude';
 import { Ghe } from './../../../model/ghe';
@@ -91,6 +90,8 @@ export class AprhoFormComponent extends GenericFormComponent implements OnInit {
         this.autoCompleteEmpregado = new EmpregadoNomeAutocomplete(this.aprhoService.getEmpregadoService());
         this.autoCompleteAprovador = new ProfissionalNomeAutocomplete(this.aprhoService.getProfissionalSaudeService());
         this.autoCompleteElaborador = new ProfissionalNomeAutocomplete(this.aprhoService.getProfissionalSaudeService());
+    
+        
     }
 
     ngOnInit() {

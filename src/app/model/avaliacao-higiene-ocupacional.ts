@@ -1,7 +1,6 @@
 import { Localizacao } from './localizacao';
 import { Profissional } from './profissional';
-import { Empregado } from './empregado';
-import { CustomTime } from './../generics/utils/custom-time.util';
+import { Empregado } from './empregado'
 import { CustomDate } from './../generics/utils/custom-date.util';
 
 export class AvaliacaoHigieneOcupacional {
@@ -29,8 +28,8 @@ export class AvaliacaoHigieneOcupacional {
     private version: number;
 
     private dataCustomDate: CustomDate = new CustomDate(this.data);
-    private inicioCustomTime: CustomTime = new CustomTime(this.inicio);
-    private fimCustomTime: CustomTime = new CustomTime(this.fim);
+    private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
+    private fimCustomDate: CustomDate = new CustomDate(this.fim);
 
     public getId() {
         return this.id;
@@ -59,39 +58,39 @@ export class AvaliacaoHigieneOcupacional {
     }
     
     getInicio() {
-        this.inicio = this.inicioCustomTime.getApiDate();
+        this.inicio = this.inicioCustomDate.getApiDate();
         return this.inicio;
     }
     
     setInicio(inicio: Date) {
-        this.inicioCustomTime.setApiDate(inicio);
+        this.inicioCustomDate.setApiDate(inicio);
         this.inicio = inicio;
     }
     
-    getInicioCustomTime(){
+    getInicioCustomDate(){
         return this.inicio;
     }
     
-    setInicioCustomTime(inicioCustomTime: CustomTime){
-        this.inicioCustomTime = inicioCustomTime;
+    setInicioCustomDate(inicioCustomDate: CustomDate){
+        this.inicioCustomDate = inicioCustomDate;
     }
     
     getFim() {
-        this.fim = this.fimCustomTime.getApiDate();
+        this.fim = this.fimCustomDate.getApiDate();
         return this.fim;
     }
     
     setFim(fim: Date) {
-        this.fimCustomTime.setApiDate(fim);
+        this.fimCustomDate.setApiDate(fim);
         this.fim = fim;
     }
     
-    getFimCustomTime(){
+    getFimCustomDate(){
         return this.fim;
     }
     
-    setFimCustomTime(fimCustomTime: CustomTime){
-        this.fimCustomTime = fimCustomTime;
+    setFimCustomDate(fimCustomDate: CustomDate){
+        this.fimCustomDate = fimCustomDate;
     }
 
     public getLocal() {

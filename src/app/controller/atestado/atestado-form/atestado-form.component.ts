@@ -15,6 +15,7 @@ import { EquipeFilter } from './../../equipe/equipe.filter';
 import { DiagnosticoFilter } from './../../diagnostico/diagnostico.filter';
 import { DiagnosticoBuilder } from './../../diagnostico/diagnostico.builder';
 import { ProfissionalNomeAutocomplete } from './../../profissional-saude/profissional-nome.autocomplete';
+import { MaterializeAction } from "angular2-materialize";
 
 @Component( {
     selector: 'app-atestado-form',

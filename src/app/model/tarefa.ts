@@ -3,7 +3,6 @@ import { Empregado } from './empregado';
 import { Profissional } from './profissional';
 import { Equipe } from './equipe';
 import { CustomDate} from './../generics/utils/custom-date.util';
-import { CustomTime} from './../generics/utils/custom-time.util';
 
 export class Tarefa {
     private id: number;
@@ -17,8 +16,8 @@ export class Tarefa {
     private status: string;
     private version: number;
 
-    private inicioCustomTime: CustomTime = new CustomTime(this.inicio);
-    private fimCustomTime: CustomTime = new CustomTime(this.fim);
+    private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
+    private fimCustomDate: CustomDate = new CustomDate(this.fim);
     private atualizacaoCustomDate: CustomDate = new CustomDate(this.atualizacao);
 
 
@@ -49,39 +48,39 @@ export class Tarefa {
     }
     
     getInicio() {
-        this.inicio = this.inicioCustomTime.getApiDate();
+        this.inicio = this.inicioCustomDate.getApiDate();
         return this.inicio;
     }
     
     setInicio(inicio:Date) {
-        this.inicioCustomTime.setApiDate(inicio);
+        this.inicioCustomDate.setApiDate(inicio);
         this.inicio = inicio;
     }
     
-    getInicioCustomTime(){
-        return this.inicioCustomTime;
+    getInicioCustomDate(){
+        return this.inicioCustomDate;
     }
     
-    setInicioCustomTime(inicioCustomTime: CustomTime){
-        this.inicioCustomTime = inicioCustomTime;
+    setInicioCustomDate(inicioCustomDate: CustomDate){
+        this.inicioCustomDate = inicioCustomDate;
     }
     
     getFim() {
-        this.fim = this.fimCustomTime.getApiDate();
+        this.fim = this.fimCustomDate.getApiDate();
         return this.fim;
     }
     
     setFim(fim:Date) {
-        this.fimCustomTime.setApiDate(fim);
+        this.fimCustomDate.setApiDate(fim);
         this.fim = fim;
     }
     
-    getFimCustomTime(){
-        return this.fimCustomTime;
+    getFimCustomDate(){
+        return this.fimCustomDate;
     }
     
-    setFimCustomTime(fimCustomTime: CustomTime){
-        this.fimCustomTime = fimCustomTime;
+    setFimCustomDate(fimCustomDate: CustomDate){
+        this.fimCustomDate = fimCustomDate;
     }
 
     getServico() {
