@@ -93,16 +93,18 @@
 			<div class="row col s12" >
 
 				<div class="input-field col s3">
-					<label for="inicio">Abertura</label>
-					<my-date-picker name="abertura" [options]="myDatePickerOptions"
-						[(ngModel)]="solicitacaoCentralIntegra.aberturaCustomDate.appDate" placeholder="Abertura">
-					</my-date-picker>
+					<label for="inicio">Abertura</label>	
+					<app-date-picker [nome]="'abertura'" 
+									[customDate]="solicitacaoCentralIntegra.aberturaCustomDate" 									
+									[legenda]="'Abertura'"									
+									></app-date-picker>
 				</div>
 				<div class="input-field col s3">
 					<label for="prazo">Prazo</label>
-					<my-date-picker name="prazo" [options]="myDatePickerOptions"
-						[(ngModel)]="solicitacaoCentralIntegra.prazoCustomDate.appDate" placeholder="Prazo">
-					</my-date-picker>
+					<app-date-picker [nome]="'prazo'" 
+									[customDate]="solicitacaoCentralIntegra.prazoCustomDate" 									
+									[legenda]="'Prazo'"									
+									></app-date-picker>
 				</div>
 				<div class="input-field col s3">
 					<label for="tempoEstimado">Tempo Estimado (min)</label>

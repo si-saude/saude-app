@@ -93,12 +93,12 @@
 							<div class="row">
 								<div class="input-field col s3">
 									<label for="data">Data de Realização</label>
-									<my-date-picker name="resultadoExame[{{iREx}}].data"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="dataResultadoExames[iREx]" placeholder="Data">
-									</my-date-picker>
+									<app-date-picker [nome]="'resultadoExame['+iREx+'].data'" 
+											[customDate]="empregadoConvocacao.resultadoExames[iREx].dataCustomDate" 
+											[obrigatorio]="'false'"
+											[legenda]="'Data'"									
+											></app-date-picker>
 								</div>
-
 								<div class="input-field col s3 checkbox conforme">
 									<input type="checkbox" id="resultadoExame[{{iREx}}].conforme"
 										[(ngModel)]="rEx.conforme" (click)="selectConform(iREx)"
@@ -182,10 +182,11 @@
 
 								<div class="input-field col s4">
 									<label for="data">Data de Recebimento</label>
-									<my-date-picker name="resultadoExame[{{iREx}}].dataRecebimento"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="dataRecebimentoExames[iREx]" placeholder="Data Recebimento">
-									</my-date-picker>
+										<app-date-picker [nome]="'resultadoExame['+iREx+'].dataRecebimento'" 
+											[customDate]="empregadoConvocacao.resultadoExames[iREx].dataRecebimentoCustomDate" 
+											[obrigatorio]="'false'"
+											[legenda]="'Data Recebimento'"									
+											></app-date-picker>
 								</div>
 							</div>
 							
@@ -208,11 +209,12 @@
 												<td class="col s3 titulo">{{itemResultadoExame.titulo}}</td>
 												<td class="col s7 resultado">
 													<div [ngSwitch]="itemResultadoExame.codigo">
-														<div *ngSwitchCase="010" class="col s5" style="padding: 0">
-															<my-date-picker name="itemResultadoExameData[{{iREx}}]"
-																[options]="myDatePickerOptions"
-																[(ngModel)]="dataItemResultadoExames[iREx]" placeholder="Data">
-															</my-date-picker>
+														<div *ngSwitchCase="010" class="col s5" style="padding: 0">	
+																<input name="resultado" 
+															   materialize="pickadate" [(ngModel)]="itemResultadoExame.resultado"
+															   [materializeActions]="dateActions"
+															   [materializeParams]="params"
+															   type="text" placeholder="Data" />
 														</div>
 														<div *ngSwitchDefault>
 															<textarea id="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"

@@ -39,9 +39,11 @@
 							</div>		
 								<div class="input-field col s3">
 											<label for="data">Data de Criação</label>
-											<my-date-picker name="data" required
-												[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.appDate"
-												placeholder="Data"> </my-date-picker>
+											<app-date-picker [nome]="data" 
+												[customDate]="aprho.dataCustomDate" 
+												[obrigatorio]="'true'"
+												[legenda]="Data"									
+												></app-date-picker>												
 								</div>
 						</div>
 						<div class="row">
@@ -58,9 +60,11 @@
 						</div>	
 							<div class="input-field col s3">
 								<label for="dataRevisao">Data de Revisão</label>
-								<my-date-picker name="dataRevisao" required
-									[options]="myDatePickerOptions" [(ngModel)]="aprho.dataRevisaoCustomDate.appDate"
-									placeholder="Data de Revisão"> </my-date-picker>
+								<app-date-picker [nome]="'dataRevisao'" 
+											[customDate]="aprho.dataRevisaoCustomDate" 
+											[obrigatorio]="'true'"
+											[legenda]="'Data de Revisão'"									
+											></app-date-picker>	
 							</div>
 					</div>
 					<div class="row">
@@ -70,11 +74,13 @@
 					<label for="cliente">Aprovador</label> 
 						<input
 							type="text" materialize="autocomplete" autocomplete="off"
+							id="aprho.aprovador.empregado.pessoa.nome"
 							name="aprho.aprovador.empregado.pessoa.nome"
 							[(ngModel)]="aprho.aprovador.empregado.pessoa.nome"
 							(blur)="autoCompleteAprovador.getAutocomplete().getObj($event,aprho,'setAprovador','getNome')"
 							(ngModelChange)="autoCompleteAprovador.getAutocomplete().getList(aprho.aprovador, 'getNome');"
-							[materializeParams]="autoCompleteAprovador.getAutocomplete().getObjAutoComplete()">
+							[materializeParams]="autoCompleteAprovador.getAutocomplete().getObjAutoComplete()"
+							>
 				</div>
 					<div class="input-field col s2">
 								<label for="revisao">Revisão</label>

@@ -30,17 +30,20 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="input-field col s3"></div>
+		<div class="input-field col s3"></div>		
 		<div class="input-field col s3">
 			<label for="inicio">Período Inicial</label>
-			<my-date-picker name="inicio" [options]="myDatePickerOptions"
-				[(ngModel)]="filter.inicio.inicio" placeholder="Data Inicio">
-			</my-date-picker>
+			<app-date-picker [nome]="'inicio'" 
+									[customDate]="filter.inicio.inicioCustomDate" 									
+									[legenda]="'Data Inicio'"									
+									></app-date-picker>
 		</div>
-		<div class="input-field col s3">
+		<div class="input-field col s3">		
 		<label for="inicio">Período Final</label>
-			<my-date-picker name="fim" [options]="myDatePickerOptions"
-				[(ngModel)]="filter.inicio.fim" placeholder="Data Fim"> </my-date-picker>
+		<app-date-picker [nome]="'fim'" 
+									[customDate]="filter.inicio.fimCustomDate" 									
+									[legenda]="'Data Fim'"									
+									></app-date-picker>
 		</div>
 	</div>
 		<table class="table table-striped table-filter-planejamento"

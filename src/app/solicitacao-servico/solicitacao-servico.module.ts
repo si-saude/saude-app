@@ -29,7 +29,7 @@ import { SharedModule } from './../controller/shared.module';
         SolicitacaoServicoRoutingModule,
         MyDatePickerModule,
         Ng2InputMaskModule,
-        SharedModule
+        SharedModule        
      ],
      providers: [
         SolicitacaoServicoService

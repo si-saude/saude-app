@@ -28,9 +28,9 @@
 							</div>		
 							<div class="input-field col s3">
 										<label for="data">Data</label>
-										<my-date-picker name="data" disabled
-											[options]="myDatePickerOptions" [(ngModel)]="aprho.dataCustomDate.AppDate"
-											placeholder="Data"> </my-date-picker>
+										<input name="data"
+							                   [(ngModel)]="aprho.dataCustomDate.appDate" disabled
+							                   type="text" />	
 							</div>
 						</div>
 						<div class="row">

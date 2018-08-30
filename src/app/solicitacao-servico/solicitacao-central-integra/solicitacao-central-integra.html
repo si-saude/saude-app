@@ -60,9 +60,11 @@
 					
 					<div class="input-field col s4">
 						<label for="prazo">Prazo</label>
-						<my-date-picker name="prazo" [options]="myDatePickerOptions"
-							[(ngModel)]="solicitacao.prazoCustomDate.appDate" placeholder="Prazo">
-						</my-date-picker>
+						<app-date-picker [nome]="'prazo'" 
+									[customDate]="solicitacao.prazoCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Prazo'"									
+									></app-date-picker>
 					</div>
 					
 				</div>

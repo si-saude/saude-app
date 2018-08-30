@@ -97,15 +97,17 @@
 		<div class="input-field col s12">
 			<div class="input-field col s4">
 				<label for="dataInicial">Data Inicial</label>
-				<my-date-picker name="dataInicio" [options]="myDatePickerOptions"
-					[(ngModel)]="filter.data.inicio" placeholder="Data Inicial">
-				</my-date-picker>
+				<app-date-picker [nome]="'dataInicio'" 
+									[customDate]="filter.data.inicioCustomDate" 									
+									[legenda]="'Data Inicial'"									
+									></app-date-picker>
 			</div>
 			<div class="input-field col s4">
 				<label for="dataFinal">Data Final</label>
-				<my-date-picker name="dataFim" [options]="myDatePickerOptions"
-					[(ngModel)]="filter.data.fim" placeholder="Data Final">
-				</my-date-picker>
+				<app-date-picker [nome]="'dataFim'" 
+									[customDate]="filter.data.fimCustomDate" 									
+									[legenda]="'Data Final'"									
+									></app-date-picker>
 			</div>
 
 			<div class="input-field col s4">

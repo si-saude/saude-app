@@ -10,6 +10,7 @@ import { SolicitacaoServicoService } from './../solicitacao-servico.service';
 import { Atestado } from './../../model/atestado';
 import { AtestadoBuilder } from './../../controller/atestado/atestado.builder';
 import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
+import { GlobalVariable } from './../../../../src/app/global';
 
 @Component( {
     selector: 'app-homologacao-atestado',
@@ -19,11 +20,9 @@ import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
 export class HomologacaoAtestadoComponent {
     @ViewChild( 'anexo' ) inputElAnexo: ElementRef;
     private atestado: Atestado;
-    private myDatePickerOptions: IMyDpOptions;
     private globalActions;
     private toastParams;
-    private tarefa: Tarefa;
-    
+    private tarefa: Tarefa;    
     private showConfirmSave: boolean;
     private msgConfirmSave: string;
     private goTo: string;
@@ -34,9 +33,6 @@ export class HomologacaoAtestadoComponent {
         this.tarefa = new TarefaBuilder().initialize(this.tarefa);
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
-        this.myDatePickerOptions = {
-                dateFormat: 'dd/mm/yyyy'
-            };
     }
 
     ngOnInit() {

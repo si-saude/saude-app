@@ -2,8 +2,8 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
-import { MyDatePickerModule } from 'mydatepicker';
 import { IMyDpOptions } from 'mydatepicker';
+import { Util } from './../../../generics/utils/util'; 
 
 import { GlobalVariable } from './../../../global';
 import { Empregado } from './../../../model/empregado';
@@ -34,7 +34,7 @@ export class CheckOutComponent {
     showConfirmSave: boolean;
     msgConfirmSave: string;
     reload: boolean;
-    myDatePickerOptions: IMyDpOptions;
+    params;
 
     constructor( private route: ActivatedRoute,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
@@ -43,9 +43,7 @@ export class CheckOutComponent {
         this.filaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().initialize(this.filaEsperaOcupacional);
         this.localizacao = new LocalizacaoBuilder().initialize(this.localizacao);
         this.localizacoes = new LocalizacaoBuilder().initializeList(this.localizacoes);
-        this.myDatePickerOptions = {
-                dateFormat: 'dd/mm/yyyy'
-            };
+        this.params = GlobalVariable.PARAMS_DATE;
     }
 
     ngOnInit() {
@@ -55,18 +53,16 @@ export class CheckOutComponent {
     }
     
     checkOut( localizacaoId ) {
-        if ( ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == undefined ||
-            ( this.cpf && this.matricula && this.chave && this.dataNascimento ) == "" ||
-            localizacaoId == 0 ) {
+        if ( Util.isNotNull(this.cpf) && Util.isNotNull(this.matricula) && 
+                Util.isNotNull(this.chave) && Util.isNotNull(this.empregado.getPessoa().getDataNascimentoCustomDate()) &&
+                localizacaoId == 0) {
             this.toastParams = ['Por favor, preencha todos os campos', 4000];
             this.globalActions.emit( 'toast' );
             return;
         }
-
-        let data: Date = this.parseDatePickerToDate( this.dataNascimento );
-
+       
+        this.empregado.getPessoa().getDataNascimento();
         this.localizacao.setId(localizacaoId);
-        this.empregado.getPessoa().setDataNascimento(data);
         this.empregado.getPessoa().setCpf(this.treatCpf(this.cpf));
         this.empregado.setChave(this.chave);
         this.empregado.setMatricula(this.matricula);
@@ -81,7 +77,6 @@ export class CheckOutComponent {
                 this.cpf = "";
                 this.matricula = "";
                 this.chave = "";
-                this.dataNascimento = null;
                 this.empregado = new EmpregadoBuilder().initialize(new Empregado());
                 this.reload = true;
             })
@@ -103,19 +98,8 @@ export class CheckOutComponent {
             })
     }
     
-    parseDatePickerToDate( data ) {
-        if ( data === undefined || data === null ) {
-            return null;
-        } else if ( data instanceof Date ) {
-            return data;
-        }
-        let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
-        return d;
-    }
-    
     treatCpf( cpf: string ) {
-        let s: string;
-    
+        let s: string;    
         if ( cpf != undefined ) {
             if ( cpf.length > 11 ) { 
                 s = cpf.substring(0, 3);
@@ -126,8 +110,7 @@ export class CheckOutComponent {
             } else if ( cpf.length > 0 && cpf.length < 14 ) {
                 return cpf;
             }
-        } return undefined;
-        
+        } return undefined;        
     }
 
 }

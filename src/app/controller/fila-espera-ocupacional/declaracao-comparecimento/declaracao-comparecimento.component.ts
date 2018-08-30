@@ -1,9 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Util } from './../../../generics/utils/util'; 
 
 import { MaterializeAction } from "angular2-materialize";
-import { MyDatePickerModule } from 'mydatepicker';
-import { IMyDpOptions } from 'mydatepicker';
 import * as $ from 'jquery';
 
 import { GlobalVariable } from './../../../global';
@@ -28,30 +27,29 @@ import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.auto
 export class DeclaracaoComparecimentoComponent {
     atendimento: Atendimento;
     dataDeclaracao: any;
-
+    autoCompleteEmp;
     globalActions;
     toastParams;
-    myDatePickerOptions: IMyDpOptions;
+    params;    
 
     constructor( private route: ActivatedRoute,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.toastParams = ['', 4000];
         this.atendimento = new AtendimentoBuilder().initialize(new Atendimento())
-        this.myDatePickerOptions = { dateFormat: 'dd/mm/yyyy' };
+        this.params = GlobalVariable.PARAMS_DATE;
+        this.autoCompleteEmp = new EmpregadoNomeAutocomplete(filaEsperaOcupacionalService.getEmpregadoService()); 
     }
 
     ngOnInit() {}
     
     downloadDeclaracaoComparecimento() {
-        if ( this.dataDeclaracao == null || this.atendimento.getFilaEsperaOcupacional().getEmpregado().getId() == 0 ) {
+        if ( (!Util.isNotNull(this.atendimento.getTarefa().getInicioCustomDate())) || this.atendimento.getFilaEsperaOcupacional().getEmpregado().getId() == 0 ) {
             this.toastParams = ['Por favor, preencha todos os campos da busca', 4000];
             this.globalActions.emit( 'toast' );
             return;
-        }
-        
-        this.atendimento.getTarefa().setInicio(this.parseDatePickerToDate(this.dataDeclaracao));
-        
+        }        
+        this.atendimento.getTarefa().getInicio();        
         this.filaEsperaOcupacionalService.downloadDeclaracaoComparecimento( this.atendimento )
             .then(res => {
                 this.downloadFile( res, this.atendimento.getFilaEsperaOcupacional().getEmpregado().getMatricula().trim()+".pdf" );
@@ -61,16 +59,6 @@ export class DeclaracaoComparecimentoComponent {
                 this.globalActions.emit( 'toast' );
                 console.log("Erro ao retornar os atendimentos."+error);
             })
-    }
-    
-    parseDatePickerToDate( data ) {
-        if ( data === undefined || data === null ) {
-            return null;
-        } else if ( data instanceof Date ) {
-            return data;
-        }
-        let d: Date = new Date( data.date.year, data.date.month - 1, data.date.day );
-        return d;
     }
     
     downloadFile( data, fileName ) {

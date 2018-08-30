@@ -15,6 +15,7 @@ import { ProfissionalSaudeFilter } from './../../controller/profissional-saude/p
 import { DateFilter } from './../../generics/date.filter';
 import { IMyDpOptions } from 'mydatepicker';
 import { DateUtil } from './../../generics/utils/date.util';
+import { GlobalVariable } from './../../../../src/app/global';
 
 @Component( {
     selector: 'app-modal-fila-atendimento-ocupacional',
@@ -34,7 +35,6 @@ export class ModalFilaAtendimentoOcupacionalComponent {
     modelParams;
     private localizacoes: Array<Localizacao>;
     private profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
-    protected myDatePickerOptions: IMyDpOptions;
     protected dateUtil: DateUtil;
 
 
@@ -49,9 +49,6 @@ export class ModalFilaAtendimentoOcupacionalComponent {
         this.filter.setInicio( new DateFilter() );
         this.filter.getInicio().setTypeFilter( "ENTRE" );
         this.filter.setPageSize( Math.pow( 2, 31 ) - 1 );
-        this.myDatePickerOptions = {
-            dateFormat: 'dd/mm/yyyy'
-        };
         this.dateUtil = new DateUtil();
     }
 
@@ -91,9 +88,7 @@ export class ModalFilaAtendimentoOcupacionalComponent {
     buscarFilaAtendimentosOcupacionais() {
         if ( this.verificarCampos() ) {
             this.profissionalFilter.setId( this.profissional.getId() );
-            this.filter.getInicio().setInicio( this.dateUtil.parseDatePickerToDate( this.filter.getInicio().getInicio() ) );
-            this.filter.getInicio().setFim( this.dateUtil.parseDatePickerToDate( this.filter.getInicio().getFim() ) );
-
+            console.log(this.filter.getInicio());
             this.filter.setProfissional( this.profissionalFilter );
             this.service.getListFilaAtendimentoOcupacional( this.filter )
                 .then( res => {

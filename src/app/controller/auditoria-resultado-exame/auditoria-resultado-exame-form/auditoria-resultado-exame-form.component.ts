@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
-import { MyDatePickerModule } from 'mydatepicker';
+import { MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
 import { CampoExame } from './../../../model/campo-exame';
@@ -49,6 +49,8 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     dataItemResultadoExames: Array<any>;
 
     selectedExm = null;
+    dateActions;
+    params;
     
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
@@ -70,6 +72,8 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         this.empregadoConvocacoes = new Array<EmpregadoConvocacao>();
         this.autocompleteEmpregadoConvocacao = [];
         this.validExame = "";
+        this.dateActions = new EventEmitter<string|MaterializeAction>();
+        this.params = GlobalVariable.PARAMS_DATE;
     }
 
     ngOnInit() {
@@ -84,8 +88,6 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
                             this.showPreload = false;
                             this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().clone( res.json() );
                             this.saveArrayExames();
-                            this.parseAndSetDates();
-                            this.treatDateItemResultadoExame();
                             this.empConv = this.empregadoConvocacao.getConvocacao().getTitulo() + " - " + this.empregadoConvocacao.getEmpregado().getPessoa().getNome();
                             if ( this.empregadoConvocacao.getResultadoExames() != undefined &&
                                 this.empregadoConvocacao.getResultadoExames() != null ) {
@@ -127,7 +129,6 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
     }
 
     save() {
-        this.verifyAndSetDates();
         super.save( new EmpregadoConvocacaoBuilder().clone( this.empregadoConvocacao ) );
     }
 
@@ -178,15 +179,6 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
             this.conformList[value] = this.empregadoConvocacao.getResultadoExames()[value].getConforme();
         }, 100 );
     }
-    
-    treatDateItemResultadoExame() {
-        for ( let i=0; i<this.empregadoConvocacao.getResultadoExames().length; i++ ) {
-            let iRExame: ItemResultadoExame = this.empregadoConvocacao.getResultadoExames()[i].getItemResultadoExames().
-                find(iREx => iREx.getCodigo() == "010");
-            if ( iRExame != undefined )
-                this.dataItemResultadoExames[i] = this.parseItemResultadoExameDataToObjectDatePicker( iRExame.getResultado() );
-        }
-    }
 
     verifyAuditado() {
         let ret: boolean = this.conformList.find( cL => cL == false );
@@ -214,74 +206,7 @@ export class AuditoriaResultadoExameFormComponent extends GenericFormComponent i
         }, 100 );
     }
 
-    verifyAndSetDates() {
-        if ( this.empregadoConvocacao.getResultadoExames() !== undefined &&
-            this.empregadoConvocacao.getResultadoExames() !== null ) {
-            for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
-                this.empregadoConvocacao.getResultadoExames()[i].setData(
-                        this.dateUtil.parseDatePickerToDate( this.dataResultadoExames[i] ) );
 
-                this.empregadoConvocacao.getResultadoExames()[i].setDataRecebimento(
-                        this.dateUtil.parseDatePickerToDate( this.dataRecebimentoExames[i] ) );
-                
-                this.empregadoConvocacao.getResultadoExames()[i].getItemResultadoExames().forEach(iREx => {
-                    if ( iREx.getCodigo() == "010") {
-                        iREx.setResultado( this.parseDatePickerToItemResultadoExameDate( this.dataItemResultadoExames[i] ) );
-                    }
-                })
-            }
-        }
-    }
-
-    parseAndSetDates() {
-        if ( this.empregadoConvocacao.getResultadoExames() !== undefined &&
-            this.empregadoConvocacao.getResultadoExames() !== null ) {
-            for ( let i = 0; i < this.empregadoConvocacao.getResultadoExames().length; i++ ) {
-                this.dataResultadoExames[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.empregadoConvocacao.getResultadoExames()[i].getData() );
-
-                this.dataRecebimentoExames[i] =
-                    this.dateUtil.parseDataToObjectDatePicker(
-                        this.empregadoConvocacao.getResultadoExames()[i].getDataRecebimento() );
-            }
-        }
-    }
-    
-    parseItemResultadoExameDataToObjectDatePicker( data: string ) {
-        if ( data === undefined || data === null ) {
-            return undefined;
-        }
-        
-        let mes = data.substring( 4, 6 );
-        let dia = data.substring( 6, 8 );
-        
-        if ( mes.substring(0, 1) == "0" ) mes = mes.replace("0", ""); 
-        if ( dia.substring(0, 1) == "0" ) dia = dia.replace("0", "");
-        
-        let o = Object.create( 
-                { date: 
-                    { year: data.substring( 0, 4 ), month: mes, day: dia } 
-                });
-        return o;
-    }
-    
-    parseDatePickerToItemResultadoExameDate( data ) {
-        if ( data === undefined || data === null ) {
-            return null;
-        }
-        let ano: string = (data.date.year).toString();
-        let mes: string = ( data.date.month ).toString();
-        let dia: string = (data.date.day).toString();
-
-        if ( mes.length == 1 ) mes = "0"+ mes.toString();
-        if ( dia.length == 1 ) dia = "0"+ dia.toString();
-        
-        let d: string = ano + mes + dia;
-        
-        return d;
-    }
-    
     focusExame(evento, indexREx) {
         this.validExame = this.empregadoConvocacao.getResultadoExames()[indexREx].getExame().getDescricao();
     }

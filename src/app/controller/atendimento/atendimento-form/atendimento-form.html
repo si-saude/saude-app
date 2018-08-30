@@ -149,12 +149,10 @@
 
 					<div class="input-field-empregado input-field col s3">
 						<label for="dataNascimento">Nascimento</label>
-						<my-date-picker name="dataNascimento" disabled
-							[options]="myDatePickerOptions" 
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.dataNascimentoCustomDate.appDate"
-							placeholder="Data de Nascimento"> </my-date-picker>
+						<input name="dataNascimento"
+								   [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.dataNascimentoCustomDate.appDate" disabled
+								   type="text" />
 					</div>
-
 					<div class="input-field-empregado input-field col s3">
 						<label for="idade">Idade</label> <input id="idade" type="text"
 							disabled

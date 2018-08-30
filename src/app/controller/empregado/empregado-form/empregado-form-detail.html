@@ -56,17 +56,17 @@
 
 					<div class="input-field col s3">
 						<label for="dataNascimento">Data de Nascimento</label>
-						<my-date-picker name="dataNascimento" disabled
-							[options]="myDatePickerOptions" [(ngModel)]="empregado.pessoa.dataNascimentoCustomDate.appDate"
-							placeholder="Data de Nascimento"> </my-date-picker>
+						<input name="dataNascimento"
+												   [(ngModel)]="empregado.pessoa.dataNascimentoCustomDate.appDate" disabled
+												   type="text"/>
 					</div>
 					
 					<div class="input-field col s3">
 							<label for="dataAdmissao">Data de Admissão</label>
-							<my-date-picker name="dataAdmissao"
-								[options]="myDatePickerOptions" [(ngModel)]="empregado.dataAdmissaoCustomDate.appDate"
-								placeholder="Data de Admissão"> </my-date-picker>
-						</div>
+							<input name="dataAdmissao"	
+												   [(ngModel)]="empregado.dataAdmissaoCustomDate.appDate" disabled
+												   type="text"/>
+					</div>
 				</div>
 
 				<div class="row">
@@ -468,11 +468,9 @@
 
 									<div class="input-field col s4">
 										<label for="data">Data</label>
-										<my-date-picker name="empregadoVacinas.data"
-											[options]="myDatePickerOptions" disabled
-											name="empregado.empregadoVacinas[i].data"
-											[(ngModel)]="dataVacinas[i]" placeholder="Data">
-										</my-date-picker>
+										<input name="empregadoVacinas.data" 
+											   [(ngModel)]="empregado.empregadoVacinas[i].dataCustomDate.appDate" disabled
+											   type="text" />
 									</div>
 
 								</div>
@@ -503,12 +501,10 @@
 									</div>
 
 									<div class="input-field col s4">
-										<label for="proximaDose" maxlength="128">Próxima Dose</label>
-										<my-date-picker name="proximaDose" disabled
-											[options]="myDatePickerOptions"
-											name="empregado.empregadoVacinas[{{i}}].proximaDose"
-											[(ngModel)]="proximaDoseVacinas[i]"
-											placeholder="Próxima dose"> </my-date-picker>
+										<label for="proximaDose" maxlength="128">Próxima Dose</label>										
+										<input name="empregado.empregadoVacinas[{{i}}].proximaDose"
+													   [(ngModel)]="empregado.empregadoVacinas[i].proximaDoseCustomDate.appDate" disabled
+													   type="text" />
 									</div>
 								</div>
 

@@ -47,7 +47,6 @@ export class SolicitacaoCentralIntegraFormComponent extends GenericFormComponent
     
     private autoCompleteEmp:EmpregadoNomeAutocomplete;
     private autoCompleteProf:ProfissionalNomeAutocomplete;
-    
     private cssUtil: CssUtil;
     
     constructor( private route: ActivatedRoute,

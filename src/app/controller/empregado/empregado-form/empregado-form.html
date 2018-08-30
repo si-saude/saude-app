@@ -12,7 +12,9 @@
 <div class="row form-container">
 
 	<div>
-		<h6>Nome do Empregado: <b>{{empregado.pessoa.nome}}</b></h6>
+		<h6>
+			Nome do Empregado: <b>{{empregado.pessoa.nome}}</b>
+		</h6>
 	</div>
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
@@ -66,16 +68,22 @@
 						</div>
 
 						<div class="input-field col s3">
-							<label for="dataNascimento">Data de Nascimento</label>
-							<my-date-picker name="dataNascimento"
-								[options]="myDatePickerOptions" [(ngModel)]="empregado.pessoa.dataNascimentoCustomDate.appDate"
-								placeholder="Data de Nascimento"> </my-date-picker>
+							<label for="dataNascimento">Data de Nascimento</label> 
+							<app-date-picker [nome]="'dataNascimento'" 
+									[customDate]="empregado.pessoa.dataNascimentoCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Nascimento'"									
+									></app-date-picker>
+							
 						</div>
+
 						<div class="input-field col s3">
 							<label for="dataAdmissao">Data de Admissão</label>
-							<my-date-picker name="dataAdmissao"
-								[options]="myDatePickerOptions" [(ngModel)]="empregado.dataAdmissaoCustomDate.appDate"
-								placeholder="Data de Admissão"> </my-date-picker>
+							<app-date-picker [nome]="'dataAdmissao'" 
+									[customDate]="empregado.dataAdmissaoCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Adimissão'"									
+									></app-date-picker>
 						</div>
 					</div>
 
@@ -90,11 +98,10 @@
 								type="text" maxlength="32" [(ngModel)]="empregado.matricula"
 								name="matricula">
 						</div>
-						
+
 						<div class="input-field col s4">
-							<label for="pis">PIS</label> <input id="pis"
-								type="text" maxlength="20" [(ngModel)]="empregado.pis"
-								name="pis">
+							<label for="pis">PIS</label> <input id="pis" type="text"
+								maxlength="20" [(ngModel)]="empregado.pis" name="pis">
 						</div>
 					</div>
 
@@ -182,10 +189,9 @@
 								</select>
 							</fieldset>
 						</div>
-						
+
 						<div class="input-field col s6">
-							<label for="email">Email</label> 
-							<input id="email" type="email"
+							<label for="email">Email</label> <input id="email" type="email"
 								[(ngModel)]="empregado.pessoa.email" name="email">
 						</div>
 
@@ -202,8 +208,8 @@
 										class="material-icons center-icon">cached</i>
 									</a>
 								</legend>
-								<select name="cargo" class="browser-default" [disabled]="(empregado.id >0)"
-									[(ngModel)]="empregado.cargo.id">
+								<select name="cargo" class="browser-default"
+									[disabled]="(empregado.id >0)" [(ngModel)]="empregado.cargo.id">
 									<option disabled selected value=0>Selecione um cargo</option>
 									<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
 								</select>
@@ -219,7 +225,8 @@
 										class="material-icons center-icon">cached</i>
 									</a>
 								</legend>
-								<select name="funcao" class="browser-default" [disabled]="(empregado.id >0)"
+								<select name="funcao" class="browser-default"
+									[disabled]="(empregado.id >0)"
 									[(ngModel)]="empregado.funcao.id">
 									<option disabled selected value=0>Selecione uma função</option>
 									<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
@@ -239,7 +246,8 @@
 										class="material-icons center-icon">cached</i>
 									</a>
 								</legend>
-								<select name="regime" class="browser-default" [disabled]="(empregado.id >0)"
+								<select name="regime" class="browser-default"
+									[disabled]="(empregado.id >0)"
 									[(ngModel)]="empregado.regime.id">
 									<option disabled selected value=0>Selecione um regime</option>
 									<option *ngFor="let regime of regimes" value="{{regime.id}}">{{regime.nome}}</option>
@@ -255,7 +263,8 @@
 										class="material-icons center-icon">cached</i>
 									</a>
 								</legend>
-								<select name="gerencia" class="browser-default" [disabled]="(empregado.id >0)"
+								<select name="gerencia" class="browser-default"
+									[disabled]="(empregado.id >0)"
 									[(ngModel)]="empregado.gerencia.id">
 									<option disabled selected value=0>Selecione uma gerencia</option>
 									<option *ngFor="let gerencia of gerencias"
@@ -263,11 +272,12 @@
 								</select>
 							</fieldset>
 						</div>
-						
+
 						<div class="input-field col s4">
 							<fieldset>
-								<legend> Ênfase 
-									<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								<legend>
+									Ênfase <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
 										(click)="getEnfases()"> <i
 										class="material-icons center-icon">cached</i>
 									</a>
@@ -275,8 +285,7 @@
 								<select name="enfase" class="browser-default"
 									[(ngModel)]="empregado.enfase.id">
 									<option disabled selected value="undefined">Selecione uma ênfase</option>
-									<option *ngFor="let enfase of enfases"
-										value="{{enfase.id}}">{{enfase.descricao}}</option>
+									<option *ngFor="let enfase of enfases" value="{{enfase.id}}">{{enfase.descricao}}</option>
 								</select>
 							</fieldset>
 						</div>
@@ -294,8 +303,8 @@
 										class="material-icons center-icon">cached</i>
 									</a>
 								</legend>
-								<select name="base" class="browser-default" [disabled]="(empregado.id >0)"
-									[(ngModel)]="empregado.base.id">
+								<select name="base" class="browser-default"
+									[disabled]="(empregado.id >0)" [(ngModel)]="empregado.base.id">
 									<option disabled selected value=0>Selecione uma base</option>
 									<option *ngFor="let base of bases" value="{{base.id}}">{{base.nome}}</option>
 								</select>
@@ -309,8 +318,9 @@
 										(click)="getGhes()"> <i class="material-icons center-icon">cached</i>
 									</a>
 								</legend>
-								<select name="ghe" class="browser-default" #ghe  
-									(mouseover)="showToastGhe(ghe.value)" (mouseleave)="closeTooltip()" [disabled]="(empregado.id >0)"
+								<select name="ghe" class="browser-default" #ghe
+									(mouseover)="showToastGhe(ghe.value)"
+									(mouseleave)="closeTooltip()" [disabled]="(empregado.id >0)"
 									[(ngModel)]="empregado.ghe.id">
 									<option disabled selected value=0>Selecione um ghe</option>
 									<option *ngFor="let ghe of ghes" value="{{ghe.id}}">{{ghe.nome}}</option>
@@ -327,8 +337,9 @@
 										class="material-icons center-icon">cached</i>
 									</a>
 								</legend>
-								<select name="ghee" class="browser-default" #ghee 
-									(mouseover)="showToastGhee(ghee.value)" (mouseleave)="closeTooltip()" [disabled]="(empregado.id >0)"
+								<select name="ghee" class="browser-default" #ghee
+									(mouseover)="showToastGhee(ghee.value)"
+									(mouseleave)="closeTooltip()" [disabled]="(empregado.id >0)"
 									[(ngModel)]="empregado.ghee.id">
 									<option disabled selected value=0>Selecione um ghee</option>
 									<option *ngFor="let ghee of ghees" value="{{ghee.id}}">{{ghee.nome}}</option>
@@ -464,7 +475,8 @@
 							<tbody class="col s12">
 								<tr class="col s12">
 									<td class="col s8 grupo-monitoramento-nome">{{empregado.historicoGrupoMonitoramentos[i].grupoMonitoramento.nome}}</td>
-									<td class="col s4 data-remocao-historico">{{empregado.historicoGrupoMonitoramentos[i].dataRemocao | transformDate}}</td>
+									<td class="col s4 data-remocao-historico">{{empregado.historicoGrupoMonitoramentos[i].dataRemocao
+										| transformDate}}</td>
 								</tr>
 							</tbody>
 						</div>
@@ -599,11 +611,11 @@
 
 										<div class="input-field col s4">
 											<label for="data">Data</label>
-											<my-date-picker
-												[options]="myDatePickerOptions"
-												name="empregado.empregadoVacinas[{{i}}].dataCustomDate.appDate"
-												[(ngModel)]="empregado.empregadoVacinas[i].dataCustomDate.appDate" placeholder="Data">
-											</my-date-picker>
+											<app-date-picker [nome]="'empregado.empregadoVacinas['+i+'].dataCustomDate.appDate'" 
+												[customDate]="empregado.empregadoVacinas[i].dataCustomDate" 
+												[obrigatorio]="'false'"
+												[legenda]="'Data'"									
+												></app-date-picker>
 										</div>
 
 									</div>
@@ -635,10 +647,11 @@
 
 										<div class="input-field col s4">
 											<label for="proximaDose" maxlength="128">Próxima Dose</label>
-											<my-date-picker [options]="myDatePickerOptions"
-												name="empregado.empregadoVacinas[{{i}}].proximaDose"
-												[(ngModel)]="empregado.empregadoVacinas[i].proximaDoseCustomDate.appDate"
-												placeholder="Próxima dose"> </my-date-picker>
+											<app-date-picker [nome]="'empregado.empregadoVacinas['+i+'].proximaDose'" 
+												[customDate]="empregado.empregadoVacinas[i].proximaDoseCustomDate" 
+												[obrigatorio]="'false'"
+												[legenda]="'Próxima dose'"									
+												></app-date-picker>
 										</div>
 									</div>
 
@@ -698,19 +711,19 @@
 					<div class="input-field col s12 instalacoes">
 
 						<fieldset>
-							<legend> Instalações 
-								<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
-									(click)="getInstalacoes()"> 
-									<i class="material-icons center-icon">cached</i>
+							<legend>
+								Instalações <a
+									class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getInstalacoes()"> <i
+									class="material-icons center-icon">cached</i>
 								</a>
 							</legend>
 
 							<div class="row row-curso">
 
 								<div class="input-field col s8">
-									<label for="instalacao">Instalação</label> 
-									<input
-										type="text" materialize="autocomplete" autocomplete="off"
+									<label for="instalacao">Instalação</label> <input type="text"
+										materialize="autocomplete" autocomplete="off"
 										name="instalacao.nome"
 										[(ngModel)]="instalacao.instalacao.nome"
 										(blur)="autoCompleteInstalacao.getAutocomplete().getObj($event,instalacao,'setInstalacao','getNome')"
@@ -800,5 +813,5 @@
 	</form>
 </div>
 
-<div materialize [materializeParams]="toastParams" 
+<div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>

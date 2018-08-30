@@ -43,8 +43,6 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private tipoCats: Array<string>;
     private showModalDiagnostico: boolean;
     private innerIdEquipe: number = 0;
-    private diaHoraAcidente: string;
-    private diaHoraAcidenteTimeActions;
 
     private autoCompleteGerencia: GerenciaCodigoCompletoAutocomplete;
     private autoCompleteEmpregado: EmpregadoNomeAutocomplete;
@@ -52,6 +50,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private autoCompleteParteCorpoAtingida: ParteCorpoAtingidaDescricaoAutocomplete;
     private autoCompleteAgenteCausador: AgenteCausadorDescricaoAutocomplete;
     private autoCompleteNaturezaLesao: NaturezaLesaoDescricaoAutocomplete;
+    timeActions;
 
     constructor( private route: ActivatedRoute,
         private catService: CatService,
@@ -75,7 +74,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.gravidades = new Array<string>();
         this.tipoAcidentes = new Array<string>();
         this.tipoCats = new Array<string>();
-        this.diaHoraAcidenteTimeActions = new EventEmitter<string|MaterializeAction>();
+        this.timeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {

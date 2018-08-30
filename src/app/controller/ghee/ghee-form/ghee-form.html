@@ -34,17 +34,17 @@
 
 			<div class="input-field col s6">
 				<label for="dataCriacao">Data de Criação</label>
-				<my-date-picker name="dataCriacao" disabled
-					[options]="myDatePickerOptions"
-					[(ngModel)]="ghee.dataCriacaoCustomDate.appDate" placeholder="Data de Criação">
-				</my-date-picker>
+				<input name="dataCriacao"
+						   [(ngModel)]="ghee.dataCriacaoCustomDate.appDate" disabled
+						   type="text" placeholder="Data de Criação"/>
 			</div>
 
 			<div class="input-field col s6">
 				<label for="dataDesativacao">Data de Desativação</label>
-				<my-date-picker name="dataDesativacao"
-					[options]="myDatePickerOptions" [(ngModel)]="ghee.dataDesativacaoCustomDate.appDate"
-					placeholder="Data de Desativação"> </my-date-picker>
+				<app-date-picker [nome]="'dataDesativacao'" 
+									[customDate]="ghee.dataDesativacaoCustomDate" 									
+									[legenda]="'Data de Desativação'"									
+									></app-date-picker>
 			</div>
 
 		</div>

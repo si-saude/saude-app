@@ -81,10 +81,10 @@
 								<td class="col s1 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
 								<td class="col s7 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
 								<div class="input-field col s2" style="margin-top: 0">
-									<my-date-picker name="empregadoConvocacaoExame[{{eCE}}].realizacaoCustomDate.appDate"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="empregadoConvocacaoExame.realizacaoCustomDate.appDate"
-										placeholder="Realização"> </my-date-picker>
+										<app-date-picker [nome]="'empregadoConvocacaoExame['+eCE+'].realizacaoCustomDate'" 
+											[customDate]="empregadoConvocacaoExame.realizacaoCustomDate" 									
+											[legenda]="'Realização'"									
+											></app-date-picker>					
 								</div>
 								<td class="col s1 checkbox-conforme">
 									<input [disabled]="empregadoConvocacaoExame.pendenteRelatorio"

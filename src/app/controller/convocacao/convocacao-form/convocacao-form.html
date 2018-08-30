@@ -79,15 +79,17 @@
 				<div class="row">
 					<div class="input-field col s6">
 						<label for="inicio">Início</label>
-						<my-date-picker name="inicio" [options]="myDatePickerOptions"
-							[(ngModel)]="convocacao.inicioCustomDate.appDate" 
-							placeholder="Início"> </my-date-picker>
+								<app-date-picker [nome]="'inicio'" 
+									[customDate]="convocacao.inicioCustomDate" 									
+									[legenda]="'Início'"									
+									></app-date-picker>
 					</div>
 					<div class="input-field col s6">
 						<label for="fim">Fim</label>
-						<my-date-picker name="fim" [options]="myDatePickerOptions"
-							[(ngModel)]="convocacao.fimCustomDate.appDate" 
-							placeholder="Fim"> </my-date-picker>
+						<app-date-picker [nome]="'fim'" 
+									[customDate]="convocacao.fimCustomDate" 									
+									[legenda]="'Fim'"									
+									></app-date-picker>	
 					</div>
 				</div>
 
@@ -132,37 +134,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- 
-				<div class="col s5 datas">
-					<div class="row-item-collection"
-						*ngFor="let selectedGerencia of selectedGerenciaConvocacaoCC; let gC = index">
-						<div class="row-item-collection">
-							<div>
-								<p>{{selectedGerencia}}</p>
-							</div>
-							<div class="gerenciaConvocacaoDatas">
-								<div class="row">
-									<div class="input-field col s8">
-										<label for="dataGerenciaConvocacaoInicio[{{gC}}]">Início</label>
-										<my-date-picker name="dataGerenciaConvocacaoInicio[{{gC}}]"
-											[options]="myDatePickerOptions"
-											[(ngModel)]="dataGerenciaConvocacaoInicio[selectedGerencia]"
-											placeholder="Início"> </my-date-picker>
-									</div>
-									<div class="input-field col s8">
-										<label for="dataGerenciaConvocacaoFim[{{gC}}]">Fim</label>
-										<my-date-picker name="dataGerenciaConvocacaoFim[{{gC}}]"
-											[options]="myDatePickerOptions"
-											[(ngModel)]="dataGerenciaConvocacaoFim[selectedGerencia]"
-											placeholder="Fim"> </my-date-picker>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				 -->
-
 				</div>
 
 			</div>
@@ -240,10 +211,11 @@
 										<td class="col s4 nome">{{empregadoConvocacao.empregado.pessoa.nome}}</td>
 										<td class="col s2 codigo_completo">{{empregadoConvocacao.empregado.gerencia.codigoCompleto}}</td>
 										<td class="col s2 data_convocacao{{eC}}">
-											<my-date-picker name="dataConvocacao{{eC}}" [disabled]="!empregadoConvocacao.selecionado" 
-												[options]="myDatePickerOptions"
-												[(ngModel)]="empregadoConvocacao.dataConvocacaoCustomDate.appDate" 
-												placeholder="Data da Convocação"></my-date-picker>
+												<app-date-picker [nome]="'dataConvocacao['+eC+']'" 
+													[customDate]="empregadoConvocacao.dataConvocacaoCustomDate" 													
+													[desabilitar]="'!empregadoConvocacao.selecionado'"									
+													[legenda]="'Data da Convocação'"
+													></app-date-picker>
 										</td>
 										<td class="col s1 checkbox_selecionado" *ngIf="empregadoConvocacao.auditado">
 											<input type="checkbox" id="empregadoConvocacao[{{eC}}].selecionado"

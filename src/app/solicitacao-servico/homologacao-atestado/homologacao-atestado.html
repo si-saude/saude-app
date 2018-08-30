@@ -32,9 +32,10 @@
 					
 					<div class="input-field col s3">
 						<label for="dataInicio">Início</label>
-						<my-date-picker name="inicio" [options]="myDatePickerOptions"
-							[(ngModel)]="tarefa.inicioCustomTime.appDate" placeholder="Início">
-						</my-date-picker>
+						<app-date-picker [nome]="'inicio'" 
+									[customDate]="tarefa.inicioCustomDate.appDate" 									
+									[legenda]="'Data'"									
+									></app-date-picker>
 					</div>
 					<div class="input-field col s3 checkbox">
 						<input (click)="showCardNotice($event)" type="checkbox" id="atestado.impossibilidadeLocomocao" 

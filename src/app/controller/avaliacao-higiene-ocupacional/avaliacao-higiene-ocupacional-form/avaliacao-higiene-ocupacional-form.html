@@ -56,10 +56,11 @@
 						</div>
 						
 						<div class="input-field col s3">
-							<label for="data">Data</label>
-							<my-date-picker name="data"
-								[options]="myDatePickerOptions" [(ngModel)]="avaliacaoHigieneOcupacional.dataCustomDate.appDate"
-								placeholder="Data"> </my-date-picker>
+							<label for="data">Data</label>	
+							<app-date-picker [nome]="'data'" 
+									[customDate]="avaliacaoHigieneOcupacional.dataCustomDate" 
+									[legenda]="'Data'"																		
+									></app-date-picker>
 						</div>
 					</div>
 					
@@ -68,18 +69,18 @@
 							<label for="inicio">Início</label>
 							<div>
 								<div class="input-field col s6">
-									<my-date-picker name="inicio"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="avaliacaoHigieneOcupacional.inicioCustomTime.appDate"
-										placeholder="Início"></my-date-picker>
+								<app-date-picker [nome]="'inicio'" 
+									[customDate]="avaliacaoHigieneOcupacional.inicioCustomDate" 
+									[legenda]="'Início'"									
+									></app-date-picker>
 								</div>
 								<div class="input-field col s6">
-						            <input id="inicio" name="inicio" 
-						            	[(ngModel)]="avaliacaoHigieneOcupacional.inicioCustomTime.appTime"
-					                    materialize="pickatime" 
-					                    [materializeActions]="inicioTimeActions"
-					                    [materializeParams]="[{twelvehour: false}]"
-					                    placeholder="00:00" class="validate" type="text">
+								<input id="inicio" name="inicio"
+									[(ngModel)]="avaliacaoHigieneOcupacional.inicioCustomDate.appTime"
+									materialize="pickatime" 
+									[materializeActions]="timeActions" 
+									[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+									class="validate" type="text">
 					            </div>
 				            </div>
 						</div>
@@ -88,18 +89,18 @@
 							<label for="fim">Fim</label>
 							<div>
 								<div class="input-field col s6">
-									<my-date-picker name="fim"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="avaliacaoHigieneOcupacional.fimCustomTime.appDate"
-										placeholder="Fim"></my-date-picker>
+										<app-date-picker [nome]="'fim'" 
+											[customDate]="avaliacaoHigieneOcupacional.fimCustomDate" 
+											[legenda]="'Fim'"									
+											></app-date-picker>
 								</div>
 								<div class="input-field col s6">
-						            <input id="fim" name="fim" 
-						            	[(ngModel)]="avaliacaoHigieneOcupacional.fimCustomTime.appTime"
-					                    materialize="pickatime" 
-					                    [materializeActions]="fimTimeActions"
-					                    [materializeParams]="[{twelvehour: false}]"
-					                    placeholder="00:00" class="validate" type="text">
+										<input id="fim" name="fim"
+											[(ngModel)]="avaliacaoHigieneOcupacional.fimCustomDate.appTime"
+											materialize="pickatime" 
+											[materializeActions]="timeActions" 
+											[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+											class="validate" type="text">
 					            </div>
 				            </div>
 						</div>

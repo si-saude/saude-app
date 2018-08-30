@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterializeModule } from 'angular2-materialize';
 
+import { DatePickerModule } from './../includes/date-picker/date-picker.module';
 import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
 import { PreloadComponent } from './../includes/preload/preload.component';
 import { ConfirmSaveComponent } from './../includes/confirm-save/confirm-save.component';
@@ -96,7 +97,8 @@ import { EnfaseService } from './enfase/enfase.service';
     HttpModule,
     FormsModule,
     MaterializeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DatePickerModule
   ],
   exports: [ 
     CommonModule,
@@ -108,7 +110,8 @@ import { EnfaseService } from './enfase/enfase.service';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent
+    PaginacaoComponent,
+    DatePickerModule
   ],
   providers: [
     PerfilService,

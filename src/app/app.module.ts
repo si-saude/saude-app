@@ -111,7 +111,7 @@ import { EnfaseGuard } from './guards/guards-child/enfase.guard';
     SidenavComponent,
     PageNotFoundComponent
   ],
-  imports: [
+  imports: [    
     BrowserModule,
     MaterializeModule,
     HttpModule,
@@ -119,6 +119,7 @@ import { EnfaseGuard } from './guards/guards-child/enfase.guard';
     ContatoModule,
     SharedModule,
     AppRoutingModule
+    
   ],
   providers: [ 
     { provide: LOCALE_ID, useValue: 'pt-BR' },

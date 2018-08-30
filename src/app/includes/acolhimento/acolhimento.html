@@ -158,15 +158,17 @@
 								<td class="col s3 label-reserva-agendamento">Reserva de
 									Agendamento</td>
 								<td class="col s4 inicio-agentamento">
-									<my-date-picker (ngModelChange)="setInicioAgendamento($event)"
-										name="inicioAgendamento" [options]="myDatePickerOptions"
-										[(ngModel)]="inicioAgendamento" placeholder="Inicio">
-									</my-date-picker></td>
+								<app-date-picker [nome]="'inicioAgendamento'" 
+									[customDate]="innerRiscoPotencial.inicioAgendamentoCustomDate" 									
+									[legenda]="'Inicio'"									
+									></app-date-picker>
+							   </td>
 								<td class="col s4 fim-agendamento">
-									<my-date-picker (ngModelChange)="setFimAgendamento($event)"
-										name="fimAgendamento" [options]="myDatePickerOptions"
-										[(ngModel)]="fimAgendamento" placeholder="Fim">
-									</my-date-picker></td>
+								<app-date-picker [nome]="'fimAgendamento'" 
+									[customDate]="innerRiscoPotencial.fimAgendamentoCustomDate" 									
+									[legenda]="'Fim'"									
+									></app-date-picker>
+								</td>
 							</tr>
 						</div>
 
