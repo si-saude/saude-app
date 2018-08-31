@@ -31,11 +31,12 @@ export class CustomDate {
         this.apiDate = date;
     }
     
-    getAppDate(){               
+    getAppDate(){ 
         return this.appDate;
     }
     
     setAppDate(date:any){        
         this.appDate = date;
+        this.getApiDate();
     }    
 }

@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MyDatePickerModule } from 'mydatepicker';
-
 import { AtestadoComponent } from './atestado.component';
 import { AtestadoService } from './atestado.service';
 import { AtestadoFormComponent } from './atestado-form/atestado-form.component';
@@ -21,7 +19,6 @@ import { SharedModule } from '../shared.module';
      ],
      imports: [
         AtestadoRoutingModule,
-        MyDatePickerModule,
         SharedModule,
         PipesModule
      ],

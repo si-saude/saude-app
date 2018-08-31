@@ -16,7 +16,7 @@ import { RegimeService } from './../controller/regime/regime.service';
 import { BaseService } from './../controller/base/base.service';
 import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-solicitacao.service';
 import { EquipeService } from './../controller/equipe/equipe.service';
-
+ 
 @Injectable()
 export class SolicitacaoServicoService {
     protected headers: Headers;

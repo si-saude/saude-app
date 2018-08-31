@@ -5,7 +5,6 @@ import { HomologacaoAtestado } from './homologacao-atestado';
 import { Regime } from './regime';
 import { Empregado } from './empregado';
 import { CustomDate} from './../generics/utils/custom-date.util';
-import { CustomTime} from './../generics/utils/custom-time.util';
 
 export class Atestado {
     private id: number;
@@ -48,12 +47,12 @@ export class Atestado {
     private ciente: boolean;
     private empregado: Empregado;
 
-    private dataInicioEscalaTrabalhoCustomTime: CustomTime = new CustomTime(this.dataInicioEscalaTrabalho);
-    private dataFimEscalaTrabalhoCustomTime: CustomTime = new CustomTime(this.dataFimEscalaTrabalho);
-    private dataInicioFeriasCustomTime: CustomTime = new CustomTime(this.dataInicioFerias);
-    private dataFimFeriasCustomTime: CustomTime = new CustomTime(this.dataFimFerias);
+    private dataInicioEscalaTrabalhoCustomDate: CustomDate = new CustomDate(this.dataInicioEscalaTrabalho);
+    private dataFimEscalaTrabalhoCustomDate: CustomDate = new CustomDate(this.dataFimEscalaTrabalho);
+    private dataInicioFeriasCustomDate: CustomDate = new CustomDate(this.dataInicioFerias);
+    private dataFimFeriasCustomDate: CustomDate = new CustomDate(this.dataFimFerias);
 
-    private inicioCustomTime: CustomTime = new CustomTime(this.inicio);
+    private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
     private dataAgendamentoCustomDate: CustomDate = new CustomDate(this.dataAgendamento);
     private dataSolicitacaoCustomDate: CustomDate = new CustomDate(this.dataSolicitacao);
 
@@ -278,93 +277,95 @@ export class Atestado {
     }
     
     getInicio() {
-        this.inicio = this.inicioCustomTime.getApiDate();
+        this.inicio = this.inicioCustomDate.getApiDate();
         return this.inicio;
     }
     
     setInicio(inicio:Date) {
-        this.inicioCustomTime.setApiDate(inicio);
+        this.inicioCustomDate.setApiDate(inicio);
         this.inicio = inicio;
     }
     
-    getInicioCustomTime(){
-        return this.inicioCustomTime;
+    getInicioCustomDate(){
+        return this.inicioCustomDate;
     }
     
-    setInicioCustomTime(inicioCustomTime: CustomTime){
-        this.inicioCustomTime = inicioCustomTime;
+    setInicioCustomDate(inicioCustomDate: CustomDate){
+        this.inicioCustomDate = inicioCustomDate;
     }
     
     getDataInicioEscalaTrabalho() {
-        this.dataInicioEscalaTrabalho = this.dataInicioEscalaTrabalhoCustomTime.getApiDate();
+        this.dataInicioEscalaTrabalho = this.dataInicioEscalaTrabalhoCustomDate.getApiDate();
         return this.dataInicioEscalaTrabalho;
     }
     
     setDataInicioEscalaTrabalho(dataInicioEscalaTrabalho:Date) {
-        this.dataInicioEscalaTrabalhoCustomTime.setApiDate(dataInicioEscalaTrabalho);
+        this.dataInicioEscalaTrabalhoCustomDate.setApiDate(dataInicioEscalaTrabalho);
         this.dataInicioEscalaTrabalho = dataInicioEscalaTrabalho;
+        
+        console.log(this.dataInicioEscalaTrabalho);
     }
     
-    getDataInicioEscalaTrabalhoCustomTime(){
-        return this.dataInicioEscalaTrabalhoCustomTime;
+    getDataInicioEscalaTrabalhoCustomDate(){
+        return this.dataInicioEscalaTrabalhoCustomDate;
     }
     
-    setDataInicioEscalaTrabalhoCustomTime(dataInicioEscalaTrabalhoCustomTime: CustomTime){
-        this.dataInicioEscalaTrabalhoCustomTime = dataInicioEscalaTrabalhoCustomTime;
+    setDataInicioEscalaTrabalhoCustomDate(dataInicioEscalaTrabalhoCustomDate: CustomDate){
+        this.dataInicioEscalaTrabalhoCustomDate = dataInicioEscalaTrabalhoCustomDate;
     }
     
     getDataFimEscalaTrabalho() {
-        this.dataFimEscalaTrabalho = this.dataFimEscalaTrabalhoCustomTime.getApiDate();
+        this.dataFimEscalaTrabalho = this.dataFimEscalaTrabalhoCustomDate.getApiDate();
         return this.dataFimEscalaTrabalho;
     }
     
     setDataFimEscalaTrabalho(dataFimEscalaTrabalho:Date) {
-        this.dataFimEscalaTrabalhoCustomTime.setApiDate(dataFimEscalaTrabalho);
+        this.dataFimEscalaTrabalhoCustomDate.setApiDate(dataFimEscalaTrabalho);
         this.dataFimEscalaTrabalho = dataFimEscalaTrabalho;
     }
     
-    getDataFimEscalaTrabalhoCustomTime(){
-        return this.dataFimEscalaTrabalhoCustomTime;
+    getDataFimEscalaTrabalhoCustomDate(){
+        return this.dataFimEscalaTrabalhoCustomDate;
     }
     
-    setDataFimEscalaTrabalhoCustomTime(dataFimEscalaTrabalhoCustomTime: CustomTime){
-        this.dataFimEscalaTrabalhoCustomTime = dataFimEscalaTrabalhoCustomTime;
+    setDataFimEscalaTrabalhoCustomDate(dataFimEscalaTrabalhoCustomDate: CustomDate){
+        this.dataFimEscalaTrabalhoCustomDate = dataFimEscalaTrabalhoCustomDate;
     }
     
     getDataInicioFerias() {
-        this.dataInicioFerias = this.dataInicioFeriasCustomTime.getApiDate();
+        this.dataInicioFerias = this.dataInicioFeriasCustomDate.getApiDate();
         return this.dataInicioFerias;
     }
     
     setDataInicioFerias(dataInicioFerias:Date) {
-        this.dataInicioFeriasCustomTime.setApiDate(dataInicioFerias);
+        this.dataInicioFeriasCustomDate.setApiDate(dataInicioFerias);
         this.dataInicioFerias = dataInicioFerias;
     }
     
-    getDataInicioFeriasCustomTime(){
-        return this.dataInicioFeriasCustomTime;
+    getDataInicioFeriasCustomDate(){
+        return this.dataInicioFeriasCustomDate;
     }
     
-    setDataInicioFeriasCustomTime(dataInicioFeriasCustomTime: CustomTime){
-        this.dataInicioFeriasCustomTime = dataInicioFeriasCustomTime;
+    setDataInicioFeriasCustomDate(dataInicioFeriasCustomDate: CustomDate){
+        this.dataInicioFeriasCustomDate = dataInicioFeriasCustomDate;
     }
     
     getDataFimFerias() {
-        this.dataFimFerias = this.dataFimFeriasCustomTime.getApiDate();
+        this.dataFimFerias = this.dataFimFeriasCustomDate.getApiDate();
         return this.dataFimFerias;
     }
     
     setDataFimFerias(dataFimFerias:Date) {
-        this.dataFimFeriasCustomTime.setApiDate(dataFimFerias);
+        this.dataFimFeriasCustomDate.setApiDate(dataFimFerias);
         this.dataFimFerias = dataFimFerias;
     }
     
-    getDataFimFeriasCustomTime(){
-        return this.dataFimFeriasCustomTime;
+    getDataFimFeriasCustomDate(){
+        return this.dataFimFeriasCustomDate;
     }
     
-    setDataFimFeriasCustomTime(dataFimFeriasCustomTime: CustomTime){
-        this.dataFimFeriasCustomTime = dataFimFeriasCustomTime;
+    setDataFimFeriasCustomDate(dataFimFeriasCustomDate: CustomDate){
+        this.dataFimFeriasCustomDate = dataFimFeriasCustomDate;
     }
     
     getContatoMedico() {

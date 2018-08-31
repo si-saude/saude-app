@@ -1,6 +1,6 @@
 import { Atestado } from './atestado';
 import { Profissional } from './profissional';
-import { CustomTime } from './../generics/utils/custom-time.util';
+import { CustomDate } from './../generics/utils/custom-date.util';
 
 export class HomologacaoAtestado {
     private id: number;
@@ -12,8 +12,8 @@ export class HomologacaoAtestado {
     private profissional: Profissional;
     private version: number;
 
-    private dataEntregaCustomTime: CustomTime = new CustomTime(this.dataEntrega);
-    private dataHomologacaoCustomTime: CustomTime = new CustomTime(this.dataHomologacao);
+    private dataEntregaCustomDate: CustomDate = new CustomDate(this.dataEntrega);
+    private dataHomologacaoCustomDate: CustomDate = new CustomDate(this.dataHomologacao);
     
     public getId() {
         return this.id;
@@ -24,39 +24,39 @@ export class HomologacaoAtestado {
     }
 
     getDataEntrega() {
-        this.dataEntrega = this.dataEntregaCustomTime.getApiDate();
+        this.dataEntrega = this.dataEntregaCustomDate.getApiDate();
         return this.dataEntrega;
     }
     
     setDataEntrega(dataEntrega: Date) {
-        this.dataEntregaCustomTime.setApiDate(dataEntrega);
+        this.dataEntregaCustomDate.setApiDate(dataEntrega);
         this.dataEntrega = dataEntrega;
     }
     
-    getDataEntregaCustomTime(){
-        return this.dataEntregaCustomTime;
+    getDataEntregaCustomDate(){
+        return this.dataEntregaCustomDate;
     }
     
-    setDataEntregaCustomTime(dataEntregaCustomTime: CustomTime){
-        this.dataEntregaCustomTime = dataEntregaCustomTime;
+    setDataEntregaCustomDate(dataEntregaCustomDate: CustomDate){
+        this.dataEntregaCustomDate = dataEntregaCustomDate;
     }
     
     getDataHomologacao() {
-        this.dataHomologacao = this.dataHomologacaoCustomTime.getApiDate();
+        this.dataHomologacao = this.dataHomologacaoCustomDate.getApiDate();
         return this.dataHomologacao;
     }
     
     setDataHomologacao(dataHomologacao: Date) {
-        this.dataHomologacaoCustomTime.setApiDate(dataHomologacao);
+        this.dataHomologacaoCustomDate.setApiDate(dataHomologacao);
         this.dataHomologacao = dataHomologacao;
     }
     
-    getDataHomologacaoCustomTime(){
-        return this.dataHomologacaoCustomTime;
+    getDataHomologacaoCustomDate(){
+        return this.dataHomologacaoCustomDate;
     }
     
-    setDataHomologacaoCustomTime(dataHomologacaoCustomTime: CustomTime){
-        this.dataHomologacaoCustomTime = dataHomologacaoCustomTime;
+    setDataHomologacaoCustomDate(dataHomologacaoCustomDate: CustomDate){
+        this.dataHomologacaoCustomDate = dataHomologacaoCustomDate;
     }
 
     public getStatus() {

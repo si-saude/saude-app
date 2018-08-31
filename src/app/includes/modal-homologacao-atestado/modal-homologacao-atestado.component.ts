@@ -1,7 +1,7 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, EventEmitter} from '@angular/core';
 import { Router } from '@angular/router';
-
-import { IMyDpOptions } from 'mydatepicker';
+import { GlobalVariable } from './../../global';
+import { MaterializeAction } from "angular2-materialize";
 import * as $ from 'jquery';
 
 import { Atestado } from './../../model/atestado';
@@ -19,18 +19,18 @@ import { RegimeBuilder } from './../../controller/regime/regime.builder';
 export class ModalHomologacaoAtestadoComponent {
     @ViewChild( 'anexo' ) inputElAnexo: ElementRef;
     @ViewChild( 'anexoRelatorioMedico' ) inputElAnexoRelatorioMedico: ElementRef;
-    private myDatePickerOptions: IMyDpOptions;
     private atestado: Atestado;
     private msnError: string;
     private regimes: Array<Regime>;
-
+    dateActions;
+    params;
+    
     constructor(private regimeService: RegimeService) {
         this.atestado = new AtestadoBuilder().initialize( this.atestado );
         this.regimes = new RegimeBuilder().initializeList(this.regimes);
-        this.myDatePickerOptions = {
-            dateFormat: 'dd/mm/yyyy'
-        };
         this.getRegimes();
+        this.dateActions = new EventEmitter<string|MaterializeAction>();
+        this.params = GlobalVariable.PARAMS_DATE;
     }
     
     ngOnInit() {
@@ -70,9 +70,20 @@ export class ModalHomologacaoAtestadoComponent {
     
     verifyEscalaTrabalho() {
         if ( this.atestado.getRegime().getId() == 0 || 
-                this.regimes.find(r => r.getId() == this.atestado.getRegime().getId()).getNome() == "ADMINISTRATIVO" )
+                this.regimes.find(r => r.getId() == this.atestado.getRegime().getId()).getNome() == "ADMINISTRATIVO" ) {            
+                this.atestado.getDataInicioEscalaTrabalhoCustomDate().setAppDate(undefined);
+                this.atestado.getDataFimEscalaTrabalhoCustomDate().setAppDate(undefined);
             return true;
+        }
         else return false;
+    }
+    
+    verifyFerias() {
+        if ( !this.atestado.getPossuiFeriasAgendadas() ) {
+            this.atestado.getDataInicioFeriasCustomDate().setAppDate(undefined);
+            this.atestado.getDataFimFeriasCustomDate().setAppDate(undefined);
+            return true;
+        }
     }
     
     getCiente() {
@@ -82,8 +93,6 @@ export class ModalHomologacaoAtestadoComponent {
     
     canSave() {
         let ret: Array<any> = new Array<any>();
-    
-        console.log(this.regimes.find( r => r.getId() == this.atestado.getRegime().getId()));
     
         if ( this.atestado.getRegime().getId() != 0 && 
                 this.regimes.find( r => r.getId() == this.atestado.getRegime().getId()).getNome() != "ADMINISTRATIVO" &&
