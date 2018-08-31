@@ -10,6 +10,7 @@ import { AtestadoBuilder } from './../../controller/atestado/atestado.builder';
 import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
 import { ModalHomologacaoAtestadoComponent } from './../../includes/modal-homologacao-atestado/modal-homologacao-atestado.component';
 import { TextUtil } from './../../generics/utils/text.util';
+import { GlobalVariable } from './../../../../src/app/global';
 
 @Component( {
     selector: 'app-homologacao-atestado',
@@ -19,7 +20,6 @@ import { TextUtil } from './../../generics/utils/text.util';
 export class HomologacaoAtestadoComponent {
     @ViewChild( ModalHomologacaoAtestadoComponent ) modalHomologacaoAtestado: ModalHomologacaoAtestadoComponent;
     private atestado: Atestado;
-
     private textUtil: TextUtil;
 
     private showConfirmSave: boolean;
@@ -28,8 +28,8 @@ export class HomologacaoAtestadoComponent {
 
     constructor( private route: ActivatedRoute, private router: Router,
         private solicitacaoServicoService: SolicitacaoServicoService ) {
-        this.atestado = new AtestadoBuilder().initialize( new Atestado() );
         this.textUtil = new TextUtil();
+        this.atestado = new AtestadoBuilder().initialize(new Atestado());
     }
 
     ngOnInit() {

@@ -72,9 +72,12 @@ export class AuditoriaResultadoExameFormDetailComponent extends GenericFormCompo
                                 this.empConv = this.empregadoConvocacao.getConvocacao().getTitulo() + " - " + this.empregadoConvocacao.getEmpregado().getPessoa().getNome();
                                 if (this.empregadoConvocacao.getResultadoExames() != undefined && 
                                         this.empregadoConvocacao.getResultadoExames() != null) {
+                                    
+                                   
                                     for (let i=0; i<this.empregadoConvocacao.getResultadoExames().length; i++) {
-                                        if ( this.empregadoConvocacao.getResultadoExames()[i].getConforme() == true )
-                                            this.conformList[i] = true;
+                                    console.log(this.empregadoConvocacao.getResultadoExames()[i].getItemResultadoExames())
+                                        if ( this.empregadoConvocacao.getResultadoExames()[i].getConforme() == true )                                           
+                                             this.conformList[i] = true;
                                         else this.conformList[i] = false; 
                                     }
                                 }

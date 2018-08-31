@@ -39,9 +39,9 @@
 					
 					<div class="input-field col s4">
 						<label for="dataAso">Data do ASO</label>
-						<my-date-picker name="dataAso" disabled
-							[options]="myDatePickerOptions" [(ngModel)]="profissionalSaude.dataAsoCustomDate.appDate"
-							placeholder="Data do ASO"> </my-date-picker>
+						<input name="dataAso"
+							   [(ngModel)]="profissionalSaude.dataAsoCustomDate.appDate" disabled
+							   type="text" />
 					</div>
 				</div>
 
@@ -217,10 +217,10 @@
 
 									<div class="input-field col s4">
 										<label for="dataCurriculoCurso">Data</label>
-										<my-date-picker name="data" [options]="myDatePickerOptions" disabled
-											name="profissionalSaude.curriculo.curriculoCursos[{{i}}].data"
-											[(ngModel)]="curriculoCursos.dataCustomDate.appDate" placeholder="Data">
-										</my-date-picker>
+										<input name="profissionalSaude.curriculo.curriculoCursos[{{i}}].data"
+													   [(ngModel)]="profissionalSaude.curriculo.curriculoCursos[i].dataCustomDate.appDate" 
+													   disabled
+													   type="text" />
 									</div>
 
 								</div>
@@ -264,10 +264,9 @@
 
 						<div class="input-field col s4">
 							<label for="vencimento" maxlength="2">Vencimento</label>
-							<my-date-picker name="vencimentoProfissionalConselho" disabled
-								[options]="myDatePickerOptions"
-								[(ngModel)]="profissionalSaude.profissionalConselho.vencimentoCustomDate.appDate"
-								placeholder="Vencimento"></my-date-picker>
+							<input name="vencimentoProfissionalConselho"
+										   [(ngModel)]="profissionalSaude.profissionalConselho.vencimentoCustomDate.appDate" disabled
+										   type="text" />
 						</div>
 					</div>
 

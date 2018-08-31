@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-
-import { MyDatePickerModule } from 'mydatepicker';
 import * as $ from 'jquery';
 
 import { GlobalVariable } from './../../../global';
@@ -20,7 +18,7 @@ import { Ghe } from './../../../model/ghe';
 import { GheBuilder } from './../../ghe/ghe.builder';
 import { Ghee } from './../../../model/ghee';
 import { IndicadorRiscoAcidenteInstalacao } from './../../../model/indicador-risco-acidente-instalacao';
-import { GheeBuilder } from './../../ghee/ghee.builder';
+import { GheeBuilder } from './../../ghee/ghee.builder'; 
 import { Cidade } from './../../../model/cidade';
 import { Instalacao } from './../../../model/instalacao';
 import { InstalacaoBuilder } from './../../instalacao/instalacao.builder';
@@ -35,6 +33,8 @@ import { IndicadorRiscoAcidenteInstalacaoBuilder } from './../../indicador-risco
 import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-monitoramento.builder';
 import { HistoricoGrupoMonitoramentoBuilder } from './../../historico-grupo-monitoramento/historico-grupo-monitoramento.builder';
 import { InstalacaoNomeAutocomplete } from './../../instalacao/instalacao-nome.autocomplete';
+import { MaterializeAction } from "angular2-materialize";
+import { GerenciaBuilder } from './../../gerencia/gerencia.builder';
 
 @Component( {
     selector: 'app-empregado-form',
@@ -71,7 +71,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
     fotoSrc: string;
     assinaturaSrc: any;
     instalacao: IndicadorRiscoAcidenteInstalacao; 
-
+    gerenciaAxu;
+    
     empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
     
     autoCompleteInstalacao: InstalacaoNomeAutocomplete;
@@ -85,6 +86,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
         this.assinaturaSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.fotoSrcStyle = { 'width': '0px', 'heigth': '0px' };
         this.empregado = new EmpregadoBuilder().initialize( this.empregado );
+        this.gerenciaAxu = new GerenciaBuilder().initialize(this.gerenciaAxu);
         this.instalacao = new IndicadorRiscoAcidenteInstalacaoBuilder().initialize( this.instalacao );
         
         this.enfases = new EnfaseBuilder().initializeList(new Array<Enfase>());
@@ -119,7 +121,6 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                             this.empregado = new EmpregadoBuilder().clone( res.json() );
                             this.instalacoesSelecteds = this.empregado.getInstalacoes();
                             this.verifyAndSetSelectsStrings();
-
                             if ( this.empregado.getFotoBase64() !== undefined ) {
                                 this.fotoSrc = "data:image/png;base64," + this.empregado.getFotoBase64();
                                 this.fotoSrcStyle = { 'width': '500px', 'heigth': '500px' };
@@ -256,7 +257,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
                     else if ( a['codigoCompleto'] < b['codigoCompleto'] )
                         return -1;
                     else return 0;
-                })
+                });
             } )
             .catch( error => {
                 console.log( error );
@@ -533,8 +534,25 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             this.empregado.getStatus() == null )
             this.empregado.setStatus( "" );
     }
-    
-    teste(){
-        console.log(this.empregado.getPessoa().getCpf());
+
+    private getDefaultPickaOption(): any {
+        return {
+        monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+        weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabádo'],
+        weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+        today: 'Hoje',
+        clear: 'Limpar',
+        close: 'Fecha',
+        labelMonthNext: 'Próximo mês',
+        labelMonthPrev: 'Mês anterior',
+        labelMonthSelect: 'Selecione um mês',
+        labelYearSelect: 'Selecione um ano',
+        format: 'dd/mm/yyyy',
+        editable: true,
+        closeOnSelect: true,
+        selectYears: 15
+        };
     }
+
 }

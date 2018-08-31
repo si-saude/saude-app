@@ -61,19 +61,18 @@
 					</div>
 
 				</div>
-
 				<div class="row">
 					<div class="input-field col s6">
-						<label for="inicio">Início</label>
-						<my-date-picker name="inicio" disabled
-							[options]="myDatePickerOptions" [(ngModel)]="convocacao.inicioCustomDate.appDate"
-							placeholder="Início"> </my-date-picker>
+						<label for="inicio">Início</label>						
+						<input name="inicio"
+								   [(ngModel)]="convocacao.inicioCustomDate.appDate" disabled
+								   type="text" />
 					</div>
 					<div class="input-field col s6">
-						<label for="fim">Fim</label>
-						<my-date-picker name="fim" disabled
-							[options]="myDatePickerOptions" [(ngModel)]="convocacao.fimCustomDate.appDate"
-							placeholder="Fim"> </my-date-picker>
+						<label for="fim">Fim</label> 
+						<input name="fim"
+								   [(ngModel)]="convocacao.fimCustomDate.appDate" disabled
+								   type="text" />
 					</div>
 				</div>
 

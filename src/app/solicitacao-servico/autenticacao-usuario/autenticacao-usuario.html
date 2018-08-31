@@ -14,8 +14,8 @@
 
 					<div class="input-field col s12">
 						<label for="cpf">CPF</label> 
-						<input id="cpf" type="text" [mask]="'cpf'"
-							name="cpf" [(ngModel)]="cpf">
+						<input id="cpf" type="text" [mask]="'cpf'" required 
+							name="cpf" [(ngModel)]="empregadoFilter.pessoa.cpf">
 					</div>
 
 				</div>
@@ -23,8 +23,8 @@
 				<div class="row">
 
 					<div class="input-field col s12">
-						<label for="matricula">Matricula</label> <input id="matricula"
-							type="text" name="matricula" [(ngModel)]="matricula">
+						<label for="matricula">Matricula</label> <input id="empregadoFilter.matricula" required 
+							type="text" name="matricula" [(ngModel)]="empregadoFilter.matricula">
 					</div>
 
 				</div>
@@ -32,21 +32,21 @@
 				<div class="row">
 
 					<div class="input-field col s12">
-						<label for="chave">Chave</label> <input id="chave" type="text"
-							name="chave" [(ngModel)]="chave">
+						<label for="chave">Chave</label> <input id="empregadoFilter.chave" type="text" required 
+							name="chave" [(ngModel)]="empregadoFilter.chave">
 					</div>
 
 				</div>
 
-				<div class="row">
-
+				<div class="row">					
 					<div class="input-field col s8">
 						<label for="inicio">Data de Nascimento</label>
-						<my-date-picker name="dataNascimento"
-							[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
-							placeholder="Data de Nascimento"> </my-date-picker>
+						<app-date-picker [nome]="'dataNascimento'" 
+									[customDate]="empregadoFilter.pessoa.dataNascimento.inicioCustomDate" 
+									[obrigatorio]="'true'"
+									[legenda]="'Data de Nascimento'"									
+									></app-date-picker>
 					</div>
-
 				</div>
 			</fieldset>
 		</div>

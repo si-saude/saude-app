@@ -12,6 +12,7 @@ import { ResultadoExameService } from './../resultado-exame/resultado-exame.serv
 import { ResultadoExameImport } from './../../imports/resultado-exame.import';
 import { GenericListComponent } from './../../generics/generic.list.component';
 import { CheckboxUtil } from './../../generics/utils/checkbox.util'; 
+import { Util } from './../../generics/utils/util'; 
 
 @Component({
   selector: 'app-auditoria-resultado-exame',
@@ -28,6 +29,8 @@ export class AuditoriaResultadoExameComponent
     fim: any;
     modalConfirmImport;
     msnConfirmImport;
+    resultadoExameImport: ResultadoExameImport;
+    params;
     
     constructor(private resultadoExameService: ResultadoExameService, 
                 auditoriaResultadoExameService: EmpregadoConvocacaoService,
@@ -36,6 +39,8 @@ export class AuditoriaResultadoExameComponent
         super(auditoriaResultadoExameService, new EmpregadoConvocacaoFilter(), auditoriaResultadoExameGuard, router);
         this.modalConfirmImport = new EventEmitter<string | MaterializeAction>();
         this.msnConfirmImport = "";
+        this.resultadoExameImport = new ResultadoExameImport();
+        this.params = GlobalVariable.PARAMS_DATE;
     }
     
     ngAfterViewInit() {
@@ -49,35 +54,26 @@ export class AuditoriaResultadoExameComponent
     }
     
     importar() {
-        let dateInicio = null;
-        let dateFim = null;
-        if ( this.inicio != undefined )
-            dateInicio = this.parseDatePickerToDate( this.inicio );
-        else return;
-        if ( this.fim != undefined )
-            dateFim = this.parseDatePickerToDate( this.fim );
-        else return;
-
-        let arquivo = undefined;
+         let arquivo = undefined;
 
         if ( this.inputElArquivo.nativeElement.files.length > 0 ) {
             arquivo = this.inputElArquivo.nativeElement.files[0];
         }
         let component = this;
-        let resultadoExameImport: ResultadoExameImport = new ResultadoExameImport();
-
-        if ( arquivo != undefined ) {
+              
+        if ( arquivo != undefined && Util.isNotNull(this.resultadoExameImport.getInicioCustomDate().getAppDate()) 
+             && Util.isNotNull(this.resultadoExameImport.getFimCustomDate().getAppDate())) {
+            this.resultadoExameImport.getInicio();
+            this.resultadoExameImport.getFim();          
             let readerArquivo = new FileReader();
 
             readerArquivo.onload = function() {
                 let arrayBuffer: ArrayBuffer = readerArquivo.result;
                 let array = new Uint8Array( arrayBuffer );
-                resultadoExameImport.setArquivo( array );
-                resultadoExameImport.setInicio( dateInicio );
-                resultadoExameImport.setFim( dateFim );
+                component.resultadoExameImport.setArquivo( array );
                 component.showPreload = true;
 
-                component.resultadoExameService.sendFileAsObject( resultadoExameImport )
+                component.resultadoExameService.sendFileAsObject( component.resultadoExameImport )
                     .then( res => {
                         component.showPreload = false;
                         component.openModalConfirmImport();

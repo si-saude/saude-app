@@ -77,17 +77,19 @@
 				<div class="input-field col s4">
 					<label for="data">Data de Revisão
 						Inicial</label>
-					<my-date-picker name="dataRevisao"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filter.dataRevisao.inicio"
-						placeholder="Data de Revisão Inicial"> </my-date-picker>
+						<app-date-picker [nome]="'dataRevisao'" 
+									[customDate]="filter.dataRevisao.inicioCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Revisão Inicial'"									
+									></app-date-picker>
 				</div>
 				<div class="input-field col s4">
 					<label for="dataRevisao">Data de Revisão Final</label>
-					<my-date-picker name="dataRevisao"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filter.dataRevisao.fim"
-						placeholder="Data de Revisão Final"> </my-date-picker>
+							<app-date-picker [nome]="'dataRevisao'" 
+									[customDate]="filter.dataRevisao.fimCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Revisão Final'"									
+									></app-date-picker>
 				</div>
 
 				<div class="input-field col s4">
@@ -100,8 +102,10 @@
 						</select>
 					</fieldset>
 				</div>
+				
 
 			</div>
+			
 		</div>
 
 	<div class="modal-footer">

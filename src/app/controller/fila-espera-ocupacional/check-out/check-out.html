@@ -59,9 +59,10 @@
 
 					<div class="input-field col s8">
 						<label for="dataNascimento">Data de Nascimento</label>
-						<my-date-picker name="dataNascimento"
-							[options]="myDatePickerOptions" [(ngModel)]="dataNascimento"
-							placeholder="Data de Nascimento"> </my-date-picker>
+						<app-date-picker [nome]="'dataNascimento'" 
+									[customDate]="empregado.pessoa.dataNascimentoCustomDate" 									
+									[legenda]="'Data de Nascimento'"									
+									></app-date-picker>
 					</div>
 
 				</div>

@@ -131,9 +131,9 @@
 													</div>
 													<div class="col s6">
 														<label for="dataAcao">Data</label>
-														<my-date-picker name="dataAcoes{{acao.id}}" disabled 
-															[options]="myDatePickerOptions" placeholder="Data"
-															[(ngModel)]="acao.tarefa.fimCustomTime.appDate"> </my-date-picker>
+														<input name="dataAcoes{{acao.id}}" 
+															[(ngModel)]="acao.tarefa.fimCustomDate.appDate" disabled
+															type="text" />
 													</div>
 												</div>
 												<div class="row">
@@ -212,11 +212,10 @@
 					</select>
 				</fieldset>
 			</div>
-			
-			<div class="input-field col s6">
-				<label for="dataTarefaAcao">Data</label>
-				<my-date-picker name="dataTarefaAcao" [options]="myDatePickerOptions"
-					[(ngModel)]="acao.tarefa.fimCustomTime.appDate" placeholder="Data"> </my-date-picker>
+			<div class="input-field col s6">,
+				<app-date-picker [nome]="'dataTarefaAcao'" 
+					[customDate]="flagAcao.tarefa.fimCustomDate" 									
+					[legenda]="'Data'"></app-date-picker>
 			</div>
 		</div>
 

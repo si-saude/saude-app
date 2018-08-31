@@ -10,6 +10,7 @@ import { GenericComponent } from './generic.component';
 import { GenericService } from './generic.service';
 import { TypeFilter } from './type.filter';
 import { ChildGuard } from './child.guard';
+import { DateFilter } from './date.filter';
 
 export abstract class GenericListComponent<T, F extends GenericFilter, C extends ChildGuard> extends GenericComponent implements OnInit, OnDestroy {
     @ViewChild( 'arquivo' ) inputElArquivo: ElementRef;
@@ -163,20 +164,24 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
 
     
     isNullOrUndefined(object){
-        if ( object === undefined || object === null ) 
+        if ( object === undefined || object === null || object === '') 
             return true; 
-        else
+        else{
             return false;
+        
+        }
     }
     
-    formateDateFilter(data){
-        if (this.isNullOrUndefined(data) ) 
+    initializerDateFilter(data: DateFilter){
+        if (this.isNullOrUndefined(data) ) {
             return undefined;
+        }
         else{
-            if(!this.isNullOrUndefined(data.inicio))            
-               data.inicio = this.parseDatePickerToDate(data.inicio);
-            if(!this.isNullOrUndefined(data.fim))            
-               data.fim = this.parseDatePickerToDate(data.fim);     
+            if(!this.isNullOrUndefined(data.getInicioCustomDate()))                 
+                data.getInicio();
+            
+            if(!this.isNullOrUndefined(data.getFimCustomDate()))  
+                data.getFim();
         }
     }
     

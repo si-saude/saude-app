@@ -29,13 +29,12 @@ export class QuadroAtendimentoComponent {
     atendimento: Atendimento;
     atendimentos: Array<Atendimento>;
     empregados: Array<Empregado>;
-    dataTarefas: any;
     localizacoes: Array<Localizacao>;
     globalActions;
     toastParams;
-    myDatePickerOptions: IMyDpOptions;
     dateUtil: DateUtil;
     empregadoTarefas: Array<EmpregadoTarefas>;
+    protected params; 
 
     constructor( private route: ActivatedRoute,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService) {
@@ -45,9 +44,9 @@ export class QuadroAtendimentoComponent {
         this.atendimentos = new AtendimentoBuilder().initializeList( this.atendimentos );
         this.empregados = new EmpregadoBuilder().initializeList( this.empregados );
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
-        this.myDatePickerOptions = { dateFormat: 'dd/mm/yyyy' };
         this.dateUtil = new DateUtil();
         this.empregadoTarefas = new Array<EmpregadoTarefas>();
+        this.params = GlobalVariable.PARAMS_DATE;
     }
 
     ngOnInit() {
@@ -65,7 +64,7 @@ export class QuadroAtendimentoComponent {
     }
     
     search( localizacaoId ) {
-        if ( localizacaoId == 0 || this.dataTarefas == null ) {
+        if ( localizacaoId == 0) {
             this.toastParams = ['Por favor, preencha todos os campos da busca', 4000];
             this.globalActions.emit( 'toast' );
             return;
@@ -73,10 +72,11 @@ export class QuadroAtendimentoComponent {
         
         let localizacao = this.localizacoes.find(l => l.getId() == localizacaoId);
         
-        this.atendimento.getFilaEsperaOcupacional().setLocalizacao( localizacao );
-        this.atendimento.getTarefa().setInicio( this.dateUtil.parseDatePickerToDate( this.dataTarefas ) );
+//        console.log(this.atendimento.getTarefa().getInicio());
         
-        this.filaEsperaOcupacionalService.buscarQuadroAtendimento( this.atendimento )
+        this.atendimento.getFilaEsperaOcupacional().setLocalizacao( localizacao );
+        
+        this.filaEsperaOcupacionalService.buscarQuadroAtendimento(new AtendimentoBuilder().clone(this.atendimento))
             .then(res => {
                 this.atendimentos = new AtendimentoBuilder().cloneList( res.json() );
                 this.empregadoTarefas = new Array<EmpregadoTarefas>();

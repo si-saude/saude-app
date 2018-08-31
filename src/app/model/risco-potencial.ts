@@ -26,6 +26,8 @@ export class RiscoPotencial {
     private acoesDelete: Array<Acao>;
     private profissional: Profissional;
 
+    private fimAgendamentoCustomDate: CustomDate = new CustomDate(this.fimAgendamento);
+    private inicioAgendamentoCustomDate: CustomDate = new CustomDate(this.inicioAgendamento);
     private dataCustomDate: CustomDate = new CustomDate(this.data);
 
     public getId() {
@@ -45,13 +47,49 @@ export class RiscoPotencial {
         this.dataCustomDate.setApiDate(data);
         this.data = data;
     }
-    
+
     getDataCustomDate(){
         return this.dataCustomDate;
     }
     
     setDataCustomDate(dataCustomDate: CustomDate){
         this.dataCustomDate = dataCustomDate;
+    }
+    
+    public getInicioAgendamento() {
+        this.inicioAgendamento = this.inicioAgendamentoCustomDate.getApiDate();
+        return this.inicioAgendamento;
+    }
+
+    public setInicioAgendamento(inicioAgendamento: Date) {
+        this.inicioAgendamentoCustomDate.setApiDate(inicioAgendamento);
+        this.inicioAgendamento = inicioAgendamento;
+    }
+    getInicioAgendamentoCustomDate(){
+        return this.inicioAgendamentoCustomDate;
+    }
+    
+    setInicioAgendamentoCustomDate(inicioAgendamentoCustomDate: CustomDate){
+        this.inicioAgendamentoCustomDate = inicioAgendamentoCustomDate;
+    }
+    
+    
+    public getFimAgendamento() {
+        this.fimAgendamento = this.fimAgendamentoCustomDate.getApiDate();
+        return this.fimAgendamento;
+    }
+
+    public setFimAgendamento(fimAgendamento: Date) {
+        this.fimAgendamentoCustomDate.setApiDate(fimAgendamento);
+        this.fimAgendamento = fimAgendamento;
+    }
+    
+    getFimAgendamentoCustomDate(){
+        return this.fimAgendamentoCustomDate;
+    }
+    
+    setFimAgendamentoCustomDate(fimAgendamentoCustomDate: CustomDate){
+        this.fimAgendamentoCustomDate = fimAgendamentoCustomDate;
     }
 
     public getEmpregado() {
@@ -108,22 +146,6 @@ export class RiscoPotencial {
 
     public setCondutaPercepcao(condutaPercepcao: string) {
         this.condutaPercepcao = condutaPercepcao;
-    }
-
-    public getInicioAgendamento() {
-        return this.inicioAgendamento;
-    }
-
-    public setInicioAgendamento(inicioAgendamento: Date) {
-        this.inicioAgendamento = inicioAgendamento;
-    }
-
-    public getFimAgendamento() {
-        return this.fimAgendamento;
-    }
-
-    public setFimAgendamento(fimAgendamento: Date) {
-        this.fimAgendamento = fimAgendamento;
     }
     
     public getAtual() {

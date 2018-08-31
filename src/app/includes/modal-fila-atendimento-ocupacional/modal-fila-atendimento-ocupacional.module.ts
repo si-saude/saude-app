@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { DataTableModule } from "angular2-datatable";
-import { MyDatePickerModule } from 'mydatepicker';
 
 import { ModalFilaAtendimentoOcupacionalComponent } from './modal-fila-atendimento-ocupacional.component';
 import { PipesModule } from './../../controller/pipes.module';
+import { IncludeSharedModule } from './../../controller/include-shared.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +20,8 @@ import { PipesModule } from './../../controller/pipes.module';
     FormsModule,
     DataTableModule,
     CommonModule,
-    MyDatePickerModule,
-    RouterModule
+    RouterModule,
+    IncludeSharedModule
   ],
   exports: [
     ModalFilaAtendimentoOcupacionalComponent

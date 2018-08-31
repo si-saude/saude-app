@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MaterializeAction } from "angular2-materialize";
+
 import { GlobalVariable } from './../../global';
 import { Empregado } from './../../model/empregado';
 import { Cargo } from './../../model/cargo';
@@ -150,24 +152,11 @@ export class EmpregadoComponent extends GenericListComponent<Empregado, Empregad
                 console.log( error );
             } )        
     }
-
-    initializeFilterDate() {
-        if ( this.filter.getPessoa().getDataNascimento().getInicio() !== null && 
-            this.filter.getPessoa().getDataNascimento().getInicio() !== undefined ) {
-            this.filter.getPessoa().getDataNascimento().setInicio(
-                this.parseDatePickerToDate( this.filter.getPessoa().getDataNascimento().getInicio() ) );
-        }
-
-        if ( this.filter.getPessoa().getDataNascimento().getFim() !== null &&
-            this.filter.getPessoa().getDataNascimento().getFim() !== undefined ) {
-            this.filter.getPessoa().getDataNascimento().setFim(
-                this.parseDatePickerToDate( this.filter.getPessoa().getDataNascimento().getFim() ) );
-        }
-    }
-
+    
     setFilter() {
-        this.initializeFilterDate();
-        super.setFilter();
-    }
+        this.initializerDateFilter(this.filter.getPessoa().getDataNascimento());
+        super.setFilter();        
+     }
+     
 
 }

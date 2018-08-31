@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { IMyDpOptions } from 'mydatepicker';
 import { MaterializeAction } from "angular2-materialize";
+import { GlobalVariable } from './../global';
 
 import { HTMLStatus } from './../html-status';
 
@@ -15,7 +16,6 @@ export abstract class GenericComponent {
     protected colorError: string;
     protected msgError: string;
     protected verifyError: boolean = false;
-    protected myDatePickerOptions: IMyDpOptions;
     protected modalParams;
     protected router;
     protected globalActions;
@@ -26,16 +26,13 @@ export abstract class GenericComponent {
         this.showPreload = true;
         this.showConfirmSave = false;
         this.msgConfirmSave = "Salvo com sucesso! Ao confirmar, você será redirecionado para a tela de listagem.";
-        this.msgPreload = "Aguarde processamento...";
-        this.myDatePickerOptions = {
-                dateFormat: 'dd/mm/yyyy'
-            };
+        this.msgPreload = "Aguarde processamento...";     
         this.modalParams = [{
             dismissible: false,
             complete: function() { }
         }];
         this.globalActions = new EventEmitter<string | MaterializeAction>();
-        this.toastParams = ['', 4000];
+        this.toastParams = ['', 4000];     
     }
 
     catchConfiguration( error ) {

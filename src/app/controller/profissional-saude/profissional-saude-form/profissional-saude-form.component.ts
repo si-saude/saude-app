@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
-import { MyDatePickerModule } from 'mydatepicker';
+import { MaterializeAction } from "angular2-materialize";
+
 
 import { GlobalVariable } from './../../../global';
 import { Profissional } from './../../../model/profissional';
@@ -60,7 +61,6 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         this.profissionalSaude = new ProfissionalSaudeBuilder().initialize( this.profissionalSaude );
         this.servicos = new ServicoBuilder().initializeList( this.servicos );
         this.servicosSelecteds = new Array<Servico>();
-
         this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.profissionalSaudeService.getEmpregadoService());
     }
 

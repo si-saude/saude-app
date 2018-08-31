@@ -38,7 +38,6 @@ export class AprhoFormDetailComponent extends GenericFormComponent implements On
                     .then( res => {
                         this.showPreload = false;
                         this.aprho = new AprhoBuilder().clone( res.json() );
-                       
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );

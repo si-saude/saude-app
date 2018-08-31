@@ -33,38 +33,52 @@
 					name="filaEsperaOcupacional.empregado.pessoa.nome"
 					[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.nome">
 			</div>
-		</div>
+		</div>		
+		
 		<div class="row">
 			<div class="input-field col s12">
 				<label for="atendimento.tarefa.inicio">Agendamento</label>
-				<my-date-picker name="atendimento.tarefa.inicio"
-					[disabled]="!(atendimento.filaEsperaOcupacional.id > 0)"
-					[options]="myDatePickerOptions"
-					(click)="atendimento.filaEsperaOcupacional.id > 0 ? modalTarefa.openModalTarefa() : false "
-					[(ngModel)]="atendimento.tarefa.inicioCustomTime.appDate"
-					placeholder="Data Atendimento"> </my-date-picker>
+				<input name="atendimento.tarefa.inicio"
+						    	[disabled]="!(atendimento.filaEsperaOcupacional.id > 0)"
+			                   [(ngModel)]="atendimento.tarefa.inicioCustomDate.appDate"
+			                   (click)="atendimento.filaEsperaOcupacional.id > 0 ? modalTarefa.openModalTarefa() : false "
+			                   type="text" />
 			</div>
 		</div>
-				<div class="input-field col s6">
-					<label for="diaHoraAcidente">Dia/Hora Inicio Tarefa</label>
+		<div class="row">
+				<div class="input-field col s12	">
 					<div>
-						<div class="input-field col s6">
-							<my-date-picker name="diaHoraTarefa"
-								[options]="myDatePickerOptions"
-								[(ngModel)]="atendimento.tarefa.inicioCustomTime.appDate"
-								placeholder="Dia/Hora da Tarefa"></my-date-picker>
+					
+						<div class="input-field col s3">
+							<label>Dia</label>							
+							<input name="atendimento.tarefa.inicio"
+			                   [(ngModel)]="atendimento.tarefa.inicioCustomDate.appDate" disabled
+			                   type="text" />
+							
+						</div>				
+						<div class="input-field col s3">
+						<label>Hora Inicio</label>
+							<input id="diaHoraTarefa" name="diaHoraInicioTarefa"
+								[disabled]="!(atendimento.tarefa.id > 0)"
+								[(ngModel)]="atendimento.tarefa.inicioCustomDate.appTime"
+								materialize="pickatime" 
+								[materializeActions]="timeActions" 
+								[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+								class="validate" type="text">
 						</div>
-						<div class="input-field col s6">
-							<input id="diaHoraTarefa" name="diaHoraTarefa"
-								[(ngModel)]="atendimento.tarefa.inicioCustomTime.appTime"
-								materialize="pickatime"
-								[materializeActions]="diaHoraTarefaInicioTimeActions"
+						<div class="input-field col s3">
+						<label>Hora Fim</label>
+							<input id="diaHoraTarefa" name="diaHoraFimTarefa"
+								[disabled]="!(atendimento.tarefa.id > 0)"
+								[(ngModel)]="atendimento.tarefa.fimCustomDate.appTime"
+								materialize="pickatime" 
+								[materializeActions]="timeActions" 
 								[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
 								class="validate" type="text">
 						</div>
 					</div>
 				</div>
-		<!-- </div> -->
+		</div>
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 				[msg]="msgError"></app-mensagem-form>

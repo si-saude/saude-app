@@ -2,8 +2,44 @@ import * as moment from 'moment';
 
 export class DateUtil {
     
-    public parseDataToObjectDatePicker( data ) {
+    public getDateStringDataUTC(value) {
+        if(value){
+            let date : Date = new Date(this.removeUTCDate(value));            
+            return date.toLocaleDateString('pt-br');     
+        }
+    }
+    
+    public removeUTCDate(value){        
+        if((typeof value === 'string'))
+        value = value.replace("[UTC]","");
         
+        return value;
+    }
+    
+    
+    public getTimeStringDataUTC(value) {
+        if(value){              
+            let date : Date = new Date(this.removeUTCDate(value));
+            return date.getHours().toString()+":"+ date.getMinutes();     
+        }
+    }
+    
+    public parseStringPtBrToDate(dataString ,timeString: string){
+        
+        let arrayDateString:Array<string> =  dataString.split("/");
+        let dateAux:Date ;
+        let arrayTimeString:Array<string> ;
+        if(timeString != '' &&  timeString != undefined){
+            arrayTimeString =  timeString.split(":");
+            dateAux= new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]),Number(arrayTimeString[0]), Number(arrayTimeString[1]), 0, 0);
+        }else        
+            dateAux = new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]));       
+    
+        return dateAux;
+   }
+   
+    
+    public parseDataToObjectDatePicker( data ) {
         if ( data === undefined || data === null )
             return undefined;
         else if ( typeof data == 'object' ) {
@@ -31,6 +67,8 @@ export class DateUtil {
         return o;
     }
     
+    
+ 
     public parseDatePickerToDate( data ) {
         if ( data === undefined || data === null ) {
             return null;
@@ -103,4 +141,14 @@ export class DateUtil {
         
         return m.hours()+":"+m.minutes();
     }
+    
+    cloneDate(date: Date){        
+        let d: Date = new Date();
+        d.setDate(date.getDay());
+        d.setHours(date.getHours());
+        d.setMinutes(date.getMinutes());
+        d.setSeconds(date.getSeconds());
+    return d;      
+    }
+    
 }

@@ -58,10 +58,9 @@
 
 								<div class="input-field col s3">
 									<label for="data">Data de Realização</label>
-									<my-date-picker name="resultadoExame[{{iREx}}].data"
-										[options]="myDatePickerOptions" disabled
-										[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].dataCustomDate.appDate" placeholder="Data">
-									</my-date-picker>
+									<input name="resultadoExame[{{iREx}}].data"
+											   [(ngModel)]="empregadoConvocacao.resultadoExames[iREx].dataCustomDate.appDate" disabled
+											   type="text" />
 								</div>
 
 								<div class="input-field col s3 checkbox conforme">
@@ -142,10 +141,9 @@
 
 								<div class="input-field col s4">
 									<label for="data">Data de Recebimento</label>
-									<my-date-picker name="resultadoExame[{{iREx}}].dataRecebimento"
-										disabled [options]="myDatePickerOptions"
-										[(ngModel)]="empregadoConvocacao.resultadoExames[iREx].dataRecebimentoCustomDate.appDate"
-										placeholder="Data Recebimento"> </my-date-picker>
+									<input name="resultadoExame[{{iREx}}].dataRecebimento"
+												   [(ngModel)]="empregadoConvocacao.resultadoExames[iREx].dataRecebimentoCustomDate.appDate" disabled
+												   type="text" />
 								</div>
 							</div>
 
@@ -169,10 +167,11 @@
 												<td class="col s7 resultado">
 													<div [ngSwitch]="itemResultadoExame.codigo">
 														<div *ngSwitchCase="010" class="col s5" style="padding: 0">
-															<my-date-picker name="itemResultadoExameData[{{iREx}}]"
-																[options]="myDatePickerOptions" disabled
-																[(ngModel)]="dataItemResultadoExames[iREx]"
-																placeholder="Data"> </my-date-picker>
+															<input name="resultado"
+																id="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+																name="empregadoConvocacao.resultadoExames[{{iREx}}].itemResultadoExame[{{i}}].resultado"
+																		   [(ngModel)]="itemResultadoExame.resultado" disabled
+																		   type="text" />
 														</div>
 														<div *ngSwitchDefault>
 															<textarea disabled
