@@ -104,13 +104,13 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-        if ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate() != undefined && 
-                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate() != undefined && 
-                ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate().getTime() > 
-                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate().getTime() ) ) {
-            this.showTextToast("Erro: datas incondizentes.", 5000);
-            return;
-        }
+//        if ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate() != undefined && 
+//                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate() != undefined && 
+//                ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate().getTime() > 
+//                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate().getTime() ) ) {
+//            this.showTextToast("Erro: datas incondizentes.", 5000);
+//            return;
+//        }
 
         if ( !this.edit ) {
             let i: number = 0;

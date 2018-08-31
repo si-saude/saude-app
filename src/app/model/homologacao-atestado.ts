@@ -1,6 +1,6 @@
 import { Atestado } from './atestado';
 import { Profissional } from './profissional';
-import { CustomTime } from './../generics/utils/custom-time.util';
+//import { CustomTime } from './../generics/utils/custom-time.util';
 
 export class HomologacaoAtestado {
     private id: number;
@@ -12,8 +12,8 @@ export class HomologacaoAtestado {
     private profissional: Profissional;
     private version: number;
 
-    private dataEntregaCustomTime: CustomTime = new CustomTime(this.dataEntrega);
-    private dataHomologacaoCustomTime: CustomTime = new CustomTime(this.dataHomologacao);
+//    private dataEntregaCustomTime: CustomTime = new CustomTime(this.dataEntrega);
+//    private dataHomologacaoCustomTime: CustomTime = new CustomTime(this.dataHomologacao);
     
     public getId() {
         return this.id;
@@ -24,40 +24,40 @@ export class HomologacaoAtestado {
     }
 
     getDataEntrega() {
-        this.dataEntrega = this.dataEntregaCustomTime.getApiDate();
+//        this.dataEntrega = this.dataEntregaCustomTime.getApiDate();
         return this.dataEntrega;
     }
     
     setDataEntrega(dataEntrega: Date) {
-        this.dataEntregaCustomTime.setApiDate(dataEntrega);
+//        this.dataEntregaCustomTime.setApiDate(dataEntrega);
         this.dataEntrega = dataEntrega;
     }
     
-    getDataEntregaCustomTime(){
-        return this.dataEntregaCustomTime;
-    }
-    
-    setDataEntregaCustomTime(dataEntregaCustomTime: CustomTime){
-        this.dataEntregaCustomTime = dataEntregaCustomTime;
-    }
-    
+//    getDataEntregaCustomTime(){
+//        return this.dataEntregaCustomTime;
+//    }
+//    
+//    setDataEntregaCustomTime(dataEntregaCustomTime: CustomTime){
+//        this.dataEntregaCustomTime = dataEntregaCustomTime;
+//    }
+//    
     getDataHomologacao() {
-        this.dataHomologacao = this.dataHomologacaoCustomTime.getApiDate();
+//        this.dataHomologacao = this.dataHomologacaoCustomTime.getApiDate();
         return this.dataHomologacao;
     }
     
     setDataHomologacao(dataHomologacao: Date) {
-        this.dataHomologacaoCustomTime.setApiDate(dataHomologacao);
+//        this.dataHomologacaoCustomTime.setApiDate(dataHomologacao);
         this.dataHomologacao = dataHomologacao;
     }
     
-    getDataHomologacaoCustomTime(){
-        return this.dataHomologacaoCustomTime;
-    }
-    
-    setDataHomologacaoCustomTime(dataHomologacaoCustomTime: CustomTime){
-        this.dataHomologacaoCustomTime = dataHomologacaoCustomTime;
-    }
+//    getDataHomologacaoCustomTime(){
+//        return this.dataHomologacaoCustomTime;
+//    }
+//    
+//    setDataHomologacaoCustomTime(dataHomologacaoCustomTime: CustomTime){
+//        this.dataHomologacaoCustomTime = dataHomologacaoCustomTime;
+//    }
 
     public getStatus() {
         return this.status;

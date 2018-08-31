@@ -4,8 +4,8 @@ import { Cat } from './cat';
 import { HomologacaoAtestado } from './homologacao-atestado';
 import { Regime } from './regime';
 import { Empregado } from './empregado';
-import { CustomDate} from './../generics/utils/custom-date.util';
-import { CustomTime} from './../generics/utils/custom-time.util';
+//import { CustomDate} from './../generics/utils/custom-date.util';
+//import { CustomTime} from './../generics/utils/custom-time.util';
 
 export class Atestado {
     private id: number;
@@ -48,14 +48,14 @@ export class Atestado {
     private ciente: boolean;
     private empregado: Empregado;
 
-    private dataInicioEscalaTrabalhoCustomTime: CustomTime = new CustomTime(this.dataInicioEscalaTrabalho);
-    private dataFimEscalaTrabalhoCustomTime: CustomTime = new CustomTime(this.dataFimEscalaTrabalho);
-    private dataInicioFeriasCustomTime: CustomTime = new CustomTime(this.dataInicioFerias);
-    private dataFimFeriasCustomTime: CustomTime = new CustomTime(this.dataFimFerias);
-
-    private inicioCustomTime: CustomTime = new CustomTime(this.inicio);
-    private dataAgendamentoCustomDate: CustomDate = new CustomDate(this.dataAgendamento);
-    private dataSolicitacaoCustomDate: CustomDate = new CustomDate(this.dataSolicitacao);
+//    private dataInicioEscalaTrabalhoCustomTime: CustomTime = new CustomTime(this.dataInicioEscalaTrabalho);
+//    private dataFimEscalaTrabalhoCustomTime: CustomTime = new CustomTime(this.dataFimEscalaTrabalho);
+//    private dataInicioFeriasCustomTime: CustomTime = new CustomTime(this.dataInicioFerias);
+//    private dataFimFeriasCustomTime: CustomTime = new CustomTime(this.dataFimFerias);
+//
+//    private inicioCustomTime: CustomTime = new CustomTime(this.inicio);
+//    private dataAgendamentoCustomDate: CustomDate = new CustomDate(this.dataAgendamento);
+//    private dataSolicitacaoCustomDate: CustomDate = new CustomDate(this.dataSolicitacao);
 
     private anexoRelatorioMedico: any;
     private anexoRelatorioMedicoBase64: any;
@@ -178,40 +178,40 @@ export class Atestado {
     }
 
     getDataAgendamento() {
-        this.dataAgendamento = this.dataAgendamentoCustomDate.getApiDate();
+//        this.dataAgendamento = this.dataAgendamentoCustomDate.getApiDate();
         return this.dataAgendamento;
     }
     
     setDataAgendamento(dataAgendamento: Date) {
-        this.dataAgendamentoCustomDate.setApiDate(dataAgendamento);
+//        this.dataAgendamentoCustomDate.setApiDate(dataAgendamento);
         this.dataAgendamento = dataAgendamento;
     }
     
-    getDataAgendamentoCustomDate(){
-        return this.dataAgendamento;
-    }
-    
-    setDataAgendamentoCustomDate(dataAgendamentoCustomDate: CustomDate){
-        this.dataAgendamentoCustomDate = dataAgendamentoCustomDate;
-    }
+//    getDataAgendamentoCustomDate(){
+//        return this.dataAgendamento;
+//    }
+//    
+//    setDataAgendamentoCustomDate(dataAgendamentoCustomDate: CustomDate){
+//        this.dataAgendamentoCustomDate = dataAgendamentoCustomDate;
+//    }
     
     getDataSolicitacao() {
-        this.dataSolicitacao = this.dataSolicitacaoCustomDate.getApiDate();
+//        this.dataSolicitacao = this.dataSolicitacaoCustomDate.getApiDate();
         return this.dataSolicitacao;
     }
     
     setDataSolicitacao(dataSolicitacao: Date) {
-        this.dataSolicitacaoCustomDate.setApiDate(dataSolicitacao);
+//        this.dataSolicitacaoCustomDate.setApiDate(dataSolicitacao);
         this.dataSolicitacao = dataSolicitacao;
     }
     
-    getDataSolicitacaoCustomDate(){
-        return this.dataSolicitacao;
-    }
-    
-    setDataSolicitacaoCustomDate(dataSolicitacaoCustomDate: CustomDate){
-        this.dataSolicitacaoCustomDate = dataSolicitacaoCustomDate;
-    }
+//    getDataSolicitacaoCustomDate(){
+//        return this.dataSolicitacao;
+//    }
+//    
+//    setDataSolicitacaoCustomDate(dataSolicitacaoCustomDate: CustomDate){
+//        this.dataSolicitacaoCustomDate = dataSolicitacaoCustomDate;
+//    }
 
     getTipoBeneficio() {
         return this.tipoBeneficio;
@@ -278,94 +278,94 @@ export class Atestado {
     }
     
     getInicio() {
-        this.inicio = this.inicioCustomTime.getApiDate();
+//        this.inicio = this.inicioCustomTime.getApiDate();
         return this.inicio;
     }
     
     setInicio(inicio:Date) {
-        this.inicioCustomTime.setApiDate(inicio);
+//        this.inicioCustomTime.setApiDate(inicio);
         this.inicio = inicio;
     }
     
-    getInicioCustomTime(){
-        return this.inicioCustomTime;
-    }
-    
-    setInicioCustomTime(inicioCustomTime: CustomTime){
-        this.inicioCustomTime = inicioCustomTime;
-    }
+//    getInicioCustomTime(){
+//        return this.inicioCustomTime;
+//    }
+//    
+//    setInicioCustomTime(inicioCustomTime: CustomTime){
+//        this.inicioCustomTime = inicioCustomTime;
+//    }
     
     getDataInicioEscalaTrabalho() {
-        this.dataInicioEscalaTrabalho = this.dataInicioEscalaTrabalhoCustomTime.getApiDate();
+//        this.dataInicioEscalaTrabalho = this.dataInicioEscalaTrabalhoCustomTime.getApiDate();
         return this.dataInicioEscalaTrabalho;
     }
     
     setDataInicioEscalaTrabalho(dataInicioEscalaTrabalho:Date) {
-        this.dataInicioEscalaTrabalhoCustomTime.setApiDate(dataInicioEscalaTrabalho);
+//        this.dataInicioEscalaTrabalhoCustomTime.setApiDate(dataInicioEscalaTrabalho);
         this.dataInicioEscalaTrabalho = dataInicioEscalaTrabalho;
     }
     
-    getDataInicioEscalaTrabalhoCustomTime(){
-        return this.dataInicioEscalaTrabalhoCustomTime;
-    }
-    
-    setDataInicioEscalaTrabalhoCustomTime(dataInicioEscalaTrabalhoCustomTime: CustomTime){
-        this.dataInicioEscalaTrabalhoCustomTime = dataInicioEscalaTrabalhoCustomTime;
-    }
+//    getDataInicioEscalaTrabalhoCustomTime(){
+//        return this.dataInicioEscalaTrabalhoCustomTime;
+//    }
+//    
+//    setDataInicioEscalaTrabalhoCustomTime(dataInicioEscalaTrabalhoCustomTime: CustomTime){
+//        this.dataInicioEscalaTrabalhoCustomTime = dataInicioEscalaTrabalhoCustomTime;
+//    }
     
     getDataFimEscalaTrabalho() {
-        this.dataFimEscalaTrabalho = this.dataFimEscalaTrabalhoCustomTime.getApiDate();
+//        this.dataFimEscalaTrabalho = this.dataFimEscalaTrabalhoCustomTime.getApiDate();
         return this.dataFimEscalaTrabalho;
     }
     
     setDataFimEscalaTrabalho(dataFimEscalaTrabalho:Date) {
-        this.dataFimEscalaTrabalhoCustomTime.setApiDate(dataFimEscalaTrabalho);
+//        this.dataFimEscalaTrabalhoCustomTime.setApiDate(dataFimEscalaTrabalho);
         this.dataFimEscalaTrabalho = dataFimEscalaTrabalho;
     }
     
-    getDataFimEscalaTrabalhoCustomTime(){
-        return this.dataFimEscalaTrabalhoCustomTime;
-    }
-    
-    setDataFimEscalaTrabalhoCustomTime(dataFimEscalaTrabalhoCustomTime: CustomTime){
-        this.dataFimEscalaTrabalhoCustomTime = dataFimEscalaTrabalhoCustomTime;
-    }
+//    getDataFimEscalaTrabalhoCustomTime(){
+//        return this.dataFimEscalaTrabalhoCustomTime;
+//    }
+//    
+//    setDataFimEscalaTrabalhoCustomTime(dataFimEscalaTrabalhoCustomTime: CustomTime){
+//        this.dataFimEscalaTrabalhoCustomTime = dataFimEscalaTrabalhoCustomTime;
+//    }
     
     getDataInicioFerias() {
-        this.dataInicioFerias = this.dataInicioFeriasCustomTime.getApiDate();
+//        this.dataInicioFerias = this.dataInicioFeriasCustomTime.getApiDate();
         return this.dataInicioFerias;
     }
     
     setDataInicioFerias(dataInicioFerias:Date) {
-        this.dataInicioFeriasCustomTime.setApiDate(dataInicioFerias);
+//        this.dataInicioFeriasCustomTime.setApiDate(dataInicioFerias);
         this.dataInicioFerias = dataInicioFerias;
     }
     
-    getDataInicioFeriasCustomTime(){
-        return this.dataInicioFeriasCustomTime;
-    }
-    
-    setDataInicioFeriasCustomTime(dataInicioFeriasCustomTime: CustomTime){
-        this.dataInicioFeriasCustomTime = dataInicioFeriasCustomTime;
-    }
+//    getDataInicioFeriasCustomTime(){
+//        return this.dataInicioFeriasCustomTime;
+//    }
+//    
+//    setDataInicioFeriasCustomTime(dataInicioFeriasCustomTime: CustomTime){
+//        this.dataInicioFeriasCustomTime = dataInicioFeriasCustomTime;
+//    }
     
     getDataFimFerias() {
-        this.dataFimFerias = this.dataFimFeriasCustomTime.getApiDate();
+//        this.dataFimFerias = this.dataFimFeriasCustomTime.getApiDate();
         return this.dataFimFerias;
     }
     
     setDataFimFerias(dataFimFerias:Date) {
-        this.dataFimFeriasCustomTime.setApiDate(dataFimFerias);
+//        this.dataFimFeriasCustomTime.setApiDate(dataFimFerias);
         this.dataFimFerias = dataFimFerias;
     }
     
-    getDataFimFeriasCustomTime(){
-        return this.dataFimFeriasCustomTime;
-    }
-    
-    setDataFimFeriasCustomTime(dataFimFeriasCustomTime: CustomTime){
-        this.dataFimFeriasCustomTime = dataFimFeriasCustomTime;
-    }
+//    getDataFimFeriasCustomTime(){
+//        return this.dataFimFeriasCustomTime;
+//    }
+//    
+//    setDataFimFeriasCustomTime(dataFimFeriasCustomTime: CustomTime){
+//        this.dataFimFeriasCustomTime = dataFimFeriasCustomTime;
+//    }
     
     getContatoMedico() {
         return this.contatoMedico;

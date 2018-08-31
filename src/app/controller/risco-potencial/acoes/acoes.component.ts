@@ -34,6 +34,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private tipoContatoAcoes: Array<string>;
     private flagTriagem: Triagem;
     private flagIndexAcao: number = -1;
+    private flagEditAcao: boolean;
     private modalAcao;
 
     constructor( private route: ActivatedRoute,
@@ -159,6 +160,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         
         this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
         this.flagIndexAcao = indexAcao;
+        this.flagEditAcao = true;
         
         this.openModal();
     }
@@ -175,7 +177,10 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             triagem.setAcoes(new Array<Acao>());
         this.flagAcao.setStatus(this.statusAcoes[0]);
         
-        triagem.getAcoes().push(this.flagAcao);
+        if ( this.flagEditAcao ) triagem.getAcoes()[this.flagIndexAcao] = this.flagAcao;
+        else triagem.getAcoes().push(this.flagAcao);
+        
+        this.flagEditAcao = false;
     }
     
     removeAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
