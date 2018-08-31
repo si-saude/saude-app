@@ -67,12 +67,12 @@
 				<div class="row">
 					<div class="input-field col s6">
 						<label for="intervalo">Intervalo de Solicitações</label> 
-						<input type="text" id="intervalo"
+						<input type="number" id="intervalo"
 							[(ngModel)]="servico.intervalo" name="intervalo">
 					</div>
 					<div class="input-field col s6">
 						<label for="quantidadeSolicitacaoIntervalo">Quantidade de Solicitações no Intervalo</label> 
-						<input type="text" id="quantidadeSolicitacaoIntervalo"
+						<input type="number" id="quantidadeSolicitacaoIntervalo"
 							[(ngModel)]="servico.quantidadeSolicitacaoIntervalo" name="quantidadeSolicitacaoIntervalo">
 					</div>
 				</div>
@@ -102,7 +102,7 @@
 
 						<div class="input-field col s4" style="margin: 0 auto;">
 							<label for="tempoMedio">Tempo Médio</label> <input
-								id="tempoMedio" type="text" name="tempoMedio"
+								id="tempoMedio" type="number" name="tempoMedio"
 								[(ngModel)]="tempoMedio">
 						</div>
 

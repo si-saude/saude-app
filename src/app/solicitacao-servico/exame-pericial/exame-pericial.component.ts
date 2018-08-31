@@ -10,16 +10,18 @@ import { AtendimentoBuilder } from './../../controller/atendimento/atendimento.b
 import { SolicitacaoServicoService } from './../solicitacao-servico.service';
 import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
 import { Tarefa } from './../../model/tarefa';
+import { Equipe } from './../../model/equipe';
+import { EquipeBuilder } from './../../controller/equipe/equipe.builder';
+import { EquipeFilter } from './../../controller/equipe/equipe.filter';
 import { DateUtil } from './../../generics/utils/date.util';
+import { TextUtil } from './../../generics/utils/text.util';
 
 @Component( {
-    selector: 'app-atendimento-ocupacional',
-    templateUrl: './atendimento-ocupacional.html',
-    styleUrls: ['./atendimento-ocupacional.css']
+    selector: 'app-exame-pericial',
+    templateUrl: './exame-pericial.html',
+    styleUrls: ['./exame-pericial.css']
 } )
-export class AtendimentoOcupacionalComponent {
-    globalActions;
-    toastParams;
+export class ExamePericialComponent {
     tarefa: Tarefa;
     atendimento: Atendimento;
     dataInicio: any;
@@ -28,26 +30,39 @@ export class AtendimentoOcupacionalComponent {
     goTo: string;
     myDatePickerOptions: IMyDpOptions;
     dateUtil: DateUtil;
+    textUtil: TextUtil;
+    equipes: Array<Equipe>;
     
     constructor( private route: ActivatedRoute, private router: Router,
             private solicitacaoServicoService: SolicitacaoServicoService) {
-        this.globalActions = new EventEmitter<string | MaterializeAction>();
-        this.toastParams = ['', 4000];
         this.atendimento = new AtendimentoBuilder().initialize(this.atendimento);
         this.tarefa = new TarefaBuilder().initialize(this.tarefa);
         this.myDatePickerOptions = {
                 dateFormat: 'dd/mm/yyyy'
             };
         this.dateUtil = new DateUtil();
+        this.textUtil = new TextUtil();
+        this.equipes = new EquipeBuilder().initializeList(new Array<Equipe>());
     }
 
     ngOnInit() {
         if ( localStorage.getItem("tarefa") == undefined ) {
             this.router.navigate(["/solicitacao-servico/selecao-servico"]);
         } else {
+            this.getEquipes();
             this.tarefa = new TarefaBuilder().clone(JSON.parse(localStorage.getItem("tarefa")));
             localStorage.removeItem("tarefa");
         }
+    }
+    
+    getEquipes() {
+        this.solicitacaoServicoService.getEquipeMedicinaOdonto()
+            .then(res => {
+                this.equipes = new EquipeBuilder().cloneList(res.json().list);
+            })
+            .catch(error => {
+                console.log("Erro ao buscar as equipes.");
+            })
     }
 
     next() {
@@ -55,7 +70,7 @@ export class AtendimentoOcupacionalComponent {
         
         this.atendimento.setTarefa(this.tarefa);
         
-        this.solicitacaoServicoService.registrarAtendimento( this.atendimento )
+        this.solicitacaoServicoService.registrarExamePericial( this.atendimento )
             .then(res => {
                 this.showConfirmSave = true;
                 this.msgConfirmSave = res.text();

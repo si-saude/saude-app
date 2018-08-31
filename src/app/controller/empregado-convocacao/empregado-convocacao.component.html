@@ -40,7 +40,7 @@
 
 </div>
 
-<div id="modal" class="modal" materialize="modal"
+<div id="modal" class="modal" materialize="modal" (keypress)="enterFilter($event)"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="input-field col s8">

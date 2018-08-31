@@ -226,16 +226,12 @@ export class AtendimentoFormComponent {
     }
 
     atualizar() {
-        console.log("atualizar");
         this.atualizarLista();
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
-            console.log(this.atendimento);
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log("atendimento");
-                    console.log(this.atendimento)
                     
                     if ( this.atendimento.getTriagens() != undefined )
                         this.atendimento.getTriagens().forEach(t => {
@@ -257,6 +253,7 @@ export class AtendimentoFormComponent {
                     else this.disabledTab = 'disabled';
                     
                     if ( this.atendimento.getId() > 0 ) {
+                        console.log(this.atendimento.getId());
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         
                         if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("DISPON") )
@@ -279,6 +276,9 @@ export class AtendimentoFormComponent {
                             ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("DISPON") && 
                             !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("IN") ) ) {
                         this.timeout = Observable.timer(33000).subscribe(() => this.atualizar()); 
+                    } else {
+                        if ( this.timeout != undefined )
+                            this.timeout.unsubscribe();
                     }
                     
                     this.showPreload = false;
@@ -452,14 +452,19 @@ export class AtendimentoFormComponent {
 
     liberar() {
         if ( this.atendimento.getId() > 0 ) {
-
+            console.log("1 - ");
+            console.log(this.atendimento.getFilaAtendimentoOcupacional());
             if ( !this.fichaColetaUtil.verifyValidFichaColeta(
                     this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
                 this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-
+            console.log("2 - ");
+            console.log(this.atendimento.getFilaAtendimentoOcupacional());
+            
+            console.log("3 - ");
+            console.log(new AtendimentoBuilder().clone(this.atendimento).getFilaAtendimentoOcupacional());
             this.atendimentoService.liberar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Empregado liberado", 4000];

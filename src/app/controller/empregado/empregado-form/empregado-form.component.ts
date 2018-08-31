@@ -397,7 +397,7 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             foto = this.inputElFoto.nativeElement.files[0];
             total++;
         }
-
+        
         if ( total > 0 ) {
             let component = this;
             let empregado: Empregado = new EmpregadoBuilder().clone( component.empregado );
@@ -533,5 +533,8 @@ export class EmpregadoFormComponent extends GenericFormComponent implements OnIn
             this.empregado.getStatus() == null )
             this.empregado.setStatus( "" );
     }
-
+    
+    teste(){
+        console.log(this.empregado.getPessoa().getCpf());
+    }
 }

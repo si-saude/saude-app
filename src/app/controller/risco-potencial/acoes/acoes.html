@@ -133,7 +133,7 @@
 														<label for="dataAcao">Data</label>
 														<my-date-picker name="dataAcoes{{acao.id}}" disabled 
 															[options]="myDatePickerOptions" placeholder="Data"
-															[(ngModel)]="acao.tarefa.fimCustomDate.appDate"> </my-date-picker>
+															[(ngModel)]="acao.tarefa.fimCustomTime.appDate"> </my-date-picker>
 													</div>
 												</div>
 												<div class="row">
@@ -216,7 +216,7 @@
 			<div class="input-field col s6">
 				<label for="dataTarefaAcao">Data</label>
 				<my-date-picker name="dataTarefaAcao" [options]="myDatePickerOptions"
-					[(ngModel)]="acao.tarefa.fimCustomDate.appDate" placeholder="Data"> </my-date-picker>
+					[(ngModel)]="acao.tarefa.fimCustomTime.appDate" placeholder="Data"> </my-date-picker>
 			</div>
 		</div>
 

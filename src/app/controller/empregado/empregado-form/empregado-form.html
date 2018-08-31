@@ -60,8 +60,9 @@
 					<div class="row">
 						<div class="input-field col s6">
 							<label for="cpf">CPF</label> <input id="cpf" type="text"
-								[mask]="'cpf'" (ngModelChange)="empregado.pessoa.cpf=$event"
-								maxlength="14" [ngModel]="empregado.pessoa.cpf | cpfMask"
+								(ngModelChange)="empregado.pessoa.cpf=$event"
+								maxlength="14" [ngModel]="empregado.pessoa.cpf | cpfMask : 'cpf'"
+								(click)="teste()"
 								name="cpf">
 						</div>
 

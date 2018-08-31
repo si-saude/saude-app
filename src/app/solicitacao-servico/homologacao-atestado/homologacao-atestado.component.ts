@@ -2,14 +2,14 @@ import { Component, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
-import { IMyDpOptions } from 'mydatepicker';
-import * as $ from 'jquery';
 
-import { Tarefa }  from './../../model/tarefa';
+import { Tarefa } from './../../model/tarefa';
 import { SolicitacaoServicoService } from './../solicitacao-servico.service';
 import { Atestado } from './../../model/atestado';
 import { AtestadoBuilder } from './../../controller/atestado/atestado.builder';
 import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
+import { ModalHomologacaoAtestadoComponent } from './../../includes/modal-homologacao-atestado/modal-homologacao-atestado.component';
+import { TextUtil } from './../../generics/utils/text.util';
 
 @Component( {
     selector: 'app-homologacao-atestado',
@@ -17,95 +17,128 @@ import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
     styleUrls: ['./homologacao-atestado.css']
 } )
 export class HomologacaoAtestadoComponent {
-    @ViewChild( 'anexo' ) inputElAnexo: ElementRef;
+    @ViewChild( ModalHomologacaoAtestadoComponent ) modalHomologacaoAtestado: ModalHomologacaoAtestadoComponent;
     private atestado: Atestado;
-    private myDatePickerOptions: IMyDpOptions;
-    private globalActions;
-    private toastParams;
-    private tarefa: Tarefa;
-    
+
+    private textUtil: TextUtil;
+
     private showConfirmSave: boolean;
     private msgConfirmSave: string;
     private goTo: string;
 
     constructor( private route: ActivatedRoute, private router: Router,
         private solicitacaoServicoService: SolicitacaoServicoService ) {
-        this.atestado = new AtestadoBuilder().initialize(new Atestado());
-        this.tarefa = new TarefaBuilder().initialize(this.tarefa);
-        this.globalActions = new EventEmitter<string | MaterializeAction>();
-        this.toastParams = ['', 4000];
-        this.myDatePickerOptions = {
-                dateFormat: 'dd/mm/yyyy'
-            };
+        this.atestado = new AtestadoBuilder().initialize( new Atestado() );
+        this.textUtil = new TextUtil();
     }
 
     ngOnInit() {
-        if ( localStorage.getItem("tarefa") == undefined ) {
-            this.router.navigate(["/solicitacao-servico/selecao-servico"]);
+        if ( localStorage.getItem( "tarefa" ) == undefined ) {
+            this.router.navigate( ["/solicitacao-servico/selecao-servico"] );
         } else {
-            this.tarefa = new TarefaBuilder().clone(JSON.parse(localStorage.getItem("tarefa")));
-            localStorage.removeItem("tarefa");
+            let tarefa = new TarefaBuilder().clone( JSON.parse( localStorage.getItem( "tarefa" ) ) );
+            this.atestado.setTarefa( tarefa );
+            this.atestado.setEmpregado( tarefa.getCliente() );
+            this.modalHomologacaoAtestado.configure( this.atestado );
+            localStorage.removeItem( "tarefa" );
         }
     }
 
     next() {
-        this.atestado.setTarefa(this.tarefa);
-        
+        if ( this.atestado.getInicio() == undefined ) {
+            this.textUtil.showTextToast( "Por favor, insira uma data inicial.", 4000 );
+            return;
+        }
+        let canSave = this.modalHomologacaoAtestado.canSave();
+
+        if ( !canSave[0] ) {
+            this.textUtil.showTextToast( canSave[1], 4000 );
+            return;
+        }
+
         let i: number = 0;
         let total: number = 0;
         let anexo = undefined;
-    
-        if ( this.inputElAnexo.nativeElement.files.length > 0 ) {
-            anexo = this.inputElAnexo.nativeElement.files[0];
+        let anexoRelatorioMedico = undefined;
+
+        if ( this.modalHomologacaoAtestado.inputElAnexo.nativeElement.files.length > 0 ) {
+            anexo = this.modalHomologacaoAtestado.inputElAnexo.nativeElement.files[0];
             total++;
         }
-    
+
+        if ( this.modalHomologacaoAtestado.inputElAnexoRelatorioMedico.nativeElement.files.length > 0 ) {
+            anexoRelatorioMedico = this.modalHomologacaoAtestado.inputElAnexoRelatorioMedico.nativeElement.files[0];
+            total++;
+        }
+
         if ( total > 0 ) {
             let component = this;
             let atestado: Atestado = new AtestadoBuilder().clone( component.atestado );
-    
+
             if ( anexo != undefined ) {
+                if ( anexo["type"] != "application/pdf" ) {
+                    this.textUtil.showTextToast( "O formato do anexo deve ser PDF.", 4000 );
+                    return;
+                }
+
                 let readerAnexo = new FileReader();
-    
+
                 readerAnexo.onload = function() {
                     let arrayBuffer: ArrayBuffer = readerAnexo.result;
                     let array = new Uint8Array( arrayBuffer );
                     atestado.setAnexo( array );
                     component.callSave( ++i, total, atestado );
                 }
-    
+
                 readerAnexo.readAsArrayBuffer( new Blob( [anexo] ) );
             }
+
+            if ( anexoRelatorioMedico != undefined ) {
+                if ( anexoRelatorioMedico["type"] != "application/pdf" ) {
+                    this.textUtil.showTextToast( "O formato do anexo deve ser PDF.", 4000 );
+                    return;
+                }
+
+                let readerAnexoRelatorioMedico = new FileReader();
+
+                readerAnexoRelatorioMedico.onload = function() {
+                    let arrayBuffer: ArrayBuffer = readerAnexoRelatorioMedico.result;
+                    let array = new Uint8Array( arrayBuffer );
+                    atestado.setAnexoRelatorioMedico( array );
+                    component.callSave( ++i, total, atestado );
+                }
+
+                readerAnexoRelatorioMedico.readAsArrayBuffer( new Blob( [anexoRelatorioMedico] ) );
+            }
+
         } else {
             this.salvar( new AtestadoBuilder().clone( this.atestado ) );
         }
+
     }
-    
+
     callSave( i: number, total: number, atestado: Atestado ) {
         if ( i == total ) {
             this.salvar( atestado );
         }
     }
-    
-    salvar ( atestado ) {
-        this.solicitacaoServicoService.registrarAtestado(atestado)
-            .then(res => {
+
+    salvar( atestado: Atestado ) {
+        atestado.setHomologacaoAtestado( undefined );
+        this.solicitacaoServicoService.registrarAtestado( atestado )
+            .then( res => {
                 this.showConfirmSave = true;
                 this.msgConfirmSave = res.text();
                 this.goTo = "solicitacao-servico/autenticacao-usuario";
-            })
-            .catch(error => {
+            } )
+            .catch( error => {
                 this.showConfirmSave = true;
                 this.msgConfirmSave = error.text();
                 this.goTo = "solicitacao-servico/autenticacao-usuario";
-            })
+            } )
     }
-    
+
     back() {
-        this.router.navigate(["/solicitacao-servico/selecao-servico"]);
-    }
-    
-    showCardNotice( evento ) {
-        $(".card-notice").toggle();
+        this.router.navigate( ["/solicitacao-servico/selecao-servico"] );
     }
 }

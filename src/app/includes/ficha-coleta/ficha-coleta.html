@@ -66,7 +66,7 @@
 				</div>
 				
 				<div class="resposta" *ngIf="!isEnumOrSimNao(resposta)">
-					<textarea [disabled]="isDisabledResposta(resposta)"
+					<textarea [disabled]="isDisabledResposta(resposta)" maxlength="2048"
 						[(ngModel)]="resposta.conteudo">
 					</textarea>
 				</div>
@@ -85,7 +85,7 @@
 		<h5 class="title-modal">Conteúdo</h5>
 		
 		<div class="div-conteudo col s12 center">
-			<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudo"
+			<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudo" maxlength="2048"
 				class="materialize-textarea conteudo" name="conteudo"></textarea>
 		</div>
 		

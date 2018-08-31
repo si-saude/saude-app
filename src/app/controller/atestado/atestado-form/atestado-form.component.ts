@@ -61,24 +61,6 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                             this.showPreload = false;
                             this.atestado = new AtestadoBuilder().clone( res.json() );
                             
-                            if ( this.atestado.getCid() != undefined && this.atestado.getCid() != "" ) {
-                                this.proxyAutocompleteDiagnostico.getAutocompleteDiagnostico()
-                                        .getAutocomplete().initializeLastValue( this.atestado.getCid() );
-                                let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
-                                diagnosticoFilter.getEixo().setEquipe(new EquipeFilter());
-                                diagnosticoFilter.getEixo().getEquipe().setAbreviacao("MED");
-                                diagnosticoFilter.getInativo().setValue(2);
-                                diagnosticoFilter.setCodigo(this.atestado.getCid());
-                                this.atestadoService.getDiagnosticoService().list(diagnosticoFilter)
-                                    .then(res => {
-                                        this.proxyAutocompleteDiagnostico.getEncapsulatorDiagnostico().setDiagnostico(
-                                                new DiagnosticoBuilder().clone(res.json().list));
-                                    })
-                                    .catch(error => {
-                                        console.log("Erro ao buscar diagnostico.");
-                                    })
-                                
-                            }
                             if ( this.atestado.getProfissionalRealizouVisita() != undefined ) {
                                 this.autoCompleteProfissional.getAutocomplete().initializeLastValue(
                                         this.atestado.getProfissionalRealizouVisita().getEmpregado().getPessoa().getNome() )
@@ -205,18 +187,6 @@ class ProxyAutocompleteDiagnostico {
     changeDiagnostico(evento) {
         this.encapsulatorDiagnostico.getDiagnostico().setCodigo(evento);
         this.autocompleteDiagnostico.getAutocomplete().getList(this.encapsulatorDiagnostico.getDiagnostico(), 'getCodigo');
-    }
-    
-    setCid(atestado: Atestado, evento) {
-        this.autocompleteDiagnostico.getAutocomplete().getObj(
-                evento, this.encapsulatorDiagnostico,'setDiagnostico','getCodigo');
-        atestado.setCid(this.encapsulatorDiagnostico.getDiagnostico().getCodigo());
-    }
-    
-    getCid() {
-        if ( this.encapsulatorDiagnostico.getDiagnostico().getId() > 0 )
-            this.encapsulatorDiagnostico.getDiagnostico().getCodigo();
-        else return "";
     }
     
     getEncapsulatorDiagnostico() {

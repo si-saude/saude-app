@@ -15,6 +15,7 @@ import { FuncaoService } from './../controller/funcao/funcao.service';
 import { RegimeService } from './../controller/regime/regime.service';
 import { BaseService } from './../controller/base/base.service';
 import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-solicitacao.service';
+import { EquipeService } from './../controller/equipe/equipe.service';
 
 @Injectable()
 export class SolicitacaoServicoService {
@@ -32,7 +33,8 @@ export class SolicitacaoServicoService {
             private gheeService: GheeService,
             private baseService: BaseService,
             private empregadoService: EmpregadoService,
-            private tipoSolicitacaoService: TipoSolicitacaoService) {
+            private tipoSolicitacaoService: TipoSolicitacaoService,
+            private equipeService: EquipeService) {
         this.headers = new Headers( { 'Content-Type': 'application/json' } );
         this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
         this.URL = GlobalVariable.BASE_API_URL;
@@ -63,6 +65,13 @@ export class SolicitacaoServicoService {
     
     registrarAtendimento( atendimento ) {
         let urlSolicitacao = this.URL + "/atendimento/registrar-solicitacao-atendimento";
+        return this.http
+            .post( urlSolicitacao, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    registrarExamePericial( atendimento ) {
+        let urlSolicitacao = this.URL + "/atendimento/registrar-solicitacao-exame-pericial";
         return this.http
             .post( urlSolicitacao, atendimento, { headers: this.headers } )
             .toPromise();
@@ -125,5 +134,11 @@ export class SolicitacaoServicoService {
         return this.regimeService.getRegimes();
     }
     
+    getEquipeMedicinaOdonto() {
+        let urlEquipe = this.URL + "/equipe/get-medicina-odonto"
+        return this.http
+            .get( urlEquipe, { headers: this.headers } )
+            .toPromise();
+    }
     
 }
