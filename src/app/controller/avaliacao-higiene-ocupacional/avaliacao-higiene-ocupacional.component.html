@@ -53,8 +53,8 @@
 
 </div>
 
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
+<!-- Modal Structure --> 
+<div id="modal" class="modal" materialize="modal" (keypress)="enterFilter($event)"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="modal-content">

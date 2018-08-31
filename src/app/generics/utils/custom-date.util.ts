@@ -1,42 +1,42 @@
 import { DateUtil } from './date.util';
+import { Util } from './util';
 
-export class CustomDate {
+export class CustomDate { 
     
     private dateUtil: DateUtil = new DateUtil();
     private apiDate: Date;
     private appDate: any;
+    private apiTime: string;
+    private appTime: string;
 
     constructor(apiDate:Date){
         this.setApiDate(apiDate);
     }
 
     getApiDate(){
-        if( this.appDate !== null && this.appDate !== undefined )
-            this.apiDate = this.dateUtil.parseDatePickerToDate(this.appDate);
-        else
+        if(Util.isNotNull(this.appDate))
+            this.apiDate = this.dateUtil.parseStringPtBrToDate(this.appDate,this.appTime);
+         else
             this.apiDate = undefined;
         
         return this.apiDate;
     }
     
     setApiDate(date:Date){
-        if(date !== null && date !== undefined)
-            this.appDate = this.dateUtil.parseDataToObjectDatePicker(date);
+        if(Util.isNotNull(date)){
+            this.appDate = this.dateUtil.getDateStringDataUTC(date);
+            this.appTime = this.dateUtil.getTimeStringDataUTC(date);
+        }
         
         this.apiDate = date;
     }
     
-    getAppDate(){
-        if(this.apiDate !== null && this.apiDate !== undefined)
-            this.appDate = this.dateUtil.parseDataToObjectDatePicker(this.apiDate.toLocaleDateString());
-        
+    getAppDate(){ 
         return this.appDate;
     }
     
-    setAppDate(date:any){
-        if( date !== null && date !== undefined )
-            this.apiDate = this.dateUtil.parseDatePickerToDate(date);
-        
+    setAppDate(date:any){        
         this.appDate = date;
-    }
+        this.getApiDate();
+    }    
 }

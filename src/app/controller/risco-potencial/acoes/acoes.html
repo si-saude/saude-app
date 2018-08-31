@@ -113,34 +113,34 @@
 												</div>
 												<div class="row">
 													<div class="col s6">
-														<label for="tipo{{a}}">Tipo</label> 
+														<label for="tipo{{t}}{{a}}">Tipo</label> 
 														<input type="text" disabled
-															name="tipo{{a}}" value={{acao.tipo}}>
+															name="tipo{{t}}{{a}}" value={{acao.tipo}}>
 													</div>
 													<div class="col s6">
-														<label for="status{{a}}">Status</label> 
+														<label for="status{{t}}{{a}}">Status</label> 
 														<input type="text" disabled
-															name="status{{a}}" value={{acao.status}}>
+															name="status{{t}}{{a}}" value={{acao.status}}>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col s6">
 														<label for="tipoContato">Tipo de Contato</label> 
 														<input type="text" disabled
-															name="tipoContato{{a}}" value={{acao.tipoContato}}>
+															name="tipoContato{{t}}{{a}}" value={{acao.tipoContato}}>
 													</div>
 													<div class="col s6">
 														<label for="dataAcao">Data</label>
-														<my-date-picker name="dataAcoes{{acao.id}}" disabled 
-															[options]="myDatePickerOptions" placeholder="Data"
-															[(ngModel)]="acao.tarefa.fimCustomTime.appDate"> </my-date-picker>
+														<input name="dataAcoes{{t}}{{a}}" 
+															[(ngModel)]="acao.tarefa.fimCustomDate.appDate" disabled
+															type="text" />
 													</div>
 												</div>
 												<div class="row">
 													<div class="col s12">
 														<label for="detalhe">Detalhe</label> 
 														<textarea class="materialize-textarea" disabled
-															name="detalhe{{a}}" value={{acao.detalhe}}></textarea>
+															name="detalhe{{t}}{{a}}" value={{acao.detalhe}}></textarea>
 													</div>
 												</div>
 												<div class="row center" *ngIf="verifyReopenAcao(acao)">
@@ -193,7 +193,7 @@
 				<fieldset>
 					<legend>Tipo de Contato</legend>
 					<select name="tipoContato" class="browser-default"
-						[(ngModel)]="acao.tipoContato">
+						[(ngModel)]="flagAcao.tipoContato">
 						<option disabled selected value="">Selecione um tipo de contato</option>
 						<option *ngFor="let tipoContato of tipoContatoAcoes"
 							value="{{tipoContato}}">{{tipoContato}}</option>
@@ -206,24 +206,25 @@
 			<div class="input-field col s6">
 				<fieldset>
 					<legend>Tipo</legend>
-					<select name="tipo" class="browser-default" [(ngModel)]="acao.tipo">
+					<select name="tipo" class="browser-default" [(ngModel)]="flagAcao.tipo">
 						<option disabled selected value="">Selecione um tipo</option>
 						<option *ngFor="let tipo of tipoAcoes" value="{{tipo}}">{{tipo}}</option>
 					</select>
 				</fieldset>
 			</div>
-			
+										
 			<div class="input-field col s6">
-				<label for="dataTarefaAcao">Data</label>
-				<my-date-picker name="dataTarefaAcao" [options]="myDatePickerOptions"
-					[(ngModel)]="acao.tarefa.fimCustomTime.appDate" placeholder="Data"> </my-date-picker>
+			<label for="dataTarefaAcao">Data</label>
+				<app-date-picker [nome]="'dataTarefaAcao'" 
+					[customDate]="flagAcao.tarefa.fimCustomDate" 									
+					[legenda]="'Data'"></app-date-picker>
 			</div>
 		</div>
 
 		<div class="input-field col s12">
-			<label for="acao.detalhe">Detalhe</label>
-			<textarea class="materialize-textarea" [(ngModel)]="acao.detalhe" maxlength="2048"
-				name="acao.detalhe"></textarea>
+			<label for="flagAcao.detalhe">Detalhe</label>
+			<textarea class="materialize-textarea" [(ngModel)]="flagAcao.detalhe" maxlength="2048"
+				name="flagAcao.detalhe"></textarea>
 		</div>
 
 	</div>

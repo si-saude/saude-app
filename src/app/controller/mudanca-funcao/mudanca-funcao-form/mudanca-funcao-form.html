@@ -132,7 +132,7 @@
 											<select name="tarefa.status{{i}}" class="browser-default" 
 															[(ngModel)]="tarefa.status"  
 															[disabled]="(profissional.equipe.id != tarefa.equipe.id)"
-															(change)="setarResponsalvel(i)">
+															(change)="setarResponsavel(i)">
 												<option *ngFor="let status of listStatus" value="{{status}}">{{status}}</option>
 											</select>						
 										</td>

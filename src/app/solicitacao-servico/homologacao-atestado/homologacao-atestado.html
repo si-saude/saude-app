@@ -9,66 +9,7 @@
 <div class="row form-container">
 	<form class="col s12" (ngSubmit)="next()">
 
-		<div class="row cabecalho">
-			<h6>Serviço: {{tarefa.servico.nome}}</h6>
-			<h6>Cliente: {{tarefa.cliente.pessoa.nome}}</h6>
-		</div>
-
-		<div class="content-dados">
-
-			<fieldset>
-				<legend>Dados da Solicitação</legend>
-
-				<div class="row">
-					<div class="input-field col s4">
-						<label for="CID">CID</label>
-						<input id="CID" type="text" maxlength="16" name="CID" [(ngModel)]="atestado.CID">
-					</div>
-					
-					<div class="input-field col s2">
-						<label for="numero-dias">Número de dias</label>
-						<input id="numero-dias" type="number" name="numero-dias" [(ngModel)]="atestado.numeroDias">
-					</div>
-					
-					<div class="input-field col s3">
-						<label for="dataInicio">Início</label>
-						<my-date-picker name="inicio" [options]="myDatePickerOptions"
-							[(ngModel)]="tarefa.inicioCustomTime.appDate" placeholder="Início">
-						</my-date-picker>
-					</div>
-					<div class="input-field col s3 checkbox">
-						<input (click)="showCardNotice($event)" type="checkbox" id="atestado.impossibilidadeLocomocao" 
-							[(ngModel)]="atestado.impossibilidadeLocomocao"
-							name="atestado.impossibilidadeLocomocao"> 
-							<label for="atestado.impossibilidadeLocomocao">Impossibilidade de Locomoção</label>
-					</div>
-				</div>
-				
-				<div class="row card-notice" hidden>
-					<div class="card-panel red">
-				        <span class="white-text"> Relatório comprobatório de impossibilidade de locomoção deve estar entre os anexos.</span>
-				    </div>
-				</div>
-					
-				<div class="row col s12">
-
-					<div class="input-field col s12">
-						<div class="row file-import">
-							<div class="file-field input-field col s12">
-								<div class="btn">
-									<span>Anexo</span> <input id="anexo" type="file" name="anexo" required 
-										accept=".zip" #anexo>
-								</div>
-								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text">
-								</div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-			</fieldset>
-		</div>
+		<app-modal-homologacao-atestado></app-modal-homologacao-atestado>
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
@@ -82,7 +23,8 @@
 			</div>
 			
 			<div class="col s6 btn-avancar">
-				<button type="submit" class="btn btn-primary btn-salvar right">Avançar</button>
+				<button type="submit" [disabled]="!modalHomologacaoAtestado.getCiente()" 
+					class="btn btn-primary btn-salvar right">Avançar</button>
 			</div>
 			
 		</div>
@@ -90,5 +32,5 @@
 	</form>
 </div>
 
-<div materialize [materializeParams]="toastParams"
-	[materializeActions]="globalActions"></div>
+<div materialize [materializeParams]="textUtil.toastParams"
+	[materializeActions]="textUtil.globalActions"></div>

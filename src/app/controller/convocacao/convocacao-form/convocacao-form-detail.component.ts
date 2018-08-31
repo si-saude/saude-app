@@ -1,8 +1,6 @@
 import { Component, OnInit, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-
-import { MyDatePickerModule } from 'mydatepicker';
 import { MaterializeAction } from "angular2-materialize";
 import 'rxjs/Rx';
 

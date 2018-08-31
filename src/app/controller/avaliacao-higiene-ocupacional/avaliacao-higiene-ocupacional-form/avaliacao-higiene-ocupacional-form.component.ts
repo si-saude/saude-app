@@ -32,8 +32,7 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
     private localizacoes: Array<Localizacao>;
     private ensaioVedacoes: Array<string>;
     private empregadoNomeAutocomplete: EmpregadoNomeAutocomplete;
-    private inicioTimeActions;
-    private fimTimeActions;
+    timeActions ;
     
     constructor( private route: ActivatedRoute,
         private avaliacaoHigieneOcupacionalService: AvaliacaoHigieneOcupacionalService,
@@ -43,9 +42,9 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
         this.goTo = "avaliacao-higiene-ocupacional";
         this.avaliacaoHigieneOcupacional = new AvaliacaoHigieneOcupacionalBuilder().initialize( this.avaliacaoHigieneOcupacional );
         this.empregadoNomeAutocomplete = new EmpregadoNomeAutocomplete( this.avaliacaoHigieneOcupacionalService.getEmpregadoService());
-        this.inicioTimeActions = new EventEmitter<string|MaterializeAction>();
-        this.fimTimeActions = new EventEmitter<string|MaterializeAction>();
         this.ensaioVedacoes = new Array<string>();
+        this.timeActions = new EventEmitter<string|MaterializeAction>();
+        
     }
 
     ngOnInit() {
@@ -60,8 +59,7 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
                             this.showPreload = false;
                             this.avaliacaoHigieneOcupacional = new AvaliacaoHigieneOcupacionalBuilder().clone( res.json() );
                             this.empregadoNomeAutocomplete.getAutocomplete().initializeLastValue(
-                                    this.avaliacaoHigieneOcupacional.getEmpregado().getPessoa().getNome() );
-                            console.log(this.avaliacaoHigieneOcupacional.getEnsaioVedacao())
+                            this.avaliacaoHigieneOcupacional.getEmpregado().getPessoa().getNome() );
                             this.getLocalizacoes();
                             this.getEnsaioVedacoes();
                         } )
@@ -115,7 +113,6 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
         this.avaliacaoHigieneOcupacionalService.getEnsaioVedacao()
             .then(res => {
                 this.ensaioVedacoes = Object.keys( res.json() ).sort();
-                console.log(this.ensaioVedacoes);
             })
             .catch(error => {
                 console.log("Erro ao buscar os ensaios vedacoes.");
@@ -159,7 +156,6 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
                 this.avaliacaoHigieneOcupacional.setEnsaioVedacao(this.ensaioVedacoes[1]);
                 break;
             case "sim":
-                console.log('teste')
                 this.avaliacaoHigieneOcupacional.setEnsaioVedacao(this.ensaioVedacoes[2]);
                 break;
         }

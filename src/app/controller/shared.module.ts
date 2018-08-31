@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterializeModule } from 'angular2-materialize';
 
+import { DatePickerModule } from './../includes/date-picker/date-picker.module';
 import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
 import { PreloadComponent } from './../includes/preload/preload.component';
 import { ConfirmSaveComponent } from './../includes/confirm-save/confirm-save.component';
@@ -81,6 +82,7 @@ import { AvaliacaoHigieneOcupacionalService } from './avaliacao-higiene-ocupacio
 import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
 import { EnfaseService } from './enfase/enfase.service';
 import { ImovelService } from './imovel/imovel.service';
+import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-recusa-atestado.service';
 
 @NgModule({
   declarations: [
@@ -97,7 +99,8 @@ import { ImovelService } from './imovel/imovel.service';
     HttpModule,
     FormsModule,
     MaterializeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DatePickerModule
   ],
   exports: [ 
     CommonModule,
@@ -109,7 +112,8 @@ import { ImovelService } from './imovel/imovel.service';
     PreloadComponent,
     ConfirmSaveComponent,
     ConfirmDeleteComponent,
-    PaginacaoComponent
+    PaginacaoComponent,
+    DatePickerModule
   ],
   providers: [
     PerfilService,
@@ -181,7 +185,8 @@ import { ImovelService } from './imovel/imovel.service';
     AvaliacaoHigieneOcupacionalService,
     FichaColetaService,
     EnfaseService,
-    ImovelService
+    ImovelService,
+    MotivoRecusaAtestadoService
   ]
 })
 export class SharedModule { }

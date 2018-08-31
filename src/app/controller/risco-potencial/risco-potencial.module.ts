@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MyDatePickerModule } from 'mydatepicker';
 import { ChartsModule } from 'ng2-charts';
 import { DataTableModule } from "angular2-datatable";
 
@@ -43,12 +42,11 @@ import { AcolhimentoModule } from './../acolhimento.module';
        AcolhimentoComponent
      ],
      imports: [
+        SharedModule,
         TriagemModule,
         RiscoPotencialRoutingModule,
-        MyDatePickerModule,
         ChartsModule,
         DataTableModule,
-        SharedModule,
         PipesModule,
         PlanejamentoModule,
         FichaColetaModule,

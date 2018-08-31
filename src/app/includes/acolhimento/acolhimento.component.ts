@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
 import * as $ from 'jquery';
-import { MyDatePickerModule } from 'mydatepicker';
-import { IMyDpOptions } from 'mydatepicker';
+
 
 import { Triagem } from './../../model/triagem';
 import { TriagemBuilder } from './../../controller/triagem/triagem.builder';
@@ -16,6 +15,7 @@ import { Intervencao } from './../../model/intervencao';
 import { IntervencaoBuilder } from './../../controller/intervencao/intervencao.builder';
 import { RiscoPotencial } from './../../model/risco-potencial';
 import { DateUtil } from '../../generics/utils/date.util';
+import { GlobalVariable } from './../../global';
 
 @Component( {
     selector: 'app-acolhimento',
@@ -34,9 +34,6 @@ export class AcolhimentoComponent{
     private equipes: Array<Equipe>;
     private equipesSelecteds: Array<Equipe>;
     private dateUtil: DateUtil;
-    private inicioAgendamento: any;
-    private fimAgendamento: any;
-    private myDatePickerOptions: IMyDpOptions;
     
     constructor( router: Router ) {
     }
@@ -47,9 +44,6 @@ export class AcolhimentoComponent{
         this.equipesTriagensTodosAtendimentos = new Array<Equipe>();
         this.innerTriagensTodosAtendimentos = new Array<Triagem>();
         this.dateUtil = new DateUtil();
-        this.myDatePickerOptions = {
-                dateFormat: 'dd/mm/yyyy'
-            };
     }
     
     ngOnChanges( changes: SimpleChanges ) {
@@ -64,7 +58,6 @@ export class AcolhimentoComponent{
         if ( changes["riscoPotencial"] != undefined ) {
             this.innerRiscoPotencial = changes["riscoPotencial"].currentValue;
             this.equipesSelecteds = this.innerRiscoPotencial.getEquipes();
-            this.getDates();
         }
     }
     
@@ -132,24 +125,6 @@ export class AcolhimentoComponent{
     getIndiceDescricao( triagem: Triagem ) {
         return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
     }
-    
-    setInicioAgendamento( inicioAgendamento ) {
-        if ( inicioAgendamento != null ) {
-            this.innerRiscoPotencial.setInicioAgendamento(this.dateUtil.parseDatePickerToDate(inicioAgendamento));
-        }
-    }
-    
-    setFimAgendamento( fimAgendamento ) {
-        if ( fimAgendamento != null ) {
-            this.innerRiscoPotencial.setFimAgendamento(this.dateUtil.parseDatePickerToDate(fimAgendamento));
-        }
-    }
-    
-    getDates() {
-        if ( this.riscoPotencial.getInicioAgendamento() != undefined )
-            this.inicioAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.riscoPotencial.getInicioAgendamento() );
-        if ( this.riscoPotencial.getFimAgendamento() != undefined )
-            this.fimAgendamento = this.dateUtil.parseDataToObjectDatePicker( this.riscoPotencial.getFimAgendamento() );
-    }
+
     
 }

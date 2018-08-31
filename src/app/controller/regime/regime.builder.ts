@@ -8,6 +8,19 @@ export class RegimeBuilder extends GenericBuilder {
         return regime;
     }
     
+    initializeList( regimes: Array<Regime> ) {
+        let array: Array<Regime> = new Array<Regime>();
+
+        if ( regimes === null || regimes === undefined )
+            regimes = new Array<Regime>();
+
+        for ( let regime of regimes ) {
+            array.push( this.initialize( regime ) );
+        }
+
+        return array;
+    }
+    
     clone(regime: Regime): Regime {
         
         if (regime === null || regime === undefined)
@@ -18,6 +31,18 @@ export class RegimeBuilder extends GenericBuilder {
         cloneRegime.setNome(this.getValue(regime, "getNome"));
         cloneRegime.setVersion(this.getValue(regime, "getVersion"));
         return cloneRegime;
+    }
+    
+    cloneList( regimes: Array<Regime> ): Array<Regime> {
+        let array: Array<Regime> = new Array<Regime>();
+
+        if ( regimes !== null && regimes !== undefined ) {
+            for ( let regime of regimes ) {
+                array.push( this.clone( regime ) );
+            }
+        }
+
+        return array;
     }
     
 }

@@ -15,6 +15,8 @@ import { EquipeFilter } from './../../equipe/equipe.filter';
 import { DiagnosticoFilter } from './../../diagnostico/diagnostico.filter';
 import { DiagnosticoBuilder } from './../../diagnostico/diagnostico.builder';
 import { ProfissionalNomeAutocomplete } from './../../profissional-saude/profissional-nome.autocomplete';
+import { MaterializeAction } from "angular2-materialize";
+import { Util } from "./../../../generics/utils/util";
 
 @Component( {
     selector: 'app-atestado-form',
@@ -61,24 +63,6 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                             this.showPreload = false;
                             this.atestado = new AtestadoBuilder().clone( res.json() );
                             
-                            if ( this.atestado.getCid() != undefined && this.atestado.getCid() != "" ) {
-                                this.proxyAutocompleteDiagnostico.getAutocompleteDiagnostico()
-                                        .getAutocomplete().initializeLastValue( this.atestado.getCid() );
-                                let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
-                                diagnosticoFilter.getEixo().setEquipe(new EquipeFilter());
-                                diagnosticoFilter.getEixo().getEquipe().setAbreviacao("MED");
-                                diagnosticoFilter.getInativo().setValue(2);
-                                diagnosticoFilter.setCodigo(this.atestado.getCid());
-                                this.atestadoService.getDiagnosticoService().list(diagnosticoFilter)
-                                    .then(res => {
-                                        this.proxyAutocompleteDiagnostico.getEncapsulatorDiagnostico().setDiagnostico(
-                                                new DiagnosticoBuilder().clone(res.json().list));
-                                    })
-                                    .catch(error => {
-                                        console.log("Erro ao buscar diagnostico.");
-                                    })
-                                
-                            }
                             if ( this.atestado.getProfissionalRealizouVisita() != undefined ) {
                                 this.autoCompleteProfissional.getAutocomplete().initializeLastValue(
                                         this.atestado.getProfissionalRealizouVisita().getEmpregado().getPessoa().getNome() )
@@ -121,10 +105,10 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-        if ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate() != undefined && 
-                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate() != undefined && 
-                ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate().getTime() > 
-                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate().getTime() ) ) {
+        if (Util.isNotNull(this.atestado.getHomologacaoAtestado().getDataEntregaCustomDate().getAppDate()) &&
+            Util.isNotNull(this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomDate().getAppDate()) &&
+            (this.atestado.getHomologacaoAtestado().getDataEntregaCustomDate().getApiDate() > 
+            this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomDate().getApiDate())) {
             this.showTextToast("Erro: datas incondizentes.", 5000);
             return;
         }
@@ -205,18 +189,6 @@ class ProxyAutocompleteDiagnostico {
     changeDiagnostico(evento) {
         this.encapsulatorDiagnostico.getDiagnostico().setCodigo(evento);
         this.autocompleteDiagnostico.getAutocomplete().getList(this.encapsulatorDiagnostico.getDiagnostico(), 'getCodigo');
-    }
-    
-    setCid(atestado: Atestado, evento) {
-        this.autocompleteDiagnostico.getAutocomplete().getObj(
-                evento, this.encapsulatorDiagnostico,'setDiagnostico','getCodigo');
-        atestado.setCid(this.encapsulatorDiagnostico.getDiagnostico().getCodigo());
-    }
-    
-    getCid() {
-        if ( this.encapsulatorDiagnostico.getDiagnostico().getId() > 0 )
-            this.encapsulatorDiagnostico.getDiagnostico().getCodigo();
-        else return "";
     }
     
     getEncapsulatorDiagnostico() {

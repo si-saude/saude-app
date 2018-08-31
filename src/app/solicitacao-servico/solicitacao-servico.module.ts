@@ -12,8 +12,10 @@ import { MudancaFuncaoComponent } from './mudanca-funcao/mudanca-funcao.componen
 import { AtendimentoOcupacionalComponent } from './atendimento-ocupacional/atendimento-ocupacional.component';
 import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integra/solicitacao-central-integra.component';
 import { HomologacaoAtestadoComponent } from './homologacao-atestado/homologacao-atestado.component';
+import { ExamePericialComponent } from './exame-pericial/exame-pericial.component';
 import { SolicitacaoServicoService } from './solicitacao-servico.service';
 import { SolicitacaoServicoRoutingModule } from './solicitacao-servico.routing.module';
+import { ModalHomologacaoAtestadoModule } from './../includes/modal-homologacao-atestado/modal-homologacao-atestado.module';
 import { SharedModule } from './../controller/shared.module';
 
 @NgModule({
@@ -23,12 +25,14 @@ import { SharedModule } from './../controller/shared.module';
        AtendimentoOcupacionalComponent,
        SolicitacaoCentralIntegraComponent,
        HomologacaoAtestadoComponent,
-       MudancaFuncaoComponent
+       MudancaFuncaoComponent,
+       ExamePericialComponent
      ],
      imports: [
         SolicitacaoServicoRoutingModule,
         MyDatePickerModule,
         Ng2InputMaskModule,
+        ModalHomologacaoAtestadoModule,
         SharedModule
      ],
      providers: [

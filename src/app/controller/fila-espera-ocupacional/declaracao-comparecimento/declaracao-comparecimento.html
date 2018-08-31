@@ -15,9 +15,11 @@
 				<legend>Dados do Empregado</legend>
 
 				<div class="input-field col s3 dataDeclaracao">
-					<label for="dataDeclaracao">Data da Declaração</label>
-					<my-date-picker name="dataDeclaracao" [options]="myDatePickerOptions"
-						[(ngModel)]="dataDeclaracao" placeholder="Data"> </my-date-picker>
+					<label for="dataDeclaracao">Data da Declaração</label>	
+					<app-date-picker [nome]="'dataDeclaracao'" 
+									[customDate]="atendimento.tarefa.inicioCustomDate" 									
+									[legenda]="'Data'"									
+									></app-date-picker>
 				</div>
 <br><br>
 				<div class="row">

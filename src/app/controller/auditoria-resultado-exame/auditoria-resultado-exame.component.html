@@ -73,7 +73,7 @@
 
 </div>
 
-<div id="modal" class="modal" materialize="modal"
+<div id="modal" class="modal" materialize="modal" (keypress)="enterFilter($event)"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="row">
@@ -148,14 +148,20 @@
 
 			<div class="input-field col s4">
 				<label for="inicio">Inicio</label>
-				<my-date-picker name="inicio" [options]="myDatePickerOptions"
-					[(ngModel)]="inicio" placeholder="Inicio"> </my-date-picker>
+				<app-date-picker [nome]="'inicio'" 
+									[customDate]="resultadoExameImport.inicioCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Inicio'"									
+									></app-date-picker>
 			</div>
 
 			<div class="input-field col s4">
 				<label for="fim">Fim</label>
-				<my-date-picker name="fim" [options]="myDatePickerOptions"
-					[(ngModel)]="fim" placeholder="Fim"> </my-date-picker>
+				<app-date-picker [nome]="'fim'" 
+									[customDate]="resultadoExameImport.fimCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Fim'"									
+									></app-date-picker>
 			</div>
 
 		</div>

@@ -1,0 +1,69 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form class="col s12" (ngSubmit)="next()">
+
+		<div class="row cabecalho">
+			<h6>Serviço: {{atendimento.tarefa.servico.nome}}</h6>
+			<h6>Cliente: {{atendimento.tarefa.cliente.pessoa.nome}}</h6>
+		</div>
+
+		<div class="content-dados">
+
+			<fieldset>
+				<legend>Dados do Atendimento Ocupacional</legend>
+
+				<div class="row col s12">
+
+					<div class="input-field col s4">
+						<label for="inicio">Data</label>
+						<app-date-picker [nome]="'dataInicio'" 
+									[customDate]="atendimento.tarefa.inicioCustomDate" 									
+									[legenda]="'Data'"									
+									></app-date-picker>
+					</div>
+					
+					<div class="input-field col s5">
+						<fieldset>
+							<legend> Equipe </legend>
+							<select name="equipes" required class="browser-default" [(ngModel)]="atendimento.tarefa.equipe.id">
+								<option disabled selected value=0>Selecione um equipe</option>
+								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+							</select>
+						</fieldset>
+					</div>
+
+				</div>
+
+			</fieldset>
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+
+		<div class='row row-btns'>
+		
+			<div class="col s6 botao-voltar">
+				<button (click)="back()" class="btn btn-primary btn-salvar">Voltar</button>
+			</div>
+			
+			<div class="col s6 btn-avancar">
+				<button type="submit" class="btn btn-primary btn-salvar right">Avançar</button>
+			</div>
+			
+		</div>
+
+	</form>
+</div>
+
+<div materialize [materializeParams]="textUtil.toastParams"
+	[materializeActions]="textUtil.globalActions"></div>

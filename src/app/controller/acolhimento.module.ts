@@ -3,8 +3,8 @@ import { MaterializeModule } from 'angular2-materialize';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { IncludeSharedModule } from './include-shared.module';
 
-import { MyDatePickerModule } from 'mydatepicker';
 
 import { AcolhimentoComponent } from './../includes/acolhimento/acolhimento.component';
 
@@ -14,7 +14,7 @@ import { AcolhimentoComponent } from './../includes/acolhimento/acolhimento.comp
     FormsModule,
     CommonModule,
     RouterModule,
-    MyDatePickerModule
+    IncludeSharedModule    
   ],
   declarations: [
     AcolhimentoComponent

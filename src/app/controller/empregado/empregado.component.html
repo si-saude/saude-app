@@ -73,17 +73,19 @@
 				<div class="input-field col s4">
 					<label for="dataNascimentoInicial">Data de Nascimento
 						Inicial</label>
-					<my-date-picker name="dataNascimentoInicio"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filter.pessoa.dataNascimento.inicio"
-						placeholder="Data de Nascimento Inicial"> </my-date-picker>
+						<app-date-picker [nome]="'dataNascimentoInicio'" 
+									[customDate]="filter.pessoa.dataNascimento.inicioCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Nascimento Inicial'"									
+									></app-date-picker>
 				</div>
 				<div class="input-field col s4">
 					<label for="dataNascimentoFinal">Data de Nascimento Final</label>
-					<my-date-picker name="dataNascimentoFim"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filter.pessoa.dataNascimento.fim"
-						placeholder="Data de Nascimento Final"> </my-date-picker>
+					<app-date-picker [nome]="'dataNascimentoFinal'" 
+									[customDate]="filter.pessoa.dataNascimento.fimCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Nascimento Final'"									
+									></app-date-picker>
 				</div>
 
 				<div class="input-field col s4">
@@ -258,7 +260,7 @@
 	[show]="openModalDelete"></app-confirm-delete>
 
 <!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
+<div id="modal" class="modal" materialize="modal" 
 	[materializeParams]="modalParams" [materializeActions]="modalImport">
 
 	<form #form="ngForm" class="col s12 form-import" *ngIf="canImport">

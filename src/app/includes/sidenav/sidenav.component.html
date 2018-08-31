@@ -75,6 +75,7 @@
 			<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
 			<a [routerLink]="['/intervencao']" *ngIf="checkPermissao('INTERVENCAO_LISTAR')">Intervenção</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
+			<a [routerLink]="['/motivo-recusa-atestado']" *ngIf="checkPermissao('MOTIVO-RECUSA-ATESTADO_LISTAR')">Motivo de Recusa do Atestado</a>
 			<a [routerLink]="['/natureza-lesao']" *ngIf="checkPermissao('NATUREZA-LESAO_LISTAR')">Natureza da Lesão</a>
 			<a [routerLink]="['/parte-corpo-atingida']" *ngIf="checkPermissao('PARTE-CORPO-ATINGIDA_LISTAR')">Parte do Corpo Atingida</a>
 			<a [routerLink]="['/perfil']" *ngIf="checkPermissao('PERFIL_LISTAR')">Perfil</a>

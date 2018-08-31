@@ -100,9 +100,9 @@
 														</div>
 														<div class="col s6">
 															<label for="dataAcao">Data</label>
-															<my-date-picker name="dataAcoes{{acao.id}}" disabled 
-																[options]="myDatePickerOptions" placeholder="Data"
-																[(ngModel)]="acao.tarefa.fimCustomTime.appDate"> </my-date-picker>
+															<input name="dataAcoes{{acao.id}}"
+																		   [(ngModel)]="acao.tarefa.fimCustomDate.appDate" disabled
+																		   type="text" />
 														</div>
 													</div>
 													<div class="row">
@@ -202,61 +202,6 @@
 		<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 			[msg]="msgError"></app-mensagem-form>
 	</div>
-</div>
-
-<!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modelParams" [materializeActions]="modalAcao">
-
-	<div class="row row-modal-acao">
-
-		<div class="row">
-			<div class="input-field col s12">
-				<fieldset>
-					<legend>Tipo de Contato</legend>
-					<select name="tipoContato" class="browser-default"
-						[(ngModel)]="acao.tipoContato">
-						<option disabled selected value="">Selecione um tipo de contato</option>
-						<option *ngFor="let tipoContato of tipoContatoAcoes"
-							value="{{tipoContato}}">{{tipoContato}}</option>
-					</select>
-				</fieldset>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="input-field col s6">
-				<fieldset>
-					<legend>Tipo</legend>
-					<select name="tipo" class="browser-default" [(ngModel)]="acao.tipo">
-						<option disabled selected value="">Selecione um tipo</option>
-						<option *ngFor="let tipo of tipoAcoes" value="{{tipo}}">{{tipo}}</option>
-					</select>
-				</fieldset>
-			</div>
-
-			<div class="input-field col s6">
-				<label for="dataTarefaAcao">Data</label>
-				<my-date-picker name="dataTarefaAcao"
-					[options]="myDatePickerOptions" [(ngModel)]="acao.tarefa.fimCustomTime.appDate"
-					placeholder="Data"> </my-date-picker>
-			</div>
-		</div>
-
-		<div class="input-field col s12">
-			<label for="acao.detalhe">Detalhe</label>
-			<textarea class="materialize-textarea" [(ngModel)]="acao.detalhe"
-				name="acao.detalhe"></textarea>
-		</div>
-
-	</div>
-
-	<div class="modal-footer">
-		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
-		<a class="modal-action modal-close waves-effect waves-green btn-flat"
-			(click)="confirmAddAcao()">Confirmar</a>
-	</div>
-
 </div>
 
 <div materialize [materializeParams]="toastParams"

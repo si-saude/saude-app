@@ -20,6 +20,7 @@ import { AtendimentoBuilder } from './../../atendimento/atendimento.builder';
 import { LocalizacaoBuilder } from './../../localizacao/localizacao.builder';
 import { AtendimentoService } from './../../atendimento/atendimento.service';
 import { Localizacao } from './../../../model/localizacao';
+import { DateUtil } from '../../../generics/utils/date.util';
 import { ModalFilaAtendimentoOcupacionalComponent } from './../../../includes/modal-fila-atendimento-ocupacional/modal-fila-atendimento-ocupacional.component';
 import { ModalTarefaComponent } from './../../../includes/modal-tarefa/modal-tarefa.component';
 import { ModalFilaEsperaOcupacionalComponent } from './../../../includes/modal-fila-espera-ocupacional/modal-fila-espera-ocupacional.component';
@@ -35,8 +36,7 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
     private localizacoes: Array<Localizacao>;
     private usuario: Usuario;
     private profissional: Profissional;
-    private diaHoraTarefaInicioTimeActions;
-
+    timeActions ;
     @ViewChild( ModalFilaAtendimentoOcupacionalComponent ) modalFilaAtendimento: ModalFilaAtendimentoOcupacionalComponent;
     @ViewChild( ModalFilaEsperaOcupacionalComponent ) modalFilaEspera: ModalFilaEsperaOcupacionalComponent;
     @ViewChild( ModalTarefaComponent ) modalTarefa: ModalTarefaComponent;
@@ -51,7 +51,7 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
-        this.diaHoraTarefaInicioTimeActions = new EventEmitter<string|MaterializeAction>();
+        this.timeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {
@@ -96,16 +96,27 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
 
     }
 
-    save() {
-        this.showPreload = true;
-        this.canDeactivate = true;
-        this.atendimentoService.saveAtendimentoAvulso( new AtendimentoBuilder().clone( this.atendimento ) )
-            .then( res => {
-                this.processReturn( true, res );
-            } )
-            .catch( error => {
-                this.processReturn( false, error );
-            } )
+    save() {        
+//        this.dateUtil = new DateUtil();
+        
+        console.log(new AtendimentoBuilder().clone( this.atendimento ).getTarefa());
+//        console.log(this.atendimento.getTarefa().getFimCustomTime().getAppTime());
+//        let horaMinutos: Date =  this.dateUtil.cloneDate(this.atendimento.getTarefa().getFim());
+//        console.log(horaMinutos);
+    
+//        let test : Date = this.dateUtil.cloneDate(this.atendimento.getTarefa().getInicio());
+//        this.atendimento.getTarefa().setFim(test);
+//        this.atendimento.getTarefa().getFim().setHours(horaMinutos.getHours(), horaMinutos.getSeconds());
+        
+//        this.showPreload = true;
+//        this.canDeactivate = true;
+//        this.atendimentoService.saveAtendimentoAvulso( new AtendimentoBuilder().clone( this.atendimento ) )
+//            .then( res => {
+//                this.processReturn( true, res );
+//            } )
+//            .catch( error => {
+//                this.processReturn( false, error );
+//            } )
     }
 
 }

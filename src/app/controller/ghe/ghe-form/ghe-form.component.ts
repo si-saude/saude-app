@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-
-import { MyDatePickerModule } from 'mydatepicker'; 
+import { MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
 import { Ghe } from './../../../model/ghe';

@@ -47,7 +47,7 @@
 </div>
 
 <!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
+<div id="modal" class="modal" materialize="modal" (keypress)="enterFilter($event)"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 
 	<div class="row">
@@ -80,17 +80,17 @@
 			<div class="input-field col s12">
 				<div class="input-field col s4">
 					<label for="dataCriacaoInicial">Data de Criação Inicial</label>
-					<my-date-picker name="dataCriacaoInicio"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filtro.dataCriacao.inicio"
-						placeholder="Data de Criação Inicial"> </my-date-picker>
+					<app-date-picker [nome]="'dataCriacaoInicio'" 
+									[customDate]="filtro.dataCriacao.inicioCustomDate" 									
+									[legenda]="'Data de Criação Inicial'"									
+									></app-date-picker>
 				</div>
 				<div class="input-field col s4">
 					<label for="dataCriacaoFinal">Data de Criação Final</label>
-					<my-date-picker name="dataCriacaoFinal"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filtro.dataCriacao.fim"
-						placeholder="Data de Criação Final"> </my-date-picker>
+					<app-date-picker [nome]="'dataCriacaoFinal'" 
+									[customDate]="filtro.dataCriacao.fimCustomDate" 									
+									[legenda]="'Data de Criação Final'"									
+									></app-date-picker>
 				</div>
 
 				<div class="input-field col s4">
@@ -112,17 +112,17 @@
 				<div class="input-field col s4">
 					<label for="dataDesativacaoInicial">Data de Desativação
 						Inicial</label>
-					<my-date-picker name="dataDesativacaoInicio"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filtro.dataDesativacao.inicio"
-						placeholder="Data de Desativação Inicial"> </my-date-picker>
+						<app-date-picker [nome]="'dataDesativacaoInicio'" 
+									[customDate]="filtro.dataDesativacao.inicioCustomDate" 									
+									[legenda]="'Data de Desativação Inicial'"									
+									></app-date-picker>
 				</div>
 				<div class="input-field col s4">
 					<label for="dataCriacaoFinal">Data de Desativação Final</label>
-					<my-date-picker name="dataDesativacaoFinal"
-						[options]="myDatePickerOptions"
-						[(ngModel)]="filtro.dataDesativacao.fim"
-						placeholder="Data de Desativação Final"> </my-date-picker>
+					<app-date-picker [nome]="'dataDesativacaoFinal'" 
+									[customDate]="filtro.dataDesativacao.fimCustomDate" 									
+									[legenda]="'Data de Desativação Final'"									
+									></app-date-picker>
 				</div>
 
 				<div class="input-field col s4">

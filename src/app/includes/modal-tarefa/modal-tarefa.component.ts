@@ -14,6 +14,7 @@ import { DateFilter } from './../../generics/date.filter';
 import { IMyDpOptions } from 'mydatepicker';
 import { DateUtil } from './../../generics/utils/date.util';
 import { TarefaService } from './../../controller/tarefa/tarefa.service';
+import { GlobalVariable } from './../../../../src/app/global';
 
 @Component( {
     selector: 'app-modal-tarefa',
@@ -37,7 +38,6 @@ export class ModalTarefaComponent {
     protected myDatePickerOptions: IMyDpOptions;
     protected dateUtil: DateUtil;
 
-
     constructor( router: Router,
         private tarefaService: TarefaService ) {
         this.modalTarefa = new EventEmitter<string | MaterializeAction>();
@@ -51,9 +51,6 @@ export class ModalTarefaComponent {
         this.filter.setEquipe( new EquipeFilter() );
         this.filter.getInicio().setTypeFilter( "ENTRE" );
         this.filter.setPageSize( Math.pow( 2, 31 ) - 1 );
-        this.myDatePickerOptions = {
-            dateFormat: 'dd/mm/yyyy'
-        };
         this.dateUtil = new DateUtil();
     }
 
@@ -66,7 +63,7 @@ export class ModalTarefaComponent {
     }
 
     selectTarefa( tarefa: Tarefa ) {
-        this.model.setTarefa( tarefa );
+        this.model.setTarefa( new TarefaBuilder().clone(tarefa) );
         this.modalTarefa.emit( { action: "modal", params: ['close'] } );
     }
 
@@ -85,10 +82,6 @@ export class ModalTarefaComponent {
             this.filter.getCliente().setId( this.empregadoId );
             this.filter.getEquipe().setId( this.equipeId );
             this.filter.setStatus("ABERTA");
-            
-
-            this.filter.getInicio().setInicio( this.dateUtil.parseDatePickerToDate( this.filter.getInicio().getInicio() ) );
-            this.filter.getInicio().setFim( this.dateUtil.parseDatePickerToDate( this.filter.getInicio().getFim() ) );
             this.tarefaService.list( this.filter )
                 .then( res => {
                     this.arrayTarefa = new TarefaBuilder().cloneList( res.json().list );

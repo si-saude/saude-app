@@ -113,12 +113,11 @@
 								</div>
 
 								<div class="input-field col s3">
-									<label for="dataInspecaoAcidente">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoAcidenteInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="instalacao.indicadorRiscoAcidenteInstalacoes[i].dataInspecaoCustomDate.appDate"
-										placeholder="Data de Inspeção"> </my-date-picker>
+									<label for="dataInspecaoAcidente">Data de Inspeção</label>	
+									<app-date-picker [nome]="'instalacao.indicadorRiscoAcidenteInstalacoes['+i+'].dataInspecao'" 
+											[customDate]="instalacao.indicadorRiscoAcidenteInstalacoes[i].dataInspecaoCustomDate" 									
+											[legenda]="'Data de Inspeção'"									
+											></app-date-picker>
 								</div>
 
 								<div class="input-field col s3">
@@ -194,11 +193,10 @@
 
 								<div class="input-field col s3">
 									<label for="dataInspecaoAmbiental">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoAmbientalInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="instalacao.indicadorRiscoAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate"
-										placeholder="Data de Inspeção"> </my-date-picker>
+									<app-date-picker [nome]="'instalacao.indicadorRiscoAmbientalInstalacoes['+i+'].dataInspecao'" 
+											[customDate]="instalacao.indicadorRiscoAmbientalInstalacoes[i].dataInspecaoCustomDate" 									
+											[legenda]="'Data de Inspeção'"									
+											></app-date-picker>
 								</div>
 
 								<div class="input-field col s3">
@@ -275,11 +273,10 @@
 
 								<div class="input-field col s3">
 									<label for="dataInspecaoErgonomico">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoErgonomicoInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].dataInspecaoCustomDate.appDate"
-										placeholder="Data de Inspeção"> </my-date-picker>
+									<app-date-picker [nome]="'instalacao.indicadorRiscoErgonomicoInstalacoes['+i+'].dataInspecao'" 
+											[customDate]="instalacao.indicadorRiscoErgonomicoInstalacoes[i].dataInspecaoCustomDate" 									
+											[legenda]="'Data de Inspeção'"									
+											></app-date-picker>
 								</div>
 
 								<div class="input-field col s3">
@@ -355,11 +352,10 @@
 
 								<div class="input-field col s3">
 									<label for="dataInspecaoSanitario">Data de Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoSanitarioInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="instalacao.indicadorRiscoSanitarioInstalacoes[i].dataInspecaoCustomDate.appDate"
-										placeholder="Data de Inspeção"> </my-date-picker>
+									<app-date-picker [nome]="'instalacao.indicadorRiscoSanitarioInstalacoes['+i+'].dataInspecao'" 
+										[customDate]="instalacao.indicadorRiscoSanitarioInstalacoes[i].dataInspecaoCustomDate" 									
+										[legenda]="'Data de Inspeção'"									
+										></app-date-picker>
 								</div>
 
 								<div class="input-field col s3">
@@ -434,12 +430,11 @@
 
 								<div class="input-field col s3">
 									<label for="dataInspecaoSaudeAmbiental">Data de
-										Inspeção</label>
-									<my-date-picker
-										name="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[{{i}}].dataInspecao"
-										[options]="myDatePickerOptions"
-										[(ngModel)]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].dataInspecaoCustomDate.appDate"
-										placeholder="Data de Inspeção"> </my-date-picker>
+										Inspeção</label>						
+										<app-date-picker [nome]="'instalacao.indicadorRiscoSaudeAmbientalInstalacoes['+i+'].dataInspecao'" 
+											[customDate]="instalacao.indicadorRiscoSaudeAmbientalInstalacoes[i].dataInspecaoCustomDate" 									
+											[legenda]="'Data de Inspeção'"									
+											></app-date-picker>							
 								</div>
 
 								<div class="input-field col s3">

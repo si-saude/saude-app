@@ -59,10 +59,9 @@
 
 					<div class="input-field col s4">
 						<label for="dataNascimento">Data de Nascimento</label>
-						<my-date-picker name="dataNascimento"
-							disabled [options]="myDatePickerOptions"
-							[(ngModel)]="cat.dataNascimentoCustomDate.appDate"
-							placeholder="Data de Nascimento"></my-date-picker>
+						<input name="dataNascimento"
+			                   [(ngModel)]="cat.dataNascimentoCustomDate.appDate" disabled
+			                   type="text" />
 					</div>
 				</div>
 
@@ -132,24 +131,21 @@
 				
 				<div class="row">
 					<div class="input-field col s4">
-						<my-date-picker name="inicioBeneficio" disabled
-							[options]="myDatePickerOptions" 
-							[(ngModel)]="cat.inicioBeneficioCustomDate.appDate"
-							placeholder="Início do Benefício"></my-date-picker>
+						<input name="inicioBeneficio"
+			                   [(ngModel)]="cat.inicioBeneficioCustomDate.appDate" disabled
+			                   type="text" />
 					</div>
 					
 					<div class="input-field col s4">
-						<my-date-picker name="ultimoDiaTrabalho" disabled
-							[options]="myDatePickerOptions"
-							[(ngModel)]="cat.ultimoDiaTrabalhoCustomDate.appDate"
-							placeholder="Último Dia de Trabalho"></my-date-picker>
+						<input name="ultimoDiaTrabalho"
+			                   [(ngModel)]="cat.ultimoDiaTrabalhoCustomDate.appDate" disabled
+			                   type="text" />
 					</div>
 					
 					<div class="input-field col s4">
-						<my-date-picker name="retornoTrabalho" disabled
-							[options]="myDatePickerOptions"
-							[(ngModel)]="cat.retornoTrabalhoCustomDate.appDate"
-							placeholder="Retorno ao Trabalho"></my-date-picker>
+						<input name="retornoTrabalho"
+			                   [(ngModel)]="cat.retornoTrabalhoCustomDate.appDate" disabled
+			                   type="text" />
 					</div>
 				</div>
 				
@@ -212,19 +208,15 @@
 						<label for="diaHoraAcidente">Dia/Hora do Acidente</label>
 						<div>
 							<div class="input-field col s6">
-								<my-date-picker name="diaHoraAcidente"
-									[options]="myDatePickerOptions" disabled
-									[(ngModel)]="cat.diaHoraAcidenteCustomTime.appDate"
-									placeholder="Dia/Hora do Acidente"></my-date-picker>
+								<input name="diaHoraAcidente"
+			                   [(ngModel)]="cat.diaHoraAcidenteCustomDate.appDate" disabled
+			                   type="text" />
 							</div>
 							<div class="input-field col s6">
-					            <input id="diaHoraAcidente" name="diaHoraAcidente" 
-					            	[(ngModel)]="cat.diaHoraAcidenteCustomTime.appTime"
-				                    materialize="pickatime" disabled 
-				                    [materializeActions]="diaHoraAcidenteTimeActions"
-				                    [materializeParams]="[{twelvehour: false}]"
-				                    placeholder="00:00" class="validate" type="text">
-				            </div>
+							<input name="diaHoraAcidente"
+			                   [(ngModel)]="cat.diaHoraAcidenteCustomDate.appTime" disabled
+			                   type="text" />
+			                </div>
 			            </div>
 					</div>
 
@@ -233,9 +225,9 @@
 				<div class="row">
 					<div class="input-field col s3">
 						<label for="dataEmissaoCat">Data de Emissão da CAT</label>
-						<my-date-picker name="dataEmissaoCat" [options]="myDatePickerOptions" disabled
-							[(ngModel)]="cat.dataEmissaoCatCustomDate.appDate"
-							placeholder="Data de Emissao da Cat"></my-date-picker>
+						<input name="dataEmissaoCat"
+			                   [(ngModel)]="cat.dataEmissaoCatCustomDate.appDate" disabled
+			                   type="text" />
 					</div>
 				
 					<div class="input-field col s6">
@@ -254,12 +246,10 @@
 				<div class="row">
 					<div class="input-field col s3">
 						<label for="dataAvaliacaoMedica">Data da Avaliação Médica</label>
-						<my-date-picker name="dataAvaliacaoMedica" disabled
-							[options]="myDatePickerOptions"
-							[(ngModel)]="cat.dataAvaliacaoMedicaCustomDate.appDate"
-							placeholder="Data da Avaliacao Médica"></my-date-picker>
+						<input name="dataAvaliacaoMedica"
+			                   [(ngModel)]="cat.dataAvaliacaoMedicaCustomDate.appDate" disabled
+			                   type="text" />
 					</div>
-
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="registroSD2000" disabled
 							[(ngModel)]="cat.registroSd2000" name="cat.registroSD2000">
@@ -329,10 +319,9 @@
 				<div class="row">
 					<div class="input-field col s4">
 						<label for="dataComunicacaoSindicato">Data de Comunicação do Sindicato</label>
-						<my-date-picker name="dataComunicacaoSindicato" disabled
-							[options]="myDatePickerOptions"
-							[(ngModel)]="cat.dataComunicacaoSindicatoCustomDate.appDate"
-							placeholder="Data de Comunicação do Sindicato"></my-date-picker>
+						<input name="dataComunicacaoSindicato"
+			                   [(ngModel)]="cat.dataComunicacaoSindicatoCustomDate.appDate" disabled
+			                   type="text" />
 					</div>
 					<div class="input-field col s3">
 						<label for="remuneracao">Remuneração</label> 
