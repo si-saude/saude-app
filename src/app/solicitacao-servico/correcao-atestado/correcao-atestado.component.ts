@@ -40,13 +40,18 @@ export class CorrecaoAtestadoComponent extends GenericAtestadoComponent {
             localStorage.removeItem( "tarefa" );
         }
     }
-   
+    
     verifyAtestado() {
         if ( this.containerAtestado.getAtestado().getVersion() >= 0 ) {
-            this.containerAtestado.getAtestado().setCiente(false);
             return {'display': 'inline'};
         }
         return {'display': 'none'};
+    }
+    
+    setAtestado() {
+        if ( this.containerAtestado.getAtestado().getVersion() >= 0 ) {
+            this.containerAtestado.getAtestado().setCiente(false);
+        }
     }
 }
 

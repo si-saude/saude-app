@@ -21,7 +21,7 @@
 					<input type="text" materialize="autocomplete" autocomplete="off"
 						name="atestado"
 						[(ngModel)]="containerAtestado.atestado.id"
-						(blur)="atestadoIdAutocomplete.getAutocomplete().getObj($event,containerAtestado,'setAtestado','getId');"
+						(blur)="atestadoIdAutocomplete.getAutocomplete().getObj($event,containerAtestado,'setAtestado','getId'); setAtestado()"
 						(ngModelChange)="atestadoIdAutocomplete.getAutocomplete().getList(containerAtestado.atestado, 'getId');"
 						(keydown.enter)="atestadoIdAutocomplete.getAutocomplete().pressEnter($event,containerAtestado,'setAtestado','getId');"
 						[materializeParams]="atestadoIdAutocomplete.getAutocomplete().getObjAutoComplete()">
@@ -45,7 +45,7 @@
 			</div>
 			
 			<div class="col s6 btn-avancar">
-				<button type="submit"
+				<button type="submit" [disabled]="!containerAtestado.atestado.ciente" 
 					class="btn btn-primary btn-salvar right">Avançar</button>
 			</div>
 			
