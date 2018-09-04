@@ -1,55 +1,35 @@
-import { Component, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ViewChild } from '@angular/core';
 
-import { MaterializeAction } from "angular2-materialize";
+import { Atestado } from './../model/atestado';
+import { TextUtil } from './utils/text.util';
+import { HomologacaoAtestadoComponent } from './../includes/homologacao-atestado/homologacao-atestado.component';
+import { AtestadoBuilder } from './../controller/atestado/atestado.builder';
+import { SolicitacaoServicoService } from './../solicitacao-servico/solicitacao-servico.service';
+import { Util } from './utils/util';
 
-import { Tarefa } from './../../model/tarefa';
-import { SolicitacaoServicoService } from './../solicitacao-servico.service';
-import { Atestado } from './../../model/atestado';
-import { AtestadoBuilder } from './../../controller/atestado/atestado.builder';
-import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
-import { ModalHomologacaoAtestadoComponent } from './../../includes/modal-homologacao-atestado/modal-homologacao-atestado.component';
-import { TextUtil } from './../../generics/utils/text.util';
-import { GlobalVariable } from './../../../../src/app/global';
+export abstract class GenericAtestadoComponent {
+    @ViewChild( HomologacaoAtestadoComponent ) homologacaoAtestado: HomologacaoAtestadoComponent;
+    protected atestado: Atestado;
+    protected textUtil: TextUtil;
+    protected router: Router;
 
-@Component( {
-    selector: 'app-homologacao-atestado',
-    templateUrl: './homologacao-atestado.html',
-    styleUrls: ['./homologacao-atestado.css']
-} )
-export class HomologacaoAtestadoComponent {
-    @ViewChild( ModalHomologacaoAtestadoComponent ) modalHomologacaoAtestado: ModalHomologacaoAtestadoComponent;
-    private atestado: Atestado;
-    private textUtil: TextUtil;
+    protected showConfirmSave: boolean;
+    protected msgConfirmSave: string;
+    protected goTo: string;
 
-    private showConfirmSave: boolean;
-    private msgConfirmSave: string;
-    private goTo: string;
-
-    constructor( private route: ActivatedRoute, private router: Router,
-        private solicitacaoServicoService: SolicitacaoServicoService ) {
+    constructor( router: Router, protected solicitacaoServicoService: SolicitacaoServicoService ) {
+        this.router = router;
         this.textUtil = new TextUtil();
         this.atestado = new AtestadoBuilder().initialize(new Atestado());
     }
-
-    ngOnInit() {
-        if ( localStorage.getItem( "tarefa" ) == undefined ) {
-            this.router.navigate( ["/solicitacao-servico/selecao-servico"] );
-        } else {
-            let tarefa = new TarefaBuilder().clone( JSON.parse( localStorage.getItem( "tarefa" ) ) );
-            this.atestado.setTarefa( tarefa );
-            this.atestado.setEmpregado( tarefa.getCliente() );
-            this.modalHomologacaoAtestado.configure( this.atestado );
-            localStorage.removeItem( "tarefa" );
-        }
-    }
-
+    
     next() {
-        if ( this.atestado.getInicio() == undefined ) {
+        if ( !Util.isNotNull(this.homologacaoAtestado.atestado.getInicioCustomDate().getAppDate() ) ) {
             this.textUtil.showTextToast( "Por favor, insira uma data inicial.", 4000 );
             return;
         }
-        let canSave = this.modalHomologacaoAtestado.canSave();
+        let canSave = this.homologacaoAtestado.canSave();
 
         if ( !canSave[0] ) {
             this.textUtil.showTextToast( canSave[1], 4000 );
@@ -61,19 +41,19 @@ export class HomologacaoAtestadoComponent {
         let anexo = undefined;
         let anexoRelatorioMedico = undefined;
 
-        if ( this.modalHomologacaoAtestado.inputElAnexo.nativeElement.files.length > 0 ) {
-            anexo = this.modalHomologacaoAtestado.inputElAnexo.nativeElement.files[0];
+        if ( this.homologacaoAtestado.inputElAnexo.nativeElement.files.length > 0 ) {
+            anexo = this.homologacaoAtestado.inputElAnexo.nativeElement.files[0];
             total++;
         }
 
-        if ( this.modalHomologacaoAtestado.inputElAnexoRelatorioMedico.nativeElement.files.length > 0 ) {
-            anexoRelatorioMedico = this.modalHomologacaoAtestado.inputElAnexoRelatorioMedico.nativeElement.files[0];
+        if ( this.homologacaoAtestado.inputElAnexoRelatorioMedico.nativeElement.files.length > 0 ) {
+            anexoRelatorioMedico = this.homologacaoAtestado.inputElAnexoRelatorioMedico.nativeElement.files[0];
             total++;
         }
 
         if ( total > 0 ) {
             let component = this;
-            let atestado: Atestado = new AtestadoBuilder().clone( component.atestado );
+            let atestado: Atestado = new AtestadoBuilder().clone( this.homologacaoAtestado.atestado );
 
             if ( anexo != undefined ) {
                 if ( anexo["type"] != "application/pdf" ) {
@@ -112,7 +92,7 @@ export class HomologacaoAtestadoComponent {
             }
 
         } else {
-            this.salvar( new AtestadoBuilder().clone( this.atestado ) );
+            this.salvar( new AtestadoBuilder().clone( this.homologacaoAtestado.atestado ) );
         }
 
     }

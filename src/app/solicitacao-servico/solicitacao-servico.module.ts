@@ -11,11 +11,12 @@ import { AutenticacaoUsuarioComponent } from './autenticacao-usuario/autenticaca
 import { MudancaFuncaoComponent } from './mudanca-funcao/mudanca-funcao.component';
 import { AtendimentoOcupacionalComponent } from './atendimento-ocupacional/atendimento-ocupacional.component';
 import { SolicitacaoCentralIntegraComponent } from './solicitacao-central-integra/solicitacao-central-integra.component';
-import { HomologacaoAtestadoComponent } from './homologacao-atestado/homologacao-atestado.component';
+import { ServicoHomologacaoAtestadoComponent } from './homologacao-atestado/servico-homologacao-atestado.component';
 import { ExamePericialComponent } from './exame-pericial/exame-pericial.component';
+import { CorrecaoAtestadoComponent } from './correcao-atestado/correcao-atestado.component';
 import { SolicitacaoServicoService } from './solicitacao-servico.service';
 import { SolicitacaoServicoRoutingModule } from './solicitacao-servico.routing.module';
-import { ModalHomologacaoAtestadoModule } from './../includes/modal-homologacao-atestado/modal-homologacao-atestado.module';
+import { HomologacaoAtestadoModule } from './../includes/homologacao-atestado/homologacao-atestado.module';
 import { SharedModule } from './../controller/shared.module';
 
 @NgModule({
@@ -24,15 +25,16 @@ import { SharedModule } from './../controller/shared.module';
        AutenticacaoUsuarioComponent,
        AtendimentoOcupacionalComponent,
        SolicitacaoCentralIntegraComponent,
-       HomologacaoAtestadoComponent,
+       ServicoHomologacaoAtestadoComponent,
        MudancaFuncaoComponent,
-       ExamePericialComponent
+       ExamePericialComponent,
+       CorrecaoAtestadoComponent
      ],
      imports: [
         SolicitacaoServicoRoutingModule,
         MyDatePickerModule,
         Ng2InputMaskModule,
-        ModalHomologacaoAtestadoModule,
+        HomologacaoAtestadoModule,
         SharedModule
      ],
      providers: [

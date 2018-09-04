@@ -4,6 +4,7 @@ import { Cat } from './cat';
 import { HomologacaoAtestado } from './homologacao-atestado';
 import { Regime } from './regime';
 import { Empregado } from './empregado';
+import { MotivoRecusaAtestado } from './motivo-recusa-atestado';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Atestado {
@@ -46,6 +47,7 @@ export class Atestado {
     private dataFimFerias: Date;
     private ciente: boolean;
     private empregado: Empregado;
+    private motivoRecusa: MotivoRecusaAtestado;
 
     private dataInicioEscalaTrabalhoCustomDate: CustomDate = new CustomDate(this.dataInicioEscalaTrabalho);
     private dataFimEscalaTrabalhoCustomDate: CustomDate = new CustomDate(this.dataFimEscalaTrabalho);
@@ -478,5 +480,13 @@ export class Atestado {
     
     getLimiteLancar() {
         return this.limiteLancar;
+    }
+    
+    getMotivoRecusa() {
+        return this.motivoRecusa;
+    }
+
+    setMotivoRecusa(motivoRecusa) {
+        this.motivoRecusa = motivoRecusa;
     }
 }

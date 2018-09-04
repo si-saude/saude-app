@@ -63,4 +63,11 @@ export class AtestadoService extends GenericService {
         return this.profissionalService;
     }
     
+    getListRegime(aF) {
+        let urlListRegime = GlobalVariable.BASE_API_URL + "/atestado/list-regime";
+        return this.http
+            .post( urlListRegime, aF, { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

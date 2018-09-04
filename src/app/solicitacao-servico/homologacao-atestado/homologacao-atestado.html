@@ -8,8 +8,14 @@
 
 <div class="row form-container">
 	<form class="col s12" (ngSubmit)="next()">
+	
+	
+		<div class="row cabecalho">
+			<h6>Serviço: {{atestado.tarefa.servico.nome}}</h6>
+			<h6>Cliente: {{atestado.empregado.pessoa.nome}}</h6>
+		</div>
 
-		<app-modal-homologacao-atestado></app-modal-homologacao-atestado>
+		<app-homologacao-atestado [atestado]="atestado"></app-homologacao-atestado>
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
@@ -23,7 +29,7 @@
 			</div>
 			
 			<div class="col s6 btn-avancar">
-				<button type="submit" [disabled]="!modalHomologacaoAtestado.getCiente()" 
+				<button type="submit" [disabled]="!homologacaoAtestado.getCiente()" 
 					class="btn btn-primary btn-salvar right">Avançar</button>
 			</div>
 			

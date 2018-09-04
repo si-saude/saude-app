@@ -1,0 +1,191 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="content-dados">
+
+	<fieldset>
+		<legend>Dados da Solicitação</legend>
+
+		<div class="row">
+			<div class="input-field col s4">
+				<label for="numero-dias">Número de dias do Atestado</label> <input
+					id="numero-dias" type="number" name="numero-dias" min="1"
+					[(ngModel)]="atestado.numeroDias">
+			</div>
+
+			<div class="input-field col s4">
+				<label for="dataInicio">Data de Início do Atestado</label>				
+				<input name="inicio"
+	                   materialize="pickadate" 
+	                   [ngModel]="atestado.inicioCustomDate.appDate" placeholder="Início"
+					   (ngModelChange)="atestado.inicioCustomDate.appDate=$event; verifyPrazoAtestado();"
+	                   [materializeActions]="dateActions"
+	                   [materializeParams]="params"
+	                   type="text" />
+				
+			</div>
+			<div class="input-field col s4 checkbox">
+				<input type="checkbox"
+					id="atestado.impossibilidadeLocomocao"
+					[(ngModel)]="atestado.impossibilidadeLocomocao"
+					name="atestado.impossibilidadeLocomocao"> <label
+					for="atestado.impossibilidadeLocomocao">Impossibilidade de
+					Locomoção</label>
+			</div>
+		</div>
+		
+		<div class="card-panel orange msnImpossibilidade" *ngIf="atestado.impossibilidadeLocomocao">
+			<span class="white-text">Relatório comprobatório de impossibilidade de locomoção deve estar entre os anexos.</span>
+		</div>
+		
+		<div class="card-panel orange msnData" hidden>
+			<span class="white-text">O atestado se encontra em atraso (mais de 3 dias).</span>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s4">
+				<label for="clinica">Clínica do Atestado</label> <input required
+					id="clinica" type="text" name="clinica" maxlength="64"
+					[(ngModel)]="atestado.clinica">
+			</div>
+			<div class="input-field col s4">
+				<label for="contatoMedico">Contato do Médico</label> <input required
+					id="contatoMedico" type="text" name="contatoMedico" maxlength="64"
+					[(ngModel)]="atestado.contatoMedico">
+			</div>
+			<div class="input-field col s4">
+				<label for="localAtendimento">Local do Atendimento</label> <input required
+					id="localAtendimento" type="text" name="localAtendimento" maxlength="64"
+					[(ngModel)]="atestado.localAtendimento">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s4">
+				<label for="telefoneExterno">Telefone Externo</label> 
+				<input required 
+					id="telefoneExterno" type="text" name="telefoneExterno" maxlength="15" 
+					[ngModel]="atestado.telefoneExterno | cellPhone : 'telefoneExterno'"
+					(ngModelChange)="atestado.telefoneExterno=$event"> 
+			</div>
+			<div class="input-field col s4">
+				<label for="emailExterno">Email Externo</label> <input
+					id="emailExterno" type="text" name="emailExterno" maxlength="64"
+					[(ngModel)]="atestado.emailExterno">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s4 checkbox">
+				<input type="checkbox" id="atestado.aposentadoInss"
+					[(ngModel)]="atestado.aposentadoInss"
+					name="atestado.aposentadoInss"> <label
+					for="atestado.aposentadoInss">Aposentado INSS</label>
+			</div>
+			<div class="input-field col s3">
+				<label for="dataInicioEscalaTrabalho" style="font-size: 13px;">Data de Início da Escala de Trabalho</label>
+				<app-date-picker [nome]="'inicioEscalaTrabalho'" 
+									[customDate]="atestado.dataInicioEscalaTrabalhoCustomDate" 									
+									[desabilitar]="verifyEscalaTrabalho()"									
+									[legenda]="'Início'"	
+									></app-date-picker>
+			</div>
+			<div class="input-field col s3">
+				<label for="dataFimEscalaTrabalho" style="font-size: 13px;">Data de Fim da Escala de Trabalho</label>
+				<app-date-picker [nome]="'fimEscalaTrabalho'" 
+									[customDate]="atestado.dataFimEscalaTrabalhoCustomDate" 									
+									[desabilitar]="verifyEscalaTrabalho()"									
+									[legenda]="'Fim'"	
+									></app-date-picker>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s4 checkbox">
+				<input type="checkbox" id="atestado.possuiFeriasAgendadas"
+					[(ngModel)]="atestado.possuiFeriasAgendadas"
+					name="atestado.possuiFeriasAgendadas"> <label
+					for="atestado.possuiFeriasAgendadas">Possui Férias Agendadas?</label>
+			</div>
+			<div class="input-field col s3">
+				<label for="dataInicioFerias">Data de Início das Férias</label>
+				<app-date-picker [nome]="'dataInicioFerias'" 
+									[customDate]="atestado.dataInicioFeriasCustomDate" 									
+									[desabilitar]="verifyFerias()"									
+									[legenda]="'Início'"	
+									></app-date-picker>
+			</div>
+			<div class="input-field col s3">
+				<label for="dataFimFerias">Data de Fim das Férias</label>
+				<app-date-picker [nome]="'dataFimFerias'" 
+									[customDate]="atestado.dataFimFeriasCustomDate" 									
+									[desabilitar]="verifyFerias()"									
+									[legenda]="'Fim'"	
+									></app-date-picker>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s4">
+				<fieldset>
+					<legend> Regime 
+						<a class="btn-floating waves-effect waves-light green btn-add-fieldset" (click)="getRegimes()"> 
+							<i class="material-icons center-icon">cached</i>
+						</a>
+					</legend>
+					<select name="regime" class="browser-default" [(ngModel)]="atestado.regime.id">
+						<option selected value="0">Nenhum regime</option>
+						<option *ngFor="let regime of regimes" value="{{regime.id}}">{{regime.nome}}</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
+		
+		<div class="row col s12">
+			<div class="input-field col s12">
+				<div class="row file-import">
+					<div class="file-field input-field col s12">
+						<div class="btn">
+							<span>Atestado</span> <input id="anexo" type="file" name="anexo"
+								required accept=".pdf" #anexo>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row col s12">
+			<div class="input-field col s12">
+				<div class="row file-import">
+					<div class="file-field input-field col s12">
+						<div class="btn">
+							<span>Relatório Médico</span> <input id="anexoRelatorioMedico" type="file" name="anexoRelatorioMedico"
+								[required]="atestado.impossibilidadeLocomocao" accept=".pdf" #anexoRelatorioMedico>
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="card-panel orange col s10">
+				<p style="color: white">Declaro que as informações prestadas são verídicas e que tenho conhecimento de que, 
+				caso necessário, posso ser convocado para homologação presencial no Serviço de Saúde, 
+				estarei disponível através dos contatos disponibilizados, e enviarei os documentos originais 
+				para a conclusão da homologação.</p>
+			</div>
+			<div class="input-field col s2">
+				<input type="checkbox" id="ciente" required 
+					[(ngModel)]="atestado.ciente" name="ciente"> 
+				<label for="ciente">Ciente</label>
+			</div>
+		</div>
+	</fieldset>
+</div>
