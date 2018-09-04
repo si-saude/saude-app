@@ -304,6 +304,8 @@ export class Atestado {
     setDataInicioEscalaTrabalho(dataInicioEscalaTrabalho:Date) {
         this.dataInicioEscalaTrabalhoCustomDate.setApiDate(dataInicioEscalaTrabalho);
         this.dataInicioEscalaTrabalho = dataInicioEscalaTrabalho;
+        
+        console.log(this.dataInicioEscalaTrabalho);
     }
     
     getDataInicioEscalaTrabalhoCustomDate(){
