@@ -34,12 +34,8 @@ export class AcolhimentoComponent{
     private equipes: Array<Equipe>;
     private equipesSelecteds: Array<Equipe>;
     private dateUtil: DateUtil;
-    dateActions;
-    params;
+    
     constructor( router: Router ) {
-        
-        this.dateActions = new EventEmitter<string|MaterializeAction>();
-        this.params = GlobalVariable.PARAMS_DATE;
     }
     
     ngOnInit() { 

@@ -2,12 +2,6 @@
 <meta charset="utf-8">
 </head>
 
-
-<div class="row cabecalho">
-	<h6>Serviço: {{atestado.tarefa.servico.nome}}</h6>
-	<h6>Cliente: {{atestado.empregado.pessoa.nome}}</h6>
-</div>
-
 <div class="content-dados">
 
 	<fieldset>
@@ -21,15 +15,18 @@
 			</div>
 
 			<div class="input-field col s4">
-				<label for="dataInicio">Data de Início do Atestado</label>
-				<my-date-picker name="inicio" [options]="myDatePickerOptions"
-					[ngModel]="atestado.inicioCustomTime.appDate" placeholder="Início"
-					(ngModelChange)="atestado.inicioCustomTime.appDate=$event; verifyPrazoAtestado();">
-				</my-date-picker>
+				<label for="dataInicio">Data de Início do Atestado</label>				
+				<input name="inicio"
+	                   materialize="pickadate" 
+	                   [ngModel]="atestado.inicioCustomDate.appDate" placeholder="Início"
+					   (ngModelChange)="atestado.inicioCustomDate.appDate=$event; verifyPrazoAtestado();"
+	                   [materializeActions]="dateActions"
+	                   [materializeParams]="params"
+	                   type="text" />
+				
 			</div>
 			<div class="input-field col s4 checkbox">
-				<input (click)="setMsn('Relatório comprobatório de
-					impossibilidade de locomoção deve estar entre os anexos.'); showMsn();" type="checkbox"
+				<input type="checkbox"
 					id="atestado.impossibilidadeLocomocao"
 					[(ngModel)]="atestado.impossibilidadeLocomocao"
 					name="atestado.impossibilidadeLocomocao"> <label
@@ -37,8 +34,13 @@
 					Locomoção</label>
 			</div>
 		</div>
-		<div class="card-panel red msn" hidden>
-			<span class="white-text">{{msnError}}</span>
+		
+		<div class="card-panel orange msnImpossibilidade" *ngIf="atestado.impossibilidadeLocomocao">
+			<span class="white-text">Relatório comprobatório de impossibilidade de locomoção deve estar entre os anexos.</span>
+		</div>
+		
+		<div class="card-panel orange msnData" hidden>
+			<span class="white-text">O atestado se encontra em atraso (mais de 3 dias).</span>
 		</div>
 		
 		<div class="row">
@@ -83,17 +85,19 @@
 			</div>
 			<div class="input-field col s3">
 				<label for="dataInicioEscalaTrabalho" style="font-size: 13px;">Data de Início da Escala de Trabalho</label>
-				<my-date-picker name="inicioEscalaTrabalho" 
-					[options]="myDatePickerOptions" [disabled]="verifyEscalaTrabalho()"
-					[(ngModel)]="atestado.dataInicioEscalaTrabalhoCustomTime.appDate" placeholder="Início">
-				</my-date-picker>
+				<app-date-picker [nome]="'inicioEscalaTrabalho'" 
+									[customDate]="atestado.dataInicioEscalaTrabalhoCustomDate" 									
+									[desabilitar]="verifyEscalaTrabalho()"									
+									[legenda]="'Início'"	
+									></app-date-picker>
 			</div>
 			<div class="input-field col s3">
 				<label for="dataFimEscalaTrabalho" style="font-size: 13px;">Data de Fim da Escala de Trabalho</label>
-				<my-date-picker name="fimEscalaTrabalho" 
-					[options]="myDatePickerOptions" [disabled]="verifyEscalaTrabalho()"
-					[(ngModel)]="atestado.dataFimEscalaTrabalhoCustomTime.appDate" placeholder="Fim">
-				</my-date-picker>
+				<app-date-picker [nome]="'fimEscalaTrabalho'" 
+									[customDate]="atestado.dataFimEscalaTrabalhoCustomDate" 									
+									[desabilitar]="verifyEscalaTrabalho()"									
+									[legenda]="'Fim'"	
+									></app-date-picker>
 			</div>
 		</div>
 		
@@ -106,17 +110,19 @@
 			</div>
 			<div class="input-field col s3">
 				<label for="dataInicioFerias">Data de Início das Férias</label>
-				<my-date-picker name="dataInicioFerias" [options]="myDatePickerOptions" 
-					[disabled]="!atestado.possuiFeriasAgendadas"
-					[(ngModel)]="atestado.dataInicioFeriasCustomTime.appDate" placeholder="Início">
-				</my-date-picker>
+				<app-date-picker [nome]="'dataInicioFerias'" 
+									[customDate]="atestado.dataInicioFeriasCustomDate" 									
+									[desabilitar]="verifyFerias()"									
+									[legenda]="'Início'"	
+									></app-date-picker>
 			</div>
 			<div class="input-field col s3">
 				<label for="dataFimFerias">Data de Fim das Férias</label>
-				<my-date-picker name="dataFimFerias" [options]="myDatePickerOptions" 
-					[disabled]="!atestado.possuiFeriasAgendadas"
-					[(ngModel)]="atestado.dataFimFeriasCustomTime.appDate" placeholder="Fim">
-				</my-date-picker>
+				<app-date-picker [nome]="'dataFimFerias'" 
+									[customDate]="atestado.dataFimFeriasCustomDate" 									
+									[desabilitar]="verifyFerias()"									
+									[legenda]="'Fim'"	
+									></app-date-picker>
 			</div>
 		</div>
 		
@@ -176,7 +182,8 @@
 				para a conclusão da homologação.</p>
 			</div>
 			<div class="input-field col s2">
-				<input type="checkbox" id="ciente" [(ngModel)]="atestado.ciente" name="ciente"> 
+				<input type="checkbox" id="ciente" required 
+					[(ngModel)]="atestado.ciente" name="ciente"> 
 				<label for="ciente">Ciente</label>
 			</div>
 		</div>

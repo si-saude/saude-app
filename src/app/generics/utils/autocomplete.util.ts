@@ -22,7 +22,6 @@ export class AutoComplete<F extends GenericFilter> {
         let infos = obj[getMethod]().split('||');
         let info = infos[infos.length - 1].trim();
         
-        
         if(this.lastInfo != info){
             
             this.lastInfo = info;
@@ -61,9 +60,8 @@ export class AutoComplete<F extends GenericFilter> {
     
     public getObj(input,obj,setMethod, getMethod){
         let value = obj[setMethod.replace('set','get')]()[getMethod]();
-        
+
         if(input.target.value != undefined && input.target.value.includes('||')){
-            
             let infos = input.target.value.split('||');
             let id = infos[0].trim();
             let info = infos[infos.length - 1].trim();
@@ -72,6 +70,7 @@ export class AutoComplete<F extends GenericFilter> {
             
             this.objAutoComplete = [{'data': {'': null }}];
         }else if(this.lastValue != undefined && this.lastValue != value){
+            this.lastValue = value;
             obj[setMethod](this.builder.initialize(undefined));
         }
     }

@@ -16,6 +16,7 @@ import { DiagnosticoFilter } from './../../diagnostico/diagnostico.filter';
 import { DiagnosticoBuilder } from './../../diagnostico/diagnostico.builder';
 import { ProfissionalNomeAutocomplete } from './../../profissional-saude/profissional-nome.autocomplete';
 import { MaterializeAction } from "angular2-materialize";
+import { Util } from "./../../../generics/utils/util";
 
 @Component( {
     selector: 'app-atestado-form',
@@ -104,13 +105,13 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     }
 
     save() {
-//        if ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate() != undefined && 
-//                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate() != undefined && 
-//                ( this.atestado.getHomologacaoAtestado().getDataEntregaCustomTime().getApiDate().getTime() > 
-//                this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomTime().getApiDate().getTime() ) ) {
-//            this.showTextToast("Erro: datas incondizentes.", 5000);
-//            return;
-//        }
+        if (Util.isNotNull(this.atestado.getHomologacaoAtestado().getDataEntregaCustomDate().getAppDate()) &&
+            Util.isNotNull(this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomDate().getAppDate()) &&
+            (this.atestado.getHomologacaoAtestado().getDataEntregaCustomDate().getApiDate() > 
+            this.atestado.getHomologacaoAtestado().getDataHomologacaoCustomDate().getApiDate())) {
+            this.showTextToast("Erro: datas incondizentes.", 5000);
+            return;
+        }
 
         if ( !this.edit ) {
             let i: number = 0;

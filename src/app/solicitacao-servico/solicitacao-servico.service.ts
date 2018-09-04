@@ -16,6 +16,7 @@ import { RegimeService } from './../controller/regime/regime.service';
 import { BaseService } from './../controller/base/base.service';
 import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-solicitacao.service';
 import { EquipeService } from './../controller/equipe/equipe.service';
+import { AtestadoService } from './../controller/atestado/atestado.service';
 
 @Injectable()
 export class SolicitacaoServicoService {
@@ -34,7 +35,8 @@ export class SolicitacaoServicoService {
             private baseService: BaseService,
             private empregadoService: EmpregadoService,
             private tipoSolicitacaoService: TipoSolicitacaoService,
-            private equipeService: EquipeService) {
+            private equipeService: EquipeService,
+            private atestadoService: AtestadoService) {
         this.headers = new Headers( { 'Content-Type': 'application/json' } );
         this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
         this.URL = GlobalVariable.BASE_API_URL;
@@ -139,6 +141,10 @@ export class SolicitacaoServicoService {
         return this.http
             .get( urlEquipe, { headers: this.headers } )
             .toPromise();
+    }
+    
+    getAtestadoService() {
+        return this.atestadoService;
     }
     
 }

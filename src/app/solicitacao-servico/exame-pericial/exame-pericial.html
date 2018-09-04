@@ -10,8 +10,8 @@
 	<form class="col s12" (ngSubmit)="next()">
 
 		<div class="row cabecalho">
-			<h6>Serviço: {{tarefa.servico.nome}}</h6>
-			<h6>Cliente: {{tarefa.cliente.pessoa.nome}}</h6>
+			<h6>Serviço: {{atendimento.tarefa.servico.nome}}</h6>
+			<h6>Cliente: {{atendimento.tarefa.cliente.pessoa.nome}}</h6>
 		</div>
 
 		<div class="content-dados">
@@ -23,15 +23,16 @@
 
 					<div class="input-field col s4">
 						<label for="inicio">Data</label>
-						<my-date-picker name="dataInicio" [options]="myDatePickerOptions"
-							[(ngModel)]="dataInicio" placeholder="Data">
-						</my-date-picker>
+						<app-date-picker [nome]="'dataInicio'" 
+									[customDate]="atendimento.tarefa.inicioCustomDate" 									
+									[legenda]="'Data'"									
+									></app-date-picker>
 					</div>
 					
 					<div class="input-field col s5">
 						<fieldset>
 							<legend> Equipe </legend>
-							<select name="equipes" required class="browser-default" [(ngModel)]="tarefa.equipe.id">
+							<select name="equipes" required class="browser-default" [(ngModel)]="atendimento.tarefa.equipe.id">
 								<option disabled selected value=0>Selecione um equipe</option>
 								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
 							</select>

@@ -5,6 +5,7 @@ import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-s
 import { HomologacaoAtestadoBuilder } from './../homologacao-atestado/homologacao-atestado.builder';
 import { RegimeBuilder } from './../regime/regime.builder';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
+import { MotivoRecusaAtestadoBuilder } from './../motivo-recusa-atestado/motivo-recusa-atestado.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class AtestadoBuilder extends GenericBuilder {
@@ -18,6 +19,7 @@ export class AtestadoBuilder extends GenericBuilder {
         atestado.setHomologacaoAtestado(new HomologacaoAtestadoBuilder().initialize(atestado.getHomologacaoAtestado()));
         atestado.setRegime(new RegimeBuilder().initialize(atestado.getRegime()));
         atestado.setEmpregado(new EmpregadoBuilder().initialize(atestado.getEmpregado()));
+        atestado.setMotivoRecusa(new MotivoRecusaAtestadoBuilder().initialize(atestado.getMotivoRecusa()));
         
         return atestado;
     }
@@ -83,6 +85,15 @@ export class AtestadoBuilder extends GenericBuilder {
         
         cloneAtestado.setEmpregado(
                 new EmpregadoBuilder().clone(this.getValue(atestado,"getEmpregado")));
+        
+        if (this.getValue(atestado, "getMotivoRecusa") !== undefined) { 
+            cloneAtestado.setMotivoRecusa(
+                    new MotivoRecusaAtestadoBuilder().clone(this.getValue(atestado,"getMotivoRecusa")));
+            if( !this.idGtZero(cloneAtestado.getMotivoRecusa()) )
+                cloneAtestado.setMotivoRecusa(undefined);
+        } else {
+            cloneAtestado.setMotivoRecusa(new MotivoRecusaAtestadoBuilder().initialize(null));
+        }
         
         if (this.getValue(atestado, "getRegime") !== undefined) { 
             cloneAtestado.setRegime(
