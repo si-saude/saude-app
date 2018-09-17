@@ -12,5 +12,12 @@ export class FilaAtendimentoOcupacionalService extends GenericService {
     constructor( http: Http, router: Router) { 
         super(http,router,"fila-atendimento-ocupacional");
     }  
+    
+    saveModalFilaAtendimentoOcupacional(filaAtendimentoOcupacionalFilter){        
+        let urlSaveFilaAtendimentoOcupacional = this.URL + "/save-fila-atendimento-ocupacional-retroativo";
+        return this.http
+            .post( urlSaveFilaAtendimentoOcupacional, filaAtendimentoOcupacionalFilter, { headers: this.headers } )
+            .toPromise();        
+    }
      
 } 

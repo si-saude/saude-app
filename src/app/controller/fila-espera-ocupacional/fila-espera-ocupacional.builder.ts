@@ -55,7 +55,8 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         if (this.getValue(filaEsperaOcupacional, "getFichaColeta") !== undefined) { 
             cloneFilaEsperaOcupacional.setFichaColeta(
                     new FichaColetaBuilder().clone(this.getValue(filaEsperaOcupacional,"getFichaColeta")));
-            if(!this.idGtZero(cloneFilaEsperaOcupacional.getFichaColeta()))
+            if(!this.idGtZero(cloneFilaEsperaOcupacional.getFichaColeta()) && 
+                    cloneFilaEsperaOcupacional.getFichaColeta().getRespostaFichaColetas().length == 0)
                 cloneFilaEsperaOcupacional.setFichaColeta(undefined);
         } else {
             cloneFilaEsperaOcupacional.setFichaColeta(new FichaColetaBuilder().initialize(null));
@@ -71,6 +72,9 @@ export class FilaEsperaOcupacionalBuilder extends GenericBuilder {
         if (this.getValue(filaEsperaOcupacional, "getRiscoPotencial") !== undefined) { 
             cloneFilaEsperaOcupacional.setRiscoPotencial(
                     new RiscoPotencialBuilder().clone(this.getValue(filaEsperaOcupacional,"getRiscoPotencial")));
+            if(!this.idGtZero(cloneFilaEsperaOcupacional.getRiscoPotencial()) && 
+                    cloneFilaEsperaOcupacional.getRiscoPotencial().getData() == undefined)
+                cloneFilaEsperaOcupacional.setRiscoPotencial(undefined);
         } else {
             cloneFilaEsperaOcupacional.setRiscoPotencial(new RiscoPotencialBuilder().initialize(null));            
         }

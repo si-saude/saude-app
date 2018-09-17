@@ -9,6 +9,8 @@ export class RespostaFichaColeta {
     private conteudo: string = "";
     private itens: Array<ItemRespostaFichaColeta>;
     private version: number;
+    private verified:boolean = false;
+    private enabled:boolean = false;
 
     getId() {
         return this.id;
@@ -56,5 +58,21 @@ export class RespostaFichaColeta {
 
     setVersion(version: number) {
         this.version = version;
+    }
+    
+    getVerified(){
+        return this.verified;
+    }
+    
+    setVerified(verified){
+        this.verified = verified;
+    }
+    
+    getEnabled(){
+        return this.enabled;
+    }
+    
+    setEnabled(enabled){
+        this.enabled = enabled;
     }
 }
