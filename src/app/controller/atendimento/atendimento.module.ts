@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 
-import { MyDatePickerModule } from 'mydatepicker';
 import { DataTableModule } from "angular2-datatable";
 
 import { AtendimentoService } from './atendimento.service';
@@ -23,7 +22,6 @@ import { AcolhimentoModule } from './../acolhimento.module';
      imports: [
         CommonModule,
         AtendimentoRoutingModule,
-        MyDatePickerModule,
         DataTableModule,
         SharedModule,
         PlanejamentoModule,

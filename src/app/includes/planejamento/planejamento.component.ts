@@ -25,7 +25,7 @@ export class PlanejamentoComponent{
     
     private prazos: Array<string>;
     
-    private flagIdTriagem: number;
+    private flagIdTriagem: Triagem;
     private activeDiagnostico:boolean;
     private activeIntervencao:boolean;
     private innerIdEquipeProfissional: number;
@@ -78,12 +78,11 @@ export class PlanejamentoComponent{
         this.activeDiagnostico = true;
         this.activeIntervencao = false;
         this.showModalDiagnostico = true;
-        this.flagIdTriagem = triagem.getId();
+        this.flagIdTriagem = triagem;
     }
     
     selectDiagnostico( diagnostico: Diagnostico ) {
-        let triagem = this.innerTriagens.find(t => t.getId() == this.flagIdTriagem);
-        triagem.setDiagnostico(diagnostico);
+        this.flagIdTriagem.setDiagnostico(diagnostico);
         this.showModalDiagnostico = false; 
     }
     
@@ -95,12 +94,11 @@ export class PlanejamentoComponent{
         this.activeDiagnostico = false;
         this.activeIntervencao = true;
         this.showModalIntervencao = true;
-        this.flagIdTriagem = triagem.getId();
+        this.flagIdTriagem = triagem;
     }
     
     selectIntervencao( intervencao: Intervencao) {
-        let triagem = this.innerTriagens.find(t => t.getId() == this.flagIdTriagem);
-        triagem.setIntervencao(intervencao);
+        this.flagIdTriagem.setIntervencao(intervencao);
         this.showModalIntervencao = false;
     }
     
@@ -109,13 +107,12 @@ export class PlanejamentoComponent{
     }
     
     openModalEquipe( triagem: Triagem ) {
-        this.flagIdTriagem = triagem.getId();
+        this.flagIdTriagem = triagem;
         this.showModalEquipe = true;
     }
     
     selectEquipe( equipe: Equipe ) {
-        let triagem = this.innerTriagens.find(t => t.getId() == this.flagIdTriagem);
-        triagem.setEquipeAbordagem(equipe);
+        this.flagIdTriagem.setEquipeAbordagem(equipe);
         this.showModalEquipe = false;
     }
     

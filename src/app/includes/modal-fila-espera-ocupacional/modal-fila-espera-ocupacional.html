@@ -3,7 +3,7 @@
 </head>
 
 <!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
+<div id="modal" class="modal altura-modal" materialize="modal"
 	[materializeParams]="[{dismissible: false}]"
 	[materializeActions]="modalFilaEsperaOcupacional">
 
@@ -29,7 +29,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="input-field col s12">
+			<div class="input-field col s8">
 				<fieldset>
 					<label for="profissional.empregado">Empregado</label> <input
 						type="text" materialize="autocomplete" autocomplete="off"
@@ -40,6 +40,15 @@
 						[materializeParams]="autoCompleteEmpregado.getAutocomplete().getObjAutoComplete()">
 				</fieldset>
 			</div>
+		<div class="input-field col s4">
+			<p>
+		      <a class="btn-floating waves-effect waves-light green btn-add"
+							(click)="addFilaEspera()"> <i
+							class="material-icons center-icon">add</i>
+			  </a>
+		        <label>Adicionar Retroativo</label>
+		    </p>
+	    </div>
 		</div>
 	</div>
 			<table class="table table-striped table-filter-planejamento"
@@ -68,5 +77,5 @@
 			class="waves-effect waves-green btn-flat"
 			(click)="cancelarModalFilaEsperaOcupacional()">Cancelar</a>
 	</div>
-
+	<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="'$*close*$'"></app-confirm-save>
 </div>

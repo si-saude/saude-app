@@ -186,22 +186,32 @@ export class FichaColetaComponent{
     }
     
     isDisabledResposta(resposta: RespostaFichaColeta) {
-        let ret: boolean = true;
-        let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);
-    
-        if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
-            if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
-                if ( this.fuma.getConteudo() == "SIM" && 
-                        equipe != undefined )
-                    ret = false;
-                else ret = true;
-            } else {
-                if ( equipe != undefined ) ret = false;
-                else ret = true;
+        
+        if(!resposta.getVerified()){
+            let ret: boolean = true;
+            let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);        
+            
+            if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
+                if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
+                    if ( this.fuma.getConteudo() == "SIM" && 
+                            equipe != undefined ){
+                        ret = false;
+                    }
+                    else ret = true;
+                } else {
+                    if ( equipe != undefined ) {
+                        ret = false;
+                    }
+                    else {
+                        ret = true;
+                    }
+                }
             }
+            resposta.setVerified(true);
+            resposta.setEnabled(!ret);
         }
         
-        return ret;
+        return !resposta.getEnabled();
     }
     
     getConteudoEnumOrSimNao(resposta: RespostaFichaColeta) {
