@@ -16,7 +16,9 @@ import { ModalTarefaModule } from './../../includes/modal-tarefa/modal-tarefa.mo
 import { ModalFilaEsperaOcupacionalModule } from './../../includes/modal-fila-espera-ocupacional/modal-fila-espera-ocupacional.module';
 import { SharedModule } from './../shared.module';
 import { PipesModule } from './../pipes.module';
-import { MyDatePickerModule } from 'mydatepicker';
+import { FichaColetaModule } from './../ficha-coleta.module';
+import { TriagemModule } from './../triagem.module';
+import { PlanejamentoModule } from './../planejamento.module';
 
 @NgModule({
     declarations: [
@@ -30,7 +32,9 @@ import { MyDatePickerModule } from 'mydatepicker';
         ModalTarefaModule,
         AtendimentoAvulsoRoutingModule,
         PipesModule,
-        MyDatePickerModule,
+        FichaColetaModule,
+        TriagemModule,
+        PlanejamentoModule,
         SharedModule
      ],
      providers: [

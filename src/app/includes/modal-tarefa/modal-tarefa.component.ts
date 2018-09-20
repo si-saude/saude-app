@@ -11,10 +11,10 @@ import { ServicoFilter } from './../../controller/servico/servico.filter';
 import { EmpregadoFilter } from './../../controller/empregado/empregado.filter';
 import { EquipeFilter } from './../../controller/equipe/equipe.filter';
 import { DateFilter } from './../../generics/date.filter';
-import { IMyDpOptions } from 'mydatepicker';
 import { DateUtil } from './../../generics/utils/date.util';
 import { TarefaService } from './../../controller/tarefa/tarefa.service';
 import { GlobalVariable } from './../../../../src/app/global';
+import { Util } from './../../generics/utils/util';
 
 @Component( {
     selector: 'app-modal-tarefa',
@@ -28,15 +28,15 @@ export class ModalTarefaComponent {
     @Input() servicoId;
     @Input() empregadoId;
     @Input() equipeId;
-
+    @Output() setTarefa : EventEmitter<DateFilter> = new EventEmitter();
     @Input() showModalTarefa: boolean;
     tarefa: EventEmitter<Tarefa>;
     private arrayTarefa: Array<Tarefa>;
     private filter: TarefaFilter = new TarefaFilter();
     modalTarefa;
     modelParams;
-    protected myDatePickerOptions: IMyDpOptions;
     protected dateUtil: DateUtil;
+    
 
     constructor( router: Router,
         private tarefaService: TarefaService ) {
@@ -57,6 +57,11 @@ export class ModalTarefaComponent {
     ngOnInit() {
         this.arrayTarefa = new TarefaBuilder().initializeList( new Array<Tarefa>() );
     }
+    
+    setPeriodoFilter(periodo : DateFilter){   
+        this.filter.getInicio().setInicio(periodo.getInicio());
+        this.filter.getInicio().setFim(periodo.getFim());  
+    }
 
     openModalTarefa() {
         this.modalTarefa.emit( { action: "modal", params: ['open'] } );
@@ -64,6 +69,7 @@ export class ModalTarefaComponent {
 
     selectTarefa( tarefa: Tarefa ) {
         this.model.setTarefa( new TarefaBuilder().clone(tarefa) );
+        this.setTarefa.emit(null);
         this.modalTarefa.emit( { action: "modal", params: ['close'] } );
     }
 
@@ -81,8 +87,7 @@ export class ModalTarefaComponent {
             this.filter.getServico().setId( this.servicoId );
             this.filter.getCliente().setId( this.empregadoId );
             this.filter.getEquipe().setId( this.equipeId );
-            this.filter.setStatus("ABERTA");
-            this.tarefaService.list( this.filter )
+            this.tarefaService.listAtendimentoAvulso( this.filter )
                 .then( res => {
                     this.arrayTarefa = new TarefaBuilder().cloneList( res.json().list );
                 } )
@@ -92,16 +97,10 @@ export class ModalTarefaComponent {
         }
     }
 
-    verificarCampos() {
-        if ( this.filter.getInicio().getInicio() == null || this.filter.getInicio().getInicio() == undefined ||
-            this.filter.getInicio().getFim() == null || this.filter.getInicio().getFim() == undefined ) {
-            return false;
-        } else
+    verificarCampos() {                   
+        if (Util.isNotNull(this.filter.getInicio().getInicio()) && Util.isNotNull(this.filter.getInicio().getFim())) {
             return true;
+        } else
+            return false;
     }
-
-//    
-//    if ( this.filter.getPessoa().getDataNascimento().getFim() !== null &&
-//            this.filter.getPessoa().getDataNascimento().getFim() !== undefined ) {
-//    }
 }

@@ -41,6 +41,14 @@ export class TarefaService extends GenericService {
             .toPromise();
     }
     
+    
+    listAtendimentoAvulso( tarefaFilter: TarefaFilter) {
+        let urlList = this.URL + "/list-atendimento-avulso";
+        return this.http
+            .post( urlList, tarefaFilter, { headers: this.headers } )
+            .toPromise();
+    }
+    
     getProfissionalByName(nome: string) {
         return this.profissionalSaudeService.getProfissionalByName(nome);
     }

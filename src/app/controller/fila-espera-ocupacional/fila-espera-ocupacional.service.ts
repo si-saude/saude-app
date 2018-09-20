@@ -126,4 +126,13 @@ export class FilaEsperaOcupacionalService extends GenericService {
             .toPromise();
     }
     
+    
+    saveModalFilaEsperaOcupacional(filaEsperaOcupacionalFilter){        
+        let urlSaveFilaEsperaOcupacional = this.URL + "/save-fila-espera-ocupacional-retroativo";
+        return this.http
+            .post( urlSaveFilaEsperaOcupacional, filaEsperaOcupacionalFilter, { headers: this.headers } )
+            .toPromise();
+        
+    }
+    
 }

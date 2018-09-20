@@ -6,9 +6,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterializeModule } from 'angular2-materialize';
 
 import { DatePickerModule } from './../includes/date-picker/date-picker.module';
-import { MensagemFormComponent } from './../includes/mensagem-form/mensagem-form.component';
+import { MensagemFormModule } from './../includes/mensagem-form/mensagem-form.module';
 import { PreloadComponent } from './../includes/preload/preload.component';
-import { ConfirmSaveComponent } from './../includes/confirm-save/confirm-save.component';
+import { ConfirmSaveModule } from './../includes/confirm-save/confirm-save.module';
 import { ConfirmDeleteComponent } from './../includes/confirm-delete/confirm-delete.component';
 import { PaginacaoComponent } from './../includes/paginacao/paginacao.component';
 import { PerfilService } from './perfil/perfil.service';
@@ -86,9 +86,7 @@ import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-rec
 
 @NgModule({
   declarations: [
-    MensagemFormComponent,
     PreloadComponent,
-    ConfirmSaveComponent,
     ConfirmDeleteComponent,
     PaginacaoComponent,
     TarefaComponent
@@ -100,7 +98,8 @@ import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-rec
     FormsModule,
     MaterializeModule,
     ReactiveFormsModule,
-    DatePickerModule
+    DatePickerModule,
+    MensagemFormModule
   ],
   exports: [ 
     CommonModule,
@@ -108,9 +107,9 @@ import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-rec
     FormsModule,
     MaterializeModule,
     ReactiveFormsModule,
-    MensagemFormComponent,
+    MensagemFormModule,
     PreloadComponent,
-    ConfirmSaveComponent,
+    ConfirmSaveModule,
     ConfirmDeleteComponent,
     PaginacaoComponent,
     DatePickerModule

@@ -34,7 +34,7 @@ export class EmpregadoService extends GenericService {
             private vacinaService: VacinaService,
             private cidadeService: CidadeService,
             private grupoMonitoramentoService: GrupoMonitoramentoService,
-            private enfaseService: EnfaseService,) { 
+            private enfaseService: EnfaseService) { 
         super(http, router, "empregado");
     }
     

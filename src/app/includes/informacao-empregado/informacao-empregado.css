@@ -1,0 +1,22 @@
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}

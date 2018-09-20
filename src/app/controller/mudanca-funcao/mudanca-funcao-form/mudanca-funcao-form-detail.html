@@ -20,13 +20,13 @@
 				<div class="row col s12">
 				<div class="input-field col s6">
 						<fieldset>
-							<label for="cargo">Cargo</label> <input
+							<label for="enfase">Enfase</label> <input
 								type="text" materialize="autocomplete" autocomplete="off"
-								name="mudancaFuncao.cargo.nome"
-								[(ngModel)]="mudancaFuncao.cargo.nome"
-								(blur)="autoCompleteCargo.getAutocomplete().getObj($event,mudancaFuncao,'setCargo','getNome')"
-								(ngModelChange)="autoCompleteCargo.getAutocomplete().getList(mudancaFuncao.cargo, 'getNome');"
-								[materializeParams]="autoCompleteCargo.getAutocomplete().getObjAutoComplete()">
+								name="mudancaFuncao.enfase.nome"
+								[(ngModel)]="mudancaFuncao.enfase.nome"
+								(blur)="autoCompleteEnfase.getAutocomplete().getObj($event,mudancaFuncao,'setEnfase','getNome')"
+								(ngModelChange)="autoCompleteEnfase.getAutocomplete().getList(mudancaFuncao.enfase, 'getNome');"
+								[materializeParams]="autoCompleteEnfase.getAutocomplete().getObjAutoComplete()">
 								</fieldset>
 			    </div>
 			    <div class="input-field col s6">

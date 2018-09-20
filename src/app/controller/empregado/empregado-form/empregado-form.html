@@ -283,6 +283,7 @@
 									</a>
 								</legend>
 								<select name="enfase" class="browser-default"
+									[disabled]="(empregado.id >0)"
 									[(ngModel)]="empregado.enfase.id">
 									<option disabled selected value="undefined">Selecione uma ênfase</option>
 									<option *ngFor="let enfase of enfases" value="{{enfase.id}}">{{enfase.descricao}}</option>

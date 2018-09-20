@@ -1,6 +1,6 @@
 import { MudancaFuncao } from './../../model/mudanca-funcao';
-import { Cargo } from './../../model/cargo';
-import { CargoBuilder } from './../cargo/cargo.builder';
+import { Enfase } from './../../model/enfase';
+import { EnfaseBuilder } from './../enfase/enfase.builder';
 import { Funcao } from './../../model/funcao';
 import { FuncaoBuilder } from './../funcao/funcao.builder';
 import { Ghee } from './../../model/ghee';
@@ -23,7 +23,7 @@ export class MudancaFuncaoBuilder extends GenericBuilder {
     initialize(mudancaFuncao: MudancaFuncao) {
         mudancaFuncao = new MudancaFuncao();
         
-        mudancaFuncao.setCargo(new CargoBuilder().initialize(new Cargo()));
+        mudancaFuncao.setEnfase(new EnfaseBuilder().initialize(new Enfase()));
         mudancaFuncao.setFuncao(new FuncaoBuilder().initialize(new Funcao()));
         mudancaFuncao.setGhe(new GheBuilder().initialize(new Ghe()));
         mudancaFuncao.setGhee(new GheeBuilder().initialize(new Ghee()));
@@ -45,13 +45,13 @@ export class MudancaFuncaoBuilder extends GenericBuilder {
         cloneMudancaFuncao.setVersion(this.getValue(mudancaFuncao,"getVersion"));  
         cloneMudancaFuncao.setTarefas(new TarefaBuilder().cloneList(this.getValue(mudancaFuncao,"getTarefas")));
         
-        if (this.getValue(mudancaFuncao, "getCargo") !== undefined) { 
-            cloneMudancaFuncao.setCargo(
-                new CargoBuilder().clone(this.getValue(mudancaFuncao,"getCargo")));
-            if(!this.idGtZero(cloneMudancaFuncao.getCargo()))
-                cloneMudancaFuncao.setCargo(undefined);
+        if (this.getValue(mudancaFuncao, "getEnfase") !== undefined) { 
+            cloneMudancaFuncao.setEnfase(
+                new EnfaseBuilder().clone(this.getValue(mudancaFuncao,"getEnfase")));
+            if(!this.idGtZero(cloneMudancaFuncao.getEnfase()))
+                cloneMudancaFuncao.setEnfase(undefined);
         }else{
-            cloneMudancaFuncao.setCargo(new CargoBuilder().initialize(null));
+            cloneMudancaFuncao.setEnfase(new EnfaseBuilder().initialize(null));
         }
         
         if (this.getValue(mudancaFuncao, "getFuncao") !== undefined) { 
