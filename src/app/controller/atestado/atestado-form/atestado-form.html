@@ -93,14 +93,12 @@
 							[(ngModel)]="atestado.presencial" name="atestado.presencial">
 						<label for="atestado.presencial">Presencial</label>
 					</div>
-					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="atestado.impossibilidadeLocomocao"
-							[(ngModel)]="atestado.impossibilidadeLocomocao"
-							name="atestado.impossibilidadeLocomocao"> <label
-							for="atestado.impossibilidadeLocomocao">Impossibilidade
-							de Locomoção</label>
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.aposentadoInss"
+							[(ngModel)]="atestado.aposentadoInss"
+							name="atestado.aposentadoInss"> <label
+							for="atestado.aposentadoInss">Aposentado INSS</label>
 					</div>
-
 					<div class="input-field col s2 checkbox">
 						<input type="checkbox" id="atestado.lancadoSap"
 							[disabled]="atestado.status != 'HOMOLOGADO'"
@@ -108,7 +106,7 @@
 						<label for="atestado.lancadoSap">Lançado SAP</label>
 					</div>
 
-					<div class="input-field col s2 checkbox">
+					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="atestado.atestadoFisicoRecebido"
 							[(ngModel)]="atestado.atestadoFisicoRecebido"
 							[disabled]="atestado.status == 'PENDENTE DE ARQUIVAMENTO' || atestado.status == 'ARQUIVADO'"
@@ -127,19 +125,13 @@
 				</div>
 
 				<div class="row">
-					<div class="input-field col s2 checkbox">
-						<input type="checkbox" id="atestado.aposentadoInss"
-							[(ngModel)]="atestado.aposentadoInss"
-							name="atestado.aposentadoInss"> <label
-							for="atestado.aposentadoInss">Aposentado INSS</label>
-					</div>
 					<div class="input-field col s3">
 						<label for="inicio">Data de Início do Atestado</label>
 						<app-date-picker [nome]="'inicio'"
 							[customDate]="atestado.inicioCustomDate"
 							[obrigatorio]="'false'" [legenda]="'Início'"></app-date-picker>
 					</div>
-					<div class="input-field col s7">
+					<div class="input-field col s9">
 						<label for="cid">CID</label> 
 						<input type="text" materialize="autocomplete" autocomplete="off" name="atestado.cid"
 							required
