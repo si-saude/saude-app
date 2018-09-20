@@ -15,6 +15,6 @@ export const GlobalVariable = Object.freeze({
         labelMonthPrev: 'Mês anterior',
         format: 'dd/mm/yyyy',
         closeOnSelect: true,       
-        selectYears: 15
+        selectYears: 200
     }],     
 });

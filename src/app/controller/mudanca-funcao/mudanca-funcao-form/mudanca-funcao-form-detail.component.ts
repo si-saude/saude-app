@@ -22,7 +22,7 @@ import { GerenciaCodigoCompletoAutocomplete } from './../../gerencia/gerencia-co
 import { GheeNomeAutocomplete } from './../../ghee/ghee-nome.autocomplete';
 import { FuncaoNomeAutocomplete } from './../../funcao/funcao-nome.autocomplete';
 import { BaseNomeAutocomplete } from './../../base/base-nome.autocomplete';
-import { CargoNomeAutocomplete } from './../../cargo/cargo-nome.autocomplete';
+import { EnfaseDescricaoAutocomplete } from './../../enfase/enfase-descricao.autocomplete';
 
 
 @Component( {
@@ -33,7 +33,7 @@ import { CargoNomeAutocomplete } from './../../cargo/cargo-nome.autocomplete';
 export class MudancaFuncaoFormDetailComponent extends GenericFormComponent implements OnInit {
     private autoCompleteGhe:GheNomeAutocomplete;
     private autoCompleteGerencia: GerenciaCodigoCompletoAutocomplete;
-    private autoCompleteCargo:CargoNomeAutocomplete;
+    private autoCompleteEnfase:EnfaseDescricaoAutocomplete;
     private autoCompleteFuncao:FuncaoNomeAutocomplete;
     private autoCompleteGhee:GheeNomeAutocomplete;
     private autoCompleteBase:BaseNomeAutocomplete;
@@ -52,7 +52,7 @@ export class MudancaFuncaoFormDetailComponent extends GenericFormComponent imple
         this.mudancaFuncao = new MudancaFuncaoBuilder().initialize(this.mudancaFuncao);
         this.autoCompleteGhe = new GheNomeAutocomplete(this.mudancaFuncaoService.getGheService());
         this.autoCompleteGerencia = new GerenciaCodigoCompletoAutocomplete(this.mudancaFuncaoService.getGerenciaService());
-        this.autoCompleteCargo = new CargoNomeAutocomplete(this.mudancaFuncaoService.getCargoService());
+        this.autoCompleteEnfase = new EnfaseDescricaoAutocomplete(this.mudancaFuncaoService.getEnfaseService());
         this.autoCompleteFuncao = new FuncaoNomeAutocomplete(this.mudancaFuncaoService.getFuncaoService());
         this.autoCompleteGhee = new GheeNomeAutocomplete(this.mudancaFuncaoService.getGheeService());
         this.autoCompleteBase = new BaseNomeAutocomplete(this.mudancaFuncaoService.getBaseService());   

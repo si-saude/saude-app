@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 
 import { MaterializeDirective} from "angular2-materialize";
 import { MaterializeAction } from "angular2-materialize";
-import { MyDatePickerModule } from 'mydatepicker';
 
 import { Usuario } from './../../../model/usuario';
 import { UsuarioBuilder } from './../../usuario/usuario.builder';
@@ -20,15 +19,12 @@ import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { MudancaFuncao } from './../../../model/mudanca-funcao';
 import { MudancaFuncaoBuilder } from './../mudanca-funcao.builder';
-import { Regime } from './../../../model/regime';
 import { MudancaFuncaoService } from './../mudanca-funcao.service';
-import { GheNomeAutocomplete } from './../../ghe/ghe-nome.autocomplete';
-import { GerenciaCodigoCompletoAutocomplete } from './../../gerencia/gerencia-codigo-completo.autocomplete';
-import { GheeNomeAutocomplete } from './../../ghee/ghee-nome.autocomplete';
-import { FuncaoNomeAutocomplete } from './../../funcao/funcao-nome.autocomplete';
-import { BaseNomeAutocomplete } from './../../base/base-nome.autocomplete';
-import { CargoNomeAutocomplete } from './../../cargo/cargo-nome.autocomplete';
+import { RegimeService } from './../../regime/regime.service';
+
 import { Profissional } from './../../../model/profissional';
+import { Tarefa } from './../../../model/tarefa';
+import { TarefaBuilder } from './../../tarefa/tarefa.builder';
 
 @Component( {
     selector: 'app-mudanca-funcao-form',
@@ -36,34 +32,27 @@ import { Profissional } from './../../../model/profissional';
     styleUrls: ['./mudanca-funcao-form.css','./../../../../assets/css/modal-filter.css','./../../../../assets/css/form-component.css']
 } )
 export class MudancaFuncaoFormComponent extends GenericFormComponent implements OnInit {
-    private autoCompleteGhe:GheNomeAutocomplete;
-    private autoCompleteGerencia: GerenciaCodigoCompletoAutocomplete;
-    private autoCompleteCargo:CargoNomeAutocomplete;
-    private autoCompleteFuncao:FuncaoNomeAutocomplete;
-    private autoCompleteGhee:GheeNomeAutocomplete;
-    private autoCompleteBase:BaseNomeAutocomplete;
     private listStatus: Array<string>;   
     private usuario: Usuario;
     private profissional: Profissional;
-    regimes: Array<Regime>;
     mudancaFuncao: MudancaFuncao;
+    private tarefaMedicinaOcupacional:Tarefa;
+    private tarefaErgonomia:Tarefa;
+    private tarefaHigieneOcupacional:Tarefa;
         
     constructor( private route: ActivatedRoute,
-        private mudancaFuncaoService: MudancaFuncaoService,     
+        private mudancaFuncaoService: MudancaFuncaoService,
         router: Router) {
         super( mudancaFuncaoService, router );
         this.goTo = "mudanca-funcao";
         
         this.globalActions = new EventEmitter<string | MaterializeAction>();
         this.mudancaFuncao = new MudancaFuncaoBuilder().initialize(this.mudancaFuncao);
-        this.autoCompleteGhe = new GheNomeAutocomplete(this.mudancaFuncaoService.getGheService());
-        this.autoCompleteGerencia = new GerenciaCodigoCompletoAutocomplete(this.mudancaFuncaoService.getGerenciaService());
-        this.autoCompleteCargo = new CargoNomeAutocomplete(this.mudancaFuncaoService.getCargoService());
-        this.autoCompleteFuncao = new FuncaoNomeAutocomplete(this.mudancaFuncaoService.getFuncaoService());
-        this.autoCompleteGhee = new GheeNomeAutocomplete(this.mudancaFuncaoService.getGheeService());
-        this.autoCompleteBase = new BaseNomeAutocomplete(this.mudancaFuncaoService.getBaseService());   
         this.listStatus = new Array<string>();
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
+        this.tarefaMedicinaOcupacional = new TarefaBuilder().initialize(new Tarefa());
+        this.tarefaErgonomia = new TarefaBuilder().initialize(new Tarefa());
+        this.tarefaHigieneOcupacional = new TarefaBuilder().initialize(new Tarefa());
     }
 
     ngOnInit() {
@@ -93,15 +82,17 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
                                                             .then( res => {
                                                                 this.showPreload = false;
                                                                 this.mudancaFuncao = new MudancaFuncaoBuilder().clone( res.json() );
+                                                                this.tarefaMedicinaOcupacional = this.mudancaFuncao.getTarefas().find(x => x.getEquipe().getAbreviacao() == 'MED');
+                                                                this.tarefaErgonomia = this.mudancaFuncao.getTarefas().find(x => x.getEquipe().getAbreviacao() == 'ERG');
+                                                                this.tarefaHigieneOcupacional = this.mudancaFuncao.getTarefas().find(x => x.getEquipe().getAbreviacao() == 'HIG');                                                                
+                                                                this.tarefaMedicinaOcupacional.getInicioCustomDate().setAppTime("08:00");
                                                         } )
                                                             .catch( error => {
                                                                 this.catchConfiguration( error );
                                                              } )
                                                     }
-                                                } );
-                                        
-                                        this.getRegimes();
-                                        this.getStatus();
+                                                } );                                      
+                                    this.getStatus();
                                         
                                 } else {
                                     this.router.navigate( ["/home"] );
@@ -127,17 +118,6 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
         }
     }
     
-    
-    getRegimes() {
-        this.mudancaFuncaoService.getRegimes()
-            .then( res => {
-                this.regimes = res.json();
-            } )
-            .catch( error => {
-                console.log( error );
-            } )
-    }
-    
     getStatus() {
         this.mudancaFuncaoService.getStatus()
             .then(res => {
@@ -156,7 +136,27 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
     }
     
     save() {
-//       new MudancaFuncaoBuilder().clone( this.mudancaFuncao ).getTarefas()[0].getInicio();
         super.save( new MudancaFuncaoBuilder().clone( this.mudancaFuncao ) );
+    }
+    
+    solicitarConvocacao(){        
+        this.mudancaFuncaoService.solicitarConvocacao(new MudancaFuncaoBuilder().clone(this.mudancaFuncao))
+        .then(res => {  
+                 localStorage.setItem("tarefa", JSON.stringify(this.tarefaMedicinaOcupacional));
+                 window.open("/solicitacao-servico/solicitacao-central-integra");              
+        })
+        .catch(error => {
+            this.catchConfiguration( error );
+        })  
+    }
+    
+    aplicarAlteracao(){   
+            this.mudancaFuncaoService.aplicarAlteracoes(new MudancaFuncaoBuilder().clone(this.mudancaFuncao))
+            .then(res => {
+                this.processReturn( true, res );
+            })
+            .catch(error => {
+                this.catchConfiguration( error );
+            })    
     }
 }

@@ -17,6 +17,8 @@ import { CorrecaoAtestadoComponent } from './correcao-atestado/correcao-atestado
 import { SolicitacaoServicoService } from './solicitacao-servico.service';
 import { SolicitacaoServicoRoutingModule } from './solicitacao-servico.routing.module';
 import { HomologacaoAtestadoModule } from './../includes/homologacao-atestado/homologacao-atestado.module';
+import { IncludeMudancaFuncaoModule } from './../includes/include-mudanca-funcao/include-mudanca-funcao.module';
+import { InformacaoEmpregadoModule } from './../includes/informacao-empregado/informacao-empregado.module';
 import { SharedModule } from './../controller/shared.module';
 
 @NgModule({
@@ -35,6 +37,8 @@ import { SharedModule } from './../controller/shared.module';
         MyDatePickerModule,
         Ng2InputMaskModule,
         HomologacaoAtestadoModule,
+        IncludeMudancaFuncaoModule,
+        InformacaoEmpregadoModule,
         SharedModule
      ],
      providers: [

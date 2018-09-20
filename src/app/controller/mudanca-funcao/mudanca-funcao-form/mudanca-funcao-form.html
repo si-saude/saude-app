@@ -14,102 +14,25 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 		<div class="row">
 			<ul class="tabs" materialize="tabs">
-				<li class="tab col s6"><a RouterLinkActive="active"
+				<li class="tab col s3"><a RouterLinkActive="active"
 					href="#dadosGerais">Dados Gerais</a></li>
-				<li class="tab col s6"><a RouterLinkActive="active"
+				<li class="tab col s3"><a RouterLinkActive="active"  
+					href="#mudancaFuncao">Mudança de Função</a></li>
+				<li class="tab col s3"><a RouterLinkActive="active"
 					href="#tarefas">Tarefas</a></li>
+					<li class="tab col s3" [class.disabled]="(profissional.equipe.abreviacao !='CAT')"><a RouterLinkActive="active"
+					href="#agendamento">Agendamento</a></li>
 			</ul>
 			<div class="groups">
 				<div id="dadosGerais">
-				<div class="row col s12">
-				<div class="input-field col s6">
-						<fieldset>
-							<label for="cargo">Cargo</label> <input
-								type="text" materialize="autocomplete" autocomplete="off"
-								name="mudancaFuncao.cargo.nome"
-								[(ngModel)]="mudancaFuncao.cargo.nome"
-								(blur)="autoCompleteCargo.getAutocomplete().getObj($event,mudancaFuncao,'setCargo','getNome')"
-								(ngModelChange)="autoCompleteCargo.getAutocomplete().getList(mudancaFuncao.cargo, 'getNome');"
-								(keydown.enter)="autoCompleteCargo.getAutocomplete().pressEnter($event,mudancaFuncao,'setCargo','getNome')"
-								[materializeParams]="autoCompleteCargo.getAutocomplete().getObjAutoComplete()">
-						</fieldset>
-			    </div>
-			    <div class="input-field col s6">
-						<fieldset>
-							<label for="funcao">Função</label> <input
-								type="text" materialize="autocomplete" autocomplete="off"
-								name="mudancaFuncao.funcao.nome"
-								[(ngModel)]="mudancaFuncao.funcao.nome"
-								(blur)="autoCompleteFuncao.getAutocomplete().getObj($event,mudancaFuncao,'setFuncao','getNome')"
-								(ngModelChange)="autoCompleteFuncao.getAutocomplete().getList(mudancaFuncao.funcao, 'getNome');"
-								(keydown.enter)="autoCompleteFuncao.getAutocomplete().pressEnter($event,mudancaFuncao,'setFuncao','getNome')"
-								[materializeParams]="autoCompleteFuncao.getAutocomplete().getObjAutoComplete()">
-						</fieldset>
-			    </div>
-				</div>
-				<div class="row col s12">
-				<div class="input-field col s6">
-							<fieldset>
-								<label for="mudancaFuncao.ghe" >GHE</label> 						
-								<input type="text" materialize="autocomplete" autocomplete="off"
-								name="mudancaFuncao.ghe.nome"
-								[(ngModel)]="mudancaFuncao.ghe.nome"
-								(blur)="autoCompleteGhe.getAutocomplete().getObj($event,mudancaFuncao,'setGhe','getNome')"
-								(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(mudancaFuncao.ghe, 'getNome');"
-								(keydown.enter)="autoCompleteGhe.getAutocomplete().pressEnter($event,mudancaFuncao,'setGhe','getNome')"
-								[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
-							</fieldset>
-				</div>
-				<div class="input-field col s6">
-						<fieldset>
-							<label for="ghee">GHEE</label> <input
-								type="text" materialize="autocomplete" autocomplete="off"
-								name="mudancaFuncao.ghee.nome"
-								[(ngModel)]="mudancaFuncao.ghee.nome"
-								(blur)="autoCompleteGhee.getAutocomplete().getObj($event,mudancaFuncao,'setGhee','getNome')"
-								(ngModelChange)="autoCompleteGhee.getAutocomplete().getList(mudancaFuncao.ghee, 'getNome');"
-								(keydown.enter)="autoCompleteGhee.getAutocomplete().pressEnter($event,mudancaFuncao,'setGhee','getNome')"
-								[materializeParams]="autoCompleteGhee.getAutocomplete().getObjAutoComplete()">
-								</fieldset>
-			    </div>	
-				</div>
-				<div class="row col s12">
-					<div class="input-field col s4">
-						<fieldset>
-							<label for="gerencia">Código da Gerência</label> <input
-								type="text" materialize="autocomplete" autocomplete="off"
-								name="mudancaFuncao.gerencia.codigoCompleto"
-								[(ngModel)]="mudancaFuncao.gerencia.codigoCompleto"
-								(blur)="autoCompleteGerencia.getAutocomplete().getObj($event,mudancaFuncao,'setGerencia','getCodigoCompleto')"
-								(ngModelChange)="autoCompleteGerencia.getAutocomplete().getList(mudancaFuncao.gerencia, 'getCodigoCompleto');"
-								(keydown.enter)="autoCompleteGerencia.getAutocomplete().pressEnter($event,mudancaFuncao,'setGerencia','getCodigoCompleto')"
-								[materializeParams]="autoCompleteGerencia.getAutocomplete().getObjAutoComplete()">
-								</fieldset>
-			       </div>
-				   <div class="input-field col s4">
-						<fieldset>
-							<label for="base">Base</label> <input
-								type="text" materialize="autocomplete" autocomplete="off"
-								name="mudancaFuncao.base.nome"
-								[(ngModel)]="mudancaFuncao.base.nome"
-								(blur)="autoCompleteBase.getAutocomplete().getObj($event,mudancaFuncao,'setBase','getNome')"
-								(ngModelChange)="autoCompleteBase.getAutocomplete().getList(mudancaFuncao.base, 'getNome');"
-								(keydown.enter)="autoCompleteBase.getAutocomplete().pressEnter($event,mudancaFuncao,'setBase','getNome')"
-								[materializeParams]="autoCompleteBase.getAutocomplete().getObjAutoComplete()">
-								</fieldset>
-			    </div>
-			     <div class="input-field col s4">
-						<fieldset>
-							<label for="base">Regime</label>
-		    						<select name="regime" class="browser-default"
-									[(ngModel)]="mudancaFuncao.regime.id">
-									<option disabled selected value=0>Selecione um regime</option>
-									<option *ngFor="let regime of regimes" value="{{regime.id}}">{{regime.nome}}</option>
-									</select>
-						</fieldset>
-				</div>
-			    </div>
-			</div>
+					<app-informacao-empregado [idEmpregado]="tarefaMedicinaOcupacional.cliente.id" [service]="mudancaFuncaoService">
+					</app-informacao-empregado>	
+				</div>			
+				<div id="mudancaFuncao">
+				   <app-include-mudanca-funcao [mudancaFuncao]="mudancaFuncao" [desabilitarGhe]="(tarefaHigieneOcupacional.fim != undefined)"
+					[desabilitarGhee]="(tarefaErgonomia.fim != undefined)" [service]="mudancaFuncaoService">
+			       </app-include-mudanca-funcao>
+			  </div>
 			<div id="tarefas">
 			<div class="row">
 
@@ -145,25 +68,50 @@
 				</div>	
 			
 			</div>
+			<div id="agendamento">
+				<div class="row">				
+					<div class="input-field col s4">
+					<label>Agendamento</label>
+					<app-date-picker [nome]="'tarefaMedicinaOcupacional.inicio'" 
+									[customDate]="tarefaMedicinaOcupacional.inicioCustomDate" 									
+									[legenda]="'Agendamento'"									
+									></app-date-picker>
+				    </div>
+				
+				</div>
+			</div>
 		</div>
-
-		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
-				[msg]="msgError"></app-mensagem-form>
-		</div>
-
-
 		<div class='row row-btns'>
 		
-			<div class="col s6">
+			<div class="col s3">
 				<a [routerLink]="['/mudanca-funcao']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			
-			<div class="col s6 btn-salvar">
+			<div class="col s3">
+				<a (click)="solicitarConvocacao()" class="btn btn-primary btn-salvar" 
+				[class.disabled]="(profissional.equipe.abreviacao !='MED' || 
+				tarefaErgonomia.fim == undefined || 
+				tarefaHigieneOcupacional.fim == undefined)">Solicitar Convocação</a>
+			</div>
+			
+			<div class="col s3">
+				<a (click)="aplicarAlteracao()" class="btn btn-primary btn-salvar" 
+				[class.disabled]="(profissional.equipe.abreviacao !='MED' || 
+				tarefaErgonomia.fim == undefined || 
+				tarefaHigieneOcupacional.fim == undefined ||
+				tarefaMedicinaOcupacional.fim == undefined
+				)">Aplicar Alterações</a>
+			</div>
+			
+			<div class="col s3 btn-salvar">
 				<button type="submit" class="btn btn-primary btn-salvar right">salvar</button>
 			</div>			
 		</div>
 	</div>
-
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
 	</form>
+	
 </div>
