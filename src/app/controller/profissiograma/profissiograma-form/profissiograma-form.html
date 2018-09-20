@@ -79,7 +79,7 @@
 				</div>
 			</div>
 
-			<div class="input-field col s4">
+			<div class="input-field col s5">
 				<div class="collection">
 
 					<fieldset>
@@ -117,11 +117,11 @@
 									{{grupoMonitoramentoExame.exame.codigo}} -
 									{{grupoMonitoramentoExame.exame.descricao}} </a>
 							</div>
-							<div class="col s5">
+							<div class="col s4">
 								<select class="browser-default"
 									name="grupoMonitoramentoExame[{{gME}}].periodicidade"
 									[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
-									<option selected value=0>Selecione uma periodicidade</option>
+									<option selected value=0>periodicidade</option>
 									<option *ngFor="let periodicidade of periodicidades"
 										value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
 								</select>
@@ -144,7 +144,7 @@
 			</div>
 
 
-			<div class="input-field col s4">
+			<div class="input-field col s3">
 				<div class="collection">
 
 					<fieldset>
@@ -157,7 +157,7 @@
 						</legend>
 						<div class="row select">
 
-							<div class="input-field col s4">
+							<div class="input-field col s2">
 								<select class="browser-default" #criterio>
 									<option disabled selected value=0>Selecione um critério</option>
 									<option *ngFor="let criterio of criterios"
