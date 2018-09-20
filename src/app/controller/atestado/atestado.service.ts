@@ -10,6 +10,12 @@ import { EmpregadoService } from './../empregado/empregado.service';
 import { CatService } from './../cat/cat.service';
 import { DiagnosticoService } from './../diagnostico/diagnostico.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
+import { UsuarioService } from './../usuario/usuario.service';
+import { EquipeService } from './../equipe/equipe.service';
+import { TarefaService } from './../tarefa/tarefa.service';
+import { FeriadoService } from './../feriado/feriado.service';
+import { ServicoService } from './../servico/servico.service';
+import { MotivoRecusaAtestadoService } from './../motivo-recusa-atestado/motivo-recusa-atestado.service';
 
 @Injectable()
 export class AtestadoService extends GenericService {
@@ -18,8 +24,22 @@ export class AtestadoService extends GenericService {
             private empregadoService: EmpregadoService,
             private catService: CatService,
             private diagnosticoService: DiagnosticoService,
-            private profissionalService: ProfissionalSaudeService) { 
+            private profissionalService: ProfissionalSaudeService,
+            private usuarioService: UsuarioService,
+            private equipeService: EquipeService,
+            private tarefaService: TarefaService,
+            private feriadoService: FeriadoService,
+            private servicoService: ServicoService,
+            private motivoRecusaAtestadoService: MotivoRecusaAtestadoService) { 
         super(http,router,"atestado");
+    }
+    
+    getUsuario( id: number ) {
+        return this.usuarioService.get( id );
+    }
+
+    getProfissional( profissionalFilter ) {
+        return this.profissionalService.list( profissionalFilter );
     }
     
     getAtestados() {
@@ -34,16 +54,16 @@ export class AtestadoService extends GenericService {
     }
     
     getAnexo( id: number ) {
-        let urlGetAnexo = GlobalVariable.BASE_API_URL + "/atestado/get-anexo";
+        let urlGetAnexo = this.URL + "/get-atestado";
         return this.http
             .post( urlGetAnexo, id, { headers: this.headers } )
             .toPromise();
     }
     
-    getSituacaoEmpregado() {
-        let urlSituacaoEmpregado = GlobalVariable.BASE_API_URL + "/generic/situacao-empregado";
+    getRelatorioMedico( id: number ) {
+        let urlGetRelatorioMedico = this.URL + "/get-relatorio-medico";
         return this.http
-            .get( urlSituacaoEmpregado+"?filter=", { headers: this.headers } )
+            .post( urlGetRelatorioMedico, id, { headers: this.headers } )
             .toPromise();
     }
     
@@ -63,11 +83,45 @@ export class AtestadoService extends GenericService {
         return this.profissionalService;
     }
     
-    getListRegime(aF) {
-        let urlListRegime = GlobalVariable.BASE_API_URL + "/atestado/list-regime";
+    getListAll(aF) {
+        let urlListAll = this.URL + "/list-all";
         return this.http
-            .post( urlListRegime, aF, { headers: this.headers } )
+            .post( urlListAll, aF, { headers: this.headers } )
             .toPromise();
+    }
+    
+    getEquipeService() {
+        return this.equipeService;
+    }
+    
+    getTarefaService() {
+        return this.tarefaService;
+    }
+    
+    getFeriadoService() {
+        return this.feriadoService;
+    }
+    
+    cancelarAgendamento(atestado) {
+        let urlCancelarAgendamento = this.URL + "/cancelar-agendamento";
+        return this.http
+            .post( urlCancelarAgendamento, atestado, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    recalcularLimitesDatas(atestado) {
+        let urlRecalcularLimites = this.URL + "/recalcular-limites-datas";
+        return this.http
+            .post( urlRecalcularLimites, atestado, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getServicoService() {
+        return this.servicoService;
+    }
+    
+    getMotivoRecusaService( ){
+        return this.motivoRecusaAtestadoService;
     }
     
 }

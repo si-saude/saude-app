@@ -104,7 +104,6 @@ export abstract class GenericAtestadoComponent {
     }
 
     salvar( atestado: Atestado ) {
-        atestado.setHomologacaoAtestado( undefined );
         this.solicitacaoServicoService.registrarAtestado( atestado )
             .then( res => {
                 this.showConfirmSave = true;

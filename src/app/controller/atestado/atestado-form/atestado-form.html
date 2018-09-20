@@ -14,256 +14,442 @@
 
 		<div class="row">
 
-			<div class="row" *ngIf="edit">
-				<h6>
-					<b>Serviço: {{atestado.tarefa.servico.nome}} - Cliente:
-						{{atestado.tarefa.cliente.pessoa.nome}}</b>
-				</h6>
+			<div class="row">
+				<div class="col s3">
+					<b>Atestado</b>
+					<a (click)="getAnexo()" style="cursor: pointer"> 
+						<i class="small material-icons icon">file_download</i>
+					</a>
+				</div>
+				<div class="col s3">
+					<b>Relatório Médico</b>
+					<a (click)="getRelatorioMedico()" style="cursor: pointer"> 
+						<i class="small material-icons icon">file_download</i>
+					</a>
+				</div>
+				<div class="col s6">
+					<b>Empregado:
+						{{atestado.empregado.pessoa.nome}}</b><br>
+						<b>Status:{{atestado.status}}</b><br>
+						<b>Identificador: {{atestado.id}}</b><br>
+					<b style="color: red" *ngIf="atestado.impossibilidadeLocomocao">Impossibilidade de Locomoção</b><br>
+				</div>
 			</div>
 
 			<ul class="tabs" materialize="tabs">
-				<li class="tab col s6"><a RouterLinkActive="active"
-					href="#dadosGerais">Dados Gerais</a></li>
-				<li class="tab col s6"><a RouterLinkActive="active"
-					href="#homologacaoAtestado">Homologação do Atestado</a></li>
+				<li class="tab col s3" [ngClass]="disabledTab('analiseAdministrativa')">
+					<a href="#analiseAdministrativa">ANÁLISE ADMINISTRATIVA</a>
+				</li>
+				<li class="tab col s2" [ngClass]="disabledTab('analiseTecnica')">
+					<a href="#analiseTecnica">ANÁLISE TÉCNICA</a>
+				</li>
+				<li class="tab col s2" [ngClass]="disabledTab('arquivo')">
+					<a href="#arquivo">ARQUIVO</a>
+				</li>
+				<li class="tab col s2">
+					<a href="#historico">HISTÓRICO</a>
+				</li>
+				<li class="tab col s3">
+					<a class="active" href="#informacoesComplementares">INFORMAÇÕES COMPLEMENTARES</a>
+				</li>
 			</ul>
 
-			<div class="groups">
-				<div id="dadosGerais">
-					<div class="row" *ngIf="!edit">
-						<div class="input-field col s12">
-							<label for="empregado">Empregado</label> <input required
-								type="text" materialize="autocomplete" autocomplete="off"
-								name="atestado.tarefa.cliente.pessoa.nome"
-								[(ngModel)]="atestado.tarefa.cliente.pessoa.nome"
-								(blur)="autoCompleteEmp.getAutocomplete().getObj($event,atestado.tarefa,'setCliente','getNome')"
-								(ngModelChange)="autoCompleteEmp.getAutocomplete().getList(atestado.tarefa.cliente, 'getNome');"
-								(keydown.enter)="autoCompleteEmp.getAutocomplete().pressEnter($event,atestado.tarefa,'setCliente','getNome');"
-								[materializeParams]="autoCompleteEmp.getAutocomplete().getObjAutoComplete()">
-						</div>
+			<div id="analiseAdministrativa">
+				<div class="row">
+					<div class="input-field col s3">
+						<fieldset>
+							<legend> Equipe </legend>
+							<select name="equipe" class="browser-default"
+								(change)="changeEquipe($event)" 
+								[required]="atestado.tarefa.id == undefined || atestado.tarefa.id == 0"
+								[disabled]="atestado.tarefa.id > 0"
+								[(ngModel)]="atestado.tarefa.equipe.id">
+								<option disabled selected value="0">Selecione uma equipe</option>
+								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="input-field col s3">
+						<label style="color: red" for="dataInicio">Data Limite para Auditar</label>
+						<input style="color: red" name="dataLimiteAuditar" disabled
+							[(ngModel)]="atestado.dataLimiteAuditarCustomDate.appDate">
 					</div>
 
-					<div class="row">
-						<div class="input-field col s3 checkbox">
-							<input type="checkbox" id="atestado.impossibilidadeLocomocao"
-								[(ngModel)]="atestado.impossibilidadeLocomocao"
-								name="atestado.impossibilidadeLocomocao"> <label
-								for="atestado.impossibilidadeLocomocao">Impossibilidade
-								de Locomoção</label>
-						</div>
-
-						<div class="input-field col s3 checkbox">
-							<input type="checkbox" id="atestado.lancadoSap"
-								[(ngModel)]="atestado.lancadoSap" name="atestado.lancadoSap">
-							<label for="atestado.lancadoSap">Lançado SAP</label>
-						</div>
-
-						<div class="input-field col s3 checkbox">
-							<input type="checkbox" id="atestado.atestadoFisicoRecebido"
-								[(ngModel)]="atestado.atestadoFisicoRecebido"
-								name="atestado.atestadoFisicoRecebido"> <label
-								for="atestado.atestadoFisicoRecebido">Atestado Físico
-								Recebido</label>
-						</div>
-
-						<div class="input-field col s3 checkbox">
-							<input type="checkbox" id="atestado.controleLicenca"
-								[(ngModel)]="atestado.controleLicenca"
-								name="atestado.controleLicenca"> <label
-								for="atestado.controleLicenca">Controle Licença</label>
-						</div>
-
+					<div class="input-field col s3">
+						<label style="color: red" for="dataInicio">Data Limite do Agendamento</label>
+						<input style="color: red" name="dataLimiteAgendamento" disabled
+							[(ngModel)]="atestado.dataLimiteAgendamentoCustomDate.appDate">
 					</div>
-
-					<div class="row">
-
-						<div class="input-field col s2">
-							<label for="numeroDias">Número de Dias</label> <input
-								id="numeroDias" type="number" name="numeroDias"
-								[(ngModel)]="atestado.numeroDias">
-						</div>
-
-						<div class="input-field col s3">
-							<label for="dataInicio">Início</label>
-							<app-date-picker [nome]="'inicio'" 
-									[customDate]="atestado.tarefa.inicioCustomDate" 
-									[obrigatorio]="'false'"
-									[legenda]="'Início'"									
-									></app-date-picker>
-						</div>
-						<div class="input-field col s4">
-							<fieldset>
-								<legend> Status </legend>
-								<select name="status" class="browser-default"
-									[(ngModel)]="atestado.status">
-									<option disabled selected value="undefined">Selecione um status</option>
-									<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
-								</select>
-							</fieldset>
-						</div>
-
-					</div>
-
-					<div class="row">
-						<div class="input-field col s3">
-							<label for="dataSolicitacao">Data de Solicitação</label>
-							<app-date-picker [nome]="'dataSolicitacao'" 
-									[customDate]="atestado.dataSolicitacaoCustomDate" 
-									[obrigatorio]="'false'"
-									[legenda]="'Data de Solicitação'"									
-									></app-date-picker>
-						</div>
-
-						<div class="input-field col s3">
-							<label for="dataAgendamento">Data de Agendamento</label>
-							<app-date-picker [nome]="'dataAgendamento'" 
-									[customDate]="atestado.dataAgendamentoCustomDate" 
-									[obrigatorio]="'false'"
-									[legenda]="'Data de Agendamento'"									
-									></app-date-picker>
-						</div>
-
-						<div class="input-field col s6">
-							<label for="numeroCat">Número da CAT</label> <input type="text"
-								materialize="autocomplete" autocomplete="off"
-								name="atestado.cat.numero" [(ngModel)]="atestado.cat.numero"
-								(blur)="autoCompleteCat.getAutocomplete().getObj($event,atestado,'setCat','getNumero')"
-								(ngModelChange)="autoCompleteCat.getAutocomplete().getList(atestado.cat, 'getNumero');"
-								(keydown.enter)="autoCompleteCat.getAutocomplete().pressEnter($event,atestado,'setCat','getNumero');"
-								[materializeParams]="autoCompleteCat.getAutocomplete().getObjAutoComplete()">
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="input-field col s12">
-							<label for="profissional">Profissional que Realizou a
-								Visita</label> <input type="text" materialize="autocomplete"
-								autocomplete="off" name="atestado.profissional"
-								[(ngModel)]="atestado.profissionalRealizouVisita.empregado.pessoa.nome"
-								(blur)="autoCompleteProfissional.getAutocomplete().getObj($event,atestado,'setProfissionalRealizouVisita','getNome')"
-								(ngModelChange)="autoCompleteProfissional.getAutocomplete().getList(atestado.profissionalRealizouVisita, 'getNome');"
-								(keydown.enter)="autoCompleteProfissional.getAutocomplete().pressEnter($event,atestado,'setProfissionalRealizouVisita','getNome');"
-								[materializeParams]="autoCompleteProfissional.getAutocomplete().getObjAutoComplete()">
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="input-field col s4">
-							<label for="tipoBeneficio">Tipo do Benefício</label> <input
-								id="tipoBeneficio" type="text" name="tipoBeneficio"
-								[(ngModel)]="atestado.tipoBeneficio">
-						</div>
-
-						<div class="input-field col s4">
-							<label for="causaAfastamento">Causa do Afastamento</label> <input
-								id="causaAfastamento" type="text" name="causaAfastamento"
-								[(ngModel)]="atestado.causaAfastamento">
-						</div>
-
-						<div class="input-field col s4">
-							<fieldset>
-								<legend> Situação do Empregado </legend>
-								<select name="situacaoEmpregado" class="browser-default"
-									[(ngModel)]="atestado.situacaoEmpregado">
-									<option disabled selected value="undefined">Selecione uma Situação do Empregado</option>
-									<option *ngFor="let situacaoEmpregado of situacaoEmpregados"
-										value="{{situacaoEmpregado}}">
-								{{situacaoEmpregado}}
-							</option>
-								</select>
-							</fieldset>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="input-field col s12">
-							<label for="ultimoContato">Último Contato</label>
-							<textarea class="materialize-textarea" id="descricao"
-								[(ngModel)]="atestado.ultimoContato"
-								name="atestado.ultimoContato"></textarea>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="input-field col s12">
-							<label for="proximoContato">Próximo Contato</label>
-							<textarea class="materialize-textarea" id="descricao"
-								[(ngModel)]="atestado.proximoContato"
-								name="atestado.proximoContato"></textarea>
-						</div>
-					</div>
-
-					<div class="row col s12" *ngIf="!edit">
-						<div class="input-field col s11">
-							<div class="row file-import">
-								<div class="file-field input-field col s12">
-									<div class="btn">
-										<span>Anexo</span> <input id="anexo" type="file" required
-											name="anexo" accept=".zip" #anexo>
-									</div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text">
-									</div>
-								</div>
-							</div>
-						</div>
+					<div class="input-field col s3">
+						<label style="color: red; font-size: small;" for="dataInicio">Data Limite para Lançamento no SAP</label>
+						<input style="color: red" name="dataLimiteLançamentoSap" disabled
+							[(ngModel)]="atestado.dataLimiteLancarCustomDate.appDate">
 					</div>
 				</div>
 
-				<div id="homologacaoAtestado">
-
-					<div class="row" center>
-						<div class="input-field col s3">
-							<label for="dataEntrega">Data da Entrega</label>							
-							<app-date-picker [nome]="'dataEntrega'" 
-									[customDate]="atestado.homologacaoAtestado.dataEntregaCustomDate" 
-									[obrigatorio]="'false'"
-									[legenda]="'Data de Entrega'"									
-									></app-date-picker>
-						</div>
-
-						<div class="input-field col s3">
-							<label for="dataHomologacao">Data da Homologação</label>
-							<app-date-picker [nome]="'dataHomologacao'" 
-									[customDate]="atestado.homologacaoAtestado.dataHomologacaoCustomDate" 
-									[obrigatorio]="'false'"
-									[legenda]="'Data da Homologacao'"									
-									></app-date-picker>
-						</div>
-
+				<div class="row">
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.presencial" disabled
+							[(ngModel)]="atestado.presencial" name="atestado.presencial">
+						<label for="atestado.presencial">Presencial</label>
+					</div>
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="atestado.impossibilidadeLocomocao"
+							[(ngModel)]="atestado.impossibilidadeLocomocao"
+							name="atestado.impossibilidadeLocomocao"> <label
+							for="atestado.impossibilidadeLocomocao">Impossibilidade
+							de Locomoção</label>
 					</div>
 
-					<div class="row">
-						<div class="input-field col s12">
-							<label for="observacao">Observação</label>
-							<textarea class="materialize-textarea" id="observacao"
-								[(ngModel)]="atestado.homologacaoAtestado.observacao"
-								name="atestado.homologacaoAtestado.observacao"></textarea>
-						</div>
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.lancadoSap"
+							[disabled]="atestado.status != 'HOMOLOGADO'"
+							[(ngModel)]="atestado.lancadoSap" name="atestado.lancadoSap">
+						<label for="atestado.lancadoSap">Lançado SAP</label>
 					</div>
-					<div class="row">
-						<div class="input-field col s12">
-							<label for="profissional">Profissional</label> <input type="text"
-								materialize="autocomplete" autocomplete="off"
-								name="atestado.homologacaoAtestado.profissional"
-								[(ngModel)]="atestado.homologacaoAtestado.profissional.empregado.pessoa.nome"
-								(blur)="autoCompleteProfissional.getAutocomplete().getObj($event,atestado.homologacaoAtestado,'setProfissional','getNome')"
-								(ngModelChange)="autoCompleteProfissional.getAutocomplete().getList(atestado.homologacaoAtestado.profissional, 'getNome');"
-								[materializeParams]="autoCompleteProfissional.getAutocomplete().getObjAutoComplete()">
-						</div>
+
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.atestadoFisicoRecebido"
+							[(ngModel)]="atestado.atestadoFisicoRecebido"
+							[disabled]="atestado.status == 'PENDENTE DE ARQUIVAMENTO' || atestado.status == 'ARQUIVADO'"
+							name="atestado.atestadoFisicoRecebido"> <label
+							for="atestado.atestadoFisicoRecebido">Atestado Físico
+							Recebido</label>
+					</div>
+
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="atestado.controleLicenca"
+							[(ngModel)]="atestado.controleLicenca"
+							[disabled]="atestado.status == 'PENDENTE DE ARQUIVAMENTO' || atestado.status == 'ARQUIVADO'"
+							name="atestado.controleLicenca"> <label
+							for="atestado.controleLicenca">Controle Licença</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.aposentadoInss"
+							[(ngModel)]="atestado.aposentadoInss"
+							name="atestado.aposentadoInss"> <label
+							for="atestado.aposentadoInss">Aposentado INSS</label>
+					</div>
+					<div class="input-field col s3">
+						<label for="inicio">Data de Início do Atestado</label>
+						<app-date-picker [nome]="'inicio'"
+							[customDate]="atestado.inicioCustomDate"
+							[obrigatorio]="'false'" [legenda]="'Início'"></app-date-picker>
+					</div>
+					<div class="input-field col s7">
+						<label for="cid">CID</label> 
+						<input type="text" materialize="autocomplete" autocomplete="off" name="atestado.cid"
+							required
+							(click)="clickCid()"
+							[disabled]="atestado.tarefa.equipe == undefined || atestado.tarefa.equipe.id == undefined || atestado.tarefa.equipe.id == 0"
+							[(ngModel)]="atestado.cid.codigo"
+							(blur)="autocompleteDiagnostico.getAutocomplete().getObj($event,atestado,'setCid','getCodigo')"
+							(ngModelChange)="autocompleteDiagnostico.getAutocomplete().getList(atestado.cid, 'getCodigo');"
+							(keydown.enter)="autocompleteDiagnostico.getAutocomplete().pressEnter($event,atestado,'setCid','getCodigo');"
+							[materializeParams]="autocompleteDiagnostico.getAutocomplete().getObjAutoComplete()">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s2">
+						<label for="numeroDias">Número de Dias</label> 
+						<input (change)="changeNumeroDias($event)"
+							id="numeroDias" type="number" name="numeroDias"
+							[(ngModel)]="atestado.numeroDias">
+					</div>
+					<div class="input-field col s4">
+						<fieldset>
+							<legend> Motivo de Recusa </legend>
+							<select name="motivoRecusa" class="browser-default"
+								[disabled]="atestado.status != 'RECUSADO'"
+								[required]="atestado.status == 'RECUSADO'"
+								[(ngModel)]="atestado.motivoRecusa.id">
+								<option disabled selected value="undefined">Selecione um motivo de recusa</option>
+								<option *ngFor="let motivoRecusa of motivoRecusas"
+									value="{{motivoRecusa.id}}">
+										{{motivoRecusa.descricao}}
+									</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="input-field col s3">
+						<label for="agendamento">Agendamento</label> <input
+							name="atestado.agendamento"
+							[disabled]="!atestado.presencial || atestado.status == 'RECUSADO' || !atestado.tarefa || !atestado.tarefa.equipe || atestado.tarefa.equipe.id == 0"
+							[required]="atestado.presencial && atestado.status != 'RECUSADO' && atestado.previewStatus.includes('ADMINISTRATIVA') "
+							(click)="clickAgendamento()"
+							[(ngModel)]="atestado.agendamento.inicioCustomDate.appDate"
+							type="text" />
+					</div>
+					<div class="col s3" style="margin-top: 35px">
+						<button (click)="cancelarAgendamento()" type='button'
+							[disabled]="atestado.presencial || !atestado.agendamento"
+							class="btn">Cancelar</button>
+					</div>	
+				</div>
+
+				<div class="row">
+					<div class="col s6">
+						<button (click)="recusarAnaliseAdministrativa()" type='button'
+							[disabled]="verifyRecusarAnaliseAdministrativa()"
+							class="btn">Recusar</button>
+					</div>
+					<div class="col s6">
+						<button style='float: right' 
+							(click)="auditar()" [disabled]="verifyAuditar()" type='button'
+							class="btn">Auditar</button>
 					</div>
 				</div>
 			</div>
+
+			<div id="analiseTecnica">
+				
+				<div class="row">
+					<div class="col s12">
+						<b>Profissional:
+							{{atestado.tarefa?.responsavel?.empregado.pessoa.nome}}</b><br> 
+						<b>Equipe Responsável: {{atestado.tarefa?.equipe.nome}}</b><br>
+						<b>Soma de Dias de Atestados: {{atestado.somaDiasAtestados}}</b><br>
+						<b>Datas e CIDs dos Atestados: {{atestado.concatenacaoDatasCids}}</b><br>
+						<b *ngIf="atestado.agendamento.id > 0">Agendamento: 
+							Data de Início: {{atestado.agendamento.inicioCustomDate.appDate}} - 
+							Status: {{atestado.agendamento.status}} - 
+							Responsável: {{atestado.agendamento?.responsavel?.empregado.pessoa.nome}}</b><br>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s2">
+						<label style="color: red; font-size: small;" for="dataLimiteHomologar">Data Limite para Homologar</label>
+						<input style="color: red" name="dataLimiteHomologar" disabled
+							[(ngModel)]="atestado.dataLimiteHomologarCustomDate.appDate">
+					</div>
+					<div class="input-field col s4">
+						<fieldset>
+							<legend> Motivo de Recusa </legend>
+							<select name="motivoRecusaTecnica" class="browser-default" 
+								[disabled]="atestado.status != 'RECUSADO'"
+								[required]="atestado.status == 'RECUSADO'"
+								[(ngModel)]="atestado.motivoRecusa.id">
+								<option disabled selected value="undefined">Selecione um motivo de recusa</option>
+								<option *ngFor="let motivoRecusa of motivoRecusas"
+									value="{{motivoRecusa.id}}">
+										{{motivoRecusa.descricao}}
+									</option>
+							</select>
+						</fieldset>
+					</div>
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="atestado.lancamentoSd2000"
+							[(ngModel)]="atestado.lancamentoSd2000"
+							name="atestado.lancamentoSd2000"> <label
+							for="atestado.lancamentoSd2000">Lançamento SD2000</label>
+					</div>
+					<div class="input-field col s3 checkbox">
+						<input type="checkbox" id="atestado.ausenciaExames"
+							[(ngModel)]="atestado.ausenciaExames" (click)="setAusenciaExames($event)"
+							name="atestado.ausenciaExames"> <label
+							for="atestado.ausenciaExames">Ausência de Exames</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.presencial_analise_tecnica"
+							[(ngModel)]="atestado.presencial"
+							[disabled]="atestado.status != 'ANÁLISE TÉCNICA'"
+							(click)="changePresencialAnaliseTecnica($event)" 
+							name="atestado.presencial_analise_tecnica">
+						<label for="atestado.presencial_analise_tecnica">Presencial</label>
+					</div>
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.aposentadoInss"
+							[(ngModel)]="atestado.aposentadoInss"
+							name="atestado.aposentadoInss"> <label
+							for="atestado.aposentadoInss">Aposentado INSS</label>
+					</div>
+					<div class="input-field col s8">
+						<label for="cid">CID</label> 
+						<input type="text" materialize="autocomplete" autocomplete="off" name="atestado.cid"
+							required
+							(click)="clickCid()"
+							[disabled]="atestado.tarefa.equipe == undefined || atestado.tarefa.equipe.id == undefined || atestado.tarefa.equipe.id == 0"
+							[(ngModel)]="atestado.cid.codigo"
+							(blur)="autocompleteDiagnostico.getAutocomplete().getObj($event,atestado,'setCid','getCodigo')"
+							(ngModelChange)="autocompleteDiagnostico.getAutocomplete().getList(atestado.cid, 'getCodigo');"
+							(keydown.enter)="autocompleteDiagnostico.getAutocomplete().pressEnter($event,atestado,'setCid','getCodigo');"
+							[materializeParams]="autocompleteDiagnostico.getAutocomplete().getObjAutoComplete()">
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="observacao">Observação</label>
+						<textarea class="materialize-textarea" id="observacao"
+							maxlength="2048" [(ngModel)]="atestado.observacao"
+							name="atestado.observacao"></textarea>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s4">
+						<button (click)="recusarAtestado()" type='button'
+							[disabled]="verifyRecusarAtestado()" class="btn">Recusar</button>
+					</div>
+					<div class="col s4">
+						<button (click)="homologarAtestado(); changeStatusExameConvocacao()" type='button'
+							[disabled]="verifyHomologarAtestado()" class="btn">Homologar</button>
+					</div>
+					<div class="col s4">
+						<button (click)="modalExame.openModalExame()" type='button'
+							[disabled]="!statusAlteradoHomologado || atestado.ausenciaExames"
+							class="btn">Exames para Convocação</button>
+					</div>
+				</div>
+
+			</div>
+			
+			<div id="arquivo">
+				<div class="row" style="text-align: center; margin-top: 20px;">
+					<button (click)="arquivar()" type="button"
+						[disabled]="atestado.status != 'PENDENTE DE ARQUIVAMENTO'"
+						class="btn">Arquivar</button>
+				</div>
+			</div>
+
+			<div id="historico">
+				<table class="striped table-historico">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s7">Profissional</th>
+							<th class="col s2">Data</th>
+							<th class="col s3">Status</th>
+						</tr>
+					</thead>
+					<div *ngFor="let historicoAtestado of atestado.historicoAtestados;let i = index">
+						<tbody style="padding: 0;" class="col s12">
+							<tr style="padding: 0;" class="col s12">
+								<td class="col s7 historico-atestado-nome">{{historicoAtestado.profissional.empregado.pessoa.nome}}</td>
+								<td class="col s2 historico-atestado-data">{{historicoAtestado.data | transformDate}}</td>
+								<td class="col s3 historico-atestado-status">{{historicoAtestado.status}}</td>
+							</tr>
+						</tbody>
+					</div>
+
+				</table>
+			</div>
+			
+			<div id="informacoesComplementares">
+				<div class="row">
+					<div class="input-field col s3">
+						<label for="clinica">Clínica</label> 
+						<input disabled
+							id="clinica" type="text" name="clinica"
+							[(ngModel)]="atestado.clinica">
+					</div>
+					<div class="input-field col s3">
+						<label for="contatoMedico">Contato do Médico</label> 
+						<input disabled
+							id="clinica" type="text" name="contatoMedico"
+							[(ngModel)]="atestado.contatoMedico">
+					</div>
+					<div class="input-field col s3">
+						<label for="localAtendimento">Local do Atendimento</label> 
+						<input disabled
+							id="localAtendimento" type="text" name="localAtendimento"
+							[(ngModel)]="atestado.localAtendimento">
+					</div>
+					<div class="input-field col s3">
+						<label for="telefoneExterno">Telefone Externo</label> 
+						<input disabled
+							id="telefoneExterno" type="text" name="telefoneExterno" maxlength="15" 
+							[ngModel]="atestado.telefoneExterno | cellPhone : 'telefoneExterno'"
+							(ngModelChange)="atestado.telefoneExterno=$event"> 
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="atestado.possuiFeriasAgendadas" disabled
+							[(ngModel)]="atestado.possuiFeriasAgendadas" name="atestado.possuiFeriasAgendadas">
+						<label for="atestado.possuiFeriasAgendadas">Possui Férias</label>
+					</div>
+					<div class="input-field col s2">
+						<label for="dataInicioFerias">Início das Férias</label>
+						<input name="dataInicioFerias" disabled
+							[(ngModel)]="atestado.dataInicioFeriasCustomDate.appDate">
+					</div>
+					<div class="input-field col s2">
+						<label for="dataFimFerias">Fim das Férias</label>
+						<input name="dataFimFerias" disabled
+							[(ngModel)]="atestado.dataFimFeriasCustomDate.appDate">
+					</div>
+					<div class="input-field col s2">
+						<label for="dataAuditoria">Data Auditoria</label>
+						<input name="dataAuditoria" disabled
+							[(ngModel)]="atestado.dataAuditoriaCustomDate.appDate">
+					</div>
+					<div class="input-field col s4">
+						<label for="emailExterno">Email Externo</label> 
+						<input disabled
+							id="emailExterno" type="text" name="emailExterno"
+							[(ngModel)]="atestado.emailExterno">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s3">
+						<label style="font-size: small;" for="dataInicioEscalaTrabalho">Data de Início da Escala de Trabalho</label>
+						<input name="dataInicioEscalaTrabalho" disabled
+							[(ngModel)]="atestado.dataInicioEscalaTrabalhoCustomDate.appDate">
+					</div>
+					<div class="input-field col s3">
+						<label style="font-size: small;" for="dataFimEscalaTrabalho">Data de Fim da Escala de Trabalho</label>
+						<input name="dataFimEscalaTrabalho" disabled
+							[(ngModel)]="atestado.dataFimEscalaTrabalhoCustomDate.appDate">
+					</div>
+					<div class="input-field col s3">
+						<label for="regime">Regime</label> 
+						<input disabled id="regime" type="text" name="regime"
+							[(ngModel)]="atestado.regime.nome">
+					</div>
+					<div class="input-field col s2">
+						<label for="numeroDiasInfos">Número de Dias</label> 
+						<input disabled id="numeroDiasInfos" type="text" name="numeroDiasInfos"
+							[(ngModel)]="atestado.numeroDias">
+					</div>
+				</div>
+			
+			</div>
+			
+<!-- 			<div class="row col s12" *ngIf="!edit"> -->
+<!-- 				<div class="input-field col s11"> -->
+<!-- 					<div class="row file-import"> -->
+<!-- 						<div class="file-field input-field col s12"> -->
+<!-- 							<div class="btn"> -->
+<!-- 								<span>Anexo</span> <input id="anexo" type="file" required -->
+<!-- 									name="anexo" accept=".zip" #anexo> -->
+<!-- 							</div> -->
+<!-- 							<div class="file-path-wrapper"> -->
+<!-- 								<input class="file-path validate" type="text"> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+		
 
 			<input id="id" name="id" type="hidden" [(ngModel)]="atestado.id">
 			<input id="version" name="version" type="hidden"
 				[(ngModel)]="atestado.version">
-
+			
 			<div class="mensagem">
 				<app-mensagem-form *ngIf="verifyError" [color]="colorError"
 					[msg]="msgError"></app-mensagem-form>
 			</div>
-
+		
 			<div class='row row-btns'>
 				<div class="col s6">
 					<a [routerLink]="['/atestado']" class="btn btn-primary btn-listar">Listar</a>
@@ -278,3 +464,7 @@
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>
+
+<app-modal-tarefa-simple (tarefa)="setAgendamento($event)"></app-modal-tarefa-simple>
+<app-modal-exame [atestado]="atestado" (exame)="addExame($event)"></app-modal-exame>
+<app-modal-confirm (value)="functionModalConfirm($event)"></app-modal-confirm>
