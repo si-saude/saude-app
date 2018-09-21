@@ -67,7 +67,6 @@ export class AutoComplete<F extends GenericFilter> {
             let info = infos[infos.length - 1].trim();
             this.lastValue = info;
             obj[setMethod]( this.array.find(a => a.getId().toString() == id) );
-            
             this.objAutoComplete = [{'data': {'': null }}];
         }else if(this.lastValue != undefined && this.lastValue != value){
             this.lastValue = value;

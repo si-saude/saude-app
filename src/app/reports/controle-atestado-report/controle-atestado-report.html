@@ -1,0 +1,223 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="list-container">
+
+	<div class="row">
+		<div class="col s1">
+			<a (click)="exportFile()"> <i class="small material-icons icon"
+				(mouseover)="textUtil.showTextToast('Exportar', 4000)"
+				(mouseleave)="textUtil.closeTooltip()">file_download</i>
+			</a>
+		</div>
+	</div>
+	<table class="table table-striped" [mfData]="entities | filterData : filter : typeFilter : value" #mf="mfDataTable">
+	    <thead>
+		    <tr>
+		    	<th style="width: 4%">
+		            <mfDefaultSorter by="nome">Nome do Empregado</mfDefaultSorter>
+		            <input type="text" name="nome" style="width: 90%" 
+							placeholder="filtrar nome" maxlength="400"
+							(input)="selectFilter($event, 'nomeEmpregado')">
+		        </th>
+		        <th style="width: 4%">
+		            <mfDefaultSorter by="matricula">Matricula</mfDefaultSorter>
+		            <input type="text" name="matricula" style="width: 90%" 
+							placeholder="filtrar matricula" maxlength="32"
+							(input)="selectFilter($event, 'matricula')">
+		        </th>
+		    	<th style="width: 4%">
+		    		<mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
+					<i class="small material-icons icon" (click)="dropdown(false, 'gerencia')">arrow_drop_down</i>
+					<div class="div-icon" id="gerencia"></div>
+				</th>
+				<th style="width: 4%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="base">Base</mfDefaultSorter>
+						<div class="div-icon" id="base">
+							<i class="small material-icons icon"  (click)="dropdown(false, 'base')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 2%">
+		            <mfDefaultSorter by="inicioAtestado">Início do Atestado</mfDefaultSorter>
+		            <input type="text" name="inicioAtestado" style="width: 90%" 
+							placeholder="filtrar início do atestado"
+							(input)="selectFilter($event, 'inicioAtestado')">
+		        </th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="fimAtestado">Fim do Atestado</mfDefaultSorter>
+		            <input type="text" name="fimAtestado" style="width: 90%" 
+							placeholder="filtrar fim do atestado"
+							(input)="selectFilter($event, 'fimAtestado')">
+		        </th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="numeroDias">Número de Dias</mfDefaultSorter>
+		            <input type="text" name="numeroDias" style="width: 90%" 
+							placeholder="filtrar número de dias"
+							(input)="selectFilter($event, 'numeroDias')">
+		        </th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="dataRecebimento">Data de Recebimento</mfDefaultSorter>
+		            <input type="text" name="dataRecebimento" style="width: 90%" 
+							placeholder="filtrar data de recebimento"
+							(input)="selectFilter($event, 'dataRecebimento')">
+		        </th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="prazoRecebimento">Prazo de Recebimento</mfDefaultSorter>
+		            <input type="text" name="prazoRecebimento" style="width: 90%" 
+							placeholder="filtrar prazo de recebimento"
+							(input)="selectFilter($event, 'prazoRecebimento')">
+		        </th>
+		        <th style="width: 2%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="recebidoNoPrazo">Recebido no Prazo</mfDefaultSorter>
+						<div class="div-icon" id="recebidoNoPrazo">
+							<i class="small material-icons icon"
+								(click)="dropdown(true, 'recebidoNoPrazo')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+		        <th style="width: 4%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="mesRecebimento">Mês do Recebimento</mfDefaultSorter>
+						<div class="div-icon" id="mesRecebimento">
+							<i class="small material-icons icon"  (click)="dropdown(false, 'mesRecebimento')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="dataEntrega">Data de Entrega</mfDefaultSorter>
+		            <input type="text" name="dataEntrega" style="width: 90%" 
+							placeholder="filtrar data de entrega"
+							(input)="selectFilter($event, 'dataEntrega')">
+		        </th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="dataHomologacao">Data da Homologação</mfDefaultSorter>
+		            <input type="text" name="dataHomologacao" style="width: 90%" 
+							placeholder="filtrar data da homologação"
+							(input)="selectFilter($event, 'dataHomologacao')">
+		        </th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="prazoHomologacao">Prazo de Homologação</mfDefaultSorter>
+		            <input type="text" name="prazoHomologacao" style="width: 90%" 
+							placeholder="filtrar prazo de homologação"
+							(input)="selectFilter($event, 'prazoHomologacao')">
+		        </th>
+		        <th style="width: 4%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="homologadoNoPrazo">Homologado no Prazo</mfDefaultSorter>
+						<div class="div-icon" id="homologadoNoPrazo">
+							<i class="small material-icons icon"
+								(click)="dropdown(true, 'homologadoNoPrazo')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+		        <th style="width: 4%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="mesHomologacao">Mês de Homologação</mfDefaultSorter>
+						<div class="div-icon" id="mesHomologacao">
+							<i class="small material-icons icon"  (click)="dropdown(false, 'mesHomologacao')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 4%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="abreviacaoEquipe">Abreviação da Equipe</mfDefaultSorter>
+						<div class="div-icon" id="abreviacaoEquipe">
+							<i class="small material-icons icon"  (click)="dropdown(false, 'abreviacaoEquipe')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 4%">
+		            <mfDefaultSorter by="tarefaProfissional">Profissional da Tarefa</mfDefaultSorter>
+		            <input type="text" name="tarefaProfissional" style="width: 90%" 
+							placeholder="filtrar profissional da tarefa"
+							(input)="selectFilter($event, 'tarefaProfissional')">
+		        </th>
+				<th style="width: 4%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="atestadoFisicoRecebido">Atestado Físico Recebido</mfDefaultSorter>
+						<div class="div-icon" id="atestadoFisicoRecebido">
+							<i class="small material-icons icon"
+								(click)="dropdown(true, 'atestadoFisicoRecebido')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+				<th style="width: 4%">
+		            <mfDefaultSorter by="observacao">Observação</mfDefaultSorter>
+		            <input type="text" name="observacao" style="width: 90%" 
+							placeholder="filtrar observação"
+							(input)="selectFilter($event, 'observacao')">
+		        </th>
+		        <th style="width: 4%">
+					<div class="row">
+						<mfDefaultSorter class="mleft" by="statusAtestado">Status</mfDefaultSorter>
+						<div class="div-icon" id="statusAtestado">
+							<i class="small material-icons icon"
+								(click)="dropdown(false, 'statusAtestado')">arrow_drop_down</i>
+						</div>
+					</div>
+				</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+		    <tr *ngFor="let item of mf.data; let i = index">
+		    	<td>{{item.nomeEmpregado}}</td>
+		    	<td>{{item.matricula}}</td>
+		    	<td>{{item.gerencia}}</td>
+		    	<td>{{item.base}}</td>
+		    	<td>{{item.inicioAtestado}}</td>
+		    	<td>{{item.fimAtestado}}</td>
+		    	<td>{{item.numeroDias}}</td>
+		    	<td>{{item.dataRecebimento}}</td>
+		    	<td>{{item.prazoRecebimento}}</td>
+		    	<td style="margin-left: 20px;">
+		        	<input type="checkbox" id="item-recebidoNoPrazo" disabled 
+						[(ngModel)]="item.recebidoNoPrazo" name="recebidoNoPrazo"> 
+					<label for="recebidoNoPrazo"></label>
+		        </td>
+		    	<td>{{item.mesRecebimento}}</td>
+		    	<td>{{item.dataEntrega}}</td>
+		    	<td>{{item.dataHomologacao}}</td>
+		    	<td>{{item.prazoHomologacao}}</td>
+		    	<td style="margin-left: 20px;">
+		        	<input type="checkbox" id="item-homologadoNoPrazo" disabled 
+						[(ngModel)]="item.homologadoNoPrazo" name="homologadoNoPrazo"> 
+					<label for="homologadoNoPrazo"></label>
+		        </td>
+    	    	<td>{{item.mesHomologacao}}</td>
+		    	<td style="margin-left: 20px;">{{item.abreviacaoEquipe}}</td>
+		    	<td>{{item.tarefaProfissional}}</td>
+		    	<td style="margin-left: 20px;">
+		        	<input type="checkbox" id="item-atestadoFisicoRecebido" disabled 
+						[(ngModel)]="item.atestadoFisicoRecebido" name="atestadoFisicoRecebido"> 
+					<label for="atestadoFisicoRecebido"></label>
+		        </td>
+		    	<td style="cursor: pointer;" (dblclick)="modalDisplayTextComponent.openModal(item.observacao)">
+		    		{{ item.observacao ? shortText(item.observacao) : ""}}
+		    	</td>
+		    	<td>{{item.statusAtestado}}</td>
+			</tr>
+	    </tbody>
+	</table>
+</div>
+
+<app-modal-display-text></app-modal-display-text>
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
+</div>
+
+<ul id='dropdown' class='dropdown-conteudo'></ul>
+
+<div materialize [materializeParams]="textUtil.toastParams"
+	[materializeActions]="textUtil.globalActions"></div>

@@ -1,0 +1,19 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]" [materializeActions]="modalConfirm">
+
+	<h5 class="title-modal">Confirmação</h5>
+	<p class="paragraph-modal">{{msn}}</p>
+
+	<div class="modal-footer">
+		<a class="waves-effect modal-close modal-close waves-green btn-flat"
+			(click)="cancel()">Cancelar</a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="confirm()">Confirmar</a>
+	</div>
+
+</div>

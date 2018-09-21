@@ -48,17 +48,6 @@ export class AtestadoFormDetailComponent extends GenericFormComponent implements
                     } )
             } );
         this.getStatuses();
-        this.getSituacaoEmpregados();
-    }
-    
-    getSituacaoEmpregados() {
-        this.atestadoService.getSituacaoEmpregado()
-            .then(res => {
-                this.situacaoEmpregados = Object.keys(res.json()).sort();
-            })
-            .catch(error => {
-                console.log("Erro ao buscar a situacao do empregado");
-            })
     }
     
     getStatuses() {

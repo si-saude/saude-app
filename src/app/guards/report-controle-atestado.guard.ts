@@ -7,7 +7,7 @@ import { ChildGuard } from '../generics/child.guard';
 import { AuthService } from '../login/auth.service';
 
 @Injectable()
-export class ReportAtestadoGuard implements CanActivate {
+export class ReportControleAtestadoGuard implements CanActivate {
 
     constructor(
             private authService: AuthService,

@@ -6,7 +6,7 @@ import { GenericService } from './../../generics/generic.service';
 import { InterfaceServiceReport } from './../../interfaces/interface.service.report';
 
 @Injectable()
-export class AtestadoReportService extends GenericService implements InterfaceServiceReport {
+export class ControleAtestadoReportService extends GenericService implements InterfaceServiceReport {
 
     constructor( http: Http, router: Router ) { 
         super(http, router, "atestado");
