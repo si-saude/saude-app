@@ -7,9 +7,11 @@ import { DropdownCommon } from './../interfaces-implementations/dropdown.common'
 import { DropdownCheckbox } from './../interfaces-implementations/dropdown.checkbox';
 import { HttpUtil } from './utils/http.util';
 import { TextUtil } from './utils/text.util';
+import { ModalDisplayTextComponent } from './../includes/modal-display-text/modal-display-text.component';
 
 export class GenericReportComponent<E> {
     @ViewChild( "mf" ) data;
+    @ViewChild( ModalDisplayTextComponent ) modalDisplayTextComponent: ModalDisplayTextComponent;
     
     public entities: Array<E>;
     
@@ -73,6 +75,12 @@ export class GenericReportComponent<E> {
                 .catch(error => {
                     console.log(error);
                 })
+    }
+    
+    shortText(text: string) {
+        if ( text.length > 10 )
+            return text.substr(0, 7)+"...";
+        return text;
     }
     
     dropdown( checkbox: boolean, tipo: string ) {

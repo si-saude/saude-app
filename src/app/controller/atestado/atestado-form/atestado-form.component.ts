@@ -161,6 +161,7 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
         this.getStatuses();
         this.getEquipes();
         this.getMotivoRecusas();
+        this.getStatusesTarefa();
     }
     
     getEquipes() {

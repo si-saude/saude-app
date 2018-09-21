@@ -93,7 +93,7 @@ import { ParteCorpoAtingidaGuard } from './guards/guards-child/parte-corpo-ating
 import { AgenteCausadorGuard } from './guards/guards-child/agente-causador.guard';
 import { NaturezaLesaoGuard } from './guards/guards-child/natureza-lesao.guard';
 import { ReportCatGuard } from './guards/report-cat.guard';
-import { ReportAtestadoGuard } from './guards/report-atestado.guard';
+import { ReportControleAtestadoGuard } from './guards/report-controle-atestado.guard';
 import { ReportAvaliacaoHigieneOcupacionalGuard } from './guards/report-avaliacao-higiene-ocupacional.guard';
 import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisitos-agendamento.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
@@ -198,7 +198,7 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
     AgenteCausadorGuard,
     NaturezaLesaoGuard,
     ReportCatGuard,
-    ReportAtestadoGuard,
+    ReportControleAtestadoGuard,
     AvaliacaoHigieneOcupacionalGuard,
     EnfaseGuard,
     ReportAvaliacaoHigieneOcupacionalGuard,
