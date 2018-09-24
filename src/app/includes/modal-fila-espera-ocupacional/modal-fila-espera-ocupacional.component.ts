@@ -23,6 +23,7 @@ import { IMyDpOptions } from 'mydatepicker';
 import { EmpregadoNomeAutocomplete } from './../../controller/empregado/empregado-nome.autocomplete';
 import { DateUtil } from './../../generics/utils/date.util';
 import { FilaEsperaOcupacionalService } from './../../controller/fila-espera-ocupacional/fila-espera-ocupacional.service';
+import { AtendimentoService } from './../../controller/atendimento/atendimento.service';
 
 @Component( {
     selector: 'app-modal-fila-espera-ocupacional',
@@ -31,7 +32,7 @@ import { FilaEsperaOcupacionalService } from './../../controller/fila-espera-ocu
 } )
 export class ModalFilaEsperaOcupacionalComponent {
 
-    @Input() service;
+    @Input() service: AtendimentoService ;
     @Input() periodo: Date;
     @Input() localizacaoFilter: LocalizacaoFilter;
     @Input() model;
@@ -46,14 +47,18 @@ export class ModalFilaEsperaOcupacionalComponent {
     private empregadoFilter: EmpregadoFilter = new EmpregadoFilter();
     private autoCompleteEmpregado: EmpregadoNomeAutocomplete;
     protected dateUtil: DateUtil;
-
-
+    showConfirmSave;
+    msgConfirmSave;
+    
     constructor( router: Router,
         private filaEsperaOcupacionalService: FilaEsperaOcupacionalService ) {
         this.modalFilaEsperaOcupacional = new EventEmitter<string | MaterializeAction>();
         this.modelParams = [{
             dismissible: true
         }];
+        this.showConfirmSave = false;
+        this.msgConfirmSave = "";
+        
         this.servicos = new ServicoBuilder().initializeList( this.servicos );
         this.filaEsperaOcupacional = new EventEmitter<FilaEsperaOcupacional>();
         this.filter.setServico( new ServicoFilter() );
@@ -75,7 +80,10 @@ export class ModalFilaEsperaOcupacionalComponent {
         this.modalFilaEsperaOcupacional.emit( { action: "modal", params: ['open'] } );
     }
     getServicos() {
-        this.service.getServicos()
+        
+        let servicoFilter: ServicoFilter = new ServicoFilter();
+        servicoFilter.setGrupo("ATENDIMENTO OCUPACIONAL");     
+        this.service.getServicosService().selectList(servicoFilter)
             .then( res => {
                 this.servicos = new ServicoBuilder().cloneList( res.json() );
             } )
@@ -97,25 +105,25 @@ export class ModalFilaEsperaOcupacionalComponent {
     onDestroy() {
         this.modalFilaEsperaOcupacional.emit( { action: "modal", params: ["close"] } );
     }
-
-    buscarFilaEsperasOcupacionais() {
-        if ( this.profissional.getEmpregado().getId() > 0 ) {
-            this.empregadoFilter.setId( this.profissional.getEmpregado().getId() );
-            this.filter.setEmpregado( this.empregadoFilter );
+    
+    addFilaEspera(){
+        this.showConfirmSave = false;
+        if(this.verificarCampos()){
+            this.filaEsperaOcupacionalService.saveModalFilaEsperaOcupacional(this.filter)
+            .then( res => {
+                    this.buscarFilaEsperasOcupacionais();  
+                } )
+                .catch( error => {
+                    this.msgConfirmSave = error._body;
+                    this.buscarFilaEsperasOcupacionais();  
+                    this.showConfirmSave = true;
+                } )
         }
-        if ( this.verificarCampos() ) {
-
-            this.periodo = new Date( this.periodo.toString().replace( "[UTC]", "" ) );
-
-            
-            let dataFim: Date = moment( this.periodo ).add( 1, 'days' ).toDate();
-            let dataInicio: Date = moment( this.periodo ).subtract( 1, 'days' ).toDate();
-            dataInicio = new Date(dataInicio.getFullYear(), dataInicio.getMonth(), dataInicio.getDate(), 0,0,0);
-            console.log(dataInicio);
-            this.filter.setLocalizacao( this.localizacaoFilter );
-            this.filter.getHorarioCheckin().setInicio( dataInicio );
-            this.filter.getHorarioCheckin().setFim( dataFim );
-
+    }
+    
+    
+    buscarFilaEsperasOcupacionais() {
+        if ( this.verificarCampos() ) {         
             this.filaEsperaOcupacionalService.list( this.filter )
                 .then( res => {
                     this.arrayFilaEsperaOcupacional = new FilaEsperaOcupacionalBuilder().cloneList( res.json().list );
@@ -124,13 +132,26 @@ export class ModalFilaEsperaOcupacionalComponent {
                     console.log( "Erro ao buscar a Fila de Espera Ocupacional" );
                 } )
         }
+    }   
+    
+    
+    setFilterFilaEsperaOcupacional(){
+        
+        this.empregadoFilter.setId( this.profissional.getEmpregado().getId());
+        this.filter.setEmpregado( this.empregadoFilter );
+        this.filter.setLocalizacao( this.localizacaoFilter );
+        this.filter.getHorarioCheckin().setInicio( this.periodo );
+        this.filter.getHorarioCheckin().setFim( this.periodo );
+        
     }
 
     verificarCampos() {
         if ( this.filter.getServico().getId() == 0 ||
-            this.filter.getEmpregado().getId() == 0 ) {
-            return false;
-        } else
-            return true;
+             this.profissional.getEmpregado().getId() == 0) {
+             return false;
+        } else {
+            this.setFilterFilaEsperaOcupacional();
+            return true;            
+        }
     }
 }

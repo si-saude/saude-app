@@ -83,3 +83,8 @@ select {
 .center-icon {
 	margin-top: 0px;
 }
+.altura-modal{
+	min-height: 60%;
+}
+
+

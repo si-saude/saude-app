@@ -1,0 +1,54 @@
+.form-container {
+	margin-bottom: 100px;
+}
+
+.cabecalho > h6 {
+	padding-left: 10px;
+	color: #26a69a;
+}
+
+.btn-avancar { 
+	margin-top: 50px;
+    float: right;
+}
+
+.botao-voltar {
+	margin-top: 50px;
+    float: left;
+}
+
+.btn-back {
+	
+}
+
+.row-btns {
+	
+}
+
+.right {
+	float: right;
+}
+
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}

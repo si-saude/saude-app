@@ -8,6 +8,8 @@ import { MudancaFuncaoService } from './mudanca-funcao.service';
 import { MudancaFuncaoFormComponent } from './mudanca-funcao-form/mudanca-funcao-form.component';
 import { MudancaFuncaoFormDetailComponent } from './mudanca-funcao-form/mudanca-funcao-form-detail.component';
 import { MudancaFuncaoRoutingModule } from './mudanca-funcao.routing.module';
+import { IncludeMudancaFuncaoModule } from './../../includes/include-mudanca-funcao/include-mudanca-funcao.module';
+import { InformacaoEmpregadoModule } from './../../includes/informacao-empregado/informacao-empregado.module';
 import { SharedModule } from './../shared.module';
 import { PipesModule } from './../pipes.module';
 
@@ -20,6 +22,8 @@ import { PipesModule } from './../pipes.module';
      imports: [
         MudancaFuncaoRoutingModule,
         PipesModule,
+        IncludeMudancaFuncaoModule,
+        InformacaoEmpregadoModule,
         SharedModule
      ],
      providers: [

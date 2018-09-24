@@ -7,7 +7,7 @@ import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { BooleanFilter } from './../../generics/boolean.filter';
 import { AutoComplete } from './../../generics/utils/autocomplete.util';
 
-export class AtestadoIdAutocomplete {
+export class AtestadoIdCorrecaoAutocomplete {
 
     private autoComplete: AutoComplete<AtestadoFilter>;
 
@@ -39,6 +39,6 @@ export class AtestadoIdAutocomplete {
     }
 
     public getList( service: AtestadoService, aF: AtestadoFilter ) {
-        return service.getListRegime( aF );
+        return service.getListAll( aF );
     }
 }

@@ -33,6 +33,21 @@ export class AtendimentoService extends GenericService {
         super( http, router, "atendimento" );
     }
 
+    getFilaAtendimentoOcupacionalService(){
+        
+       return this.filaAtendimentoOcupacionalService;
+        
+    }
+    getServicosService(){
+        
+        return this.servicoService;
+    }
+    
+    getLocalizacaoService(){
+        
+        return this.localizacaoService;
+    }
+    
     getServicos() {
         return this.servicoService.selectList( new ServicoFilter() );
     }
@@ -70,10 +85,13 @@ export class AtendimentoService extends GenericService {
     getListFilaAtendimentoOcupacional( filaAtendimentoOcupacionalFilter ) {
         return this.filaAtendimentoOcupacionalService.list( filaAtendimentoOcupacionalFilter );
     }
-
-    //    getListFilaEsperaOcupacional( filaEsperaOcupacionalFilter ) {
-    //        return this.filaEsperaOcupacionalService.list( filaEsperaOcupacionalFilter );
-    //    }
+    
+    getComplementoAtendimentoAvulso( atendimento ) {
+        let urlGetComplementoAtendimentoAvulso = this.URL + "/complemento-atendimento-avulso";
+        return this.http
+            .post( urlGetComplementoAtendimentoAvulso, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
 
     entrar( filaAtendimentoOcupacional ) {
         let urlEntrar = this.URL + "/entrar";
@@ -131,6 +149,14 @@ export class AtendimentoService extends GenericService {
             .toPromise();
     }
 
+    finalizarRetroativo( atendimento ) {
+        let urlFinalizar = this.URL + "/finalizar-retroativo";
+        return this.http
+            .post( urlFinalizar, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    
     finalizar( atendimento ) {
         let urlFinalizar = this.URL + "/finalizar";
         return this.http

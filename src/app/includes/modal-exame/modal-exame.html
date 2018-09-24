@@ -1,0 +1,66 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalExame">
+
+	<h5 class="title-modal">Exame</h5>
+	<table class="table table-striped" [mfData]="arrayExames | filterData : filter : typeFilter : value" #mf="mfDataTable">
+		<thead>
+			<tr>
+				<th style="width: 33%">
+		            <label by="codigo">Código</label>
+		            <input type="text" name="codigo" style="width: 90%" 
+							placeholder="filtrar codigo"
+							(input)="selectFilter($event, 'codigo')">
+		        </th>
+		        <th style="width: 33%">
+		            <label by="descricao">Descrição</label>
+		            <input type="text" name="descricao" style="width: 90%" 
+							placeholder="filtrar descrição"
+							(input)="selectFilter($event, 'descricao')">
+		        </th>
+		        <th style="width: 33%">
+		        	<button (click)="fetchExames()" class="btn">Buscar</button>
+		        </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of arrayExames" class="tr-filter" (click)="selectExame(item)">
+				<td>{{item.codigo}}</td>
+				<td colspan='2'>{{item.descricao}}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<div class="table-exames-convocacao">
+		<table style="width: 100%">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Descrição</th>
+					<th>Remover</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let exame of atestado.examesConvocacao; let e = index">
+					<td>{{exame.codigo}}</td>
+					<td>{{exame.descricao}}</td>
+					<td class="col s3 botao-remover">
+						<a class="btn-floating waves-effect waves-light red btn-remove"
+							(click)="removeExame(exame)"> 
+							<i class="material-icons center-icon">delete</i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="modal-footer">
+		<a class="waves-effect modal-close modal-close waves-green btn-flat">Fechar</a>
+	</div>
+</div>

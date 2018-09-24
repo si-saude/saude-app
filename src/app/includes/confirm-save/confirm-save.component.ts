@@ -40,9 +40,11 @@ export class ConfirmSaveComponent implements OnInit {
       if ( this.reload ) {
           window.location.reload();
           return;
-      }
-      if ( this.goTo == "$*close*$") 
-          window.close();
+      }      
+      this.modalConfirmSave.emit({action: "modal", params: ["close"]});      
+      if ( this.goTo == "$*close*$") {
+          window.close();         
+      }     
       else this.router.navigate(['/'+this.goTo]);
   }
   

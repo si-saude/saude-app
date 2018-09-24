@@ -31,4 +31,11 @@ export class EquipeService extends GenericService{
       return this.selectList(equipeFilter);
   }
   
+  getMedicinaOdonto() {
+      let urlEquipe = this.URL + "/get-medicina-odonto"
+      return this.http
+          .get( urlEquipe, { headers: this.headers } )
+          .toPromise();
+  }
+  
 }

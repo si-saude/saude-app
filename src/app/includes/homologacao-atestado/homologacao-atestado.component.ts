@@ -33,6 +33,14 @@ export class HomologacaoAtestadoComponent {
         this.params = GlobalVariable.PARAMS_DATE;
     }
     
+    ngOnChanges( changes: SimpleChanges ) {
+        if ( changes["atestado"] != undefined ){
+            this.atestado = changes["atestado"].currentValue;
+            if(!this.atestado.getRegime())
+                this.atestado.setRegime(new RegimeBuilder().initialize(this.atestado.getRegime()));
+        }
+    }
+    
     getRegimes() {
         this.regimeService.getRegimes()
             .then(res => {

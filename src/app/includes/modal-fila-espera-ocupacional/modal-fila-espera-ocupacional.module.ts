@@ -5,9 +5,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { DataTableModule } from "angular2-datatable";
-import { MyDatePickerModule } from 'mydatepicker';
-
 import { ModalFilaEsperaOcupacionalComponent } from './modal-fila-espera-ocupacional.component';
+import { ConfirmSaveModule} from './../confirm-save/confirm-save.module';
 import { PipesModule } from './../../controller/pipes.module';
 
 @NgModule({
@@ -20,8 +19,8 @@ import { PipesModule } from './../../controller/pipes.module';
     FormsModule,
     DataTableModule,
     CommonModule,
-    MyDatePickerModule,
-    RouterModule
+    RouterModule,
+    ConfirmSaveModule
   ],
   exports: [
     ModalFilaEsperaOcupacionalComponent

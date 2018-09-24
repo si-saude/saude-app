@@ -1,4 +1,4 @@
-import { Cargo } from './cargo';
+import { Enfase } from './enfase';
 import { Funcao } from './funcao';
 import { Ghe } from './ghe';
 import { Ghee } from './ghee';
@@ -12,7 +12,7 @@ import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class MudancaFuncao { 
     private id: number = 0;
-    private cargo: Cargo;
+    private enfase: Enfase;
     private funcao: Funcao;
     private ghe: Ghe;
     private ghee: Ghee;
@@ -57,12 +57,12 @@ export class MudancaFuncao {
         this.cliente = cliente;
     }
     
-    getCargo() {
-        return this.cargo;
+    getEnfase() {
+        return this.enfase;
     }
 
-    setCargo(cargo: Cargo) {
-        this.cargo = cargo;
+    setEnfase(enfase: Enfase) {
+        this.enfase = enfase;
     }
 
     setFuncao(funcao: Funcao) {

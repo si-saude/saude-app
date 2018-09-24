@@ -16,6 +16,9 @@ import { DateFilter } from './../../generics/date.filter';
 import { IMyDpOptions } from 'mydatepicker';
 import { DateUtil } from './../../generics/utils/date.util';
 import { GlobalVariable } from './../../../../src/app/global';
+import { AtendimentoService } from './../../controller/atendimento/atendimento.service';
+import { Atendimento } from './../../model/atendimento';
+import { Util } from './../../generics/utils/util';
 
 @Component( {
     selector: 'app-modal-fila-atendimento-ocupacional',
@@ -24,10 +27,11 @@ import { GlobalVariable } from './../../../../src/app/global';
 } )
 export class ModalFilaAtendimentoOcupacionalComponent {
 
-    @Input() service;
-    @Input() model;
+    @Input() service: AtendimentoService;
+    @Input() model : Atendimento;
     @Input() profissional: Profissional;
     @Input() showModalFilaAtendimentoOcupacional: boolean;
+    @Output() setTarefaFilter : EventEmitter<DateFilter> = new EventEmitter();
     filaAtendimentoOcupacional: EventEmitter<FilaAtendimentoOcupacional>;
     private arrayFilaAtendimentoOcupacional: Array<FilaAtendimentoOcupacional>;
     private filter: FilaAtendimentoOcupacionalFilter = new FilaAtendimentoOcupacionalFilter();
@@ -55,6 +59,7 @@ export class ModalFilaAtendimentoOcupacionalComponent {
     ngOnInit() {
         this.arrayFilaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initializeList( new Array<FilaAtendimentoOcupacional>() );
         this.getLocalizacoes();
+
     }
 
     openModalFilaAtendimentoOcupacional() {
@@ -70,10 +75,37 @@ export class ModalFilaAtendimentoOcupacionalComponent {
                 console.log( "Erro ao retornar as localizações." );
             } )
     }
+    
+    setProfissionalFilter(){
+        this.profissionalFilter.setId( this.profissional.getId());
+        this.filter.setProfissional( this.profissionalFilter );        
+    }
+    
+    
+    addFilaAtendimento(){
+        if(this.verificarCampos()){
+            this.setProfissionalFilter();
+            this.service.getFilaAtendimentoOcupacionalService().saveModalFilaAtendimentoOcupacional(this.filter)
+            .then( res => {
+                    this.buscarFilaAtendimentosOcupacionais();                    
+                } )
+                .catch( error => {
+                    console.log( "Erro ao buscar a Fila de Atendimento Ocupacional" );
+                } )
+        }
+    }
 
     selectFilaAtendimentoOcupacional( filaAtendimentoOcupacional: FilaAtendimentoOcupacional ) {
-        this.model.setFilaAtendimentoOcupacional( filaAtendimentoOcupacional );
-        this.modalFilaAtendimentoOcupacional.emit( { action: "modal", params: ['close'] } );
+        this.service.getLocalizacaoService().get(this.filter.getLocalizacao().getId())
+        .then( res => {
+            filaAtendimentoOcupacional.setLocalizacao(new LocalizacaoBuilder().clone(res.json()));
+            this.model.setFilaAtendimentoOcupacional( filaAtendimentoOcupacional );
+            this.modalFilaAtendimentoOcupacional.emit( { action: "modal", params: ['close'] } );
+        } )
+        .catch( error => {
+            console.log( "Erro ao buscar A Localização");
+        } )       
+        
     }
 
     cancelarModalFilaAtendimentoOcupacional() {
@@ -86,10 +118,8 @@ export class ModalFilaAtendimentoOcupacionalComponent {
     }
 
     buscarFilaAtendimentosOcupacionais() {
-        if ( this.verificarCampos() ) {
-            this.profissionalFilter.setId( this.profissional.getId() );
-            console.log(this.filter.getInicio());
-            this.filter.setProfissional( this.profissionalFilter );
+        if ( this.verificarCampos() ) {         
+            this.setProfissionalFilter();
             this.service.getListFilaAtendimentoOcupacional( this.filter )
                 .then( res => {
                     this.arrayFilaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().cloneList( res.json().list );
@@ -101,16 +131,12 @@ export class ModalFilaAtendimentoOcupacionalComponent {
     }
 
     verificarCampos() {
-        if ( ( this.filter.getLocalizacao() == null || this.filter.getLocalizacao().getId() == null ) || this.filter.getLocalizacao() == undefined ||
-            this.filter.getInicio().getInicio() == null || this.filter.getInicio().getInicio() == undefined ||
-            this.filter.getInicio().getFim() == null || this.filter.getInicio().getFim() == undefined ) {
-            return false;
+        if (Util.isNotNull(this.filter.getLocalizacao()) && Util.isNotNull(this.filter.getLocalizacao().getId()) &&
+            Util.isNotNull(this.filter.getInicio().getInicio()) &&Util.isNotNull(this.filter.getInicio().getFim())) {
+                this.setTarefaFilter.emit(this.filter.getInicio());            
+                return true;
         } else
-            return true;
+            return false;
     }
 
-//    
-//    if ( this.filter.getPessoa().getDataNascimento().getFim() !== null &&
-//            this.filter.getPessoa().getDataNascimento().getFim() !== undefined ) {
-//    }
 }

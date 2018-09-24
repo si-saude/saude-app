@@ -11,6 +11,7 @@ import { EmpregadoService } from './../controller/empregado/empregado.service';
 import { GheService } from './../controller/ghe/ghe.service';
 import { GheeService } from './../controller/ghee/ghee.service';
 import { CargoService } from './../controller/cargo/cargo.service';
+import { EnfaseService } from './../controller/enfase/enfase.service';
 import { FuncaoService } from './../controller/funcao/funcao.service';
 import { RegimeService } from './../controller/regime/regime.service';
 import { BaseService } from './../controller/base/base.service';
@@ -29,6 +30,7 @@ export class SolicitacaoServicoService {
             private gerenciaService: GerenciaService,
             private gheService: GheService,
             private cargoService: CargoService,
+            private enfaseService: EnfaseService,
             private funcaoService: FuncaoService,
             private regimeService: RegimeService,
             private gheeService: GheeService,
@@ -99,6 +101,10 @@ export class SolicitacaoServicoService {
     
     getEmpregadoService() {
         return this.empregadoService;
+    }
+    
+    getEnfaseService() {
+        return this.enfaseService;
     }
     
     registrarAtestado( atestado ) {

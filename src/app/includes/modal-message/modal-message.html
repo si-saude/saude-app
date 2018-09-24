@@ -1,0 +1,18 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modal">
+
+	<h5 class="title-modal">{{title}}</h5>
+	<p class="paragraph-modal">{{msg}}</p>
+
+	<div class="modal-footer">
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="closeModal()">Confirmar</a>
+	</div>
+	
+</div>

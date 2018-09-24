@@ -12,6 +12,7 @@ import { EmpregadoFilter } from './../../empregado/empregado.filter';
 import { Profissional } from './../../../model/profissional';
 import { MaterializeAction } from "angular2-materialize";
 
+import { DateFilter } from './../../../generics/date.filter';
 import { FilaAtendimentoOcupacional } from './../../../model/fila-atendimento-ocupacional';
 import { GlobalVariable } from './../../../global';
 import { Atendimento } from './../../../model/atendimento';
@@ -24,6 +25,10 @@ import { DateUtil } from '../../../generics/utils/date.util';
 import { ModalFilaAtendimentoOcupacionalComponent } from './../../../includes/modal-fila-atendimento-ocupacional/modal-fila-atendimento-ocupacional.component';
 import { ModalTarefaComponent } from './../../../includes/modal-tarefa/modal-tarefa.component';
 import { ModalFilaEsperaOcupacionalComponent } from './../../../includes/modal-fila-espera-ocupacional/modal-fila-espera-ocupacional.component';
+import { FichaColetaUtil } from './../../../generics/utils/ficha-coleta.util';
+import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
+import { TriagemUtil } from './../../../generics/utils/triagem.util';
+import { Util } from './../../../generics/utils/util';
 
 @Component( {
     selector: 'app-atendimento-avulso-form',
@@ -36,6 +41,11 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
     private localizacoes: Array<Localizacao>;
     private usuario: Usuario;
     private profissional: Profissional;
+    private atendimentoCarregado;
+    private fichaColetaUtil: FichaColetaUtil;
+    private planejamentoUtil: PlanejamentoUtil;
+    private triagemUtil: TriagemUtil;
+    
     timeActions ;
     @ViewChild( ModalFilaAtendimentoOcupacionalComponent ) modalFilaAtendimento: ModalFilaAtendimentoOcupacionalComponent;
     @ViewChild( ModalFilaEsperaOcupacionalComponent ) modalFilaEspera: ModalFilaEsperaOcupacionalComponent;
@@ -52,6 +62,11 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
         this.timeActions = new EventEmitter<string|MaterializeAction>();
+        this.atendimentoCarregado =  false;
+        this.fichaColetaUtil = new FichaColetaUtil();
+        this.planejamentoUtil = new PlanejamentoUtil();
+        this.triagemUtil = new TriagemUtil();
+        this.atendimentoCarregado = false;
     }
 
     ngOnInit() {
@@ -94,29 +109,68 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
             this.router.navigate( ["/login"] );
         }
 
+    }    
+    setTarefa(event){        
+        this.atendimento.getTarefa().getInicioCustomDate().setAppDate(
+                this.atendimento.getFilaAtendimentoOcupacional().getInicioCustomDate().getAppDate());
+        this.atendimento.getTarefa().getFimCustomDate().setAppDate(
+                this.atendimento.getFilaAtendimentoOcupacional().getInicioCustomDate().getAppDate());   
     }
-
-    save() {        
-//        this.dateUtil = new DateUtil();
-        
-        console.log(new AtendimentoBuilder().clone( this.atendimento ).getTarefa());
-//        console.log(this.atendimento.getTarefa().getFimCustomTime().getAppTime());
-//        let horaMinutos: Date =  this.dateUtil.cloneDate(this.atendimento.getTarefa().getFim());
-//        console.log(horaMinutos);
     
-//        let test : Date = this.dateUtil.cloneDate(this.atendimento.getTarefa().getInicio());
-//        this.atendimento.getTarefa().setFim(test);
-//        this.atendimento.getTarefa().getFim().setHours(horaMinutos.getHours(), horaMinutos.getSeconds());
+    setTarefaFilter(event){
+        if(event != null){
+           let periodo : DateFilter = new DateFilter();
+           periodo= event;     
+           this.modalTarefa.setPeriodoFilter(periodo);           
+        }     
+    }
+    carregarComplementoAtendimento(){ 
+       this.atendimentoCarregado = true;
+        this.atendimento.getTarefa().setResponsavel(new ProfissionalSaudeBuilder().clone(this.profissional));
+        this.showPreload = true;
+        this.atendimentoService.getComplementoAtendimentoAvulso( new AtendimentoBuilder().clone( this.atendimento ) )
+          .then( res => {
+              this.atendimento = new AtendimentoBuilder().clone( res.json() );
+              this.showPreload = false;
+          } )
+          .catch( error => {
+              this.processReturn( false, error );
+          } )
         
-//        this.showPreload = true;
-//        this.canDeactivate = true;
-//        this.atendimentoService.saveAtendimentoAvulso( new AtendimentoBuilder().clone( this.atendimento ) )
-//            .then( res => {
-//                this.processReturn( true, res );
-//            } )
-//            .catch( error => {
-//                this.processReturn( false, error );
-//            } )
+    }
+    save() {        
+        
+        if ( !this.fichaColetaUtil.verifyValidFichaColeta(
+                this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
+            this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+
+        if ( !this.triagemUtil.verifyValidTriagens( this.atendimento.getTriagens() ) ) {
+            this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+
+        if ( !this.planejamentoUtil.verifyPlanejamento( 
+                this.atendimento.getTriagens(), this.profissional.getEquipe().getId() ) ) {
+            this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }     
+        
+        this.showPreload = true;
+        this.canDeactivate = true;
+        this.atendimentoService.finalizarRetroativo(new AtendimentoBuilder().clone( this.atendimento ) )
+            .then( res => {
+                this.msgConfirmSave= "Atendimento finalizado";
+                this.showConfirmSave = true;
+                this.showPreload = false;
+            } )
+            .catch( error => {
+                this.processReturn( false, error );
+            } )
     }
 
 }

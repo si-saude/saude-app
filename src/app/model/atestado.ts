@@ -1,11 +1,12 @@
 import { Profissional } from './profissional';
 import { Tarefa } from './tarefa';
-import { Cat } from './cat';
-import { HomologacaoAtestado } from './homologacao-atestado';
 import { Regime } from './regime';
 import { Empregado } from './empregado';
+import { Diagnostico } from './diagnostico';
 import { MotivoRecusaAtestado } from './motivo-recusa-atestado';
-import { CustomDate} from './../generics/utils/custom-date.util';
+import { Exame } from './exame';
+import { CustomDate } from './../generics/utils/custom-date.util';
+import { HistoricoAtestado } from './historico-atestado';
 
 export class Atestado {
     private id: number;
@@ -18,24 +19,13 @@ export class Atestado {
     private lancadoSap: boolean;
     private atestadoFisicoRecebido: boolean;
     private controleLicenca: boolean;
-    private dataAgendamento: Date;
     private dataSolicitacao: Date;
-    private cat: Cat;
-    private homologacaoAtestado: HomologacaoAtestado;
     private inicio: Date;
     private contatoMedico: string;
     private clinica: string;
     private localAtendimento: string;
     private telefoneExterno: string;
     private emailExterno: string;
-    private cid: string;
-    
-    private tipoBeneficio: string;
-    private causaAfastamento: string; 
-    private profissionalRealizouVisita: Profissional;
-    private ultimoContato: string;
-    private proximoContato: string;
-    private situacaoEmpregado: string;
     
     private aposentadoInss: boolean;
     private presencial: boolean;
@@ -55,7 +45,6 @@ export class Atestado {
     private dataFimFeriasCustomDate: CustomDate = new CustomDate(this.dataFimFerias);
 
     private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
-    private dataAgendamentoCustomDate: CustomDate = new CustomDate(this.dataAgendamento);
     private dataSolicitacaoCustomDate: CustomDate = new CustomDate(this.dataSolicitacao);
 
     private anexoRelatorioMedico: any;
@@ -63,6 +52,33 @@ export class Atestado {
     private limiteAuditar: number;
     private limiteHomologar: number;
     private limiteLancar: number;
+
+    private dataLimiteAuditar: Date;
+    private dataLimiteAgendamento: Date;
+    private dataLimiteLancar: Date;
+    private dataLimiteHomologar: Date;
+    private cid: Diagnostico;
+
+    private dataLimiteAuditarCustomDate: CustomDate = new CustomDate(this.dataLimiteAuditar);
+    private dataLimiteAgendamentoCustomDate: CustomDate = new CustomDate(this.dataLimiteAgendamento);
+    private dataLimiteLancarCustomDate: CustomDate = new CustomDate(this.dataLimiteLancar);
+    private dataLimiteHomologarCustomDate: CustomDate = new CustomDate(this.dataLimiteHomologar);
+    private agendamento: Tarefa;
+    private lancamentoSd2000: boolean;
+
+    private somaDiasAtestados: number;
+    private concatenacaoDatasCids: number;
+    private observacao: string;
+    private fim: Date;
+    private examesConvocacao: Array<Exame>;
+    private ausenciaExames: boolean;
+    private historicoAtestados: Array<HistoricoAtestado>;
+    private profissional: Profissional;
+    private previewStatus: string;
+    private dataAuditoria: Date;
+    private convocado: boolean;
+
+    private dataAuditoriaCustomDate: CustomDate = new CustomDate(this.dataAuditoria);
 
     private version: number;
 
@@ -74,22 +90,6 @@ export class Atestado {
         this.id = id;
     }
     
-    getCid() {
-        return this.cid;
-    }
-    
-    setCid(cid) {
-        this.cid = cid;
-    }
-
-    getCat() {
-        return this.cat;
-    }
-
-    setCat(cat: Cat) {
-        this.cat = cat;
-    }
-
     getNumeroDias() {
         return this.numeroDias;
     }
@@ -178,24 +178,6 @@ export class Atestado {
         this.controleLicenca = controleLicenca;
     }
 
-    getDataAgendamento() {
-        this.dataAgendamento = this.dataAgendamentoCustomDate.getApiDate();
-        return this.dataAgendamento;
-    }
-    
-    setDataAgendamento(dataAgendamento: Date) {
-        this.dataAgendamentoCustomDate.setApiDate(dataAgendamento);
-        this.dataAgendamento = dataAgendamento;
-    }
-    
-    getDataAgendamentoCustomDate(){
-        return this.dataAgendamento;
-    }
-    
-    setDataAgendamentoCustomDate(dataAgendamentoCustomDate: CustomDate){
-        this.dataAgendamentoCustomDate = dataAgendamentoCustomDate;
-    }
-    
     getDataSolicitacao() {
         this.dataSolicitacao = this.dataSolicitacaoCustomDate.getApiDate();
         return this.dataSolicitacao;
@@ -214,68 +196,12 @@ export class Atestado {
         this.dataSolicitacaoCustomDate = dataSolicitacaoCustomDate;
     }
 
-    getTipoBeneficio() {
-        return this.tipoBeneficio;
-    }
-
-    setTipoBeneficio(tipoBeneficio: string) {
-        this.tipoBeneficio = tipoBeneficio;
-    }
-
-    getCausaAfastamento() {
-        return this.causaAfastamento;
-    }
-
-    setCausaAfastamento(causaAfastamento: string) {
-        this.causaAfastamento = causaAfastamento;
-    }
-
-    getProfissionalRealizouVisita() {
-        return this.profissionalRealizouVisita;
-    }
-
-    setProfissionalRealizouVisita(profissionalRealizouVisita: Profissional) {
-        this.profissionalRealizouVisita = profissionalRealizouVisita;
-    }
-
-    getUltimoContato() {
-        return this.ultimoContato;
-    }
-
-    setUltimoContato(ultimoContato: string) {
-        this.ultimoContato = ultimoContato;
-    }
-
-    getProximoContato() {
-        return this.proximoContato;
-    }
-
-    setProximoContato(proximoContato: string) {
-        this.proximoContato = proximoContato;
-    }
-
-    getSituacaoEmpregado() {
-        return this.situacaoEmpregado;
-    }
-
-    setSituacaoEmpregado(situacaoEmpregado: string) {
-        this.situacaoEmpregado = situacaoEmpregado;
-    }
-
     getVersion() {
         return this.version;
     }
 
     setVersion(version: number) {
         this.version = version;
-    }
-    
-    getHomologacaoAtestado() {
-        return this.homologacaoAtestado;
-    }
-
-    setHomologacaoAtestado(homologacaoAtestado: HomologacaoAtestado) {
-        this.homologacaoAtestado = homologacaoAtestado;
     }
     
     getInicio() {
@@ -489,4 +415,199 @@ export class Atestado {
     setMotivoRecusa(motivoRecusa) {
         this.motivoRecusa = motivoRecusa;
     }
+    
+    getDataLimiteAuditar() {
+        this.dataLimiteAuditar = this.dataLimiteAuditarCustomDate.getApiDate();
+        return this.dataLimiteAuditar;
+    }
+
+    setDataLimiteAuditar(dataLimiteAuditar) {
+        this.dataLimiteAuditarCustomDate.setApiDate(dataLimiteAuditar);
+        this.dataLimiteAuditar = dataLimiteAuditar;
+    }
+    
+    getDataLimiteAuditarCustomDate(){
+        return this.dataLimiteAuditar;
+    }
+    
+    setDataLimiteAuditarCustomDate(dataLimiteAuditar: Date){
+        this.dataLimiteAuditar = dataLimiteAuditar;
+    }
+    
+    getDataLimiteAgendamento() {
+        this.dataLimiteAgendamento = this.dataLimiteAgendamentoCustomDate.getApiDate();
+        return this.dataLimiteAgendamento;
+    }
+    
+    setDataLimiteAgendamento(dataLimiteAgendamento) {
+        this.dataLimiteAgendamentoCustomDate.setApiDate(dataLimiteAgendamento);
+        this.dataLimiteAgendamento = dataLimiteAgendamento;
+    }
+    
+    getDataLimiteAgendamentoCustomDate(){
+        return this.dataLimiteAgendamento;
+    }
+    
+    setDataLimiteAgendamentoCustomDate(dataLimiteAgendamento: Date){
+        this.dataLimiteAgendamento = dataLimiteAgendamento;
+    }
+    
+    getDataLimiteLancar() {
+        this.dataLimiteLancar = this.dataLimiteLancarCustomDate.getApiDate();
+        return this.dataLimiteLancar;
+    }
+
+    setDataLimiteLancar(dataLimiteLancar) {
+        this.dataLimiteLancarCustomDate.setApiDate(dataLimiteLancar);
+        this.dataLimiteLancar = dataLimiteLancar;
+    }
+    
+    getDataLimiteLancarCustomDate(){
+        return this.dataLimiteLancar;
+    }
+    
+    setDataLimiteLancarCustomDate(dataLimiteLancar: Date){
+        this.dataLimiteLancar = dataLimiteLancar;
+    }
+    
+    getDataLimiteHomologar() {
+        this.dataLimiteHomologar = this.dataLimiteHomologarCustomDate.getApiDate();
+        return this.dataLimiteHomologar;
+    }
+
+    setDataLimiteHomologar(dataLimiteHomologar) {
+        this.dataLimiteHomologarCustomDate.setApiDate(dataLimiteHomologar);
+        this.dataLimiteHomologar = dataLimiteHomologar;
+    }
+    
+    getDataLimiteHomologarCustomDate(){
+        return this.dataLimiteHomologar;
+    }
+    
+    setDataLimiteHomologarCustomDate(dataLimiteHomologar: Date){
+        this.dataLimiteHomologar = dataLimiteHomologar;
+    }
+
+    getCid() {
+        return this.cid;
+    }
+
+    setCid(cid) {
+        this.cid = cid;
+    }
+    
+    getAgendamento() {
+        return this.agendamento;
+    }
+
+    setAgendamento(agendamento) {
+        this.agendamento = agendamento;
+    }
+    
+    getSomaDiasAtestados() {
+        return this.somaDiasAtestados;
+    }
+
+    setSomaDiasAtestados(somaDiasAtestados) {
+        this.somaDiasAtestados = somaDiasAtestados;
+    }
+
+    getConcatenacaoDatasCids() {
+        return this.concatenacaoDatasCids;
+    }
+
+    setConcatenacaoDatasCids(concatenacaoDatasCids) {
+        this.concatenacaoDatasCids = concatenacaoDatasCids;
+    }
+
+    getObservacao() {
+        return this.observacao;
+    }
+
+    setObservacao(observacao) {
+        this.observacao = observacao;
+    }
+    
+    getLancamentoSd2000() {
+        return this.lancamentoSd2000;
+    }
+    
+    setLancamentoSd2000(lancamentoSd2000) {
+        this.lancamentoSd2000 = lancamentoSd2000;
+    }
+    
+    getFim() {
+        return this.fim;
+    }
+
+    setFim(fim: Date) {
+        this.fim = fim;
+    }
+    
+    getExamesConvocacao() {
+        return this.examesConvocacao;
+    }
+    
+    setExamesConvocacao(examesConvocacao: Array<Exame>) {
+        this.examesConvocacao = examesConvocacao;
+    }
+    
+    getAusenciaExames() {
+        return this.ausenciaExames;
+    }
+    
+    setAusenciaExames(ausenciaExames: boolean) {
+        this.ausenciaExames = ausenciaExames;
+    }
+    
+    getHistoricoAtestados() {
+        return this.historicoAtestados;
+    }
+    
+    setHistoricoAtestados(historicoAtestados: Array<HistoricoAtestado>) {
+        this.historicoAtestados = historicoAtestados;
+    }
+    
+    getProfissional() {
+        return this.profissional;
+    }
+    
+    setProfissional(profissional: Profissional) {
+        this.profissional = profissional;
+    }
+    
+    getPreviewStatus() {
+        return this.previewStatus;
+    }
+    
+    setPreviewStatus(previewStatus: string) {
+        this.previewStatus = previewStatus;
+    }
+    
+    getDataAuditoria() {
+        this.dataAuditoria = this.dataAuditoriaCustomDate.getApiDate();
+        return this.dataAuditoria;
+    }
+
+    setDataAuditoria(dataAuditoria) {
+        this.dataAuditoriaCustomDate.setApiDate(dataAuditoria);
+        this.dataAuditoria = dataAuditoria;
+    }
+    
+    getDataAuditoriaCustomDate(){
+        return this.dataAuditoria;
+    }
+    
+    setDataAuditoriaCustomDate(dataAuditoria: Date){
+        this.dataAuditoria = dataAuditoria;
+    }
+    
+    getConvocado() {
+        return this.convocado;
+    }
+
+    setConvocado(convocado: boolean) {
+        this.convocado = convocado;
+    }
+    
 }

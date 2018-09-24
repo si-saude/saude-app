@@ -74,14 +74,27 @@
 					id="emailExterno" type="text" name="emailExterno" maxlength="64"
 					[(ngModel)]="atestado.emailExterno">
 			</div>
-		</div>
-		
-		<div class="row">
 			<div class="input-field col s4 checkbox">
 				<input type="checkbox" id="atestado.aposentadoInss"
 					[(ngModel)]="atestado.aposentadoInss"
 					name="atestado.aposentadoInss"> <label
 					for="atestado.aposentadoInss">Aposentado INSS</label>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s4">
+				<fieldset>
+					<legend> Regime 
+						<a class="btn-floating waves-effect waves-light green btn-add-fieldset" (click)="getRegimes()"> 
+							<i class="material-icons center-icon">cached</i>
+						</a>
+					</legend>
+					<select name="regime" class="browser-default" [(ngModel)]="atestado.regime.id">
+						<option selected value="0">Nenhum regime</option>
+						<option *ngFor="let regime of regimes" value="{{regime.id}}">{{regime.nome}}</option>
+					</select>
+				</fieldset>
 			</div>
 			<div class="input-field col s3">
 				<label for="dataInicioEscalaTrabalho" style="font-size: 13px;">Data de Início da Escala de Trabalho</label>
@@ -123,22 +136,6 @@
 									[desabilitar]="verifyFerias()"									
 									[legenda]="'Fim'"	
 									></app-date-picker>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="input-field col s4">
-				<fieldset>
-					<legend> Regime 
-						<a class="btn-floating waves-effect waves-light green btn-add-fieldset" (click)="getRegimes()"> 
-							<i class="material-icons center-icon">cached</i>
-						</a>
-					</legend>
-					<select name="regime" class="browser-default" [(ngModel)]="atestado.regime.id">
-						<option selected value="0">Nenhum regime</option>
-						<option *ngFor="let regime of regimes" value="{{regime.id}}">{{regime.nome}}</option>
-					</select>
-				</fieldset>
 			</div>
 		</div>
 		

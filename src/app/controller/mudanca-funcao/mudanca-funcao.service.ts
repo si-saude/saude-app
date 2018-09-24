@@ -10,7 +10,7 @@ import { GerenciaService } from './../gerencia/gerencia.service';
 import { EmpregadoService } from './../empregado/empregado.service';
 import { GheService } from './../ghe/ghe.service';
 import { GheeService } from './../ghee/ghee.service';
-import { CargoService } from './../cargo/cargo.service';
+import { EnfaseService } from './../enfase/enfase.service';
 import { FuncaoService } from './../funcao/funcao.service';
 import { RegimeService } from './../regime/regime.service';
 import { BaseService } from './../base/base.service';
@@ -25,7 +25,7 @@ export class MudancaFuncaoService extends GenericService {
                 private profissionalService: ProfissionalSaudeService,
                 private gerenciaService: GerenciaService,
                 private gheService: GheService,
-                private cargoService: CargoService,
+                private enfaseService: EnfaseService,
                 private funcaoService: FuncaoService,
                 private regimeService: RegimeService,
                 private gheeService: GheeService,
@@ -53,7 +53,25 @@ export class MudancaFuncaoService extends GenericService {
         return this.http
             .get( urlStatus + "?filter=", { headers: this.headers } )
             .toPromise();
-    } 
+    }
+    
+    solicitarConvocacao( mudancafuncao ) {
+        let urlSolicitarConvocacao = this.URL + "/solicitar-convocacao";
+        return this.http
+            .post( urlSolicitarConvocacao, mudancafuncao, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    aplicarAlteracoes( mudancafuncao ) {
+        let urlaplicarAlteracao = this.URL + "/aplicar-alteracoes";
+        return this.http
+            .post( urlaplicarAlteracao, mudancafuncao, { headers: this.headers } )
+            .toPromise();
+    }
+ 
+    getEmpregadoService() {
+        return this.empregadoService;
+    }
     
     getGheService() {
         return this.gheService;
@@ -63,8 +81,8 @@ export class MudancaFuncaoService extends GenericService {
         return this.gerenciaService;
     }
     
-    getCargoService() {
-        return this.cargoService;
+    getEnfaseService() {
+        return this.enfaseService;
     }
     
     getFuncaoService() {

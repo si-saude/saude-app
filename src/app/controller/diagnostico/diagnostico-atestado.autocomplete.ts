@@ -10,11 +10,7 @@ export class DiagnosticoAtestadoAutocomplete{
     
     private autoComplete:AutoComplete<DiagnosticoFilter>;
 
-    constructor(service:DiagnosticoService) {
-        let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
-        diagnosticoFilter.getEixo().setEquipe(new EquipeFilter());
-        diagnosticoFilter.getEixo().getEquipe().setAbreviacao("MED");
-        diagnosticoFilter.getInativo().setValue(2);
+    constructor(service:DiagnosticoService, diagnosticoFilter: DiagnosticoFilter) {
         this.autoComplete = new AutoComplete<DiagnosticoFilter>(
                 diagnosticoFilter,
                 this,
