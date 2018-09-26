@@ -12,6 +12,13 @@ export class ControleAtestadoReportService extends GenericService implements Int
         super(http, router, "atestado");
     }
     
+    getAtestadosByAno(ano: number) {
+        let urlAtestadosByAno = this.URL + "/get-atestados-by-ano";
+        return this.http
+            .post( urlAtestadosByAno, ano, { headers: this.headers } )
+            .toPromise();
+    }
+    
     getEntities() {
         let urlAtestado = this.URL + "/get-atestados";
         return this.http

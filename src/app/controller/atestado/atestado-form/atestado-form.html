@@ -242,6 +242,7 @@
 					</div>
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="atestado.ausenciaExames"
+							[disabled]="atestado.numeroDias < 5"
 							[(ngModel)]="atestado.ausenciaExames" (click)="setAusenciaExames($event)"
 							name="atestado.ausenciaExames"> <label
 							for="atestado.ausenciaExames">Ausência de Exames</label>
@@ -297,7 +298,7 @@
 					</div>
 					<div class="col s4">
 						<button (click)="modalExame.openModalExame()" type='button'
-							[disabled]="!statusAlteradoHomologado || atestado.ausenciaExames"
+							[disabled]="!statusAlteradoHomologado || atestado.ausenciaExames || atestado.numeroDias < 5"
 							class="btn">Exames para Convocação</button>
 					</div>
 				</div>
@@ -336,25 +337,39 @@
 			
 			<div id="informacoesComplementares">
 				<div class="row">
-					<div class="input-field col s3">
-						<label for="clinica">Clínica</label> 
-						<input disabled
-							id="clinica" type="text" name="clinica"
-							[(ngModel)]="atestado.clinica">
-					</div>
-					<div class="input-field col s3">
+					<div class="input-field col s4">
 						<label for="contatoMedico">Contato do Médico</label> 
 						<input disabled
 							id="clinica" type="text" name="contatoMedico"
 							[(ngModel)]="atestado.contatoMedico">
 					</div>
+					<div class="input-field col s4">
+						<label for="emailExterno">Email Externo</label> 
+						<input disabled
+							id="emailExterno" type="text" name="emailExterno"
+							[(ngModel)]="atestado.emailExterno">
+					</div>
 					<div class="input-field col s3">
+						<label for="dataHomologacao">Data Homologação</label>
+						<input name="dataHomologacao" disabled
+							[(ngModel)]="atestado.dataHomologacaoCustomDate.appDate">
+					</div>
+				</div>
+			
+				<div class="row">
+					<div class="input-field col s4">
+						<label for="clinica">Clínica</label> 
+						<input disabled
+							id="clinica" type="text" name="clinica"
+							[(ngModel)]="atestado.clinica">
+					</div>
+					<div class="input-field col s4">
 						<label for="localAtendimento">Local do Atendimento</label> 
 						<input disabled
 							id="localAtendimento" type="text" name="localAtendimento"
 							[(ngModel)]="atestado.localAtendimento">
 					</div>
-					<div class="input-field col s3">
+					<div class="input-field col s4">
 						<label for="telefoneExterno">Telefone Externo</label> 
 						<input disabled
 							id="telefoneExterno" type="text" name="telefoneExterno" maxlength="15" 
@@ -363,31 +378,25 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="input-field col s2 checkbox">
+					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="atestado.possuiFeriasAgendadas" disabled
 							[(ngModel)]="atestado.possuiFeriasAgendadas" name="atestado.possuiFeriasAgendadas">
 						<label for="atestado.possuiFeriasAgendadas">Possui Férias</label>
 					</div>
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<label for="dataInicioFerias">Início das Férias</label>
 						<input name="dataInicioFerias" disabled
 							[(ngModel)]="atestado.dataInicioFeriasCustomDate.appDate">
 					</div>
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<label for="dataFimFerias">Fim das Férias</label>
 						<input name="dataFimFerias" disabled
 							[(ngModel)]="atestado.dataFimFeriasCustomDate.appDate">
 					</div>
-					<div class="input-field col s2">
+					<div class="input-field col s3">
 						<label for="dataAuditoria">Data Auditoria</label>
 						<input name="dataAuditoria" disabled
 							[(ngModel)]="atestado.dataAuditoriaCustomDate.appDate">
-					</div>
-					<div class="input-field col s4">
-						<label for="emailExterno">Email Externo</label> 
-						<input disabled
-							id="emailExterno" type="text" name="emailExterno"
-							[(ngModel)]="atestado.emailExterno">
 					</div>
 				</div>
 				

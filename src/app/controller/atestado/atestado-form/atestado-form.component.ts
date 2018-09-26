@@ -309,6 +309,7 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     
     homologarAtestado( evento ) {
         this.atestado.setStatus("HOMOLOGADO");
+        this.atestado.setDataHomologacao(new Date());
         
         if ( this.atestado.getTarefa() ) {
             this.atestado.getTarefa().setFim(new Date());
@@ -318,6 +319,8 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
         
         if ( this.atestado.getAgendamento() == undefined ) 
             this.atestado.setAgendamento(new TarefaBuilder().initialize(this.atestado.getAgendamento()));
+        
+        this.recalcularLimitesDatas();
     }
     
     verifyHomologarAtestado() {

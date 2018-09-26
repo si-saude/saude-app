@@ -1,9 +1,13 @@
 import { Cat } from './../../model/cat';
 import { GenericBuilder } from './../../generics/generic.builder';
-import { DiagnosticoBuilder } from './../diagnostico/diagnostico.builder';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
-import { FornecedorBuilder } from './../fornecedor/fornecedor.builder';
+import { EmpresaBuilder } from './../empresa/empresa.builder';
 import { GerenciaBuilder } from './../gerencia/gerencia.builder';
+import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
+import { ClassificacaoAfastamentoBuilder } from './../classificacao-afastamento/classificacao-afastamento.builder';
+
+import { DiagnosticoBuilder } from './../diagnostico/diagnostico.builder';
+import { FornecedorBuilder } from './../fornecedor/fornecedor.builder';
 import { ParteCorpoAtingidaBuilder } from './../parte-corpo-atingida/parte-corpo-atingida.builder';
 import { AgenteCausadorBuilder } from './../agente-causador/agente-causador.builder';
 import { NaturezaLesaoBuilder } from './../natureza-lesao/natureza-lesao.builder';
@@ -14,14 +18,13 @@ export class CatBuilder extends GenericBuilder {
     initialize(cat: Cat) {
         cat = new Cat();
         
-        cat.setDiagnostico(new DiagnosticoBuilder().initialize(cat.getDiagnostico()));
         cat.setEmpregado(new EmpregadoBuilder().initialize(cat.getEmpregado()));
-        cat.setEmpresa(new FornecedorBuilder().initialize(cat.getEmpresa()));
+        cat.setEmpresa(new EmpresaBuilder().initialize(cat.getEmpresa()));
         cat.setGerencia(new GerenciaBuilder().initialize(cat.getGerencia()));
-        cat.setParteCorpoAtingida(new ParteCorpoAtingidaBuilder().initialize(cat.getParteCorpoAtingida()));
-        cat.setAgenteCausador(new AgenteCausadorBuilder().initialize(cat.getAgenteCausador()));
-        cat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(cat.getNaturezaLesao()));
-        cat.setBase(new BaseBuilder().initialize(cat.getBase()));
+        cat.setProfissionalCaracterizacao(new ProfissionalSaudeBuilder().initialize(cat.getProfissionalCaracterizacao()));
+        cat.setClassificacao(new ClassificacaoAfastamentoBuilder().initialize(cat.getClassificacao()));
+        cat.setCid(new DiagnosticoBuilder().initialize(cat.getCid()));
+        cat.setProfissionalClassificacao(new ProfissionalSaudeBuilder().initialize(cat.getProfissionalClassificacao()));
         
         return cat;
     }
@@ -47,66 +50,26 @@ export class CatBuilder extends GenericBuilder {
         
         let cloneCat = new Cat();
         cloneCat.setId(this.getValue(cat,"getId"));
-        cloneCat.setNumero(this.getValue(cat, "getNumero"));
-        cloneCat.setAfastamento(this.getValue(cat, "getAfastamento"));
-        cloneCat.setCargo(this.getValue(cat, "getCargo"));
-        cloneCat.setCatSd2000(this.getValue(cat, "getCatSd2000"));
-        cloneCat.setClassificacaoSisin(this.getValue(cat, "getClassificacaoSisin"));
-        cloneCat.setCodigoCartaSindicato(this.getValue(cat, "getCodigoCartaSindicato"));
-        cloneCat.setComunicavelSus(this.getValue(cat, "getComunicavelSus"));
-        cloneCat.setContratado(this.getValue(cat, "getContratado"));
-        cloneCat.setCpf(this.getValue(cat, "getCpf"));
-        cloneCat.setDataAvaliacaoMedica(this.getValue(cat, "getDataAvaliacaoMedica"));
-        cloneCat.setDataComunicacaoSindicato(this.getValue(cat, "getDataComunicacaoSindicato"));
-        cloneCat.setDataEmissaoCat(this.getValue(cat, "getDataEmissaoCat"));
-        cloneCat.setDataNascimento(this.getValue(cat, "getDataNascimento"));
-        cloneCat.setDiaHoraAcidente(this.getValue(cat, "getDiaHoraAcidente"));
-        cloneCat.setFerimentoGraveConformeAnp(this.getValue(cat, "getFerimentoGraveConformeAnp"));
-        cloneCat.setInstalacao(this.getValue(cat, "getInstalacao"));
-        cloneCat.setNome(this.getValue(cat, "getNome"));
-        cloneCat.setNumeroSisin(this.getValue(cat, "getNumeroSisin"));
-        cloneCat.setRegime(this.getValue(cat, "getRegime"));
-        cloneCat.setRegistroSd2000(this.getValue(cat, "getRegistroSd2000"));
-        cloneCat.setRemuneracao(this.getValue(cat, "getRemuneracao"));
-        cloneCat.setRta(this.getValue(cat, "getRta"));
-        cloneCat.setNumeroBeneficio(this.getValue(cat, "getNumeroBeneficio"));
-        cloneCat.setInicioBeneficio(this.getValue(cat, "getInicioBeneficio"));
-        cloneCat.setUltimoDiaTrabalho(this.getValue(cat, "getUltimoDiaTrabalho"));
-        cloneCat.setRetornoTrabalho(this.getValue(cat, "getRetornoTrabalho"));
-        
-        if(this.getValue(cat, "getSexo") == ( "" || undefined ))
-            cloneCat.setSexo(undefined);
-        else
-            cloneCat.setSexo(this.getValue(cat, "getSexo"));
-        
-        if(this.getValue(cat, "getPartesCorpo") == ( "" || undefined) )
-            cloneCat.setPartesCorpo(undefined);
-        else
-            cloneCat.setPartesCorpo(this.getValue(cat, "getPartesCorpo"));
-
-        if(this.getValue(cat, "getGravidade") == ( "" || undefined ) )
-            cloneCat.setGravidade(undefined); 
-        else
-            cloneCat.setGravidade(this.getValue(cat, "getGravidade"));
-
-        if(this.getValue(cat, "getTipoAcidente") == ( "" || undefined ) )
-            cloneCat.setTipoAcidente(undefined);
-        else
-            cloneCat.setTipoAcidente(this.getValue(cat, "getTipoAcidente"));
-        
-        if(this.getValue(cat, "getTipoCat") == ( "" || undefined ) )
-            cloneCat.setTipoCat(undefined);
-        else
-            cloneCat.setTipoCat(this.getValue(cat, "getTipoCat"));
-        
-        if (this.getValue(cat, "getDiagnostico") !== undefined) { 
-            cloneCat.setDiagnostico(
-                    new DiagnosticoBuilder().clone(this.getValue(cat,"getDiagnostico")));
-            if(!this.idGtZero(cloneCat.getDiagnostico()))
-                cloneCat.setDiagnostico(undefined);
-        } else {
-            cloneCat.setDiagnostico(new DiagnosticoBuilder().initialize(null));
-        }
+        cloneCat.setGerenteContrato(this.getValue(cat,"getGerenteContrato"));
+        cloneCat.setTelefoneGerente(this.getValue(cat,"getTelefoneGerente"));
+        cloneCat.setFiscalContrato(this.getValue(cat,"getFiscalContrato"));
+        cloneCat.setTelefoneFiscal(this.getValue(cat,"getTelefoneFiscal"));
+        cloneCat.setDataOcorrencia(this.getValue(cat,"getDataOcorrencia"));
+        cloneCat.setLocal(this.getValue(cat,"getLocal"));
+        cloneCat.setDescricao(this.getValue(cat,"getDescricao"));
+        cloneCat.setEmpregadoServicoCompanhia(this.getValue(cat,"getEmpregadoServicoCompanhia"));
+        cloneCat.setOcorrenciaAmbienteTrabalho(this.getValue(cat,"getOcorrenciaAmbienteTrabalho"));
+        cloneCat.setOcorrenciaTrajeto(this.getValue(cat,"getOcorrenciaTrajeto"));
+        cloneCat.setResponsavelInformacao(this.getValue(cat,"getResponsavelInformacao"));
+        cloneCat.setDataInformacao(this.getValue(cat,"getDataInformacao"));
+        cloneCat.setCaracterizacao(this.getValue(cat,"getCaracterizacao"));
+        cloneCat.setLesaoCorporal(this.getValue(cat,"getLesaoCorporal"));
+        cloneCat.setNexoCausal(this.getValue(cat,"getNexoCausal"));
+        cloneCat.setDataCaracterizacao(this.getValue(cat,"getDataCaracterizacao"));
+        cloneCat.setTempoPrevisto(this.getValue(cat,"getTempoPrevisto"));
+        cloneCat.setFerimentoGrave(this.getValue(cat,"getFerimentoGrave"));
+        cloneCat.setDataClassificacao(this.getValue(cat,"getDataClassificacao"));
+        cloneCat.setVersion(this.getValue(cat,"getVersion"));
         
         if (this.getValue(cat, "getEmpregado") !== undefined) { 
             cloneCat.setEmpregado(
@@ -119,11 +82,11 @@ export class CatBuilder extends GenericBuilder {
         
         if (this.getValue(cat, "getEmpresa") !== undefined) { 
             cloneCat.setEmpresa(
-                    new FornecedorBuilder().clone(this.getValue(cat,"getEmpresa")));
+                    new EmpresaBuilder().clone(this.getValue(cat,"getEmpresa")));
             if(!this.idGtZero(cloneCat.getEmpresa()))
                 cloneCat.setEmpresa(undefined);
         } else {
-            cloneCat.setEmpresa(new FornecedorBuilder().initialize(null));
+            cloneCat.setEmpresa(new EmpresaBuilder().initialize(null));
         }
         
         if (this.getValue(cat, "getGerencia") !== undefined) { 
@@ -135,44 +98,42 @@ export class CatBuilder extends GenericBuilder {
             cloneCat.setGerencia(new GerenciaBuilder().initialize(null));
         }
         
-        if (this.getValue(cat, "getParteCorpoAtingida") !== undefined) { 
-            cloneCat.setParteCorpoAtingida(
-                    new ParteCorpoAtingidaBuilder().clone(this.getValue(cat,"getParteCorpoAtingida")));
-            if(!this.idGtZero(cloneCat.getParteCorpoAtingida()))
-                cloneCat.setParteCorpoAtingida(undefined);
+        if (this.getValue(cat, "getProfissionalCaracterizacao") !== undefined) { 
+            cloneCat.setProfissionalCaracterizacao(
+                    new ProfissionalSaudeBuilder().clone(this.getValue(cat,"getProfissionalCaracterizacao")));
+            if(!this.idGtZero(cloneCat.getProfissionalCaracterizacao()))
+                cloneCat.setProfissionalCaracterizacao(undefined);
         } else {
-            cloneCat.setParteCorpoAtingida(new ParteCorpoAtingidaBuilder().initialize(null));
+            cloneCat.setProfissionalCaracterizacao(new ProfissionalSaudeBuilder().initialize(null));
         }
         
-        if (this.getValue(cat, "getAgenteCausador") !== undefined) { 
-            cloneCat.setAgenteCausador(
-                    new AgenteCausadorBuilder().clone(this.getValue(cat,"getAgenteCausador")));
-            if(!this.idGtZero(cloneCat.getAgenteCausador()))
-                cloneCat.setAgenteCausador(undefined);
+        if (this.getValue(cat, "getClassificacao") !== undefined) { 
+            cloneCat.setClassificacao(
+                    new ClassificacaoAfastamentoBuilder().clone(this.getValue(cat,"getClassificacao")));
+            if(!this.idGtZero(cloneCat.getClassificacao()))
+                cloneCat.setClassificacao(undefined);
         } else {
-            cloneCat.setAgenteCausador(new AgenteCausadorBuilder().initialize(null));
+            cloneCat.setClassificacao(new ClassificacaoAfastamentoBuilder().initialize(null));
         }
         
-        if (this.getValue(cat, "getNaturezaLesao") !== undefined) { 
-            cloneCat.setNaturezaLesao(
-                    new NaturezaLesaoBuilder().clone(this.getValue(cat,"getNaturezaLesao")));
-            if(!this.idGtZero(cloneCat.getNaturezaLesao()))
-                cloneCat.setNaturezaLesao(undefined);
+        if (this.getValue(cat, "getCid") !== undefined) { 
+            cloneCat.setCid(
+                    new DiagnosticoBuilder().clone(this.getValue(cat,"getCid")));
+            if(!this.idGtZero(cloneCat.getCid()))
+                cloneCat.setCid(undefined);
         } else {
-            cloneCat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(null));
+            cloneCat.setCid(new DiagnosticoBuilder().initialize(null));
         }
         
-        if (this.getValue(cat, "getBase") !== undefined) { 
-            cloneCat.setBase(
-                    new BaseBuilder().clone(this.getValue(cat,"getBase")));
-            if(!this.idGtZero(cloneCat.getBase()))
-                cloneCat.setBase(undefined);
+        if (this.getValue(cat, "getProfissionalClassificacao") !== undefined) { 
+            cloneCat.setProfissionalClassificacao(
+                    new ProfissionalSaudeBuilder().clone(this.getValue(cat,"getProfissionalClassificacao")));
+            if(!this.idGtZero(cloneCat.getProfissionalClassificacao()))
+                cloneCat.setProfissionalClassificacao(undefined);
         } else {
-            cloneCat.setBase(new BaseBuilder().initialize(null));
+            cloneCat.setProfissionalClassificacao(new ProfissionalSaudeBuilder().initialize(null));
         }
-        
-        cloneCat.setVersion(this.getValue(cat, "getVersion"));
-        
+
         return cloneCat;
     }
     

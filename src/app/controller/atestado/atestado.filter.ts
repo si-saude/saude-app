@@ -1,8 +1,8 @@
 import { GenericFilter } from './../../generics/generic.filter';
 import { BooleanFilter } from './../../generics/boolean.filter';
-import { EmpregadoFilter } from './../empregado/empregado.filter';
 import { MotivoRecusaAtestadoFilter } from './../motivo-recusa-atestado/motivo-recusa-atestado.filter';
 import { DateFilter } from './../../generics/date.filter';
+import { EmpregadoFilter } from './../empregado/empregado.filter';
 
 export class AtestadoFilter extends GenericFilter {
     private atestadoFisicoRecebido: BooleanFilter;
@@ -13,10 +13,11 @@ export class AtestadoFilter extends GenericFilter {
     private presencial: BooleanFilter;
     private possuiFeriasAgendadas: BooleanFilter;
     private ciente: BooleanFilter;
-    private empregado: EmpregadoFilter;
+    private empregado: EmpregadoFilter = new EmpregadoFilter();;
     private motivoRecusa: MotivoRecusaAtestadoFilter;
     private dataAuditoria: DateFilter;
     private convocado: BooleanFilter;
+    private dataHomologacao: DateFilter;
     
     public getAtestadoFisicoRecebido() {
         return this.atestadoFisicoRecebido;
@@ -89,5 +90,11 @@ export class AtestadoFilter extends GenericFilter {
     }
     public setConvocado(convocado) {
         this.convocado = convocado;
+    }
+    public getDataHomologacao() {
+        return this.dataHomologacao;
+    }
+    public setDataHomologacao(dataHomologacao: DateFilter) {
+        this.dataHomologacao = dataHomologacao;
     }
 }

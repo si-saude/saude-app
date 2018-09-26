@@ -29,7 +29,7 @@ export class GenericReportComponent<E> {
     public countCheckbox: number = 0;
 
     constructor(private service: InterfaceServiceReport,
-            private builder: InterfaceBuilder,
+            protected builder: InterfaceBuilder,
             private nameFileDownload: string) {
         this.entities = builder.initializeList(this.entities);
         this.textUtil = new TextUtil()

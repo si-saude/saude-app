@@ -10,6 +10,20 @@ export class CargoBuilder extends GenericBuilder {
         return cargo;
     }
     
+    initializeList(cargos: Array<Cargo>) {
+        
+        let array:Array<Cargo> = new Array<Cargo>();
+        
+        if(cargos === null || cargos === undefined)
+            cargos = new Array<Cargo>();
+        
+        for (let cargo of cargos) {
+            array.push(this.initialize(cargo));
+        }
+        
+        return array;
+    }
+    
     clone(cargo: Cargo) {
         
         if (cargo === null || cargo === undefined)
@@ -34,4 +48,5 @@ export class CargoBuilder extends GenericBuilder {
         
         return array;
     }
+    
 }

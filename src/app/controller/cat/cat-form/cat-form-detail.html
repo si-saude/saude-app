@@ -13,332 +13,450 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
-
 			<ul class="tabs" materialize="tabs">
-				<li class="tab col s6"><a RouterLinkActive="active"
-					href="#dadosGerais">Dados Gerais</a></li>
-				<li class="tab col s6"><a RouterLinkActive="active"
-					href="#outrasInformacoes">Outras Informações</a></li>
+				<li class="tab col s2"><a RouterLinkActive="active"
+					href="#identificacaoTrabalhador">IDENTIFICAÇÃO DO TRABALHADOR</a></li>
+				<li class="tab col s2"><a RouterLinkActive="active"
+					href="#informacoesPreliminares">INFORMAÇÕES PRELIMINARES</a></li>
+				<li class="tab col s2"><a RouterLinkActive="active"
+					href="#caracterizacao">CARACTERIZAÇÃO</a></li>
+				<li class="tab col s2"><a RouterLinkActive="active"
+					href="#afastamento">AFASTAMENTO</a></li>
+				<li class="tab col s2"><a RouterLinkActive="active" href="#cat">CAT</a></li>
+				<li class="tab col s2"><a RouterLinkActive="active"
+					href="#informacoesComplementares">INFORMAÇÕES COMPLEMENTARES</a></li>
 			</ul>
 
-			<div id="dadosGerais">
+			<table class="table-infos" style="margin-top: 30px">
+				<tr>
+					<th>Nome do Empregado:</th>
+					<td><b>{{cat.empregado.pessoa.nome}}</b></td>
+				</tr>
+			</table>
+
+			<div id="identificacaoTrabalhador">
 
 				<div class="row">
-					<div class="input-field col s5">
-						<label for="numero">Número</label> <input id="numero" type="text" disabled
-							maxlength="16" name="numero" [(ngModel)]="cat.numero">
+					<div class="input-field col s12">
+						<label for="empregado">Empregado</label> <input type="text" disabled
+							name="cat.empregado" [(ngModel)]="cat.empregado.pessoa.nome">
 					</div>
-					
-					<div class="input-field col s4">
-							<label for="numeroBeneficio">Número do Benefício</label> <input id="numeroBeneficio" type="text"
-								maxlength="32" name="numeroBeneficio" [(ngModel)]="cat.numeroBeneficio">
+				</div>
+
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="empresa">Empresa</label> <input type="text"  disabled
+							name="cat.empresa" [(ngModel)]="cat.empresa.nome">
+					</div>
+
+					<div class="input-field col s6">
+						<label for="gerencia">Gerência</label> <input type="text" disabled
+							name="gerencia.codigoCompleto" [(ngModel)]="cat.gerencia.codigoCompleto">
+					</div>
+				</div>
+
+				<fieldset>
+					<legend>Empregado</legend>
+					<div class="row">
+						<div class="input-field col s12">
+							<label for="nome">Nome</label> <input id="nome" type="text"
+								[disabled]="cat.empregado.id > 0" maxlength="400" disabled
+								[(ngModel)]="cat.empregado.pessoa.nome" name="nome">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="input-field col s4">
+							<label for="matricula">Matricula</label> <input id="matricula" disabled
+								type="text" [disabled]="cat.empregado.id > 0" maxlength="32"
+								[(ngModel)]="cat.empregado.matricula" name="matricula">
 						</div>
 
-					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="contratado"  disabled
-							[(ngModel)]="cat.contratado" name="cat.contratado"> <label
-							for="contratado">Contratado</label>
-					</div>
-				</div>
+						<div class="input-field col s4">
+							<label for="chave">Chave</label> <input id="chave" type="text"
+								[disabled]="cat.empregado.id > 0" maxlength="16" disabled
+								[(ngModel)]="cat.empregado.chave" name="chave">
+						</div>
 
-				<div class="row">
-					<div class="input-field col s12">
-						<label for="empregado">Empregado</label> <input
-							type="text" disabled
-							name="autoCompleteEmpregado"
-							[(ngModel)]="cat.empregado.pessoa.nome">
-					</div>
-				</div>
+						<div class="input-field col s4">
+							<label for="cpf">CPF</label> <input id="cpf" type="text"
+								[disabled]="cat.empregado.id > 0" disabled
+								(ngModelChange)="cat.empregado.pessoa.cpf=$event" maxlength="14"
+								[ngModel]="cat.empregado.pessoa.cpf | cpfMask : 'cpf'"
+								name="cpf">
+						</div>
 
-				<div class="row">
-					<div class="input-field col s8">
-						<label for="nome">Nome</label> <input id="nome" type="text"
-							maxlength="256" disabled name="nome"
-							[(ngModel)]="cat.nome">
 					</div>
 
-					<div class="input-field col s4">
-						<label for="dataNascimento">Data de Nascimento</label>
-						<input name="dataNascimento"
-			                   [(ngModel)]="cat.dataNascimentoCustomDate.appDate" disabled
-			                   type="text" />
-					</div>
-				</div>
+					<div class="row">
+						<div class="input-field col s6">
+							<label for="gerencia">Gerência</label> <input type="text"
+								name="gerencia.codigoCompleto"  disabled
+								[(ngModel)]="cat.empregado.gerencia.codigoCompleto">
+						</div>
 
-				<div class="row">
-					<div class="input-field col s8">
-						<label for="cargo">Cargo</label> <input id="cargo" type="text"
-							maxlength="128" disabled name="cargo"
-							[(ngModel)]="cat.cargo">
+						<div class="input-field col s3">
+							<label for="dataNascimento">Data de Nascimento</label>
+							<app-date-picker [nome]="'dataNascimento'"
+								[desabilitar]="true"
+								[customDate]="cat.empregado.pessoa.dataNascimentoCustomDate"
+								[obrigatorio]="'false'" [legenda]="'Data de Nascimento'"></app-date-picker>
+						</div>
+
+						<div class="input-field col s3">
+							<label for="idade">Idade</label> <input id="idade" type="text"
+								disabled [(ngModel)]="cat.empregado.pessoa.idade" name="idade">
+						</div>
 					</div>
 
-					<div class="input-field col s4">
-						<label for="regime">Regime</label> <input id="regime" type="text"
-							maxlength="32" disabled name="regime"
-							[(ngModel)]="cat.regime">
-					</div>
-				</div>
+					<div class="row">
+						<div class="input-field col s6">
+							<fieldset>
+								<legend>
+									Cargo <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getCargos()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
+								<select name="cargo" class="browser-default" disabled
+									[(ngModel)]="cat.empregado.cargo.id">
+									<option disabled selected value="0">Selecione um Cargo</option>
+									<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
+								</select>
+							</fieldset>
+						</div>
 
-				<div class="row">
-					<div class="input-field col s4">
-						<label for="cpf">CPF</label> <input id="cpf" type="text"
-							maxlength="14" disabled [mask]="'cpf'"
-							(ngModelChange)="cat.cpf=$event" maxlength="14"
-							[ngModel]="cat.cpf | cpfMask" name="cargo">
+						<div class="input-field col s6">
+							<fieldset>
+								<legend>
+									Escolaridade <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getEscolaridades()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
+								<select name="vinculo" class="browser-default"
+									disabled
+									[(ngModel)]="cat.empregado.escolaridade">
+									<option disabled selected value="">Selecione uma Escolaridade</option>
+									<option *ngFor="let escolaridade of escolaridades"
+										value="{{escolaridade}}">{{escolaridade}}</option>
+								</select>
+							</fieldset>
+						</div>
 					</div>
 					
-					<div class="input-field col s4">
-						<fieldset>
-							<legend>Base</legend>
-							<select name="base" class="browser-default" disabled [(ngModel)]="cat.base.id">
-								<option disabled selected value="undefined">Selecione um base</option>
-								<option *ngFor="let base of bases" value="{{base.id}}">{{base.nome}}</option>
-							</select>
-						</fieldset>
-					</div>
+					<div class="row">
+						<div class="input-field col s6">
+							<fieldset>
+								<legend>
+									Função <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getFuncoes()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
+								<select name="funcao" class="browser-default"
+									disabled
+									[(ngModel)]="cat.empregado.funcao.id">
+									<option disabled selected value="0">Selecione uma Função</option>
+									<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
+								</select>
+							</fieldset>
+						</div>
 
+						<div class="input-field col s6">
+							<fieldset>
+								<legend>
+									Estado Civíl <a
+										class="btn-floating waves-effect waves-light green btn-add-fieldset"
+										(click)="getEstadosCivis()"> <i
+										class="material-icons center-icon">cached</i>
+									</a>
+								</legend>
+								<select name="vinculo" class="browser-default"
+									disabled
+									[(ngModel)]="cat.empregado.estadoCivil">
+									<option disabled selected value="">Selecione uma Estado Civil</option>
+									<option *ngFor="let estadoCivil of estadosCivis"
+										value="{{estadoCivil}}">{{estadoCivil}}</option>
+								</select>
+							</fieldset>
+						</div>
+
+					</div>
+				</fieldset>
+				
+				<div class="row">
+					<div class="input-field col s8">
+						<label for="gerenteContrato">Gerente do Contrato</label> 
+						<input id="gerenteContrato" type="text" disabled
+							maxlength="128" [(ngModel)]="cat.gerenteContrato" name="gerenteContrato">
+					</div>
 					<div class="input-field col s4">
-						<fieldset>
-							<legend>Sexo</legend>
-							<select name="sexo" class="browser-default" disabled
-								[(ngModel)]="cat.sexo">
-								<option disabled selected value="undefined">Selecione um sexo</option>
-								<option *ngFor="let sexo of sexos" value="{{sexo}}">{{sexo}}</option>
-							</select>
-						</fieldset>
+						<label for="telefoneGerente">Telefone</label>
+						<input id="telefoneGerente" type="text" disabled
+							[ngModel]="cat.telefoneGerente | cellPhone : 'telefoneGerente'"
+							(ngModelChange)="cat.telefoneGerente=$event" 
+							maxlength="16" name="telefoneGerente">
 					</div>
 				</div>
-
+				
+				<div class="row">
+					<div class="input-field col s8">
+						<label for="fiscalContrato">Fiscal do Contrato</label> 
+						<input id="fiscalContrato" type="text" disabled
+							maxlength="128" [(ngModel)]="cat.fiscalContrato" name="fiscalContrato">
+					</div>
+					<div class="input-field col s4">
+						<label for="telefoneFiscal">Telefone</label> 
+						<input id="telefoneFiscal" type="text" disabled
+							[ngModel]="cat.telefoneFiscal | cellPhone : 'telefoneFiscal'"
+							(ngModelChange)="cat.telefoneFiscal=$event" 
+							maxlength="16" name="telefoneFiscal">
+					</div>
+				</div>
 
 			</div>
 
-			<div id="outrasInformacoes">
-
-				<div class="row">
-					<div class="input-field col s12">
-						<label for="RTA">RTA</label> <input id="RTA" type="text" disabled
-							maxlength="64" name="RTA" [(ngModel)]="cat.rta">
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="input-field col s12">
-						<label for="instalacao">Instalação</label> <input id="instalacao" disabled
-							type="text" maxlength="128" name="instalacao"
-							[(ngModel)]="cat.instalacao">
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="input-field col s4">
-						<input name="inicioBeneficio"
-			                   [(ngModel)]="cat.inicioBeneficioCustomDate.appDate" disabled
-			                   type="text" />
-					</div>
-					
-					<div class="input-field col s4">
-						<input name="ultimoDiaTrabalho"
-			                   [(ngModel)]="cat.ultimoDiaTrabalhoCustomDate.appDate" disabled
-			                   type="text" />
-					</div>
-					
-					<div class="input-field col s4">
-						<input name="retornoTrabalho"
-			                   [(ngModel)]="cat.retornoTrabalhoCustomDate.appDate" disabled
-			                   type="text" />
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="input-field col s4">
-						<label for="parteCorpoAtingida">Parte do Corpo Atingida</label> <input
-							type="text" disabled
-							name="autoCompleteParteCorpoAtingida"
-							[(ngModel)]="cat.parteCorpoAtingida.descricao">
-					</div>
-					
-					<div class="input-field col s4">
-						<label for="agenteCausador">Agente Causador</label> <input
-							type="text" disabled
-							name="autoCompleteAgenteCausador"
-							[(ngModel)]="cat.agenteCausador.descricao">
-					</div>
-					
-					<div class="input-field col s4">
-						<label for="naturezaLesao">Natureza da Lesão</label> 
-						<input id="naturezaLesao" name="naturezaLesao" type="text" disabled
-							[(ngModel)]="cat.naturezaLesao.descricao">
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="input-field col s6">
-						<fieldset>
-							<legend>Partes do Corpo</legend>
-							<select name="partesCorpo" class="browser-default" disabled
-								[(ngModel)]="cat.partesCorpo">
-								<option disabled selected value="undefined">Selecione uma parte do corpo</option>
-								<option *ngFor="let parteCorpo of partesCorpo"
-									value="{{parteCorpo}}">{{parteCorpo}}</option>
-							</select>
-						</fieldset>
-					</div>
-					
-					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="afastamento" disabled
-							[(ngModel)]="cat.afastamento" name="cat.afastamento"> <label
-							for="afastamento">Afastamento</label>
-					</div>
-				</div>
-
+			<div id="informacoesPreliminares">
 				<div class="row">
 					<div class="input-field col s3">
-						<label for="numeroSISIN">Número SISIN</label> <input disabled
-							id="numeroSISIN" type="text" maxlength="128" name="numeroSISIN"
-							[(ngModel)]="cat.numeroSisin">
+						<label for="data.dataOcorrencia">Data de Ocorrência</label>
+						<app-date-picker [nome]="'data.dataOcorrencia'" 
+							[desabilitar]="true"
+							[customDate]="cat.dataOcorrenciaCustomDate"
+							[obrigatorio]="'false'" [legenda]="'Data de Ocorrencia'"></app-date-picker>
 					</div>
-
 					<div class="input-field col s3">
-						<label for="classificacaoSISIN">Classificação SISIN</label> <input disabled
-							id="classificacaoSISIN" type="numer" name="classificacaoSISIN"
-							[(ngModel)]="cat.classificacaoSisin">
+						<label>Hora da Ocorrência</label>
+						<input id="hora-dataOcorrencia" name="hora-dataOcorrencia"
+							[(ngModel)]="cat.dataOcorrenciaCustomDate.appTime"
+							materialize="pickatime"  disabled
+							[materializeActions]="timeActions" 
+							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+							class="validate" type="text">
 					</div>
-					
-					<div class="input-field col s6">
-						<label for="diaHoraAcidente">Dia/Hora do Acidente</label>
-						<div>
-							<div class="input-field col s6">
-								<input name="diaHoraAcidente"
-			                   [(ngModel)]="cat.diaHoraAcidenteCustomDate.appDate" disabled
-			                   type="text" />
-							</div>
-							<div class="input-field col s6">
-							<input name="diaHoraAcidente"
-			                   [(ngModel)]="cat.diaHoraAcidenteCustomDate.appTime" disabled
-			                   type="text" />
-			                </div>
-			            </div>
-					</div>
-
-				</div>
-
-				<div class="row">
 					<div class="input-field col s3">
-						<label for="dataEmissaoCat">Data de Emissão da CAT</label>
-						<input name="dataEmissaoCat"
-			                   [(ngModel)]="cat.dataEmissaoCatCustomDate.appDate" disabled
-			                   type="text" />
-					</div>
-				
-					<div class="input-field col s6">
-						<fieldset>
-							<legend>Gravidade</legend>
-							<select name="gravidade" class="browser-default" disabled
-								[(ngModel)]="cat.gravidade">
-								<option disabled selected value="undefined">Selecione uma gravidade</option>
-								<option *ngFor="let gravidade of gravidades"
-									value="{{gravidade}}">{{gravidade}}</option>
-							</select>
-						</fieldset>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="input-field col s3">
-						<label for="dataAvaliacaoMedica">Data da Avaliação Médica</label>
-						<input name="dataAvaliacaoMedica"
-			                   [(ngModel)]="cat.dataAvaliacaoMedicaCustomDate.appDate" disabled
-			                   type="text" />
+						<label for="local">Local</label> 
+						<input id="local" type="text" disabled
+							maxlength="512" [(ngModel)]="cat.local" name="local">
 					</div>
 					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="registroSD2000" disabled
-							[(ngModel)]="cat.registroSd2000" name="cat.registroSD2000">
-						<label for="registroSD2000">Registro SD2000</label>
-					</div>
-
-					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="catSD2000" [(ngModel)]="cat.catSd2000" disabled
-							name="cat.catSD2000"> 
-						<label for="catSD2000">CAT SD2000</label>
+						<input type="checkbox" id="empregadoServicoCompanhia"
+							[(ngModel)]="cat.empregadoServicoCompanhia" disabled
+							name="cat.empregadoServicoCompanhia"> <label
+							for="cat.empregadoServicoCompanhia">Empregado a serviço da companhia?</label>
 					</div>
 				</div>
-
+			
 				<div class="row">
-					<div class="input-field col s6">
-						<fieldset>
-							<legend>Tipo de Acidente</legend>
-							<select name="tipoAcidente" class="browser-default" disabled
-								[(ngModel)]="cat.tipoAcidente">
-								<option disabled selected value="undefined">Selecione uma tipo de acidente</option>
-								<option *ngFor="let tipoAcidente of tipoAcidentes"
-									value="{{tipoAcidente}}">{{tipoAcidente}}</option>
-							</select>
-						</fieldset>
+					<div class="input-field col s3">
+						<label for="data.dataInformacao">Data da Informação</label>
+						<app-date-picker [nome]="'data.dataInformacao'"
+							[desabilitar]="true"
+							[customDate]="cat.dataInformacaoCustomDate"
+							[obrigatorio]="'false'" [legenda]="'Data da Informação'"></app-date-picker>
 					</div>
-
+					<div class="input-field col s3">
+						<label>Hora da Informação</label>
+						<input id="hora-dataInformacao" name="hora-dataInformacao" disabled
+							[(ngModel)]="cat.dataInformacaoCustomDate.appTime"
+							materialize="pickatime" 
+							[materializeActions]="timeActions" 
+							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+							class="validate" type="text">
+					</div>
+					<div class="input-field col s4 checkbox">
+						<input type="checkbox" id="ocorrenciaAmbienteTrabalho" disabled
+							[(ngModel)]="cat.ocorrenciaAmbienteTrabalho"
+							name="cat.ocorrenciaAmbienteTrabalho"> <label
+							for="cat.ocorrenciaAmbienteTrabalho">Ocorrência no ambiente de trabalho?</label>
+					</div>
+				</div>
+			
+				<div class="row">
+					<div class="input-field col s6 checkbox">
+						<input type="checkbox" id="ocorrenciaTrajeto" disabled
+							[(ngModel)]="cat.ocorrenciaTrajeto"
+							name="cat.ocorrenciaTrajeto"> 
+						<label for="cat.ocorrenciaTrajeto">Ocorrência no trajeto trabalho x residência/local de refeição?</label>
+					</div>
 					<div class="input-field col s6">
-						<fieldset>
-							<legend>Tipo do CAT</legend>
-							<select name="tipoCat" class="browser-default" disabled
-								[(ngModel)]="cat.tipoCat">
-								<option disabled selected value="undefined">Selecione uma tipo do cat</option>
-								<option *ngFor="let tipoCat of tipoCats" value="{{tipoCat}}">{{tipoCat}}</option>
-							</select>
-						</fieldset>
+						<label for="responsavelInformacao">Responsável pela Informação</label> 
+						<input id="responsavelInformacao" type="text" disabled
+							maxlength="256" [(ngModel)]="cat.responsavelInformacao" name="responsavelInformacao">
 					</div>
 				</div>
 				
 				<div class="row">
 					<div class="input-field col s12">
-						<label for="dataAvaliacaoMedica">Diagnóstico</label>
-						<input disabled
-							id="cat.diagnostico.descricao" type="text"
-							name="cat.diagnostico.descricao"
-							[(ngModel)]="cat.diagnostico.descricao">
+						<label for="descricao">Descrição/Cinemática da Ocorrência</label>
+						<textarea class="materialize-textarea" id="descricao" maxlength="4096" disabled
+							[(ngModel)]="cat.descricao" name="cat.descricao"></textarea>
 					</div>
 				</div>
-				
-				<div class="row">
-					<div class="input-field col s6">
-						<label for="codigoCartaSindicato">Código da Carta do Sindicato</label> 
-							<input id="codigoCartaSindicato" type="text" maxlength="16" disabled 
-								name="codigoCartaSindicato" [(ngModel)]="cat.codigoCartaSindicato">
-					</div>
-					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="comunicavelSUS" [(ngModel)]="cat.comunicavelSus" disabled
-							name="cat.comunicavelSUS"> 
-						<label for="comunicavelSUS">Comunicável SUS</label>
-					</div>
-					<div class="input-field col s3 checkbox">
-						<input type="checkbox" id="ferimentoGraveConformeANP" [(ngModel)]="cat.ferimentoGraveConformeAnp" disabled
-							name="cat.ferimentoGraveConformeANP"> 
-						<label for="ferimentoGraveConformeANP">Ferimento Grave Conforme ANP</label>
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="input-field col s4">
-						<label for="dataComunicacaoSindicato">Data de Comunicação do Sindicato</label>
-						<input name="dataComunicacaoSindicato"
-			                   [(ngModel)]="cat.dataComunicacaoSindicatoCustomDate.appDate" disabled
-			                   type="text" />
-					</div>
-					<div class="input-field col s3">
-						<label for="remuneracao">Remuneração</label> 
-							<input id="remuneracao" type="number" disabled
-								name="remuneracao" [(ngModel)]="cat.remuneracao">
-					</div>
-					
-					<div class="input-field col s5">
-						<label for="gerencia">Fornecedor</label> <input
-							type="text" disabled
-							name="autoCompleteEmpresa"
-							[(ngModel)]="cat.empresa.razaoSocial">
-					</div>
-					
-				</div>
-
 			</div>
+
+			<div id="caracterizacao">
+				
+				<div class="row">
+					<div class="input-field col s12 checkbox">
+						<input type="checkbox" id="lesaoCorporal" disabled
+							[(ngModel)]="cat.lesaoCorporal"
+							name="cat.lesaoCorporal"> 
+							<label for="cat.lesaoCorporal">
+									Há lesão corporal / perturbação funcional conforme os termos da Lei 8.213/91?
+							</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s3">
+						<label for="data.dataCaracterizacao">Data da Caracterização</label>
+						<app-date-picker [nome]="'data.dataCaracterizacao'"
+							[desabilitar]="true"
+							[customDate]="cat.dataCaracterizacaoCustomDate"
+							[obrigatorio]="'false'" [legenda]="'Data da Caracterização'"></app-date-picker>
+					</div>
+					<div class="input-field col s3">
+						<label>Hora da Informação</label>
+						<input id="hora-dataCaracterizacao" name="hora-dataCaracterizacao" disabled
+							[(ngModel)]="cat.dataCaracterizacaoCustomDate.appTime"
+							materialize="pickatime" 
+							[materializeActions]="timeActions" 
+							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+							class="validate" type="text">
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12 checkbox">
+						<div class="input-field col s6">
+							<p><b><span>Há nexo causal entre a lesão apresentada e a ocorrência?</span></b></p>
+						</div>
+						<div class="input-field col s1">
+							<p>
+								<input class="radio" name="group1" type="radio" id="nexoCausal.sim" disabled
+									[ngModel]="getNexoCausal()" (ngModelChange)="setNexoCausal('sim')"
+									value="sim"/> 
+								<label for="nexoCausal.sim">SIM</label>
+							</p>
+						</div>
+						<div class="input-field col s1">
+							<p>
+								<input class="radio" name="group1" type="radio" id="nexoCausal.nao" disabled
+									[ngModel]="getNexoCausal()" (ngModelChange)="setNexoCausal('nao')"
+									value="nao"/> 
+								<label for="nexoCausal.nao">NÃO</label>
+							</p>
+						</div>
+						<div class="input-field col s3">
+							<p>
+								<input class="radio" name="group1" type="radio" id="nexoCausal.naoAplicavel" disabled
+									[ngModel]="getNexoCausal()" (ngModelChange)="setNexoCausal('naoAplicavel')"
+									value="naoAplicavel"/>
+								<label for="nexoCausal.naoAplicavel">NÃO APLICÁVEL</label>
+							</p>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="profissionalCaracterizacao">Profissional Caracterização</label> <input type="text"
+							name="cat.profissionalCaracterizacao.empregado.pessoa.nome"  disabled
+							[(ngModel)]="cat.profissionalCaracterizacao.empregado.pessoa.nome">
+					</div>
+				</div>
+			
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="caracterizacao">Caracterização</label>
+						<textarea class="materialize-textarea" id="caracterizacao" maxlength="4096" disabled
+							[(ngModel)]="cat.caracterizacao" name="cat.caracterizacao"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div id="afastamento">
+				<div class="row">
+					<p *ngIf="cat.classificacao && cat.classificacao.id > 0 && 
+						cat.classificacao.afastamento"><b>Lesão COM afastamento</b></p>
+					<p *ngIf="cat.classificacao && cat.classificacao.id > 0 &&
+						!cat.classificacao.afastamento"><b>Lesão SEM afastamento</b></p>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="cid">CID</label> <input type="text" disabled
+							name="cat.cid" [(ngModel)]="cat.cid.codigo">
+					</div>
+					<div class="input-field col s6">
+						<fieldset>
+							<legend> Classificação do Afastamento 
+								<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
+									(click)="getCLassificacoes()"> 
+									<i class="material-icons center-icon">cached</i>
+								</a>
+							</legend>
+							<select name="classificacao" class="browser-default" disabled
+								[(ngModel)]="cat.classificacao.id">
+								<option disabled selected value="undefined">Selecione uma Classificação</option>
+								<option *ngFor="let classificacao of classificacoes" value="{{classificacao.id}}">
+									{{classificacao.descricao}}
+								</option>
+							</select>
+						</fieldset>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s2">
+						<label for="tempoPrevisto">Tempo Previsto</label> 
+						<input id="tempoPrevisto" type="number"  disabled
+							[(ngModel)]="cat.tempoPrevisto" name="tempoPrevisto">
+					</div>
+					<div class="input-field col s10 checkbox">
+						<input type="checkbox" id="ferimentoGrave" disabled
+							[(ngModel)]="cat.ferimentoGrave"
+							name="cat.ferimentoGrave"> 
+							<label for="cat.ferimentoGrave">
+									Ferimento grave conforme resolução ANP nº 44 de 22/12/2009?
+							</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s6">
+						<label for="profissionalClassificacao">Profissional Classificação</label> <input type="text"
+							name="cat.profissionalClassificacao.empregado.pessoa.nome" disabled
+							[(ngModel)]="cat.profissionalClassificacao.empregado.pessoa.nome">
+					</div>
+					<div class="input-field col s3">
+						<label for="data.dataClassificacao">Data da Classificação</label>
+						<app-date-picker [nome]="'data.dataClassificacao'"
+							[desabilitar]="true"
+							[customDate]="cat.dataClassificacaoCustomDate"
+							[obrigatorio]="'false'" [legenda]="'Data da Classificação'"></app-date-picker>
+					</div>
+					<div class="input-field col s3">
+						<label>Hora da Classificacao</label>
+						<input id="hora-dataClassificacao" name="hora-dataClassificacao" disabled
+							[(ngModel)]="cat.dataClassificacaoCustomDate.appTime"
+							materialize="pickatime" 
+							[materializeActions]="timeActions" 
+							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
+							class="validate" type="text">
+					</div>
+				</div>
+			
+			</div>
+
+			<div id="cat"></div>
+
+			<div id="informacoesComplementares"></div>
 
 		</div>
 
@@ -354,9 +472,9 @@
 			<div class="col s6">
 				<a [routerLink]="['/cat']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
-			<div class="col s6">
-				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
-			</div>
 		</div>
 	</form>
 </div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

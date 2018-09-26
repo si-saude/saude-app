@@ -129,6 +129,7 @@ export abstract class GenericListComponent<T, F extends GenericFilter, C extends
 
     setFilter() {
         this.showPreload = true;
+        console.log(this.filter)
         this.list();
     }
 

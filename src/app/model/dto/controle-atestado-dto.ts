@@ -7,6 +7,7 @@ export class ControleAtestadoDto {
     private fimAtestado: string;
     private numeroDias: number;
     private dataRecebimento: string;
+    private dataAgendamento: string;
     
     private prazoRecebimento: number;
     private recebidoNoPrazo: boolean;
@@ -71,6 +72,12 @@ export class ControleAtestadoDto {
     }
     setDataRecebimento(dataRecebimento) {
         this.dataRecebimento = dataRecebimento;
+    }
+    getDataAgendamento() {
+        return this.dataAgendamento;
+    }
+    setDataAgendamento(dataAgendamento) {
+        this.dataAgendamento = dataAgendamento;
     }
     getPrazoRecebimento() {
         return this.prazoRecebimento;

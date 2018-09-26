@@ -3,26 +3,29 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { GlobalVariable } from './../../global';
-import { Cat } from './../../model/cat';
 import { CatFilter } from './cat.filter';
 import { GenericService } from './../../generics/generic.service';
-import { EixoService } from './../eixo/eixo.service';
+import { CargoService } from './../cargo/cargo.service';
+import { GerenciaService } from './../gerencia/gerencia.service';
+import { EmpregadoService } from './../empregado/empregado.service';
+import { EmpresaService } from './../empresa/empresa.service';
+import { FuncaoService } from './../funcao/funcao.service';
+import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
+import { ClassificacaoAfastamentoService } from './../classificacao-afastamento/classificacao-afastamento.service';
 import { DiagnosticoService } from './../diagnostico/diagnostico.service';
-import { ParteCorpoAtingidaService } from './../parte-corpo-atingida/parte-corpo-atingida.service';
-import { AgenteCausadorService } from './../agente-causador/agente-causador.service';
-import { NaturezaLesaoService } from './../natureza-lesao/natureza-lesao.service';
-import { BaseService } from './../base/base.service';
 
 @Injectable()
 export class CatService extends GenericService {
 
     constructor( http: Http, router: Router,
-            private baseService: BaseService,
-            private eixoService: EixoService,
-            private diagnosticoService: DiagnosticoService,
-            private parteCorpoAtingidaService: ParteCorpoAtingidaService,
-            private agenteCausadorService: AgenteCausadorService,
-            private naturezaLesaoService: NaturezaLesaoService) { 
+            private cargoService: CargoService,
+            private gerenciaService: GerenciaService,
+            private empregadoService: EmpregadoService,
+            private empresaService: EmpresaService,
+            private funcaoService: FuncaoService,
+            private profissionalSaudeService: ProfissionalSaudeService,
+            private classificacaoAfastamentoService: ClassificacaoAfastamentoService,
+            private diagnosticoService: DiagnosticoService) {
         super(http,router,"cat");
     }
     
@@ -30,62 +33,64 @@ export class CatService extends GenericService {
         return this.selectList(new CatFilter());
     }
     
-    getSexos() {
-        let urlSexos = GlobalVariable.BASE_API_URL + "/generic/sexo";
+    getCargoService() {
+        return this.cargoService;
+    }
+    
+    getFuncaoService() {
+        return this.funcaoService;
+    }
+    
+    getGerenciaService() {
+        return this.gerenciaService;
+    }
+    
+    getEmpregadoService() {
+        return this.empregadoService;
+    }
+    
+    getEmpresaService() {
+        return this.empresaService;
+    }
+    
+    getProfissionalService() {
+        return this.profissionalSaudeService;
+    }
+    
+    getClassificacaoService() {
+        return this.classificacaoAfastamentoService;
+    }
+    
+    getDiagnosticoService() {
+        return this.diagnosticoService;
+    }
+    
+    getNexoCausais() {
+        let urlNexoCausais =  GlobalVariable.BASE_API_URL + "/generic/ensaio-vedacao";
         return this.http
-            .get( urlSexos + "?filter=", { headers: this.headers } )
+            .get( urlNexoCausais + "?filter=", { headers: this.headers } )
             .toPromise();
     }
     
-    getPartesCorpo() {
-        let urlPartesCorpo = GlobalVariable.BASE_API_URL + "/generic/partes-corpo";
+    getEscolaridades() {
+        let urlEscolaridades = GlobalVariable.BASE_API_URL + "/generic/escolaridade";
         return this.http
-            .get( urlPartesCorpo + "?filter=", { headers: this.headers } )
+            .get( urlEscolaridades + "?filter=", { headers: this.headers } )
             .toPromise();
     }
     
-    getGravidades() {
-        let urlGravidades = GlobalVariable.BASE_API_URL + "/generic/gravidade";
+    getEstadosCivis() {
+        let urlEstadosCivis = GlobalVariable.BASE_API_URL + "/generic/estado-civil";
         return this.http
-            .get( urlGravidades + "?filter=", { headers: this.headers } )
+            .get( urlEstadosCivis + "?filter=", { headers: this.headers } )
             .toPromise();
     }
     
-    getTipoAcidentes() {
-        let urlTipoAcidentes = GlobalVariable.BASE_API_URL + "/generic/tipo-acidente";
+    getVinculos() {
+        let urlVinculos = GlobalVariable.BASE_API_URL + "/generic/vinculo-empregado";
         return this.http
-            .get( urlTipoAcidentes + "?filter=", { headers: this.headers } )
+            .get( urlVinculos + "?filter=", { headers: this.headers } )
             .toPromise();
     }
     
-    getTipoCats() {
-        let urlTipoCats = GlobalVariable.BASE_API_URL + "/generic/tipo-cat";
-        return this.http
-            .get( urlTipoCats + "?filter=", { headers: this.headers } )
-            .toPromise();
-    }
-    
-    getEixosByEquipe( idEquipe ) {
-        return this.eixoService.getEixos();
-    }
-    
-    getDiagnosticoByEixo( idEixo, idEquipe ) {
-        return this.diagnosticoService.getDiagnosticoByEixoWithoutEquipe(idEixo)
-    }
-    
-    getParteCorpoAtingidaService() {
-        return this.parteCorpoAtingidaService;
-    }
-    
-    getAgenteCausadorService() {
-        return this.agenteCausadorService;
-    }
-    
-    getNaturezaLesaoService() {
-        return this.naturezaLesaoService;
-    }
-    
-    getBases() {
-        return this.baseService.getBases();
-    }
 }

@@ -77,8 +77,10 @@ export class Atestado {
     private previewStatus: string;
     private dataAuditoria: Date;
     private convocado: boolean;
+    private dataHomologacao: Date;
 
     private dataAuditoriaCustomDate: CustomDate = new CustomDate(this.dataAuditoria);
+    private dataHomologacaoCustomDate: CustomDate = new CustomDate(this.dataHomologacao);
 
     private version: number;
 
@@ -608,6 +610,24 @@ export class Atestado {
 
     setConvocado(convocado: boolean) {
         this.convocado = convocado;
+    }
+    
+    getDataHomologacao() {
+        this.dataHomologacao = this.dataHomologacaoCustomDate.getApiDate();
+        return this.dataHomologacao;
+    }
+
+    setDataHomologacao(dataHomologacao) {
+        this.dataHomologacaoCustomDate.setApiDate(dataHomologacao);
+        this.dataHomologacao = dataHomologacao;
+    }
+    
+    getDataHomologacaoCustomDate(){
+        return this.dataHomologacao;
+    }
+    
+    setDataHomologacaoCustomDate(dataHomologacao: Date){
+        this.dataHomologacao = dataHomologacao;
     }
     
 }

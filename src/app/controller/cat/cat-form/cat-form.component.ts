@@ -6,26 +6,23 @@ import * as $ from 'jquery';
 import { MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
-import { Diagnostico } from './../../../model/diagnostico';
-import { Cat } from './../../../model/cat';
-import { Base } from './../../../model/base';
-import { BaseBuilder } from './../../base/base.builder';
-import { Empregado } from './../../../model/empregado';
-import { Gerencia } from './../../../model/gerencia';
+import { Cat } from './../../../model/cat'; 
 import { CatBuilder } from './../cat.builder';
 import { CatService } from './../cat.service';
-import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { GerenciaCodigoCompletoAutocomplete } from './../../gerencia/gerencia-codigo-completo.autocomplete';
-import { GerenciaService } from './../../gerencia/gerencia.service';
-import { GerenciaBuilder } from './../../gerencia/gerencia.builder';
-import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
-import { FornecedorRazaoSocialAutocomplete } from './../../fornecedor/fornecedor-razao-social.autocomplete';
-import { FornecedorService } from './../../fornecedor/fornecedor.service';
-import { EmpregadoService } from './../../empregado/empregado.service';
+import { Cargo } from './../../../model/cargo';
+import { CargoBuilder } from './../../cargo/cargo.builder';
+import { Funcao } from './../../../model/funcao';
+import { ClassificacaoAfastamento } from './../../../model/classificacao-afastamento';
+import { ClassificacaoAfastamentoBuilder } from './../../classificacao-afastamento/classificacao-afastamento.builder';
+import { FuncaoBuilder } from './../../funcao/funcao.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
-import { ParteCorpoAtingidaDescricaoAutocomplete } from './../../parte-corpo-atingida/parte-corpo-atingida-descricao.autocomplete';
-import { AgenteCausadorDescricaoAutocomplete } from './../../agente-causador/agente-causador-descricao.autocomplete';
-import { NaturezaLesaoDescricaoAutocomplete } from './../../natureza-lesao/natureza-lesao-descricao.autocomplete';
+import { GerenciaCodigoCompletoAutocomplete } from './../../gerencia/gerencia-codigo-completo.autocomplete';
+import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
+import { EmpresaNomeAutocomplete } from './../../empresa/empresa-nome.autocomplete';
+import { ProfissionalCatNomeAutocomplete } from './../../profissional-saude/profissional-cat-nome.autocomplete';
+import { DiagnosticoAtestadoAutocomplete } from './../../diagnostico/diagnostico-atestado.autocomplete';
+import { DiagnosticoFilter } from './../../diagnostico/diagnostico.filter';
+import { GenericFormComponent } from './../../../generics/generic.form.component';
 
 @Component( {
     selector: 'app-cat-form',
@@ -34,46 +31,45 @@ import { NaturezaLesaoDescricaoAutocomplete } from './../../natureza-lesao/natur
 } )
 export class CatFormComponent extends GenericFormComponent implements OnInit {
     private cat: Cat;
-    private bases: Array<Base>;
-    private ufs: Array<string>;
-    private sexos: Array<string>;
-    private partesCorpo: Array<string>;
-    private gravidades: Array<string>;
-    private tipoAcidentes: Array<string>;
-    private tipoCats: Array<string>;
-    private showModalDiagnostico: boolean;
-    private innerIdEquipe: number = 0;
-
+    private cargos: Array<Cargo>;
+    private escolaridades: Array<string>;
+    private estadosCivis: Array<string>;
     private autoCompleteGerencia: GerenciaCodigoCompletoAutocomplete;
+    private autoCompleteGerenciaEmpregado: GerenciaCodigoCompletoAutocomplete;
     private autoCompleteEmpregado: EmpregadoNomeAutocomplete;
-    private autoCompleteEmpresa: FornecedorRazaoSocialAutocomplete;
-    private autoCompleteParteCorpoAtingida: ParteCorpoAtingidaDescricaoAutocomplete;
-    private autoCompleteAgenteCausador: AgenteCausadorDescricaoAutocomplete;
-    private autoCompleteNaturezaLesao: NaturezaLesaoDescricaoAutocomplete;
-    timeActions;
+    private autoCompleteEmpresa: EmpresaNomeAutocomplete;
+    private autoCompleteProfissionalCaracterizacao: ProfissionalCatNomeAutocomplete;
+    private autoCompleteProfissionalClassificacao: ProfissionalCatNomeAutocomplete;
+    private autoCompleteCid: DiagnosticoAtestadoAutocomplete;
+    private vinculos: Array<string>;
+    private funcoes: Array<Funcao>;
+    private classificacoes: Array<ClassificacaoAfastamento>;
+    private nexoCausais: Array<string>;
 
+    private timeActions;
+    
     constructor( private route: ActivatedRoute,
         private catService: CatService,
-        private gerenciaService: GerenciaService,
-        private empregadoService: EmpregadoService,
-        private fornecedorService: FornecedorService,
         router: Router) {
         super( catService, router );
 
         this.goTo = "cat";
         this.cat = new CatBuilder().initialize( this.cat );
-        this.autoCompleteGerencia = new GerenciaCodigoCompletoAutocomplete(this.gerenciaService);
-        this.autoCompleteEmpregado = new EmpregadoNomeAutocomplete(this.empregadoService);
-        this.autoCompleteEmpresa =  new FornecedorRazaoSocialAutocomplete(this.fornecedorService);
-        this.autoCompleteParteCorpoAtingida = new ParteCorpoAtingidaDescricaoAutocomplete(this.catService.getParteCorpoAtingidaService())
-        this.autoCompleteAgenteCausador = new AgenteCausadorDescricaoAutocomplete(this.catService.getAgenteCausadorService())
-        this.autoCompleteNaturezaLesao = new NaturezaLesaoDescricaoAutocomplete(this.catService.getNaturezaLesaoService())
-        this.bases = new BaseBuilder().initializeList(new Array<Base>());
-        this.sexos = new Array<string>();
-        this.partesCorpo = new Array<string>();
-        this.gravidades = new Array<string>();
-        this.tipoAcidentes = new Array<string>();
-        this.tipoCats = new Array<string>();
+        this.cargos = new CargoBuilder().initializeList( this.cargos );
+        this.escolaridades = new Array<string>();
+        this.estadosCivis = new Array<string>();
+        this.vinculos = new Array<string>();
+        this.autoCompleteGerencia = new GerenciaCodigoCompletoAutocomplete(this.catService.getGerenciaService());
+        this.autoCompleteGerenciaEmpregado = new GerenciaCodigoCompletoAutocomplete(this.catService.getGerenciaService());
+        this.autoCompleteEmpregado = new EmpregadoNomeAutocomplete(this.catService.getEmpregadoService());
+        this.autoCompleteEmpresa = new EmpresaNomeAutocomplete(this.catService.getEmpresaService());
+        this.autoCompleteProfissionalCaracterizacao = new ProfissionalCatNomeAutocomplete(this.catService.getProfissionalService());
+        this.autoCompleteCid = new DiagnosticoAtestadoAutocomplete(this.catService.getDiagnosticoService(), new DiagnosticoFilter());
+        this.autoCompleteProfissionalClassificacao = new ProfissionalCatNomeAutocomplete(this.catService.getProfissionalService());
+        this.funcoes = new FuncaoBuilder().initializeList( this.funcoes );
+        this.classificacoes = new ClassificacaoAfastamentoBuilder().initializeList(this.classificacoes);
+        this.nexoCausais = new Array<string>();
+        
         this.timeActions = new EventEmitter<string|MaterializeAction>();
     }
 
@@ -89,18 +85,29 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                             this.showPreload = false;
                             this.cat = new CatBuilder().clone( res.json() );
                             
-                            if ( this.cat.getGerencia() != undefined )
-                                this.autoCompleteGerencia.getAutocomplete().initializeLastValue(this.cat.getGerencia().getCodigoCompleto());
-                            if ( this.cat.getEmpregado() != undefined )
-                                this.autoCompleteEmpregado.getAutocomplete().initializeLastValue(this.cat.getEmpregado().getPessoa().getNome());
-                            if ( this.cat.getEmpresa() != undefined ) 
-                                this.autoCompleteEmpresa.getAutocomplete().initializeLastValue(this.cat.getEmpresa().getRazaoSocial());
-                            if ( this.cat.getParteCorpoAtingida() != undefined ) 
-                                this.autoCompleteParteCorpoAtingida.getAutocomplete().initializeLastValue(this.cat.getParteCorpoAtingida().getDescricao());
-                            if ( this.cat.getAgenteCausador() != undefined ) 
-                                this.autoCompleteAgenteCausador.getAutocomplete().initializeLastValue(this.cat.getAgenteCausador().getDescricao());
-                            if ( this.cat.getNaturezaLesao() != undefined ) 
-                                this.autoCompleteNaturezaLesao.getAutocomplete().initializeLastValue(this.cat.getNaturezaLesao().getDescricao());
+                            if ( this.cat.getEmpregado() ) 
+                                this.autoCompleteEmpregado.getAutocomplete().initializeLastValue(
+                                        this.cat.getEmpregado().getPessoa().getNome());
+                            
+                            if ( this.cat.getEmpregado() && this.cat.getEmpregado().getGerencia() )
+                                this.autoCompleteGerencia.getAutocomplete().initializeLastValue(
+                                        this.cat.getEmpregado().getGerencia().getCodigoCompleto());
+                            
+                            if ( this.cat.getEmpresa() )
+                                this.autoCompleteEmpresa.getAutocomplete().initializeLastValue(
+                                        this.cat.getEmpresa().getNome());
+                            
+                            if ( this.cat.getProfissionalCaracterizacao() )
+                                this.autoCompleteProfissionalCaracterizacao.getAutocomplete().initializeLastValue(
+                                        this.cat.getProfissionalCaracterizacao().getEmpregado().getPessoa().getNome());
+                            
+                            if ( this.cat.getCid() )
+                                this.autoCompleteCid.getAutocomplete().initializeLastValue(
+                                        this.cat.getCid().getCodigo());
+                            
+                            if ( this.cat.getProfissionalClassificacao() )
+                                this.autoCompleteProfissionalCaracterizacao.getAutocomplete().initializeLastValue(
+                                        this.cat.getProfissionalClassificacao().getEmpregado().getPessoa().getNome());
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -108,133 +115,148 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                 }
             } );
         
-        this.getSexos();
-        this.getPartesCorpo();
-        this.getGravidades();
-        this.getTipoAcidentes();
-        this.getTipoCats();
-        this.getBases();
+        this.getCargos();
+        this.getEscolaridades();
+        this.getEstadosCivis();
+        this.getVinculos();
+        this.getFuncoes();
+        this.getClassificacoes();
+        this.getNexoCausais();
     }
     
-    getBases() {
-        this.catService.getBases()
-            .then( res => {
-                this.bases = new BaseBuilder().cloneList(res.json());
-            })
-            .catch( erro => {
-                console.log("Erro ao buscar as bases.");
-            })
-    }
-    
-    getSexos() {
-        this.catService.getSexos()
-            .then( res => {
-                this.sexos = Object.keys( res.json() ).sort();
+    getCargos() {
+        this.catService.getCargoService().getCargos()
+            .then(res => {
+                this.cargos = new CargoBuilder().cloneList(res.json());
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getPartesCorpo() {
-        this.catService.getPartesCorpo()
-            .then( res => {
-                this.partesCorpo = Object.keys( res.json() ).sort();
+    getEscolaridades() {
+        this.catService.getEscolaridades()
+            .then(res => {
+                this.escolaridades = Object.keys(res.json()).sort();
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getGravidades() {
-        this.catService.getGravidades()
-            .then( res => {
-                this.gravidades = Object.keys( res.json() ).sort();
+    getEstadosCivis() {
+        this.catService.getEstadosCivis()
+            .then(res => {
+                this.estadosCivis = Object.keys(res.json()).sort();
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getTipoAcidentes() {
-        this.catService.getTipoAcidentes()
-            .then( res => {
-                this.tipoAcidentes = Object.keys( res.json() ).sort();
+    getVinculos() {
+        this.catService.getVinculos()
+            .then(res => {
+                this.vinculos = Object.keys(res.json()).sort();
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getTipoCats() {
-        this.catService.getTipoCats()
-            .then( res => {
-                this.tipoCats = Object.keys( res.json() ).sort();
+    getFuncoes() {
+        this.catService.getFuncaoService().getFuncoes()
+            .then(res => {
+                this.funcoes = new FuncaoBuilder().cloneList(res.json());
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    ngOnDestroy() {
-        this.inscricao.unsubscribe();
+    getClassificacoes() {
+        this.catService.getClassificacaoService().getClassificacaoAfastamentos()
+            .then(res => {
+                this.classificacoes = new ClassificacaoAfastamentoBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
     }
     
-    setDadosEmpregado() {
-        if ( this.cat.getEmpregado() != undefined && this.cat.getEmpregado().getId() > 0 ) {
-            this.empregadoService.get( this.cat.getEmpregado().getId() )
-                .then(res => {
-                    this.cat.setEmpregado(new EmpregadoBuilder().clone(res.json()));
-                    this.cat.setNome(this.cat.getEmpregado().getPessoa().getNome());
-                    this.cat.setDataNascimento(this.cat.getEmpregado().getPessoa().getDataNascimento());
-                    this.cat.setCargo(this.cat.getEmpregado().getCargo().getNome());
-                    this.cat.setRegime(this.cat.getEmpregado().getRegime().getNome());
-                    this.cat.setCpf(this.cat.getEmpregado().getPessoa().getCpf());
-                    this.cat.setSexo(this.cat.getEmpregado().getPessoa().getSexo());
-                    this.cat.setGerencia(this.cat.getEmpregado().getGerencia());
-                    this.cat.setBase(this.cat.getEmpregado().getBase());
-                })
-                .catch(error => {
-                    console.log("Erro ao retornar o Empregado.");
-                })
-        }
+    getNexoCausais() {
+        this.catService.getNexoCausais()
+            .then(res => {
+                this.nexoCausais = Object.keys( res.json() ).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
     }
     
     save() {
-        if ( this.cat.getCpf() != undefined )
-            this.cat.setCpf(this.cat.getCpf().replace(".","").replace(".","").replace("-", ""));
         super.save( new CatBuilder().clone( this.cat ) );
     }
     
-    verifyContratado() {
-        if ( this.cat.getContratado() )
-            return false;
-        else return true;
+    changeEmpregado() {
+        setTimeout(() => {
+            if ( this.cat.getEmpregado().getId() > 0 ) {
+                this.cat.setGerencia(this.cat.getEmpregado().getGerencia());
+            }
+        }, 250);
     }
     
-    setContratado( ) {
-        this.cat.setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
-        this.cat.setNome('');
-        this.cat.setDataNascimento(null);
-        this.cat.getDataNascimentoCustomDate().setAppDate(null);
-        this.cat.setSexo('');
-        this.cat.setGerencia(new GerenciaBuilder().initialize(new Gerencia()));
-        this.cat.setCpf('');
-        this.cat.setCargo('');
-        this.cat.setEmpresa('');
-        this.cat.setRegime('');
+    cadastrarContratado() {
+        if ( this.cat.getEmpregado().getNome() == '' || this.cat.getEmpregado().getNome() == undefined || 
+                this.cat.getEmpregado().getMatricula() == '' || this.cat.getEmpregado().getMatricula() == undefined ||
+                this.cat.getEmpregado().getChave() == '' || this.cat.getEmpregado().getChave() == undefined || 
+                this.cat.getEmpregado().getPessoa().getCpf() == '' || this.cat.getEmpregado().getPessoa().getCpf() == undefined ||
+                this.cat.getEmpregado().getGerencia().getId() ==  0 || this.cat.getEmpregado().getGerencia().getId() == undefined || 
+                this.cat.getEmpregado().getPessoa().getDataNascimento() == undefined ||
+                this.cat.getEmpregado().getCargo() == undefined || 
+                this.cat.getEmpregado().getCargo().getId() == 0 || this.cat.getEmpregado().getCargo().getId() == undefined ||
+                this.cat.getEmpregado().getFuncao() == undefined || 
+                this.cat.getEmpregado().getFuncao().getId() == 0 || this.cat.getEmpregado().getFuncao().getId() == undefined) {
+            this.toastParams = ["Por favor, complete todos os dados do empregado.", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+        
+        this.cat.getEmpregado().setVinculo("CONTRATADO");
+        this.catService.getEmpregadoService().saveAndReturn(new EmpregadoBuilder().clone(this.cat.getEmpregado()))
+            .then(res => {
+                this.cat.setEmpregado(new EmpregadoBuilder().clone(res.json()));
+                this.verifyError = false;
+                this.toastParams = ["Sucesso ao salvar o empregado.", 4000];
+                this.globalActions.emit( 'toast' );
+            })
+            .catch(error => {
+                this.toastParams = ["Erro ao salvar o empregado.", 4000];
+                this.globalActions.emit( 'toast' );
+                this.catchConfiguration(error);
+            })
     }
     
-    openModalDiagnostico() {
-        this.showModalDiagnostico = true;
+    getNexoCausal() {
+        if ( this.cat.getNexoCausal() == undefined ) return "";
+        else if ( this.cat.getNexoCausal().includes("APLIC") )
+            return "naoAplicavel";
+        else if ( this.cat.getNexoCausal().includes("N") )
+            return "nao";
+        else return "sim";
     }
     
-    selectDiagnostico( diagnostico: Diagnostico ) {
-        this.cat.setDiagnostico(diagnostico);
-        this.showModalDiagnostico = false; 
-    }
-    
-    cancelarModalDiagnostico() {
-        this.showModalDiagnostico = false;
+    setNexoCausal( value ) {
+        switch(value) {
+            case "nao":
+                this.cat.setNexoCausal(this.nexoCausais[0]);
+                break;
+            case "naoAplicavel":
+                this.cat.setNexoCausal(this.nexoCausais[1]);
+                break;
+            case "sim":
+                this.cat.setNexoCausal(this.nexoCausais[2]);
+                break;
+        }
     }
 }

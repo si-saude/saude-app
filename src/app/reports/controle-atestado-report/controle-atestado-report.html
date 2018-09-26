@@ -9,6 +9,18 @@
 <!-- Preload  -->
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
+<div class="row" style="width: 50%; margin: 0 auto;">
+	<div class="row" style="margin: 0 auto; width: 50%;">
+		<div class="input-field col s8">
+			<label for="ano">Ano do Atestado</label>
+			<input type="number" name='ano' id='ano' [(ngModel)]="ano">
+		</div>
+		<div class="input-field col s3" style="margin-top:12%">
+			<button class="btn btn-primary" type='button' (click)="getEntities()">Buscar</button>
+		</div>
+	</div>
+</div>
+
 <div class="list-container">
 
 	<div class="row">
@@ -19,6 +31,7 @@
 			</a>
 		</div>
 	</div>
+	
 	<table class="table table-striped" [mfData]="entities | filterData : filter : typeFilter : value" #mf="mfDataTable">
 	    <thead>
 		    <tr>
@@ -50,31 +63,37 @@
 				<th style="width: 2%">
 		            <mfDefaultSorter by="inicioAtestado">Início do Atestado</mfDefaultSorter>
 		            <input type="text" name="inicioAtestado" style="width: 90%" 
-							placeholder="filtrar início do atestado"
+							placeholder="filtrar início do atestado"  maxlength="10"
 							(input)="selectFilter($event, 'inicioAtestado')">
 		        </th>
 		        <th style="width: 2%">
 		            <mfDefaultSorter by="fimAtestado">Fim do Atestado</mfDefaultSorter>
 		            <input type="text" name="fimAtestado" style="width: 90%" 
-							placeholder="filtrar fim do atestado"
+							placeholder="filtrar fim do atestado" maxlength="10"
 							(input)="selectFilter($event, 'fimAtestado')">
 		        </th>
 		        <th style="width: 2%">
 		            <mfDefaultSorter by="numeroDias">Número de Dias</mfDefaultSorter>
 		            <input type="text" name="numeroDias" style="width: 90%" 
-							placeholder="filtrar número de dias"
+							placeholder="filtrar número de dias" maxlength="10"
 							(input)="selectFilter($event, 'numeroDias')">
+		        </th>
+		        <th style="width: 2%">
+		            <mfDefaultSorter by="dataAgendamento">Data de Agendamento</mfDefaultSorter>
+		            <input type="text" name="dataAgendamento" style="width: 90%" 
+							placeholder="filtrar data de agendamento" maxlength="10"
+							(input)="selectFilter($event, 'dataAgendamento')">
 		        </th>
 		        <th style="width: 2%">
 		            <mfDefaultSorter by="dataRecebimento">Data de Recebimento</mfDefaultSorter>
 		            <input type="text" name="dataRecebimento" style="width: 90%" 
-							placeholder="filtrar data de recebimento"
+							placeholder="filtrar data de recebimento" maxlength="10"
 							(input)="selectFilter($event, 'dataRecebimento')">
 		        </th>
 		        <th style="width: 2%">
 		            <mfDefaultSorter by="prazoRecebimento">Prazo de Recebimento</mfDefaultSorter>
 		            <input type="text" name="prazoRecebimento" style="width: 90%" 
-							placeholder="filtrar prazo de recebimento"
+							placeholder="filtrar prazo de recebimento" maxlength="10"
 							(input)="selectFilter($event, 'prazoRecebimento')">
 		        </th>
 		        <th style="width: 2%">
@@ -97,19 +116,19 @@
 		        <th style="width: 2%">
 		            <mfDefaultSorter by="dataEntrega">Data de Entrega</mfDefaultSorter>
 		            <input type="text" name="dataEntrega" style="width: 90%" 
-							placeholder="filtrar data de entrega"
+							placeholder="filtrar data de entrega" maxlength="10"
 							(input)="selectFilter($event, 'dataEntrega')">
 		        </th>
 		        <th style="width: 2%">
 		            <mfDefaultSorter by="dataHomologacao">Data da Homologação</mfDefaultSorter>
 		            <input type="text" name="dataHomologacao" style="width: 90%" 
-							placeholder="filtrar data da homologação"
+							placeholder="filtrar data da homologação" maxlength="10"
 							(input)="selectFilter($event, 'dataHomologacao')">
 		        </th>
 		        <th style="width: 2%">
 		            <mfDefaultSorter by="prazoHomologacao">Prazo de Homologação</mfDefaultSorter>
 		            <input type="text" name="prazoHomologacao" style="width: 90%" 
-							placeholder="filtrar prazo de homologação"
+							placeholder="filtrar prazo de homologação" maxlength="10"
 							(input)="selectFilter($event, 'prazoHomologacao')">
 		        </th>
 		        <th style="width: 4%">
@@ -140,7 +159,7 @@
 				<th style="width: 4%">
 		            <mfDefaultSorter by="tarefaProfissional">Profissional da Tarefa</mfDefaultSorter>
 		            <input type="text" name="tarefaProfissional" style="width: 90%" 
-							placeholder="filtrar profissional da tarefa"
+							placeholder="filtrar profissional da tarefa" maxlength="32"
 							(input)="selectFilter($event, 'tarefaProfissional')">
 		        </th>
 				<th style="width: 4%">
@@ -155,7 +174,7 @@
 				<th style="width: 4%">
 		            <mfDefaultSorter by="observacao">Observação</mfDefaultSorter>
 		            <input type="text" name="observacao" style="width: 90%" 
-							placeholder="filtrar observação"
+							placeholder="filtrar observação" maxlength="36"
 							(input)="selectFilter($event, 'observacao')">
 		        </th>
 		        <th style="width: 4%">
@@ -178,6 +197,7 @@
 		    	<td>{{item.inicioAtestado}}</td>
 		    	<td>{{item.fimAtestado}}</td>
 		    	<td>{{item.numeroDias}}</td>
+		    	<td>{{item.dataAgendamento}}</td>
 		    	<td>{{item.dataRecebimento}}</td>
 		    	<td>{{item.prazoRecebimento}}</td>
 		    	<td style="margin-left: 20px;">

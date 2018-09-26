@@ -100,6 +100,8 @@ import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliaca
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
 import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
+import { EmpresaGuard } from './guards/guards-child/empresa.guard';
+import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 
 @NgModule({
   declarations: [
@@ -204,7 +206,9 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
     ReportAvaliacaoHigieneOcupacionalGuard,
     ReportPreRequisitosAgendamentoGuard,
     ImovelGuard,
-    MotivoRecusaAtestadoGuard
+    MotivoRecusaAtestadoGuard,
+    EmpresaGuard,
+    ClassificacaoAfastamentoGuard
   ],
   bootstrap: [ 
     AppComponent
