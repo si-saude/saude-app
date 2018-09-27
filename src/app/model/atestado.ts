@@ -7,6 +7,7 @@ import { MotivoRecusaAtestado } from './motivo-recusa-atestado';
 import { Exame } from './exame';
 import { CustomDate } from './../generics/utils/custom-date.util';
 import { HistoricoAtestado } from './historico-atestado';
+import { AuditoriaAtestado } from './auditoria-atestado';
 
 export class Atestado {
     private id: number;
@@ -81,6 +82,8 @@ export class Atestado {
 
     private dataAuditoriaCustomDate: CustomDate = new CustomDate(this.dataAuditoria);
     private dataHomologacaoCustomDate: CustomDate = new CustomDate(this.dataHomologacao);
+
+    private auditoriaAtestados: Array<AuditoriaAtestado>;
 
     private version: number;
 
@@ -628,6 +631,14 @@ export class Atestado {
     
     setDataHomologacaoCustomDate(dataHomologacao: Date){
         this.dataHomologacao = dataHomologacao;
+    }
+    
+    getAuditoriaAtestados() {
+        return this.auditoriaAtestados;
+    }
+    
+    setAuditoriaAtestados(auditoriaAtestados: Array<AuditoriaAtestado>) {
+        this.auditoriaAtestados = auditoriaAtestados;
     }
     
 }

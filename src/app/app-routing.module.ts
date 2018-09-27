@@ -80,6 +80,7 @@ import { ImovelGuard } from './guards/guards-child/imovel.guard';
 import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
 import { EmpresaGuard } from './guards/guards-child/empresa.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
+import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -275,6 +276,9 @@ const routes: Routes = [
   { path: 'classificacao-afastamento', 
       loadChildren: 'app/controller/classificacao-afastamento/classificacao-afastamento.module#ClassificacaoAfastamentoModule',
       canActivateChild: [ClassificacaoAfastamentoGuard]},
+  { path: 'item-auditoria-atestado', 
+      loadChildren: 'app/controller/item-auditoria-atestado/item-auditoria-atestado.module#ItemAuditoriaAtestadoModule',
+      canActivateChild: [ItemAuditoriaAtestadoGuard]},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

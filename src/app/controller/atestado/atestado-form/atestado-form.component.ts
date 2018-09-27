@@ -38,6 +38,7 @@ import { MotivoRecusaAtestadoFilter } from './../../motivo-recusa-atestado/motiv
 import { ModalTarefaSimpleComponent } from './../../../includes/modal-tarefa-simple/modal-tarefa-simple.component';
 import { ModalExameComponent } from './../../../includes/modal-exame/modal-exame.component';
 import { ModalConfirmComponent } from './../../../includes/modal-confirm/modal-confirm.component';
+import { ModalAuditoriaAtestadoComponent } from './../../../includes/modal-auditoria-atestado/modal-auditoria-atestado.component';
 import { HttpUtil } from './../../../generics/utils/http.util';
 
 @Component( {
@@ -50,6 +51,7 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     @ViewChild( ModalTarefaSimpleComponent ) modalTarefa: ModalTarefaSimpleComponent;
     @ViewChild( ModalExameComponent ) modalExame: ModalExameComponent;
     @ViewChild( ModalConfirmComponent ) modalConfirm: ModalConfirmComponent;
+    @ViewChild( ModalAuditoriaAtestadoComponent ) modalAuditoriaAtestado: ModalAuditoriaAtestadoComponent;
     private atestado: Atestado;
     private statuses: Array<string>;
     private statusesTarefa: Array<string>;
@@ -486,5 +488,10 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
             .catch(error => {
                 console.log("Erro ao recalcular o limite das datas.");
             })   
+    }
+    
+    functionModalConfirmAuditar( evento ) {
+        if ( evento )
+            this.auditar();
     }
 }

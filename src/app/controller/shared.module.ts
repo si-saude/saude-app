@@ -85,6 +85,7 @@ import { ImovelService } from './imovel/imovel.service';
 import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-recusa-atestado.service';
 import { EmpresaService } from './empresa/empresa.service';
 import { ClassificacaoAfastamentoService } from './classificacao-afastamento/classificacao-afastamento.service';
+import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-auditoria-atestado.service';
 
 @NgModule({
   declarations: [
@@ -189,7 +190,8 @@ import { ClassificacaoAfastamentoService } from './classificacao-afastamento/cla
     ImovelService,
     MotivoRecusaAtestadoService,
     EmpresaService,
-    ClassificacaoAfastamentoService
+    ClassificacaoAfastamentoService,
+    ItemAuditoriaAtestadoService
   ]
 })
 export class SharedModule { }

@@ -191,7 +191,7 @@
 					</div>
 					<div class="col s6">
 						<button style='float: right' 
-							(click)="auditar()" [disabled]="verifyAuditar()" type='button'
+							(click)="modalAuditoriaAtestado.openModal()" [disabled]="verifyAuditar()" type='button'
 							class="btn">Auditar</button>
 					</div>
 				</div>
@@ -469,3 +469,5 @@
 <app-modal-tarefa-simple (tarefa)="setAgendamento($event)"></app-modal-tarefa-simple>
 <app-modal-exame [atestado]="atestado" (exame)="addExame($event)"></app-modal-exame>
 <app-modal-confirm (value)="functionModalConfirm($event)"></app-modal-confirm>
+<app-modal-auditoria-atestado [atestado]="atestado" 
+	(confirm)="functionModalConfirmAuditar($event)"></app-modal-auditoria-atestado>

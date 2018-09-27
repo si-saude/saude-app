@@ -1,0 +1,30 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]" [materializeActions]="modalAuditoriaAtestado">
+
+	<h5 class="title-modal">Auditar</h5>
+	
+	<table>
+		<tr *ngFor="let auditoriaAtestado of atestado.auditoriaAtestados; let i = index">
+			<td><p>{{auditoriaAtestado.itemAuditoriaAtestado.descricao}}</p></td>
+			<td>
+				<input type="checkbox" id="conforme{{i}}" (click)="changeConforme($event, i)"
+					[(ngModel)]="auditoriaAtestado.conforme"
+					name="auditoriaAtestado.conforme"> 
+				<label for="conforme{{i}}">Conforme</label>
+			</td>
+		</tr>
+	</table>
+
+	<div class="modal-footer">
+		<button class="waves-effect modal-close modal-close waves-green btn-flat"
+			(click)="cancel()">Fechar</button>
+		<button class="waves-effect modal-close waves-effect waves-green  btn-flat" [disabled]="verifyConfirm()"
+			(click)="confirmar()">Confirmar</button>
+	</div>
+
+</div>

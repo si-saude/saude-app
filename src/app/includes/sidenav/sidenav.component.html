@@ -76,6 +76,7 @@
 			<a [routerLink]="['/indicador-sast']" *ngIf="checkPermissao('INDICADOR-SAST_LISTAR')">Indicador SAST</a>
 			<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
 			<a [routerLink]="['/intervencao']" *ngIf="checkPermissao('INTERVENCAO_LISTAR')">Intervenção</a>
+			<a [routerLink]="['/item-auditoria-atestado']" *ngIf="checkPermissao('ITEM-AUDITORIA-ATESTADO_LISTAR')">Item de Auditoria de Atestado</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
 			<a [routerLink]="['/motivo-recusa-atestado']" *ngIf="checkPermissao('MOTIVO-RECUSA-ATESTADO_LISTAR')">Motivo de Recusa do Atestado</a>
 			<a [routerLink]="['/natureza-lesao']" *ngIf="checkPermissao('NATUREZA-LESAO_LISTAR')">Natureza da Lesão</a>

@@ -9,6 +9,7 @@ import { AtestadoRoutingModule } from './atestado.routing.module';
 import { ModalTarefaSimpleModule } from './../../includes/modal-tarefa-simple/modal-tarefa-simple.module';
 import { ModalConfirmModule } from './../../includes/modal-confirm/modal-confirm.module';
 import { ModalExameModule } from './../../includes/modal-exame/modal-exame.module';
+import { ModalAuditoriaAtestadoModule } from './../../includes/modal-auditoria-atestado/modal-auditoria-atestado.module';
 import { PipesModule } from './../pipes.module';
 import { SharedModule } from '../shared.module';
 
@@ -25,7 +26,8 @@ import { SharedModule } from '../shared.module';
         PipesModule,
         ModalTarefaSimpleModule,
         ModalExameModule,
-        ModalConfirmModule
+        ModalConfirmModule,
+        ModalAuditoriaAtestadoModule
      ],
      providers: [
         AtestadoService

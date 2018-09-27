@@ -6,6 +6,7 @@ import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { MotivoRecusaAtestadoBuilder } from './../motivo-recusa-atestado/motivo-recusa-atestado.builder';
 import { DiagnosticoBuilder } from './../diagnostico/diagnostico.builder';
 import { ExameBuilder } from './../exame/exame.builder';
+import { AuditoriaAtestadoBuilder } from './../auditoria-atestado/auditoria-atestado.builder';
 import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
 import { HistoricoAtestadoBuilder } from './../historico-atestado/historico-atestado.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
@@ -23,6 +24,7 @@ export class AtestadoBuilder extends GenericBuilder {
         atestado.setAgendamento(new TarefaBuilder().initialize(atestado.getAgendamento()));
         atestado.setProfissional(new ProfissionalSaudeBuilder().initialize(atestado.getProfissional()));        
         atestado.setHistoricoAtestados(new HistoricoAtestadoBuilder().initializeList(atestado.getHistoricoAtestados()));
+        atestado.setAuditoriaAtestados(new AuditoriaAtestadoBuilder().initializeList(atestado.getAuditoriaAtestados()));
         atestado.setExamesConvocacao(new ExameBuilder().cloneList(atestado.getExamesConvocacao()));
         
         return atestado;
@@ -90,6 +92,13 @@ export class AtestadoBuilder extends GenericBuilder {
         cloneAtestado.setDataAuditoria(this.getValue(atestado,"getDataAuditoria"));
         cloneAtestado.setConvocado(this.getValue(atestado,"getConvocado"));
         cloneAtestado.setDataHomologacao(this.getValue(atestado,"getDataHomologacao"));
+        
+        if (this.getValue(atestado, "getAuditoriaAtestados") !== undefined) { 
+            cloneAtestado.setAuditoriaAtestados(
+                    new AuditoriaAtestadoBuilder().cloneList(this.getValue(atestado,"getAuditoriaAtestados")));
+        } else {
+            cloneAtestado.setAuditoriaAtestados(new AuditoriaAtestadoBuilder().initializeList(null));
+        }
         
         if (this.getValue(atestado, "getHistoricoAtestados") !== undefined) { 
             cloneAtestado.setHistoricoAtestados(
