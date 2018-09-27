@@ -26,6 +26,7 @@ import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional
 import { Usuario } from './../../../model/usuario';
 import { PessoaFilter } from './../../pessoa/pessoa.filter';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
+import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
 
 @Component( {
     selector: 'app-acompanhamento',
@@ -44,6 +45,7 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
     private flagIndexAcao: number = -1;
     private modalAcao;
     private profissional: Profissional;
+    @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
 
     constructor( private route: ActivatedRoute,
         private riscoPotencialService: RiscoPotencialService,
@@ -157,6 +159,7 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
         this.canDeactivate = true;
         this.riscoPotencialService.saveAcompanhamentos( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
             .then( res => {
+                this.confirmSaveComponent.setGoTo("$*close*$");
                 this.processReturn( true, res );
             } )
             .catch( error => {

@@ -83,33 +83,34 @@
 													<legend>Ação</legend>
 													<div class="row">
 														<div class="col s6">
-															<label for="tipo{{a}}">Tipo</label> <input type="text"
-																disabled name="tipo{{a}}" value={{acao.tipo}}>
+															<label for="tipo{{t}}{{a}}">Tipo</label> 
+															<input type="text" disabled
+																name="tipo{{t}}{{a}}" value={{acao.tipo}}>
 														</div>
 														<div class="col s6">
-															<label for="status{{a}}">Status</label> <input
-																type="text" disabled name="status{{a}}"
-																value={{acao.status}}>
+															<label for="status{{t}}{{a}}">Status</label> 
+															<input type="text" disabled
+																name="status{{t}}{{a}}" value={{acao.status}}>
 														</div>
 													</div>
-													<div class="row">
-														<div class="col s6">
-															<label for="tipoContato">Tipo de Contato</label> <input
-																type="text" disabled name="tipoContato{{a}}"
-																value={{acao.tipoContato}}>
-														</div>
-														<div class="col s6">
-															<label for="dataAcao">Data</label>
-															<input name="dataAcoes{{acao.id}}"
-																		   [(ngModel)]="acao.tarefa.fimCustomDate.appDate" disabled
-																		   type="text" />
-														</div>
+											      <div class="row">
+													<div class="col s6">
+														<label for="tipoContato">Tipo de Contato</label> 
+														<input type="text" disabled
+															name="tipoContato{{t}}{{a}}" value={{acao.tipoContato}}>
 													</div>
+													<div class="col s6">
+														<label for="dataAcao">Data</label>
+														<input name="dataAcoes{{t}}{{a}}" 
+															 disabled
+															type="text" />
+													</div>
+												  </div>
 													<div class="row">
 														<div class="col s12">
-															<label for="detalhe">Detalhe</label>
+															<label for="detalhe">Detalhe</label> 
 															<textarea class="materialize-textarea" disabled
-																name="detalhe{{a}}" value={{acao.detalhe}}></textarea>
+																name="detalhe{{t}}{{a}}" value={{acao.detalhe}}></textarea>
 														</div>
 													</div>
 
@@ -184,15 +185,11 @@
 		</div>
 
 		<div class='row row-btns'>
-			<div class="col s4">
-				<a [routerLink]="['/risco-potencial']"
-					class="btn btn-primary btn-voltar">Voltar</a>
-			</div>
-			<div class="col s4 center">
+			<div class="col s6">
 				<a (click)="savaAndRedirect()" *ngIf="triagensValidadas()"
 					class="btn btn-primary btn-validar">Reavaliar</a>
 			</div>
-			<div class="col s4">
+			<div class="col s6">
 				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>

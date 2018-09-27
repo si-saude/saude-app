@@ -33,6 +33,7 @@
 			(click)="closeSidenav3()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
+			<a [routerLink]="['/acao-intervencao']" *ngIf="checkPermissao('ACAO_LISTAR')">Ação</a>
 			<a [routerLink]="['/agente-causador']" *ngIf="checkPermissao('AGENTE-CAUSADOR_LISTAR')">Agente Causador</a>
 			<a [routerLink]="['/agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente de Risco</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>

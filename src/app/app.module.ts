@@ -71,7 +71,6 @@ import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoGheGuard } from './guards/guards-child/risco-ghe.guard';
 import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
-import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { EmpregadosPorGrupoGuard } from './guards/guards-child/empregados-por-grupo.guard';
 import { PanoramaGuard } from './guards/panorama.guard';
@@ -99,6 +98,7 @@ import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisi
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
+import { AcaoIntervencaoGuard } from './guards/guards-child/acao-intervencao.guard'; 
 import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
 
 @NgModule({
@@ -176,7 +176,6 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
     IntervencaoGuard,
     RiscoGheGuard,
     RiscoPotencialGuard,
-    NotificacaoGuard,
     EmpregadosPorGrupoGuard,
     DeclaracaoComparecimentoGuard,
     QuadroAtendimentoGuard,
@@ -204,7 +203,8 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
     ReportAvaliacaoHigieneOcupacionalGuard,
     ReportPreRequisitosAgendamentoGuard,
     ImovelGuard,
-    MotivoRecusaAtestadoGuard
+    MotivoRecusaAtestadoGuard,
+    AcaoIntervencaoGuard
   ],
   bootstrap: [ 
     AppComponent

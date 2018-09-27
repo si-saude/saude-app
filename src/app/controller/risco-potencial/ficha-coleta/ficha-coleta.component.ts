@@ -20,6 +20,7 @@ import { EmpregadoFilter } from './../../empregado/empregado.filter';
 import { PessoaFilter } from './../../pessoa/pessoa.filter';
 import { FichaColetaService } from './../../ficha-coleta/ficha-coleta.service';
 import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.service';
+import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
 
 @Component( {
     selector: 'app-risco-potencial-ficha-coleta',
@@ -32,6 +33,8 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
     private usuario: Usuario;
     private profissional: Profissional;
     private nomeEmpregado: string;
+
+    @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
 
     constructor( private route: ActivatedRoute,
         private fichaColetaService: FichaColetaService,
@@ -62,7 +65,7 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                                    component.idEquipeProfissional = component.profissional.getId();
+                                    component.idEquipeProfissional = component.profissional.getEquipe().getId();
 
                                     this.inscricao = this.route.params.subscribe(
                                         ( params: any ) => {
@@ -78,7 +81,6 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
                                                 component.filaEsperaOcupacionalService.listAll( filaFilter )
                                                     .then( res => {
                                                         component.showPreload = false;
-                                                        console.log(res.json());
                                                         component.fichaColeta = new FichaColetaBuilder().clone( res.json().list[0]["fichaColeta"] );
                                                     } )
                                                     .catch( error => {
@@ -112,9 +114,9 @@ export class FichaColetaComponent extends GenericFormComponent implements OnInit
     }
 
     salvar() {
-        this.save( new FichaColetaBuilder().clone( this.fichaColeta ) );
+        this.confirmSaveComponent.setGoTo("$*close*$");
+        this.save(new FichaColetaBuilder().clone( this.fichaColeta ));
     }
-
     ngOnDestroy() {
         if ( this.inscricao != undefined )
             this.inscricao.unsubscribe();

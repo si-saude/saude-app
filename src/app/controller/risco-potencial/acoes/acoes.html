@@ -9,168 +9,97 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<p style="color: #26a69a;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b></p>
+<p style="color: #26a69a; margin-left: 19.7%;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b></p>
 
 <div class="form-container">
-	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
-
-		<div class="container-triagem">
-			<div class="table-triagem">
-				<table style="width: 100%">
-					<div class="container-triagens-acolhimento">
-						<div
-							*ngFor="let equipe of equipesAbordagemTriagens; let e = index">
-							<p style="margin-left: 20px;">
-								<b>{{equipe.nome}}</b>
-							</p>
-							<div
-								*ngFor="let triagem of triagensByEquipeAbordagem[equipe.id]; let t = index">
-								<fieldset class="fieldset-planejamento-triagem">
-									<tr class="row col s12">
-										<td class="col s3 label-indicador-acolhimento">Indicador</td>
-										<td class="col s9 indicador-acolhimento">{{triagem.indicadorSast.nome}}</td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-indice-descricao-acolhimento">Índice
-											Descrição</td>
-										<td class="col s9 indice-descricao-acolhimento">{{getIndiceDescricao(triagem)}}</td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-eixo-clinico-acolhimento">Eixo
-											Clínico</td>
-										<td class="col s9 eixo-clinico-acolhimento">
-											<input type="text" maxlength="256" 
-												name="eixo-clinico-acolhimento{{e}}{{t}}"
-												disabled [(ngModel)]="triagem.diagnostico.eixo.titulo"></td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-diagnostico-acolhimento">Diagnóstico</td>
-										<td class="col s9 diagnostico-acolhimento">
-											<input maxlength="300"
-												type="text" name="diagnostico-acolhimento{{e}}{{t}}" disabled
-												[(ngModel)]="triagem.diagnostico.descricao"></td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-intervencao-acolhimento">Intervenção</td>
-										<td class="col s9 intervencao-acolhimento">
-											<input maxlength="50"
-												type="text" name="intervencao-acolhimento{{e}}{{t}}" disabled
-												[(ngModel)]="triagem.intervencao.descricao"></td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-equipe-abordagem-acolhimento">Equipe
-											de Abordagem</td>
-										<td class="col s9 equipe-abordagem-acolhimento">
-										    <input maxlength="50"
-												type="text" name="equipe-abordagem-acolhimento{{e}}{{t}}"
-												disabled [(ngModel)]="triagem.equipeAbordagem.nome">
-										</td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-prazo-inicio-acolhimento">Sugestão
-											de prazo de início</td>
-										<td class="col s9 prazo-inicio-acolhimento">
-											<input maxlength="16"
-												type="text" name="prazo-inicio-acolhimento{{e}}{{t}}"
-												disabled [(ngModel)]="triagem.prazo"></td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-justificativa-acolhimento">Justificativa/Observação</td>
-										<td class="col s9 justificativa-acolhimento">
-											<input maxlength="2048"
-												type="text" name="justificativa-acolhimento{{e}}{{t}}"
-												disabled [(ngModel)]="triagem.justificativa"></td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-ignorar-acoes">Ignorar Ações</td>
-										<td class="col s9 ignorar-acoes"><input type="checkbox"
-											id="triagem.ignorarAcoes{{e}}{{t}}"
-											[(ngModel)]="triagem.ignorarAcoes"
-											name="triagem.ignorarAcoes{{e}}{{t}}">
-											<label for="triagem.ignorarAcoes{{e}}{{t}}"></label>
-										</td>
-									</tr>
-									<tr class="row col s12">
-										<td class="col s3 label-acoes">Acões <a
-											(click)="addAcao(equipe.id, t)" 
-											class="btn-floating waves-effect waves-light btn-add-acao">
-												<i class="material-icons icon-btn-add-acao">add</i>
-										</a>
-										</td>
-										<td class="col s9">
-											<div *ngFor="let acao of triagem.acoes; let a = index">
-											<fieldset (mouseenter)="showActions(a)"
-													  (mouseleave)="hiddenActions(a)">
-												<legend>Ação</legend>
-												<div class="row btn-action{{a}} btn-action-div" hidden>
-													<a class="btn-floating waves-effect waves-light blue btn-edit"
-														(click)="editAcao(equipe.id, t, triagem.id, a)">
-														<i class="material-icons center-icon">mode_edit</i></a>
-													<a class="btn-floating waves-effect waves-light red btn-remove"
-														(click)="removeAcao(equipe.id, t, triagem.id, a)"> 
-														<i class="material-icons center-icon">delete</i>
-													</a>
-												</div>
-												<div class="row">
-													<div class="col s6">
-														<label for="tipo{{t}}{{a}}">Tipo</label> 
-														<input type="text" disabled
-															name="tipo{{t}}{{a}}" value={{acao.tipo}}>
-													</div>
-													<div class="col s6">
-														<label for="status{{t}}{{a}}">Status</label> 
-														<input type="text" disabled
-															name="status{{t}}{{a}}" value={{acao.status}}>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col s6">
-														<label for="tipoContato">Tipo de Contato</label> 
-														<input type="text" disabled
-															name="tipoContato{{t}}{{a}}" value={{acao.tipoContato}}>
-													</div>
-													<div class="col s6">
-														<label for="dataAcao">Data</label>
-														<input name="dataAcoes{{t}}{{a}}" 
-															[(ngModel)]="acao.tarefa.fimCustomDate.appDate" disabled
-															type="text" />
-													</div>
-												</div>
-												<div class="row">
-													<div class="col s12">
-														<label for="detalhe">Detalhe</label> 
-														<textarea class="materialize-textarea" disabled
-															name="detalhe{{t}}{{a}}" value={{acao.detalhe}}></textarea>
-													</div>
-												</div>
-												<div class="row center" *ngIf="verifyReopenAcao(acao)">
-													<a (click)="reopenAcao(acao)" 
-														class="btn btn-primary btn-reabrir">Reabrir</a>
-												</div>
-											</fieldset>
-											</div>
-										</td>
-									</tr>
-								</fieldset>
-							</div>
-						</div>
-
+	<form #form="ngForm" (ngSubmit)="save()">
+		<div class='row'>
+			<div class="listClick collection">
+					<div *ngFor="let riscoEmpregado of riscoPotencial.riscoEmpregados; let r = index">
+					     <div class="row row-collection"  *ngFor="let triagem of riscoEmpregado.triagens; let t = index">
+					     	<a (click)="selectTriagem(r,t)" class="collection-item" 
+					     	*ngIf="verificarTriagens(triagem)">
+					     	{{triagem.equipeAbordagem.abreviacao}} - {{triagem.indicadorSast.nome}}</a>
+					     </div>
+			     	</div>				
+			</div>
+			<div class="col s8"*ngIf="triagemAux.id > 0">
+				<div class="col s12">
+			         <p><b>INDICADOR: {{triagemAux.indicadorSast.nome}}</b></p>
+			         <p><b>ÍNDICE: {{getIndiceDescricao(triagemAux)}}</b></p>
+			         <p><b>EIXO CLÍNICO: {{triagemAux.diagnostico.eixo.titulo}}</b></p>
+			         <p><b>DIAGNÓSTICO: {{triagemAux.diagnostico.descricao}}</b></p>
+			         <p><b>INTERVENÇÃO: {{triagemAux.intervencao.descricao}}</b></p>
+			         <p><b>EQUIPE DE ABORDAGEM: {{triagemAux.equipeAbordagem.nome}}</b></p>
+			         <p><b>SUGESTAO DE PRAZO: {{triagemAux.prazo}}</b></p>
+			         <p><b>JUSTIFICATIVA/OBSERVAÇÃO: {{triagemAux.justificativa}}</b></p>
+		        </div>
+		        <div class="col s12">		        
+					<div class="input-field col s8">
+						<input type="checkbox"
+							name="triagemAux.ignorarAcoes"
+							[(ngModel)]="triagemAux.ignorarAcoes"> 
+							<label style="color: #26a69a;" for="triagemAux.ignorarAcoes">Ignorar Ações</label>
 					</div>
-				</table>
-			</div>
-
-			<input id="id" name="id" type="hidden"
-				[(ngModel)]="riscoPotencial.id"> <input id="version"
-				name="version" type="hidden" [(ngModel)]="riscoPotencial.version">
-
-		</div>
-
-		<div class='row row-btns'>
-			<div class="col s6">
-				<a [routerLink]="['/risco-potencial']"
-					class="btn btn-primary btn-voltar">Voltar</a>
-			</div>
-			<div class="col s6">
+					<div class="input-field col s4">
+						<p>
+							<a class="btn-floating waves-effect waves-light green btn-add"
+								(click)="addAcao()"> <i
+								class="material-icons center-icon">add</i>
+							  </a>
+					        <label style="color: #26a69a;">Adicionar Ação</label>
+					    </p>
+	   				 </div>
+		        </div>
+		        <div class="col s12 margemTable">	
+		        <div class="row">
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s2">Tipo</th>
+								<th class="col s2">Status</th>
+								<th class="col s2">Tipo de Contato</th>
+								<th class="col s3">Datalhe</th>
+								<th class="col s1" >Reabrir</th>
+								<th class="col s1">Editar</th>
+								<th class="col s1">Remover</th>
+							</tr>
+						</thead>
+						<div *ngFor="let acao of triagemAux.acoes; let a = index">
+							<tbody class="col s12">
+								<tr class="col s12" (click)="reopenAcao(acao)">
+									<td class="col s2">{{acao.tipo}}</td>
+									<td class="col s2">{{acao.status}}</td>
+									<td class="col s2">{{acao.tipoContato}}</td>	
+									<td class="col s3">{{textUtil.shortText(acao.acaoIntervencao.descricao)}}</td>
+									<td class="col s1">
+										<a *ngIf="verifyReopenAcao(acao)" class="waves-effect"
+											(click)="reopenAcao(acao)">
+										<i class="material-icons center-icon">rotate_right</i></a>											
+									</td>
+									<td class="col s1">
+										<a class="waves-effect"
+											(click)="editAcao(a)">
+										<i class="material-icons center-icon">mode_edit</i></a>	
+									</td>
+									<td class="col s1">
+										<a class="waves-effect"
+											(click)="removeAcao(a)"> 
+											<i class="material-icons center-icon">delete</i>
+										</a>
+									</td>		
+								</tr>
+							</tbody>
+						</div>
+					</table>
+				</div>
+		        
+		    </div>    
+		                
+	      </div>
+        </div>
+		<div class='row'>
+			<div class="col s12">
 				<button type="submit" class="btn btn-primary btn-salvar" right>Salvar</button>
 			</div>
 		</div>
@@ -211,22 +140,19 @@
 						<option *ngFor="let tipo of tipoAcoes" value="{{tipo}}">{{tipo}}</option>
 					</select>
 				</fieldset>
-			</div>
-										
-			<div class="input-field col s6">
-			<label for="dataTarefaAcao">Data</label>
-				<app-date-picker [nome]="'dataTarefaAcao'" 
-					[customDate]="flagAcao.tarefa.fimCustomDate" 									
-					[legenda]="'Data'"></app-date-picker>
-			</div>
 		</div>
-
 		<div class="input-field col s12">
-			<label for="flagAcao.detalhe">Detalhe</label>
-			<textarea class="materialize-textarea" [(ngModel)]="flagAcao.detalhe" maxlength="2048"
-				name="flagAcao.detalhe"></textarea>
-		</div>
-
+			<fieldset>
+				<label for="flagAcao.acaoIntervencao" >Ação</label> 						
+				<input type="text" materialize="autocomplete" autocomplete="off"
+					name="flagAcao.acaoIntervencao.descricao"
+					[(ngModel)]="flagAcao.acaoIntervencao.descricao"
+					(blur)="autoCompleteAcaoIntervencao.getAutocomplete().getObj($event,flagAcao,'setAcaoIntervencao','getDescricao')"
+					(ngModelChange)="autoCompleteAcaoIntervencao.getAutocomplete().getList(flagAcao.acaoIntervencao, 'getDescricao');"
+					(keydown.enter)="autoCompleteAcaoIntervencao.getAutocomplete().pressEnter($event,flagAcao,'setAcaoIntervencao','getDescricao');"
+					[materializeParams]="autoCompleteAcaoIntervencao.getAutocomplete().getObjAutoComplete()">
+			</fieldset>
+		</div>	
 	</div>
 
 	<div class="modal-footer">

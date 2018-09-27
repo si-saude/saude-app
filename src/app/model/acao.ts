@@ -1,14 +1,14 @@
 import { Tarefa } from './tarefa';
 import { Triagem } from './triagem';
 import { Acompanhamento } from './acompanhamento';
+import { AcaoIntervencao } from './acao-intervencao';
 
 export class Acao {
 	private id: number;
 	private tipo: string = "";
 	private status: string = "";
 	private tipoContato: string = "";
-	private detalhe: string;
-	private tarefa: Tarefa;
+	private acaoIntervencao: AcaoIntervencao;
 	private triagem: Triagem;
     private acompanhamentos: Array<Acompanhamento>; 
 	private version: number;
@@ -45,22 +45,13 @@ export class Acao {
 		this.tipoContato = tipoContato;
 	}
 
-	getDetalhe() {
-		return this.detalhe;
+	getAcaoIntervencao() {
+		return this.acaoIntervencao;
 	}
 
-	setDetalhe(detalhe: string) {
-		this.detalhe = detalhe;
+	setAcaoIntervencao(acaoIntervencao: AcaoIntervencao) {
+		this.acaoIntervencao = acaoIntervencao;
 	}
-
-	getTarefa() {
-		return this.tarefa;
-	}
-
-	setTarefa(tarefa: Tarefa) {
-		this.tarefa = tarefa;
-	}
-
 	getTriagem() {
 		return this.triagem;
 	}

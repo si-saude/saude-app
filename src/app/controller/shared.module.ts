@@ -83,6 +83,7 @@ import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
 import { EnfaseService } from './enfase/enfase.service';
 import { ImovelService } from './imovel/imovel.service';
 import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-recusa-atestado.service';
+import { AcaoIntervencaoService } from './acao-intervencao/acao-intervencao.service';
 
 @NgModule({
   declarations: [
@@ -185,7 +186,8 @@ import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-rec
     FichaColetaService,
     EnfaseService,
     ImovelService,
-    MotivoRecusaAtestadoService
+    MotivoRecusaAtestadoService,
+    AcaoIntervencaoService
   ]
 })
 export class SharedModule { }
