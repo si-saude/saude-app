@@ -1,11 +1,14 @@
 import { Atestado } from './../../model/atestado';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { CatBuilder } from './../cat/cat.builder';
-import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
-import { HomologacaoAtestadoBuilder } from './../homologacao-atestado/homologacao-atestado.builder';
 import { RegimeBuilder } from './../regime/regime.builder';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { MotivoRecusaAtestadoBuilder } from './../motivo-recusa-atestado/motivo-recusa-atestado.builder';
+import { DiagnosticoBuilder } from './../diagnostico/diagnostico.builder';
+import { ExameBuilder } from './../exame/exame.builder';
+import { AuditoriaAtestadoBuilder } from './../auditoria-atestado/auditoria-atestado.builder';
+import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
+import { HistoricoAtestadoBuilder } from './../historico-atestado/historico-atestado.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class AtestadoBuilder extends GenericBuilder {
@@ -14,12 +17,15 @@ export class AtestadoBuilder extends GenericBuilder {
         atestado = new Atestado();
         
         atestado.setTarefa(new TarefaBuilder().initialize(atestado.getTarefa()));
-        atestado.setCat(new CatBuilder().initialize(atestado.getCat()))
-        atestado.setProfissionalRealizouVisita(new ProfissionalSaudeBuilder().initialize(atestado.getProfissionalRealizouVisita()));
-        atestado.setHomologacaoAtestado(new HomologacaoAtestadoBuilder().initialize(atestado.getHomologacaoAtestado()));
         atestado.setRegime(new RegimeBuilder().initialize(atestado.getRegime()));
         atestado.setEmpregado(new EmpregadoBuilder().initialize(atestado.getEmpregado()));
         atestado.setMotivoRecusa(new MotivoRecusaAtestadoBuilder().initialize(atestado.getMotivoRecusa()));
+        atestado.setCid(new DiagnosticoBuilder().initialize(atestado.getCid()));
+        atestado.setAgendamento(new TarefaBuilder().initialize(atestado.getAgendamento()));
+        atestado.setProfissional(new ProfissionalSaudeBuilder().initialize(atestado.getProfissional()));        
+        atestado.setHistoricoAtestados(new HistoricoAtestadoBuilder().initializeList(atestado.getHistoricoAtestados()));
+        atestado.setAuditoriaAtestados(new AuditoriaAtestadoBuilder().initializeList(atestado.getAuditoriaAtestados()));
+        atestado.setExamesConvocacao(new ExameBuilder().cloneList(atestado.getExamesConvocacao()));
         
         return atestado;
     }
@@ -46,22 +52,15 @@ export class AtestadoBuilder extends GenericBuilder {
         let cloneAtestado = new Atestado();
         cloneAtestado.setId(this.getValue(atestado,"getId"));
         cloneAtestado.setVersion(this.getValue(atestado,"getVersion"));
-        cloneAtestado.setCid(this.getValue(atestado,"getCid"));
         cloneAtestado.setAnexoBase64(this.getValue(atestado,"getAnexoBase64"));
         cloneAtestado.setAnexoRelatorioMedicoBase64(this.getValue(atestado,"getAnexoRelatorioMedicoBase64"));
         cloneAtestado.setAtestadoFisicoRecebido(this.getValue(atestado,"getAtestadoFisicoRecebido"));
         cloneAtestado.setControleLicenca(this.getValue(atestado,"getControleLicenca"));
-        cloneAtestado.setDataAgendamento(this.getValue(atestado,"getDataAgendamento"));
         cloneAtestado.setDataSolicitacao(this.getValue(atestado,"getDataSolicitacao"));
         cloneAtestado.setImpossibilidadeLocomocao(this.getValue(atestado,"getImpossibilidadeLocomocao"));
         cloneAtestado.setLancadoSap(this.getValue(atestado,"getLancadoSap"));
         cloneAtestado.setNumeroDias(this.getValue(atestado,"getNumeroDias"));
         cloneAtestado.setStatus(this.getValue(atestado,"getStatus"));
-        cloneAtestado.setTipoBeneficio(this.getValue(atestado,"getTipoBeneficio"));
-        cloneAtestado.setCausaAfastamento(this.getValue(atestado,"getCausaAfastamento"));
-        cloneAtestado.setUltimoContato(this.getValue(atestado,"getUltimoContato"));
-        cloneAtestado.setProximoContato(this.getValue(atestado,"getProximoContato"));
-        cloneAtestado.setSituacaoEmpregado(this.getValue(atestado,"getSituacaoEmpregado"));
         cloneAtestado.setInicio(this.getValue(atestado,"getInicio"));
         cloneAtestado.setTelefoneExterno(this.treatTelefoneExterno(this.getValue(atestado,"getTelefoneExterno")));
         cloneAtestado.setEmailExterno(this.getValue(atestado,"getEmailExterno"));
@@ -79,12 +78,84 @@ export class AtestadoBuilder extends GenericBuilder {
         cloneAtestado.setLimiteAuditar(this.getValue(atestado,"getLimiteAuditar"));
         cloneAtestado.setLimiteHomologar(this.getValue(atestado,"getLimiteHomologar"));
         cloneAtestado.setLimiteLancar(this.getValue(atestado,"getLimiteLancar"));
+        cloneAtestado.setDataLimiteAgendamento(this.getValue(atestado,"getDataLimiteAgendamento"));
+        cloneAtestado.setDataLimiteAuditar(this.getValue(atestado,"getDataLimiteAuditar"));
+        cloneAtestado.setDataLimiteHomologar(this.getValue(atestado,"getDataLimiteHomologar"));
+        cloneAtestado.setDataLimiteLancar(this.getValue(atestado,"getDataLimiteLancar"));
+        cloneAtestado.setSomaDiasAtestados(this.getValue(atestado,"getSomaDiasAtestados"));
+        cloneAtestado.setConcatenacaoDatasCids(this.getValue(atestado,"getConcatenacaoDatasCids"));
+        cloneAtestado.setObservacao(this.getValue(atestado,"getObservacao"));
+        cloneAtestado.setLancamentoSd2000(this.getValue(atestado,"getLancamentoSd2000"))
+        cloneAtestado.setFim(this.getValue(atestado,"getFim"));
+        cloneAtestado.setAusenciaExames(this.getValue(atestado,"getAusenciaExames"));
+        cloneAtestado.setPreviewStatus(this.getValue(atestado,"getPreviewStatus"));
+        cloneAtestado.setDataAuditoria(this.getValue(atestado,"getDataAuditoria"));
+        cloneAtestado.setConvocado(this.getValue(atestado,"getConvocado"));
+        cloneAtestado.setDataHomologacao(this.getValue(atestado,"getDataHomologacao"));
         
-        cloneAtestado.setTarefa(
+        if (this.getValue(atestado, "getAuditoriaAtestados") !== undefined) { 
+            cloneAtestado.setAuditoriaAtestados(
+                    new AuditoriaAtestadoBuilder().cloneList(this.getValue(atestado,"getAuditoriaAtestados")));
+        } else {
+            cloneAtestado.setAuditoriaAtestados(new AuditoriaAtestadoBuilder().initializeList(null));
+        }
+        
+        if (this.getValue(atestado, "getHistoricoAtestados") !== undefined) { 
+            cloneAtestado.setHistoricoAtestados(
+                    new HistoricoAtestadoBuilder().cloneList(this.getValue(atestado,"getHistoricoAtestados")));
+        } else {
+            cloneAtestado.setHistoricoAtestados(new HistoricoAtestadoBuilder().initializeList(null));
+        }
+        
+        if (this.getValue(atestado, "getProfissional") !== undefined) { 
+            cloneAtestado.setProfissional(
+                    new ProfissionalSaudeBuilder().clone(this.getValue(atestado,"getProfissional")));
+            if( !this.idGtZero(cloneAtestado.getProfissional()) )
+                cloneAtestado.setProfissional(undefined);
+        } else {
+            cloneAtestado.setProfissional(new ProfissionalSaudeBuilder().initialize(null));
+        }
+        
+        if (this.getValue(atestado, "getTarefa") !== undefined) { 
+            cloneAtestado.setTarefa(
                 new TarefaBuilder().clone(this.getValue(atestado,"getTarefa")));
+        } else {
+            cloneAtestado.setTarefa(new TarefaBuilder().initialize(null));
+        }
         
-        cloneAtestado.setEmpregado(
-                new EmpregadoBuilder().clone(this.getValue(atestado,"getEmpregado")));
+        if (this.getValue(atestado, "getEmpregado") !== undefined) { 
+            cloneAtestado.setEmpregado(
+                    new EmpregadoBuilder().clone(this.getValue(atestado,"getEmpregado")));
+            if( !this.idGtZero(cloneAtestado.getEmpregado()) )
+                cloneAtestado.setEmpregado(undefined);
+        } else {
+            cloneAtestado.setEmpregado(new EmpregadoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(atestado, "getExamesConvocacao") !== undefined) { 
+            cloneAtestado.setExamesConvocacao(
+                    new ExameBuilder().cloneList(this.getValue(atestado,"getExamesConvocacao")));
+        } else {
+            cloneAtestado.setExamesConvocacao(new ExameBuilder().initializeList(null));
+        }
+        
+        if (this.getValue(atestado, "getCid") !== undefined) { 
+            cloneAtestado.setCid(
+                    new DiagnosticoBuilder().clone(this.getValue(atestado,"getCid")));
+            if( !this.idGtZero(cloneAtestado.getCid()) )
+                cloneAtestado.setCid(undefined);
+        } else {
+            cloneAtestado.setCid(new DiagnosticoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(atestado, "getAgendamento") !== undefined) { 
+            cloneAtestado.setAgendamento(
+                    new TarefaBuilder().clone(this.getValue(atestado,"getAgendamento")));
+            if( !this.idGtZero(cloneAtestado.getAgendamento()) )
+                cloneAtestado.setAgendamento(undefined);
+        } else {
+            cloneAtestado.setAgendamento(new TarefaBuilder().initialize(null));
+        }
         
         if (this.getValue(atestado, "getMotivoRecusa") !== undefined) { 
             cloneAtestado.setMotivoRecusa(
@@ -98,35 +169,10 @@ export class AtestadoBuilder extends GenericBuilder {
         if (this.getValue(atestado, "getRegime") !== undefined) { 
             cloneAtestado.setRegime(
                     new RegimeBuilder().clone(this.getValue(atestado,"getRegime")));
-            if(!this.idGtZero(cloneAtestado.getRegime()))
+            if( !this.idGtZero(cloneAtestado.getRegime()) )
                 cloneAtestado.setRegime(undefined);
         } else {
             cloneAtestado.setRegime(new RegimeBuilder().initialize(null));
-        }
-        
-        if (this.getValue(atestado, "getProfissionalRealizouVisita") !== undefined) { 
-            cloneAtestado.setProfissionalRealizouVisita(
-                    new ProfissionalSaudeBuilder().clone(this.getValue(atestado,"getProfissionalRealizouVisita")));
-            if(!this.idGtZero(cloneAtestado.getProfissionalRealizouVisita()))
-                cloneAtestado.setProfissionalRealizouVisita(undefined);
-        } else {
-            cloneAtestado.setProfissionalRealizouVisita(new ProfissionalSaudeBuilder().initialize(null));
-        }
-        
-        if (this.getValue(atestado, "getCat") !== undefined) { 
-            cloneAtestado.setCat(
-                    new CatBuilder().clone(this.getValue(atestado,"getCat")));
-            if(!this.idGtZero(cloneAtestado.getCat()))
-                cloneAtestado.setCat(undefined);
-        } else {
-            cloneAtestado.setCat(new CatBuilder().initialize(null));
-        }
-        
-        if (this.getValue(atestado, "getHomologacaoAtestado") !== undefined) { 
-            cloneAtestado.setHomologacaoAtestado(
-                    new HomologacaoAtestadoBuilder().clone(this.getValue(atestado,"getHomologacaoAtestado")));
-        } else {
-            cloneAtestado.setHomologacaoAtestado(undefined);
         }
         
         return cloneAtestado;

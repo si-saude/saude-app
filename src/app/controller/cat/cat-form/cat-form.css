@@ -8,3 +8,7 @@
 .checkbox {
 	margin-top: 30px;
 }
+
+.radio {
+	pointer-events: auto;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -6,19 +6,18 @@ import * as $ from 'jquery';
 import { MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
-import { Diagnostico } from './../../../model/diagnostico';
-import { Cat } from './../../../model/cat';
-import { Empregado } from './../../../model/empregado';
+import { Cat } from './../../../model/cat'; 
 import { CatBuilder } from './../cat.builder';
 import { CatService } from './../cat.service';
-import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { GerenciaCodigoCompletoAutocomplete } from './../../gerencia/gerencia-codigo-completo.autocomplete';
-import { GerenciaService } from './../../gerencia/gerencia.service';
-import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
-import { FornecedorRazaoSocialAutocomplete } from './../../fornecedor/fornecedor-razao-social.autocomplete';
-import { FornecedorService } from './../../fornecedor/fornecedor.service';
-import { EmpregadoService } from './../../empregado/empregado.service';
+import { Cargo } from './../../../model/cargo';
+import { CargoBuilder } from './../../cargo/cargo.builder';
+import { Funcao } from './../../../model/funcao';
+import { ClassificacaoAfastamento } from './../../../model/classificacao-afastamento';
+import { ClassificacaoAfastamentoBuilder } from './../../classificacao-afastamento/classificacao-afastamento.builder';
+import { FuncaoBuilder } from './../../funcao/funcao.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
+import { DiagnosticoFilter } from './../../diagnostico/diagnostico.filter';
+import { GenericFormComponent } from './../../../generics/generic.form.component';
 
 @Component( {
     selector: 'app-cat-form-detail',
@@ -27,15 +26,15 @@ import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 } )
 export class CatFormDetailComponent extends GenericFormComponent implements OnInit {
     private cat: Cat;
-    private ufs: Array<string>;
-    private sexos: Array<string>;
-    private partesCorpo: Array<string>;
-    private gravidades: Array<string>;
-    private tipoAcidentes: Array<string>;
-    private tipoCats: Array<string>;
-    private showModalDiagnostico: boolean;
-    private innerIdEquipe: number = 0;
-    private diaHoraAcidenteTimeActions;
+    private cargos: Array<Cargo>;
+    private escolaridades: Array<string>;
+    private estadosCivis: Array<string>;
+    private vinculos: Array<string>;
+    private funcoes: Array<Funcao>;
+    private classificacoes: Array<ClassificacaoAfastamento>;
+    private nexoCausais: Array<string>;
+
+    private timeActions;
     
     constructor( private route: ActivatedRoute,
         private catService: CatService,
@@ -44,12 +43,15 @@ export class CatFormDetailComponent extends GenericFormComponent implements OnIn
 
         this.goTo = "cat";
         this.cat = new CatBuilder().initialize( this.cat );
-        this.sexos = new Array<string>();
-        this.partesCorpo = new Array<string>();
-        this.gravidades = new Array<string>();
-        this.tipoAcidentes = new Array<string>();
-        this.tipoCats = new Array<string>();
-        this.diaHoraAcidenteTimeActions = new EventEmitter<string|MaterializeAction>();
+        this.cargos = new CargoBuilder().initializeList( this.cargos );
+        this.escolaridades = new Array<string>();
+        this.estadosCivis = new Array<string>();
+        this.vinculos = new Array<string>();
+        this.funcoes = new FuncaoBuilder().initializeList( this.funcoes );
+        this.classificacoes = new ClassificacaoAfastamentoBuilder().initializeList(this.classificacoes);
+        this.nexoCausais = new Array<string>();
+        
+        this.timeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {
@@ -70,68 +72,105 @@ export class CatFormDetailComponent extends GenericFormComponent implements OnIn
                 }
             } );
         
-        this.getSexos();
-        this.getPartesCorpo();
-        this.getGravidades();
-        this.getTipoAcidentes();
-        this.getTipoCats();
+        this.getCargos();
+        this.getEscolaridades();
+        this.getEstadosCivis();
+        this.getVinculos();
+        this.getFuncoes();
+        this.getClassificacoes();
+        this.getNexoCausais();
     }
     
-    getSexos() {
-        this.catService.getSexos()
-            .then( res => {
-                this.sexos = Object.keys( res.json() ).sort();
+    getCargos() {
+        this.catService.getCargoService().getCargos()
+            .then(res => {
+                this.cargos = new CargoBuilder().cloneList(res.json());
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getPartesCorpo() {
-        this.catService.getPartesCorpo()
-            .then( res => {
-                this.partesCorpo = Object.keys( res.json() ).sort();
+    getEscolaridades() {
+        this.catService.getEscolaridades()
+            .then(res => {
+                this.escolaridades = Object.keys(res.json()).sort();
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getGravidades() {
-        this.catService.getGravidades()
-            .then( res => {
-                this.gravidades = Object.keys( res.json() ).sort();
+    getEstadosCivis() {
+        this.catService.getEstadosCivis()
+            .then(res => {
+                this.estadosCivis = Object.keys(res.json()).sort();
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getTipoAcidentes() {
-        this.catService.getTipoAcidentes()
-            .then( res => {
-                this.tipoAcidentes = Object.keys( res.json() ).sort();
+    getVinculos() {
+        this.catService.getVinculos()
+            .then(res => {
+                this.vinculos = Object.keys(res.json()).sort();
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    getTipoCats() {
-        this.catService.getTipoCats()
-            .then( res => {
-                this.tipoCats = Object.keys( res.json() ).sort();
+    getFuncoes() {
+        this.catService.getFuncaoService().getFuncoes()
+            .then(res => {
+                this.funcoes = new FuncaoBuilder().cloneList(res.json());
             })
             .catch(error => {
-                console.log("Erro ao buscar os sexos.");
+                this.catchConfiguration(error);
             })
     }
     
-    ngOnDestroy() {
-        this.inscricao.unsubscribe();
+    getClassificacoes() {
+        this.catService.getClassificacaoService().getClassificacaoAfastamentos()
+            .then(res => {
+                this.classificacoes = new ClassificacaoAfastamentoBuilder().cloneList(res.json());
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
     }
     
-    save() {
-        super.save( new CatBuilder().clone( this.cat ) );
+    getNexoCausais() {
+        this.catService.getNexoCausais()
+            .then(res => {
+                this.nexoCausais = Object.keys( res.json() ).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
+    getNexoCausal() {
+        if ( this.cat.getNexoCausal() == undefined ) return "";
+        else if ( this.cat.getNexoCausal().includes("APLIC") )
+            return "naoAplicavel";
+        else if ( this.cat.getNexoCausal().includes("N") )
+            return "nao";
+        else return "sim";
+    }
+    
+    setNexoCausal( value ) {
+        switch(value) {
+            case "nao":
+                this.cat.setNexoCausal(this.nexoCausais[0]);
+                break;
+            case "naoAplicavel":
+                this.cat.setNexoCausal(this.nexoCausais[1]);
+                break;
+            case "sim":
+                this.cat.setNexoCausal(this.nexoCausais[2]);
+                break;
+        }
     }
 }

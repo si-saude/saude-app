@@ -43,6 +43,7 @@ export class ExamePericialComponent {
             this.atendimento.setTarefa(new TarefaBuilder().clone(JSON.parse(localStorage.getItem("tarefa"))));
             localStorage.removeItem("tarefa");
         }
+        this.getEquipes();
     }
     
     getEquipes() {

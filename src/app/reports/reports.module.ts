@@ -10,25 +10,26 @@ import { EmpregadosPorGrupoReportComponent } from './empregados-por-grupo-report
 import { EmpregadosPorGrupoReportService } from './empregados-por-grupo-report/empregados-por-grupo-report.service';
 import { PanoramaReportComponent } from './panorama-report/panorama-report.component';
 import { SolicitacaoCentralIntegraReportComponent } from './solicitacao-central-integra-report/solicitacao-central-integra-report.component';
-import { AtestadoReportComponent } from './atestado-report/atestado-report.component';
+import { ControleAtestadoReportComponent } from './controle-atestado-report/controle-atestado-report.component';
 import { CatReportComponent } from './cat-report/cat-report.component';
 import { AvaliacaoHigieneOcupacionalReportComponent } from './avaliacao-higiene-ocupacional-report/avaliacao-higiene-ocupacional-report.component';
 import { PreRequisitosAgendamentoReportComponent } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.component';
 import { PanoramaReportService } from './panorama-report/panorama-report.service';
-import { AtestadoReportService } from './atestado-report/atestado-report.service';
+import { ControleAtestadoReportService } from './controle-atestado-report/controle-atestado-report.service';
 import { CatReportService } from './cat-report/cat-report.service';
 import { PreRequisitosAgendamentoReportService } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
 import { PipesModule } from './../controller/pipes.module';
 import { ModalAvaliacaoHigieneOcupacionalModule } from './../controller/modal-avaliacao-higiene-ocupacional.module';
+import { ModalDisplayTextModule } from './../includes/modal-display-text/modal-display-text.module';
 
 @NgModule({
     declarations: [
        EmpregadosPorGrupoReportComponent,
        PanoramaReportComponent,
        SolicitacaoCentralIntegraReportComponent,
-       AtestadoReportComponent,
+       ControleAtestadoReportComponent,
        CatReportComponent,
        AvaliacaoHigieneOcupacionalReportComponent,
        PreRequisitosAgendamentoReportComponent
@@ -40,12 +41,13 @@ import { ModalAvaliacaoHigieneOcupacionalModule } from './../controller/modal-av
         MyDatePickerModule,
         MaterializeModule,
         PipesModule,
-        ModalAvaliacaoHigieneOcupacionalModule
+        ModalAvaliacaoHigieneOcupacionalModule,
+        ModalDisplayTextModule 
      ],
      providers: [
         EmpregadosPorGrupoReportService,
         PanoramaReportService,
-        AtestadoReportService,
+        ControleAtestadoReportService,
         CatReportService,
         PreRequisitosAgendamentoReportService
      ]

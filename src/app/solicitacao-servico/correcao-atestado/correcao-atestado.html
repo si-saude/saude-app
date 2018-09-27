@@ -21,10 +21,10 @@
 					<input type="text" materialize="autocomplete" autocomplete="off"
 						name="atestado"
 						[(ngModel)]="containerAtestado.atestado.id"
-						(blur)="atestadoIdAutocomplete.getAutocomplete().getObj($event,containerAtestado,'setAtestado','getId'); setAtestado()"
-						(ngModelChange)="atestadoIdAutocomplete.getAutocomplete().getList(containerAtestado.atestado, 'getId');"
-						(keydown.enter)="atestadoIdAutocomplete.getAutocomplete().pressEnter($event,containerAtestado,'setAtestado','getId');"
-						[materializeParams]="atestadoIdAutocomplete.getAutocomplete().getObjAutoComplete()">
+						(blur)="atestadoIdCorrecaoAutocomplete.getAutocomplete().getObj($event,containerAtestado,'setAtestado','getId'); setAtestado()"
+						(ngModelChange)="atestadoIdCorrecaoAutocomplete.getAutocomplete().getList(containerAtestado.atestado, 'getId');"
+						(keydown.enter)="atestadoIdCorrecaoAutocomplete.getAutocomplete().pressEnter($event,containerAtestado,'setAtestado','getId');"
+						[materializeParams]="atestadoIdCorrecaoAutocomplete.getAutocomplete().getObjAutoComplete()">
 				</fieldset>
 			</div>
 		</div>

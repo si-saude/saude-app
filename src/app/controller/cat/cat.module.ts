@@ -14,6 +14,7 @@ import { CatRoutingModule } from './cat.routing.module';
 import { SharedModule } from './../shared.module';
 import { CpfPipe } from './../../pipes/cpf.pipe';
 import { PlanejamentoModule } from './../planejamento.module';
+import { PipesModule } from './../pipes.module';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { PlanejamentoModule } from './../planejamento.module';
         CatRoutingModule,
         SharedModule,
         Ng2InputMaskModule,
-        PlanejamentoModule
+        PlanejamentoModule,
+        PipesModule
      ],
      providers: [
         CatService

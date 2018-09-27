@@ -64,3 +64,18 @@ select {
 .mensagem {
 	margin-top: 50px;
 }
+
+.table-infos {
+	width:100%;
+}
+
+.table-infos tr {
+	background: #ddd;
+	border-style: groove;
+}
+
+.table-infos th, .table-infos td {
+	border: 1px solid;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}

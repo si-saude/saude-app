@@ -11,7 +11,7 @@ import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
 import { HomologacaoAtestadoComponent } from './../../includes/homologacao-atestado/homologacao-atestado.component';
 import { TextUtil } from './../../generics/utils/text.util';
 import { GlobalVariable } from './../../../../src/app/global';
-import { AtestadoIdAutocomplete } from './../../controller/atestado/atestado-id.autocomplete';
+import { AtestadoIdCorrecaoAutocomplete } from './../../controller/atestado/atestado-id-correcao.autocomplete';
 import { GenericAtestadoComponent } from './../../generics/generic.atestado.component';
 
 @Component( {
@@ -21,13 +21,14 @@ import { GenericAtestadoComponent } from './../../generics/generic.atestado.comp
 } )
 export class CorrecaoAtestadoComponent extends GenericAtestadoComponent {
     private containerAtestado: ContainerAtestado;
-    private atestadoIdAutocomplete: AtestadoIdAutocomplete;
+    private atestadoIdCorrecaoAutocomplete: AtestadoIdCorrecaoAutocomplete;
     private tarefa: Tarefa;
 
     constructor(router: Router, solicitacaoServicoService: SolicitacaoServicoService ) {
         super(router, solicitacaoServicoService);
         this.containerAtestado = new ContainerAtestado(new AtestadoBuilder().initialize(new Atestado()));
-        this.atestadoIdAutocomplete = new AtestadoIdAutocomplete( this.solicitacaoServicoService.getAtestadoService() );
+        this.atestadoIdCorrecaoAutocomplete = new AtestadoIdCorrecaoAutocomplete( 
+                this.solicitacaoServicoService.getAtestadoService() );
         this.tarefa = new TarefaBuilder().initialize(new Tarefa());
     }
 

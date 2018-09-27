@@ -147,4 +147,11 @@ export class EmpregadoService extends GenericService {
         return this.enfaseService.getEnfases();
     }
     
+    saveAndReturn(empregado) {
+        let urlSaveAndReturn = this.URL + "/save-and-return";
+        return this.http
+            .post( urlSaveAndReturn, empregado, { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

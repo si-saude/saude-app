@@ -40,11 +40,13 @@
 			<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
 			<a [routerLink]="['/categoria-risco']" *ngIf="checkPermissao('CATEGORIA-RISCO_LISTAR')">Categoria de Risco</a>
 			<a [routerLink]="['/cidade']" *ngIf="checkPermissao('CIDADE_LISTAR')">Cidade</a>
+			<a [routerLink]="['/classificacao-afastamento']" *ngIf="checkPermissao('CLASSIFICACAO-AFASTAMENTO_LISTAR')">Classificação de Afastamento</a>
 			<a [routerLink]="['/criterio']" *ngIf="checkPermissao('CRITERIO_LISTAR')">Critério</a>
 			<a [routerLink]="['/curso']" *ngIf="checkPermissao('CURSO_LISTAR')">Curso</a>
 			<a [routerLink]="['/diagnostico']" *ngIf="checkPermissao('DIAGNOSTICO_LISTAR')">Diagnóstico</a>
 			<a [routerLink]="['/eixo']" *ngIf="checkPermissao('EIXO_LISTAR')">Eixo</a>
 			<a [routerLink]="['/empregado']" *ngIf="checkPermissao('EMPREGADO_LISTAR')">Empregado</a>
+			<a [routerLink]="['/empresa']" *ngIf="checkPermissao('EMPRESA_LISTAR')">Empresa</a>
 			<a [routerLink]="['/enfase']" *ngIf="checkPermissao('ENFASE_LISTAR')">Ênfase</a>
 			<a [routerLink]="['/equipe']" *ngIf="checkPermissao('EQUIPE_LISTAR')">Equipe</a>
 			<a [routerLink]="['/exame']" *ngIf="checkPermissao('EXAME_LISTAR')">Exame</a>
@@ -75,6 +77,7 @@
 			<a [routerLink]="['/indicador-sast']" *ngIf="checkPermissao('INDICADOR-SAST_LISTAR')">Indicador SAST</a>
 			<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
 			<a [routerLink]="['/intervencao']" *ngIf="checkPermissao('INTERVENCAO_LISTAR')">Intervenção</a>
+			<a [routerLink]="['/item-auditoria-atestado']" *ngIf="checkPermissao('ITEM-AUDITORIA-ATESTADO_LISTAR')">Item de Auditoria de Atestado</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
 			<a [routerLink]="['/motivo-recusa-atestado']" *ngIf="checkPermissao('MOTIVO-RECUSA-ATESTADO_LISTAR')">Motivo de Recusa do Atestado</a>
 			<a [routerLink]="['/natureza-lesao']" *ngIf="checkPermissao('NATUREZA-LESAO_LISTAR')">Natureza da Lesão</a>
@@ -108,7 +111,7 @@
 		</a>
 		<div class="groups">
 			<a [routerLink]="['/agenda']" *ngIf="checkPermissao('AGENDA')">Agenda</a>
-			<a [routerLink]="['/agenda-periodico']" *ngIf="checkPermissao('AGENDA-PERIODICO')">Agenda Periódico</a>
+			<a [routerLink]="['/agenda-periodico']" *ngIf="checkPermissao('AGENDA-PERIODICO')">Agenda de Atendimento Ocupacional</a>
 			<a [routerLink]="['/aprho']" *ngIf="checkPermissao('APRHO_LISTAR')">Análise Preliminar de Risco (APR-HO)</a>
 			<a [routerLink]="['/atendimento']" *ngIf="checkPermissao('ATENDIMENTO')">Atendimento</a>
 			<a [routerLink]="['/atendimento-avulso']" *ngIf="checkPermissao('ATENDIMENTO-AVULSO_LISTAR')">Atendimento Avulso</a>
@@ -169,11 +172,11 @@
 			(click)="closeSidenavRelatorio()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
-			<a [routerLink]="['/reports/atestado']" *ngIf="checkPermissao('REPORT-ATESTADO')">Atestado</a>
 			<a [routerLink]="['/reports/avaliacao-higiene-ocupacional']" *ngIf="checkPermissao('REPORT-AVALIACAO-HIGIENE-OCUPACIONAL')">
 				Avaliação de Higiene Ocupacional
 			</a>
 			<a [routerLink]="['/reports/cat']" *ngIf="checkPermissao('REPORT-CAT')">CAT - Comunicado de Acidente de Trabalho</a>
+			<a [routerLink]="['/reports/atestado']" *ngIf="checkPermissao('REPORT-ATESTADO')">Controle de Atestado</a>
 			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>
 			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
 			<a [routerLink]="['/reports/pre-requisitos-agendamento']" *ngIf="checkPermissao('REPORT-PRE-REQUISITOS-AGENDAMENTO')">Pré Requisitos Agendamento</a>
