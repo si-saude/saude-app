@@ -17,6 +17,7 @@ import { BaseFilter } from './../base/base.filter';
 import { IndicadorSastService } from './../indicador-sast/indicador-sast.service';
 import { IndicadorSastFilter } from './../indicador-sast/indicador-sast.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
+import { AcaoIntervencaoService } from './../acao-intervencao/acao-intervencao.service';
 
 @Injectable()
 export class RiscoPotencialService extends GenericService {
@@ -29,12 +30,16 @@ export class RiscoPotencialService extends GenericService {
             private intervencaoService: IntervencaoService,
             private equipeService: EquipeService,
             private indicadorSastService: IndicadorSastService,
+            private acaoIntervencaoService: AcaoIntervencaoService,
             private baseService: BaseService ) { 
         super(http,router,"risco-potencial");
     }
     
     getUfs() {
         return this.baseService.getUfs();
+    }
+    getAcaoIntervencaoService(){        
+        return this.acaoIntervencaoService;
     }
     
     getUsuario( id: number ) {

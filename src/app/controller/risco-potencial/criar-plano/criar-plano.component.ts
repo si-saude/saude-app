@@ -11,6 +11,7 @@ import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 import { RiscoPotencialService } from './../risco-potencial.service';
 import { RiscoEmpregado } from './../../../model/risco-empregado';
 import { RiscoEmpregadoBuilder } from './../../risco-empregado/risco-empregado.builder';
+import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
 
 @Component( {
     selector: 'app-criar-plano',
@@ -21,6 +22,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
     private riscoPotencial: RiscoPotencial;
     private idsEquipes: Array<number>;
     private selectedRiscoEmpregados: Array<RiscoEmpregado>;
+    @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
 
     constructor( private route: ActivatedRoute,
         private riscoPotencialService: RiscoPotencialService,
@@ -92,6 +94,7 @@ export class CriarPlanoComponent extends GenericFormComponent implements OnInit 
         this.canDeactivate = true;
         this.riscoPotencialService.criarPlano( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
             .then( res => {
+                this.confirmSaveComponent.setGoTo("$*close*$");
                 this.processReturn( true, res );
             } )
             .catch( error => {

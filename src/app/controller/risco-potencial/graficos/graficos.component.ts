@@ -86,7 +86,7 @@ export class GraficosComponent extends GenericFormComponent {
                             let arrayData = [];
                             let arrayLineData = [];
                             for ( let i = 0; i < this.riscoPotencial.getRiscoEmpregados().length; i++ ) {
-                                arrayData.push(this.riscoPotencial.getRiscoEmpregados()[i].getValor());
+                                arrayData.push(this.riscoPotencial.getRiscoEmpregados()[i].getValorPonderado());
                                 arrayLineData.push(this.riscoPotencial.getValor());
                                 this.barChartLabels.push(this.riscoPotencial.getRiscoEmpregados()[i].getEquipe().getNome());
                                 

@@ -8,6 +8,7 @@ import { CustomDate} from './../generics/utils/custom-date.util';
 export class RiscoEmpregado {
     private id: number;
     private valor: number;
+    private valorPonderado: number;
     private riscoPotencial: RiscoPotencial;
     private empregado: Empregado;
     private equipe: Equipe;
@@ -27,6 +28,14 @@ export class RiscoEmpregado {
 
     setId(id: number) {
         this.id = id;
+    }
+    
+    getValorPonderado() {
+        return this.valorPonderado;
+    }
+
+    setValorPonderado(valorPonderado: number) {
+        this.valorPonderado = valorPonderado;
     }
 
     getValor() {

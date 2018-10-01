@@ -83,6 +83,7 @@ import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
 import { EnfaseService } from './enfase/enfase.service';
 import { ImovelService } from './imovel/imovel.service';
 import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-recusa-atestado.service';
+import { AcaoIntervencaoService } from './acao-intervencao/acao-intervencao.service';
 import { EmpresaService } from './empresa/empresa.service';
 import { ClassificacaoAfastamentoService } from './classificacao-afastamento/classificacao-afastamento.service';
 import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-auditoria-atestado.service';
@@ -191,6 +192,7 @@ import { CnaeService } from './cnae/cnae.service';
     EnfaseService,
     ImovelService,
     MotivoRecusaAtestadoService,
+    AcaoIntervencaoService,
     EmpresaService,
     ClassificacaoAfastamentoService,
     ItemAuditoriaAtestadoService,

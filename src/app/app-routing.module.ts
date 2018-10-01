@@ -57,7 +57,6 @@ import { DiagnosticoGuard } from './guards/guards-child/diagnostico.guard';
 import { IntervencaoGuard } from './guards/guards-child/intervencao.guard';
 import { PerguntaFichaColetaGuard } from './guards/guards-child/pergunta-ficha-coleta.guard';
 import { RiscoPotencialGuard } from './guards/guards-child/risco-potencial.guard';
-import { NotificacaoGuard } from './guards/guards-child/notificacao.guard';
 import { AgendaComponent } from './agenda/agenda.component';
 import { FilaEsperaOcupacionalGuard } from './guards/guards-child/fila-espera-ocupacional.guard';
 import { FonteGeradoraGuard } from './guards/guards-child/fonte-geradora.guard';
@@ -78,6 +77,7 @@ import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliaca
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
 import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
+import { AcaoIntervencaoGuard } from './guards/guards-child/acao-intervencao.guard';
 import { EmpresaGuard } from './guards/guards-child/empresa.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
@@ -88,7 +88,6 @@ const routes: Routes = [
   { path: 'contato', component: ContatoComponent },
   { path: 'permissao', component: PermissaoComponent },
   { path: 'home', loadChildren: 'app/home/home.module#HomeModule',
-      canActivateChild: [NotificacaoGuard],
       canActivate: [AuthGuard]},
   { path: 'agenda', loadChildren: 'app/agenda/agenda.module#AgendaModule',
       canActivateChild: [AgendaGuard]},
@@ -271,6 +270,9 @@ const routes: Routes = [
   { path: 'motivo-recusa-atestado', 
       loadChildren: 'app/controller/motivo-recusa-atestado/motivo-recusa-atestado.module#MotivoRecusaAtestadoModule',
       canActivateChild: [MotivoRecusaAtestadoGuard]},
+  { path: 'acao-intervencao', 
+      loadChildren: 'app/controller/acao-intervencao/acao-intervencao.module#AcaoIntervencaoModule',
+      canActivateChild: [AcaoIntervencaoGuard]},
   { path: 'empresa', 
       loadChildren: 'app/controller/empresa/empresa.module#EmpresaModule',
       canActivateChild: [EmpresaGuard]},

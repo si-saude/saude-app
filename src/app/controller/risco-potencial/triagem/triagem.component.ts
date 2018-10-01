@@ -22,6 +22,7 @@ import { RiscoEmpregadoService } from './../../risco-empregado/risco-empregado.s
 import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.service';
 import { TriagemUtil } from './../../../generics/utils/triagem.util';
 import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
+import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
 
 @Component({
   selector: 'app-risco-potencial-triagem',
@@ -36,6 +37,7 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
 
     private triagemUtil: TriagemUtil;
     private planejamentoUtil: PlanejamentoUtil;
+    @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
     
     constructor(private route: ActivatedRoute,
             private riscoEmpregadoService: RiscoEmpregadoService,
@@ -81,7 +83,7 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
                                                         .then( res => {
                                                             component.showPreload = false;
                                                             component.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
-                                                            component.riscoEmpregadoService.getByProfissional(component.riscoPotencial.getId(), component.profissional.getId())
+                                                            component.riscoEmpregadoService.getByEquipe(component.profissional.getEquipe().getId(), component.riscoPotencial.getId())
                                                                     .then(res => {
                                                                         component.riscoEmpregado = new RiscoEmpregadoBuilder().clone( res.json().list[0] );
                                                                     })
@@ -130,7 +132,7 @@ export class TriagemComponent extends GenericFormComponent implements OnInit {
             this.globalActions.emit( 'toast' );
             return;
         }
-        
+        this.confirmSaveComponent.setGoTo("$*close*$");
         super.save(new RiscoEmpregadoBuilder().clone(this.riscoEmpregado));
     }
     

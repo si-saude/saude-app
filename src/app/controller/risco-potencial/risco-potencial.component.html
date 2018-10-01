@@ -89,48 +89,45 @@
 					<div class="row div-btns-risco">
 						<div style="display: inline;">
 							<a
-								[routerLink]="['/risco-potencial/ficha-coleta/', item.id, item.empregadoNome]"
+								href="/risco-potencial/ficha-coleta/{{item.id}}/{{item.empregadoNome}}" target="_blank"
 								class="btn btn-primary btn-ranking">Ficha Coleta</a>
 						</div>
 						<div style="display: inline;">
 							<a
-								[routerLink]="['/risco-potencial/triagem/', item.id]"
-								class="btn btn-primary btn-ranking">Triagem</a>
-						</div>
-						<div style="display: inline;">
-							<a
-								[routerLink]="['/risco-potencial/planejamento/', item.id, item.empregadoNome]"
-								class="btn btn-primary btn-ranking">Planejamento</a>
+								href="/risco-potencial/triagem/{{item.id}}" target="_blank"
+								class="btn btn-primary btn-ranking">Triagem/Planejamento</a>
 						</div>
 						<div style="display: inline;" *ngIf="verifyAcolhimento(item)">
 							<a
-								[routerLink]="['/risco-potencial/acolhimento/', item.id]"
+								href="/risco-potencial/plano-intervencao/{{item.id}}" target="_blank"
 								class="btn btn-primary btn-ranking">Acolhimento</a>
 						</div>
 						<div style="display: inline;">
 							<a
-								[routerLink]="['/risco-potencial/graficos/', item.id]"
+								href="/risco-potencial/graficos/{{item.id}}" target="_blank"
 								class="btn btn-primary btn-ranking">Gráficos</a>
 						</div>
 						<div style="display: inline;" *ngIf="verifyStatusCriarPlano(item)">
 							<a
-								[routerLink]="['/risco-potencial/criar-plano/', item.id]"
+								href="/risco-potencial/criar-plano/{{item.id}}" target="_blank"
 								class="btn btn-primary btn-ranking">Criar Plano</a>
 						</div>
 						<div style="display: inline;" *ngIf="verifyStatusAcao(item)">
-							<a [routerLink]="['/risco-potencial/acoes/', item.id]"
+								
+							<a 
+								href="/risco-potencial/acoes/{{item.id}}" target="_blank"
 								class="btn btn-primary btn-ranking">Ações</a>
 						</div>
 						<div style="display: inline;"
 							*ngIf="verifyStatusPlanoIntervencao(item)">
 							<a
-								[routerLink]="['/risco-potencial/plano-intervencao/', item.id]"
+								href="/risco-potencial/plano-intervencao/{{item.id}}" target="_blank"
 								class="btn btn-primary btn-ranking">Plano de Intervenção</a>
 						</div>
 						<div style="display: inline;"
 							*ngIf="verifyStatusAcompanhamento(item)">
 							<a
-								[routerLink]="['/risco-potencial/acompanhamento/', item.id]"
+								href="/risco-potencial/acompanhamento/{{item.id}}" target="_blank"
 								class="btn btn-primary btn-ranking">Acompanhamento</a>
 						</div>
 					</div>

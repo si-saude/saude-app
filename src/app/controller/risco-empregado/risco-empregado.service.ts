@@ -52,8 +52,17 @@ export class RiscoEmpregadoService extends GenericService {
         riscoEmpregadoFilter.getEquipe().setId(equipeProfissionalId);
         riscoEmpregadoFilter.getRiscoPotencial().setId(riscoPotencialId);
         
-        return super.list(riscoEmpregadoFilter);
+        return this.listAll(riscoEmpregadoFilter);
     }
+    
+    
+    listAll( riscoEmpregadoFilter: RiscoEmpregadoFilter) {
+        let urlList = this.URL + "/list-all";
+        return this.http
+            .post( urlList, riscoEmpregadoFilter, { headers: this.headers } )
+            .toPromise();
+    }
+    
     
     getTriagensByEquipeAbordagem( equipeProfissionalId, riscoPotencialId ) {
         let triagemFilter: TriagemFilter = new TriagemFilter();
@@ -89,6 +98,21 @@ export class RiscoEmpregadoService extends GenericService {
         
         return this.list( riscoEmpregadoFilter );
     }
+    
+//    getByEquipe( riscoPotencialId, equipeId ) {
+//        let riscoEmpregadoFilter: RiscoEmpregadoFilter = new RiscoEmpregadoFilter();
+//        
+//        riscoEmpregadoFilter.setPageNumber(1);
+//        riscoEmpregadoFilter.setPageSize(1);
+//        riscoEmpregadoFilter.setRiscoPotencial( new RiscoPotencialFilter() );
+//        riscoEmpregadoFilter.setAtivo(new BooleanFilter());
+//        riscoEmpregadoFilter.getAtivo().setValue(1);
+//        riscoEmpregadoFilter.setEquipe(new EquipeFilter());
+//        riscoEmpregadoFilter.getEquipe().setId(equipeId)
+//        riscoEmpregadoFilter.getRiscoPotencial().setId( riscoPotencialId );
+//        return this.list( riscoEmpregadoFilter );
+//    }
+    
     
     getUsuario( id: number ) {
         return this.usuarioService.get( id );
