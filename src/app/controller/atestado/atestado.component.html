@@ -21,18 +21,14 @@
 				<div class="col s4">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregado.pessoa.nome}}</a>
 				</div>
-				<div class="col s3">
+				<div class="col s4">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.inicio | transformDate}} - {{a.status}}</a>
 				</div>
-				<div class="col s1">
+				<div class="col s2">
 					<a [routerLink]="['/atestado/detalhe', a.id]"><i
 						class="material-icons">details</i></a>
-				</div>
-				<div class="col s1">
 					<a [routerLink]="['/atestado/editar', a.id]"><i
 						class="material-icons">mode_edit</i></a>
-				</div>
-				<div class="col s1">
 					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
 						class="material-icons">delete</i></a>
 				</div>
