@@ -103,6 +103,7 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
 import { EmpresaGuard } from './guards/guards-child/empresa.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
+import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
 
 @NgModule({
   declarations: [
@@ -210,7 +211,8 @@ import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria
     MotivoRecusaAtestadoGuard,
     EmpresaGuard,
     ClassificacaoAfastamentoGuard,
-    ItemAuditoriaAtestadoGuard
+    ItemAuditoriaAtestadoGuard,
+    ClassificacaoGravidadeGuard
   ],
   bootstrap: [ 
     AppComponent

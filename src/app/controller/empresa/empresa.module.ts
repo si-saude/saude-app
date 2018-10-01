@@ -9,6 +9,7 @@ import { EmpresaFormComponent } from '../empresa/empresa-form/empresa-form.compo
 import { EmpresaFormDetailComponent } from '../empresa/empresa-form/empresa-form-detail.component';
 import { EmpresaRoutingModule } from '../empresa/empresa.routing.module';
 import { SharedModule } from '../shared.module';
+import { PipesModule } from './../pipes.module';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared.module';
      ],
      imports: [
         EmpresaRoutingModule,
-        SharedModule
+        SharedModule,
+        PipesModule
      ],
      providers: [
         EmpresaService

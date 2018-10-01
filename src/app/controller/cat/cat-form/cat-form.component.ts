@@ -19,9 +19,24 @@ import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { GerenciaCodigoCompletoAutocomplete } from './../../gerencia/gerencia-codigo-completo.autocomplete';
 import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 import { EmpresaNomeAutocomplete } from './../../empresa/empresa-nome.autocomplete';
+import { EmpresaFilter } from './../../empresa/empresa.filter';
 import { ProfissionalCatNomeAutocomplete } from './../../profissional-saude/profissional-cat-nome.autocomplete';
 import { DiagnosticoAtestadoAutocomplete } from './../../diagnostico/diagnostico-atestado.autocomplete';
+import { AgenteCausadorDescricaoAutocomplete } from './../../agente-causador/agente-causador-descricao.autocomplete';
+import { NaturezaLesaoDescricaoAutocomplete } from './../../natureza-lesao/natureza-lesao-descricao.autocomplete';
+import { ParteCorpoAtingidaDescricaoAutocomplete } from './../../parte-corpo-atingida/parte-corpo-atingida-descricao.autocomplete';
+import { InstalacaoNomeAutocomplete } from './../../instalacao/instalacao-nome.autocomplete';
+import { CidadeNomeAutocomplete } from './../../cidade/cidade-nome.autocomplete';
+import { CnaeCodigoAutocomplete } from './../../cnae/cnae-codigo.autocomplete';
+import { CnaeFilter } from './../../cnae/cnae.filter';
+import { CnaeBuilder } from './../../cnae/cnae.builder';
+import { ClassificacaoGravidadeTituloAutocomplete } from './../../classificacao-gravidade/classificacao-gravidade-titulo.autocomplete';
 import { DiagnosticoFilter } from './../../diagnostico/diagnostico.filter';
+import { Usuario } from './../../../model/usuario';
+import { UsuarioBuilder } from './../../usuario/usuario.builder';
+import { Profissional } from './../../../model/profissional';
+import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
+import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional-saude.filter';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 
 @Component( {
@@ -34,6 +49,9 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private cargos: Array<Cargo>;
     private escolaridades: Array<string>;
     private estadosCivis: Array<string>;
+    private sexos: Array<string>;
+    private tipoAcidentes: Array<string>;
+    private tipoCats: Array<string>;
     private autoCompleteGerencia: GerenciaCodigoCompletoAutocomplete;
     private autoCompleteGerenciaEmpregado: GerenciaCodigoCompletoAutocomplete;
     private autoCompleteEmpregado: EmpregadoNomeAutocomplete;
@@ -41,10 +59,20 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private autoCompleteProfissionalCaracterizacao: ProfissionalCatNomeAutocomplete;
     private autoCompleteProfissionalClassificacao: ProfissionalCatNomeAutocomplete;
     private autoCompleteCid: DiagnosticoAtestadoAutocomplete;
+    private autoCompleteDiagnosticoProvavel: DiagnosticoAtestadoAutocomplete;
+    private autoCompleteAgenteCausador: AgenteCausadorDescricaoAutocomplete;
+    private autoCompleteNaturezaLesao: NaturezaLesaoDescricaoAutocomplete;
+    private autoCompleteParteCorpoAtingida: ParteCorpoAtingidaDescricaoAutocomplete;
+    private autoCompleteCidade: CidadeNomeAutocomplete;
+    private autoCompleteInstalacao: InstalacaoNomeAutocomplete;
+    private autoCompleteCnae: CnaeCodigoAutocomplete;
+    private autoCompleteClassificacaoGravidade: ClassificacaoGravidadeTituloAutocomplete;
     private vinculos: Array<string>;
     private funcoes: Array<Funcao>;
     private classificacoes: Array<ClassificacaoAfastamento>;
     private nexoCausais: Array<string>;
+    private profissional: Profissional;
+    private cnaeFilter: CnaeFilter;
 
     private timeActions;
     
@@ -59,21 +87,57 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.escolaridades = new Array<string>();
         this.estadosCivis = new Array<string>();
         this.vinculos = new Array<string>();
+        this.sexos = new Array<string>();
+        this.tipoAcidentes = new Array<string>();
+        this.tipoCats = new Array<string>();
+        this.cnaeFilter = new CnaeFilter();
+        this.cnaeFilter.setPageNumber(0);
+        this.cnaeFilter.setPageSize(0);
         this.autoCompleteGerencia = new GerenciaCodigoCompletoAutocomplete(this.catService.getGerenciaService());
         this.autoCompleteGerenciaEmpregado = new GerenciaCodigoCompletoAutocomplete(this.catService.getGerenciaService());
         this.autoCompleteEmpregado = new EmpregadoNomeAutocomplete(this.catService.getEmpregadoService());
         this.autoCompleteEmpresa = new EmpresaNomeAutocomplete(this.catService.getEmpresaService());
         this.autoCompleteProfissionalCaracterizacao = new ProfissionalCatNomeAutocomplete(this.catService.getProfissionalService());
         this.autoCompleteCid = new DiagnosticoAtestadoAutocomplete(this.catService.getDiagnosticoService(), new DiagnosticoFilter());
+        this.autoCompleteDiagnosticoProvavel = new DiagnosticoAtestadoAutocomplete(this.catService.getDiagnosticoService(), new DiagnosticoFilter());
         this.autoCompleteProfissionalClassificacao = new ProfissionalCatNomeAutocomplete(this.catService.getProfissionalService());
-        this.funcoes = new FuncaoBuilder().initializeList( this.funcoes );
+        this.autoCompleteAgenteCausador  = new AgenteCausadorDescricaoAutocomplete(this.catService.getAgenteCausadorService());
+        this.autoCompleteNaturezaLesao = new NaturezaLesaoDescricaoAutocomplete(this.catService.getNaturezaLesaoService());
+        this.autoCompleteParteCorpoAtingida  = new ParteCorpoAtingidaDescricaoAutocomplete(this.catService.getParteCorpoAtingidaService());
+        this.autoCompleteCidade = new CidadeNomeAutocomplete(this.catService.getCidadeService());
+        this.autoCompleteInstalacao = new InstalacaoNomeAutocomplete(this.catService.getInstalacaoService());
+        this.autoCompleteCnae = new CnaeCodigoAutocomplete(this.catService.getCnaeService(), this.cnaeFilter);
+        this.autoCompleteClassificacaoGravidade = new ClassificacaoGravidadeTituloAutocomplete(this.catService.getClassificacaoGravidadeService());
+        this.funcoes = new FuncaoBuilder().initializeList(this.funcoes);
         this.classificacoes = new ClassificacaoAfastamentoBuilder().initializeList(this.classificacoes);
         this.nexoCausais = new Array<string>();
+        this.profissional = new ProfissionalSaudeBuilder().initialize(null);
         
         this.timeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {
+        if ( localStorage.getItem( 'usuario-id' ) != undefined ) {
+            this.catService.getUsuarioService().get( Number( localStorage.getItem( 'usuario-id' ) ) )
+                .then(res => {
+                    let usuario = new UsuarioBuilder().clone(res.json());
+                    if ( usuario.getId() > 0 && usuario.getPessoa().getId() > 0 ) {
+                        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+                        profissionalFilter.getEmpregado().getPessoa().setCpf(usuario.getPessoa().getCpf());
+                        this.catService.getProfissionalService().list(profissionalFilter)
+                            .then(res => {
+                                this.profissional = new ProfissionalSaudeBuilder().clone(res.json().list[0]);
+                            })
+                            .catch(error => {
+                                this.catchConfiguration(error);
+                            })
+                    }
+                })
+                .catch(error => {
+                    this.catchConfiguration(error);
+                })
+        }
+        
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if ( params['id'] !== undefined ) {
@@ -84,7 +148,6 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.cat = new CatBuilder().clone( res.json() );
-                            
                             if ( this.cat.getEmpregado() ) 
                                 this.autoCompleteEmpregado.getAutocomplete().initializeLastValue(
                                         this.cat.getEmpregado().getPessoa().getNome());
@@ -105,9 +168,42 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                                 this.autoCompleteCid.getAutocomplete().initializeLastValue(
                                         this.cat.getCid().getCodigo());
                             
+                            if ( this.cat.getDiagnosticoProvavel() )
+                                this.autoCompleteDiagnosticoProvavel.getAutocomplete().initializeLastValue(
+                                        this.cat.getDiagnosticoProvavel().getCodigo());
+                            
                             if ( this.cat.getProfissionalClassificacao() )
                                 this.autoCompleteProfissionalCaracterizacao.getAutocomplete().initializeLastValue(
                                         this.cat.getProfissionalClassificacao().getEmpregado().getPessoa().getNome());
+                            
+                            if ( this.cat.getAgenteCausador() )
+                                this.autoCompleteAgenteCausador.getAutocomplete().initializeLastValue(
+                                        this.cat.getAgenteCausador().getDescricao());
+                            
+                            if ( this.cat.getNaturezaLesao() )
+                                this.autoCompleteNaturezaLesao.getAutocomplete().initializeLastValue(
+                                        this.cat.getNaturezaLesao().getDescricao());
+                            
+                            if ( this.cat.getParteCorpoAtingida() )
+                                this.autoCompleteParteCorpoAtingida.getAutocomplete().initializeLastValue(
+                                        this.cat.getParteCorpoAtingida().getDescricao());
+                            
+                            if ( this.cat.getMunicipio() )
+                                this.autoCompleteCidade.getAutocomplete().initializeLastValue(
+                                        this.cat.getMunicipio().getNome());
+                            
+                            if ( this.cat.getInstalacao() )
+                                this.autoCompleteInstalacao.getAutocomplete().initializeLastValue(
+                                        this.cat.getInstalacao().getNome());
+                            
+                            if ( this.cat.getCnae() )
+                                this.autoCompleteCnae.getAutocomplete().initializeLastValue(
+                                        this.cat.getCnae().getCodigo());
+                            
+                            if ( this.cat.getClassificacaoGravidade() )
+                                this.autoCompleteClassificacaoGravidade.getAutocomplete().initializeLastValue(
+                                        this.cat.getClassificacaoGravidade().getTitulo());
+                            
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -118,10 +214,13 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.getCargos();
         this.getEscolaridades();
         this.getEstadosCivis();
+        this.getSexos();
         this.getVinculos();
         this.getFuncoes();
         this.getClassificacoes();
         this.getNexoCausais();
+        this.getTipoAcidentes();
+        this.getTipoCats();
     }
     
     getCargos() {
@@ -194,6 +293,36 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             })
     }
     
+    getSexos() {
+        this.catService.getSexos()
+            .then(res => {
+                this.sexos = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
+    getTipoAcidentes() {
+        this.catService.getTipoAcidentes()
+            .then(res => {
+                this.tipoAcidentes = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
+    getTipoCats() {
+        this.catService.getTipoCats()
+            .then(res => {
+                this.tipoCats = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
     save() {
         super.save( new CatBuilder().clone( this.cat ) );
     }
@@ -211,12 +340,17 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                 this.cat.getEmpregado().getMatricula() == '' || this.cat.getEmpregado().getMatricula() == undefined ||
                 this.cat.getEmpregado().getChave() == '' || this.cat.getEmpregado().getChave() == undefined || 
                 this.cat.getEmpregado().getPessoa().getCpf() == '' || this.cat.getEmpregado().getPessoa().getCpf() == undefined ||
+                this.cat.getEmpregado().getPis() == '' || this.cat.getEmpregado().getPis() == undefined ||
+                this.cat.getEmpregado().getPessoa().getRg() == '' || this.cat.getEmpregado().getPessoa().getRg() == undefined ||
                 this.cat.getEmpregado().getGerencia().getId() ==  0 || this.cat.getEmpregado().getGerencia().getId() == undefined || 
                 this.cat.getEmpregado().getPessoa().getDataNascimento() == undefined ||
                 this.cat.getEmpregado().getCargo() == undefined || 
                 this.cat.getEmpregado().getCargo().getId() == 0 || this.cat.getEmpregado().getCargo().getId() == undefined ||
                 this.cat.getEmpregado().getFuncao() == undefined || 
-                this.cat.getEmpregado().getFuncao().getId() == 0 || this.cat.getEmpregado().getFuncao().getId() == undefined) {
+                this.cat.getEmpregado().getFuncao().getId() == 0 || this.cat.getEmpregado().getFuncao().getId() == undefined ||
+                this.cat.getEmpregado().getPessoa().getSexo() == '' || this.cat.getEmpregado().getPessoa().getSexo() == undefined ||
+                this.cat.getEmpregado().getEscolaridade() == '' || this.cat.getEmpregado().getEscolaridade() == undefined ||
+                this.cat.getEmpregado().getEstadoCivil() == '' || this.cat.getEmpregado().getEstadoCivil() == undefined) {
             this.toastParams = ["Por favor, complete todos os dados do empregado.", 4000];
             this.globalActions.emit( 'toast' );
             return;
@@ -257,6 +391,37 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             case "sim":
                 this.cat.setNexoCausal(this.nexoCausais[2]);
                 break;
+        }
+    }
+    
+    changeCaracterizacao() { 
+        if ( this.cat.getProfissionalCaracterizacao().getId() == 0 )
+            this.cat.setProfissionalCaracterizacao(this.profissional);
+        if ( this.cat.getDataCaracterizacao() == undefined )
+            this.cat.setDataCaracterizacao(new Date());
+    }
+    
+    changeCidOrClassificacaoAfastamento() {
+        if ( this.cat.getProfissionalClassificacao().getId() == 0 && 
+                ( this.cat.getCid().getId() > 0 || this.cat.getClassificacao().getId() > 0) )
+            this.cat.setProfissionalClassificacao(this.profissional);
+        if ( this.cat.getDataClassificacao() == undefined )
+            this.cat.setDataClassificacao(new Date());
+    }
+    
+    setCnaeFilter() {
+        console.log(this.cat)
+        if ( this.cat.getEmpresa() && this.cat.getEmpresa().getId() > 0 ) {
+            this.cnaeFilter.setEmpresa(new EmpresaFilter());
+            this.cnaeFilter.getEmpresa().setId(this.cat.getEmpresa().getId());
+            this.cnaeFilter.setPageNumber(1);
+            this.cnaeFilter.setPageSize(Math.pow(2, 31)-1);
+            this.autoCompleteCnae = new CnaeCodigoAutocomplete(this.catService.getCnaeService(), this.cnaeFilter);
+        } else {
+            this.cnaeFilter = new CnaeFilter();
+            this.cnaeFilter.setPageNumber(0);
+            this.cnaeFilter.setPageSize(0);
+            this.cat.setCnae(new CnaeBuilder().initialize(null));
         }
     }
 }

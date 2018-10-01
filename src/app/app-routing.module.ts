@@ -81,6 +81,7 @@ import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-a
 import { EmpresaGuard } from './guards/guards-child/empresa.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
+import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -279,6 +280,9 @@ const routes: Routes = [
   { path: 'item-auditoria-atestado', 
       loadChildren: 'app/controller/item-auditoria-atestado/item-auditoria-atestado.module#ItemAuditoriaAtestadoModule',
       canActivateChild: [ItemAuditoriaAtestadoGuard]},
+  { path: 'classificacao-gravidade', 
+      loadChildren: 'app/controller/classificacao-gravidade/classificacao-gravidade.module#ClassificacaoGravidadeModule',
+      canActivateChild: [ClassificacaoGravidadeGuard]},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

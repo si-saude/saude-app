@@ -35,6 +35,8 @@ export class CatFilter extends GenericFilter {
     private ferimentoGrave: BooleanFilter;
     private profissionalClassificacao: ProfissionalSaudeFilter;
     private dataClassificacao: DateFilter;
+    private comunicavelSus: BooleanFilter;
+    private pendenciaCorrecao: BooleanFilter;
 
     getEmpregado() {
         return this.empregado;
@@ -185,6 +187,18 @@ export class CatFilter extends GenericFilter {
     }
     setDataClassificacao(dataClassificacao) {
         this.dataClassificacao = dataClassificacao;
+    }
+    getComunicavelSus() {
+        return this.comunicavelSus;
+    }
+    setComunicavelSus(comunicavelSus) {
+        this.comunicavelSus = comunicavelSus;
+    }
+    getPendenciaCorrecao() {
+        return this.pendenciaCorrecao;
+    }
+    setPendenciaCorrecao(pendenciaCorrecao) {
+        this.pendenciaCorrecao = pendenciaCorrecao;
     }
     
 }
