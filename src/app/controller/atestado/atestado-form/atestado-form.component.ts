@@ -455,9 +455,21 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
         this.recalcularLimitesDatas();
     }
     
-    changePresencialAnaliseTecnica( evento ) {
-        if ( evento.target.checked ) {
-            this.atestado.setStatus(this.statuses.find(s => s.includes("ADMINISTRATIVA")));
+    changeNumeroDiasAnaliseTecnica(evento){
+        let flag:boolean = false;
+        if( evento.target.value >= 5 ){
+            flag = true;
+        }
+        
+        
+        this.atestado.setPresencial(flag);
+        this.changePresencialAnaliseTecnica(flag);
+        this.recalcularLimitesDatas();
+    }
+    
+    changePresencialAnaliseTecnica( value ) {
+        this.atestado.setStatus(this.statuses.find(s => s.includes("ADMINISTRATIVA")));
+        if ( value ) {
             this.atestado.setPresencial(true);
         }
         

@@ -92,6 +92,7 @@ export class AtestadoBuilder extends GenericBuilder {
         cloneAtestado.setDataAuditoria(this.getValue(atestado,"getDataAuditoria"));
         cloneAtestado.setConvocado(this.getValue(atestado,"getConvocado"));
         cloneAtestado.setDataHomologacao(this.getValue(atestado,"getDataHomologacao"));
+        cloneAtestado.setJustificativa(this.getValue(atestado,"getJustificativa"))
         
         if (this.getValue(atestado, "getAuditoriaAtestados") !== undefined) { 
             cloneAtestado.setAuditoriaAtestados(

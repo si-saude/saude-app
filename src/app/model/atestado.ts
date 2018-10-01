@@ -84,6 +84,7 @@ export class Atestado {
     private dataHomologacaoCustomDate: CustomDate = new CustomDate(this.dataHomologacao);
 
     private auditoriaAtestados: Array<AuditoriaAtestado>;
+    private justificativa: string;
 
     private version: number;
 
@@ -639,6 +640,14 @@ export class Atestado {
     
     setAuditoriaAtestados(auditoriaAtestados: Array<AuditoriaAtestado>) {
         this.auditoriaAtestados = auditoriaAtestados;
+    }
+    
+    getJustificativa() {
+        return this.justificativa;
+    }
+
+    setJustificativa(justificativa: string) {
+        this.justificativa = justificativa;
     }
     
 }

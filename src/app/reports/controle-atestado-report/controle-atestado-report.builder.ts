@@ -53,6 +53,7 @@ export class ControleAtestadoReportBuilder extends GenericBuilder implements Int
         cloneControleAtestadoDto.setObservacao(this.getValue(atestado, "getObservacao"));
         cloneControleAtestadoDto.setStatusAtestado(this.getValue(atestado, "getStatusAtestado"));
         cloneControleAtestadoDto.setDataAgendamento(this.getValue(atestado, "getDataAgendamento"));
+        cloneControleAtestadoDto.setJustificativa(this.getValue(atestado, "getJustificativa"));
 
         return cloneControleAtestadoDto;
     }

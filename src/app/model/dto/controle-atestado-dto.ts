@@ -24,6 +24,7 @@ export class ControleAtestadoDto {
     private atestadoFisicoRecebido: boolean;
     private observacao: string;
     private statusAtestado: string;
+    private justificativa: string;
     
     getNomeEmpregado() {
         return this.nomeEmpregado;
@@ -156,5 +157,11 @@ export class ControleAtestadoDto {
     }
     setStatusAtestado(statusAtestado) {
         this.statusAtestado = statusAtestado;
+    }
+    getJustificativa() {
+        return this.justificativa;
+    }
+    setJustificativa(justificativa) {
+        this.justificativa = justificativa;
     }
 }
