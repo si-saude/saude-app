@@ -15,6 +15,8 @@ import { SharedModule } from './../shared.module';
 import { CpfPipe } from './../../pipes/cpf.pipe';
 import { PlanejamentoModule } from './../planejamento.module';
 import { PipesModule } from './../pipes.module';
+import { ModalExameModule } from './../../includes/modal-exame/modal-exame.module';
+import { ModalConfirmModule } from './../../includes/modal-confirm/modal-confirm.module';
 
 @NgModule({
     declarations: [
@@ -29,7 +31,9 @@ import { PipesModule } from './../pipes.module';
         SharedModule,
         Ng2InputMaskModule,
         PlanejamentoModule,
-        PipesModule
+        PipesModule,
+        ModalExameModule,
+        ModalConfirmModule
      ],
      providers: [
         CatService

@@ -8,6 +8,7 @@ import { DataTableModule } from "angular2-datatable";
 
 import { ModalExameComponent } from './modal-exame.component';
 import { PipesModule } from './../../controller/pipes.module';
+import { GenericBuilder } from './../../generics/generic.builder';
 
 @NgModule({
   declarations: [

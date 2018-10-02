@@ -37,7 +37,11 @@ import { UsuarioBuilder } from './../../usuario/usuario.builder';
 import { Profissional } from './../../../model/profissional';
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional-saude.filter';
+import { ModalExameComponent } from './../../../includes/modal-exame/modal-exame.component';
+import { ModalConfirmComponent } from './../../../includes/modal-confirm/modal-confirm.component';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { Exame } from './../../../model/exame';
+import { ExameBuilder } from './../../exame/exame.builder';
 
 @Component( {
     selector: 'app-cat-form',
@@ -45,6 +49,8 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
     styleUrls: ['./cat-form.css', './../../../../assets/css/form-component.css']
 } )
 export class CatFormComponent extends GenericFormComponent implements OnInit {
+    @ViewChild( ModalExameComponent ) modalExame: ModalExameComponent;
+    @ViewChild( ModalConfirmComponent ) modalConfirm: ModalConfirmComponent;
     private cat: Cat;
     private cargos: Array<Cargo>;
     private escolaridades: Array<string>;
@@ -73,7 +79,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private nexoCausais: Array<string>;
     private profissional: Profissional;
     private cnaeFilter: CnaeFilter;
-
+    
     private timeActions;
     
     constructor( private route: ActivatedRoute,
@@ -148,6 +154,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.cat = new CatBuilder().clone( res.json() );
+                            console.log(res.json())
+                            console.log(this.cat)
                             if ( this.cat.getEmpregado() ) 
                                 this.autoCompleteEmpregado.getAutocomplete().initializeLastValue(
                                         this.cat.getEmpregado().getPessoa().getNome());
@@ -324,6 +332,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     }
     
     save() {
+        console.log(this.cat)
         super.save( new CatBuilder().clone( this.cat ) );
     }
     
@@ -410,7 +419,6 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     }
     
     setCnaeFilter() {
-        console.log(this.cat)
         if ( this.cat.getEmpresa() && this.cat.getEmpresa().getId() > 0 ) {
             this.cnaeFilter.setEmpresa(new EmpresaFilter());
             this.cnaeFilter.getEmpresa().setId(this.cat.getEmpresa().getId());
@@ -423,5 +431,28 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             this.cnaeFilter.setPageSize(0);
             this.cat.setCnae(new CnaeBuilder().initialize(null));
         }
+    }
+    
+    addExame(exame: Exame) {
+        if ( this.cat.getExamesConvocacao().find(ec => ec.getId() == exame.getId() ) != undefined ) {
+            this.toastParams = ["N&atilde;o &eacute; poss&iacute;vel adicionar exames repetidos.", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+        this.cat.getExamesConvocacao().push(new ExameBuilder().clone(exame));   
+    }
+    
+    setAusenciaExames(evento) {
+        if ( evento.target.checked ) {
+            this.modalConfirm.setMensagem("Tem certeza que deseja excluir todos os exames?");
+            this.modalConfirm.openModal();
+        }
+    }
+    
+    functionModalConfirm(evento) {
+        if ( evento ) 
+            this.cat.setExamesConvocacao(new Array<Exame>());
+        else 
+            this.cat.setAusenciaExames(false);
     }
 }

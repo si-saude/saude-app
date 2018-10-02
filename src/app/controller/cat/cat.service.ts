@@ -21,6 +21,7 @@ import { UsuarioService } from './../usuario/usuario.service';
 import { InstalacaoService } from './../instalacao/instalacao.service';
 import { CnaeService } from './../cnae/cnae.service';
 import { ClassificacaoGravidadeService } from './../classificacao-gravidade/classificacao-gravidade.service';
+import { ExameService } from './../exame/exame.service';
 
 @Injectable()
 export class CatService extends GenericService {
@@ -41,7 +42,8 @@ export class CatService extends GenericService {
             private usuarioService: UsuarioService,
             private instalacaoService: InstalacaoService,
             private cnaeService: CnaeService,
-            private classificacaoGravidadeService: ClassificacaoGravidadeService) {
+            private classificacaoGravidadeService: ClassificacaoGravidadeService,
+            private exameService: ExameService) {
         super(http,router,"cat");
     }
     
@@ -111,6 +113,10 @@ export class CatService extends GenericService {
     
     getUsuarioService() {
         return this.usuarioService;
+    }
+    
+    getExameService() {
+        return this.exameService;
     }
     
     getNexoCausais() {

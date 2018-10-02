@@ -14,6 +14,7 @@ import { CidadeBuilder } from './../cidade/cidade.builder';
 import { InstalacaoBuilder } from './../instalacao/instalacao.builder';
 import { CnaeBuilder } from './../cnae/cnae.builder';
 import { ClassificacaoGravidadeBuilder } from './../classificacao-gravidade/classificacao-gravidade.builder';
+import { ExameBuilder } from './../exame/exame.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class CatBuilder extends GenericBuilder {
@@ -36,6 +37,7 @@ export class CatBuilder extends GenericBuilder {
         cat.setCnae(new CnaeBuilder().initialize(cat.getCnae()));
         cat.setClassificacaoGravidade(new ClassificacaoGravidadeBuilder().initialize(cat.getClassificacaoGravidade()));
         cat.setDiagnosticoProvavel(new DiagnosticoBuilder().initialize(cat.getDiagnosticoProvavel()));
+        cat.setExamesConvocacao(new ExameBuilder().initializeList(cat.getExamesConvocacao()));
         
         return cat;
     }
@@ -101,6 +103,17 @@ export class CatBuilder extends GenericBuilder {
         cloneCat.setClassificacaoAnomalia(this.getValue(cat,"getClassificacaoAnomalia"));
         cloneCat.setDataComunicacaoSindicato(this.getValue(cat,"getDataComunicacaoSindicato"));
         cloneCat.setJustificativaAtrasoEmissaoCarta(this.getValue(cat,"getJustificativaAtrasoEmissaoCarta"));
+        cloneCat.setCatInss(this.getValue(cat,"getCatInss"));
+        cloneCat.setConvocado(this.getValue(cat,"getConvocado"));
+        cloneCat.setAusenciaExames(this.getValue(cat,"getAusenciaExames"));
+        cloneCat.setVersion(this.getValue(cat,"getVersion"));
+        
+        if (this.getValue(cat, "getExamesConvocacao") !== undefined) { 
+            cloneCat.setExamesConvocacao(
+                    new ExameBuilder().cloneList(this.getValue(cat,"getExamesConvocacao")));
+        } else {
+            cloneCat.setExamesConvocacao(new ExameBuilder().initializeList(null));
+        }
         
         if (this.getValue(cat, "getDiagnosticoProvavel") !== undefined) { 
             cloneCat.setDiagnosticoProvavel(

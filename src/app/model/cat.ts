@@ -11,6 +11,7 @@ import { Cidade } from './cidade';
 import { Instalacao } from './instalacao';
 import { Cnae } from './cnae';
 import { ClassificacaoGravidade } from './classificacao-gravidade';
+import { Exame } from './exame';
 import { CustomDate } from './../generics/utils/custom-date.util';
 
 export class Cat {
@@ -85,6 +86,11 @@ export class Cat {
     private justificativaAtrasoEmissaoCarta: string;
     
     private dataComunicacaoSindicatoCustomDate: CustomDate = new CustomDate(this.dataComunicacaoSindicato);
+
+    private catInss: boolean;
+    private convocado: boolean;
+    private examesConvocacao: Array<Exame>;
+    private ausenciaExames: boolean;
 
     private version: number;
 
@@ -622,6 +628,38 @@ export class Cat {
 
     setJustificativaAtrasoEmissaoCarta(justificativaAtrasoEmissaoCarta) {
         this.justificativaAtrasoEmissaoCarta = justificativaAtrasoEmissaoCarta;
+    }
+    
+    getCatInss() {
+        return this.catInss;
+    }
+
+    setCatInss(catInss) {
+        this.catInss = catInss;
+    }
+
+    getConvocado() {
+        return this.convocado;
+    }
+
+    setConvocado(convocado) {
+        this.convocado = convocado;
+    }
+
+    getExamesConvocacao() {
+        return this.examesConvocacao;
+    }
+
+    setExamesConvocacao(examesConvocacao) {
+        this.examesConvocacao = examesConvocacao;
+    }
+
+    getAusenciaExames() {
+        return this.ausenciaExames;
+    }
+
+    setAusenciaExames(ausenciaExames) {
+        this.ausenciaExames = ausenciaExames;
     }
     
 }
