@@ -53,7 +53,7 @@ th {
 }
 
 td > a > i {
-	margin-top: -5px;
+	margin-top: 30%;
 }
 
 
@@ -87,4 +87,62 @@ td > a > i {
 
 .row-btns {
 	margin-bottom: 130px;
+}
+
+.row-collection {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+
+.listClick {
+	width: -moz-fit-content !important;
+	position: relative;	
+	z-index: 1;
+	padding-top: 0;
+	top: 1%;
+	float: left;
+	overflow-y: auto;
+	max-height: 600px;
+}
+
+.listClick2 {	
+	z-index: 1;
+	padding-top: 0;
+	top: 1%;
+	float: left;
+	overflow-y: auto;
+	max-height: 600px;
+}
+
+.lado{
+	overflow-y: auto;
+}
+
+.collection .collection-item:last-child { 
+    cursor: pointer;
+}
+
+.row-item-collection {
+	border-top: solid 1px #a2a2a2;
+	line-height: 0;
+}
+
+.esquerda{
+	float: left;
+	margin-left: -11%;
+}
+
+.row-btns {
+	margin-bottom: 130px;
+}
+
+.margemTable{
+	margin-top: 25px;
+}
+.btn-add-fieldset {
+	margin-left: 15px;
+}
+.btn-add {
+    margin-top: 0% !important;
 }

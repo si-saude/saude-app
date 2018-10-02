@@ -9,21 +9,19 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<p style="color: #26a69a; margin-left: 19.7%;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b></p>
+<p style="color: #26a69a; margin-left: -12%;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b></p>
 
 <div class="form-container">
 	<form #form="ngForm" (ngSubmit)="save()">
 		<div class='row'>
 			<div class="listClick collection">
-					<div *ngFor="let riscoEmpregado of riscoPotencial.riscoEmpregados; let r = index">
-					     <div class="row row-collection"  *ngFor="let triagem of riscoEmpregado.triagens; let t = index">
-					     	<a (click)="selectTriagem(r,t)" class="collection-item" 
-					     	*ngIf="verificarTriagens(triagem)">
-					     	{{triagem.equipeAbordagem.abreviacao}} - {{triagem.indicadorSast.nome}}</a>
-					     </div>
-			     	</div>				
+				<p  *ngIf="triagens.length > 0" style="color: #26a69a; text-align: center;"><b>Indicador</b></p>
+			     <div class="row row-collection"  *ngFor="let triagem of triagens; let t = index">
+			     	<a (click)="selectTriagem(t)" class="collection-item"  [ngClass]="triagem.selecionado" [routerLinkActive]="['active']">
+			     	{{triagem.equipeAbordagem.abreviacao}} - {{triagem.indicadorSast.nome}}</a>
+			     </div>			
 			</div>
-			<div class="col s8"*ngIf="triagemAux.id > 0">
+			<div class="col s8" *ngIf="triagemAux.id > 0">
 				<div class="col s12">
 			         <p><b>INDICADOR: {{triagemAux.indicadorSast.nome}}</b></p>
 			         <p><b>ÍNDICE: {{getIndiceDescricao(triagemAux)}}</b></p>
@@ -31,15 +29,11 @@
 			         <p><b>DIAGNÓSTICO: {{triagemAux.diagnostico.descricao}}</b></p>
 			         <p><b>INTERVENÇÃO: {{triagemAux.intervencao.descricao}}</b></p>
 			         <p><b>EQUIPE DE ABORDAGEM: {{triagemAux.equipeAbordagem.nome}}</b></p>
-			         <p><b>SUGESTAO DE PRAZO: {{triagemAux.prazo}}</b></p>
+			         <p><b>SUGESTÃO DE PRAZO: {{triagemAux.prazo}}</b></p>
 			         <p><b>JUSTIFICATIVA/OBSERVAÇÃO: {{triagemAux.justificativa}}</b></p>
 		        </div>
 		        <div class="col s12">		        
 					<div class="input-field col s8">
-						<input type="checkbox"
-							name="triagemAux.ignorarAcoes"
-							[(ngModel)]="triagemAux.ignorarAcoes"> 
-							<label style="color: #26a69a;" for="triagemAux.ignorarAcoes">Ignorar Ações</label>
 					</div>
 					<div class="input-field col s4">
 						<p>
@@ -67,7 +61,7 @@
 						</thead>
 						<div *ngFor="let acao of triagemAux.acoes; let a = index">
 							<tbody class="col s12">
-								<tr class="col s12" (click)="reopenAcao(acao)">
+								<tr class="col s12">
 									<td class="col s2">{{acao.tipo}}</td>
 									<td class="col s2">{{acao.status}}</td>
 									<td class="col s2">{{acao.tipoContato}}</td>	
@@ -78,12 +72,12 @@
 										<i class="material-icons center-icon">rotate_right</i></a>											
 									</td>
 									<td class="col s1">
-										<a class="waves-effect"
+										<a *ngIf="verifyStatusAcao(acao)" class="waves-effect"
 											(click)="editAcao(a)">
 										<i class="material-icons center-icon">mode_edit</i></a>	
 									</td>
 									<td class="col s1">
-										<a class="waves-effect"
+										<a *ngIf="verifyStatusAcao(acao)" class="waves-effect"
 											(click)="removeAcao(a)"> 
 											<i class="material-icons center-icon">delete</i>
 										</a>
@@ -146,6 +140,7 @@
 				<label for="flagAcao.acaoIntervencao" >Ação</label> 						
 				<input type="text" materialize="autocomplete" autocomplete="off"
 					name="flagAcao.acaoIntervencao.descricao"
+					(click)="clickAcaoIntervencao()"
 					[(ngModel)]="flagAcao.acaoIntervencao.descricao"
 					(blur)="autoCompleteAcaoIntervencao.getAutocomplete().getObj($event,flagAcao,'setAcaoIntervencao','getDescricao')"
 					(ngModelChange)="autoCompleteAcaoIntervencao.getAutocomplete().getList(flagAcao.acaoIntervencao, 'getDescricao');"

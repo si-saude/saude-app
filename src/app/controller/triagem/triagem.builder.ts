@@ -55,7 +55,6 @@ export class TriagemBuilder extends GenericBuilder {
         cloneTriagem.setVersion(this.getValue(triagem,"getVersion"));
         cloneTriagem.setIndice(this.getValue(triagem,"getIndice"));
         cloneTriagem.setJustificativa(this.getValue(triagem,"getJustificativa"));
-        cloneTriagem.setIgnorarAcoes(this.getValue(triagem, "getIgnorarAcoes"));
         
         if(this.getValue(triagem, "getPrazo") == "")
             cloneTriagem.setPrazo(undefined);

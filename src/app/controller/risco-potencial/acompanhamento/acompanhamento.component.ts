@@ -9,6 +9,7 @@ import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { RiscoPotencialService } from './../risco-potencial.service';
 import { Triagem } from './../../../model/triagem';
+import { TriagemBuilder } from './../../triagem/triagem.builder';
 import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { Acompanhamento } from './../../../model/acompanhamento';
@@ -16,7 +17,9 @@ import { AcompanhamentoBuilder } from './../../acompanhamento/acompanhamento.bui
 import { Acao } from './../../../model/acao';
 import { AcaoBuilder } from './../../acao/acao.builder';
 import { Tarefa } from './../../../model/tarefa';
+import { RiscoEmpregado } from './../../../model/risco-empregado';
 import { RiscoPotencial } from './../../../model/risco-potencial';
+import { RiscoEmpregadoBuilder } from './../../risco-empregado/risco-empregado.builder';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 import { RiscoPotencialFilter } from './../risco-potencial.filter';
 import { UsuarioBuilder } from './../../usuario/usuario.builder';
@@ -27,6 +30,8 @@ import { Usuario } from './../../../model/usuario';
 import { PessoaFilter } from './../../pessoa/pessoa.filter';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
 import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
+import { TextUtil } from './../../../generics/utils/text.util';
+import { Util } from './../../../generics/utils/util';
 
 @Component( {
     selector: 'app-acompanhamento',
@@ -36,15 +41,20 @@ import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-s
 export class AcompanhamentoComponent extends GenericFormComponent implements OnInit {
     private equipesAbordagemTriagens: Array<Equipe>;
     private triagensByEquipeAbordagem = [[]];
+    private triagens: Array<Triagem>;
     private riscoPotencial: RiscoPotencial;
-    private acao: Acao;
+    private acaoAux: Acao;
+    private acompanhamentoAux: Acompanhamento;
     private tipoAcoes: Array<string>;
     private statusAcoes: Array<string>;
     private tipoContatoAcoes: Array<string>;
     private flagTriagem: Triagem;
-    private flagIndexAcao: number = -1;
-    private modalAcao;
+    private flagIndexAcompanhamento: number = -1;
+    private flagEditAcompanhamento: boolean;
+    private modalAcompanhamento;
+    private triagemAux : Triagem;
     private profissional: Profissional;
+    private textUtil: TextUtil;
     @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
 
     constructor( private route: ActivatedRoute,
@@ -56,12 +66,18 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
 
         this.equipesAbordagemTriagens = new EquipeBuilder().initializeList( new Array<Equipe>() );
         this.riscoPotencial = new RiscoPotencialBuilder().initialize( new RiscoPotencial() );
-        this.modalAcao = new EventEmitter<string | MaterializeAction>();
-        this.acao = new AcaoBuilder().initialize( new Acao() );
+        this.modalAcompanhamento = new EventEmitter<string | MaterializeAction>();
+        this.acaoAux = new AcaoBuilder().initialize( new Acao() );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
+        this.triagemAux = new TriagemBuilder().initialize(new Triagem());
+        this.textUtil = new TextUtil();
+        this.acompanhamentoAux = new AcompanhamentoBuilder().initialize(new Acompanhamento());
+        
+        this.triagens = new TriagemBuilder().initializeList(undefined);
     }
 
     ngOnInit() {
+        $( ".container" ).get( 0 ).style.width = "100%";
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
             this.riscoPotencialService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
@@ -76,6 +92,7 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
                         this.riscoPotencialService.getProfissional( profissionalFilter )
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
+                                    this.textUtil.setTextLength(40);
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
 
                                     this.inscricao = this.route.params.subscribe(
@@ -90,6 +107,22 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
                                                         this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
                                                         this.riscoPotencial.setProfissional(this.profissional);
                                                         this.getTriagensEquipeAbordagem();
+                                                        
+                                                        this.riscoPotencial.getRiscoEmpregados().filter(r => r.getAtivo()).forEach(r=>{
+                                                            r.getTriagens().forEach(t => {
+                                                                if(t.getEquipeAbordagem() && t.getEquipeAbordagem().getId() > 0 && this.verificarTriagens(t)){
+                                                                   this.triagens.push(t);                                                                   
+                                                                   this.triagens.sort(function(a, b){
+                                                                       
+                                                                       if ( a['equipeAbordagem']['abreviacao'] > b['equipeAbordagem']['abreviacao'] )
+                                                                           return 1;
+                                                                       else if ( a['equipeAbordagem']['abreviacao'] < b['equipeAbordagem']['abreviacao'] )
+                                                                           return -1;
+                                                                       else return 0;
+                                                                   });
+                                                                }
+                                                            });
+                                                        });
                                                     } )
                                                     .catch( error => {
                                                         this.showPreload = false;
@@ -153,7 +186,26 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
                 console.log( error );
             } )
     }
+    
+    selectTriagem( indexTriagem: number ) {
+        this.triagemAux.setSelecionado("");
+        this.acaoAux.setSelecionado("");
+        this.triagemAux = this.triagens[indexTriagem];
+        this.acaoAux = new AcaoBuilder().initialize(new Acao());
+        this.triagemAux.setSelecionado("active");
+    }
+   
+    selectAcao(indexAcao: number) {
+        this.acaoAux.setSelecionado("");
+        this.acaoAux =  this.triagemAux.getAcoes()[indexAcao]
+        this.acaoAux.setSelecionado("active");
+    }
 
+    verificarTriagens(triagem: Triagem){
+        return ((triagem.getEquipeAbordagem().getId() == this.profissional.getEquipe().getId() ||
+                this.riscoPotencial.getEquipeResponsavel().getId() == this.profissional.getEquipe().getId()) &&
+                this.riscoPotencial.getEquipes().filter(x => x.getId() == triagem.getEquipeAbordagem().getId()).length > 0);        
+    }
     save() {
         this.showPreload = true;
         this.canDeactivate = true;
@@ -167,12 +219,19 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
             } )
     }
     
-    savaAndRedirect() {
+    saveAndRedirect() {
         this.showPreload = true;
         this.canDeactivate = true;
+        
+        let riscoEmpregado: RiscoEmpregado = this.riscoPotencial.getRiscoEmpregados().find(r=> r.getEquipe().getId() == this.profissional.getEquipe().getId() && r.getAtivo());
+        riscoEmpregado.setRiscoPotencial(new RiscoPotencial());
+        riscoEmpregado.getRiscoPotencial().setId(this.riscoPotencial.getId());
+        riscoEmpregado.setEmpregado(this.riscoPotencial.getEmpregado());
+        riscoEmpregado.getRiscoPotencial().setEquipeResponsavel(this.riscoPotencial.getEquipeResponsavel())
         this.riscoPotencialService.saveAcompanhamentos( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
             .then( res => {
-                this.router.navigate(['/risco-potencial/triagem-reavaliacao', this.riscoPotencial.getId()])
+                localStorage.setItem("riscoEmpregadoReavaliacao", JSON.stringify(riscoEmpregado));
+                this.router.navigate(['/risco-potencial/triagem-reavaliacao'])
             } )
             .catch( error => {
                 this.processReturn( false, error );
@@ -203,67 +262,110 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
         } )
     }
 
-    addAcompanhamento( idEquipe, idTriagem, indexAcao ) {
-        let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );
-        triagem.getAcoes()[indexAcao].getAcompanhamentos().push( new Acompanhamento() );
-    }
-
-    removeAcompanhamento( idEquipe, idTriagem, indexAcao, indexAcompanhamento ) {
-        let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );
-        triagem.getAcoes()[indexAcao].getAcompanhamentos().splice( indexAcompanhamento, 1 );
-    }
-
-    encerrarAcao( idEquipe, idTriagem, indexAcao ) {
-        let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );
-        triagem.getAcoes()[indexAcao].setStatus( this.statusAcoes[1] )
+    
+    addAcompanhamento() {
+        this.acompanhamentoAux = new AcompanhamentoBuilder().initialize( new Acompanhamento( ) );        
+        this.openModal();
     }
     
-    validarAcao( idEquipe, idTriagem, indexAcao ) {
-        let triagem: Triagem = this.triagensByEquipeAbordagem[idEquipe].find( t => t.getId() == idTriagem );
-        triagem.getAcoes()[indexAcao].setStatus( this.statusAcoes[4] );
+    editAcompanhamento(indexAcompanhamento: number) {
+        this.acompanhamentoAux = new AcompanhamentoBuilder().clone(this.acaoAux.getAcompanhamentos()[indexAcompanhamento]);        
+        this.flagIndexAcompanhamento = indexAcompanhamento;
+        this.flagEditAcompanhamento = true;
+        this.openModal();
     }
     
-    triagensValidadas() {
-        let ret: boolean = (this.equipesAbordagemTriagens != undefined && this.equipesAbordagemTriagens.length > 0);
-        this.equipesAbordagemTriagens.forEach(eA => {
-            this.triagensByEquipeAbordagem[eA.getId()].forEach(t => {
-                if ( t.getIgnorarAcoes() ) return; 
-                if ( ( this.profissional.getEquipe().getId() != this.riscoPotencial.getEquipeResponsavel().getId() && 
-                        t.getIndicadorSast().getEquipe().getId() != this.profissional.getEquipe().getId() &&
-                        t.getEquipeAbordagem().getId() != this.profissional.getEquipe().getId() ) ||
-                                t.getAcoes() == undefined || 
-                                t.getAcoes().length == 0 ||
-                                t.getAcoes().filter(a => a.getStatus() != "VALIDADA").
-                                    filter(a1 => a1.getStatus() != "REAVALIADA").length > 0 )
-                    ret = false;
-            });
-        });
+    confirmAddAcompanhamento() {
+        if(Util.isNotNull(this.acompanhamentoAux.getDescricao())){
+            
+            if(this.flagEditAcompanhamento){
+                this.acaoAux.getAcompanhamentos()[this.flagIndexAcompanhamento] = this.acompanhamentoAux;
+                
+            }else{
+                this.acompanhamentoAux.setAcao(new AcaoBuilder().clone(this.acaoAux));
+                this.acaoAux.getAcompanhamentos().push(new AcompanhamentoBuilder().clone(this.acompanhamentoAux));
+            }
+        }else{
+            this.toastParams = ["Por favor, informe todos os dados corretamente", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
+    }
+
+    removeAcompanhamento(indexAcompanhamento) {
+        this.acaoAux.getAcompanhamentos().splice( indexAcompanhamento, 1 )
+    }
+
+    encerrarAcao() {
+        this.acaoAux.setStatus( this.statusAcoes[1] );
+    }
+    
+    validarAcao() {
+        this.acaoAux.setStatus( this.statusAcoes[4] );
+    }
+    
+    validarReavaliacao() {
+        if(this.profissional.getEquipe().getId() == this.riscoPotencial.getEquipeResponsavel().getId()){
+
+            //OBTER TODOS OS RISCOS ATUAIS, CUJA EQUIPE DIFERENTE DA EQUIPE DO PROFISSIONAL -> LOOP
+            if (this.riscoPotencial.getRiscoEmpregados()
+                .filter(r=> r.getEquipe().getId() != this.profissional.getEquipe().getId() && r.getAtivo()
+                            && this.riscoPotencial.getEquipes().filter(e=> e.getId() == r.getEquipe().getId()).length > 0
+                            && r.getStatus() != "REAVALIADO")
+                .length > 0){
+                return false;
+            }
+        }
         
-        return ret;
+        return this.validarReavaliacaoAbordagem();
+    }
+    
+    validarReavaliacaoAbordagem(){
+        let qtdAcoes = 0;
+        let ret: boolean = true;
+          let riscoEmpregado: RiscoEmpregado = this.riscoPotencial.getRiscoEmpregados()
+                  .filter(ri => this.riscoPotencial.getEquipes().filter(e=> e.getId() == ri.getEquipe().getId()).length > 0)
+                  .find(x => x.getAtivo() == true && 
+                             x.getEquipe().getId() == this.profissional.getEquipe().getId());
+          if(riscoEmpregado){
+              riscoEmpregado.getTriagens().forEach( t => {
+                 t.getAcoes().forEach(a=> {
+                     qtdAcoes++;
+                     if(a.getStatus()!= this.statusAcoes[4]){
+                         ret = false;
+                     }
+                 }) 
+              });
+          }
+          else{
+              ret = false;
+          }
+                
+        return ret && qtdAcoes > 0;
     }
 
-    verifyAcompanhamento( acao: Acao ) {
-        if ( acao.getStatus() == this.statusAcoes[1] || 
-                acao.getStatus() == this.statusAcoes[3] || 
-                acao.getStatus() == this.statusAcoes[4] )
+    verifyAcompanhamento() {
+        if ( this.acaoAux.getStatus() == this.statusAcoes[1] || 
+                this.acaoAux.getStatus() == this.statusAcoes[3] || 
+                this.acaoAux.getStatus() == this.statusAcoes[4] )
             return false;
         
         return true;
     }
     
-    verifyEncerrarAcompanhamento(triagem: Triagem, acao: Acao) {
-        if ( this.profissional.getEquipe().getId() != triagem.getEquipeAbordagem().getId() || 
-                acao.getStatus() == this.statusAcoes[1] || 
-                acao.getStatus() == this.statusAcoes[3] ||
-                acao.getStatus() == this.statusAcoes[4] )
+    verifyEncerrarAcompanhamento() {
+        if ( this.profissional.getEquipe().getId() != this.triagemAux.getEquipeAbordagem().getId() || 
+                this.acaoAux.getStatus() == this.statusAcoes[1] || 
+                this.acaoAux.getStatus() == this.statusAcoes[3] ||
+                this.acaoAux.getStatus() == this.statusAcoes[4] )
             return false;
         
         return true;
     }
     
-    verifyValidarAcompanhamento(triagem: Triagem, acao: Acao) {
+    verifyValidarAcompanhamento() {
         if ( this.profissional.getEquipe().getId() == this.riscoPotencial.getEquipeResponsavel().getId() && 
-                acao.getStatus() == this.statusAcoes[1] )
+                this.acaoAux.getStatus() == this.statusAcoes[1] )
             return true;
         
         return false;
@@ -274,14 +376,15 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
     }
 
     openModal() {
-        this.modalAcao.emit( { action: "modal", params: ['open'] } );
+        this.modalAcompanhamento.emit( { action: "modal", params: ['open'] } );
     }
 
     closeModal() {
-        this.modalAcao.emit( { action: "modal", params: ['close'] } );
+        this.modalAcompanhamento.emit( { action: "modal", params: ['close'] } );
     }
 
     ngOnDestroy() {
+        $( ".container" ).get( 0 ).style.width = "70%";
         if ( this.inscricao != undefined )
             this.inscricao.unsubscribe();
     }

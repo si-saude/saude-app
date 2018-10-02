@@ -9,8 +9,7 @@ export class AcaoIntervencaoDescricaoAutocomplete{
     
     private autoComplete:AutoComplete<AcaoIntervencaoFilter>;
 
-    constructor(service:AcaoIntervencaoService) {
-        let acaoIntervencaoFilter: AcaoIntervencaoFilter = new AcaoIntervencaoFilter();
+    constructor(service:AcaoIntervencaoService, acaoIntervencaoFilter: AcaoIntervencaoFilter) {
         
         this.autoComplete = new AutoComplete<AcaoIntervencaoFilter>(
                 acaoIntervencaoFilter,
@@ -32,8 +31,4 @@ export class AcaoIntervencaoDescricaoAutocomplete{
         eF.setDescricao(e.getDescricao());
         return eF;
     }    
-    
-    public getList(service:AcaoIntervencaoService, eF:AcaoIntervencaoFilter){
-        return service.list(eF);
-    }
 }

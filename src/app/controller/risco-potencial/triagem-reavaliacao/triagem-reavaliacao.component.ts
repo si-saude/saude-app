@@ -35,6 +35,7 @@ import { RiscoEmpregadoFilter } from './../../risco-empregado/risco-empregado.fi
 import { RiscoPotencialService } from './../../risco-potencial/risco-potencial.service';
 import { RiscoPotencialFilter } from './../../risco-potencial/risco-potencial.filter';
 import { TriagemUtil } from './../../../generics/utils/triagem.util';
+import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
 
 @Component({
   selector: 'app-triagem-reavaliacao',
@@ -44,22 +45,19 @@ import { TriagemUtil } from './../../../generics/utils/triagem.util';
 export class TriagemReavaliacaoComponent extends GenericFormComponent implements OnInit {
     private riscoEmpregado: RiscoEmpregado;
     private profissional: Profissional;
-    private triagemIndices: Map<number, number>;
-    private nomeEmpregado: string;
-    private triagemUtil: TriagemUtil;
+    private triagemUtil = new TriagemUtil();
+    @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
     
     constructor(private route: ActivatedRoute,
             private riscoEmpregadoService: RiscoEmpregadoService,
             router: Router) {
             super( riscoEmpregadoService, router );
         
+            this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
+            this.riscoEmpregado = new RiscoEmpregadoBuilder().initialize(undefined);
+            this.triagemUtil = new TriagemUtil();
             this.goTo = "risco-potencial";
             
-            this.riscoEmpregado = new RiscoEmpregadoBuilder().initialize(new RiscoEmpregado());
-            this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
-            this.triagemIndices = new Map<number, number>();
-            
-            this.triagemUtil = new TriagemUtil();
     }
 
     ngOnInit() {
@@ -79,43 +77,13 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
                             .then( res => {
                                 if ( res.json().list[0] != undefined ) {
                                     component.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
-                                
-                                    component.inscricao = this.route.params.subscribe(
-                                            ( params: any ) => {
-                                                if( params['id'] !== undefined ) {
-                                                    let id = params['id'];
-                                                    component.showPreload = true;
-                                                    
-                                                    let riscoEmpregadoFilter: RiscoEmpregadoFilter = new RiscoEmpregadoFilter();
-                                                    riscoEmpregadoFilter.setRiscoPotencial(new RiscoPotencialFilter());
-                                                    riscoEmpregadoFilter.getRiscoPotencial().setId(id);
-                                                    riscoEmpregadoFilter.setEquipe(new EquipeFilter());
-                                                    riscoEmpregadoFilter.getEquipe().setId(this.profissional.getEquipe().getId());
-                                                    riscoEmpregadoFilter.setStatus('VALIDADO');
-    
-                                                    component.riscoEmpregadoService.listToCopy(riscoEmpregadoFilter)
-                                                        .then( res => {
-                                                            component.showPreload = false;
-                                                            this.riscoEmpregado = new RiscoEmpregadoBuilder().clone( res.json().list[0] );
-                                                            this.nomeEmpregado = this.riscoEmpregado.getRiscoPotencial().getEmpregado().getPessoa().getNome();
-                                                            setTimeout(() => {
-                                                                component.triagemIndices = new Map<number, number>();
-                                                                
-                                                                for ( let idx = 0; idx < component.riscoEmpregado.getTriagens().length; idx++ ) {
-                                                                    component.triagemIndices.set( idx, this.riscoEmpregado.getTriagens()[idx].getIndice() );
-                                                                    if ( component.riscoEmpregado.getTriagens()[idx].getIndice() != -1 ) {
-                                                                        let i: string = "indice" + component.triagemIndices.get( idx ) + "_" + idx;
-                                                                        $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
-                                                                    }
-                                                                }
-                                                            }, 200 );
-                                                            console.log(this.riscoEmpregado);
-                                                        } )
-                                                        .catch( error => {
-                                                            component.catchConfiguration( error );
-                                                        } )
-                                                }
-                                            } );
+                                    if(!localStorage.getItem("riscoEmpregadoReavaliacao")){   
+                                        component.router.navigate( ["/home"] );
+                                    }else{
+                                        this.riscoEmpregado = new RiscoEmpregadoBuilder().clone(JSON.parse(localStorage.getItem("riscoEmpregadoReavaliacao")));
+                                        this.riscoEmpregado.setProfissional(component.profissional);
+                                        localStorage.removeItem("riscoEmpregadoReavaliacao");
+                                    }                                  
                             } else {
                                 component.router.navigate( ["/risco-potencial"] );
                                     return;
@@ -141,17 +109,16 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
     }
     
     save() {
-        
         if ( !this.triagemUtil.verifyValidTriagens( this.riscoEmpregado.getTriagens() ) ) {
             this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
             this.globalActions.emit( 'toast' );
             return;
-        }
-        
+        } 
         this.showPreload = true;
         this.canDeactivate = true;
         this.riscoEmpregadoService.saveReavaliacao(new RiscoEmpregadoBuilder().clone(this.riscoEmpregado))
             .then( res => {
+                this.confirmSaveComponent.setGoTo("$*close*$");
                 this.processReturn( true, res );
             } )
             .catch( error => {
@@ -159,43 +126,7 @@ export class TriagemReavaliacaoComponent extends GenericFormComponent implements
             } )
     }
     
-    verifyIndiceTriagem( triagem: Triagem ) {
-        if ( triagem.getIndice() > -1 ) return true;
-
-        return false;
-    }
-    
-    getIndiceDescricao( triagem: Triagem ) {
-        return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
-    }
-    
-    selectTriagem( indexTriagem, indice ) {
-        let i: string = "indice" + indice + "_" + indexTriagem.toString();
-
-        if ( this.triagemIndices.get( indexTriagem ) != undefined ) {
-            if ( this.triagemIndices.get( indexTriagem ) == Number( indice ) ) {
-                $( "td[title=" + i + "]" ).css( "background", "" );
-                this.riscoEmpregado.getTriagens()[indexTriagem].setIndice( -1 );
-                this.triagemIndices.delete( indexTriagem );
-                return;
-            }
-            let iAntigo: string = "indice" + this.triagemIndices.get( indexTriagem ) + "_" + indexTriagem.toString();
-            $( "td[title=" + iAntigo + "]" ).css( "background", "" );
-        }
-
-        $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
-        
-        this.triagemIndices.set( indexTriagem, Number( indice ) );
-
-        this.riscoEmpregado.getTriagens()[indexTriagem].setIndice( Number( indice ) );
-    }
-    
-    verifyObrigatoriedadeIndicador( triagem: Triagem ) {
-        if ( triagem.getIndicadorSast().getObrigatorio() ) 
-            return "triagem-indicador-bold";
-        
-        return "";
-    } 
+  
     
     ngOnDestroy() {
         if ( this.inscricao != undefined ) 

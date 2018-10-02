@@ -11,6 +11,7 @@ export class Acao {
 	private acaoIntervencao: AcaoIntervencao;
 	private triagem: Triagem;
     private acompanhamentos: Array<Acompanhamento>; 
+    private selecionado: string = "";
 	private version: number;
 
 	getId() {
@@ -37,6 +38,14 @@ export class Acao {
 		this.status = status;
 	}
 
+    getSelecionado(){
+        return this.selecionado;
+    }
+    
+    setSelecionado(selecionado:string){
+        this.selecionado = selecionado;
+    }
+    
 	getTipoContato() {
 		return this.tipoContato;
 	}

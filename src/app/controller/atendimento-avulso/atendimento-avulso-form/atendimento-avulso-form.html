@@ -106,7 +106,7 @@
 									</div>	    
 									<div class="input-field col s3">
 										<a class="btn-floating btn-large pulse" 
-										[class.disabled]="atendimento.tarefa.id == 0" 
+										[class.disabled]="atendimento.tarefa.id == 0 || atendimento.tarefa.id == undefined" 
 										(click)="carregarComplementoAtendimento()">
 											<i class="material-icons center-icon">cloud_download</i></a>	
 										<label>CARREGAR ATENDIMENTO</label>
