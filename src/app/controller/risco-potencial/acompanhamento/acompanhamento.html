@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<p style="color: #26a69a; margin-left: -12%;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b>
+<p style="color: #26a69a;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b>
 <a  class="waves-effect" style=" margin-left: 5%;" (click)="saveAndRedirect()" *ngIf="validarReavaliacao()">
 	<i  class=" medium material-icons center-icon">rotate_right</i></a> 
 <b *ngIf="validarReavaliacao()">Reavaliar</b>

@@ -29,7 +29,7 @@ import { RiscoPotencialFilter } from './../risco-potencial.filter';
 import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
 import { TextUtil } from './../../../generics/utils/text.util';
 import { Util } from './../../../generics/utils/util';
-import { AcaoIntervencaoDescricaoAutocomplete } from './../../../controller/acao-intervencao/acao-intervencao-descricao.autocomplete';
+import { ModalAcaoComponent } from './../../../includes/modal-acao/modal-acao.component';
 
 @Component({
   selector: 'app-acoes',
@@ -53,7 +53,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private profissional: Profissional;
     @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
     private textUtil: TextUtil;
-    private autoCompleteAcaoIntervencao:AcaoIntervencaoDescricaoAutocomplete;   
+    @ViewChild( ModalAcaoComponent ) modalAcaoComponent: ModalAcaoComponent;
     
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -70,7 +70,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             this.triagemAux = new TriagemBuilder().initialize(new Triagem());
             this.textUtil = new TextUtil();
             this.triagens = new TriagemBuilder().initializeList(undefined);
-            this.autoCompleteAcaoIntervencao = new AcaoIntervencaoDescricaoAutocomplete(this.riscoPotencialService.getAcaoIntervencaoService(), new AcaoIntervencaoFilter());
+           
     }
     
     ngOnInit() {
@@ -208,8 +208,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             let acaoIntervencaoFilter: AcaoIntervencaoFilter = new  AcaoIntervencaoFilter();
                 acaoIntervencaoFilter.setEquipe(new EquipeFilter())
                 acaoIntervencaoFilter.getEquipe().setId(this.profissional.getEquipe().getId());
-                this.autoCompleteAcaoIntervencao = new AcaoIntervencaoDescricaoAutocomplete(this.riscoPotencialService.getAcaoIntervencaoService(), acaoIntervencaoFilter); 
-        }
+          }
     }
     
     

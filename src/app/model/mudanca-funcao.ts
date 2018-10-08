@@ -7,6 +7,7 @@ import { Gerencia } from './gerencia';
 import { Base } from './base';
 import { Profissional } from './profissional';
 import { Tarefa } from './tarefa';
+import { Instalacao } from './instalacao';
 import { DateUtil } from './../generics/utils/date.util';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
@@ -24,6 +25,8 @@ export class MudancaFuncao {
     private status: string;
     private tarefas: Array<Tarefa>;
     private version: number;
+    private atividades : string;
+    private instalacoes: Array<Instalacao>;
 
     getId() {
         return this.id;
@@ -108,6 +111,14 @@ export class MudancaFuncao {
         this.base = base;
     }
     
+    getInstalacoes():Array<Instalacao>{
+        return this.instalacoes;
+    }
+    
+    setInstalacoes(instalacoes:Array<Instalacao>){
+        this.instalacoes = instalacoes;
+    }
+    
     getTarefas():Array<Tarefa>{
         return this.tarefas;
     }
@@ -116,13 +127,20 @@ export class MudancaFuncao {
         this.tarefas = tarefas;
     }
 
+    getAtividades() {
+        return this.atividades;
+    }
+
+    setAtividades(atividades: string) {
+        this.atividades = atividades;
+    }
+    
     getVersion() {
         return this.version;
     }
 
     setVersion(version: number) {
         this.version = version;
-    }
-    
+    }    
   
 }

@@ -15,7 +15,7 @@
 		<div class="row">
 			<ul class="tabs" materialize="tabs">
 				<li class="tab col s3"><a RouterLinkActive="active"
-					href="#dadosGerais">Dados Gerais</a></li>
+					href="#dadosGerais">Dados Atuais</a></li>
 				<li class="tab col s3"><a RouterLinkActive="active"  
 					href="#mudancaFuncao">Mudança de Função</a></li>
 				<li class="tab col s3"><a RouterLinkActive="active"
@@ -25,7 +25,7 @@
 			</ul>
 			<div class="groups">
 				<div id="dadosGerais">
-					<app-informacao-empregado [idEmpregado]="tarefaMedicinaOcupacional.cliente.id" [service]="mudancaFuncaoService">
+					<app-informacao-empregado [empregado]="mudancaFuncao?.tarefas[0]?.cliente" [service]="mudancaFuncaoService">
 					</app-informacao-empregado>	
 				</div>			
 				<div id="mudancaFuncao">
@@ -83,11 +83,11 @@
 		</div>
 		<div class='row row-btns'>
 		
-			<div class="col s3">
+			<div class="col s2">
 				<a [routerLink]="['/mudanca-funcao']" class="btn btn-primary btn-listar">Listar</a>
 			</div>
 			
-			<div class="col s3">
+			<div class="col s4">
 				<a (click)="solicitarConvocacao()" class="btn btn-primary btn-salvar" 
 				[class.disabled]="(profissional.equipe.abreviacao !='MED' || 
 				tarefaErgonomia.fim == undefined || 

@@ -26,6 +26,7 @@ import { PlanejamentoModule } from './../planejamento.module';
 import { TriagemModule } from './../triagem.module';
 import { FichaColetaModule } from './../ficha-coleta.module';
 import { AcolhimentoModule } from './../acolhimento.module';
+import { ModalAcaoModule } from './../../includes/modal-acao/modal-acao.module';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,8 @@ import { AcolhimentoModule } from './../acolhimento.module';
         PipesModule,
         PlanejamentoModule,
         FichaColetaModule,
-        AcolhimentoModule
+        AcolhimentoModule,
+        ModalAcaoModule
      ],
      providers: [
         RiscoPotencialService,

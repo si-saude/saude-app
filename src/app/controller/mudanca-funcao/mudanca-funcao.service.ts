@@ -12,19 +12,23 @@ import { GheService } from './../ghe/ghe.service';
 import { GheeService } from './../ghee/ghee.service';
 import { EnfaseService } from './../enfase/enfase.service';
 import { FuncaoService } from './../funcao/funcao.service';
+import { InstalacaoService } from './../instalacao/instalacao.service';
 import { RegimeService } from './../regime/regime.service';
 import { BaseService } from './../base/base.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { UsuarioService } from './../usuario/usuario.service';
+import { EquipeService } from './../equipe/equipe.service';
 
 @Injectable()
 export class MudancaFuncaoService extends GenericService {
 
     constructor( http: Http, router: Router,
                 private usuarioService: UsuarioService,
+                private instalacaoService: InstalacaoService,
                 private profissionalService: ProfissionalSaudeService,
                 private gerenciaService: GerenciaService,
                 private gheService: GheService,
+                private equipeService: EquipeService,
                 private enfaseService: EnfaseService,
                 private funcaoService: FuncaoService,
                 private regimeService: RegimeService,
@@ -71,6 +75,13 @@ export class MudancaFuncaoService extends GenericService {
  
     getEmpregadoService() {
         return this.empregadoService;
+    }
+    getEquipeService() {
+        return this.equipeService;
+    }
+    
+    getInstalacaoService() {
+        return this.instalacaoService;
     }
     
     getGheService() {

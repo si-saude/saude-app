@@ -9,7 +9,7 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
-<p style="color: #26a69a; margin-left: -12%;"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b></p>
+<p style="color: #26a69a"><b>Nome do Empregado: {{riscoPotencial.empregado.pessoa.nome}}</b></p>
 
 <div class="form-container">
 	<form #form="ngForm" (ngSubmit)="save()">
@@ -107,7 +107,7 @@
 
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
-	[materializeParams]="modelParams" [materializeActions]="modalAcao">
+	[materializeParams]="[{dismissible: false}]" [materializeActions]="modalAcao">
 
 	<div class="row row-modal-acao">
 
@@ -137,15 +137,9 @@
 		</div>
 		<div class="input-field col s12">
 			<fieldset>
-				<label for="flagAcao.acaoIntervencao" >Ação</label> 						
-				<input type="text" materialize="autocomplete" autocomplete="off"
-					name="flagAcao.acaoIntervencao.descricao"
-					(click)="clickAcaoIntervencao()"
-					[(ngModel)]="flagAcao.acaoIntervencao.descricao"
-					(blur)="autoCompleteAcaoIntervencao.getAutocomplete().getObj($event,flagAcao,'setAcaoIntervencao','getDescricao')"
-					(ngModelChange)="autoCompleteAcaoIntervencao.getAutocomplete().getList(flagAcao.acaoIntervencao, 'getDescricao');"
-					(keydown.enter)="autoCompleteAcaoIntervencao.getAutocomplete().pressEnter($event,flagAcao,'setAcaoIntervencao','getDescricao');"
-					[materializeParams]="autoCompleteAcaoIntervencao.getAutocomplete().getObjAutoComplete()">
+				<label for="flagAcao.acaoIntervencao" >Ação</label> 
+				<input id="descricao" type="text"
+				name="descricao" [(ngModel)]="flagAcao.acaoIntervencao.descricao" (click)="modalAcaoComponent.openModalAcao()">		
 			</fieldset>
 		</div>	
 	</div>
@@ -160,3 +154,5 @@
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>
+	
+<app-modal-acao [service]="riscoPotencialService"  [model]="flagAcao"></app-modal-acao>
