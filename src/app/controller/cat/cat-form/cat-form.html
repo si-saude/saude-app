@@ -9,6 +9,13 @@
 <app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
 	[goTo]="goTo"></app-confirm-save>
 
+<div class="btns-aside">
+	
+	<a (click)="downloadComunicacaoOcorrencia()"><i style="cursor: pointer;" class="small material-icons icon">file_download</i>Relatório</a><br><br>
+	<a (click)="downloadArquivoZip()"><i style="cursor: pointer;" class="small material-icons icon">file_download</i>Arquivos</a>
+		
+</div>
+
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
@@ -25,6 +32,7 @@
 				<li class="tab"><a RouterLinkActive="active"
 					href="#informacoesComplementares">INFORMAÇÕES COMPLEMENTARES</a></li>
 				<li class="tab"><a RouterLinkActive="active" href="#cat">CAT</a></li>
+				<li class="tab"><a RouterLinkActive="active" href="#atos">ATOS</a></li>
 			</ul>
 
 			<table class="table-infos" style="margin-top: 30px">
@@ -33,6 +41,15 @@
 					<td><b>{{cat.empregado.pessoa.nome}}</b></td>
 				</tr>
 			</table>
+			<div class="file-field input-field col s12">
+				<div class="btn">
+					<span>Arquivo Zip</span> 
+					<input id="arquivo" type="file" #arquivo name="arquivo" accept=".zip">
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+			</div>
 
 			<div id="identificacaoTrabalhador">
 
@@ -70,6 +87,14 @@
 							[materializeParams]="autoCompleteGerencia.getAutocomplete().getObjAutoComplete()">
 					</div>
 				</div>
+				
+				<div class="row">
+					<div class="input-field col s4">
+						<label for="jornadaTrabalho">Jornada de Trabalho</label> 
+						<input id="jornadaTrabalho" type="numer"
+							[(ngModel)]="cat.jornadaTrabalho" name="jornadaTrabalho">
+					</div>
+				</div>
 
 				<fieldset>
 					<legend> Empregado </legend>
@@ -90,7 +115,7 @@
 
 					<div class="row">
 						<div class="input-field col s3">
-							<label for="matricula">Matricula</label> <input id="matricula"
+							<label for="matricula">Matrícula</label> <input id="matricula"
 								type="text" [disabled]="cat.empregado.id > 0" maxlength="32"
 								[(ngModel)]="cat.empregado.matricula" name="matricula">
 						</div>
@@ -210,7 +235,7 @@
 						<div class="input-field col s4">
 							<fieldset>
 								<legend>
-									Estado Civíl <a
+									Estado Civil <a
 										class="btn-floating waves-effect waves-light green btn-add-fieldset"
 										(click)="getEstadosCivis()"> <i
 										class="material-icons center-icon">cached</i>
@@ -285,7 +310,7 @@
 					<div class="input-field col s3">
 						<label for="data.dataOcorrencia">Data de Ocorrência</label>
 						<app-date-picker [nome]="'data.dataOcorrencia'"
-							[customDate]="cat.dataOcorrenciaCustomDate"
+							[customDate]="cat.dataOcorrenciaCustomDate" (change)="changeAto1()"
 							[obrigatorio]="'false'" [legenda]="'Data de Ocorrencia'"></app-date-picker>
 					</div>
 					<div class="input-field col s3">
@@ -456,9 +481,9 @@
 			<div id="afastamento">
 				<div class="row">
 					<p *ngIf="cat.classificacao && cat.classificacao.id > 0 && 
-						cat.classificacao.afastamento"><b>Lesão COM afastamento</b></p>
+						cat.classificacao.geraAfastamento"><b>Lesão COM afastamento</b></p>
 					<p *ngIf="cat.classificacao && cat.classificacao.id > 0 &&
-						!cat.classificacao.afastamento"><b>Lesão SEM afastamento</b></p>
+						!cat.classificacao.geraAfastamento"><b>Lesão SEM afastamento</b></p>
 				</div>
 				
 				<div class="row">
@@ -466,21 +491,21 @@
 						<label for="cid">CID</label> <input type="text"
 							materialize="autocomplete" autocomplete="off"
 							name="cat.cid" [(ngModel)]="cat.cid.codigo"
-							(blur)="autoCompleteCid.getAutocomplete().getObj($event,cat,'setCid','getCodigo'); changeCidOrClassificacaoAfastamento()"
+							(blur)="autoCompleteCid.getAutocomplete().getObj($event,cat,'setCid','getCodigo'); changeCid()"
 							(ngModelChange)="autoCompleteCid.getAutocomplete().getList(cat.cid, 'getCodigo');"
-							(keydown.enter)="autoCompleteCid.getAutocomplete().pressEnter($event,cat,'setCid','getCodigo'); changeCidOrClassificacaoAfastamento()"
+							(keydown.enter)="autoCompleteCid.getAutocomplete().pressEnter($event,cat,'setCid','getCodigo'); changeCid()"
 							[materializeParams]="autoCompleteCid.getAutocomplete().getObjAutoComplete()">
 					</div>
 					<div class="input-field col s6">
 						<fieldset>
 							<legend> Classificação do Afastamento 
 								<a class="btn-floating waves-effect waves-light green btn-add-fieldset"
-									(click)="getCLassificacoes()"> 
+									(click)="getClassificacoes()"> 
 									<i class="material-icons center-icon">cached</i>
 								</a>
 							</legend>
 							<select name="classificacao" class="browser-default"
-								[(ngModel)]="cat.classificacao.id" (change)="changeCidOrClassificacaoAfastamento()">
+								[(ngModel)]="cat.classificacao.id" (ngModelChange)="changeClassificacaoAfastamento()">
 								<option disabled selected value="undefined">Selecione uma Classificação</option>
 								<option *ngFor="let classificacao of classificacoes" value="{{classificacao.id}}">
 									{{classificacao.descricao}}
@@ -495,24 +520,47 @@
 					</div>
 				</div>
 				
+				<div class="row" *ngIf="cat.classificacao && 
+										cat.classificacao.id > 0 && 
+										!cat.classificacao.afastamento">
+					<div class="input-field col s12">
+						<label for="justificativa">Justificativa</label>
+						<textarea class="materialize-textarea" id="justificativa" maxlength="2048"
+							[required]="cat.classificacao && 
+										cat.classificacao.id > 0 && 
+										!cat.classificacao.afastamento"
+							[(ngModel)]="cat.justificativa" name="cat.justificativa"></textarea>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s9 checkbox">
+						<input type="checkbox" id="ferimentoGrave"
+							[(ngModel)]="cat.ferimentoGrave"
+							name="cat.ferimentoGrave"> 
+						<label for="cat.ferimentoGrave">Ferimento grave conforme resolução ANP nº 44 de 22/12/2009?</label>
+					</div>
+				</div>
+					
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="recomendacoes">Recomendações</label>
+						<textarea class="materialize-textarea" id="recomendacoes" maxlength="4096"  
+							[(ngModel)]="cat.recomendacoes" name="cat.recomendacoes"></textarea>
+					</div>
+				</div>
+				
 				<div class="row">
 					<div class="input-field col s3 checkbox">
 						<input type="checkbox" id="cat.ausenciaExames"
 							(click)="setAusenciaExames($event)"
 							[disabled]="cat.classificacao == undefined || 
 									cat.classificacao.id == 0 || 
-									cat.dataEmissaoCustomDate.appDate == undefined"
+									cat.dataEmissaoCustomDate.appDate == undefined ||
+									cat.empregado.vinculo == 'CONTRATADO'"
 							[(ngModel)]="cat.ausenciaExames"
-							name="cat.ausenciaExames"> <label
-							for="cat.ausenciaExames">Ausência de Exames</label>
-					</div>
-					<div class="input-field col s9 checkbox">
-						<input type="checkbox" id="ferimentoGrave"
-							[(ngModel)]="cat.ferimentoGrave"
-							name="cat.ferimentoGrave"> 
-							<label for="cat.ferimentoGrave">
-									Ferimento grave conforme resolução ANP nº 44 de 22/12/2009?
-							</label>
+							name="cat.ausenciaExames"> 
+						<label for="cat.ausenciaExames">Ausência de Exames</label>
 					</div>
 				</div>
 				
@@ -546,7 +594,8 @@
 							[disabled]="cat.classificacao == undefined || 
 								cat.classificacao.id == 0 || 
 								cat.dataEmissaoCustomDate.appDate == undefined || 
-								cat.ausenciaExames"
+								cat.ausenciaExames ||
+								cat.empregado.vinculo == 'CONTRATADO'"
 							class="btn">Exames para Convocação</button>
 					</div>
 				</div>
@@ -560,6 +609,7 @@
 						<label for="dataAvaliacaoMedica">Data da Avaliação Médica</label>
 						<app-date-picker [nome]="'dataAvaliacaoMedica'"
 							[customDate]="cat.dataAvaliacaoMedicaCustomDate"
+							(change)="changeAto2()"
 							[obrigatorio]="'false'" [legenda]="'Data da Avaliação Médica'"></app-date-picker>
 					</div>
 					<div class="input-field col s3 checkbox">
@@ -639,7 +689,7 @@
 				
 				<div class="row">
 					<div class="input-field col s9">
-						<label for="classificacaoGravidade">Classificação de Gravidade</label> <input type="text"
+						<label for="classificacaoGravidade">Classificação da Ocorrência</label> <input type="text"
 							materialize="autocomplete" autocomplete="off" name="classificacaoGravidade" 
 							[(ngModel)]="cat.classificacaoGravidade.titulo"
 							(blur)="autoCompleteClassificacaoGravidade.getAutocomplete().getObj($event,cat,'setClassificacaoGravidade','getTitulo')"
@@ -681,7 +731,7 @@
 					<div class="input-field col s3">
 						<label for="dataEmissao">Data de Emissão</label>
 						<app-date-picker [nome]="'dataEmissao'"
-							[customDate]="cat.dataEmissaoCustomDate"
+							[customDate]="cat.dataEmissaoCustomDate" (change)="changeAto1(); changeAto4(); changeAto3()"
 							[obrigatorio]="'false'" [legenda]="'Data de Emissão'"></app-date-picker>
 					</div>
 				</div>
@@ -720,7 +770,7 @@
 				
 				<div class="row">
 					<div class="input-field col s6">
-						<label for="diagnosticoProvavel">Diagnostico Provável</label> <input type="text"
+						<label for="diagnosticoProvavel">Diagnóstico Provável</label> <input type="text"
 							materialize="autocomplete" autocomplete="off"
 							name="cat.diagnosticoProvavel" [(ngModel)]="cat.diagnosticoProvavel.codigo"
 							(blur)="autoCompleteDiagnosticoProvavel.getAutocomplete().getObj($event,cat,'setDiagnosticoProvavel','getCodigo');"
@@ -738,7 +788,7 @@
 						<input type="checkbox" id="comunicavelSus"
 							[(ngModel)]="cat.comunicavelSus"
 							name="cat.comunicavelSus"> <label
-							for="cat.comunicávelSus">Comunicavel ao SUS</label>
+							for="cat.comunicávelSus">Comunicável ao SUS</label>
 					</div>
 				</div>
 				
@@ -788,9 +838,10 @@
 							[(ngModel)]="cat.numeroCartaMulta" name="numeroCartaMulta">
 					</div>
 					<div class="input-field col s4">
-						<label for="dataComunicacaoSindicato">Data da Comunicacao do Sindicato</label>
+						<label for="dataComunicacaoSindicato">Data da Comunicação do Sindicato</label>
 						<app-date-picker [nome]="'dataComunicacaoSindicato'"
 							[customDate]="cat.dataComunicacaoSindicatoCustomDate"
+							(change)="changeAto3()"
 							[obrigatorio]="'false'" [legenda]="'Data da Comunicacao do Sindicato'"></app-date-picker>
 					</div>
 				</div>
@@ -811,6 +862,59 @@
 					</div>
 				</div>
     
+			</div>
+			
+			<div id="atos">
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="ato1">Ato 1</label>
+						<textarea class="materialize-textarea"
+							[disabled]="profissional.equipe.abreviacao != 'COR'" 
+							id="ato1" maxlength="512"  
+							[(ngModel)]="cat.ato1" name="cat.ato1"></textarea>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="ato2">Ato 2</label>
+						<textarea class="materialize-textarea"
+							[disabled]="profissional.equipe.abreviacao != 'COR'" 
+							id="ato2" maxlength="512"  
+							[(ngModel)]="cat.ato2" name="cat.ato2"></textarea>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="ato3">Ato 3</label>
+						<textarea class="materialize-textarea"
+							[disabled]="profissional.equipe.abreviacao != 'COR'" 
+							id="ato3" maxlength="512"  
+							[(ngModel)]="cat.ato3" name="cat.ato3"></textarea>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="ato4">Ato 4</label>
+						<textarea class="materialize-textarea"
+							[disabled]="profissional.equipe.abreviacao != 'COR'" 
+							id="ato4" maxlength="512"  
+							[(ngModel)]="cat.ato4" name="cat.ato4"></textarea>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="ato5">Ato 5</label>
+						<textarea class="materialize-textarea"
+							[disabled]="profissional.equipe.abreviacao != 'COR'" 
+							id="ato5" maxlength="512"
+							[(ngModel)]="cat.ato5" name="cat.ato5"></textarea>
+					</div>
+				</div>
+			
 			</div>
 
 		</div>

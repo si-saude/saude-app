@@ -91,7 +91,17 @@ export class Cat {
     private convocado: boolean;
     private examesConvocacao: Array<Exame>;
     private ausenciaExames: boolean;
+    private recomendacoes: string;
 
+    private arquivo: any;
+    private arquivoBase64: string;
+    private jornadaTrabalho: number;
+    private ato1: string;
+    private ato2: string;
+    private ato3: string;
+    private ato4: string;
+    private ato5: string;
+    private justificativa: string;
     private version: number;
 
     getId() {
@@ -169,11 +179,11 @@ export class Cat {
     }
     
     getDataOcorrenciaCustomDate(){
-        return this.dataOcorrencia;
+        return this.dataOcorrenciaCustomDate;
     }
     
-    setDataOcorrenciaCustomDate(dataOcorrencia: Date){
-        this.dataOcorrencia = dataOcorrencia;
+    setDataOcorrenciaCustomDate(dataOcorrenciaCustomDate: CustomDate){
+        this.dataOcorrenciaCustomDate = dataOcorrenciaCustomDate;
     }
     
     getLocal() {
@@ -235,11 +245,11 @@ export class Cat {
     }
     
     getDataInformacaoCustomDate(){
-        return this.dataInformacao;
+        return this.dataInformacaoCustomDate;
     }
     
-    setDataInformacaoCustomDate(dataInformacao: Date){
-        this.dataInformacao = dataInformacao;
+    setDataInformacaoCustomDate(dataInformacaoCustomDate: CustomDate){
+        this.dataInformacaoCustomDate = dataInformacaoCustomDate;
     }
 
     getCaracterizacao() {
@@ -285,11 +295,11 @@ export class Cat {
     }
     
     getDataCaracterizacaoCustomDate(){
-        return this.dataCaracterizacao;
+        return this.dataCaracterizacaoCustomDate;
     }
     
-    setDataCaracterizacaoCustomDate(dataCaracterizacao: Date){
-        this.dataCaracterizacao = dataCaracterizacao;
+    setDataCaracterizacaoCustomDate(dataCaracterizacaoCustomDate: CustomDate){
+        this.dataCaracterizacaoCustomDate = dataCaracterizacaoCustomDate;
     }
     
     getClassificacao() {
@@ -343,11 +353,11 @@ export class Cat {
     }
     
     getDataClassificacaoCustomDate(){
-        return this.dataClassificacao;
+        return this.dataClassificacaoCustomDate;
     }
     
-    setDataClassificacaoCustomDate(dataClassificacao: Date){
-        this.dataClassificacao = dataClassificacao;
+    setDataClassificacaoCustomDate(dataClassificacaoCustomDate: CustomDate){
+        this.dataClassificacaoCustomDate = dataClassificacaoCustomDate;
     }
     
     getRemuneracao() {
@@ -393,11 +403,11 @@ export class Cat {
     }
     
     getDataObitoCustomDate(){
-        return this.dataObito;
+        return this.dataObitoCustomDate;
     }
     
-    setDataObitoCustomDate(dataObito: Date){
-        this.dataObito = dataObito;
+    setDataObitoCustomDate(dataObitoCustomDate: CustomDate){
+        this.dataObitoCustomDate = dataObitoCustomDate;
     }
     
     getMunicipio() {
@@ -483,11 +493,11 @@ export class Cat {
     }
     
     getDataAvaliacaoMedicaCustomDate(){
-        return this.dataAvaliacaoMedica;
+        return this.dataAvaliacaoMedicaCustomDate;
     }
     
-    setDataAvaliacaoMedicaCustomDate(dataAvaliacaoMedica: Date){
-        this.dataAvaliacaoMedica = dataAvaliacaoMedica;
+    setDataAvaliacaoMedicaCustomDate(dataAvaliacaoMedicaCustomDate: CustomDate){
+        this.dataAvaliacaoMedicaCustomDate = dataAvaliacaoMedicaCustomDate;
     }
 
     getRegistroSd2000() {
@@ -517,11 +527,11 @@ export class Cat {
     }
     
     getDataEmissaoCustomDate(){
-        return this.dataEmissao;
+        return this.dataEmissaoCustomDate;
     }
     
-    setDataEmissaoCustomDate(dataEmissao: Date){
-        this.dataEmissao = dataEmissao;
+    setDataEmissaoCustomDate(dataEmissaoCustomDate: CustomDate){
+        this.dataEmissaoCustomDate = dataEmissaoCustomDate;
     }
     
     getPendenciaCorrecao() {
@@ -615,11 +625,11 @@ export class Cat {
     }
     
     getDataComunicacaoSindicatoCustomDate(){
-        return this.dataComunicacaoSindicato;
+        return this.dataComunicacaoSindicatoCustomDate;
     }
     
-    setDataComunicacaoSindicatoCustomDate(dataComunicacaoSindicato: Date){
-        this.dataComunicacaoSindicato = dataComunicacaoSindicato;
+    setDataComunicacaoSindicatoCustomDate(dataComunicacaoSindicatoCustomDate: CustomDate){
+        this.dataComunicacaoSindicatoCustomDate = dataComunicacaoSindicatoCustomDate;
     }
 
     getJustificativaAtrasoEmissaoCarta() {
@@ -662,4 +672,83 @@ export class Cat {
         this.ausenciaExames = ausenciaExames;
     }
     
+    getRecomendacoes() {
+        return this.recomendacoes;
+    }
+
+    setRecomendacoes(recomendacoes) {
+        this.recomendacoes = recomendacoes;
+    }
+    
+    getArquivo():any{
+        return this.arquivo;
+    }
+    
+    setArquivo(arquivo:any){
+        this.arquivo = arquivo;
+    }
+    
+    getArquivoBase64():string{
+        return this.arquivoBase64;
+    }
+    
+    setArquivoBase64(a:string){
+        this.arquivoBase64 = a;
+    }
+    
+    getJornadaTrabalho():number{
+        return this.jornadaTrabalho;
+    }
+    
+    setJornadaTrabalho(j:number){
+        this.jornadaTrabalho = j;
+    }
+    
+    getAto1():string{
+        return this.ato1;
+    }
+    
+    setAto1(a:string){
+        this.ato1 = a;
+    }
+
+    getAto2():string{
+        return this.ato2;
+    }
+    
+    setAto2(a:string){
+        this.ato2 = a;
+    }
+    
+    getAto3():string{
+        return this.ato3;
+    }
+    
+    setAto3(a:string){
+        this.ato3 = a;
+    }
+    
+    getAto4():string{
+        return this.ato4;
+    }
+    
+    setAto4(a:string){
+        this.ato4 = a;
+    }
+    
+    getAto5():string{
+        return this.ato5;
+    }
+    
+    setAto5(a:string){
+        this.ato5 = a;
+    }
+    
+    getJustificativa():string{
+        return this.justificativa;
+    }
+    
+    setJustificativa(j:string){
+        this.justificativa = j;
+    }
 }

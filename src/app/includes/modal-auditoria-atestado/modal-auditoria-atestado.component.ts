@@ -25,10 +25,10 @@ export class ModalAuditoriaAtestadoComponent {
     ngOnChanges( changes: SimpleChanges ) {
         if ( changes["atestado"] != undefined ) {
             this.atestado = changes["atestado"].currentValue;
+            this.arrayConforme = new Array<boolean>();
             this.atestado.getAuditoriaAtestados().forEach(aa => {
                 this.arrayConforme.push(aa.getConforme());
             })
-            console.log(this.arrayConforme)
         }
     }
     

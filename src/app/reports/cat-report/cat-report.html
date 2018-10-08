@@ -2,251 +2,362 @@
 <meta charset="utf-8">
 </head>
 
-<!-- -->
-<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
-	[color]="colorEmptyPaginas"> </app-mensagem-form>
 
-<!-- Preload  -->
-<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
-
-<div class="list-container">
+<div class="list-container" id="id-list-container">
 
 	<div class="row">
 		<div class="col s1">
 			<a (click)="exportFile()"> <i class="small material-icons icon"
-				(mouseover)="showTextToast('Exportar', 4000)"
-				(mouseleave)="closeTooltip()">file_download</i>
+				(mouseover)="textUtil.showTextToast('Exportar', 4000)"
+				(mouseleave)="textUtil.closeTooltip()">file_download</i>
 			</a>
 		</div>
 	</div>
 
 	<table class="table table-striped"
-		[mfData]="cats | filterData : filter : typeFilter : value"
-		#mf="mfDataTable">
+		[mfData]="entities | filterData : filter : typeFilter : value" #mf="mfDataTable">
 		<thead>
 			<tr>
-				<th style="width: 3%"><mfDefaultSorter by="numero">Número</mfDefaultSorter>
-					<input type="text" name="numero" style="width: 90%"
-					placeholder="filtrar número"
-					(input)="selectFilter($event, 'numero')"></th>
-				<th style="width: 3%">
-					<div class="row">
-						<mfDefaultSorter class="mleft" by="contratado">Contratado</mfDefaultSorter>
-						<div class="div-icon" id="contratado">
-							<i class="small material-icons icon"
-								(click)="dropdown($event, 'contratado')">arrow_drop_down</i>
-						</div>
-					</div>
+				<th style="width: 1%"><mfDefaultSorter by="orgao">Gerência</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(false, 'orgao')">arrow_drop_down</i>
+					<div class="div-icon" id="orgao"></div>
 				</th>
-				<th style="width: 3%"><mfDefaultSorter by="nome">Nome</mfDefaultSorter>
-					<input type="text" name="nome" style="width: 90%"
-					placeholder="filtrar nome" (input)="selectFilter($event, 'nome')">
+				<th style="width: 1%"><mfDefaultSorter by="rta">RTA</mfDefaultSorter>
+					<input type="text" name="rta" style="width: 90%"
+					placeholder="filtrar rta" maxlength="64"
+					(input)="selectFilter($event, 'rta')"></th>
+				<th style="width: 1%"><mfDefaultSorter by="mes">Mês</mfDefaultSorter>
+					<input type="text" name="mes" style="width: 90%" maxlength="16"
+					placeholder="filtrar mês" (input)="selectFilter($event, 'mes')">
 				</th>
-				<th style="width: 3%"><mfDefaultSorter by="dataNascimento">Data
-					de Nascimento</mfDefaultSorter> <input type="text" name="dataNascimento"
-					style="width: 90%" placeholder="filtrar data de nascimento"
-					(input)="selectFilter($event, 'dataNascimento')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="cargo">Cargo</mfDefaultSorter>
-					<input type="text" name="cargo" style="width: 90%"
+				<th style="width: 1%"><mfDefaultSorter by="diaSemana">Dia da Semana</mfDefaultSorter>
+					<input type="text" name="diaSemana" style="width: 90%" maxlength="16"
+					placeholder="filtrar dia da semana" (input)="selectFilter($event, 'diaSemana')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="instalacao">Instalação</mfDefaultSorter>
+					<input type="text" name="instalacao" style="width: 90%" maxlength="16"
+					placeholder="filtrar instalação" (input)="selectFilter($event, 'instalacao')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="proprioContratado">Próprio/Contratado</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(false, 'proprioContratado')">arrow_drop_down</i>
+					<div class="div-icon" id="proprioContratado"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="empresa">Empresa</mfDefaultSorter>
+					<input type="text" name="empresa" style="width: 90%" maxlength="32"
+					placeholder="filtrar empresa" (input)="selectFilter($event, 'empresa')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="cnae">CNAE</mfDefaultSorter>
+					<input type="text" name="cnae" style="width: 90%" maxlength="64"
+					placeholder="filtrar cnae" (input)="selectFilter($event, 'cnae')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="grauRiscoEmpresa">Grau de Risco da Empresa (%RAT)</mfDefaultSorter>
+					<input type="text" name="grauRiscoEmpresa" style="width: 90%" maxlength="8"
+					placeholder="filtrar grau de risco da empresa" (input)="selectFilter($event, 'grauRiscoEmpresa')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="nomeAcidentado">Nome do Acidentado</mfDefaultSorter>
+					<input type="text" name="nomeAcidentado" style="width: 90%" maxlength="400"
+					placeholder="filtrar nome do acidentado" (input)="selectFilter($event, 'nomeAcidentado')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="regimeTrabalho">Regime de Trabalho</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(false, 'regimeTrabalho')">arrow_drop_down</i>
+					<div class="div-icon" id="regimeTrabalho"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="jornadaTrabalho">Jornada de Trabalho</mfDefaultSorter>
+					<input type="text" name="jornadaTrabalho" style="width: 90%" maxlength="8"
+					placeholder="filtrar jornada de trabalho" (input)="selectFilter($event, 'jornadaTrabalho')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="acidenteComSemAfastamento">Acidente Com ou Sem Afastamento</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(false, 'acidenteComSemAfastamento')">arrow_drop_down</i>
+					<div class="div-icon" id="acidenteComSemAfastamento"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="parteCorpoAtingida">Parte do Corpo Atingida</mfDefaultSorter>
+					<input type="text" name="parteCorpoAtingida" style="width: 90%" maxlength="32"
+					placeholder="filtrar parte do corpo atingida" (input)="selectFilter($event, 'parteCorpoAtingida')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="horaAcidente">Hora do Acidente</mfDefaultSorter>
+					<input type="text" name="horaAcidente" style="width: 90%" maxlength="8"
+					placeholder="filtrar hora do acidente" (input)="selectFilter($event, 'horaAcidente')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="municipioAcidente">Município do Acidente</mfDefaultSorter>
+					<input type="text" name="municipioAcidente" style="width: 90%" maxlength="32"
+					placeholder="filtrar município do acidente" (input)="selectFilter($event, 'municipioAcidente')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="numeroSisin">Número do SISIN</mfDefaultSorter>
+					<input type="txt" name="numeroSisin" style="width: 90%" maxlength="8"
+					placeholder="filtrar número do sisin" (input)="selectFilter($event, 'numeroSisin')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="classificacaoSisin">Classificação do SISIN</mfDefaultSorter>
+					<input type="text" name="classificacaoSisin" style="width: 90%" maxlength="8"
+					placeholder="filtrar classificação do sisin" (input)="selectFilter($event, 'classificacaoSisin')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataAcidente">Data do Acidente</mfDefaultSorter>
+					<input type="text" name="dataAcidente" style="width: 90%" maxlength="10"
+					placeholder="filtrar data do acidente" (input)="selectFilter($event, 'dataAcidente')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataEmissaoCat">Data da Emissão da CAT</mfDefaultSorter>
+					<input type="text" name="dataEmissaoCat" style="width: 90%" maxlength="10"
+					placeholder="filtrar data do acidente" (input)="selectFilter($event, 'dataAcidente')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="diasAtraso">Dias em Atraso</mfDefaultSorter>
+					<input type="text" name="diasAtraso" style="width: 90%" maxlength="10"
+					placeholder="filtrar dias em atraso" (input)="selectFilter($event, 'diasAtraso')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="prazo">Prazo</mfDefaultSorter>
+					<input type="text" name="prazo" style="width: 90%" maxlength="32"
+					placeholder="filtrar prazo" (input)="selectFilter($event, 'prazo')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="classificacaoGravidade">Classificação da Gravidade</mfDefaultSorter>
+					<input type="text" name="classificacaoGravidade" style="width: 90%" maxlength="32"
+					placeholder="filtrar classificação da gravidade" (input)="selectFilter($event, 'classificacaoGravidade')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataAvaliacaoMedica">Data da Avaliação Médica</mfDefaultSorter>
+					<input type="text" name="dataAvaliacaoMedica" style="width: 90%" maxlength="10"
+					placeholder="filtrar data da avaliacao médica" (input)="selectFilter($event, 'dataAvaliacaoMedica')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="registroSd2000">Registro no SD2000</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(true, 'registroSd2000')">arrow_drop_down</i>
+					<div class="div-icon" id="registroSd2000"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="catSd2000">CAT no SD2000</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(true, 'catSd2000')">arrow_drop_down</i>
+					<div class="div-icon" id="catSd2000"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="situacaoAvaliacaoMedica">Situação da Avaliação Médica</mfDefaultSorter>
+					<input type="text" name="situacaoAvaliacaoMedica" style="width: 90%" maxlength="32"
+					placeholder="filtrar situacao da avaliação médica" (input)="selectFilter($event, 'situacaoAvaliacaoMedica')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataLiberacao">Data de Liberação</mfDefaultSorter>
+					<input type="text" name="dataLiberacao" style="width: 90%" maxlength="32"
+					placeholder="filtrar data de liberação" (input)="selectFilter($event, 'dataLiberacao')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="pendenciaCorrecao">Pendência de Correção da CAT</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(true, 'pendenciaCorrecao')">arrow_drop_down</i>
+					<div class="div-icon" id="pendenciaCorrecao"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="justificativaAtrasoEmissaoCat">Justificativa do Atraso da Emissão da CAT</mfDefaultSorter>
+					<input type="text" name="justificativaAtrasoEmissaoCat" style="width: 90%" maxlength="1024"
+					placeholder="filtrar justificativa do atraso da emissão da cat" (input)="selectFilter($event, 'justificativaAtrasoEmissaoCat')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="numeroCartaMultaEmpresa">Nº da Carta de Multa da Empresa Contratada</mfDefaultSorter>
+					<input type="text" name="numeroCartaMultaEmpresa" style="width: 90%" maxlength="32"
+					placeholder="filtrar número da carta de multa da empresa" (input)="selectFilter($event, 'numeroCartaMultaEmpresa')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="tipoAcidente">Tipo de Acidente</mfDefaultSorter>
+					<input type="text" name="tipoAcidente" style="width: 90%" maxlength="32"
+					placeholder="filtrar tipo de acidente" (input)="selectFilter($event, 'tipoAcidente')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="tipoCat">Tipo de CAT</mfDefaultSorter>
+					<input type="text" name="tipoCat" style="width: 90%" maxlength="32"
+					placeholder="filtrar tipo de cat" (input)="selectFilter($event, 'tipoCat')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="diagnosticoProvavel">Diagnóstico Provável</mfDefaultSorter>
+					<input type="text" name="diagnosticoProvavel" style="width: 90%" maxlength="64"
+					placeholder="filtrar diagnostico provável" (input)="selectFilter($event, 'diagnosticoProvavel')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="agenteCausador">Agente Causador</mfDefaultSorter>
+					<input type="text" name="agenteCausador" style="width: 90%" maxlength="32"
+					placeholder="filtrar agente causador" (input)="selectFilter($event, 'agenteCausador')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="comunicavelSus">Comunicavel ao SUS</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(true, 'comunicavelSus')">arrow_drop_down</i>
+					<div class="div-icon" id="comunicavelSus"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="ferimentoGraveConformeANP">Ferimento Grave Conforme ANP</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(true, 'ferimentoGraveConformeANP')">arrow_drop_down</i>
+					<div class="div-icon" id="ferimentoGraveConformeANP"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="numeroCat">Número CAT</mfDefaultSorter>
+					<input type="text" name="numeroCat" style="width: 90%" maxlength="32"
+					placeholder="filtrar número cat" (input)="selectFilter($event, 'numeroCat')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="localizacaoLesao">Localização da Lesão</mfDefaultSorter>
+					<input type="text" name="localizacaoLesao" style="width: 90%" maxlength="32"
+					placeholder="filtrar localização da lesão" (input)="selectFilter($event, 'localizacaoLesao')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="naturezaLesao">Natureza da Lesão</mfDefaultSorter>
+					<input type="text" name="naturezaLesao" style="width: 90%" maxlength="32"
+					placeholder="filtrar natureza da lesão" (input)="selectFilter($event, 'naturezaLesao')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="diasAfastamento">Dias de Afastamento</mfDefaultSorter>
+					<input type="text" name="diasAfastamento" style="width: 90%" maxlength="8"
+					placeholder="filtrar dias de afastamento" (input)="selectFilter($event, 'diasAfastamento')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="intervaloAfastamento">Intervalo de Afastamento</mfDefaultSorter>
+					<input type="text" name="diasAfastamento" style="width: 90%" maxlength="32"
+					placeholder="filtrar dias de afastamento" (input)="selectFilter($event, 'diasAfastamento')">
+				</th>
+				<th style="width: 2%"><mfDefaultSorter by="salarioHora">Salário Hora</mfDefaultSorter>
+					<input type="text" name="salarioHora" style="width: 90%" maxlength="16"
+					placeholder="filtrar salário hora" (input)="selectFilter($event, 'salarioHora')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="codigoCartaSindicato">Código da Carta do Sindicato</mfDefaultSorter>
+					<input type="text" name="codigoCartaSindicato" style="width: 90%" maxlength="16"
+					placeholder="filtrar código da carta do sindicato" (input)="selectFilter($event, 'codigoCartaSindicato')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="classificacaoAnomalia">Classificação da Anomalia</mfDefaultSorter>
+					<input type="text" name="classificacaoAnomalia" style="width: 90%" maxlength="8"
+					placeholder="filtrar classificação da anomalia" (input)="selectFilter($event, 'classificacaoAnomalia')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataComunicacaoSindicato">Data Comunicação Sindicato</mfDefaultSorter>
+					<input type="text" name="dataComunicacaoSindicato" style="width: 90%" maxlength="10"
+					placeholder="filtrar data comunicação sindicato" (input)="selectFilter($event, 'dataComunicacaoSindicato')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="diasAcidenteComunicacaoSindicato">Dias do Acidente para Comunicação ao Sindicato</mfDefaultSorter>
+					<input type="text" name="diasAcidenteComunicacaoSindicato" style="width: 90%" maxlength="8"
+					placeholder="filtrar dias acidente para comunicação ao sindicato" (input)="selectFilter($event, 'diasAcidenteComunicacaoSindicato')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="justificativaAtrasoEmissaoCarta">Justificativa do Atraso para Emissão da Carta</mfDefaultSorter>
+					<input type="text" name="justificativaAtrasoEmissaoCarta" style="width: 90%" maxlength="10"
+					placeholder="filtrar justificativa do atraso para emissão da carta" (input)="selectFilter($event, 'justificativaAtrasoEmissaoCarta')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="dataNascimento">Data de Nascimento</mfDefaultSorter>
+					<input type="text" name="dataNascimento" style="width: 90%" maxlength="10"
+					placeholder="filtrar data de nascimento" (input)="selectFilter($event, 'dataNascimento')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="idade">Idade</mfDefaultSorter>
+					<input type="text" name="idade" style="width: 90%" maxlength="8"
+					placeholder="filtrar idade" (input)="selectFilter($event, 'idade')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="sexo">Sexo</mfDefaultSorter>
+					<input type="text" name="sexo" style="width: 90%" maxlength="16"
+					placeholder="filtrar sexo" (input)="selectFilter($event, 'sexo')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="grauInstrucao">Grau de Instrução</mfDefaultSorter>
+					<input type="text" name="grauInstrucao" style="width: 90%" maxlength="32"
+					placeholder="filtrar grau de instrução" (input)="selectFilter($event, 'grauInstrucao')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="estadoCivil">Estado Civíl</mfDefaultSorter>
+					<input type="text" name="estadoCivil" style="width: 90%" maxlength="32"
+					placeholder="filtrar estado cível" (input)="selectFilter($event, 'estadoCivil')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="remuneracao">Remuneração</mfDefaultSorter>
+					<input type="text" name="remuneracao" style="width: 90%" maxlength="32" disabled
+					placeholder="filtrar remuneracao" (input)="selectFilter($event, 'remuneracao')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="cargo">Cargo</mfDefaultSorter>
+					<input type="text" name="cargo" style="width: 90%" maxlength="32"
 					placeholder="filtrar cargo" (input)="selectFilter($event, 'cargo')">
 				</th>
-				<th style="width: 3%"><mfDefaultSorter by="regime">Regime</mfDefaultSorter>
-					<input type="text" name="regime" style="width: 90%"
-					placeholder="filtrar regime"
-					(input)="selectFilter($event, 'regime')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="cpf">CPF</mfDefaultSorter>
-					<input type="text" name="cpf" style="width: 90%"
-					placeholder="filtrar cpf" (input)="selectFilter($event, 'cpf')">
+				<th style="width: 1%"><mfDefaultSorter by="ato1">Ato 1</mfDefaultSorter>
+					<input type="text" name="ato1" style="width: 90%" maxlength="32"
+					placeholder="filtrar ato 1" (input)="selectFilter($event, 'ato1')">
 				</th>
-				<th style="width: 3%"><mfDefaultSorter by="sexo">Sexo</mfDefaultSorter>
-					<i class="small material-icons icon" style="margin-top: -10%;"
-					(click)="dropdown($event, 'sexo')">arrow_drop_down</i>
-					<div class="div-icon" id="sexo"></div></th>
-				<th style="width: 3%"><mfDefaultSorter by="rta">RTA</mfDefaultSorter>
-					<input type="text" name="rta" style="width: 90%"
-					placeholder="filtrar rta" (input)="selectFilter($event, 'rta')">
+				<th style="width: 1%"><mfDefaultSorter by="ato1">Ato 2</mfDefaultSorter>
+					<input type="text" name="ato2" style="width: 90%" maxlength="32"
+					placeholder="filtrar ato 2" (input)="selectFilter($event, 'ato2')">
 				</th>
-				<th style="width: 3%"><mfDefaultSorter by="instalacao">Instalação</mfDefaultSorter>
-					<input type="text" name="instalacao" style="width: 90%"
-					placeholder="filtrar instalacao"
-					(input)="selectFilter($event, 'instalacao')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="parteCorpoAtingida">Parte
-					do Corpo Atingida</mfDefaultSorter> <input type="text" name="instalacao"
-					style="width: 90%" placeholder="filtrar parte do corpo atingida"
-					(input)="selectFilter($event, 'parteCorpoAtingida')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="agenteCausador">Agente
-					Causador</mfDefaultSorter> <input type="text" name="agenteCausador"
-					style="width: 90%" placeholder="filtrar agente causador"
-					(input)="selectFilter($event, 'agenteCausador')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="naturezaLesao">Natureza
-					da Lesão</mfDefaultSorter> <input type="text" name="naturezaLesao" style="width: 90%"
-					placeholder="filtrar natureza da lesao"
-					(input)="selectFilter($event, 'naturezaLesao')"></th>
-				<th style="width: 3%">
-					<div class="row">
-						<mfDefaultSorter class="mleft" by="gerencia">Gerência</mfDefaultSorter>
-						<div class="div-icon" id="gerencia">
-							<i class="small material-icons icon"
-								(click)="dropdown($event, 'gerencia')">arrow_drop_down</i>
-						</div>
-					</div>
+				<th style="width: 1%"><mfDefaultSorter by="ato3">Ato 3</mfDefaultSorter>
+					<input type="text" name="ato3" style="width: 90%" maxlength="32"
+					placeholder="filtrar ato 3" (input)="selectFilter($event, 'ato3')">
 				</th>
-				<th style="width: 3%"><mfDefaultSorter by="classificacaoSisin">Classificação
-					Sisin</mfDefaultSorter> <input type="text" name="classificacaoSisin"
-					style="width: 90%" placeholder="filtrar classificação sisin"
-					(input)="selectFilter($event, 'classificacaoSisin')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="dataHoraAcidente">Data/Hora
-					do Acidente</mfDefaultSorter> <input type="text" name="dataHoraAcidente"
-					style="width: 90%" placeholder="filtrar data/hora do acidente"
-					(input)="selectFilter($event, 'dataHoraAcidente')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="afastamento">Afastamento</mfDefaultSorter>
-					<input type="text" name="afastamento" style="width: 90%"
-					placeholder="filtrar afastamento"
-					(input)="selectFilter($event, 'afastamento')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="dataEmissaoCat">Data
-					de Emissao da Cat</mfDefaultSorter> <input type="text" name="dataEmissaoCat"
-					style="width: 90%" placeholder="filtrar dataEmissaoCat"
-					(input)="selectFilter($event, 'dataEmissaoCat')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="gravidade">Gravidade</mfDefaultSorter>
-					<input type="text" name="gravidade" style="width: 90%"
-					placeholder="filtrar gravidade"
-					(input)="selectFilter($event, 'gravidade')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="dataAvaliacaoMedica">Data
-					da Avaliação Médica</mfDefaultSorter> <input type="text" name="dataAvaliacaoMedica"
-					style="width: 90%" placeholder="filtrar dataAvaliacaoMedica"
-					(input)="selectFilter($event, 'dataAvaliacaoMedica')"></th>
-				<th style="width: 3%">
-					<div class="row">
-						<mfDefaultSorter class="mleft" by="catSd2000">CAT
-						SD2000</mfDefaultSorter>
-						<div class="div-icon" id="catSd2000">
-							<i class="small material-icons icon"
-								(click)="dropdown($event, 'catSd2000')">arrow_drop_down</i>
-						</div>
-					</div>
+				<th style="width: 1%"><mfDefaultSorter by="ato4">Ato 4</mfDefaultSorter>
+					<input type="text" name="ato4" style="width: 90%" maxlength="32"
+					placeholder="filtrar ato 4" (input)="selectFilter($event, 'ato4')">
 				</th>
-				<th style="width: 3%">
-					<div class="row">
-						<mfDefaultSorter class="mleft" by="registoSd2000">Registo
-						SD2000</mfDefaultSorter>
-						<div class="div-icon" id="registoSd2000">
-							<i class="small material-icons icon"
-								(click)="dropdown($event, 'registoSd2000')">arrow_drop_down</i>
-						</div>
-					</div>
-				</th>
-				<th style="width: 3%"><mfDefaultSorter by="tipoAcidente">Tipo
-					do Acidente</mfDefaultSorter> <input type="text" name="tipoAcidente"
-					style="width: 90%" placeholder="filtrar tipo do acidente"
-					(input)="selectFilter($event, 'tipoAcidente')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="tipoCat">Tipo
-					da CAT</mfDefaultSorter> <input type="text" name="tipoCat" style="width: 90%"
-					placeholder="filtrar tipo da CAT"
-					(input)="selectFilter($event, 'tipoCat')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="diagnostico">Diagnóstico</mfDefaultSorter>
-					<input type="text" name="diagnostico" style="width: 90%"
-					placeholder="filtrar diagnostico"
-					(input)="selectFilter($event, 'diagnostico')"></th>
-				<th style="width: 3%"><mfDefaultSorter
-						by="codigoCartaSindicato">Código da Carta do
-					Sindicato</mfDefaultSorter> <input type="text" name="codigoCartaSindicato"
-					style="width: 90%"
-					placeholder="filtrar código da carta do sindicato"
-					(input)="selectFilter($event, 'codigoCartaSindicato')"></th>
-				<th style="width: 3%">
-					<div class="row">
-						<mfDefaultSorter class="mleft" by="comunicavelSus">Comunicavel
-						SUS</mfDefaultSorter>
-						<div class="div-icon" id="comunicavelSus">
-							<i class="small material-icons icon"
-								(click)="dropdown($event, 'comunicavelSus')">arrow_drop_down</i>
-						</div>
-					</div>
-				</th>
-				<th style="width: 3%">
-					<div class="row">
-						<mfDefaultSorter class="mleft" by="ferimentoGraveConformeAnp">Ferimento
-						Grave Conforme ANP</mfDefaultSorter>
-						<div class="div-icon" id="ferimentoGraveConformeAnp">
-							<i class="small material-icons icon"
-								(click)="dropdown($event, 'ferimentoGraveConformeAnp')">arrow_drop_down</i>
-						</div>
-					</div>
-				</th>
-				<th style="width: 3%"><mfDefaultSorter
-						by="dataComunicacaoSindicato">Data da
-					Comunicação do Sindicato</mfDefaultSorter> <input type="text"
-					name="dataComunicacaoSindicato" style="width: 90%"
-					placeholder="filtrar data da comunicação do sindicato"
-					(input)="selectFilter($event, 'dataComunicacaoSindicato')">
-				</th>
-				<th style="width: 3%"><mfDefaultSorter by="remuneracao">Remuneração</mfDefaultSorter>
-					<input type="text" name="remuneracao" style="width: 90%"
-					placeholder="filtrar remuneração"
-					(input)="selectFilter($event, 'remuneracao')"></th>
-				<th style="width: 3%"><mfDefaultSorter by="fornecedor">Empresa</mfDefaultSorter>
-					<input type="text" name="fornecedor" style="width: 90%"
-					placeholder="filtrar fornecedor"
-					(input)="selectFilter($event, 'fornecedor')"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let item of mf.data">
-				<td>{{item.numero}}</td>
-				<td><input type="checkbox" id="item-contratado" disabled
-					[(ngModel)]="item.contratado" name="contratado"> <label
-					for="contratado"></label></td>
-				<td>{{item.nome}}</td>
-				<td>{{item.dataNascimento}}</td>
-				<td>{{item.cargo}}</td>
-				<td>{{item.regime}}</td>
-				<td>{{item.cpf}}</td>
-				<td>{{item.sexo}}</td>
+				<td>{{item.orgao}}</td>
 				<td>{{item.rta}}</td>
+				<td>{{item.mes}}</td>
+				<td>{{item.diaSemana}}</td>
 				<td>{{item.instalacao}}</td>
+				<td>{{item.proprioContratado}}</td>
+				<td>{{item.empresa}}</td>
+				<td>{{item.cnae}}</td>
+				<td>{{item.grauRiscoEmpresa}}</td>
+				<td>{{item.nomeAcidentado}}</td>
+				<td>{{item.regimeTrabalho}}</td>
+				<td>{{item.jornadaTrabalho}}</td>
+				<td>{{item.acidenteComSemAfastamento}}</td>
 				<td>{{item.parteCorpoAtingida}}</td>
-				<td>{{item.agenteCausador}}</td>
-				<td>{{item.naturezaLesao}}</td>
-				<td>{{item.gerencia}}</td>
+				<td>{{item.horaAcidente}}</td>
+				<td>{{item.municipioAcidente}}</td>
+				<td>{{item.numeroSisin}}</td>
 				<td>{{item.classificacaoSisin}}</td>
-				<td>{{item.dataHoraAcidente}}</td>
-				<td><input type="checkbox" id="item-afastamento" disabled
-					[(ngModel)]="item.afastamento" name="afastamento"> <label
-					for="afastamento"></label></td>
+				<td>{{item.dataAcidente}}</td>
 				<td>{{item.dataEmissaoCat}}</td>
-				<td>{{item.gravidade}}</td>
+				<td>{{item.diasAtraso}}</td>
+				<td>{{item.prazo}}</td>
+				<td>{{item.classificacaoGravidade}}</td>
 				<td>{{item.dataAvaliacaoMedica}}</td>
-				<td><input type="checkbox" id="item-catSd2000" disabled
-					[(ngModel)]="item.catSd2000" name="catSd2000"> <label
-					for="catSd2000"></label></td>
-				<td><input type="checkbox" id="item-registoSd2000" disabled
-					[(ngModel)]="item.registoSd2000" name="registoSd2000"> <label
-					for="registoSd2000"></label></td>
+				<td><input type="checkbox" id="item-registroSd2000"
+					disabled [(ngModel)]="item.registroSd2000"
+					name="registroSd2000"> <label
+					class="registroSd2000" for="registroSd2000"></label>
+				</td>
+				<td><input type="checkbox" id="item-catSd2000"
+					disabled [(ngModel)]="item.catSd2000"
+					name="catSd2000"> <label
+					class="catSd2000" for="catSd2000"></label>
+				</td>
+				<td>{{item.situacaoAvaliacaoMedica}}</td>
+				<td>{{item.dataRetornoTrabalho}}</td>
+				<td><input type="checkbox" id="item-pendenciaCorrecaoCat"
+					disabled [(ngModel)]="item.pendenciaCorrecaoCat"
+					name="pendenciaCorrecaoCat"> <label
+					class="pendenciaCorrecaoCat" for="pendenciaCorrecaoCat"></label>
+				</td>
+				<td style="cursor: pointer;" (dblclick)="modalDisplayTextComponent.openModal(item.justificativaAtrasoEmissaoCat)">
+		    		{{ item.justificativaAtrasoEmissaoCat ? shortText(item.justificativaAtrasoEmissaoCat) : ""}}
+		    	</td>
+				<td>{{item.numeroCartaMultaEmpresa}}</td>
 				<td>{{item.tipoAcidente}}</td>
 				<td>{{item.tipoCat}}</td>
-				<td>{{item.diagnostico}}</td>
+				<td>{{item.diagnosticoProvavel}}</td>
+				<td>{{item.agenteCausador}}</td>
+				<td><input type="checkbox" id="item-comunicavelSus"
+					disabled [(ngModel)]="item.comunicavelSus"
+					name="comunicavelSus"> <label
+					class="comunicavelSus" for="comunicavelSus"></label>
+				</td>
+				<td><input type="checkbox" id="item-ferimentoGraveConformeANP"
+					disabled [(ngModel)]="item.ferimentoGraveConformeANP"
+					name="ferimentoGraveConformeANP"> <label
+					class="ferimentoGraveConformeANP" for="ferimentoGraveConformeANP"></label>
+				</td>
+				<td>{{item.numeroCat}}</td>
+				<td>{{item.localizacaoLesao}}</td>
+				<td>{{item.naturezaLesao}}</td>
+				<td>{{item.diasAfastamento}}</td>
+				<td>{{item.intervaloAfastamento}}</td>
+				<td>{{item.salarioHora}}</td>
 				<td>{{item.codigoCartaSindicato}}</td>
-				<td><input type="checkbox" id="item-comunicavelSus" disabled
-					[(ngModel)]="item.comunicavelSus" name="comunicavelSus"> <label
-					for="comunicavelSus"></label></td>
-				<td><input type="checkbox" id="item-ferimentoGraveConformeAnp"
-					disabled [(ngModel)]="item.ferimentoGraveConformeAnp"
-					name="ferimentoGraveConformeAnp"> <label
-					for="ferimentoGraveConformeAnp"></label></td>
+				<td>{{item.classificacaoAnomalia}}</td>
 				<td>{{item.dataComunicacaoSindicato}}</td>
-				<td>{{item.remuneracao}}</td>
-				<td>{{item.fornecedor}}</td>
+				<td>{{item.diasAcidenteComunicacaoSindicato}}</td>
+				<td style="cursor: pointer;" (dblclick)="modalDisplayTextComponent.openModal(item.justificativaAtrasoEmissaoCarta)">
+		    		{{ item.justificativaAtrasoEmissaoCarta ? shortText(item.justificativaAtrasoEmissaoCarta) : ""}}
+		    	</td>
+				<td>{{item.dataNascimento}}</td>
+				<td>{{item.idade}}</td>
+				<td>{{item.sexo}}</td>
+				<td>{{item.grauInstrucao}}</td>
+				<td>{{item.estadoCivil}}</td>
+				<td>{{item.remuneracao | money}}</td>
+				<td>{{item.cargo}}</td>
+				<td>{{item.ato1}}</td>
+				<td>{{item.ato2}}</td>
+				<td>{{item.ato3}}</td>
+				<td>{{item.ato4}}</td>
 			</tr>
 		</tbody>
 	</table>
+
+	<ul id='dropdown' class='dropdown-conteudo'></ul>
 </div>
 
-<div class="mensagem">
-	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
-		[msg]="msgError"></app-mensagem-form>
-</div>
+<app-modal-display-text></app-modal-display-text>
 
-<ul id='dropdown' class='dropdown-conteudo'></ul>
-
-<div materialize [materializeParams]="toastParams"
-	[materializeActions]="globalActions"></div>
+<div materialize [materializeParams]="textUtil.toastParams"
+	[materializeActions]="textUtil.globalActions"></div>
