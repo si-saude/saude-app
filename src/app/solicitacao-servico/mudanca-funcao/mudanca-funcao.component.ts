@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { MaterializeAction } from "angular2-materialize";
 
 import { MudancaFuncao } from './../../model/mudanca-funcao';
 import { MudancaFuncaoBuilder } from './../../controller/mudanca-funcao/mudanca-funcao.builder';
+import { InstalacaoBuilder } from './../../controller/instalacao/instalacao.builder';
 import { EmpregadoBuilder } from './../../controller/empregado/empregado.builder';
 import { SolicitacaoServicoService } from './../solicitacao-servico.service';
 import { TarefaBuilder } from './../../controller/tarefa/tarefa.builder';
@@ -41,10 +41,10 @@ export class MudancaFuncaoComponent {
             this.router.navigate(["/solicitacao-servico/selecao-servico"]);
         } else {
             
-            this.tarefa = new TarefaBuilder().clone(JSON.parse(localStorage.getItem("tarefa")));            
-            
-            this.mudancaFuncao.getTarefas().push(this.tarefa);            
+            this.tarefa = new TarefaBuilder().clone(JSON.parse(localStorage.getItem("tarefa")));
+            this.mudancaFuncao.getTarefas().push(this.tarefa);   
             localStorage.removeItem("tarefa");
+            this.loadingEmpregado();
         }
     }
 
@@ -64,5 +64,18 @@ export class MudancaFuncaoComponent {
     
     back() {
         this.router.navigate(["/solicitacao-servico/selecao-servico"]);
-    }    
+    }  
+    
+    loadingEmpregado() {            
+        this.solicitacaoServicoService.getEmpregadoService().get(this.mudancaFuncao.getTarefas()[0].getCliente().getId())
+           .then( res => {
+               this.mudancaFuncao.getTarefas()[0].setCliente(new EmpregadoBuilder().clone( res.json() ));
+               
+               this.mudancaFuncao.setInstalacoes(new InstalacaoBuilder().cloneList(this.mudancaFuncao.getTarefas()[0]
+                   .getCliente().getInstalacoes()));
+           } )
+           .catch( error => {
+               console.log( error );
+           } )
+    }
 }

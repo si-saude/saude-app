@@ -25,6 +25,8 @@ import { RegimeService } from './../../regime/regime.service';
 import { Profissional } from './../../../model/profissional';
 import { Tarefa } from './../../../model/tarefa';
 import { TarefaBuilder } from './../../tarefa/tarefa.builder';
+import { EmpregadoBuilder } from './../../empregado/empregado.builder';
+
 
 @Component( {
     selector: 'app-mudanca-funcao-form',
@@ -55,7 +57,7 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
         this.tarefaHigieneOcupacional = new TarefaBuilder().initialize(new Tarefa());
     }
 
-    ngOnInit() {
+    ngOnInit() {        
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
             this.mudancaFuncaoService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
@@ -86,6 +88,7 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
                                                                 this.tarefaErgonomia = this.mudancaFuncao.getTarefas().find(x => x.getEquipe().getAbreviacao() == 'ERG');
                                                                 this.tarefaHigieneOcupacional = this.mudancaFuncao.getTarefas().find(x => x.getEquipe().getAbreviacao() == 'HIG');                                                                
                                                                 this.tarefaMedicinaOcupacional.getInicioCustomDate().setAppTime("08:00");
+                                                                this.loadingEmpregado();
                                                         } )
                                                             .catch( error => {
                                                                 this.catchConfiguration( error );
@@ -137,7 +140,7 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
     
     save() {
         super.save( new MudancaFuncaoBuilder().clone( this.mudancaFuncao ) );
-    }
+    }   
     
     solicitarConvocacao(){        
         this.mudancaFuncaoService.solicitarConvocacao(new MudancaFuncaoBuilder().clone(this.mudancaFuncao))
@@ -158,5 +161,15 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
             .catch(error => {
                 this.catchConfiguration( error );
             })    
+    }
+    
+    loadingEmpregado() {            
+        this.mudancaFuncaoService.getEmpregadoService().get(this.mudancaFuncao.getTarefas()[0].getCliente().getId())
+           .then( res => {
+               this.mudancaFuncao.getTarefas()[0].setCliente(new EmpregadoBuilder().clone( res.json() ));
+           } )
+           .catch( error => {
+               console.log( error );
+           } )
     }
 }

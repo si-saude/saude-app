@@ -139,14 +139,6 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         
     }
     save() {        
-        
-        if ( !this.fichaColetaUtil.verifyValidFichaColeta(
-                this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
-            this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
-            this.globalActions.emit( 'toast' );
-            return;
-        }
-
         if ( !this.triagemUtil.verifyValidTriagens( this.atendimento.getTriagens() ) ) {
             this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
             this.globalActions.emit( 'toast' );

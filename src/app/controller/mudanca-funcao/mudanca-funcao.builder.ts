@@ -15,6 +15,7 @@ import { Base } from './../../model/base';
 import { BaseBuilder } from './../base/base.builder';
 import { Tarefa } from './../../model/tarefa';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
+import { InstalacaoBuilder } from './../instalacao/instalacao.builder';
 
 import { GenericBuilder } from './../../generics/generic.builder';
 
@@ -31,6 +32,7 @@ export class MudancaFuncaoBuilder extends GenericBuilder {
         mudancaFuncao.setGerencia(new GerenciaBuilder().initialize(new Gerencia()));
         mudancaFuncao.setBase(new BaseBuilder().initialize(new Base()));
         mudancaFuncao.setTarefas(new TarefaBuilder().initializeList(mudancaFuncao.getTarefas()));
+        mudancaFuncao.setInstalacoes(new InstalacaoBuilder().initializeList(mudancaFuncao.getInstalacoes()));
         
         return mudancaFuncao;
     }    
@@ -42,7 +44,8 @@ export class MudancaFuncaoBuilder extends GenericBuilder {
         
         let cloneMudancaFuncao = new MudancaFuncao();
         cloneMudancaFuncao.setId(this.getValue(mudancaFuncao,"getId"));
-        cloneMudancaFuncao.setVersion(this.getValue(mudancaFuncao,"getVersion"));  
+        cloneMudancaFuncao.setVersion(this.getValue(mudancaFuncao,"getVersion"));
+        cloneMudancaFuncao.setAtividades(this.getValue(mudancaFuncao,"getAtividades"));
         cloneMudancaFuncao.setTarefas(new TarefaBuilder().cloneList(this.getValue(mudancaFuncao,"getTarefas")));
         
         if (this.getValue(mudancaFuncao, "getEnfase") !== undefined) { 
@@ -108,6 +111,9 @@ export class MudancaFuncaoBuilder extends GenericBuilder {
         }
         if (this.getValue(mudancaFuncao, "getTarefas") !== undefined) { 
             cloneMudancaFuncao.setTarefas(new TarefaBuilder().cloneList(this.getValue(mudancaFuncao,"getTarefas")));
+        }
+        if (this.getValue(mudancaFuncao, "getInstalacoes") !== undefined) { 
+            cloneMudancaFuncao.setInstalacoes(new InstalacaoBuilder().cloneList(this.getValue(mudancaFuncao,"getInstalacoes")));
         }
         
         return cloneMudancaFuncao;

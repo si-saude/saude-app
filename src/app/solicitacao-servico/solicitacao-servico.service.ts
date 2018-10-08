@@ -18,6 +18,7 @@ import { BaseService } from './../controller/base/base.service';
 import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-solicitacao.service';
 import { EquipeService } from './../controller/equipe/equipe.service';
 import { AtestadoService } from './../controller/atestado/atestado.service';
+import { InstalacaoService } from './../controller/instalacao/instalacao.service';
  
 @Injectable()
 export class SolicitacaoServicoService {
@@ -28,6 +29,7 @@ export class SolicitacaoServicoService {
             private usuarioService: UsuarioService,
             private servicoService: ServicoService,
             private gerenciaService: GerenciaService,
+            private instalacaoService: InstalacaoService,
             private gheService: GheService,
             private cargoService: CargoService,
             private enfaseService: EnfaseService,
@@ -105,6 +107,10 @@ export class SolicitacaoServicoService {
     
     getEnfaseService() {
         return this.enfaseService;
+    }
+    
+    getInstalacaoService() {
+        return this.instalacaoService;
     }
     
     registrarAtestado( atestado ) {
