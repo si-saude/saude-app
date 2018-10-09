@@ -1,5 +1,4 @@
 import { EmpregadoConvocacao } from './empregado-convocacao';
-import { RelatorioMedico } from './relatorio-medico';
 import { Exame } from './exame';
 
 import { CustomDate} from './../generics/utils/custom-date.util';
@@ -9,12 +8,15 @@ export class EmpregadoConvocacaoExame {
     private empregadoConvocacao: EmpregadoConvocacao;
     private exame: Exame;
     private conforme: boolean;
-    private relatorioMedico: RelatorioMedico;
-    private pendenteRelatorio: boolean;
-    private version: number;
+    private exigeRelatorio: boolean;
     private realizacao: Date;
+    private recebimento: Date;
+    private auditoria: Date;
+    private version: number;
 
     private realizacaoCustomDate: CustomDate = new CustomDate(this.realizacao);
+    private recebimentoCustomDate: CustomDate = new CustomDate(this.recebimento);
+    private auditoriaCustomDate: CustomDate = new CustomDate(this.auditoria);
 
     getId() {
         return this.id;
@@ -48,20 +50,12 @@ export class EmpregadoConvocacaoExame {
         this.conforme = conforme;
     }
     
-    getRelatorioMedico() {
-        return this.relatorioMedico;
+    getExigeRelatorio() {
+        return this.exigeRelatorio;
     }
     
-    setRelatorioMedico(relatorioMedico: RelatorioMedico) {
-        this.relatorioMedico = relatorioMedico;
-    }
-    
-    getPendenteRelatorio() {
-        return this.pendenteRelatorio;
-    }
-    
-    setPendenteRelatorio(pendenteRelatorio: boolean) {
-        this.pendenteRelatorio = pendenteRelatorio;
+    setExigeRelatorio(exigeRelatorio: boolean) {
+        this.exigeRelatorio = exigeRelatorio;
     }
      
     setVersion(version: number) {
@@ -88,5 +82,41 @@ export class EmpregadoConvocacaoExame {
     
     setRealizacaoCustomDate(realizacaoCustomDate: CustomDate){
         this.realizacaoCustomDate = realizacaoCustomDate;
+    }
+    
+    getRecebimento(){
+        this.recebimento = this.recebimentoCustomDate.getApiDate();
+        return this.recebimento;
+    }
+    
+    setRecebimento(recebimento: Date){
+        this.recebimentoCustomDate.setApiDate(recebimento);
+        this.recebimento = recebimento;
+    }
+    
+    getRecebimentoCustomDate(){
+        return this.recebimentoCustomDate;
+    }
+    
+    setRecebimentoCustomDate(recebimentoCustomDate: CustomDate){
+        this.recebimentoCustomDate = recebimentoCustomDate;
+    }
+    
+    getAuditoria(){
+        this.auditoria = this.auditoriaCustomDate.getApiDate();
+        return this.auditoria;
+    }
+    
+    setAuditoria(auditoria: Date){
+        this.auditoriaCustomDate.setApiDate(auditoria);
+        this.auditoria = auditoria;
+    }
+    
+    getAuditoriaCustomDate(){
+        return this.auditoriaCustomDate;
+    }
+    
+    setAuditoriaCustomDate(auditoriaCustomDate: CustomDate){
+        this.auditoriaCustomDate = auditoriaCustomDate;
     }
 }

@@ -20,7 +20,7 @@
 						<li class="tab col s6"><a RouterLinkActive="active"
 							href="#dadosGerais">Dados Gerais</a></li>
 						<li class="tab col s6"><a RouterLinkActive="active"
-							href="#informacoesAdicionais">Informações Adicionais</a></li>
+							href="#avaliacoes">Avaliações</a></li>
 					</ul>
 				</div>
 			</div>
@@ -80,131 +80,50 @@
 				</div>
 			</div>
 
-			<div id="informacoesAdicionais">
-
-				<div class="row">
-
-					<div class="input-field col s7">
-						<div class="collection">
-
-							<fieldset>
-								<legend>
-									Exames <a
-										class="btn-floating waves-effect waves-light green btn-add-fieldset"
-										(click)="getExames()"> <i
-										class="material-icons center-icon">cached</i>
-									</a>
-								</legend>
-								<div class="row select">
-
-									<div class="input-field col s4">
-										<select class="browser-default" #exame>
-											<option disabled selected value=0>Selecione um exame</option>
-											<option *ngFor="let exame of exames" value="{{exame.id}}">{{exame.codigo}} - {{exame.descricao}}</option>
-										</select>
-									</div>
-
-									<div class="col s2">
-										<a class="btn-floating waves-effect waves-light green btn-add"
-											(click)="addExame(exame.value)"> <i
-											class="material-icons center-icon">add</i>
-										</a>
-									</div>
-								</div>
-							</fieldset>
-
-							<div class="row-item-collection"
-								*ngFor="let grupoMonitoramentoExame of grupoMonitoramento.grupoMonitoramentoExames; let gME = index">
-								<div class="row row-collection">
-									<div class="col s6">
-										<a [ngClass]="selectedExame(gME)"
-											[routerLinkActive]="['active']" class="collection-item"
-											(click)="selectExame(gME)">
-											{{grupoMonitoramentoExame.exame.codigo}} -
-											{{grupoMonitoramentoExame.exame.descricao}} </a>
-									</div>
-									<div class="col s4">
-										<select class="browser-default"
-											name="grupoMonitoramentoExame[{{gME}}].periodicidade"
-											[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
-											<option selected value=0>Selecione uma periodicidade</option>
-											<option *ngFor="let periodicidade of periodicidades"
-												value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
-										</select>
-									</div>
-									<div class="col s1">
-										<input type="checkbox" id="opcional{{grupoMonitoramentoExame.id}}{{gME}}"
-											[(ngModel)]="grupoMonitoramentoExame.opcional" 
-											name="grupoMonitoramentoExame.opcional{{grupoMonitoramentoExame.id}}{{gME}}"> 
-										<label for="opcional{{grupoMonitoramentoExame.id}}{{gME}}"></label>
-									</div>
-									<div class="col s1 btn-delete">
-										<a [ngStyle]="{'cursor': 'pointer'}"
-											(click)="removeExame(gME)"> <i class="material-icons">delete</i>
-										</a>
-									</div>
-								</div>
-							</div>
-
+			<div id="avaliacoes">
+				<fieldset>
+					<legend>
+						Avaliações
+					</legend>
+					
+					<div class="row row-avaliacao">
+						<div class="input-field col s5">
+							<label for="nome">Avaliação</label> <input id="avaliacao" type="text" 
+								 maxlength="128" name="avaliacao" #avaliacao>
+						</div>						
+						<div class="col s2">
+							<a class="btn-floating waves-effect waves-light green btn-add"
+								(click)="addAvaliacao(avaliacao.value)"> <i
+								class="material-icons center-icon">add</i>
+							</a>
 						</div>
 					</div>
-
-					<div class="input-field col s5">
-						<div class="collection">
-
-							<fieldset>
-								<legend>
-									Critérios <a
-										class="btn-floating waves-effect waves-light green btn-add-fieldset"
-										(click)="getCriterios()"> <i
-										class="material-icons center-icon">cached</i>
-									</a>
-								</legend>
-								<div class="row select">
-
-									<div class="input-field col s4">
-										<select class="browser-default" #criterio>
-											<option disabled selected value=0>Selecione um critério</option>
-											<option *ngFor="let criterio of criterios"
-												value="{{criterio.id}}">{{criterio.nome}}</option>
-										</select>
-									</div>
-
-									<div class="col s2">
-										<a class="btn-floating waves-effect waves-light green btn-add"
-											(click)="addCriterio(criterio.value)"> <i
-											class="material-icons center-icon">add</i>
-										</a>
-									</div>
-								</div>
-							</fieldset>
-
-							<div class="row-item-collection"
-								*ngFor="let criterio of arrayCriterio; let c = index">
-								<div class="row row-collection">
-									<div class="col s10">
-										<a [routerLinkActive]="['active']" class="collection-item">
-											{{criterio.nome}} </a>
-									</div>
-									<div class="col s2 btn-delete">
-										<a [ngStyle]="{'cursor': 'pointer'}"
-											(click)="removeCriterio(c)"> <i class="material-icons">delete</i>
-										</a>
-									</div>
-								</div>
+					
+					<div class="row">
+						<table class="striped">
+							<thead>
+								<tr class="row col s8">
+									<th class="col s5">Avaliação</th>
+									<th class="col s3">Remover</th>
+								</tr>
+							</thead>
+							<div *ngFor="let ava of grupoMonitoramento.avaliacoes;let i = index">
+								<tbody class="col s12">
+									<tr class="col s12">
+										<td class="col s5 avaliacao">{{ava.nome}}</td>
+										<td class="col s3 botao-remover"><a
+											class="btn-floating waves-effect waves-light red btn-remove"
+											(click)="removeAvaliacao(i)"> <i
+												class="material-icons center-icon">delete</i>
+										</a></td>
+									</tr>
+								</tbody>
 							</div>
-
-						</div>
+						</table>
 					</div>
-
-				</div>
-
+				</fieldset>
 			</div>
 		</div>
-
-		<input id="id" name="id" type="hidden"
-			[(ngModel)]="grupoMonitoramento.id"> <input id="version"
-			name="version" type="hidden" [(ngModel)]="grupoMonitoramento.version">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"

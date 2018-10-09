@@ -15,18 +15,18 @@
 
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
-				<div class="col s5">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.empregado.pessoa.nome}}</a>
-				</div>
-				<div class="col s4">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregadoConvocacaoExame.exame.descricao}}</a>
+				<div class="col s8">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
 				</div>
 				<div class="col s1">
-					<a [routerLink]="['/relatorio-medico/detalhe', a.id]"><i
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.uf}}</a>
+				</div>
+				<div class="col s1">
+					<a [routerLink]="['/clinica/detalhe', a.id]"><i
 						class="material-icons">details</i></a>
 				</div>
 				<div class="col s1">
-					<a [routerLink]="['/relatorio-medico/editar', a.id]"><i
+					<a [routerLink]="['/clinica/editar', a.id]"><i
 						class="material-icons">mode_edit</i></a>
 				</div>
 				<div class="col s1">
@@ -42,7 +42,18 @@
 		[paginas]="paginas" [listComponent]="listComponent"
 		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
 
-	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+	<div class="row bts">
+		<div class="col s4">
+			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+		</div>
+		<div class="col s4  button-import">
+			<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
+		</div>
+		<div class="col s4">
+			<a [routerLink]="['/clinica/cadastrar']"
+				class="waves-effect waves-light btn button-add">Adicionar</a>
+		</div>
+	</div>
 
 </div>
 
@@ -52,36 +63,11 @@
 
 	<div class="row">
 
-		<div class="row">
-			<div class="input-field col s9">
-				<div class="modal-content">
-					<label for="medicoPrestador">Médico Prestador</label> 
-					<input id="medicoPrestador" maxlength="256" 
-						type="text" name="medicoPrestador"
-						[(ngModel)]="filter.medicoPrestador">
-				</div>
-			</div>
-
-			<div class="input-field col s2 checkbox">
-				<input type="checkbox" id="finalizado"
-					(click)="finalizado.changeState()" name="finalizado"> <label
-					for="finalizado">Finalizado</label>
-			</div>
-		</div>
-
 		<div class="input-field col s12">
 			<div class="modal-content">
-				<label for="resumo">Resumo</label>
-				<textarea class="materialize-textarea" id="resumo" maxlength="1024"
-					[(ngModel)]="filter.resumo" name="resumo"></textarea>
-			</div>
-		</div>
-
-		<div class="input-field col s12">
-			<div class="modal-content">
-				<label for="questionamentos">Questionamentos</label>
-				<textarea class="materialize-textarea" id="questionamentos" maxlength="1024"
-					[(ngModel)]="filter.questionamentos" name="questionamentos"></textarea>
+				<label for="nome">Nome</label> 
+				<input type="text" id="nome" maxlength="128"
+					[(ngModel)]="filter.nome" name="nome">
 			</div>
 		</div>
 
@@ -90,7 +76,7 @@
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
-			(click)="filtrar()">Filtrar</a>
+			(click)="setFilter()">Filtrar</a>
 	</div>
 
 </div>

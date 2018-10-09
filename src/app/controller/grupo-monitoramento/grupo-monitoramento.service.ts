@@ -3,9 +3,6 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { TipoGrupoMonitoramentoService } from './../tipo-grupo-monitoramento/tipo-grupo-monitoramento.service';
-import { ExameService } from './../exame/exame.service';
-import { CriterioService } from './../criterio/criterio.service';
-import { PeriodicidadeService } from './../periodicidade/periodicidade.service';
 import { GrupoMonitoramentoFilter } from './grupo-monitoramento.filter';
 import { GlobalVariable } from './../../global';
 import { GenericService } from './../../generics/generic.service';
@@ -14,10 +11,7 @@ import { GenericService } from './../../generics/generic.service';
 export class GrupoMonitoramentoService extends GenericService {
     
     constructor( http: Http, router: Router,
-            private tipoGrupoMonitoramentoService: TipoGrupoMonitoramentoService,
-            private criterioService: CriterioService,
-            private exameService: ExameService,
-            private periodicidadeService: PeriodicidadeService) { 
+            private tipoGrupoMonitoramentoService: TipoGrupoMonitoramentoService) { 
         super( http, router, "grupo-monitoramento" );
     }
     
@@ -31,22 +25,5 @@ export class GrupoMonitoramentoService extends GenericService {
     
     getTiposGrupoMonitoramento() {
         return this.tipoGrupoMonitoramentoService.getTiposGrupoMonitoramento();
-    }
-    
-    getExames() {
-        return this.exameService.getExames();
-    }
-    
-    getCriterios() {
-        return this.criterioService.getCriterios();
-    }
-    
-    getCriterioById(id: number) {
-        return this.criterioService.get(id);
-    }
-    
-    getPeriodicidades() {
-        return this.periodicidadeService.getPeriodicidades();
-    }
-        
+    }        
 }

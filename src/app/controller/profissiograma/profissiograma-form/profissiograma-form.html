@@ -34,7 +34,7 @@
 
 					<fieldset>
 						<legend>
-							Grupos Monitoramento <a
+							Grupos de Monitoramento <a
 								class="btn-floating waves-effect waves-light green btn-add-fieldset"
 								(click)="getGruposMonitoramento()"> <i
 								class="material-icons center-icon">cached</i>
@@ -60,13 +60,13 @@
 					</fieldset>
 
 					<div class="row-item-collection"
-						*ngFor="let grupoMonitoramento of profissiograma.grupoMonitoramentos; let gM = index">
+						*ngFor="let grupoMonitoramentoProfissiograma of profissiograma.grupoMonitoramentoProfissiogramas; let gM = index">
 						<div class="row row-collection">
 							<div class="col s10">
 								<a [ngClass]="selectedGrupoMonitoramento(gM)"
 									[routerLinkActive]="['active']" class="collection-item"
 									(click)="selectGrupoMonitoramento(gM)">
-									{{grupoMonitoramento.nome}} </a>
+									{{grupoMonitoramentoProfissiograma.grupoMonitoramento.nome}} </a>
 							</div>
 							<div class="col s2 btn-delete">
 								<a [ngStyle]="{'cursor': 'pointer'}"
@@ -108,29 +108,20 @@
 					</fieldset>
 
 					<div class="row-item-collection"
-						*ngFor="let grupoMonitoramentoExame of gruposMonitoramentoExame; let gME = index">
+						*ngFor="let grupoMonitoramentoProfissiogramaExame of gruposMonitoramentoProfissiogramaExame; let gME = index">
 						<div class="row row-collection">
 							<div class="col s5">
 								<a [ngClass]="selectedExame(gME)"
 									[routerLinkActive]="['active']" class="collection-item"
 									(click)="selectExame(gME)">
-									{{grupoMonitoramentoExame.exame.codigo}} -
-									{{grupoMonitoramentoExame.exame.descricao}} </a>
-							</div>
-							<div class="col s4">
-								<select class="browser-default"
-									name="grupoMonitoramentoExame[{{gME}}].periodicidade"
-									[(ngModel)]="grupoMonitoramentoExame.periodicidade.id">
-									<option selected value=0>periodicidade</option>
-									<option *ngFor="let periodicidade of periodicidades"
-										value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
-								</select>
+									{{grupoMonitoramentoProfissiogramaExame.exame.codigo}} -
+									{{grupoMonitoramentoProfissiogramaExame.exame.descricao}} </a>
 							</div>
 							<div class="col s1">
-								<input type="checkbox" id="opcional{{grupoMonitoramentoExame.id}}{{gME}}"
-									[(ngModel)]="grupoMonitoramentoExame.opcional" 
-									name="grupoMonitoramentoExame.opcional{{grupoMonitoramentoExame.id}}{{gME}}"> 
-								<label for="opcional{{grupoMonitoramentoExame.id}}{{gME}}"></label>
+								<input type="checkbox" id="opcional{{grupoMonitoramentoProfissiogramaExame.id}}{{gME}}"
+									[(ngModel)]="grupoMonitoramentoProfissiogramaExame.opcional" 
+									name="grupoMonitoramentoProfissiogramaExame.opcional{{grupoMonitoramentoProfissiogramaExame.id}}{{gME}}"> 
+								<label for="opcional{{grupoMonitoramentoProfissiogramaExame.id}}{{gME}}"></label>
 							</div>
 							<div class="col s1 btn-delete">
 								<a [ngStyle]="{'cursor': 'pointer'}" (click)="removeExame(gME)">
@@ -193,9 +184,6 @@
 			</div>
 
 		</div>
-
-		<input id="id" name="id" type="hidden"> <input id="version"
-			name="version" type="hidden">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"

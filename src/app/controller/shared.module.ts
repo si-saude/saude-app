@@ -17,6 +17,7 @@ import { CargoService } from './cargo/cargo.service';
 import { ConvocacaoService } from './convocacao/convocacao.service';
 import { CriterioService } from './criterio/criterio.service';
 import { CidadeService } from './cidade/cidade.service';
+import { ClinicaService } from './clinica/clinica.service';
 import { CursoService } from './curso/curso.service';
 import { EmpregadoService } from './empregado/empregado.service';
 import { EquipeService } from './equipe/equipe.service';
@@ -41,7 +42,6 @@ import { RegimeService } from './regime/regime.service';
 import { TipoGrupoMonitoramentoService } from './tipo-grupo-monitoramento/tipo-grupo-monitoramento.service';
 import { VacinaService } from './vacina/vacina.service';
 import { UsuarioService } from './usuario/usuario.service';
-import { RelatorioMedicoService } from './relatorio-medico/relatorio-medico.service';
 import { ResultadoExameService } from './resultado-exame/resultado-exame.service';
 import { FeriadoService } from './feriado/feriado.service';
 import { PessoaService } from './pessoa/pessoa.service';
@@ -148,7 +148,6 @@ import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-aud
     TipoGrupoMonitoramentoService,
     VacinaService,
     UsuarioService,
-    RelatorioMedicoService,
     ResultadoExameService,
     FeriadoService,
     PessoaService,
@@ -191,7 +190,8 @@ import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-aud
     MotivoRecusaAtestadoService,
     EmpresaService,
     ClassificacaoAfastamentoService,
-    ItemAuditoriaAtestadoService
+    ItemAuditoriaAtestadoService,
+    ClinicaService
   ]
 })
 export class SharedModule { }

@@ -51,18 +51,7 @@
 				<label for="valor">Valor</label> <input id="valor" type="text" maxlength="64"
 					[(ngModel)]="criterio.valor" name="criterio.valor">
 			</div>
-						
-			<div class="input-field col s6" *ngIf="selectedFuncao">
-				<fieldset>
-					<legend>Função</legend>
-					<select name="valor" class="browser-default"
-						[(ngModel)]="criterio.valor">
-						<option disabled selected value="">Selecione uma função</option>
-						<option *ngFor="let funcao of funcoes" value="{{funcao.id}}">{{funcao.nome}}</option>
-					</select>
-				</fieldset>
-			</div>
-
+			
 			<div class="input-field col s6" *ngIf="selectedCargo">
 				<fieldset>
 					<legend>Cargo</legend>
@@ -70,6 +59,28 @@
 						[(ngModel)]="criterio.valor">
 						<option disabled selected value="">Selecione um cargo</option>
 						<option *ngFor="let cargo of cargos" value="{{cargo.id}}">{{cargo.nome}}</option>
+					</select>
+				</fieldset>
+			</div>
+						
+			<div class="input-field col s6" *ngIf="selectedEnfase">
+				<fieldset>
+					<legend>Ênfase</legend>
+					<select name="valor" class="browser-default"
+						[(ngModel)]="criterio.valor">
+						<option disabled selected value="">Selecione uma ênfase</option>
+						<option *ngFor="let enfase of enfases" value="{{enfase.id}}">{{enfase.descricao}}</option>
+					</select>
+				</fieldset>
+			</div>
+
+			<div class="input-field col s6" *ngIf="selectedPeriodicidade">
+				<fieldset>
+					<legend>Periodicidade</legend>
+					<select name="valor" class="browser-default"
+						[(ngModel)]="criterio.valor">
+						<option disabled selected value="">Selecione uma periodicidade</option>
+						<option *ngFor="let periodicidade of periodicidades" value="{{periodicidade.id}}">{{periodicidade.descricao}}</option>
 					</select>
 				</fieldset>
 			</div>
@@ -93,10 +104,6 @@
 			</div>
 
 		</div>
-
-		<input id="id" name="id" type="hidden" [(ngModel)]="criterio.id">
-		<input id="version" name="version" type="hidden"
-			[(ngModel)]="criterio.version">
 
 		<div class="mensagem">
 			<app-mensagem-form *ngIf="verifyError" [color]="colorError"

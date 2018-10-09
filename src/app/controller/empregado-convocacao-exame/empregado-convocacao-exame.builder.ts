@@ -1,8 +1,6 @@
 import { EmpregadoConvocacaoExame } from './../../model/empregado-convocacao-exame';
 import { EmpregadoConvocacao } from './../../model/empregado-convocacao';
-import { RelatorioMedico } from './../../model/relatorio-medico';
 import { ExameBuilder } from './../exame/exame.builder';
-import { RelatorioMedicoBuilder } from './../relatorio-medico/relatorio-medico.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class EmpregadoConvocacaoExameBuilder extends GenericBuilder {
@@ -12,7 +10,6 @@ export class EmpregadoConvocacaoExameBuilder extends GenericBuilder {
 
         empregadoConvocacaoExame.setEmpregadoConvocacao( new EmpregadoConvocacao() );
         empregadoConvocacaoExame.setExame( new ExameBuilder().initialize( empregadoConvocacaoExame.getExame() ) );
-        empregadoConvocacaoExame.setRelatorioMedico( null );
 
         return empregadoConvocacaoExame;
     }
@@ -38,21 +35,14 @@ export class EmpregadoConvocacaoExameBuilder extends GenericBuilder {
             empregadoConvocacaoExame = new EmpregadoConvocacaoExame();
 
         cloneEmpregadoConvocacaoExame.setId( this.getValue( empregadoConvocacaoExame, "getId" ) );
-        cloneEmpregadoConvocacaoExame.setVersion( this.getValue( empregadoConvocacaoExame, "getVersion" ) );
         cloneEmpregadoConvocacaoExame.setConforme( this.getValue( empregadoConvocacaoExame, "getConforme" ) );
-        cloneEmpregadoConvocacaoExame.setPendenteRelatorio(this.getValue( empregadoConvocacaoExame, "getPendenteRelatorio" ) );
+        cloneEmpregadoConvocacaoExame.setExigeRelatorio(this.getValue( empregadoConvocacaoExame, "getExigeRelatorio" ) );
         cloneEmpregadoConvocacaoExame.setRealizacao(this.getValue( empregadoConvocacaoExame, "getRealizacao" ) );
+        cloneEmpregadoConvocacaoExame.setRecebimento(this.getValue( empregadoConvocacaoExame, "getRecebimento" ) );
+        cloneEmpregadoConvocacaoExame.setAuditoria(this.getValue( empregadoConvocacaoExame, "getAuditoria" ) );
+        cloneEmpregadoConvocacaoExame.setVersion( this.getValue( empregadoConvocacaoExame, "getVersion" ) );
 
         cloneEmpregadoConvocacaoExame.setEmpregadoConvocacao( new EmpregadoConvocacao() );
-
-        if ( this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ) !== undefined &&
-                this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ) !== null &&
-                this.idGtZero(this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ))) {
-            cloneEmpregadoConvocacaoExame.setRelatorioMedico(
-                new RelatorioMedicoBuilder().clone( this.getValue( empregadoConvocacaoExame, "getRelatorioMedico" ) ) );
-        } else {
-            cloneEmpregadoConvocacaoExame.setRelatorioMedico( null );
-        }
 
         if ( this.getValue( empregadoConvocacaoExame, "getExame" ) !== undefined ) {
             cloneEmpregadoConvocacaoExame.setExame(

@@ -1,16 +1,14 @@
 import { TipoGrupoMonitoramento } from './tipo-grupo-monitoramento';
-import { GrupoMonitoramentoExame } from './grupo-monitoramento-exame';
-import { Profissiograma } from './profissiograma';
 import { Empregado } from './empregado';
+import { Avaliacao } from './avaliacao';
 
 export class GrupoMonitoramento {
     
     private id: number;
     private nome: string;
     private tipoGrupoMonitoramento: TipoGrupoMonitoramento;
-    private grupoMonitoramentoExames: Array<GrupoMonitoramentoExame>;
-    private profissiogramas: Array<Profissiograma>;
     private empregados: Array<Empregado>;
+    private avaliacoes: Array<Avaliacao>;
     private recorrente: boolean;
     private relatorio: boolean;
     private auditoriaAso: boolean;
@@ -40,28 +38,20 @@ export class GrupoMonitoramento {
         this.tipoGrupoMonitoramento = tipoGrupoMonitoramento;
     }
     
-    getGrupoMonitoramentoExames() {
-        return this.grupoMonitoramentoExames;
-    }
-    
-    setGrupoMonitoramentoExames(grupoMonitoramentoExames: Array<GrupoMonitoramentoExame>) {
-        this.grupoMonitoramentoExames = grupoMonitoramentoExames;
-    }
-    
-    getProfissiogramas() {
-        return this.profissiogramas;
-    }
-    
-    setProfissiogramas(profissiogramas: Array<Profissiograma>) {
-        this.profissiogramas = profissiogramas;
-    }
-    
-    getEmpregado() {
+    getEmpregados() {
         return this.empregados;
     }
     
     setEmpregados(empregados: Array<Empregado>) {
         this.empregados = empregados;
+    }
+    
+    getAvaliacoes() {
+        return this.avaliacoes;
+    }
+    
+    setAvaliacoes(avaliacoes: Array<Avaliacao>) {
+        this.avaliacoes = avaliacoes;
     }
     
     getRecorrente() {

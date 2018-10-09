@@ -46,7 +46,6 @@ import { PerfilGuard } from './guards/guards-child/perfil.guard';
 import { PeriodicidadeGuard } from './guards/guards-child/periodicidade.guard';
 import { ProfissiogramaGuard } from './guards/guards-child/profissiograma.guard';
 import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude.guard';
-import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
 import { RegimeGuard } from './guards/guards-child/regime.guard';
 import { RequisitoAsoGuard } from './guards/guards-child/requisito-aso.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
@@ -84,6 +83,7 @@ import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
 import { AprhoGuard } from './guards/guards-child/aprho.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
 import { CatGuard } from './guards/guards-child/cat.guard';
+import { ClinicaGuard } from './guards/guards-child/clinica.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 import { KanbanGuard } from './guards/kanban.guard';
@@ -159,7 +159,6 @@ import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria
     ProfissionalSaudeGuard,
     RegimeGuard,
     RequisitoAsoGuard,
-    RelatorioMedicoGuard,
     TipoGrupoMonitoramentoGuard,
     UsuarioGuard,
     VacinaGuard,
@@ -194,6 +193,7 @@ import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria
     KanbanGuard,
     AgendaPeriodicoGuard,
     CatGuard,
+    ClinicaGuard,
     AtestadoGuard,
     MudancaFuncaoGuard,
     AtendimentoAvulsoGuard,

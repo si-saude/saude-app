@@ -33,7 +33,6 @@ import { PerfilGuard } from './guards/guards-child/perfil.guard';
 import { PeriodicidadeGuard } from './guards/guards-child/periodicidade.guard';
 import { ProfissiogramaGuard } from './guards/guards-child/profissiograma.guard';
 import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude.guard';
-import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
 import { RegimeGuard } from './guards/guards-child/regime.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
 import { UsuarioGuard } from './guards/guards-child/usuario.guard';
@@ -79,6 +78,7 @@ import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
 import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
 import { EmpresaGuard } from './guards/guards-child/empresa.guard';
+import { ClinicaGuard } from './guards/guards-child/clinica.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
 
@@ -109,6 +109,8 @@ const routes: Routes = [
       canActivateChild: [CursoGuard]},
   { path: 'cidade', loadChildren: 'app/controller/cidade/cidade.module#CidadeModule',
       canActivateChild: [CidadeGuard]},
+  { path: 'clinica', loadChildren: 'app/controller/clinica/clinica.module#ClinicaModule',
+      canActivateChild: [ClinicaGuard]},
   { path: 'ghe', loadChildren: 'app/controller/ghe/ghe.module#GheModule',
       canActivateChild: [GheGuard]},
   { path: 'periodicidade', loadChildren: 'app/controller/periodicidade/periodicidade.module#PeriodicidadeModule',
@@ -160,8 +162,6 @@ const routes: Routes = [
       canActivateChild: [EmpregadoConvocacaoGuard]},
   { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule',
       canActivateChild: [UsuarioGuard]},
-  { path: 'relatorio-medico', loadChildren: 'app/controller/relatorio-medico/relatorio-medico.module#RelatorioMedicoModule' ,
-      canActivateChild: [RelatorioMedicoGuard]},
   { path: 'feriado', loadChildren: 'app/controller/feriado/feriado.module#FeriadoModule',
       canActivateChild: [FeriadoGuard]},
   { path: 'servico', loadChildren: 'app/controller/servico/servico.module#ServicoModule',
