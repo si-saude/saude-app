@@ -310,7 +310,7 @@
 					<div class="input-field col s3">
 						<label for="data.dataOcorrencia">Data de Ocorrência</label>
 						<app-date-picker [nome]="'data.dataOcorrencia'"
-							[customDate]="cat.dataOcorrenciaCustomDate" (change)="changeAto1()"
+							[customDate]="cat.dataOcorrenciaCustomDate" (change)="changeAto1(); changeAto4()"
 							[obrigatorio]="'false'" [legenda]="'Data de Ocorrencia'"></app-date-picker>
 					</div>
 					<div class="input-field col s3">
@@ -835,6 +835,7 @@
 						<label for="numeroCartaMulta">Número da Carta da Multa</label> 
 						<input id="numeroCartaMulta" 
 							type="text" maxlength="64"
+							(change)="changeNumeroCartaMulta()"
 							[(ngModel)]="cat.numeroCartaMulta" name="numeroCartaMulta">
 					</div>
 					<div class="input-field col s4">

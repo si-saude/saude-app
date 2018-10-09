@@ -1,0 +1,145 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+
+<div class="list-container" id="id-list-container">
+
+	<div class="row">
+		<div class="col s1">
+			<a (click)="exportFile()"> <i class="small material-icons icon"
+				(mouseover)="textUtil.showTextToast('Exportar', 4000)"
+				(mouseleave)="textUtil.closeTooltip()">file_download</i>
+			</a>
+		</div>
+	</div>
+
+	<table class="table table-striped"
+		[mfData]="entities | filterData : filter : typeFilter : value" #mf="mfDataTable">
+		<thead>
+			<tr>
+				<th style="width: 1%"><mfDefaultSorter by="dataInicioTarefaHigiene">Data</mfDefaultSorter>
+					<input type="text" name="dataInicioTarefaHigiene" style="width: 90%" maxlength="10"
+					placeholder="filtrar data início tarefa higiene" (input)="selectFilter($event, 'dataInicioTarefaHigiene')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="nomeEmpregado">Nome</mfDefaultSorter>
+					<input type="text" name="nomeEmpregado" style="width: 90%"
+					placeholder="filtrar nome" maxlength="400"
+					(input)="selectFilter($event, 'nomeEmpregado')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="matriculaEmpregado">Matricula</mfDefaultSorter>
+					<input type="text" name="matriculaEmpregado" style="width: 90%" maxlength="32"
+					placeholder="filtrar matricula" (input)="selectFilter($event, 'matriculaEmpregado')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="gerenciaAtual">Gerência Atual</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(false, 'gerenciaAtual')">arrow_drop_down</i>
+					<div class="div-icon" id="gerenciaAtual"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="gerenciaFutura">Gerência Futura</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(false, 'gerenciaFutura')">arrow_drop_down</i>
+					<div class="div-icon" id="gerenciaFutura"></div>
+				</th> 
+    			<th style="width: 1%"><mfDefaultSorter by="gheAtual">GHE Atual</mfDefaultSorter>
+					<input type="text" name="gheAtual" style="width: 90%" maxlength="32"
+					placeholder="filtrar ghe atual" (input)="selectFilter($event, 'gheAtual')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="gheFuturo">GHE Futuro</mfDefaultSorter>
+					<input type="text" name="gheFuturo" style="width: 90%" maxlength="32"
+					placeholder="filtrar ghe futuro" (input)="selectFilter($event, 'gheFuturo')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="gheeAtual">GHEE Atual</mfDefaultSorter>
+					<input type="text" name="gheeAtual" style="width: 90%" maxlength="32"
+					placeholder="filtrar ghee atual" (input)="selectFilter($event, 'gheeAtual')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="gheeFuturo">GHEE Futuro</mfDefaultSorter>
+					<input type="text" name="gheeFuturo" style="width: 90%" maxlength="32"
+					placeholder="filtrar ghee futuro" (input)="selectFilter($event, 'gheeFuturo')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="funcaoAtual">Função Atual</mfDefaultSorter>
+					<input type="text" name="funcaoAtual" style="width: 90%" maxlength="64"
+					placeholder="filtrar funcao atual" (input)="selectFilter($event, 'funcaoAtual')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="funcaoFutura">Função Futura</mfDefaultSorter>
+					<input type="text" name="funcaoFutura" style="width: 90%" maxlength="64"
+					placeholder="filtrar funcao futura" (input)="selectFilter($event, 'funcaoFutura')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="regimeAtual">Regime Atual</mfDefaultSorter>
+					<input type="text" name="regimeAtual" style="width: 90%" maxlength="64"
+					placeholder="filtrar regime atual" (input)="selectFilter($event, 'regimeAtual')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="regimeFuturo">Regime Futuro</mfDefaultSorter>
+					<input type="text" name="regimeFuturo" style="width: 90%" maxlength="64"
+					placeholder="filtrar regime futuro" (input)="selectFilter($event, 'regimeFuturo')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="baseAtual">Base Atual</mfDefaultSorter>
+					<input type="text" name="baseAtual" style="width: 90%" maxlength="32"
+					placeholder="filtrar base atual" (input)="selectFilter($event, 'baseAtual')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="baseFuturo">Base Futura</mfDefaultSorter>
+					<input type="text" name="baseFuturo" style="width: 90%" maxlength="32"
+					placeholder="filtrar base futuro" (input)="selectFilter($event, 'baseFuturo')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="enfaseAtual">Ênfase Atual</mfDefaultSorter>
+					<input type="text" name="enfaseAtual" style="width: 90%" maxlength="32"
+					placeholder="filtrar enfase atual" (input)="selectFilter($event, 'enfaseAtual')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="enfaseFuturo">Ênfase Futura</mfDefaultSorter>
+					<input type="text" name="enfaseFuturo" style="width: 90%" maxlength="32"
+					placeholder="filtrar enfase futuro" (input)="selectFilter($event, 'enfaseFuturo')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="statusTarefaHigiene">Status da Tarefa de Higiene</mfDefaultSorter>
+					<input type="text" name="statusTarefaHigiene" style="width: 90%" maxlength="16"
+					placeholder="filtrar status tarefa higiene" (input)="selectFilter($event, 'statusTarefaHigiene')">
+				</th>
+    			<th style="width: 1%"><mfDefaultSorter by="statusTarefaErgonomia">Status da Tarefa de Ergonomia</mfDefaultSorter>
+					<input type="text" name="statusTarefaErgonomia" style="width: 90%" maxlength="16"
+					placeholder="filtrar status tarefa ergonomia" (input)="selectFilter($event, 'statusTarefaErgonomia')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="statusTarefaMedicina">Status da Tarefa de Medicina</mfDefaultSorter>
+					<input type="text" name="statusTarefaMedicina" style="width: 90%" maxlength="16"
+					placeholder="filtrar status tarefa medicina" (input)="selectFilter($event, 'statusTarefaMedicina')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="atividades">Atividades</mfDefaultSorter>
+					<input type="text" name="atividades" style="width: 90%" maxlength="30"
+					placeholder="filtrar atividades" (input)="selectFilter($event, 'atividades')">
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of mf.data">
+				<td>{{item.dataInicioTarefaHigiene}}</td>
+				<td>{{item.nomeEmpregado}}</td>
+				<td>{{item.matriculaEmpregado}}</td>
+				<td>{{item.gerenciaAtual}}</td>
+				<td>{{item.gerenciaFutura}}</td>
+				<td>{{item.gheAtual}}</td>
+    			<td>{{item.gheFuturo}}</td>
+				<td>{{item.gheeAtual}}</td>
+				<td>{{item.gheeFuturo}}</td>
+				<td>{{item.funcaoAtual}}</td>
+				<td>{{item.funcaoFuturo}}</td>
+				<td>{{item.regimeAtual}}</td>
+    			<td>{{item.regimeFuturo}}</td>
+				<td>{{item.baseAtual}}</td>
+				<td>{{item.baseFuturo}}</td>
+				<td>{{item.enfaseAtual}}</td>
+				<td>{{item.enfaseFuturo}}</td>
+				<td>{{item.statusTarefaHigiene}}</td>
+    			<td>{{item.statusTarefaErgonomia}}</td>
+				<td>{{item.statusTarefaMedicina}}</td>
+				<td style="cursor: pointer;" (dblclick)="modalDisplayTextComponent.openModal(item.atividades)">
+		    		{{ item.atividades ? shortText(item.atividades) : ""}}
+		    	</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul id='dropdown' class='dropdown-conteudo'></ul>
+</div>
+
+<app-modal-display-text></app-modal-display-text>
+
+<div materialize [materializeParams]="textUtil.toastParams"
+	[materializeActions]="textUtil.globalActions"></div>

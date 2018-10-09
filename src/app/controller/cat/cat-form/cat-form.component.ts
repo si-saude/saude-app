@@ -160,17 +160,12 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                             this.showPreload = false;
                             this.cat = new CatBuilder().clone( res.json() );
                             
-                            setTimeout(() => {
-                                if ( this.cat.getAto1() == undefined )
-                                    this.changeAto1();
-                                if ( this.cat.getAto2() == undefined )
-                                    this.changeAto2();
-                                if ( this.cat.getAto3() == undefined )
-                                    this.changeAto3();
-                                if ( this.cat.getAto4() == undefined )
-                                    this.changeAto4();
-                            }, 200);
-                            
+                            this.changeAto1();
+                            if ( this.cat.getDataAvaliacaoMedicaCustomDate().getAppDate() != undefined )
+                                this.changeAto2();
+                            this.changeAto3();
+                            this.changeAto4();
+                        
                             if ( this.cat.getEmpregado() )
                                 this.autoCompleteEmpregado.getAutocomplete().initializeLastValue(
                                         this.cat.getEmpregado().getPessoa().getNome());
@@ -619,63 +614,76 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     }
     
     changeAto1() {
-        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
-            this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
-                this.getPrazo()
-                    .then(res => {
-                        this.cat.setAto1( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
-                    })
-                    .catch(error => {
-                        this.catchConfiguration(error);
-                    })
-           }
+        if ( this.cat.getAto1() == undefined || this.cat.getAto1() == "" ) {
+            if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+                this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
+                let prazo = this.getPrazo();
+                if ( prazo != undefined )
+                    prazo.then(res => {
+                            this.cat.setAto1( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                        })
+                        .catch(error => {
+                            this.catchConfiguration(error);
+                        })
+               }
+        }
     }
     
     changeAto2() {
-        if ( this.cat.getDataAvaliacaoMedicaCustomDate().getAppDate() != undefined ) {
-            if ( this.cat.getDataAvaliacaoMedica() == undefined ) {
-                this.cat.setAto2( this.conformeNaoConforme[1] );
-            } else 
-                this.cat.setAto2( this.conformeNaoConforme[0] );
+        if ( this.cat.getAto2() == undefined || this.cat.getAto2() == "" ) {
+            this.cat.setAto2( this.cat.getDataAvaliacaoMedica() == undefined ?
+                this.conformeNaoConforme[1] : this.conformeNaoConforme[0] );
         }
     }
     
     changeAto3() {
-        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
-                this.cat.getDataComunicacaoSindicatoCustomDate().getAppDate() != undefined ) {
-            this.catService.getFeriadoService().getDaysBetweenDates(
-                this.cat.getDataEmissao(), this.cat.getDataComunicacaoSindicato())
-                    .then(res => {
-                        if ( this.cat.getEmpregado().getVinculo() == "CONTRATADO" )
-                            this.cat.setAto3( (Number(res.json()) > 10) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
-                        else this.cat.setAto3( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
-                    })
-                    .catch(error => {
-                        this.catchConfiguration(error);
-                    })
+        if ( this.cat.getAto3() == undefined || this.cat.getAto3() == "" ) {
+            if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+                    this.cat.getDataComunicacaoSindicatoCustomDate().getAppDate() != undefined ) {
+                this.catService.getFeriadoService().getDaysBetweenDates(
+                    this.cat.getDataEmissao(), this.cat.getDataComunicacaoSindicato())
+                        .then(res => {
+                            if ( this.cat.getEmpregado().getVinculo() == "CONTRATADO" )
+                                this.cat.setAto3( (Number(res.json()) > 10) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                            else this.cat.setAto3( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                        })
+                        .catch(error => {
+                            this.catchConfiguration(error);
+                        })
+            }
         }
     }
    
     changeAto4() {
-        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
-            this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
-                this.getPrazo().then(res => {
-                    if ( Number(res.json()) > 1 )
-                        this.cat.setAto4(this.aplicavelNaoAplicavel[1]);
-                    else {
-                        if ( this.cat.getNumeroCartaMulta() != undefined )
-                            this.cat.setAto4( this.conformeNaoConforme[0] )
-                        else this.cat.setAto4( this.conformeNaoConforme[1] );
-                    }
-                })
-                .catch(error => {
-                    this.catchConfiguration(error);
-                })
+        if ( this.cat.getAto4() == undefined || this.cat.getAto4() == "" ) {
+            this.changeNumeroCartaMulta();
         }
     }
     
+    changeNumeroCartaMulta() {
+        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+                this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
+                let prazo = this.getPrazo();
+                if ( prazo != undefined )
+                    prazo.then(res => {
+                        if ( Number(res.json()) <= 1 )
+                            this.cat.setAto4(this.aplicavelNaoAplicavel[1]);
+                        else {
+                            if ( this.cat.getNumeroCartaMulta() != undefined && this.cat.getNumeroCartaMulta() != "" )
+                                this.cat.setAto4( this.conformeNaoConforme[0] )
+                            else this.cat.setAto4( this.conformeNaoConforme[1] );
+                        }
+                    })
+                    .catch(error => {
+                        this.catchConfiguration(error);
+                    })
+            }
+    }
+    
     getPrazo() {
-        return this.catService.getFeriadoService().getDaysBetweenDates(
-                this.cat.getDataOcorrencia(), this.cat.getDataEmissao());
+        if ( this.cat.getDataOcorrencia() != undefined && this.cat.getDataEmissao() != undefined ) 
+            return this.catService.getFeriadoService().getDaysBetweenDates(
+                    this.cat.getDataOcorrencia(), this.cat.getDataEmissao());
+        else undefined;
     }
 }

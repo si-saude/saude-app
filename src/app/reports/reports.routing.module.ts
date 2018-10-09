@@ -9,6 +9,7 @@ import { ControleAtestadoReportComponent } from './controle-atestado-report/cont
 import { CatReportComponent } from './cat-report/cat-report.component';
 import { PreRequisitosAgendamentoReportComponent } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.component';
 import { AvaliacaoHigieneOcupacionalReportComponent } from './avaliacao-higiene-ocupacional-report/avaliacao-higiene-ocupacional-report.component';
+import { MudancaFuncaoReportComponent } from './mudanca-funcao-report/mudanca-funcao-report.component';
 import { ReportSolicitacaoCentralIntegraGuard } from './../guards/report-solicitacao-central-integra.guard';
 import { PanoramaGuard } from './../guards/panorama.guard';
 import { EmpregadosPorGrupoGuard } from './../guards/guards-child/empregados-por-grupo.guard';
@@ -16,6 +17,7 @@ import { ReportControleAtestadoGuard } from './../guards/report-controle-atestad
 import { ReportCatGuard } from './../guards/report-cat.guard';
 import { ReportAvaliacaoHigieneOcupacionalGuard } from './../guards/report-avaliacao-higiene-ocupacional.guard';
 import { ReportPreRequisitosAgendamentoGuard } from './../guards/report-pre-requisitos-agendamento.guard';
+import { ReportMudancaFuncaoGuard } from './../guards/report-mudanca-funcao.guard';
 
 const reportsRoutes: Routes = [
     { path: '', redirectTo: 'empregados-por-grupo', pathMatch: 'full' },
@@ -32,7 +34,9 @@ const reportsRoutes: Routes = [
     { path: 'avaliacao-higiene-ocupacional', component: AvaliacaoHigieneOcupacionalReportComponent, 
         canActivate: [ReportAvaliacaoHigieneOcupacionalGuard] },
     { path: 'pre-requisitos-agendamento', component: PreRequisitosAgendamentoReportComponent, 
-        canActivate: [ReportPreRequisitosAgendamentoGuard] }
+        canActivate: [ReportPreRequisitosAgendamentoGuard] },
+    { path: 'mudanca-funcao', component: MudancaFuncaoReportComponent, 
+        canActivate: [ReportMudancaFuncaoGuard] }
 ];
 
 @NgModule({
