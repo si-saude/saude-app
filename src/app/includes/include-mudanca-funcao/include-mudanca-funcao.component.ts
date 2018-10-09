@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { MaterializeAction } from "angular2-materialize";
 
 import { MudancaFuncao } from './../../model/mudanca-funcao';
 import { Regime } from './../../model/regime';
+import { Instalacao } from './../../model/instalacao';
+import { MudancaFuncaoBuilder } from './../../controller/mudanca-funcao/mudanca-funcao.builder';
+import { InstalacaoBuilder } from './../../controller/instalacao/instalacao.builder';
 import { RegimeService } from './../../controller/regime/regime.service';
 import { GheNomeAutocomplete } from './../../controller/ghe/ghe-nome.autocomplete';
 import { GerenciaCodigoCompletoAutocomplete } from './../../controller/gerencia/gerencia-codigo-completo.autocomplete';
@@ -32,8 +34,12 @@ export class IncludeMudancaFuncaoComponent {
     private autoCompleteGhee:GheeNomeAutocomplete;
     private autoCompleteBase:BaseNomeAutocomplete;
     regimes: Array<Regime>;
+    private modalInstalacao;
+    private instalacao: Instalacao;
+    instalacoes: Array<Instalacao>;
     
     constructor( private route: ActivatedRoute, private router: Router) {
+        
      }
 
     ngOnInit() {        
@@ -42,9 +48,35 @@ export class IncludeMudancaFuncaoComponent {
         this.autoCompleteEnfase = new EnfaseDescricaoAutocomplete(this.service.getEnfaseService());
         this.autoCompleteFuncao = new FuncaoNomeAutocomplete(this.service.getFuncaoService());
         this.autoCompleteGhee = new GheeNomeAutocomplete(this.service.getGheeService());
-        this.autoCompleteBase = new BaseNomeAutocomplete(this.service.getBaseService());
+        this.autoCompleteBase = new BaseNomeAutocomplete(this.service.getBaseService());     
+        this.modalInstalacao = new EventEmitter<string | MaterializeAction>();
+        this.instalacao = new InstalacaoBuilder().initialize(new Instalacao());
         this.getRegimes();
+        this.getInstalacoes();
     }   
+    
+    ngOnChanges( changes: SimpleChanges ) {
+        if ( changes["mudancaFuncao"] != undefined ){
+            if(this.mudancaFuncao.getId() > 0){
+                this.autoCompleteGhe.getAutocomplete().initializeLastValue(this.mudancaFuncao.getGhe().getNome());         
+                this.autoCompleteGerencia.getAutocomplete().initializeLastValue(this.mudancaFuncao.getGerencia().getCodigoCompleto());         
+                this.autoCompleteEnfase.getAutocomplete().initializeLastValue(this.mudancaFuncao.getEnfase().getDescricao());         
+                this.autoCompleteFuncao.getAutocomplete().initializeLastValue(this.mudancaFuncao.getFuncao().getNome());         
+                this.autoCompleteGhee.getAutocomplete().initializeLastValue(this.mudancaFuncao.getGhee().getNome());         
+                this.autoCompleteBase.getAutocomplete().initializeLastValue(this.mudancaFuncao.getBase().getNome());       
+            }
+        }
+    }
+    
+    getInstalacoes() {
+        this.service.getInstalacaoService().getInstalacoes()
+            .then( res => {
+                this.instalacoes = new InstalacaoBuilder().cloneList( res.json() );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
     
     getRegimes() {
         this.service.getRegimes()
@@ -54,6 +86,30 @@ export class IncludeMudancaFuncaoComponent {
             .catch( error => {
                 console.log( error );
             } )
+    }
+    openModal() {
+        this.modalInstalacao.emit( { action: "modal", params: ['open'] } );
+    }
+
+    closeModal() {
+        this.modalInstalacao.emit( { action: "modal", params: ['close'] } );
+    }
+    confirmAddInstalacao(){
+        if(this.mudancaFuncao.getInstalacoes().find(i => i.getId() == this.instalacao.getId()) == undefined){
+            this.instalacao = new InstalacaoBuilder().clone(this.instalacoes.find(x  => x.getId() == this.instalacao.getId()));
+            if(this.mudancaFuncao.getInstalacoes() == undefined)
+                this.mudancaFuncao.setInstalacoes(new InstalacaoBuilder().initializeList(undefined));
+            this.mudancaFuncao.getInstalacoes().push(this.instalacao);
+        }
+        this.instalacao = new InstalacaoBuilder().initialize( new Instalacao( ));        
+    }
+    addInstalacao() {
+        this.instalacao = new InstalacaoBuilder().initialize(new Instalacao( ));        
+        this.openModal();
+    }
+    
+    removeInstalacao(indexInstalacao: number) {
+        this.mudancaFuncao.getInstalacoes().splice(indexInstalacao, 1);
     }
     
 }

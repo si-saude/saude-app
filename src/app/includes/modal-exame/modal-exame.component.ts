@@ -10,6 +10,7 @@ import { AtestadoBuilder } from './../../controller/atestado/atestado.builder';
 import { ExameBuilder } from './../../controller/exame/exame.builder';
 import { ExameService } from './../../controller/exame/exame.service';
 import { ExameFilter } from './../../controller/exame/exame.filter';
+import { GenericBuilder } from './../../generics/generic.builder';
 
 @Component( {
     selector: 'app-modal-exame',
@@ -17,7 +18,7 @@ import { ExameFilter } from './../../controller/exame/exame.filter';
     styleUrls: ['./modal-exame.css']
 } )
 export class ModalExameComponent {
-    @Input() atestado: Atestado;
+    @Input() examesConvocacao: Array<any>;
     @Output() exame: EventEmitter<Exame> = new EventEmitter<Exame>();
     private arrayExames: Array<Exame>;
     modalExame;
@@ -26,11 +27,10 @@ export class ModalExameComponent {
     private typeFilter: string;
     private value: string;
     
-    constructor( router: Router,
-        private exameService: ExameService ) {
+    constructor( private exameService: ExameService ) {
         this.modalExame = new EventEmitter<string | MaterializeAction>();
         this.arrayExames = new ExameBuilder().initializeList(new Array<Exame>());
-        this.atestado = new AtestadoBuilder().initialize(new Atestado());
+        this.examesConvocacao = new Array<any>();
     }
 
     ngOnInit() {}
@@ -44,8 +44,8 @@ export class ModalExameComponent {
     }
     
     removeExame(exame: Exame) {
-        let indexof = this.atestado.getExamesConvocacao().map(e => e.getId()).indexOf(exame.getId());
-        this.atestado.getExamesConvocacao().splice(indexof, 1);
+        let indexof = this.examesConvocacao.map(e => e.getId()).indexOf(exame.getId());
+        this.examesConvocacao.splice(indexof, 1);
     }
 
     cancelarModalExame() {

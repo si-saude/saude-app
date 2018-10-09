@@ -55,7 +55,6 @@ export class TriagemBuilder extends GenericBuilder {
         cloneTriagem.setVersion(this.getValue(triagem,"getVersion"));
         cloneTriagem.setIndice(this.getValue(triagem,"getIndice"));
         cloneTriagem.setJustificativa(this.getValue(triagem,"getJustificativa"));
-        cloneTriagem.setIgnorarAcoes(this.getValue(triagem, "getIgnorarAcoes"));
         
         if(this.getValue(triagem, "getPrazo") == "")
             cloneTriagem.setPrazo(undefined);
@@ -88,6 +87,13 @@ export class TriagemBuilder extends GenericBuilder {
                 cloneTriagem.setEquipeAbordagem(undefined);
         } else {
             cloneTriagem.setEquipeAbordagem(new EquipeBuilder().initialize(null));            
+        }
+        if (this.getValue(triagem, "getAtendimento") !== undefined) { 
+            cloneTriagem.setAtendimento(this.getValue( triagem, "getAtendimento" ));
+            if(!this.idGtZero(cloneTriagem.getAtendimento()))
+                cloneTriagem.setAtendimento(undefined);
+        } else {
+            cloneTriagem.setAtendimento(new AtendimentoBuilder().initialize(null));            
         }
         
         cloneTriagem.setAcoes(new AcaoBuilder().cloneList(this.getValue(triagem, "getAcoes")));

@@ -125,6 +125,7 @@ export class PlanejamentoComponent extends GenericFormComponent implements OnIni
         }
         
         super.save( new RiscoEmpregadoBuilder().clone( this.riscoEmpregado ));
+//        window.close();
     }
 
     ngOnDestroy() {

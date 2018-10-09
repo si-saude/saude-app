@@ -19,7 +19,7 @@ const riscoPotencialRoutes: Routes = [
     { path: '', component: RiscoPotencialComponent},
     { path: 'triagem/:id', component: TriagemComponent,
         canDeactivate: [CanDeactivateGuard]},
-    { path: 'triagem-reavaliacao/:id', component: TriagemReavaliacaoComponent,
+    { path: 'triagem-reavaliacao', component: TriagemReavaliacaoComponent,
         canDeactivate: [CanDeactivateGuard]},
     { path: 'acoes/:id', component: AcoesComponent,
         canDeactivate: [CanDeactivateGuard]},

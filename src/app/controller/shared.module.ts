@@ -83,9 +83,12 @@ import { FichaColetaService } from './ficha-coleta/ficha-coleta.service';
 import { EnfaseService } from './enfase/enfase.service';
 import { ImovelService } from './imovel/imovel.service';
 import { MotivoRecusaAtestadoService } from './motivo-recusa-atestado/motivo-recusa-atestado.service';
+import { AcaoIntervencaoService } from './acao-intervencao/acao-intervencao.service';
 import { EmpresaService } from './empresa/empresa.service';
 import { ClassificacaoAfastamentoService } from './classificacao-afastamento/classificacao-afastamento.service';
 import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-auditoria-atestado.service';
+import { ClassificacaoGravidadeService } from './classificacao-gravidade/classificacao-gravidade.service';
+import { CnaeService } from './cnae/cnae.service';
 
 @NgModule({
   declarations: [
@@ -188,10 +191,13 @@ import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-aud
     EnfaseService,
     ImovelService,
     MotivoRecusaAtestadoService,
+    AcaoIntervencaoService,
     EmpresaService,
     ClassificacaoAfastamentoService,
     ItemAuditoriaAtestadoService,
-    ClinicaService
+    ClinicaService,
+    ClassificacaoGravidadeService,
+    CnaeService
   ]
 })
 export class SharedModule { }

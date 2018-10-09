@@ -5,19 +5,31 @@ import { Router } from '@angular/router';
 import { MaterializeAction } from "angular2-materialize";
 import * as $ from 'jquery';
 
+import { Usuario } from './../../../model/usuario';
+import { UsuarioBuilder } from './../../usuario/usuario.builder';
+import { Profissional } from './../../../model/profissional';
+import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
+import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional-saude.filter';
+import { EmpregadoFilter } from './../../empregado/empregado.filter';
+import { PessoaFilter } from './../../pessoa/pessoa.filter';
+import { AcaoIntervencaoFilter } from './../../acao-intervencao/acao-intervencao.filter';
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { RiscoPotencialService } from './../risco-potencial.service';
 import { Triagem } from './../../../model/triagem';
+import { TriagemBuilder } from './../../triagem/triagem.builder';
 import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
+import { EquipeFilter } from './../../equipe/equipe.filter';
 import { Acao } from './../../../model/acao';
 import { AcaoBuilder } from './../../acao/acao.builder';
-import { Tarefa } from './../../../model/tarefa';
-import { TarefaBuilder } from './../../tarefa/tarefa.builder';
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 import { RiscoPotencialFilter } from './../risco-potencial.filter';
+import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
+import { TextUtil } from './../../../generics/utils/text.util';
+import { Util } from './../../../generics/utils/util';
+import { ModalAcaoComponent } from './../../../includes/modal-acao/modal-acao.component';
 
 @Component({
   selector: 'app-acoes',
@@ -26,6 +38,7 @@ import { RiscoPotencialFilter } from './../risco-potencial.filter';
 })
 export class AcoesComponent extends GenericFormComponent implements OnInit {
     private equipesAbordagemTriagens: Array<Equipe>;
+    private triagens: Array<Triagem>;
     private triagensByEquipeAbordagem = [[]];
     private riscoPotencial: RiscoPotencial;
     private flagAcao: Acao;
@@ -35,8 +48,13 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private flagTriagem: Triagem;
     private flagIndexAcao: number = -1;
     private flagEditAcao: boolean;
+    private triagemAux : Triagem;
     private modalAcao;
-
+    private profissional: Profissional;
+    @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
+    private textUtil: TextUtil;
+    @ViewChild( ModalAcaoComponent ) modalAcaoComponent: ModalAcaoComponent;
+    
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
             router: Router ) {
@@ -48,30 +66,90 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             this.riscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
             this.modalAcao = new EventEmitter<string | MaterializeAction>();
             this.flagAcao = new AcaoBuilder().initialize(new Acao());
+            this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
+            this.triagemAux = new TriagemBuilder().initialize(new Triagem());
+            this.textUtil = new TextUtil();
+            this.triagens = new TriagemBuilder().initializeList(undefined);
+           
     }
     
     ngOnInit() {
-        this.inscricao = this.route.params.subscribe(
-            ( params: any ) => {
-                if ( params['id'] !== undefined ) {
-                    let id = params['id'];
-                    this.showPreload = true;
-
-                    this.riscoPotencialService.getAcoes( id )
-                        .then( res => {
-                            this.showPreload = false;
-                            this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
-                            this.getTriagensEquipeAbordagem();
-                        } )
-                        .catch( error => {
-                            this.showPreload = false;
-                            this.catchConfiguration( error );
-                        } )
-                }
-            } );
-        this.getTipoAcao();
-        this.getStatusAcao();
-        this.getTipoContatoAcao();
+        $( ".container" ).get( 0 ).style.width = "100%";
+        let component = this;
+        if ( localStorage.getItem( "usuario-id" ) != undefined ) {
+            component.riscoPotencialService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
+                .then( res => {
+                    let usuario: Usuario = new Usuario();
+                    usuario = new UsuarioBuilder().clone( res.json() );
+                    if ( usuario.getId() > 0 && usuario.getPessoa() != undefined ) {
+                        let profissionalFilter: ProfissionalSaudeFilter = new ProfissionalSaudeFilter();
+                        profissionalFilter.setEmpregado( new EmpregadoFilter() );
+                        profissionalFilter.getEmpregado().setPessoa( new PessoaFilter() );
+                        profissionalFilter.getEmpregado().getPessoa().setCpf( usuario.getPessoa().getCpf() );
+                        
+                        component.riscoPotencialService.getProfissional( profissionalFilter )
+                            .then( res => {
+                                if ( res.json().list[0] != undefined ) {
+                                    component.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
+                                    this.textUtil.setTextLength(40);
+                                    component.inscricao = this.route.params.subscribe(
+                                            ( params: any ) => {
+                                                if( params['id'] !== undefined ) {
+                                                    let id = params['id'];
+                                                    component.showPreload = true;
+                                                    component.riscoPotencialService.getAcoes( id )
+                                                    .then( res => {
+                                                        component.showPreload = false;
+                                                        component.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
+                                                        component.getTriagensEquipeAbordagem();
+                                                        
+                                                        this.riscoPotencial.getRiscoEmpregados().filter(r => r.getAtivo()).forEach(r=>{
+                                                            r.getTriagens().forEach(t => {
+                                                                if(t.getEquipeAbordagem() && t.getEquipeAbordagem().getId() > 0 && this.verificarTriagens(t)){
+                                                                   this.triagens.push(t);
+                                                                   this.triagens.sort(function(a, b){
+                                                                       
+                                                                       if ( a['equipeAbordagem']['abreviacao'] > b['equipeAbordagem']['abreviacao'] )
+                                                                           return 1;
+                                                                       else if ( a['equipeAbordagem']['abreviacao'] < b['equipeAbordagem']['abreviacao'] )
+                                                                           return -1;
+                                                                       else return 0;
+                                                                   });
+                                                                }
+                                                            });
+                                                        });
+                                                    } )
+                                                    .catch( error => {
+                                                        component.showPreload = false;
+                                                        component.catchConfiguration( error );
+                                                    } )
+                                                }
+                                            } );
+                                    this.getTipoAcao();
+                                    this.getStatusAcao();
+                                    this.getTipoContatoAcao();
+                            } else {
+                                component.router.navigate( ["/risco-potencial"] );
+                                    return;
+                                }
+                            } )
+                            .catch( error => {
+                                console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
+                                component.catchConfiguration( error );
+                            } )
+                    } else {
+                        component.router.navigate( ["/login"] );
+                        return;
+                    }
+                } )
+                .catch( error => {
+                    console.log( "Erro no servidor ao buscar o usuario." );
+                    component.catchConfiguration( error );
+                } )
+        } else {
+            console.log( "Usuario nao logada." );
+            component.router.navigate( ["/login"] );
+        }
     }
     
     getTipoAcao() {
@@ -109,17 +187,41 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         this.canDeactivate = true;
         this.riscoPotencialService.saveAcoes( new RiscoPotencialBuilder().clone( this.riscoPotencial ) )
             .then( res => {
-                this.processReturn( true, res );
+                this.confirmSaveComponent.setGoTo("$*close*$");
+                this.processReturn( true, res );                
             } )
             .catch( error => {
                 this.processReturn( false, error );
             } )
     }
     
-    validar() {
+    verificarTriagens(triagem: Triagem){
+        
+        return ((triagem.getEquipeAbordagem().getId() == this.profissional.getEquipe().getId() ||
+                this.riscoPotencial.getEquipeResponsavel().getId() == this.profissional.getEquipe().getId()) &&
+                this.riscoPotencial.getEquipes().filter(x => x.getId() == triagem.getEquipeAbordagem().getId()).length > 0);
         
     }
     
+    clickAcaoIntervencao() {        
+        if(this.profissional.getEquipe().getId() != this.riscoPotencial.getEquipeResponsavel().getId()){           
+            let acaoIntervencaoFilter: AcaoIntervencaoFilter = new  AcaoIntervencaoFilter();
+                acaoIntervencaoFilter.setEquipe(new EquipeFilter())
+                acaoIntervencaoFilter.getEquipe().setId(this.profissional.getEquipe().getId());
+          }
+    }
+    
+    
+    validar() {
+        
+    }
+
+    selectTriagem( indexTriagem: number ) {
+        this.triagemAux.setSelecionado("");
+        this.triagemAux = this.triagens[indexTriagem];
+        this.triagemAux.setSelecionado("active");
+    }
+        
     getTriagensEquipeAbordagem() {
         this.riscoPotencial.getRiscoEmpregados().forEach(rE => {
             if ( rE.getAtivo() ) {
@@ -146,57 +248,54 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     addAcao(equipeId, indexTriagem) {
-        this.flagAcao = new AcaoBuilder().initialize( new Acao( ) );
-        
-        this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
-        this.flagIndexAcao = -1;
-        
+        this.flagAcao = new AcaoBuilder().initialize( new Acao( ) );        
         this.openModal( );
     }
     
-    editAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
-        let triagem: Triagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
-        this.flagAcao = new AcaoBuilder().clone(triagem.getAcoes()[indexAcao]);
-        
-        this.flagTriagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
+    editAcao(indexAcao: number) {
+        this.flagAcao = new AcaoBuilder().clone(this.triagemAux.getAcoes()[indexAcao]);        
         this.flagIndexAcao = indexAcao;
         this.flagEditAcao = true;
-        
         this.openModal();
     }
     
     confirmAddAcao() {
-        if ( this.flagAcao.getDetalhe() == "" || this.flagAcao.getTipo() == "" || this.flagAcao.getTipoContato() == "") {
+        if ( this.flagAcao.getAcaoIntervencao().getDescricao() == "" || this.flagAcao.getTipo() == "" || this.flagAcao.getTipoContato() == "") {
             this.toastParams = ["Por favor, informe todos os dados corretamente", 4000];
             this.globalActions.emit( 'toast' );
             return;
-        }        
-        let triagem: Triagem = this.flagTriagem;
-       
-        if ( triagem.getAcoes() == undefined ) 
-            triagem.setAcoes(new Array<Acao>());
+        }  
+        if ( this.triagemAux.getAcoes() == undefined ) 
+            this.triagemAux.setAcoes(new Array<Acao>());
         this.flagAcao.setStatus(this.statusAcoes[0]);
         
-        if ( this.flagEditAcao ) triagem.getAcoes()[this.flagIndexAcao] = this.flagAcao;
-        else triagem.getAcoes().push(this.flagAcao);
+        if ( this.flagEditAcao ) 
+            this.triagemAux.getAcoes()[this.flagIndexAcao] = this.flagAcao;
+        else 
+            this.triagemAux.getAcoes().push(this.flagAcao);
         
         this.flagEditAcao = false;
     }
     
-    removeAcao( equipeId, indexTriagem, triagemId, indexAcao ) {
-        let triagem: Triagem = this.triagensByEquipeAbordagem[equipeId][indexTriagem];
+    removeAcao(indexAcao: number) {
         
         if ( this.riscoPotencial.getAcoesDelete() == undefined )
             this.riscoPotencial.setAcoesDelete(new AcaoBuilder().initializeList(new Array<Acao>()));
-        this.riscoPotencial.getAcoesDelete().push(triagem.getAcoes()[indexAcao]);
         
-        triagem.getAcoes().splice(indexAcao, 1);
+        this.riscoPotencial.getAcoesDelete().push(this.triagemAux.getAcoes()[indexAcao]);
+        this.triagemAux.getAcoes().splice(indexAcao, 1);
     }
     
     verifyReopenAcao(acao: Acao) {
         if ( acao.getStatus() == "ENCERRADA" )
             return true;
         return false;
+    }
+    
+    verifyStatusAcao(acao: Acao){
+        if ( acao.getStatus() == "ABERTA" )
+            return true;
+        return false;        
     }
     
     reopenAcao(acao: Acao) {
@@ -220,6 +319,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     ngOnDestroy() {
+        $( ".container" ).get( 0 ).style.width = "70%";
         if ( this.inscricao != undefined ) 
             this.inscricao.unsubscribe();
     }

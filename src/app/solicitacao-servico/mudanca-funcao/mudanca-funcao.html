@@ -19,13 +19,13 @@
 			<div class="col s12">
 				<ul class="tabs" materialize="tabs">
 					<li class="tab col s6"><a RouterLinkActive="active"
-						href="#dadosGerais">Dados Gerais</a></li>
+						href="#dadosGerais">Dados Atuais</a></li>
 					<li class="tab col s6"><a RouterLinkActive="active"
 						href="#mudancaFuncao">Mudança de Função</a></li>					
 				</ul>			
 			</div>
 		<div id="dadosGerais">
-			<app-informacao-empregado [idEmpregado]="tarefa.cliente.id" [service]="solicitacaoServicoService">
+			<app-informacao-empregado [empregado]="mudancaFuncao.tarefas[0].cliente" [service]="solicitacaoServicoService">
 			 </app-informacao-empregado>	
 		</div>
 		<div class="content-dados" id="mudancaFuncao">

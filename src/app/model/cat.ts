@@ -4,6 +4,14 @@ import { Gerencia } from './gerencia';
 import { Profissional } from './profissional';
 import { ClassificacaoAfastamento } from './classificacao-afastamento';
 import { Diagnostico } from './diagnostico';
+import { AgenteCausador } from './agente-causador';
+import { ParteCorpoAtingida } from './parte-corpo-atingida';
+import { NaturezaLesao } from './natureza-lesao';
+import { Cidade } from './cidade';
+import { Instalacao } from './instalacao';
+import { Cnae } from './cnae';
+import { ClassificacaoGravidade } from './classificacao-gravidade';
+import { Exame } from './exame';
 import { CustomDate } from './../generics/utils/custom-date.util';
 
 export class Cat {
@@ -39,7 +47,61 @@ export class Cat {
     private dataInformacaoCustomDate: CustomDate = new CustomDate(this.dataInformacao);
     private dataCaracterizacaoCustomDate: CustomDate = new CustomDate(this.dataCaracterizacao);
     private dataClassificacaoCustomDate: CustomDate = new CustomDate(this.dataClassificacao);
+    
+    private remuneracao: number;
+    private agenteCausador: AgenteCausador;
+    private parteCorpoAtingida: ParteCorpoAtingida;
+    private naturezaLesao: NaturezaLesao;
+    private dataObito: Date;
+    
+    private dataObitoCustomDate: CustomDate = new CustomDate(this.dataObito);
 
+    private municipio: Cidade;
+    private rta: string;
+    private instalacao: Instalacao;
+    private cnae: Cnae;
+    private grauRiscoEmpresa: number;
+    private numeroSisin: string;
+    private classificacaoSisin: number;
+    private classificacaoGravidade: ClassificacaoGravidade;
+    private dataAvaliacaoMedica: Date;
+    private registroSd2000: boolean;
+    private catSd2000: boolean;
+    private dataEmissao: Date;
+
+    private dataAvaliacaoMedicaCustomDate: CustomDate = new CustomDate(this.dataAvaliacaoMedica);
+    private dataEmissaoCustomDate: CustomDate = new CustomDate(this.dataEmissao);
+    
+    private pendenciaCorrecao: boolean;
+    private justificativaAtrasoEmissaoCat: string;
+    private numeroCartaMulta: string;
+    private tipoAcidente: string;
+    private tipoCat: string;
+    private diagnosticoProvavel: Diagnostico;
+    private comunicavelSus: boolean;
+    private numeroCat: string;
+    private codigoCartaSindicato: string;
+    private classificacaoAnomalia: number;
+    private dataComunicacaoSindicato: Date;
+    private justificativaAtrasoEmissaoCarta: string;
+    
+    private dataComunicacaoSindicatoCustomDate: CustomDate = new CustomDate(this.dataComunicacaoSindicato);
+
+    private catInss: boolean;
+    private convocado: boolean;
+    private examesConvocacao: Array<Exame>;
+    private ausenciaExames: boolean;
+    private recomendacoes: string;
+
+    private arquivo: any;
+    private arquivoBase64: string;
+    private jornadaTrabalho: number;
+    private ato1: string;
+    private ato2: string;
+    private ato3: string;
+    private ato4: string;
+    private ato5: string;
+    private justificativa: string;
     private version: number;
 
     getId() {
@@ -117,11 +179,11 @@ export class Cat {
     }
     
     getDataOcorrenciaCustomDate(){
-        return this.dataOcorrencia;
+        return this.dataOcorrenciaCustomDate;
     }
     
-    setDataOcorrenciaCustomDate(dataOcorrencia: Date){
-        this.dataOcorrencia = dataOcorrencia;
+    setDataOcorrenciaCustomDate(dataOcorrenciaCustomDate: CustomDate){
+        this.dataOcorrenciaCustomDate = dataOcorrenciaCustomDate;
     }
     
     getLocal() {
@@ -183,11 +245,11 @@ export class Cat {
     }
     
     getDataInformacaoCustomDate(){
-        return this.dataInformacao;
+        return this.dataInformacaoCustomDate;
     }
     
-    setDataInformacaoCustomDate(dataInformacao: Date){
-        this.dataInformacao = dataInformacao;
+    setDataInformacaoCustomDate(dataInformacaoCustomDate: CustomDate){
+        this.dataInformacaoCustomDate = dataInformacaoCustomDate;
     }
 
     getCaracterizacao() {
@@ -233,11 +295,11 @@ export class Cat {
     }
     
     getDataCaracterizacaoCustomDate(){
-        return this.dataCaracterizacao;
+        return this.dataCaracterizacaoCustomDate;
     }
     
-    setDataCaracterizacaoCustomDate(dataCaracterizacao: Date){
-        this.dataCaracterizacao = dataCaracterizacao;
+    setDataCaracterizacaoCustomDate(dataCaracterizacaoCustomDate: CustomDate){
+        this.dataCaracterizacaoCustomDate = dataCaracterizacaoCustomDate;
     }
     
     getClassificacao() {
@@ -291,13 +353,71 @@ export class Cat {
     }
     
     getDataClassificacaoCustomDate(){
-        return this.dataClassificacao;
+        return this.dataClassificacaoCustomDate;
     }
     
-    setDataClassificacaoCustomDate(dataClassificacao: Date){
-        this.dataClassificacao = dataClassificacao;
+    setDataClassificacaoCustomDate(dataClassificacaoCustomDate: CustomDate){
+        this.dataClassificacaoCustomDate = dataClassificacaoCustomDate;
+    }
+    
+    getRemuneracao() {
+        return this.remuneracao;
     }
 
+    setRemuneracao(remuneracao) {
+        this.remuneracao = remuneracao;
+    }
+
+    getAgenteCausador() {
+        return this.agenteCausador;
+    }
+
+    setAgenteCausador(agenteCausador) {
+        this.agenteCausador = agenteCausador;
+    }
+
+    getParteCorpoAtingida() {
+        return this.parteCorpoAtingida;
+    }
+
+    setParteCorpoAtingida(parteCorpoAtingida) {
+        this.parteCorpoAtingida = parteCorpoAtingida;
+    }
+
+    getNaturezaLesao() {
+        return this.naturezaLesao;
+    }
+
+    setNaturezaLesao(naturezaLesao) {
+        this.naturezaLesao = naturezaLesao;
+    }
+
+    getDataObito() {
+        this.dataObito = this.dataObitoCustomDate.getApiDate();
+        return this.dataObito;
+    }
+
+    setDataObito(dataObito) {
+        this.dataObitoCustomDate.setApiDate(dataObito);
+        this.dataObito = dataObito;
+    }
+    
+    getDataObitoCustomDate(){
+        return this.dataObitoCustomDate;
+    }
+    
+    setDataObitoCustomDate(dataObitoCustomDate: CustomDate){
+        this.dataObitoCustomDate = dataObitoCustomDate;
+    }
+    
+    getMunicipio() {
+        return this.municipio;
+    }
+
+    setMunicipio(municipio) {
+        this.municipio = municipio;
+    }
+    
     getVersion() {
         return this.version;
     }
@@ -306,4 +426,329 @@ export class Cat {
         this.version = version;
     }
     
+    getRta() {
+        return this.rta;
+    }
+
+    setRta(rta) {
+        this.rta = rta;
+    }
+
+    getInstalacao() {
+        return this.instalacao;
+    }
+
+    setInstalacao(instalacao) {
+        this.instalacao = instalacao;
+    }
+    
+    getCnae() {
+        return this.cnae;
+    }
+
+    setCnae(cnae) {
+        this.cnae = cnae;
+    }
+
+    getGrauRiscoEmpresa() {
+        return this.grauRiscoEmpresa;
+    }
+
+    setGrauRiscoEmpresa(grauRiscoEmpresa) {
+        this.grauRiscoEmpresa = grauRiscoEmpresa;
+    }
+
+    getNumeroSisin() {
+        return this.numeroSisin;
+    }
+
+    setNumeroSisin(numeroSisin) {
+        this.numeroSisin = numeroSisin;
+    }
+
+    getClassificacaoSisin() {
+        return this.classificacaoSisin;
+    }
+
+    setClassificacaoSisin(classificacaoSisin) {
+        this.classificacaoSisin = classificacaoSisin;
+    }
+
+    getClassificacaoGravidade() {
+        return this.classificacaoGravidade;
+    }
+
+    setClassificacaoGravidade(classificacaoGravidade) {
+        this.classificacaoGravidade = classificacaoGravidade;
+    }
+
+    getDataAvaliacaoMedica() {
+        this.dataAvaliacaoMedica = this.dataAvaliacaoMedicaCustomDate.getApiDate();
+        return this.dataAvaliacaoMedica;
+    }
+
+    setDataAvaliacaoMedica(dataAvaliacaoMedica) {
+        this.dataAvaliacaoMedicaCustomDate.setApiDate(dataAvaliacaoMedica);
+        this.dataAvaliacaoMedica = dataAvaliacaoMedica;
+    }
+    
+    getDataAvaliacaoMedicaCustomDate(){
+        return this.dataAvaliacaoMedicaCustomDate;
+    }
+    
+    setDataAvaliacaoMedicaCustomDate(dataAvaliacaoMedicaCustomDate: CustomDate){
+        this.dataAvaliacaoMedicaCustomDate = dataAvaliacaoMedicaCustomDate;
+    }
+
+    getRegistroSd2000() {
+        return this.registroSd2000;
+    }
+
+    setRegistroSd2000(registroSd2000) {
+        this.registroSd2000 = registroSd2000;
+    }
+
+    getCatSd2000() {
+        return this.catSd2000;
+    }
+
+    setCatSd2000(catSd2000) {
+        this.catSd2000 = catSd2000;
+    }
+
+    getDataEmissao() {
+        this.dataEmissao = this.dataEmissaoCustomDate.getApiDate();
+        return this.dataEmissao;
+    }
+
+    setDataEmissao(dataEmissao) {
+        this.dataEmissaoCustomDate.setApiDate(dataEmissao);
+        this.dataEmissao = dataEmissao;
+    }
+    
+    getDataEmissaoCustomDate(){
+        return this.dataEmissaoCustomDate;
+    }
+    
+    setDataEmissaoCustomDate(dataEmissaoCustomDate: CustomDate){
+        this.dataEmissaoCustomDate = dataEmissaoCustomDate;
+    }
+    
+    getPendenciaCorrecao() {
+        return this.pendenciaCorrecao;
+    }
+
+    setPendenciaCorrecao(pendenciaCorrecao) {
+        this.pendenciaCorrecao = pendenciaCorrecao;
+    }
+
+    getJustificativaAtrasoEmissaoCat() {
+        return this.justificativaAtrasoEmissaoCat;
+    }
+
+    setJustificativaAtrasoEmissaoCat(justificativaAtrasoEmissaoCat) {
+        this.justificativaAtrasoEmissaoCat = justificativaAtrasoEmissaoCat;
+    }
+
+    getNumeroCartaMulta() {
+        return this.numeroCartaMulta;
+    }
+
+    setNumeroCartaMulta(numeroCartaMulta) {
+        this.numeroCartaMulta = numeroCartaMulta;
+    }
+
+    getTipoAcidente() {
+        return this.tipoAcidente;
+    }
+
+    setTipoAcidente(tipoAcidente) {
+        this.tipoAcidente = tipoAcidente;
+    }
+
+    getTipoCat() {
+        return this.tipoCat;
+    }
+
+    setTipoCat(tipoCat) {
+        this.tipoCat = tipoCat;
+    }
+
+    getDiagnosticoProvavel() {
+        return this.diagnosticoProvavel;
+    }
+
+    setDiagnosticoProvavel(diagnosticoProvavel) {
+        this.diagnosticoProvavel = diagnosticoProvavel;
+    }
+
+    getComunicavelSus() {
+        return this.comunicavelSus;
+    }
+
+    setComunicavelSus(comunicavelSus) {
+        this.comunicavelSus = comunicavelSus;
+    }
+
+    getNumeroCat() {
+        return this.numeroCat;
+    }
+
+    setNumeroCat(numeroCat) {
+        this.numeroCat = numeroCat;
+    }
+
+    getCodigoCartaSindicato() {
+        return this.codigoCartaSindicato;
+    }
+
+    setCodigoCartaSindicato(codigoCartaSindicato) {
+        this.codigoCartaSindicato = codigoCartaSindicato;
+    }
+
+    getClassificacaoAnomalia() {
+        return this.classificacaoAnomalia;
+    }
+
+    setClassificacaoAnomalia(classificacaoAnomalia) {
+        this.classificacaoAnomalia = classificacaoAnomalia;
+    }
+
+    getDataComunicacaoSindicato() {
+        this.dataComunicacaoSindicato = this.dataComunicacaoSindicatoCustomDate.getApiDate();
+        return this.dataComunicacaoSindicato;
+    }
+
+    setDataComunicacaoSindicato(dataComunicacaoSindicato) {
+        this.dataComunicacaoSindicatoCustomDate.setApiDate(dataComunicacaoSindicato);
+        this.dataComunicacaoSindicato = dataComunicacaoSindicato;
+    }
+    
+    getDataComunicacaoSindicatoCustomDate(){
+        return this.dataComunicacaoSindicatoCustomDate;
+    }
+    
+    setDataComunicacaoSindicatoCustomDate(dataComunicacaoSindicatoCustomDate: CustomDate){
+        this.dataComunicacaoSindicatoCustomDate = dataComunicacaoSindicatoCustomDate;
+    }
+
+    getJustificativaAtrasoEmissaoCarta() {
+        return this.justificativaAtrasoEmissaoCarta;
+    }
+
+    setJustificativaAtrasoEmissaoCarta(justificativaAtrasoEmissaoCarta) {
+        this.justificativaAtrasoEmissaoCarta = justificativaAtrasoEmissaoCarta;
+    }
+    
+    getCatInss() {
+        return this.catInss;
+    }
+
+    setCatInss(catInss) {
+        this.catInss = catInss;
+    }
+
+    getConvocado() {
+        return this.convocado;
+    }
+
+    setConvocado(convocado) {
+        this.convocado = convocado;
+    }
+
+    getExamesConvocacao() {
+        return this.examesConvocacao;
+    }
+
+    setExamesConvocacao(examesConvocacao) {
+        this.examesConvocacao = examesConvocacao;
+    }
+
+    getAusenciaExames() {
+        return this.ausenciaExames;
+    }
+
+    setAusenciaExames(ausenciaExames) {
+        this.ausenciaExames = ausenciaExames;
+    }
+    
+    getRecomendacoes() {
+        return this.recomendacoes;
+    }
+
+    setRecomendacoes(recomendacoes) {
+        this.recomendacoes = recomendacoes;
+    }
+    
+    getArquivo():any{
+        return this.arquivo;
+    }
+    
+    setArquivo(arquivo:any){
+        this.arquivo = arquivo;
+    }
+    
+    getArquivoBase64():string{
+        return this.arquivoBase64;
+    }
+    
+    setArquivoBase64(a:string){
+        this.arquivoBase64 = a;
+    }
+    
+    getJornadaTrabalho():number{
+        return this.jornadaTrabalho;
+    }
+    
+    setJornadaTrabalho(j:number){
+        this.jornadaTrabalho = j;
+    }
+    
+    getAto1():string{
+        return this.ato1;
+    }
+    
+    setAto1(a:string){
+        this.ato1 = a;
+    }
+
+    getAto2():string{
+        return this.ato2;
+    }
+    
+    setAto2(a:string){
+        this.ato2 = a;
+    }
+    
+    getAto3():string{
+        return this.ato3;
+    }
+    
+    setAto3(a:string){
+        this.ato3 = a;
+    }
+    
+    getAto4():string{
+        return this.ato4;
+    }
+    
+    setAto4(a:string){
+        this.ato4 = a;
+    }
+    
+    getAto5():string{
+        return this.ato5;
+    }
+    
+    setAto5(a:string){
+        this.ato5 = a;
+    }
+    
+    getJustificativa():string{
+        return this.justificativa;
+    }
+    
+    setJustificativa(j:string){
+        this.justificativa = j;
+    }
 }

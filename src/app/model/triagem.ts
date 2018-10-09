@@ -18,7 +18,7 @@ export class Triagem {
     private prazo: string = "";
     private justificativa: string;
     private acoes: Array<Acao>;
-    private ignorarAcoes: boolean;
+    private selecionado: string = "";
     private version: number;
 
     getId() {
@@ -93,6 +93,14 @@ export class Triagem {
         this.prazo = prazo;
     }
     
+    getSelecionado(){
+        return this.selecionado;
+    }
+    
+    setSelecionado(selecionado:string){
+        this.selecionado = selecionado;
+    }
+    
     getJustificativa(){
         return this.justificativa;
     }
@@ -115,14 +123,5 @@ export class Triagem {
 
     setAcoes(acoes: Array<Acao>) {
         this.acoes = acoes;
-    }
-    
-    getIgnorarAcoes() {
-        return this.ignorarAcoes;
-    }
-    
-    setIgnorarAcoes(ignorarAcoes: boolean) {
-        this.ignorarAcoes = ignorarAcoes;
-    }
-    
+    }    
 }

@@ -131,7 +131,13 @@
 							[customDate]="atestado.inicioCustomDate"
 							[obrigatorio]="'false'" [legenda]="'Início'"></app-date-picker>
 					</div>
-					<div class="input-field col s9">
+					<div class="input-field col s3">
+						<label for="dataSolicitacao">Data da Solicitação</label>
+						<app-date-picker [nome]="'dataSolicitacao'" (change)="changeDataSolicitacao($event)"
+							[customDate]="atestado.dataSolicitacaoCustomDate"
+							[obrigatorio]="'false'" [legenda]="'Data da Solicitação'"></app-date-picker>
+					</div>
+					<div class="input-field col s6">
 						<label for="cid">CID</label> 
 						<input type="text" materialize="autocomplete" autocomplete="off" name="atestado.cid"
 							required
@@ -195,6 +201,15 @@
 							class="btn">Auditar</button>
 					</div>
 				</div>
+				
+				<div class="row">
+					<div class="input-field col s12">
+						<label for="justificativa">Justificativa</label>
+						<textarea class="materialize-textarea" id="justificativa"
+							maxlength="1024" [(ngModel)]="atestado.justificativa"
+							name="atestado.justificativa"></textarea>
+					</div>
+				</div>
 			</div>
 
 			<div id="analiseTecnica">
@@ -254,7 +269,7 @@
 						<input type="checkbox" id="atestado.presencial_analise_tecnica"
 							[(ngModel)]="atestado.presencial"
 							[disabled]="atestado.status != 'ANÁLISE TÉCNICA'"
-							(click)="changePresencialAnaliseTecnica($event)" 
+							(click)="changePresencialAnaliseTecnica($event.target.checked)" 
 							name="atestado.presencial_analise_tecnica">
 						<label for="atestado.presencial_analise_tecnica">Presencial</label>
 					</div>
@@ -264,7 +279,13 @@
 							name="atestado.aposentadoInss"> <label
 							for="atestado.aposentadoInss">Aposentado INSS</label>
 					</div>
-					<div class="input-field col s8">
+					<div class="input-field col s2">
+						<label for="numeroDias">Número de Dias</label> 
+						<input (change)="changeNumeroDiasAnaliseTecnica($event)"
+							id="numeroDias" type="number" name="numeroDias"
+							[(ngModel)]="atestado.numeroDias">
+					</div>
+					<div class="input-field col s6">
 						<label for="cid">CID</label> 
 						<input type="text" materialize="autocomplete" autocomplete="off" name="atestado.cid"
 							required
@@ -467,7 +488,7 @@
 	[materializeActions]="globalActions"></div>
 
 <app-modal-tarefa-simple (tarefa)="setAgendamento($event)"></app-modal-tarefa-simple>
-<app-modal-exame [atestado]="atestado" (exame)="addExame($event)"></app-modal-exame>
+<app-modal-exame [examesConvocacao]="atestado.examesConvocacao" (exame)="addExame($event)"></app-modal-exame>
 <app-modal-confirm (value)="functionModalConfirm($event)"></app-modal-confirm>
 <app-modal-auditoria-atestado [atestado]="atestado" 
 	(confirm)="functionModalConfirmAuditar($event)"></app-modal-auditoria-atestado>

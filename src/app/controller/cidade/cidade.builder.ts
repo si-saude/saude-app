@@ -8,6 +8,20 @@ export class CidadeBuilder extends GenericBuilder {
         return cidade;
     }
     
+    initializeList(cidades: Array<Cidade>) {
+        
+        let array:Array<Cidade> = new Array<Cidade>();
+        
+        if(cidades === null || cidades === undefined)
+            cidades = new Array<Cidade>();
+        
+        for (let cidade of cidades) {
+            array.push(this.initialize(cidade));
+        }
+        
+        return array;
+    }
+    
     clone(cidade: Cidade): Cidade {
         
         if (cidade === null || cidade === undefined)
@@ -19,6 +33,17 @@ export class CidadeBuilder extends GenericBuilder {
         cloneCidade.setUf(this.getValue(cidade, "getUf"));
         cloneCidade.setVersion(this.getValue(cidade, "getVersion"));
         return cloneCidade;
+    }
+    
+    cloneList(cidades: Array<Cidade>): Array<Cidade> {
+        let array:Array<Cidade> = new Array<Cidade>();
+        if (cidades !== null && cidades !== undefined) { 
+            for (let cidade of cidades) {
+                array.push(this.clone(cidade));
+            }
+        }
+        
+        return array;
     }
     
 }

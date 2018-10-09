@@ -33,6 +33,7 @@
 			(click)="closeSidenav3()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
+			<a [routerLink]="['/acao-intervencao']" *ngIf="checkPermissao('ACAO-INTERVENCAO_LISTAR')">Ação</a>
 			<a [routerLink]="['/agente-causador']" *ngIf="checkPermissao('AGENTE-CAUSADOR_LISTAR')">Agente Causador</a>
 			<a [routerLink]="['/agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente de Risco</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
@@ -41,6 +42,7 @@
 			<a [routerLink]="['/cidade']" *ngIf="checkPermissao('CIDADE_LISTAR')">Cidade</a>
 			<a [routerLink]="['/classificacao-afastamento']" *ngIf="checkPermissao('CLASSIFICACAO-AFASTAMENTO_LISTAR')">Classificação de Afastamento</a>
 			<a [routerLink]="['/clinica']" *ngIf="checkPermissao('CLINICA_LISTAR')">Clínica</a>
+			<a [routerLink]="['/classificacao-gravidade']" *ngIf="checkPermissao('CLASSIFICACAO-GRAVIDADE_LISTAR')">Classificação da Ocorrência</a>
 			<a [routerLink]="['/criterio']" *ngIf="checkPermissao('CRITERIO_LISTAR')">Critério</a>
 			<a [routerLink]="['/curso']" *ngIf="checkPermissao('CURSO_LISTAR')">Curso</a>
 			<a [routerLink]="['/diagnostico']" *ngIf="checkPermissao('DIAGNOSTICO_LISTAR')">Diagnóstico</a>

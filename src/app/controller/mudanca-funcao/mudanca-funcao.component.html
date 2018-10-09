@@ -52,8 +52,6 @@
 		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
 
 	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
-	<a [routerLink]="['/mudanca-funcao/cadastrar']"
-		class="waves-effect waves-light btn button-add">Adicionar</a>
 
 </div>
 
@@ -66,6 +64,23 @@
 				<label for="nome">Nome</label> 
 				<input type="text" id="nome" maxlength="400"
 					[(ngModel)]="filter.tarefa.cliente.pessoa.nome" name="nome">
+			</div>
+		</div>	
+		<div class="input-field col s12">
+			<div class="modal-content col s6">
+				<label for="equipe">Equipe</label>
+				<select name="equipe" class="browser-default"
+					[(ngModel)]="filter.tarefa.equipe.id">
+					<option selected value=0>Selecione uma equipe</option>
+					<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+				</select>
+			</div>
+			<div class="modal-content col s6">
+				<label for="status">Status</label>
+				<select name="tarefa.status" class="browser-default" 
+						[(ngModel)]="filter.tarefa.status">
+						<option *ngFor="let status of listStatus" value="{{status}}">{{status}}</option>
+				</select>
 			</div>
 		</div>	
 	</div>

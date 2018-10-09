@@ -454,9 +454,46 @@
 			
 			</div>
 
-			<div id="cat"></div>
-
-			<div id="informacoesComplementares"></div>
+			<div id="informacoesComplementares">
+			
+				<div class="row">
+					<div class="input-field col s9">
+						<label for="remuneracao">Remuneração</label> 
+							<input id="remuneracao" type="text"
+							[(ngModel)]="cat.remuneracao" disabled
+							name="remuneracao">
+					</div>
+				</div>
+				
+			</div>
+			
+			
+			<div id="cat">
+				<div class="row">
+					<div class="input-field col s3">
+						<label for="dataObito">Data de Óbito</label>
+						<app-date-picker [nome]="'dataObito'"
+						 	[desabilitar]="true"
+							[customDate]="cat.dataObitoCustomDate"
+							[obrigatorio]="'false'" [legenda]="'Data de Óbito'"></app-date-picker>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s4">
+						<label for="agenteCausador">Agente Causador</label> <input type="text"
+							name="agenteCausador" [(ngModel)]="cat.agenteCausador.descricao">
+					</div>
+					<div class="input-field col s4">
+						<label for="naturezaLesao">Natureza da Lesão</label> <input type="text"
+							name="cat.naturezaLesao" [(ngModel)]="cat.naturezaLesao.descricao">
+					</div>
+					<div class="input-field col s4">
+						<label for="parteCorpoAtingida">Parte do Corpo Atingida</label> <input type="text"
+							name="cat.parteCorpoAtingida" [(ngModel)]="cat.parteCorpoAtingida.descricao">
+					</div>
+				</div>
+			</div>
 
 		</div>
 

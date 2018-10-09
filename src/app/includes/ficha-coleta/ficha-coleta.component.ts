@@ -47,7 +47,6 @@ export class FichaColetaComponent{
         this.modalConteudo = new EventEmitter<string | MaterializeAction>();
         this.getGrupoPerguntaFichaColeta();
         this.dadosElemento = new Array<any>();
-        this.statusFila = "";
     }
     
     ngOnChanges( changes: SimpleChanges ) {
@@ -58,6 +57,9 @@ export class FichaColetaComponent{
         }
         if ( changes["idEquipeProfissional"] != undefined ) {
             this.innerIdEquipeProfissional = changes["idEquipeProfissional"].currentValue;
+        }
+        if ( changes["statusFila"] != undefined && changes["statusFila"].currentValue != "") {
+            this.statusFila = changes["statusFila"].currentValue;
         }
     }
     
@@ -186,32 +188,37 @@ export class FichaColetaComponent{
     }
     
     isDisabledResposta(resposta: RespostaFichaColeta) {
+        if((!resposta.getVerified())){
+            this.permissaoCampo(resposta);
+        }
+        return !resposta.getEnabled();
+    }
+    
+    
+    permissaoCampo(resposta: RespostaFichaColeta){       
         
-        if(!resposta.getVerified()){
-            let ret: boolean = true;
-            let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);        
-            
-            if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
-                if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
-                    if ( this.fuma.getConteudo() == "SIM" && 
-                            equipe != undefined ){
-                        ret = false;
-                    }
-                    else ret = true;
-                } else {
-                    if ( equipe != undefined ) {
-                        ret = false;
-                    }
-                    else {
-                        ret = true;
-                    }
+        let ret: boolean = true;
+        let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);
+        if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
+            if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
+                if ( this.fuma.getConteudo() == "SIM" && equipe != undefined ){
+                    ret = false;
+                }
+                else{                        
+                    ret = true;
+                }
+            } else {
+                if ( equipe != undefined ) {
+                    ret = false;
+                }
+                else {
+                    ret = true;
                 }
             }
-            resposta.setVerified(true);
-            resposta.setEnabled(!ret);
         }
-        
-        return !resposta.getEnabled();
+        resposta.setVerified(true);
+        resposta.setEnabled(!ret);
+            
     }
     
     getConteudoEnumOrSimNao(resposta: RespostaFichaColeta) {
@@ -307,6 +314,16 @@ export class FichaColetaComponent{
                 resposta.getPergunta().getItens()[indexItemDoItem].getPath() != "" )
             return true;
         return false;   
+    }
+    
+    verifyFuma(resposta){
+        if(resposta.getPergunta().getGrupo() == "ANAMNESE" && resposta.getPergunta().getCodigo() == "0008"){
+            this.innerFichaColeta.getRespostaFichaColetas().forEach(rFC =>  {
+               if(rFC.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4]){
+                   this.permissaoCampo(rFC);    
+               }
+            });
+        }
     }
     
 }

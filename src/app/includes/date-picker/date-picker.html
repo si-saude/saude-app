@@ -6,5 +6,5 @@
 			   materialize="pickadate" [(ngModel)]="customDate.appDate" 
 			   [materializeActions]="dateActions" [required]="obrigatorio"
 			   [materializeParams]="params" [disabled]="desabilitar"
-			   (click) ="openDatePicker()"
+			   (click) ="openDatePicker()" (ngModelChange)="changeDatePicker()"
 			   type="text" placeholder="{{legenda}}" />

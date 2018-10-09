@@ -18,21 +18,17 @@
 				<div class="col s2">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.id}}</a>
 				</div>
-				<div class="col s5">
+				<div class="col s4">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregado.pessoa.nome}}</a>
 				</div>
-				<div class="col s2">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.inicio | transformDate}}</a>
+				<div class="col s4">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.inicio | transformDate}} - {{a.status}}</a>
 				</div>
-				<div class="col s1">
+				<div class="col s2">
 					<a [routerLink]="['/atestado/detalhe', a.id]"><i
 						class="material-icons">details</i></a>
-				</div>
-				<div class="col s1">
 					<a [routerLink]="['/atestado/editar', a.id]"><i
 						class="material-icons">mode_edit</i></a>
-				</div>
-				<div class="col s1">
 					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
 						class="material-icons">delete</i></a>
 				</div>
@@ -70,6 +66,10 @@
 			<div class="modal-content">
 				<label for="matricula">Matricula do Empregado</label> 
 				<input type="text" id="matricula" [(ngModel)]="filter.empregado.matricula" name="matricula">
+			</div>
+			<div class="modal-content">
+				<label for="status">Status</label> 
+				<input type="text" id="status" [(ngModel)]="filter.status" name="status">
 			</div>
 		</div>
 

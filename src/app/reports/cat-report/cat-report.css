@@ -4,3 +4,7 @@
     margin-bottom: 50px;
 
 }
+
+table {
+	width: 1000% !important;
+}

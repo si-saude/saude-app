@@ -1,8 +1,9 @@
-import { Component, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, SimpleChanges, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import * as moment from 'moment';
+import { Observable } from "rxjs/Rx";
 
 import { GlobalVariable } from './../../../global';
 import { Atestado } from './../../../model/atestado';
@@ -126,10 +127,6 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                                             diagnosticoFilter.getInativo().setValue(2);
                                             if ( this.atestado.getTarefa() != undefined && 
                                                     this.atestado.getTarefa().getEquipe().getId() > 0 ) {
-                                                
-                                                diagnosticoFilter.getEixo().setEquipe(new EquipeFilter());
-                                                diagnosticoFilter.getEixo().getEquipe().setAbreviacao(
-                                                        this.atestado.getTarefa().getEquipe().getAbreviacao());
                                             }
                                             this.autocompleteDiagnostico = new DiagnosticoAtestadoAutocomplete(
                                                     this.atestadoService.getDiagnosticoService(), diagnosticoFilter);
@@ -429,8 +426,6 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
             let eqp = this.equipes.find(e => e.getId() == this.atestado.getTarefa().getEquipe().getId());
             let diagnosticoFilter: DiagnosticoFilter = new DiagnosticoFilter();
             diagnosticoFilter.getInativo().setValue(2);
-            diagnosticoFilter.getEixo().setEquipe(new EquipeFilter());
-            diagnosticoFilter.getEixo().getEquipe().setAbreviacao(eqp.getAbreviacao());
             this.autocompleteDiagnostico = new DiagnosticoAtestadoAutocomplete(
                     this.atestadoService.getDiagnosticoService(), diagnosticoFilter);
         }
@@ -455,9 +450,21 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
         this.recalcularLimitesDatas();
     }
     
-    changePresencialAnaliseTecnica( evento ) {
-        if ( evento.target.checked ) {
-            this.atestado.setStatus(this.statuses.find(s => s.includes("ADMINISTRATIVA")));
+    changeNumeroDiasAnaliseTecnica(evento){
+        let flag:boolean = false;
+        if( evento.target.value >= 5 ){
+            flag = true;
+        }
+        
+        
+        this.atestado.setPresencial(flag);
+        this.changePresencialAnaliseTecnica(flag);
+        this.recalcularLimitesDatas();
+    }
+    
+    changePresencialAnaliseTecnica( value ) {
+        this.atestado.setStatus(this.statuses.find(s => s.includes("ADMINISTRATIVA")));
+        if ( value ) {
             this.atestado.setPresencial(true);
         }
         
@@ -493,5 +500,9 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
     functionModalConfirmAuditar( evento ) {
         if ( evento )
             this.auditar();
+    }
+    
+    changeDataSolicitacao(evento) {
+        this.recalcularLimitesDatas();
     }
 }

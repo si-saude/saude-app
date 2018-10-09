@@ -11,6 +11,7 @@ import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
+import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
 
 @Component({
   selector: 'app-plano-intervencao',
@@ -24,6 +25,7 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     private riscoPotencial: RiscoPotencial;
     private equipesSelecteds: Array<Equipe>;
     private triagensTodosAtendimentos: Array<Triagem>;
+    @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
 
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -46,10 +48,10 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
                     let id = params['id'];
                     this.showPreload = true;
 
-                    this.riscoPotencialService.get( id )
+                    this.riscoPotencialService.getAcoes( id )
                         .then( res => {
                             this.showPreload = false;
-                            this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
+                            this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );                            
                             this.equipesSelecteds = this.riscoPotencial.getEquipes();
                             this.getTriagensEquipeAbordagem();
                         } )
@@ -62,6 +64,7 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
     }
     
     save() {
+        this.confirmSaveComponent.setGoTo("$*close*$");
         super.save(new RiscoPotencialBuilder().clone( this.riscoPotencial ));
     }
     
@@ -88,6 +91,11 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
         })
         this.triagensTodosAtendimentos = new TriagemBuilder().cloneList(this.triagensTodosAtendimentos);
         this.equipesAbordagemTriagens.forEach( eA => this.flagEquipesAbordagemTriagens.push( eA ) ); 
+    }
+    
+    selectIndicador( index: number ) {
+        
+        
     }
     
     ngOnDestroy() {

@@ -10,75 +10,18 @@
 	[goTo]="goTo"></app-confirm-save>
 
 <p style="color: #26a69a;">
-	<b>Nome do Empregado: {{nomeEmpregado}}</b>
+	<b>Nome do Empregado: {{riscoEmpregado.empregado.pessoa.nome}}</b>
 </p>
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
-
-		<div class="container-triagem">
-			<div class="table-triagem">
-				<table>
-					<thead>
-						<tr class="row col s12">
-							<th class="col s2">Indicador</th>
-							<th class="col s2">Índice 0</th>
-							<th class="col s2">Índice 1</th>
-							<th class="col s2">Índice 2</th>
-							<th class="col s2">Índice 3</th>
-							<th class="col s2">Índice 4</th>
-						</tr>
-					</thead>
-					<div class="container-triagens">
-						<div
-							*ngFor="let triagem of riscoEmpregado.triagens; let t = index">
-							<tbody>
-								<tr class="row col s12">
-									<td class="col s2 nome" [ngStyle]="{'cursor':'pointer'}"
-										[ngClass]="verifyObrigatoriedadeIndicador(triagem)">
-										{{triagem.indicadorSast.nome}}</td>
-									<td class="col s2 indice0" #tdIndice0 id="0"
-										title="indice0_{{t}}" (click)="selectTriagem(t, tdIndice0.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice0}}</td>
-									<td class="col s2 indice1" #tdIndice1 id="1"
-										title="indice1_{{t}}" (click)="selectTriagem(t, tdIndice1.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice1}}</td>
-									<td class="col s2 indice2" #tdIndice2 id="2"
-										title="indice2_{{t}}" (click)="selectTriagem(t, tdIndice2.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice2}}</td>
-									<td class="col s2 indice3" #tdIndice3 id="3"
-										title="indice3_{{t}}" (click)="selectTriagem(t, tdIndice3.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice3}}</td>
-									<td class="col s2 indice4" #tdIndice4 id="4"
-										title="indice4_{{t}}" (click)="selectTriagem(t, tdIndice4.id)"
-										[ngStyle]="{'cursor': 'pointer'}">
-										{{triagem.indicadorSast.indice4}}</td>
-								</tr>
-							</tbody>
-						</div>
-					</div>
-				</table>
-			</div>
-
-		</div>
-
-		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
-				[msg]="msgError"></app-mensagem-form>
-		</div>
-
-		<div class='row row-btns'>
-			<div class="col s6">
-				<a [routerLink]="['/risco-potencial']"
-					class="btn btn-primary btn-voltar">Voltar</a>
-			</div>
-			<div class="col s6">
-				<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
-			</div>
-		</div>
+		
+	<div id="triagem">
+		<app-triagem [triagens]="riscoEmpregado.triagens"></app-triagem>
+	</div>	
+		
+	<div class="col s12">
+		<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+	</div>
 
 	</form>
 </div>

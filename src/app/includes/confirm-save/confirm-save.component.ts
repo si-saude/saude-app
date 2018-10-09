@@ -37,6 +37,7 @@ export class ConfirmSaveComponent implements OnInit {
   }
   
   confirmSave() {
+      
       if ( this.reload ) {
           window.location.reload();
           return;
@@ -46,6 +47,10 @@ export class ConfirmSaveComponent implements OnInit {
           window.close();         
       }     
       else this.router.navigate(['/'+this.goTo]);
+  }
+  
+  setGoTo( goTo: string){      
+      this.goTo = goTo;
   }
   
 }

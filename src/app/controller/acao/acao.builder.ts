@@ -1,10 +1,12 @@
 import { Acao } from './../../model/acao';
+import { AcaoIntervencao } from './../../model/acao-intervencao';
 import { Tarefa } from './../../model/tarefa';
 import { Triagem } from './../../model/triagem';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { Acompanhamento } from './../../model/acompanhamento';
 import { AcompanhamentoBuilder } from './../acompanhamento/acompanhamento.builder';
 import { TriagemBuilder } from './../triagem/triagem.builder';
+import { AcaoIntervencaoBuilder } from './../acao-intervencao/acao-intervencao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class AcaoBuilder extends GenericBuilder {
@@ -12,9 +14,9 @@ export class AcaoBuilder extends GenericBuilder {
     initialize( acao: Acao ) {
         acao = new Acao();
         
-        acao.setTarefa(new TarefaBuilder().initialize(new Tarefa()));
         acao.setAcompanhamentos(new AcompanhamentoBuilder().initializeList(new Array<Acompanhamento>()));
         acao.setTriagem(new Triagem());
+        acao.setAcaoIntervencao(new AcaoIntervencao());
         
         return acao;
     }
@@ -40,7 +42,6 @@ export class AcaoBuilder extends GenericBuilder {
 
         let cloneAcao = new Acao();
         cloneAcao.setId( this.getValue( acao, "getId" ) );
-        cloneAcao.setDetalhe(this.getValue( acao, "getDetalhe" ) );
         cloneAcao.setVersion( this.getValue( acao, "getVersion" ) );
         
         if(this.getValue(acao, "getTipoContato") == "")
@@ -61,7 +62,6 @@ export class AcaoBuilder extends GenericBuilder {
             cloneAcao.setStatus("");
         else cloneAcao.setStatus(this.getValue( acao, "getStatus" ) );
         
-        cloneAcao.setTarefa(new TarefaBuilder().clone(this.getValue( acao, "getTarefa" ) ) );
         cloneAcao.setAcompanhamentos(new AcompanhamentoBuilder().cloneList(this.getValue( acao, "getAcompanhamentos" )));
         
         if (this.getValue(acao, "getTriagem") !== undefined) { 
@@ -69,6 +69,12 @@ export class AcaoBuilder extends GenericBuilder {
             if(!this.idGtZero(cloneAcao.getTriagem()))
                 cloneAcao.setTriagem(undefined);
         } else cloneAcao.setTriagem(new TriagemBuilder().initialize(null));
+        
+        if (this.getValue(acao, "getAcaoIntervencao") !== undefined) { 
+            cloneAcao.setAcaoIntervencao(new AcaoIntervencaoBuilder().clone(this.getValue( acao, "getAcaoIntervencao" )));
+            if(!this.idGtZero(cloneAcao.getAcaoIntervencao()))
+                cloneAcao.setAcaoIntervencao(undefined);
+        } else cloneAcao.setAcaoIntervencao(new AcaoIntervencaoBuilder().initialize(null));
         
         return cloneAcao;
     }

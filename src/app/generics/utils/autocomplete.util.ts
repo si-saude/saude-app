@@ -60,7 +60,6 @@ export class AutoComplete<F extends GenericFilter> {
     
     public getObj(input,obj,setMethod, getMethod){
         let value = obj[setMethod.replace('set','get')]()[getMethod]();
-
         if(input.target.value != undefined && input.target.value.includes('||')){
             let infos = input.target.value.split('||');
             let id = infos[0].trim();
@@ -79,7 +78,7 @@ export class AutoComplete<F extends GenericFilter> {
     }
     
     public initializeLastValue(lastValue){
-        if(this.lastValue == undefined){
+        if(this.lastValue == undefined || this.lastValue == ''){
             this.lastValue = lastValue;  
         }
     }

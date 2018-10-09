@@ -186,6 +186,12 @@
 						</div>
 					</div>
 				</th>
+				<th style="width: 4%">
+		            <mfDefaultSorter by="justificativa">Justificativa</mfDefaultSorter>
+		            <input type="text" name="justificativa" style="width: 90%" 
+							placeholder="filtrar justificativa" maxlength="1024"
+							(input)="selectFilter($event, 'justificativa')">
+		        </th>
 		    </tr>
 	    </thead>
 	    <tbody>
@@ -226,6 +232,9 @@
 		    		{{ item.observacao ? shortText(item.observacao) : ""}}
 		    	</td>
 		    	<td>{{item.statusAtestado}}</td>
+		    	<td style="cursor: pointer;" (dblclick)="modalDisplayTextComponent.openModal(item.justificativa)">
+		    		{{ item.justificativa ? shortText(item.justificativa) : ""}}
+		    	</td>
 			</tr>
 	    </tbody>
 	</table>

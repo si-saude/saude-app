@@ -37,5 +37,12 @@ export class EquipeService extends GenericService{
           .get( urlEquipe, { headers: this.headers } )
           .toPromise();
   }
-  
+
+  getMedErgHig() {
+      let urlEquipe = this.URL + "/get-med-hig-erg"
+      return this.http
+          .get( urlEquipe, { headers: this.headers } )
+          .toPromise();
+  }
+
 }

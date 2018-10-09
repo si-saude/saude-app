@@ -16,6 +16,7 @@ import { TarefaService } from './../tarefa/tarefa.service';
 import { FeriadoService } from './../feriado/feriado.service';
 import { ServicoService } from './../servico/servico.service';
 import { MotivoRecusaAtestadoService } from './../motivo-recusa-atestado/motivo-recusa-atestado.service';
+import { ExameService } from './../exame/exame.service';
 
 @Injectable()
 export class AtestadoService extends GenericService {
@@ -30,7 +31,8 @@ export class AtestadoService extends GenericService {
             private tarefaService: TarefaService,
             private feriadoService: FeriadoService,
             private servicoService: ServicoService,
-            private motivoRecusaAtestadoService: MotivoRecusaAtestadoService) { 
+            private motivoRecusaAtestadoService: MotivoRecusaAtestadoService,
+            private exameService: ExameService) { 
         super(http,router,"atestado");
     }
     
@@ -123,5 +125,8 @@ export class AtestadoService extends GenericService {
     getMotivoRecusaService( ){
         return this.motivoRecusaAtestadoService;
     }
-    
+
+    getExameService() {
+        return this.exameService;
+    }
 }

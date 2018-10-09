@@ -1,220 +1,431 @@
 export class CatDto {
-    private numero: string;
-    private contratado: boolean;
-    private nome: string;
-    private dataNascimento: string;
-    private cargo: string;
-    private regime: string;
-    private cpf: string;
-    private sexo: string;
+    private orgao: string;
     private rta: string;
+    private mes: string;
+    private diaSemana: string;
     private instalacao: string;
+    private proprioContratado: string;
+    private empresa: string;
+    private cnae: string;
+    private grauRiscoEmpresa: number;
+    private nomeAcidentado: string;
+    private regimeTrabalho: string;
+    private jornadaTrabalho: number;
+    private acidenteComSemAfastamento: string;
     private parteCorpoAtingida: string;
-    private agenteCausador: string;
-    private naturezaLesao: string;
-    private gerencia: string;
+    private horaAcidente: string;
+    private municipioAcidente: string;
+    private numeroSisin: string;
     private classificacaoSisin: number;
-    private diaHoraAcidente: string;
-    private afastamento: string;
+    private dataAcidente: string;
     private dataEmissaoCat: string;
-    private gravidade: string;
+    private diasAtraso: number;
+    private prazo: string;
+    private classificacaoGravidade: string;
     private dataAvaliacaoMedica: string;
-    private registoSd2000: boolean;
+    private registroSd2000: boolean;
     private catSd2000: boolean;
+    private situacaoAvaliacaoMedica: string;
+    private dataLiberacao: string;
+    private pendenciaCorrecaoCat: boolean;
+    private justificativaAtrasoEmissaoCat: string;
+    private numeroCartaMultaEmpresa: string;
     private tipoAcidente: string;
     private tipoCat: string;
-    private diagnostico: string;
-    private codigoCartaSindicato: string;
+    private diagnosticoProvavel: string;
+    private agenteCausador: string;
     private comunicavelSus: boolean;
-    private ferimentoGraveConformeAnp: boolean;
+    private ferimentoGraveConformeANP: boolean;
+    private numeroCat: string;
+    private localizacaoLesao: string;
+    private naturezaLesao: string;
+    private diasAfastamento: string;
+    private intervaloAfastamento: string;
+    private horasPerdidas: string;
+    private salarioHora: number;
+    private custoAcidente2: string;
+    private codigoCartaSindicato: string;
+    private classificacaoAnomalia: number;
     private dataComunicacaoSindicato: string;
+    private diasAcidenteComunicacaoSindicato: string;
+    private justificativaAtrasoEmissaoCarta: string;
+    private dataNascimento: string;
+    private idade: number;
+    private sexo: string;
+    private grauInstrucao: string;
+    private estadoCivil: string;
     private remuneracao: number;
-    private fornecedor: string;
+    private cargo: string;
+    private ato1: string;
+    private ato2: string;
+    private ato3: string;
+    private ato4: string;
     
-    public getNumero() {
-        return this.numero;
+    getOrgao() {
+        return this.orgao;
     }
-    public setNumero(numero) {
-        this.numero = numero;
+    setOrgao(orgao) {
+        this.orgao = orgao;
     }
-    public getContratado() {
-        return this.contratado;
-    }
-    public setContratado(contratado) {
-        this.contratado = contratado;
-    }
-    public getNome() {
-        return this.nome;
-    }
-    public setNome(nome) {
-        this.nome = nome;
-    }
-    public getDataNascimento() {
-        return this.dataNascimento;
-    }
-    public setDataNascimento(dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-    public getCargo() {
-        return this.cargo;
-    }
-    public setCargo(cargo) {
-        this.cargo = cargo;
-    }
-    public getRegime() {
-        return this.regime;
-    }
-    public setRegime(regime) {
-        this.regime = regime;
-    }
-    public getCpf() {
-        return this.cpf;
-    }
-    public setCpf(cpf) {
-        this.cpf = cpf;
-    }
-    public getSexo() {
-        return this.sexo;
-    }
-    public setSexo(sexo) {
-        this.sexo = sexo;
-    }
-    public getRta() {
+    getRta() {
         return this.rta;
     }
-    public setRta(rta) {
+    setRta(rta) {
         this.rta = rta;
     }
-    public getInstalacao() {
+    getMes() {
+        return this.mes;
+    }
+    setMes(mes) {
+        this.mes = mes;
+    }
+    getDiaSemana() {
+        return this.diaSemana;
+    }
+    setDiaSemana(diaSemana) {
+        this.diaSemana = diaSemana;
+    }
+    getInstalacao() {
         return this.instalacao;
     }
-    public setInstalacao(instalacao) {
+    setInstalacao(instalacao) {
         this.instalacao = instalacao;
     }
-    public getParteCorpoAtingida() {
+    getProprioContratado() {
+        return this.proprioContratado;
+    }
+    setProprioContratado(proprioContratado) {
+        this.proprioContratado = proprioContratado;
+    }
+    getEmpresa() {
+        return this.empresa;
+    }
+    setEmpresa(empresa) {
+        this.empresa = empresa;
+    }
+    getCnae() {
+        return this.cnae;
+    }
+    setCnae(cnae) {
+        this.cnae = cnae;
+    }
+    getGrauRiscoEmpresa() {
+        return this.grauRiscoEmpresa;
+    }
+    setGrauRiscoEmpresa(grauRiscoEmpresa) {
+        this.grauRiscoEmpresa = grauRiscoEmpresa;
+    }
+    getNomeAcidentado() {
+        return this.nomeAcidentado;
+    }
+    setNomeAcidentado(nomeAcidentado) {
+        this.nomeAcidentado = nomeAcidentado;
+    }
+    getRegimeTrabalho() {
+        return this.regimeTrabalho;
+    }
+    setRegimeTrabalho(regimeTrabalho) {
+        this.regimeTrabalho = regimeTrabalho;
+    }
+    getJornadaTrabalho() {
+        return this.jornadaTrabalho;
+    }
+    setJornadaTrabalho(jornadaTrabalho) {
+        this.jornadaTrabalho = jornadaTrabalho;
+    }
+    getAcidenteComSemAfastamento() {
+        return this.acidenteComSemAfastamento;
+    }
+    setAcidenteComSemAfastamento(acidenteComSemAfastamento) {
+        this.acidenteComSemAfastamento = acidenteComSemAfastamento;
+    }
+    getParteCorpoAtingida() {
         return this.parteCorpoAtingida;
     }
-    public setParteCorpoAtingida(parteCorpoAtingida) {
+    setParteCorpoAtingida(parteCorpoAtingida) {
         this.parteCorpoAtingida = parteCorpoAtingida;
     }
-    public getAgenteCausador() {
-        return this.agenteCausador;
+    getHoraAcidente() {
+        return this.horaAcidente;
     }
-    public setAgenteCausador(agenteCausador) {
-        this.agenteCausador = agenteCausador;
+    setHoraAcidente(horaAcidente) {
+        this.horaAcidente = horaAcidente;
     }
-    public getNaturezaLesao() {
-        return this.naturezaLesao;
+    getMunicipioAcidente() {
+        return this.municipioAcidente;
     }
-    public setNaturezaLesao(naturezaLesao) {
-        this.naturezaLesao = naturezaLesao;
+    setMunicipioAcidente(municipioAcidente) {
+        this.municipioAcidente = municipioAcidente;
     }
-    public getGerencia() {
-        return this.gerencia;
+    getNumeroSisin() {
+        return this.numeroSisin;
     }
-    public setGerencia(gerencia) {
-        this.gerencia = gerencia;
+    setNumeroSisin(numeroSisin) {
+        this.numeroSisin = numeroSisin;
     }
-    public getClassificacaoSisin() {
+    getClassificacaoSisin() {
         return this.classificacaoSisin;
     }
-    public setClassificacaoSisin(classificacaoSisin) {
+    setClassificacaoSisin(classificacaoSisin) {
         this.classificacaoSisin = classificacaoSisin;
     }
-    public getDiaHoraAcidente() {
-        return this.diaHoraAcidente;
+    getDataAcidente() {
+        return this.dataAcidente;
     }
-    public setDiaHoraAcidente(diaHoraAcidente) {
-        this.diaHoraAcidente = diaHoraAcidente;
+    setDataAcidente(dataAcidente) {
+        this.dataAcidente = dataAcidente;
     }
-    public getAfastamento() {
-        return this.afastamento;
-    }
-    public setAfastamento(afastamento) {
-        this.afastamento = afastamento;
-    }
-    public getDataEmissaoCat() {
+    getDataEmissaoCat() {
         return this.dataEmissaoCat;
     }
-    public setDataEmissaoCat(dataEmissaoCat) {
+    setDataEmissaoCat(dataEmissaoCat) {
         this.dataEmissaoCat = dataEmissaoCat;
     }
-    public getGravidade() {
-        return this.gravidade;
+    getDiasAtraso() {
+        return this.diasAtraso;
     }
-    public setGravidade(gravidade) {
-        this.gravidade = gravidade;
+    setDiasAtraso(diasAtraso) {
+        this.diasAtraso = diasAtraso;
     }
-    public getDataAvaliacaoMedica() {
+    getPrazo() {
+        return this.prazo;
+    }
+    setPrazo(prazo) {
+        this.prazo = prazo;
+    }
+    getClassificacaoGravidade() {
+        return this.classificacaoGravidade;
+    }
+    setClassificacaoGravidade(classificacaoGravidade) {
+        this.classificacaoGravidade = classificacaoGravidade;
+    }
+    getDataAvaliacaoMedica() {
         return this.dataAvaliacaoMedica;
     }
-    public setDataAvaliacaoMedica(dataAvaliacaoMedica) {
+    setDataAvaliacaoMedica(dataAvaliacaoMedica) {
         this.dataAvaliacaoMedica = dataAvaliacaoMedica;
     }
-    public getRegistoSd2000() {
-        return this.registoSd2000;
+    getRegistroSd2000() {
+        return this.registroSd2000;
     }
-    public setRegistoSd2000(registoSd2000) {
-        this.registoSd2000 = registoSd2000;
+    setRegistroSd2000(registroSd2000) {
+        this.registroSd2000 = registroSd2000;
     }
-    public getCatSd2000() {
+    getCatSd2000() {
         return this.catSd2000;
     }
-    public setCatSd2000(catSd2000) {
+    setCatSd2000(catSd2000) {
         this.catSd2000 = catSd2000;
     }
-    public getTipoAcidente() {
+    getSituacaoAvaliacaoMedica() {
+        return this.situacaoAvaliacaoMedica;
+    }
+    setSituacaoAvaliacaoMedica(situacaoAvaliacaoMedica) {
+        this.situacaoAvaliacaoMedica = situacaoAvaliacaoMedica;
+    }
+    getDataLiberacao() {
+        return this.dataLiberacao;
+    }
+    setDataLiberacao(dataLiberacao) {
+        this.dataLiberacao = dataLiberacao;
+    }
+    getPendenciaCorrecaoCat() {
+        return this.pendenciaCorrecaoCat;
+    }
+    setPendenciaCorrecaoCat(pendenciaCorrecaoCat) {
+        this.pendenciaCorrecaoCat = pendenciaCorrecaoCat;
+    }
+    getJustificativaAtrasoEmissaoCat() {
+        return this.justificativaAtrasoEmissaoCat;
+    }
+    setJustificativaAtrasoEmissaoCat(justificativaAtrasoEmissaoCat) {
+        this.justificativaAtrasoEmissaoCat = justificativaAtrasoEmissaoCat;
+    }
+    getNumeroCartaMultaEmpresa() {
+        return this.numeroCartaMultaEmpresa;
+    }
+    setNumeroCartaMultaEmpresa(numeroCartaMultaEmpresa) {
+        this.numeroCartaMultaEmpresa = numeroCartaMultaEmpresa;
+    }
+    getTipoAcidente() {
         return this.tipoAcidente;
     }
-    public setTipoAcidente(tipoAcidente) {
+    setTipoAcidente(tipoAcidente) {
         this.tipoAcidente = tipoAcidente;
     }
-    public getTipoCat() {
+    getTipoCat() {
         return this.tipoCat;
     }
-    public setTipoCat(tipoCat) {
+    setTipoCat(tipoCat) {
         this.tipoCat = tipoCat;
     }
-    public getDiagnostico() {
-        return this.diagnostico;
+    getDiagnosticoProvavel() {
+        return this.diagnosticoProvavel;
     }
-    public setDiagnostico(diagnostico) {
-        this.diagnostico = diagnostico;
+    setDiagnosticoProvavel(diagnosticoProvavel) {
+        this.diagnosticoProvavel = diagnosticoProvavel;
     }
-    public getCodigoCartaSindicato() {
-        return this.codigoCartaSindicato;
+    getAgenteCausador() {
+        return this.agenteCausador;
     }
-    public setCodigoCartaSindicato(codigoCartaSindicato) {
-        this.codigoCartaSindicato = codigoCartaSindicato;
+    setAgenteCausador(agenteCausador) {
+        this.agenteCausador = agenteCausador;
     }
-    public getComunicavelSus() {
+    getComunicavelSus() {
         return this.comunicavelSus;
     }
-    public setComunicavelSus(comunicavelSus) {
+    setComunicavelSus(comunicavelSus) {
         this.comunicavelSus = comunicavelSus;
     }
-    public getFerimentoGraveConformeAnp() {
-        return this.ferimentoGraveConformeAnp;
+    getFerimentoGraveConformeANP() {
+        return this.ferimentoGraveConformeANP;
     }
-    public setFerimentoGraveConformeAnp(ferimentoGraveConformeAnp) {
-        this.ferimentoGraveConformeAnp = ferimentoGraveConformeAnp;
+    setFerimentoGraveConformeANP(ferimentoGraveConformeANP) {
+        this.ferimentoGraveConformeANP = ferimentoGraveConformeANP;
     }
-    public getDataComunicacaoSindicato() {
+    getNumeroCat() {
+        return this.numeroCat;
+    }
+    setNumeroCat(numeroCat) {
+        this.numeroCat = numeroCat;
+    }
+    getLocalizacaoLesao() {
+        return this.localizacaoLesao;
+    }
+    setLocalizacaoLesao(localizacaoLesao) {
+        this.localizacaoLesao = localizacaoLesao;
+    }
+    getNaturezaLesao() {
+        return this.naturezaLesao;
+    }
+    setNaturezaLesao(naturezaLesao) {
+        this.naturezaLesao = naturezaLesao;
+    }
+    getDiasAfastamento() {
+        return this.diasAfastamento;
+    }
+    setDiasAfastamento(diasAfastamento) {
+        this.diasAfastamento = diasAfastamento;
+    }
+    getIntervaloAfastamento() {
+        return this.intervaloAfastamento;
+    }
+    setIntervaloAfastamento(intervaloAfastamento) {
+        this.intervaloAfastamento = intervaloAfastamento;
+    }
+    getHorasPerdidas() {
+        return this.horasPerdidas;
+    }
+    setHorasPerdidas(horasPerdidas) {
+        this.horasPerdidas = horasPerdidas;
+    }
+    getSalarioHora() {
+        return this.salarioHora;
+    }
+    setSalarioHora(salarioHora) {
+        this.salarioHora = salarioHora;
+    }
+    getCustoAcidente2() {
+        return this.custoAcidente2;
+    }
+    setCustoAcidente2(custoAcidente2) {
+        this.custoAcidente2 = custoAcidente2;
+    }
+    getCodigoCartaSindicato() {
+        return this.codigoCartaSindicato;
+    }
+    setCodigoCartaSindicato(codigoCartaSindicato) {
+        this.codigoCartaSindicato = codigoCartaSindicato;
+    }
+    getClassificacaoAnomalia() {
+        return this.classificacaoAnomalia;
+    }
+    setClassificacaoAnomalia(classificacaoAnomalia) {
+        this.classificacaoAnomalia = classificacaoAnomalia;
+    }
+    getDataComunicacaoSindicato() {
         return this.dataComunicacaoSindicato;
     }
-    public setDataComunicacaoSindicato(dataComunicacaoSindicato) {
+    setDataComunicacaoSindicato(dataComunicacaoSindicato) {
         this.dataComunicacaoSindicato = dataComunicacaoSindicato;
     }
-    public getRemuneracao() {
+    getDiasAcidenteComunicacaoSindicato() {
+        return this.diasAcidenteComunicacaoSindicato;
+    }
+    setDiasAcidenteComunicacaoSindicato(diasAcidenteComunicacaoSindicato) {
+        this.diasAcidenteComunicacaoSindicato = diasAcidenteComunicacaoSindicato;
+    }
+    getJustificativaAtrasoEmissaoCarta() {
+        return this.justificativaAtrasoEmissaoCarta;
+    }
+    setJustificativaAtrasoEmissaoCarta(justificativaAtrasoEmissaoCarta) {
+        this.justificativaAtrasoEmissaoCarta = justificativaAtrasoEmissaoCarta;
+    }
+    getDataNascimento() {
+        return this.dataNascimento;
+    }
+    setDataNascimento(dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+    getIdade() {
+        return this.idade;
+    }
+    setIdade(idade) {
+        this.idade = idade;
+    }
+    getSexo() {
+        return this.sexo;
+    }
+    setSexo(sexo) {
+        this.sexo = sexo;
+    }
+    getGrauInstrucao() {
+        return this.grauInstrucao;
+    }
+    setGrauInstrucao(grauInstrucao) {
+        this.grauInstrucao = grauInstrucao;
+    }
+    getEstadoCivil() {
+        return this.estadoCivil;
+    }
+    setEstadoCivil(estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }
+    getRemuneracao() {
         return this.remuneracao;
     }
-    public setRemuneracao(remuneracao) {
+    setRemuneracao(remuneracao) {
         this.remuneracao = remuneracao;
     }
-    public getFornecedor() {
-        return this.fornecedor;
+    getCargo() {
+        return this.cargo;
     }
-    public setFornecedor(fornecedor) {
-        this.fornecedor = fornecedor;
+    setCargo(cargo) {
+        this.cargo = cargo;
+    }
+    getAto1() {
+        return this.ato1;
+    }
+    setAto1(ato1) {
+        this.ato1 = ato1;
+    }
+    getAto2() {
+        return this.ato2;
+    }
+    setAto2(ato2) {
+        this.ato2 = ato2;
+    }
+    getAto3() {
+        return this.ato3;
+    }
+    setAto3(ato3) {
+        this.ato3 = ato3;
+    }
+    getAto4() {
+        return this.ato4;
+    }
+    setAto4(ato4) {
+        this.ato4 = ato4;
     }
 }
+

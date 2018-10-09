@@ -25,9 +25,6 @@ import { PessoaBuilder } from './../../controller/pessoa/pessoa.builder';
     styleUrls: ['./autenticacao-usuario.css']
 } )
 export class AutenticacaoUsuarioComponent {
-    
-    
-    
     cpf: string;
     matricula: string;
     chave: string;

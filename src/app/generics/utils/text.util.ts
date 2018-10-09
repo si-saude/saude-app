@@ -5,6 +5,7 @@ import { MaterializeAction } from "angular2-materialize";
 export class TextUtil {
     private globalActions;
     private toastParams;
+    private textLength : number = 20;
     
     constructor() {
         this.globalActions = new EventEmitter<string | MaterializeAction>();
@@ -23,9 +24,12 @@ export class TextUtil {
     }
     
     public shortText( text: string ) {
-        if ( text != undefined && text.length > 20 )
-            return text.substr(0, 17) + "...";
+        if ( text != undefined && text.length > this.textLength )
+            return text.substr(0, this.textLength - 3) + "...";
         else return text;
+    }
+    public setTextLength(textLength: number){         
+        this.textLength = textLength;
     }
     
 }

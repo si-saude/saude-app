@@ -1,87 +1,95 @@
 <head>
 <meta charset="utf-8">
-</head>
-
-<fieldset>
-			<legend>Dados Gerais</legend>			
-				<div class="row col s12">
-					<div class="input-field col s6">
-							<fieldset>
-								<label>Cargo</label> <input
-									type="text" disabled
-									name="empregado.cargo.nome"
-									[ngModel]="empregado.cargo?.nome">
-									</fieldset>
-				    </div>	
-				    <div class="input-field col s6">
-							<fieldset>
-								<label>Ênfase</label> <input
-									type="text" disabled
-									name="empregado.enfase.descricao"
-									[ngModel]="empregado.enfase?.descricao">
-									</fieldset>
-				    </div>	
-				</div>					
-				<div class="row col s12">
-					<div class="input-field col s4">
-							<fieldset>
-								<label>Função</label> <input
-									type="text" disabled
-									name="empregado.funcao.nome"
-									[ngModel]="empregado.funcao?.nome">
-									</fieldset>
-				    </div>	
-				    <div class="input-field col s4">
-							<fieldset>
-								<label>Ghe</label> <input
-									type="text" disabled
-									name="empregado.ghe.nome"
-									[ngModel]="empregado.ghe?.nome">
-									</fieldset>
-				    </div>	
-				    <div class="input-field col s4">
-							<fieldset>
-								<label>Ghee</label> <input
-									type="text" disabled
-									name="empregado.ghee.nome"
-									[ngModel]="empregado.ghee?.nome">
-									</fieldset>
-				    </div>	
-				</div>			
-			</fieldset>
-			<div class="row">
-					<table class="striped">
-						<thead>
-							<tr class="row col s12">
-								<th class="col s8">Instalações</th>
-								<th class="col s3">Base</th>
-								<th class="col s1">UF</th>
-							</tr>
-						</thead>
-						<div *ngFor="let instalacao of empregado.instalacoes;let i = index">
-							<tbody class="col s12">
-								<tr class="col s12">
-									<td class="col s8">{{instalacao.nome}}</td>
-									<td class="col s3">{{instalacao.base.nome}}</td>
-									<td class="col s1">{{instalacao.base.uf}}</td>									
-								</tr>
-							</tbody>
-						</div>
-					</table>
-			</div>
-			<div class="row">
-					<table class="striped">
-						<thead>
-							<tr class="row col s12">
-								<th class="col s8">Grupos de Monitoramento</th>
-							</tr>
-						</thead>
-						<div *ngFor="let grupo of empregado.grupoMonitoramentos;let i = index">
-							<tbody class="col s12">
-								<tr class="col s12">
-									<td class="col s12">{{grupo.nome}}</td>								
-								</tr>
-							</tbody>
-						</div>
-					</table>
-			</div>	
+</head>			
+<div *ngIf="empregado != undefined">
+	<div class="row col s12">
+		<div class="input-field col s6">
+				<fieldset>
+					<label>Cargo</label> <input
+						type="text" disabled
+						name="empregado.cargo.nome"
+						[ngModel]="empregado.cargo?.nome">
+						</fieldset>
+	    </div>	
+	    <div class="input-field col s6">
+				<fieldset>
+					<label>Ênfase</label> <input
+						type="text" disabled
+						name="empregado.enfase.descricao"
+						[ngModel]="empregado.enfase?.descricao">
+						</fieldset>
+	    </div>	
+	</div>					
+	<div class="row col s12">
+		<div class="input-field col s6">
+				<fieldset>
+					<label>Função</label> <input
+						type="text" disabled
+						name="empregado.funcao.nome"
+						[ngModel]="empregado.funcao?.nome">
+						</fieldset>
+	    </div>	
+	    <div class="input-field col s6">
+				<fieldset>
+					<label>Gerência</label> <input
+						type="text" disabled
+						name="empregado.gerencia.codigoCompleto"
+						[ngModel]="empregado.gerencia?.codigoCompleto">
+						</fieldset>
+	    </div>	
+	</div>
+	<div class="row col s12">
+	    <div class="input-field col s6">
+				<fieldset>
+					<label>Ghe</label> <input
+						type="text" disabled
+						name="empregado.ghe.nome"
+						[ngModel]="empregado.ghe?.nome">
+						</fieldset>
+	    </div>	
+	    <div class="input-field col s6">
+				<fieldset>
+					<label>Ghee</label> <input
+						type="text" disabled
+						name="empregado.ghee.nome"
+						[ngModel]="empregado.ghee?.nome">
+						</fieldset>
+	    </div>	
+	</div>			
+	<div class="row">
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s8">Instalações</th>
+						<th class="col s3">Base</th>
+						<th class="col s1">UF</th>
+					</tr>
+				</thead>
+				<div *ngFor="let instalacao of empregado.instalacoes;let i = index">
+					<tbody class="col s12">
+						<tr class="col s12">
+							<td class="col s8">{{instalacao.nome}}</td>
+							<td class="col s3">{{instalacao.base.nome}}</td>
+							<td class="col s1">{{instalacao.base.uf}}</td>									
+						</tr>
+					</tbody>
+				</div>
+			</table>
+	</div>
+	<div class="row">
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s8">Grupos de Monitoramento</th>
+					</tr>
+				</thead>
+				<div *ngFor="let grupo of  filterItemsOfType('6');let i = index">
+					<tbody class="col s12">
+						<tr class="col s12">
+							<td class="col s12">{{grupo.nome}}</td>								
+						</tr>
+					</tbody>
+				</div>
+			</table>
+	</div>	
+</div>	

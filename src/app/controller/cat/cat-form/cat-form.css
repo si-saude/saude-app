@@ -12,3 +12,9 @@
 .radio {
 	pointer-events: auto;
 }
+
+.btns-aside {
+	margin-left: -175px;
+	position: absolute;
+	margin-top: 20px;
+}

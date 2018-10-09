@@ -1,17 +1,21 @@
 import { Cat } from './../../model/cat';
-import { GenericBuilder } from './../../generics/generic.builder';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { EmpresaBuilder } from './../empresa/empresa.builder';
 import { GerenciaBuilder } from './../gerencia/gerencia.builder';
 import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
 import { ClassificacaoAfastamentoBuilder } from './../classificacao-afastamento/classificacao-afastamento.builder';
-
 import { DiagnosticoBuilder } from './../diagnostico/diagnostico.builder';
 import { FornecedorBuilder } from './../fornecedor/fornecedor.builder';
 import { ParteCorpoAtingidaBuilder } from './../parte-corpo-atingida/parte-corpo-atingida.builder';
 import { AgenteCausadorBuilder } from './../agente-causador/agente-causador.builder';
 import { NaturezaLesaoBuilder } from './../natureza-lesao/natureza-lesao.builder';
 import { BaseBuilder } from './../base/base.builder';
+import { CidadeBuilder } from './../cidade/cidade.builder';
+import { InstalacaoBuilder } from './../instalacao/instalacao.builder';
+import { CnaeBuilder } from './../cnae/cnae.builder';
+import { ClassificacaoGravidadeBuilder } from './../classificacao-gravidade/classificacao-gravidade.builder';
+import { ExameBuilder } from './../exame/exame.builder';
+import { GenericBuilder } from './../../generics/generic.builder';
 
 export class CatBuilder extends GenericBuilder {
 
@@ -25,6 +29,15 @@ export class CatBuilder extends GenericBuilder {
         cat.setClassificacao(new ClassificacaoAfastamentoBuilder().initialize(cat.getClassificacao()));
         cat.setCid(new DiagnosticoBuilder().initialize(cat.getCid()));
         cat.setProfissionalClassificacao(new ProfissionalSaudeBuilder().initialize(cat.getProfissionalClassificacao()));
+        cat.setAgenteCausador(new AgenteCausadorBuilder().initialize(cat.getAgenteCausador()));
+        cat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(cat.getNaturezaLesao()));
+        cat.setParteCorpoAtingida(new ParteCorpoAtingidaBuilder().initialize(cat.getParteCorpoAtingida()));
+        cat.setMunicipio(new CidadeBuilder().initialize(cat.getMunicipio()));
+        cat.setInstalacao(new InstalacaoBuilder().initialize(cat.getInstalacao()));
+        cat.setCnae(new CnaeBuilder().initialize(cat.getCnae()));
+        cat.setClassificacaoGravidade(new ClassificacaoGravidadeBuilder().initialize(cat.getClassificacaoGravidade()));
+        cat.setDiagnosticoProvavel(new DiagnosticoBuilder().initialize(cat.getDiagnosticoProvavel()));
+        cat.setExamesConvocacao(new ExameBuilder().initializeList(cat.getExamesConvocacao()));
         
         return cat;
     }
@@ -69,7 +82,111 @@ export class CatBuilder extends GenericBuilder {
         cloneCat.setTempoPrevisto(this.getValue(cat,"getTempoPrevisto"));
         cloneCat.setFerimentoGrave(this.getValue(cat,"getFerimentoGrave"));
         cloneCat.setDataClassificacao(this.getValue(cat,"getDataClassificacao"));
+        cloneCat.setRemuneracao(this.treatMoney(this.getValue(cat,"getRemuneracao")));
+        cloneCat.setDataObito(this.getValue(cat,"getDataObito"));
+        cloneCat.setRta(this.getValue(cat,"getRta"));
+        cloneCat.setGrauRiscoEmpresa(this.getValue(cat,"getGrauRiscoEmpresa"));
+        cloneCat.setNumeroSisin(this.getValue(cat,"getNumeroSisin"));
+        cloneCat.setClassificacaoSisin(this.getValue(cat,"getClassificacaoSisin"));
+        cloneCat.setDataAvaliacaoMedica(this.getValue(cat,"getDataAvaliacaoMedica"));
+        cloneCat.setRegistroSd2000(this.getValue(cat,"getRegistroSd2000"));
+        cloneCat.setCatSd2000(this.getValue(cat,"getCatSd2000"));
+        cloneCat.setDataEmissao(this.getValue(cat,"getDataEmissao"));
+        cloneCat.setPendenciaCorrecao(this.getValue(cat,"getPendenciaCorrecao"));
+        cloneCat.setJustificativaAtrasoEmissaoCat(this.getValue(cat,"getJustificativaAtrasoEmissaoCat"));
+        cloneCat.setNumeroCartaMulta(this.getValue(cat,"getNumeroCartaMulta"));
+        cloneCat.setTipoAcidente(this.getValue(cat,"getTipoAcidente"));
+        cloneCat.setTipoCat(this.getValue(cat,"getTipoCat"));
+        cloneCat.setComunicavelSus(this.getValue(cat,"getComunicavelSus"));
+        cloneCat.setNumeroCat(this.getValue(cat,"getNumeroCat"));
+        cloneCat.setCodigoCartaSindicato(this.getValue(cat,"getCodigoCartaSindicato"));
+        cloneCat.setClassificacaoAnomalia(this.getValue(cat,"getClassificacaoAnomalia"));
+        cloneCat.setDataComunicacaoSindicato(this.getValue(cat,"getDataComunicacaoSindicato"));
+        cloneCat.setJustificativaAtrasoEmissaoCarta(this.getValue(cat,"getJustificativaAtrasoEmissaoCarta"));
+        cloneCat.setCatInss(this.getValue(cat,"getCatInss"));
+        cloneCat.setConvocado(this.getValue(cat,"getConvocado"));
+        cloneCat.setAusenciaExames(this.getValue(cat,"getAusenciaExames"));
+        cloneCat.setRecomendacoes(this.getValue(cat,"getRecomendacoes"));
+        cloneCat.setArquivo(this.getValue(cat,"getArquivo"));
+        cloneCat.setArquivoBase64(this.getValue(cat,"getArquivoBase64"));
+        cloneCat.setJornadaTrabalho(this.getValue(cat,"getJornadaTrabalho"));
+        cloneCat.setAto1(this.getValue(cat,"getAto1"));
+        cloneCat.setAto2(this.getValue(cat,"getAto2"));
+        cloneCat.setAto3(this.getValue(cat,"getAto3"));
+        cloneCat.setAto4(this.getValue(cat,"getAto4"));
+        cloneCat.setAto5(this.getValue(cat,"getAto5"));
+        cloneCat.setJustificativa(this.getValue(cat,"getJustificativa"));
         cloneCat.setVersion(this.getValue(cat,"getVersion"));
+        
+        if (this.getValue(cat, "getExamesConvocacao") !== undefined) { 
+            cloneCat.setExamesConvocacao(
+                    new ExameBuilder().cloneList(this.getValue(cat,"getExamesConvocacao")));
+        } else {
+            cloneCat.setExamesConvocacao(new ExameBuilder().initializeList(null));
+        }
+        
+        if (this.getValue(cat, "getDiagnosticoProvavel") !== undefined) { 
+            cloneCat.setDiagnosticoProvavel(
+                    new DiagnosticoBuilder().clone(this.getValue(cat,"getDiagnosticoProvavel")));
+            if(!this.idGtZero(cloneCat.getDiagnosticoProvavel()))
+                cloneCat.setDiagnosticoProvavel(undefined);
+        } else {
+            cloneCat.setDiagnosticoProvavel(new DiagnosticoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getClassificacaoGravidade") !== undefined) { 
+            cloneCat.setClassificacaoGravidade(
+                    new ClassificacaoGravidadeBuilder().clone(this.getValue(cat,"getClassificacaoGravidade")));
+            if(!this.idGtZero(cloneCat.getClassificacaoGravidade()))
+                cloneCat.setClassificacaoGravidade(undefined);
+        } else {
+            cloneCat.setClassificacaoGravidade(new ClassificacaoGravidadeBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getCnae") !== undefined) { 
+            cloneCat.setCnae(
+                    new CnaeBuilder().clone(this.getValue(cat,"getCnae")));
+            if(!this.idGtZero(cloneCat.getCnae()))
+                cloneCat.setCnae(undefined);
+        } else {
+            cloneCat.setCnae(new CnaeBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getInstalacao") !== undefined) { 
+            cloneCat.setInstalacao(
+                    new InstalacaoBuilder().clone(this.getValue(cat,"getInstalacao")));
+            if(!this.idGtZero(cloneCat.getInstalacao()))
+                cloneCat.setInstalacao(undefined);
+        } else {
+            cloneCat.setInstalacao(new InstalacaoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getAgenteCausador") !== undefined) { 
+            cloneCat.setAgenteCausador(
+                    new AgenteCausadorBuilder().clone(this.getValue(cat,"getAgenteCausador")));
+            if(!this.idGtZero(cloneCat.getAgenteCausador()))
+                cloneCat.setAgenteCausador(undefined);
+        } else {
+            cloneCat.setAgenteCausador(new AgenteCausadorBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getNaturezaLesao") !== undefined) { 
+            cloneCat.setNaturezaLesao(
+                    new NaturezaLesaoBuilder().clone(this.getValue(cat,"getNaturezaLesao")));
+            if(!this.idGtZero(cloneCat.getNaturezaLesao()))
+                cloneCat.setNaturezaLesao(undefined);
+        } else {
+            cloneCat.setNaturezaLesao(new NaturezaLesaoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(cat, "getParteCorpoAtingida") !== undefined) { 
+            cloneCat.setParteCorpoAtingida(
+                    new ParteCorpoAtingidaBuilder().clone(this.getValue(cat,"getParteCorpoAtingida")));
+            if(!this.idGtZero(cloneCat.getParteCorpoAtingida()))
+                cloneCat.setParteCorpoAtingida(undefined);
+        } else {
+            cloneCat.setParteCorpoAtingida(new ParteCorpoAtingidaBuilder().initialize(null));
+        }
         
         if (this.getValue(cat, "getEmpregado") !== undefined) { 
             cloneCat.setEmpregado(
@@ -133,6 +250,15 @@ export class CatBuilder extends GenericBuilder {
         } else {
             cloneCat.setProfissionalClassificacao(new ProfissionalSaudeBuilder().initialize(null));
         }
+        
+        if (this.getValue(cat, "getMunicipio") !== undefined) { 
+            cloneCat.setMunicipio(
+                    new CidadeBuilder().clone(this.getValue(cat,"getMunicipio")));
+            if(!this.idGtZero(cloneCat.getMunicipio()))
+                cloneCat.setMunicipio(undefined);
+        } else {
+            cloneCat.setMunicipio(new CidadeBuilder().initialize(null));
+        }
 
         return cloneCat;
     }
@@ -147,6 +273,13 @@ export class CatBuilder extends GenericBuilder {
         }
         
         return array;
+    }
+    
+    treatMoney( value: string ) {
+        if ( value != undefined ) {
+            let realValue = value.toString().replace(/\.|\,||/gi, "");
+            return Number(realValue.substring(0, realValue.length - 2)+"."+realValue.substring(realValue.length-2, realValue.length));
+        }
     }
     
 }

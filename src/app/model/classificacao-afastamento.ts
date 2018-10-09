@@ -28,7 +28,7 @@ export class ClassificacaoAfastamento {
         this.version = version;
     }
 
-    isGeraAfastamento() {
+    getGeraAfastamento() {
         return this.geraAfastamento;
     }
 
