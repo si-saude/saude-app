@@ -1,0 +1,89 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+
+<div class="list-container" id="id-list-container">
+
+	<div class="row">
+		<div class="col s1">
+			<a (click)="exportFile()"> <i class="small material-icons icon"
+				(mouseover)="textUtil.showTextToast('Exportar', 4000)"
+				(mouseleave)="textUtil.closeTooltip()">file_download</i>
+			</a>
+		</div>
+	</div>
+
+	<table class="table table-striped"
+		[mfData]="entities | filterData : filter : typeFilter : value" #mf="mfDataTable">
+		<thead>
+			<tr>
+				<th style="width: 1%"><mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
+					<i class="small material-icons icon"
+					(click)="dropdown(false, 'gerencia')">arrow_drop_down</i>
+					<div class="div-icon" id="gerencia"></div>
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+					<input type="text" name="nome" style="width: 90%"
+					placeholder="filtrar nome" maxlength="64"
+					(input)="selectFilter($event, 'nome')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="matricula">Matrícula</mfDefaultSorter>
+					<input type="text" name="matricula" style="width: 90%"
+					placeholder="filtrar matricula" maxlength="64"
+					(input)="selectFilter($event, 'matrícula')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="statusRisco">Status do Risco</mfDefaultSorter>
+					<input type="text" name="statusRisco" style="width: 90%"
+					placeholder="filtrar status do risco" maxlength="64"
+					(input)="selectFilter($event, 'statusRisco')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="statusRPSat">Status do RPSat</mfDefaultSorter>
+					<input type="text" name="statusRPSat" style="width: 90%"
+					placeholder="filtrar status do risco" maxlength="64"
+					(input)="selectFilter($event, 'statusRPSat')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="equipe">Equipe</mfDefaultSorter>
+					<input type="text" name="equipe" style="width: 90%"
+					placeholder="filtrar equipe" maxlength="64"
+					(input)="selectFilter($event, 'equipe')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="indicador">Indicador</mfDefaultSorter>
+					<input type="text" name="indicador" style="width: 90%"
+					placeholder="filtrar indicador" maxlength="64"
+					(input)="selectFilter($event, 'indicador')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="diagnostico">Diagnostico</mfDefaultSorter>
+					<input type="text" name="diagnostico" style="width: 90%"
+					placeholder="filtrar diagnostico" maxlength="64"
+					(input)="selectFilter($event, 'diagnostico')">
+				</th>
+				<th style="width: 1%"><mfDefaultSorter by="intervencao">Intervenção</mfDefaultSorter>
+					<input type="text" name="intervencao" style="width: 90%"
+					placeholder="filtrar intervencao" maxlength="64"
+					(input)="selectFilter($event, 'intervencao')">
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of mf.data" (click)="toggleAcompanhamento(item)">
+				<td>{{item.gerencia}}</td>
+				<td>{{item.nome}}</td>
+				<td>{{item.matricula}}</td>
+    			<td>{{item.statusRisco}}</td>
+    			<td>{{item.statusRPSat}}</td>
+    			<td>{{item.equipe}}</td>
+    			<td>{{item.indicador}}</td>
+			    <td>{{item.diagnostico}}</td>
+			    <td>{{item.intervencao}}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<ul id='dropdown' class='dropdown-conteudo'></ul>
+</div>
+
+<app-modal-display-text></app-modal-display-text>
+
+<div materialize [materializeParams]="textUtil.toastParams"
+	[materializeActions]="textUtil.globalActions"></div>
