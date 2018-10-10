@@ -77,7 +77,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     getGruposMonitoramento() {
         this.profissiogramaService.getGruposMonitoramento()
             .then( res => {
-                this.gruposMonitoramento = res.json();
+                this.gruposMonitoramento = new GrupoMonitoramentoBuilder().cloneList(res.json());
                 this.gruposMonitoramento.sort(function(a, b){
                     if ( a['nome'] > b['nome'] )
                         return 1;
@@ -120,19 +120,18 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
             this.toastParams = ['Por favor, selecione um grupo monitoramento', 4000];
             this.globalActions.emit( 'toast' );
         } else {
-            
             let grupoMonitoramentoProfissiograma =  this.profissiograma.getGrupoMonitoramentoProfissiogramas().find(g=>
                 g.getGrupoMonitoramento().getId() == valor );
             
             if(grupoMonitoramentoProfissiograma){
                 this.toastParams = ['Este grupo já foi adicionado', 4000];
                 this.globalActions.emit( 'toast' );
-            }
-            
-            let grupoMonitoramento = this.gruposMonitoramento.find(g => g.getId() == valor);
-            grupoMonitoramentoProfissiograma = new GrupoMonitoramentoProfissiogramaBuilder().initialize(undefined);
-            grupoMonitoramentoProfissiograma.setGrupoMonitoramento(grupoMonitoramento);
-            this.profissiograma.getGrupoMonitoramentoProfissiogramas().push(grupoMonitoramentoProfissiograma);
+            }else{
+                let grupoMonitoramento = this.gruposMonitoramento.find(g => g.getId() == valor);
+                grupoMonitoramentoProfissiograma = new GrupoMonitoramentoProfissiogramaBuilder().initialize(undefined);
+                grupoMonitoramentoProfissiograma.setGrupoMonitoramento(grupoMonitoramento);
+                this.profissiograma.getGrupoMonitoramentoProfissiogramas().push(grupoMonitoramentoProfissiograma);
+            }            
         }
     }
 
