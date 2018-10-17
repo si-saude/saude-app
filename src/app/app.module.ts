@@ -105,6 +105,7 @@ import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificac
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
 import { ReportMudancaFuncaoGuard } from './guards/report-mudanca-funcao.guard';
+import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sast.guard';
 
 @NgModule({
   declarations: [
@@ -214,7 +215,8 @@ import { ReportMudancaFuncaoGuard } from './guards/report-mudanca-funcao.guard';
     ClassificacaoAfastamentoGuard,
     ItemAuditoriaAtestadoGuard,
     ClassificacaoGravidadeGuard,
-    ReportMudancaFuncaoGuard 
+    ReportMudancaFuncaoGuard,
+    ReportAcompanhamentoSastGuard
   ],
   bootstrap: [ 
     AppComponent

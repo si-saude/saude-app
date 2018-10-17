@@ -1,21 +1,15 @@
-export class AcaoDto {
-    private descricao: string;
-    private status: string;
+export class AcompanhamentoSastAcaoDto {
+    private acao: string;
     private tipoAcao: string;
     private contatoAcao: string;
+    private statusAcao: string;
     private acompanhamentos: Array<String>;
     
-    getDescricao() {
-        return this.descricao;
+    getAcao() {
+        return this.acao;
     }
-    setDescricao(descricao) {
-        this.descricao = descricao;
-    }
-    getStatus() {
-        return this.status;
-    }
-    setStatus(status) {
-        this.status = status;
+    setAcao(acao) {
+        this.acao = acao;
     }
     getTipoAcao() {
         return this.tipoAcao;
@@ -28,6 +22,12 @@ export class AcaoDto {
     }
     setContatoAcao(contatoAcao) {
         this.contatoAcao = contatoAcao;
+    }
+    getStatusAcao() {
+        return this.statusAcao;
+    }
+    setStatusAcao(statusAcao) {
+        this.statusAcao = statusAcao;
     }
     getAcompanhamentos() {
         return this.acompanhamentos;

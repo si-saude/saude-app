@@ -2,6 +2,31 @@
 <meta charset="utf-8">
 </head>
 
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div style="width: 50%; margin: 0 auto;">
+	<div class="row">
+		<div class="input-field col s4">
+			<label for="ano">Ano</label>
+			<input type="number" name='ano' id='ano' [(ngModel)]="ano">
+		</div>
+		<fieldset class="col s4 fieldset-select">
+			<legend> Estado </legend>
+			<select name="estado" class="browser-default" [(ngModel)]="estado">
+				<option disabled selected value=''>Selecione um estado</option>
+				<option *ngFor="let estado of estados" value="{{estado}}">{{estado}}</option>
+			</select>
+		</fieldset>
+		<div class="col s3">
+			<button class="btn btn-primary" type='button' (click)="getEntities()">Buscar</button>
+		</div>
+	</div>
+</div>
 
 <div class="list-container" id="id-list-container">
 
@@ -17,66 +42,77 @@
 	<table class="table table-striped"
 		[mfData]="entities | filterData : filter : typeFilter : value" #mf="mfDataTable">
 		<thead>
-			<tr>
-				<th style="width: 1%"><mfDefaultSorter by="gerencia">Gerência</mfDefaultSorter>
-					<i class="small material-icons icon"
-					(click)="dropdown(false, 'gerencia')">arrow_drop_down</i>
+			<tr style="display: flex">
+				<div style="width: 20%">
+					<div by="gerencia" style="float: left; margin-top: 8%;">Gerência</div>
+					<i class="small material-icons icon" style="float: left"
+						(click)="dropdown(false, 'gerencia')">arrow_drop_down</i>
 					<div class="div-icon" id="gerencia"></div>
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="nome">Nome</mfDefaultSorter>
+				</div>
+				<div style="width: 30%">
+					<div by="nome">Nome</div>
 					<input type="text" name="nome" style="width: 90%"
-					placeholder="filtrar nome" maxlength="64"
+						placeholder="filtrar nome" maxlength="64"
 					(input)="selectFilter($event, 'nome')">
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="matricula">Matrícula</mfDefaultSorter>
+				</div>
+				<div style="width: 15%">
+					<div by="matricula">Matrícula</div>
 					<input type="text" name="matricula" style="width: 90%"
-					placeholder="filtrar matricula" maxlength="64"
-					(input)="selectFilter($event, 'matrícula')">
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="statusRisco">Status do Risco</mfDefaultSorter>
-					<input type="text" name="statusRisco" style="width: 90%"
-					placeholder="filtrar status do risco" maxlength="64"
-					(input)="selectFilter($event, 'statusRisco')">
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="statusRPSat">Status do RPSat</mfDefaultSorter>
+						placeholder="filtrar matricula" maxlength="64"
+					(input)="selectFilter($event, 'matricula')">
+				</div>
+				<div style="width: 15%">
+					<div by="statusRPSat">Status do RPSat</div>
 					<input type="text" name="statusRPSat" style="width: 90%"
-					placeholder="filtrar status do risco" maxlength="64"
+						placeholder="filtrar status do risco" maxlength="64"
 					(input)="selectFilter($event, 'statusRPSat')">
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="equipe">Equipe</mfDefaultSorter>
-					<input type="text" name="equipe" style="width: 90%"
-					placeholder="filtrar equipe" maxlength="64"
-					(input)="selectFilter($event, 'equipe')">
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="indicador">Indicador</mfDefaultSorter>
-					<input type="text" name="indicador" style="width: 90%"
-					placeholder="filtrar indicador" maxlength="64"
-					(input)="selectFilter($event, 'indicador')">
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="diagnostico">Diagnostico</mfDefaultSorter>
-					<input type="text" name="diagnostico" style="width: 90%"
-					placeholder="filtrar diagnostico" maxlength="64"
-					(input)="selectFilter($event, 'diagnostico')">
-				</th>
-				<th style="width: 1%"><mfDefaultSorter by="intervencao">Intervenção</mfDefaultSorter>
-					<input type="text" name="intervencao" style="width: 90%"
-					placeholder="filtrar intervencao" maxlength="64"
-					(input)="selectFilter($event, 'intervencao')">
-				</th>
+				</div>
+				<div style="width: 20%">
+					<div by="statusRisco">Status do Risco</div>
+					<input type="text" name="statusRisco" style="width: 90%"
+						placeholder="filtrar status do risco" maxlength="64"
+					(input)="selectFilter($event, 'statusRisco')">
+				</div>
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let item of mf.data" (click)="toggleAcompanhamento(item)">
-				<td>{{item.gerencia}}</td>
-				<td>{{item.nome}}</td>
-				<td>{{item.matricula}}</td>
-    			<td>{{item.statusRisco}}</td>
-    			<td>{{item.statusRPSat}}</td>
-    			<td>{{item.equipe}}</td>
-    			<td>{{item.indicador}}</td>
-			    <td>{{item.diagnostico}}</td>
-			    <td>{{item.intervencao}}</td>
-			</tr>
+			<div class="div-acompanhamento-sasts" *ngFor="let item of mf.data; let i = index">
+				<div style="display: flex; cursor: pointer" (click)="toggleEquipe(i)">
+					<div style="width: 20%">{{item.gerencia}}</div>
+					<div style="width: 30%">{{item.nome}}</div>
+					<div style="width: 15%">{{item.matricula}}</div>
+		    		<div style="width: 15%">{{item.statusRPSat}}</div>
+		    		<div style="width: 20%">{{item.statusRisco}}</div>
+		    	</div>
+		    	<div class="div-equipes" id="{{i}}" style="display: none">
+			    	<div *ngFor="let equipe of item.equipes; let e = index">
+						<div style="display: flex; cursor: pointer" (click)="toggleIndicador(i+'-'+e)">{{equipe.nome}}</div>
+						<div class="div-indicadores" id="{{i}}-{{e}}" style="display: none">
+							<div *ngFor="let indicador of equipe.indicadores; let ind = index">
+								<div style="display: flex; cursor: pointer" (click)="toggleAcao(i+'-'+e+'-'+ind)">
+									<div style="width: 33%">{{indicador.indicador}}</div>
+									<div style="width: 33%">{{indicador.diagnostico}}</div>
+									<div style="width: 33%">{{indicador.intervencao}}</div>
+								</div>
+								<div class="div-acoes" id="{{i}}-{{e}}-{{ind}}" style="display: none">
+						    		<div *ngFor="let acao of indicador.acoes; let a = index" >
+						    			<div style="display: flex; cursor: pointer" (click)="toggleAcompanhamento(i+'-'+e+'-'+ind+'-'+a)">
+											<div style="width: 25%">{{acao.acao}}</div>
+											<div style="width: 25%">{{acao.tipoAcao}}</div>
+											<div style="width: 25%">{{acao.contatoAcao}}</div>
+											<div style="width: 25%">{{acao.statusAcao}}</div>
+										</div>
+										<div class="div-acompanhamentos" *ngFor="let acompanhamento of acao.acompanhamentos; let acomp = index"
+											 id="{{i}}-{{e}}-{{ind}}-{{a}}" style="display: none">
+											<div style="width: 100%" (click)="toggle(i)">{{acompanhamento}}</div>
+										</div>
+									</div>
+								</div>
+					    	</div>
+				    	</div>
+			    	</div>
+		    	</div>
+			</div>
 		</tbody>
 	</table>
 
