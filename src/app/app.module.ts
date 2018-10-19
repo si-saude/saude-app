@@ -106,6 +106,8 @@ import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
 import { ReportMudancaFuncaoGuard } from './guards/report-mudanca-funcao.guard';
 import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sast.guard';
+import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
+import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
 
 @NgModule({
   declarations: [
@@ -216,7 +218,9 @@ import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sa
     ItemAuditoriaAtestadoGuard,
     ClassificacaoGravidadeGuard,
     ReportMudancaFuncaoGuard,
-    ReportAcompanhamentoSastGuard
+    ReportAcompanhamentoSastGuard,
+    NutricaoAlimentoGuard,
+    MedidaAlimentarGuard 
   ],
   bootstrap: [ 
     AppComponent

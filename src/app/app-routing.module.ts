@@ -82,6 +82,8 @@ import { EmpresaGuard } from './guards/guards-child/empresa.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
+import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
+import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -285,6 +287,12 @@ const routes: Routes = [
   { path: 'classificacao-gravidade', 
       loadChildren: 'app/controller/classificacao-gravidade/classificacao-gravidade.module#ClassificacaoGravidadeModule',
       canActivateChild: [ClassificacaoGravidadeGuard]},
+  { path: 'nutricao-alimento', 
+      loadChildren: 'app/controller/nutricao-alimento/nutricao-alimento.module#NutricaoAlimentoModule',
+      canActivateChild: [NutricaoAlimentoGuard]},
+  { path: 'medida-alimentar', 
+      loadChildren: 'app/controller/medida-alimentar/medida-alimentar.module#MedidaAlimentarModule',
+      canActivateChild: [MedidaAlimentarGuard]}, 
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

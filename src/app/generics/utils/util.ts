@@ -22,5 +22,25 @@ export class Util {
             }
         } return undefined;
     }
+    
+    public static treatDouble(value: string) {
+        let ret: any = undefined;
+        if ( value != undefined && value.toString() != '0' ) {
+            value = value.toString();
+            if ( value.indexOf(',') > -1 ) {
+                let indexComma = value.indexOf(',');
+                value = value.substring(0, indexComma) + 
+                    value.substring(indexComma+1, indexComma+2) +
+                    value.substring(indexComma+2, value.length);
+                let realValue = value.replace(/\./gi, "");
+                ret = Number(realValue.replace(/\,/gi, "."));
+            } else {
+                if ( value.indexOf('.') == -1 ) 
+                    ret = Number(value);
+                else ret = value.replace(/\.|\,||/gi, "");
+            }
+        }
+        return ret; 
+    }
 
 }
