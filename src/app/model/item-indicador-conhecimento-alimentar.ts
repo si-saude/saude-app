@@ -4,6 +4,7 @@ export class ItemIndicadorConhecimentoAlimentar {
     private id: number;
     private indicadorConhecimentoAlimentar: IndicadorConhecimentoAlimentar;
     private descricao: string;
+    private ordem: number;
     private version: number;
     
     getDescricao() {
@@ -36,6 +37,14 @@ export class ItemIndicadorConhecimentoAlimentar {
 
     setIndicadorConhecimentoAlimentar(indicadorConhecimentoAlimentar) {
         this.indicadorConhecimentoAlimentar = indicadorConhecimentoAlimentar;
+    }
+    
+    getOrdem() {
+        return this.ordem;
+    }
+
+    setOrdem(ordem) {
+        this.ordem = ordem;
     }
     
 }

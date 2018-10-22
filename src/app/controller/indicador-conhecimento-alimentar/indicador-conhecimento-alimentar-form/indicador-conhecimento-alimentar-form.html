@@ -10,61 +10,79 @@
 
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+	
+		<ul class="tabs" materialize="tabs">
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#dadosGerais">Dados Gerais</a></li>
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#itens">Itens</a></li>
+		</ul>
 
-		<div class="row">
-
-			<div class="input-field col s10">
-				<label for="enunciado">Enunciado</label>
-				<input id="enunciado" type="text" maxlength="1024"
-				name="enunciado" [(ngModel)]="indicadorConhecimentoAlimentar.enunciado">
-			</div>
-			
-			<div class="input-field col s2">
-				<label for="ordem">Ordem</label>
-				<input id="ordem" type="number"
-				name="ordem" [(ngModel)]="indicadorConhecimentoAlimentar.ordem">
-			</div>
-		
-		</div>
-		
-		<div class="row">
-			<div class="input-field col s10">
-				<label for="descricao">Descrição</label>
-				<input id="descricao" type="text" maxlength="1024"
-				name="descricao" [(ngModel)]="item.descricao">
-			</div>
-			<div class="col s2">
-				<a style='margin-top: 25%;'
-					class="btn-floating waves-effect waves-light green btn-add"
-					(click)="addItem()"> <i
-					class="material-icons center-icon">add</i>
-				</a>
-			</div>
-		</div>
-
-		<div class="row">
-			<table class="striped">
-				<thead>
-					<tr class="row col s12">
-						<th class="col s9">Descrição</th>
-						<th class="col s3">Remover</th>
-					</tr>
-				</thead>
-				<div *ngFor="let iica of indicadorConhecimentoAlimentar.itemIndicadorConhecimentoAlimentares;let i = index">
-					<tbody class="col s12">
-						<tr class="col s12">
-							<td class="col s9 iica-descricao">{{iica.descricao}}</td>
-							<td class="col s3 botao-remover"><a
-								class="btn-floating waves-effect waves-light red btn-remove"
-								(click)="removeItem(i)"> <i
-									class="material-icons center-icon">delete</i>
-							</a></td>
-						</tr>
-					</tbody>
+		<div id="dadosGerais">
+			<div class="row">
+	
+				<div class="input-field col s10">
+					<label for="enunciado">Enunciado</label>
+					<input id="enunciado" type="text" maxlength="1024"
+					name="enunciado" [(ngModel)]="indicadorConhecimentoAlimentar.enunciado">
 				</div>
-
-			</table>
-
+				
+				<div class="input-field col s2">
+					<label for="ordem">Ordem</label>
+					<input id="ordem" type="number"
+					name="ordem" [(ngModel)]="indicadorConhecimentoAlimentar.ordem">
+				</div>
+			
+			</div>
+		</div>
+		
+		<div id="itens">
+			<div class="row">
+				<div class="input-field col s8">
+					<label for="descricao">Descrição</label>
+					<input id="descricao" type="text" maxlength="1024"
+					name="descricao" [(ngModel)]="item.descricao">
+				</div>
+				<div class="input-field col s2">
+					<label for="item-ordem">Ordem</label>
+					<input id="item-ordem" type="text" maxlength="1024"
+					name="item-ordem" [(ngModel)]="item.ordem">
+				</div>
+				<div class="col s2">
+					<a style='margin-top: 25%;'
+						class="btn-floating waves-effect waves-light green btn-add"
+						(click)="addItem()"> <i
+						class="material-icons center-icon">add</i>
+					</a>
+				</div>
+			</div>
+	
+			<div class="row">
+				<table class="striped">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s9">Descrição</th>
+							<th class="col s2">Ordem</th>
+							<th class="col s1">Remover</th>
+						</tr>
+					</thead>
+					<div *ngFor="let iica of indicadorConhecimentoAlimentar.itemIndicadorConhecimentoAlimentares;let i = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s9 iica-descricao">{{iica.descricao}}</td>
+								<td class="col s2 iica-ordem">{{iica.ordem}}</td>
+								<td class="col s1 botao-remover"><a
+									class="btn-floating waves-effect waves-light red btn-remove"
+									(click)="removeItem(i)"> <i
+										class="material-icons center-icon">delete</i>
+								</a></td>
+							</tr>
+						</tbody>
+					</div>
+	
+				</table>
+	
+			</div>
 		</div>
 		
 		<input id="id" name="id" type="hidden" [(ngModel)]="indicadorConhecimentoAlimentar.id"> 
