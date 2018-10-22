@@ -84,6 +84,7 @@ import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
 import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
 import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
+import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -292,7 +293,10 @@ const routes: Routes = [
       canActivateChild: [NutricaoAlimentoGuard]},
   { path: 'medida-alimentar', 
       loadChildren: 'app/controller/medida-alimentar/medida-alimentar.module#MedidaAlimentarModule',
-      canActivateChild: [MedidaAlimentarGuard]}, 
+      canActivateChild: [MedidaAlimentarGuard]},
+  { path: 'indicador-conhecimento-alimentar', 
+      loadChildren: 'app/controller/indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.module#IndicadorConhecimentoAlimentarModule',
+      canActivateChild: [IndicadorConhecimentoAlimentarGuard]},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

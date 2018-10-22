@@ -108,6 +108,7 @@ import { ReportMudancaFuncaoGuard } from './guards/report-mudanca-funcao.guard';
 import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sast.guard';
 import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
 import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
+import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 
 @NgModule({
   declarations: [
@@ -220,7 +221,8 @@ import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.gua
     ReportMudancaFuncaoGuard,
     ReportAcompanhamentoSastGuard,
     NutricaoAlimentoGuard,
-    MedidaAlimentarGuard 
+    MedidaAlimentarGuard,
+    IndicadorConhecimentoAlimentarGuard
   ],
   bootstrap: [ 
     AppComponent

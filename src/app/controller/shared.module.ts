@@ -91,6 +91,7 @@ import { ClassificacaoGravidadeService } from './classificacao-gravidade/classif
 import { CnaeService } from './cnae/cnae.service';
 import { NutricaoAlimentoService } from './nutricao-alimento/nutricao-alimento.service';
 import { MedidaAlimentarService } from './medida-alimentar/medida-alimentar.service';
+import { IndicadorConhecimentoAlimentarService } from './indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.service';
 
 @NgModule({
   declarations: [
@@ -201,7 +202,8 @@ import { MedidaAlimentarService } from './medida-alimentar/medida-alimentar.serv
     ClassificacaoGravidadeService,
     CnaeService,
     NutricaoAlimentoService,
-    MedidaAlimentarService
+    MedidaAlimentarService,
+    IndicadorConhecimentoAlimentarService
   ]
 })
 export class SharedModule { }

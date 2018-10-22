@@ -3,19 +3,19 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { GlobalVariable } from './../../global';
-import { Base } from './../../model/base';
-import { BaseFilter } from './../base/base.filter';
+import { IndicadorConhecimentoAlimentar } from './../../model/indicador-conhecimento-alimentar';
+import { IndicadorConhecimentoAlimentarFilter } from './../indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.filter';
 import { GenericService } from './../../generics/generic.service';
 
 @Injectable()
-export class BaseService extends GenericService {
+export class IndicadorConhecimentoAlimentarService extends GenericService {
 
     constructor( http: Http, router: Router ) { 
-        super(http,router,"base");
+        super(http,router,"indicador-conhecimento-alimentar");
     }
     
-    getBases() {
-        return this.selectList(new BaseFilter());
+    getIndicadorConhecimentoAlimentars() {
+        return this.selectList(new IndicadorConhecimentoAlimentarFilter());
     }
     
     getUfs() {
