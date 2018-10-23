@@ -4,6 +4,8 @@ export class Clinica {
     private id: number = 0;
     private nome: string;
     private uf: string;
+    private endereco: string;
+    private telefones: string;
     private exames: Array<Exame>;
     private version: number;
 
@@ -45,5 +47,21 @@ export class Clinica {
     
     setUf(uf: string) {
         this.uf = uf;
+    }
+    
+    getEndereco(): string {
+        return this.endereco;
+    }
+    
+    setEndereco(endereco: string) {
+        this.endereco = endereco;
+    }
+    
+    getTelefones(): string {
+        return this.telefones;
+    }
+    
+    setTelefones(telefones: string) {
+        this.telefones = telefones;
     }
 }

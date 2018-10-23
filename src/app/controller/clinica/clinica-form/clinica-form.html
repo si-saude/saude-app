@@ -23,15 +23,28 @@
 		
 			<div id="clinica">
 				<div class="row">
-					<div class="input-field col s10">
+					<div class="input-field col s7">
 						<label for="nome">Nome</label>
 						<input id="nome" type="text" maxlength="128"
 						name="nome" [(ngModel)]="clinica.nome">
+					</div>
+					<div class="input-field col s7">
+						<label for="telefones">Telefones</label>
+						<input id="telefones" type="text" maxlength="128"
+						name="telefones" [(ngModel)]="clinica.telefones">
 					</div>
 					<div class="input-field col s2">
 						<label for="uf">UF</label>
 						<input id="uf" type="text" maxlength="2"
 						name="uf" [(ngModel)]="clinica.uf">
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s10">
+						<label for="endereco">Endereço</label>
+						<textarea class="materialize-textarea" id="endereco" 
+						[(ngModel)]="clinica.endereco" maxlength="512"
+						name="endereco"></textarea>
 					</div>
 				</div>
 			</div>

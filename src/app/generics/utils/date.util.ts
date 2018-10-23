@@ -4,7 +4,7 @@ export class DateUtil {
     
     public getDateStringDataUTC(value) {
         if(value){
-            let date : Date = new Date(this.removeUTCDate(value));            
+            let date : Date = new Date(this.removeUTCDate(value));          
             return date.toLocaleDateString('pt-br');     
         }
     }

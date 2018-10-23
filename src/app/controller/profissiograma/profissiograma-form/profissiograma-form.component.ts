@@ -140,8 +140,8 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
         this.profissiograma.getGrupoMonitoramentoProfissiogramas().splice( i, 1 );
     }
 
-    selectGrupoMonitoramento( index: number ) {
-        this.selectedGM = this.gruposMonitoramento[index];
+    selectGrupoMonitoramento( id: number ) {
+        this.selectedGM = this.gruposMonitoramento.find(g=>g.getId() == id);        
         this.gruposMonitoramentoProfissiogramaExame = this.profissiograma
             .getGrupoMonitoramentoProfissiogramas()
             .find(g=>g.getGrupoMonitoramento().getId() == this.selectedGM.getId())
@@ -188,14 +188,14 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
         this.arrayCriterio.splice( i, 1 );
     }
 
-    selectedGrupoMonitoramento( gM: number ) {
+    selectedGrupoMonitoramento( id: number ) {
         if ( this.gruposMonitoramento != undefined && this.selectedGM) {
-            if ( this.gruposMonitoramento[gM].getId() === this.selectedGM.getId() ) {
+            if ( id === this.selectedGM.getId() ) {
                 return "active";
             } else return "";
         } else {
             setTimeout(() => {
-                if (this.selectedGM && this.gruposMonitoramento[gM].getId() === this.selectedGM.getId() ) {
+                if (this.selectedGM && id === this.selectedGM.getId() ) {
                     return "active";
                 } else return "";
             }, 500 );

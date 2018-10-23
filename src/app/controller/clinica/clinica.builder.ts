@@ -36,6 +36,8 @@ export class ClinicaBuilder extends GenericBuilder {
         cloneClinica.setId(this.getValue(clinica,"getId"));
         cloneClinica.setNome(this.getValue(clinica, "getNome"));
         cloneClinica.setUf(this.getValue(clinica, "getUf"));
+        cloneClinica.setEndereco(this.getValue(clinica, "getEndereco"));
+        cloneClinica.setTelefones(this.getValue(clinica, "getTelefones"));
         cloneClinica.setVersion(this.getValue(clinica, "getVersion"));
         
         cloneClinica.setExames(new ExameBuilder().cloneList(this.getValue(clinica,"getExames")));

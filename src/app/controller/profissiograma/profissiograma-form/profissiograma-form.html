@@ -63,9 +63,9 @@
 						*ngFor="let grupoMonitoramentoProfissiograma of profissiograma.grupoMonitoramentoProfissiogramas; let gM = index">
 						<div class="row row-collection">
 							<div class="col s10">
-								<a [ngClass]="selectedGrupoMonitoramento(gM)"
+								<a [ngClass]="selectedGrupoMonitoramento(grupoMonitoramentoProfissiograma.grupoMonitoramento.id)"
 									[routerLinkActive]="['active']" class="collection-item"
-									(click)="selectGrupoMonitoramento(gM)">
+									(click)="selectGrupoMonitoramento(grupoMonitoramentoProfissiograma.grupoMonitoramento.id)">
 									{{grupoMonitoramentoProfissiograma.grupoMonitoramento.nome}} </a>
 							</div>
 							<div class="col s2 btn-delete">
