@@ -1,0 +1,37 @@
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.btn-remove {
+	margin-top: 0 !important;
+	height: 30px;
+	width: 30px;
+	margin-left: 10%;
+}
+
+.iica-ordem { 
+	padding-left: 4%;
+}
+
+.btn-remove {
+	margin-left: 40%;
+}

@@ -89,6 +89,9 @@ import { ClassificacaoAfastamentoService } from './classificacao-afastamento/cla
 import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-auditoria-atestado.service';
 import { ClassificacaoGravidadeService } from './classificacao-gravidade/classificacao-gravidade.service';
 import { CnaeService } from './cnae/cnae.service';
+import { NutricaoAlimentoService } from './nutricao-alimento/nutricao-alimento.service';
+import { MedidaAlimentarService } from './medida-alimentar/medida-alimentar.service';
+import { IndicadorConhecimentoAlimentarService } from './indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.service';
 
 @NgModule({
   declarations: [
@@ -197,7 +200,10 @@ import { CnaeService } from './cnae/cnae.service';
     ItemAuditoriaAtestadoService,
     ClinicaService,
     ClassificacaoGravidadeService,
-    CnaeService
+    CnaeService,
+    NutricaoAlimentoService,
+    MedidaAlimentarService,
+    IndicadorConhecimentoAlimentarService
   ]
 })
 export class SharedModule { }

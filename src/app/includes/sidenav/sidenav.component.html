@@ -36,6 +36,7 @@
 			<a [routerLink]="['/acao-intervencao']" *ngIf="checkPermissao('ACAO-INTERVENCAO_LISTAR')">Ação</a>
 			<a [routerLink]="['/agente-causador']" *ngIf="checkPermissao('AGENTE-CAUSADOR_LISTAR')">Agente Causador</a>
 			<a [routerLink]="['/agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente de Risco</a>
+			<a [routerLink]="['/nutricao-alimento']" *ngIf="checkPermissao('NUTRICAO-ALIMENTO_LISTAR')">Alimento</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
 			<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
 			<a [routerLink]="['/categoria-risco']" *ngIf="checkPermissao('CATEGORIA-RISCO_LISTAR')">Categoria de Risco</a>
@@ -77,10 +78,12 @@
 				Indicador de Risco Saúde Ambiental
 			</a>
 			<a [routerLink]="['/indicador-sast']" *ngIf="checkPermissao('INDICADOR-SAST_LISTAR')">Indicador SAST</a>
+			<a [routerLink]="['/indicador-conhecimento-alimentar']" *ngIf="checkPermissao('INDICADOR-CONHECIMENTO-ALIMENTAR_LISTAR')">Indicador de Conhecimento Alimentar</a>
 			<a [routerLink]="['/instalacao']" *ngIf="checkPermissao('INSTALACAO_LISTAR')">Instalação</a>
 			<a [routerLink]="['/intervencao']" *ngIf="checkPermissao('INTERVENCAO_LISTAR')">Intervenção</a>
 			<a [routerLink]="['/item-auditoria-atestado']" *ngIf="checkPermissao('ITEM-AUDITORIA-ATESTADO_LISTAR')">Item de Auditoria de Atestado</a>
 			<a [routerLink]="['/localizacao']" *ngIf="checkPermissao('LOCALIZACAO_LISTAR')">Localização</a>
+			<a [routerLink]="['/medida-alimentar']" *ngIf="checkPermissao('MEDIDA-ALIMENTAR_LISTAR')">Medida Alimentar</a>
 			<a [routerLink]="['/motivo-recusa-atestado']" *ngIf="checkPermissao('MOTIVO-RECUSA-ATESTADO_LISTAR')">Motivo de Recusa do Atestado</a>
 			<a [routerLink]="['/natureza-lesao']" *ngIf="checkPermissao('NATUREZA-LESAO_LISTAR')">Natureza da Lesão</a>
 			<a [routerLink]="['/parte-corpo-atingida']" *ngIf="checkPermissao('PARTE-CORPO-ATINGIDA_LISTAR')">Parte do Corpo Atingida</a>
@@ -174,6 +177,7 @@
 			(click)="closeSidenavRelatorio()"><i class="material-icons">chevron_left</i>
 		</a>
 		<div class="groups">
+			<a [routerLink]="['/reports/acompanhamento-sast']" *ngIf="checkPermissao('REPORT-ACOMPANHAMENTO-SAST')">Acompanhamento da SAST</a>
 			<a [routerLink]="['/reports/avaliacao-higiene-ocupacional']" *ngIf="checkPermissao('REPORT-AVALIACAO-HIGIENE-OCUPACIONAL')">
 				Avaliação de Higiene Ocupacional
 			</a>

@@ -81,5 +81,5 @@ export class EmpregadoConvocacaoService extends GenericService {
     getExameService() {
         return this.exameService;
     }
-
+    
 }
