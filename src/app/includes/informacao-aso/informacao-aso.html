@@ -1,0 +1,69 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+
+<div class="table" *ngIf="(atendimento.tarefa.equipe.abreviacao == 'MED' && atendimento.aso.aptidoes.length > 0)">
+	<table style="width: 100%">
+		<div
+			*ngFor="let aptidao of atendimento.aso.aptidoes; let e = index">
+			<div class="row"></div>
+			<div class="col s12">					
+				<div class="col s7">
+				<label for="aptidaoAso">{{aptidao.grupoMonitoramento.nome}}</label>
+						<select name="aptidaoAso" class="browser-default"
+						[(ngModel)]="aptidao.aptidaoAso" [disabled]="atendimento.convocado">
+						<option disabled selected value="">Selecione uma Aptidão</option>
+						<option *ngFor="let aptidaoAso of aptidoesAso" value="{{aptidaoAso}}">{{aptidaoAso}}</option>
+						</select>
+				</div>
+		   </div>
+		</div>		
+		<div>
+			<div class="col s12">			
+	 			<div class="col s4" *ngIf="eInapto()">		
+					<label for="restricao">RESTRIÇÃO</label>
+					<app-date-picker [nome]="'atendimento.aso.dataRestricao'" 
+								[customDate]="atendimento.aso.dataRestricaoCustomDate" 									
+								[legenda]="'Data Restrição'"	
+								[desabilitar]="atendimento.convocado"								
+					></app-date-picker>
+				</div>
+		   </div>
+		</div>
+	</table>
+	<div class="row">
+		<div class="input-field col s3 checkbox">
+			<input type="checkbox" id="atendimento.aso.ausenciaExames"
+				(click)="setAusenciaExames($event)"
+				[disabled]="verifyEnableCheckAusencia() || atendimento.convocado"	
+				[(ngModel)]="atendimento.aso.ausenciaExames"
+				name="atendimento.aso.ausenciaExames"> <label
+				for="atendimento.aso.ausenciaExames">Ausência de Exames</label>
+		</div>
+		<div class="input-field col s2 checkbox">
+			<input type="checkbox" id="atendimento.aso.pendente"
+				[disabled]="atendimento.convocado"			
+				[(ngModel)]="atendimento.aso.pendente"
+				(click)="setPendente($event)"
+				name="atendimento.aso.pendente"> <label
+				for="atendimento.aso.pendente">Pendente</label>
+		</div>
+		<div class="input-field col s7 checkbox">
+			<input type="checkbox" id="atendimento.aso.impressoSd2000"
+				[disabled]="atendimento.convocado"			
+				[(ngModel)]="atendimento.aso.impressoSd2000"
+				name="atendimento.aso.impressoSd2000"> <label
+				for="atendimento.aso.impressoSd2000">Impresso no SD 2000, assinado e entregue na recepção</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col s4">
+			<button (click)="modalExame.openModalExame()" type="button"
+					[disabled]="verifyEnableConvocacao() || atendimento.convocado"			
+				class="btn">Exames para Convocação</button>
+		</div>
+	</div>
+</div>
+<app-modal-confirm (value)="functionModalConfirm($event)"></app-modal-confirm>
+<app-modal-exame [examesConvocacao]="atendimento.aso.examesConvocacao" (exame)="addExame($event)"></app-modal-exame>

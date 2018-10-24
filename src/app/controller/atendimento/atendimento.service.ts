@@ -252,4 +252,11 @@ export class AtendimentoService extends GenericService {
             .get( urlGrupoPerguntaFichaColeta + "?filter=", { headers: this.headers } )
             .toPromise();
     }
+    
+    getAptidaoAso() {                                       
+        let urlaptidaoAso = GlobalVariable.BASE_API_URL + "/generic/aptidao-aso";
+        return this.http
+            .get( urlaptidaoAso + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
 }

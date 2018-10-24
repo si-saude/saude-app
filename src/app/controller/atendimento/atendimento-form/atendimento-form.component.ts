@@ -13,6 +13,7 @@ import * as $ from 'jquery';
 import { GlobalVariable } from './../../../global';
 import { Atendimento } from './../../../model/atendimento';
 import { Usuario } from './../../../model/usuario';
+import { Aso } from './../../../model/aso';
 import { UsuarioBuilder } from './../../usuario/usuario.builder';
 import { Localizacao } from './../../../model/localizacao';
 import { FilaAtendimentoOcupacional } from './../../../model/fila-atendimento-ocupacional';
@@ -47,6 +48,7 @@ import { DateUtil } from '../../../generics/utils/date.util';
 import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
 import { TriagemUtil } from './../../../generics/utils/triagem.util';
 import { FichaColetaUtil } from './../../../generics/utils/ficha-coleta.util';
+import { Util } from './../../../generics/utils/util';
 
 @Component( {
     selector: 'app-atendimento-form',
@@ -228,8 +230,7 @@ export class AtendimentoFormComponent {
             this.showPreload = true;
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
-                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );                    
                     if ( this.atendimento.getTriagens() != undefined )
                         this.atendimento.getTriagens().forEach(t => {
                             if ( t.getDiagnostico() == undefined )
@@ -250,7 +251,6 @@ export class AtendimentoFormComponent {
                     else this.disabledTab = 'disabled';
                     
                     if ( this.atendimento.getId() > 0 ) {
-                        console.log(this.atendimento.getId());
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         
                         if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("DISPON") )
@@ -373,6 +373,7 @@ export class AtendimentoFormComponent {
         this.localizacao.setId(0);
         if ( this.filaAtendimentoOcupacional != undefined ) {
             this.filaAtendimentoOcupacional.getLocalizacao().setId(0);
+            this.atendimento.getFilaAtendimentoOcupacional().setStatus('');
             this.atendimentoService.encerrar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().clone(new FilaAtendimentoOcupacional());
@@ -449,19 +450,19 @@ export class AtendimentoFormComponent {
 
     liberar() {
         if ( this.atendimento.getId() > 0 ) {
-            console.log("1 - ");
-            console.log(this.atendimento.getFilaAtendimentoOcupacional());
             if ( !this.fichaColetaUtil.verifyValidFichaColeta(
                     this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
                 this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            console.log("2 - ");
-            console.log(this.atendimento.getFilaAtendimentoOcupacional());
             
-            console.log("3 - ");
-            console.log(new AtendimentoBuilder().clone(this.atendimento).getFilaAtendimentoOcupacional());
+            if ( !this.verifyAso(this.atendimento.getAso())) {
+                this.toastParams = ["Por favor, preencha os campos do Aso exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
             this.atendimentoService.liberar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Empregado liberado", 4000];
@@ -485,7 +486,7 @@ export class AtendimentoFormComponent {
                 this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
-            }
+            } 
 
             if ( !this.triagemUtil.verifyValidTriagens( this.atendimento.getTriagens() ) ) {
                 this.toastParams = ["Por favor, preencha os campos de Triagem exigidos", 4000];
@@ -496,6 +497,11 @@ export class AtendimentoFormComponent {
             if ( !this.planejamentoUtil.verifyPlanejamento( 
                     this.atendimento.getTriagens(), this.profissional.getEquipe().getId() ) ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            if ( !this.verifyAso(this.atendimento.getAso())) {
+                this.toastParams = ["Por favor, preencha os campos do Aso exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }
@@ -513,6 +519,24 @@ export class AtendimentoFormComponent {
                     this.globalActions.emit( 'toast' );
                 } )
         }
+    }
+    
+    verifyAso(aso : Aso){     
+        let ret: boolean = true;
+    
+        if(aso && this.atendimento.getTarefa().getEquipe().getAbreviacao() == 'MED' && this.atendimento.getAso().getPendente() == false &&
+                this.atendimento.getAso().getAptidoes().find(x => x.getAptidaoAso() !='APTO')){
+                   
+                this.atendimento.getAso().getAptidoes().forEach(x=>{
+                    if(x.getAptidaoAso() !='APTO' && (!Util.isNotNull(this.atendimento.getAso().getDataRestricao()))){
+                        ret = false;
+                    }
+                }); 
+                
+            if( this.atendimento.getAso().getAusenciaExames() == false && this.atendimento.getAso().getExamesConvocacao().length == 0)
+                ret =  false;
+        }
+        return ret;
     }
 
     devolverPraFila() {
@@ -551,6 +575,12 @@ export class AtendimentoFormComponent {
             if ( !this.planejamentoUtil.verifyPlanejamento( 
                     this.atendimento.getTriagens(), this.profissional.getEquipe().getId() ) ) {
                 this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
+            if ( !this.verifyAso(this.atendimento.getAso())) {
+                this.toastParams = ["Por favor, preencha os campos do Aso exigidos", 4000];
                 this.globalActions.emit( 'toast' );
                 return;
             }

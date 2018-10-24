@@ -10,6 +10,7 @@ import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional
 import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
 import { Profissional } from './../../../model/profissional';
+import { Aso } from './../../../model/aso';
 import { MaterializeAction } from "angular2-materialize";
 
 import { DateFilter } from './../../../generics/date.filter';
@@ -134,6 +135,7 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
               this.showPreload = false;
           } )
           .catch( error => {
+              console.log(error);
               this.processReturn( false, error );
           } )
         
@@ -150,7 +152,12 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
             this.toastParams = ["Por favor, preencha os campos do Planejamento exigidos", 4000];
             this.globalActions.emit( 'toast' );
             return;
-        }     
+        }
+        if ( !this.verifyAso(this.atendimento.getAso())) {
+            this.toastParams = ["Por favor, preencha os campos do Aso exigidos", 4000];
+            this.globalActions.emit( 'toast' );
+            return;
+        }
         
         this.showPreload = true;
         this.canDeactivate = true;
@@ -163,6 +170,24 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
             .catch( error => {
                 this.processReturn( false, error );
             } )
+    }
+    
+    verifyAso(aso : Aso){     
+        let ret: boolean = true;
+    
+        if(aso && this.atendimento.getTarefa().getEquipe().getAbreviacao() == 'MED' && this.atendimento.getAso().getPendente() == false &&
+                this.atendimento.getAso().getAptidoes().find(x => x.getAptidaoAso() !='APTO')){
+                   
+                this.atendimento.getAso().getAptidoes().forEach(x=>{
+                    if(x.getAptidaoAso() !='APTO' && (!Util.isNotNull(this.atendimento.getAso().getDataRestricao()))){
+                        ret = false;
+                    }
+                }); 
+                
+            if( this.atendimento.getAso().getAusenciaExames() == false && this.atendimento.getAso().getExamesConvocacao().length == 0)
+                ret =  false;
+        }
+        return ret;
     }
 
 }

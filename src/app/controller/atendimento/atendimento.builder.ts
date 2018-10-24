@@ -46,8 +46,8 @@ export class AtendimentoBuilder extends GenericBuilder {
             atendimento = new Atendimento();
         let cloneAtendimento = new Atendimento();
         cloneAtendimento.setId( this.getValue( atendimento, "getId" ) );
-        cloneAtendimento.setVersion( this.getValue( atendimento, "getVersion" ) );
-        cloneAtendimento.setAso(new AsoBuilder().clone(this.getValue( atendimento, "getAso" ) ));
+        cloneAtendimento.setVersion( this.getValue( atendimento, "getVersion" ) );        
+        cloneAtendimento.setAso(new AsoBuilder().clone(this.getValue( atendimento, "getAso" ) ));        
         cloneAtendimento.setFilaAtendimentoOcupacional(new FilaAtendimentoOcupacionalBuilder().clone(
                 this.getValue( atendimento, "getFilaAtendimentoOcupacional" ) ));
         cloneAtendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().clone(

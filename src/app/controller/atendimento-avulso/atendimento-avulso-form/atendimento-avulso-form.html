@@ -17,6 +17,8 @@
 			<ul class="tabs" materialize="tabs">
 				<li class="tab col s2"><a RouterLinkActive="active"
 					href="#dadosGerais">Dados Gerais</a></li>
+					<li class="tab col s2" [class.disabled]="!atendimentoCarregado"><a RouterLinkActive="active"
+					href="#aso">Aso</a></li>
 				<li class="tab col s3" [class.disabled]="!atendimentoCarregado"><a RouterLinkActive="active"
 					href="#fichaColeta">Ficha de Coleta</a></li>
 				<li class="tab col s2" [class.disabled]="!atendimentoCarregado"><a RouterLinkActive="active"
@@ -116,6 +118,11 @@
 					</div>
 
 				</div>
+					<div id="aso">
+						<div>
+					 		<app-informacao-aso [service]="atendimentoService" [atendimento]="atendimento"></app-informacao-aso>
+				 		</div>
+					</div>
 					<div id="fichaColeta" disabled>
 						<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta" [statusFila]="atendimento?.filaAtendimentoOcupacional.status"
 						[service]="atendimentoService" [idEquipeProfissional]="profissional.equipe.id"></app-ficha-coleta>

@@ -2,6 +2,9 @@ import { Empregado } from './empregado';
 import { Atendimento } from './atendimento';
 import { AsoAlteracao } from './aso-alteracao';
 import { Usuario } from './usuario';
+import { Aptidao } from './aptidao';
+import { Exame } from './exame';
+import { CustomDate} from './../generics/utils/custom-date.util';
 
 export class Aso {
     private id: number;
@@ -14,6 +17,15 @@ export class Aso {
     private conforme: boolean;
     private naoConformidades: string;
     private usuario: Usuario;
+    private aptidoes: Array<Aptidao>;
+    private ausenciaExames: boolean;
+    private impressoSd2000: boolean;
+    private pendente: boolean;
+    private convocado: boolean;
+    private dataRestricao: Date;
+    private dataRestricaoCustomDate: CustomDate = new CustomDate(this.dataRestricao);
+    private examesConvocacao: Array<Exame>;
+
     private version: number;
 
     getId() {
@@ -71,6 +83,15 @@ export class Aso {
     setStatus( status: string ) {
         this.status = status;
     }
+
+    getAptidoes( ) {
+        return this.aptidoes;
+    }
+    
+    setAptidoes( aptidoes: Array<Aptidao> ) {
+        this.aptidoes = aptidoes;
+    }
+    
     
     getAsoAlteracoes( ) {
         return this.asoAlteracoes;
@@ -103,5 +124,60 @@ export class Aso {
     setUsuario( usuario: Usuario ) {
         this.usuario = usuario;
     }
+    getExamesConvocacao() {
+        return this.examesConvocacao;
+    }
 
+    setExamesConvocacao(examesConvocacao) {
+        this.examesConvocacao = examesConvocacao;
+    }
+
+    getAusenciaExames() {
+        return this.ausenciaExames;
+    }
+
+    setAusenciaExames(ausenciaExames) {
+        this.ausenciaExames = ausenciaExames;
+    }
+ 
+    getImpressoSd2000() {
+        return this.impressoSd2000;
+    }
+
+    setImpressoSd2000(impressoSd2000) {
+        this.impressoSd2000 = impressoSd2000;
+    }
+    
+    getPendente() {
+        return this.pendente;
+    }
+
+    setPendente(pendente) {
+        this.pendente = pendente;
+    }
+    getDataRestricao() {
+        this.dataRestricao = this.dataRestricaoCustomDate.getApiDate();
+        return this.dataRestricao;
+    }
+
+    setDataRestricao(dataRestricao: Date) {
+        this.dataRestricaoCustomDate.setApiDate(dataRestricao);
+        this.dataRestricao = dataRestricao;
+    }
+    
+    getDataRestricaoCustomDate(){
+        return this.dataRestricaoCustomDate;
+    }
+    
+    setDataRestricaoCustomDate(dataRestricaoCustomDate: CustomDate){
+        this.dataRestricaoCustomDate = dataRestricaoCustomDate;
+    }
+    
+    getConvocado() {
+        return this.convocado;
+    }
+
+    setConvocado(convocado: boolean) {
+        this.convocado = convocado;
+    }
 }
