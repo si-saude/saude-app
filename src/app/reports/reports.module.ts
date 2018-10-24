@@ -14,10 +14,14 @@ import { ControleAtestadoReportComponent } from './controle-atestado-report/cont
 import { CatReportComponent } from './cat-report/cat-report.component';
 import { AvaliacaoHigieneOcupacionalReportComponent } from './avaliacao-higiene-ocupacional-report/avaliacao-higiene-ocupacional-report.component';
 import { PreRequisitosAgendamentoReportComponent } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.component';
+import { MudancaFuncaoReportComponent } from './mudanca-funcao-report/mudanca-funcao-report.component';
+import { AcompanhamentoSastReportComponent } from './acompanhamento-sast-report/acompanhamento-sast-report.component';
 import { PanoramaReportService } from './panorama-report/panorama-report.service';
 import { ControleAtestadoReportService } from './controle-atestado-report/controle-atestado-report.service';
 import { CatReportService } from './cat-report/cat-report.service';
 import { PreRequisitosAgendamentoReportService } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.service';
+import { MudancaFuncaoReportService } from './mudanca-funcao-report/mudanca-funcao-report.service';
+import { AcompanhamentoSastReportService } from './acompanhamento-sast-report/acompanhamento-sast-report.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
 import { PipesModule } from './../controller/pipes.module';
@@ -32,7 +36,9 @@ import { ModalDisplayTextModule } from './../includes/modal-display-text/modal-d
        ControleAtestadoReportComponent,
        CatReportComponent,
        AvaliacaoHigieneOcupacionalReportComponent,
-       PreRequisitosAgendamentoReportComponent
+       PreRequisitosAgendamentoReportComponent,
+       MudancaFuncaoReportComponent,
+       AcompanhamentoSastReportComponent
      ],
      imports: [
         ReportsRoutingModule,
@@ -49,7 +55,9 @@ import { ModalDisplayTextModule } from './../includes/modal-display-text/modal-d
         PanoramaReportService,
         ControleAtestadoReportService,
         CatReportService,
-        PreRequisitosAgendamentoReportService
+        PreRequisitosAgendamentoReportService,
+        MudancaFuncaoReportService,
+        AcompanhamentoSastReportService
      ]
 })
 export class ReportsModule{}

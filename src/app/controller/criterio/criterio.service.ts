@@ -4,8 +4,9 @@ import { Http } from '@angular/http';
 
 import { Criterio } from './../../model/criterio';
 import { CriterioFilter } from './criterio.filter';
-import { FuncaoService } from './../funcao/funcao.service';
 import { CargoService } from './../cargo/cargo.service';
+import { EnfaseService } from './../enfase/enfase.service';
+import { PeriodicidadeService } from './../periodicidade/periodicidade.service';
 import { GenericService } from './../../generics/generic.service';
 import { GlobalVariable } from './../../global';
 
@@ -13,7 +14,8 @@ import { GlobalVariable } from './../../global';
 export class CriterioService extends GenericService {
 
     constructor( http: Http, router: Router,
-            private funcaoService: FuncaoService,
+            private enfaseService: EnfaseService,
+            private periodicidadeService: PeriodicidadeService,
             private cargoService: CargoService) { 
         super(http,router,"criterio");
     }
@@ -43,12 +45,16 @@ export class CriterioService extends GenericService {
         return this.selectList(new CriterioFilter());
     }
     
-    getFuncoes() {
-        return this.funcaoService.getFuncoes();
+    getEnfases() {
+        return this.enfaseService.getEnfases();
     }
     
     getCargos() {
         return this.cargoService.getCargos();
+    }
+    
+    getPeriodicidades() {
+        return this.periodicidadeService.getPeriodicidades();
     }
     
 }

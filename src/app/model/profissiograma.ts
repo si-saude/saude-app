@@ -1,11 +1,11 @@
-import { GrupoMonitoramento } from './grupo-monitoramento';
+import { GrupoMonitoramentoProfissiograma } from './grupo-monitoramento-profissiograma';
 
 export class Profissiograma {
 
     private id: number = 0;
     private nome: string;
     private concluido: boolean;
-    private grupoMonitoramentos: Array<GrupoMonitoramento>;
+    private grupoMonitoramentoProfissiogramas: Array<GrupoMonitoramentoProfissiograma>;
     private version: number;
     
     getId() {
@@ -32,12 +32,12 @@ export class Profissiograma {
         this.concluido = concluido;
     }
     
-    getGrupoMonitoramentos() {
-        return this.grupoMonitoramentos;
+    getGrupoMonitoramentoProfissiogramas() {
+        return this.grupoMonitoramentoProfissiogramas;
     }
     
-    setGrupoMonitoramentos(grupoMonitoramentos: Array<GrupoMonitoramento>) {
-        this.grupoMonitoramentos = grupoMonitoramentos;
+    setGrupoMonitoramentoProfissiogramas(g: Array<GrupoMonitoramentoProfissiograma>) {
+        this.grupoMonitoramentoProfissiogramas = g;
     }
     
     getVersion() {

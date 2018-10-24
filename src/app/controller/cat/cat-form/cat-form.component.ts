@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
@@ -51,6 +51,7 @@ import { ExameBuilder } from './../../exame/exame.builder';
 export class CatFormComponent extends GenericFormComponent implements OnInit {
     @ViewChild( ModalExameComponent ) modalExame: ModalExameComponent;
     @ViewChild( ModalConfirmComponent ) modalConfirm: ModalConfirmComponent;
+    @ViewChild( 'arquivo' ) inputElArquivo: ElementRef;
     private cat: Cat;
     private cargos: Array<Cargo>;
     private escolaridades: Array<string>;
@@ -79,6 +80,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private nexoCausais: Array<string>;
     private profissional: Profissional;
     private cnaeFilter: CnaeFilter;
+    private conformeNaoConforme: Array<string>;
+    private aplicavelNaoAplicavel: Array<string>;
     
     private timeActions;
     
@@ -93,6 +96,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.escolaridades = new Array<string>();
         this.estadosCivis = new Array<string>();
         this.vinculos = new Array<string>();
+        this.conformeNaoConforme = new Array<string>();
+        this.aplicavelNaoAplicavel = new Array<string>();
         this.sexos = new Array<string>();
         this.tipoAcidentes = new Array<string>();
         this.tipoCats = new Array<string>();
@@ -154,9 +159,14 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.cat = new CatBuilder().clone( res.json() );
-                            console.log(res.json())
-                            console.log(this.cat)
-                            if ( this.cat.getEmpregado() ) 
+                            
+                            this.changeAto1();
+                            if ( this.cat.getDataAvaliacaoMedicaCustomDate().getAppDate() != undefined )
+                                this.changeAto2();
+                            this.changeAto3();
+                            this.changeAto4();
+                        
+                            if ( this.cat.getEmpregado() )
                                 this.autoCompleteEmpregado.getAutocomplete().initializeLastValue(
                                         this.cat.getEmpregado().getPessoa().getNome());
                             
@@ -229,6 +239,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.getNexoCausais();
         this.getTipoAcidentes();
         this.getTipoCats();
+        this.getConformeNaoConforme();
+        this.getAplicavelNaoAplicavel();
     }
     
     getCargos() {
@@ -331,9 +343,74 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             })
     }
     
+    getConformeNaoConforme() {
+        this.catService.getConformeNaoConforme()
+            .then(res => {
+                this.conformeNaoConforme = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+   
+    getAplicavelNaoAplicavel() {
+        this.catService.getAplicavelNaoAplicavel()
+            .then(res => {
+                this.aplicavelNaoAplicavel = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
     save() {
-        console.log(this.cat)
-        super.save( new CatBuilder().clone( this.cat ) );
+        let i: number = 0;
+        let total: number = 0;
+        let arquivo= undefined;
+        let name: string;
+        
+        
+        if ( this.inputElArquivo.nativeElement.files.length > 0 ) {
+            if ( this.inputElArquivo.nativeElement.files[0].name.substr(
+                this.inputElArquivo.nativeElement.files[0].name.length-3, 
+                this.inputElArquivo.nativeElement.files[0].name.length) != 'zip' ) {
+                    this.toastParams = ["O arquivo deve ser, exclusivamente, no formato .zip.", 4000];
+                    this.globalActions.emit( 'toast' );
+                    return;
+                }
+            arquivo = this.inputElArquivo.nativeElement.files[0];
+            total++;
+        }
+        
+        if ( total > 0 ) {
+            let component = this;
+            let cat: Cat = new CatBuilder().clone( component.cat );
+    
+            if ( arquivo != undefined ) {
+                let readerArquivo = new FileReader();
+    
+                readerArquivo.onload = function() {
+                    let arrayBuffer: ArrayBuffer = readerArquivo.result;
+                    let array = new Uint8Array( arrayBuffer );
+                    cat.setArquivo( array );
+                    component.callSave( ++i, total, cat );
+                }
+    
+                readerArquivo.readAsArrayBuffer( new Blob( [arquivo] ) );
+            }
+        } else {
+            super.save( new CatBuilder().clone( this.cat ) );
+        }
+    }
+    
+    salvar( cat ) {
+        super.save( cat );
+    }
+    
+    callSave( i: number, total: number, cat: Cat ) {
+        if ( i == total ) {
+            this.salvar( cat );
+        }
     }
     
     changeEmpregado() {
@@ -410,7 +487,18 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             this.cat.setDataCaracterizacao(new Date());
     }
     
-    changeCidOrClassificacaoAfastamento() {
+    changeCid() {
+        this.setPropertiesClassificacao();
+    }
+    
+    changeClassificacaoAfastamento() {
+        this.cat.setClassificacao(
+                new ClassificacaoAfastamentoBuilder().clone(
+                        this.classificacoes.find(c => c.getId() == this.cat.getClassificacao().getId())));
+        this.setPropertiesClassificacao();
+    }
+    
+    setPropertiesClassificacao() {
         if ( this.cat.getProfissionalClassificacao().getId() == 0 && 
                 ( this.cat.getCid().getId() > 0 || this.cat.getClassificacao().getId() > 0) )
             this.cat.setProfissionalClassificacao(this.profissional);
@@ -454,5 +542,148 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             this.cat.setExamesConvocacao(new Array<Exame>());
         else 
             this.cat.setAusenciaExames(false);
+    }
+    
+    downloadComunicacaoOcorrencia() {
+        if ( this.verifyDownloadRelatorio() ) return;
+        
+        this.catService.getComunicacaoOcorrencia( new CatBuilder().clone( this.cat ) )
+            .then(res => {
+                this.baixar( res, this.cat.getEmpregado().getMatricula().trim()+".pdf", 'relatorio' );
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
+    downloadArquivoZip() {
+        if ( this.verifyDownloadArquivo() ) return;
+        
+        this.baixar(this.cat.getArquivoBase64(), "arquivo-zip.zip", 'arquivo-zip');
+    }
+    
+    verifyDownloadRelatorio() {
+        if ( this.cat.getEmpregado() == undefined || this.cat.getEmpregado().getId() == 0 ||
+                this.cat.getEmpregado() == undefined || this.cat.getEmpregado().getId() == 0 ||
+                this.cat.getGerenteContrato() == undefined || this.cat.getTelefoneGerente() == "" ||
+                this.cat.getFiscalContrato() == undefined || this.cat.getTelefoneFiscal() == "" ||
+                this.cat.getDataOcorrencia() == undefined ||
+                this.cat.getDataInformacao() == undefined ||
+                this.cat.getProfissionalCaracterizacao() == undefined || this.cat.getProfissionalCaracterizacao().getId() == 0 ||
+                this.cat.getProfissionalClassificacao() == undefined || this.cat.getProfissionalClassificacao().getId() == 0 ||
+                this.cat.getDataClassificacao() == undefined ||
+                this.cat.getDataCaracterizacao() == undefined ||
+                this.cat.getCid() == undefined || this.cat.getCid().getId() == 0 ||
+                this.cat.getClassificacao() == undefined || this.cat.getClassificacao().getId() == 0 )
+            return true;
+    }
+    
+    verifyDownloadArquivo() {
+        if ( this.cat.getArquivoBase64() == undefined )
+            return true;
+    }
+    
+    baixar( data, fileName, file ) {
+        let byteCharacters;
+        
+        if ( file == 'arquivo-zip' )
+            byteCharacters = atob(data);
+        else byteCharacters = atob(data._body);
+        let byteArrays = [];
+        let sliceSize = 1024;
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            let byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            let byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        
+        let blob = new Blob(byteArrays);
+        let url = window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = fileName;
+        anchor.href = url;
+        document.body.appendChild(anchor);
+        anchor.click();
+    }
+    
+    changeAto1() {
+        if ( this.cat.getAto1() == undefined || this.cat.getAto1() == "" ) {
+            if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+                this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
+                let prazo = this.getPrazo();
+                if ( prazo != undefined )
+                    prazo.then(res => {
+                            this.cat.setAto1( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                        })
+                        .catch(error => {
+                            this.catchConfiguration(error);
+                        })
+               }
+        }
+    }
+    
+    changeAto2() {
+        if ( this.cat.getAto2() == undefined || this.cat.getAto2() == "" ) {
+            this.cat.setAto2( this.cat.getDataAvaliacaoMedica() == undefined ?
+                this.conformeNaoConforme[1] : this.conformeNaoConforme[0] );
+        }
+    }
+    
+    changeAto3() {
+        if ( this.cat.getAto3() == undefined || this.cat.getAto3() == "" ) {
+            if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+                    this.cat.getDataComunicacaoSindicatoCustomDate().getAppDate() != undefined ) {
+                this.catService.getFeriadoService().getDaysBetweenDates(
+                    this.cat.getDataEmissao(), this.cat.getDataComunicacaoSindicato())
+                        .then(res => {
+                            if ( this.cat.getEmpregado().getVinculo() == "CONTRATADO" )
+                                this.cat.setAto3( (Number(res.json()) > 10) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                            else this.cat.setAto3( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                        })
+                        .catch(error => {
+                            this.catchConfiguration(error);
+                        })
+            }
+        }
+    }
+   
+    changeAto4() {
+        if ( this.cat.getAto4() == undefined || this.cat.getAto4() == "" ) {
+            this.changeNumeroCartaMulta();
+        }
+    }
+    
+    changeNumeroCartaMulta() {
+        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+                this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
+                let prazo = this.getPrazo();
+                if ( prazo != undefined )
+                    prazo.then(res => {
+                        if ( Number(res.json()) <= 1 )
+                            this.cat.setAto4(this.aplicavelNaoAplicavel[1]);
+                        else {
+                            if ( this.cat.getNumeroCartaMulta() != undefined && this.cat.getNumeroCartaMulta() != "" )
+                                this.cat.setAto4( this.conformeNaoConforme[0] )
+                            else this.cat.setAto4( this.conformeNaoConforme[1] );
+                        }
+                    })
+                    .catch(error => {
+                        this.catchConfiguration(error);
+                    })
+            }
+    }
+    
+    getPrazo() {
+        if ( this.cat.getDataOcorrencia() != undefined && this.cat.getDataEmissao() != undefined ) 
+            return this.catService.getFeriadoService().getDaysBetweenDates(
+                    this.cat.getDataOcorrencia(), this.cat.getDataEmissao());
+        else undefined;
     }
 }

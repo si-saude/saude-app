@@ -33,7 +33,6 @@ import { PerfilGuard } from './guards/guards-child/perfil.guard';
 import { PeriodicidadeGuard } from './guards/guards-child/periodicidade.guard';
 import { ProfissiogramaGuard } from './guards/guards-child/profissiograma.guard';
 import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude.guard';
-import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
 import { RegimeGuard } from './guards/guards-child/regime.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
 import { UsuarioGuard } from './guards/guards-child/usuario.guard';
@@ -79,9 +78,13 @@ import { ImovelGuard } from './guards/guards-child/imovel.guard';
 import { MotivoRecusaAtestadoGuard } from './guards/guards-child/motivo-recusa-atestado.guard';
 import { AcaoIntervencaoGuard } from './guards/guards-child/acao-intervencao.guard';
 import { EmpresaGuard } from './guards/guards-child/empresa.guard';
+import { ClinicaGuard } from './guards/guards-child/clinica.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
+import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
+import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
+import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -109,6 +112,8 @@ const routes: Routes = [
       canActivateChild: [CursoGuard]},
   { path: 'cidade', loadChildren: 'app/controller/cidade/cidade.module#CidadeModule',
       canActivateChild: [CidadeGuard]},
+  { path: 'clinica', loadChildren: 'app/controller/clinica/clinica.module#ClinicaModule',
+      canActivateChild: [ClinicaGuard]},
   { path: 'ghe', loadChildren: 'app/controller/ghe/ghe.module#GheModule',
       canActivateChild: [GheGuard]},
   { path: 'periodicidade', loadChildren: 'app/controller/periodicidade/periodicidade.module#PeriodicidadeModule',
@@ -160,8 +165,6 @@ const routes: Routes = [
       canActivateChild: [EmpregadoConvocacaoGuard]},
   { path: 'usuario', loadChildren: 'app/controller/usuario/usuario.module#UsuarioModule',
       canActivateChild: [UsuarioGuard]},
-  { path: 'relatorio-medico', loadChildren: 'app/controller/relatorio-medico/relatorio-medico.module#RelatorioMedicoModule' ,
-      canActivateChild: [RelatorioMedicoGuard]},
   { path: 'feriado', loadChildren: 'app/controller/feriado/feriado.module#FeriadoModule',
       canActivateChild: [FeriadoGuard]},
   { path: 'servico', loadChildren: 'app/controller/servico/servico.module#ServicoModule',
@@ -285,6 +288,15 @@ const routes: Routes = [
   { path: 'classificacao-gravidade', 
       loadChildren: 'app/controller/classificacao-gravidade/classificacao-gravidade.module#ClassificacaoGravidadeModule',
       canActivateChild: [ClassificacaoGravidadeGuard]},
+  { path: 'nutricao-alimento', 
+      loadChildren: 'app/controller/nutricao-alimento/nutricao-alimento.module#NutricaoAlimentoModule',
+      canActivateChild: [NutricaoAlimentoGuard]},
+  { path: 'medida-alimentar', 
+      loadChildren: 'app/controller/medida-alimentar/medida-alimentar.module#MedidaAlimentarModule',
+      canActivateChild: [MedidaAlimentarGuard]},
+  { path: 'indicador-conhecimento-alimentar', 
+      loadChildren: 'app/controller/indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.module#IndicadorConhecimentoAlimentarModule',
+      canActivateChild: [IndicadorConhecimentoAlimentarGuard]},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

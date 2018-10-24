@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Criterio } from './../../../model/criterio';
-import { Funcao } from './../../../model/funcao';
+import { Enfase } from './../../../model/enfase';
+import { Periodicidade } from './../../../model/periodicidade';
 import { Cargo } from './../../../model/cargo';
 import { CriterioService } from './../criterio.service';
 import { CriterioFilter } from './../criterio.filter';
@@ -19,12 +20,14 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 export class CriterioFormDetailComponent extends GenericFormComponent implements OnInit {
     criterio: Criterio;
     tipos: Array<string>;
-    funcoes: Array<Funcao>;
+    enfases: Array<Enfase>;
     cargos: Array<Cargo>;
+    periodicidades: Array<Periodicidade>;
     sexos: Array<string>;
     operadores: Array<string>;
     selectedIdadeOrExame: boolean;
-    selectedFuncao: boolean;
+    selectedEnfase: boolean;
+    selectedPeriodicidade: boolean;
     selectedCargo: boolean;
     selectedSexo: boolean;
     selectedRelatorioMedico: boolean;
@@ -36,10 +39,12 @@ export class CriterioFormDetailComponent extends GenericFormComponent implements
         this.goTo = "criterio";
 
         this.cargos = new Array<Cargo>();
-        this.funcoes = new Array<Funcao>();
+        this.enfases = new Array<Enfase>();
+        this.periodicidades = new Array<Periodicidade>();
         this.sexos = new Array<string>();
         this.operadores = new Array<string>();
-        this.selectedFuncao = false;
+        this.selectedEnfase = false;
+        this.selectedPeriodicidade = false;
         this.selectedIdadeOrExame = false;
         this.selectedCargo = false;
         this.selectedSexo = false;
@@ -97,9 +102,17 @@ export class CriterioFormDetailComponent extends GenericFormComponent implements
                 console.log( error );
             } )
 
-        this.criterioService.getFuncoes()
+        this.criterioService.getEnfases()
             .then( res => {
-                this.funcoes = res.json();
+                this.enfases = res.json();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+        
+        this.criterioService.getPeriodicidades()
+            .then( res => {
+                this.periodicidades = res.json();
             } )
             .catch( error => {
                 console.log( error );
@@ -113,40 +126,44 @@ export class CriterioFormDetailComponent extends GenericFormComponent implements
 
     selectTipo() {
         this.selectedIdadeOrExame = false;
-        this.selectedFuncao = false;
         this.selectedCargo = false;
+        this.selectedEnfase = false;
+        this.selectedPeriodicidade = false;
         this.selectedSexo = false;
         this.selectedRelatorioMedico = false;
-
+        
         let tipo = this.criterio.getTipo();
-
-        if ( tipo.includes( "FUN" ) )
-            tipo = "FUNCAO"
-        if ( tipo.includes( "EXIGE RELAT" ) )
+        
+        if ( tipo.includes("NFASE") )
+            tipo = "ENFASE"
+        if ( tipo.includes("EXIGE RELAT"))
             tipo = "EXIGE RELATORIO MEDICO"
-
-        switch ( tipo ) {
-            case "IDADE":
-                this.selectedIdadeOrExame = true;
-                break;
-            case "EXAME":
-                this.selectedIdadeOrExame = true;
-                break;
-            case "FUNCAO":
-                this.selectedFuncao = true;
-                break;
-            case "CARGO":
-                this.selectedCargo = true;
-                break;
-            case "SEXO":
-                this.selectedSexo = true;
-                break;
-            case "EXIGE RELATORIO MEDICO":
-                this.selectedRelatorioMedico = true;
-                break;
+            
+        switch( tipo ) {
+        case "IDADE":
+            this.selectedIdadeOrExame = true;
+            break;
+        case "EXAME":
+            this.selectedIdadeOrExame = true;
+            break;
+        case "CARGO":
+            this.selectedCargo = true;
+            break;
+        case "ENFASE":
+            this.selectedEnfase = true;
+            break;
+        case "PERIODICIDADE":
+            this.selectedPeriodicidade = true;
+            break;
+        case "SEXO":
+            this.selectedSexo = true;
+            break;
+        case "EXIGE RELATORIO MEDICO":
+            this.selectedRelatorioMedico = true;
+            break;
         }
-
-
+        
+        
     }
 
     onDestroy() {

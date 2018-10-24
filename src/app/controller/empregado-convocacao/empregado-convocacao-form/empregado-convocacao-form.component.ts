@@ -17,6 +17,7 @@ import { EmpregadoConvocacaoService } from './../empregado-convocacao.service';
 import { EmpregadoConvocacaoFilter } from './../empregado-convocacao.filter';
 import { EmpregadoConvocacaoBuilder } from './../empregado-convocacao.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { HttpUtil } from './../../../generics/utils/http.util';
 
 @Component( {
     selector: 'app-empregado-convocacao-form',
@@ -30,6 +31,7 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     conformList: Array<boolean>;
     selecionarTodos: boolean;
     canAuditar: boolean;
+    httpUtil: HttpUtil;
     
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
@@ -41,6 +43,7 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
         this.exames = new ExameBuilder().initializeList(this.exames);
         this.conformList = new Array<boolean>();
         this.canAuditar = false;
+        this.httpUtil = new HttpUtil();
     }
     
     ngOnInit() {
@@ -127,5 +130,4 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
             });
     
     }
-    
 }

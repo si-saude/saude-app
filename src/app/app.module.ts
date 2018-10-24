@@ -46,7 +46,6 @@ import { PerfilGuard } from './guards/guards-child/perfil.guard';
 import { PeriodicidadeGuard } from './guards/guards-child/periodicidade.guard';
 import { ProfissiogramaGuard } from './guards/guards-child/profissiograma.guard';
 import { ProfissionalSaudeGuard } from './guards/guards-child/profissional-saude.guard';
-import { RelatorioMedicoGuard } from './guards/guards-child/relatorio-medico.guard';
 import { RegimeGuard } from './guards/guards-child/regime.guard';
 import { RequisitoAsoGuard } from './guards/guards-child/requisito-aso.guard';
 import { TipoGrupoMonitoramentoGuard } from './guards/guards-child/tipo-grupo-monitoramento.guard';
@@ -83,6 +82,7 @@ import { AgenteRiscoGuard } from './guards/guards-child/agente-risco.guard';
 import { AprhoGuard } from './guards/guards-child/aprho.guard';
 import { TipoSolicitacaoGuard } from './guards/guards-child/tipo-solicitacao.guard';
 import { CatGuard } from './guards/guards-child/cat.guard';
+import { ClinicaGuard } from './guards/guards-child/clinica.guard';
 import { AtestadoGuard } from './guards/guards-child/atestado.guard';
 import { ReportSolicitacaoCentralIntegraGuard } from './guards/report-solicitacao-central-integra.guard';
 import { KanbanGuard } from './guards/kanban.guard';
@@ -104,6 +104,11 @@ import { EmpresaGuard } from './guards/guards-child/empresa.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
+import { ReportMudancaFuncaoGuard } from './guards/report-mudanca-funcao.guard';
+import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sast.guard';
+import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
+import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
+import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 
 @NgModule({
   declarations: [
@@ -160,7 +165,6 @@ import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao
     ProfissionalSaudeGuard,
     RegimeGuard,
     RequisitoAsoGuard,
-    RelatorioMedicoGuard,
     TipoGrupoMonitoramentoGuard,
     UsuarioGuard,
     VacinaGuard,
@@ -194,6 +198,7 @@ import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao
     KanbanGuard,
     AgendaPeriodicoGuard,
     CatGuard,
+    ClinicaGuard,
     AtestadoGuard,
     MudancaFuncaoGuard,
     AtendimentoAvulsoGuard,
@@ -212,7 +217,12 @@ import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao
     EmpresaGuard,
     ClassificacaoAfastamentoGuard,
     ItemAuditoriaAtestadoGuard,
-    ClassificacaoGravidadeGuard
+    ClassificacaoGravidadeGuard,
+    ReportMudancaFuncaoGuard,
+    ReportAcompanhamentoSastGuard,
+    NutricaoAlimentoGuard,
+    MedidaAlimentarGuard,
+    IndicadorConhecimentoAlimentarGuard
   ],
   bootstrap: [ 
     AppComponent

@@ -22,6 +22,7 @@ import { InstalacaoService } from './../instalacao/instalacao.service';
 import { CnaeService } from './../cnae/cnae.service';
 import { ClassificacaoGravidadeService } from './../classificacao-gravidade/classificacao-gravidade.service';
 import { ExameService } from './../exame/exame.service';
+import { FeriadoService } from './../feriado/feriado.service';
 
 @Injectable()
 export class CatService extends GenericService {
@@ -43,7 +44,8 @@ export class CatService extends GenericService {
             private instalacaoService: InstalacaoService,
             private cnaeService: CnaeService,
             private classificacaoGravidadeService: ClassificacaoGravidadeService,
-            private exameService: ExameService) {
+            private exameService: ExameService,
+            private feriadoService: FeriadoService) {
         super(http,router,"cat");
     }
     
@@ -119,6 +121,10 @@ export class CatService extends GenericService {
         return this.exameService;
     }
     
+    getFeriadoService() {
+        return this.feriadoService;
+    }
+    
     getNexoCausais() {
         let urlNexoCausais =  GlobalVariable.BASE_API_URL + "/generic/ensaio-vedacao";
         return this.http
@@ -168,4 +174,24 @@ export class CatService extends GenericService {
             .toPromise();
     }
     
+    getComunicacaoOcorrencia( cat ) {
+        let urlComunicacaoOcorrencia = this.URL + "/comunicacao-ocorrencia";
+        return this.http
+            .post( urlComunicacaoOcorrencia, cat, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getConformeNaoConforme() {
+        let urlConfomeNaoConforme = GlobalVariable.BASE_API_URL + "/generic/conforme-nao-conforme";
+        return this.http
+            .get( urlConfomeNaoConforme + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getAplicavelNaoAplicavel() {
+        let urlAplicavelNaoAplicavel = GlobalVariable.BASE_API_URL + "/generic/aplicavel-nao-aplicavel";
+        return this.http
+            .get( urlAplicavelNaoAplicavel + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
 }

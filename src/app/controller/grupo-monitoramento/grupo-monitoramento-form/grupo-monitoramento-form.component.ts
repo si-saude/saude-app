@@ -6,15 +6,8 @@ import { MaterializeDirective,MaterializeAction } from "angular2-materialize";
 
 import { GlobalVariable } from './../../../global';
 import { GrupoMonitoramento } from './../../../model/grupo-monitoramento';
+import { Avaliacao } from './../../../model/avaliacao';
 import { TipoGrupoMonitoramento } from './../../../model/tipo-grupo-monitoramento';
-import { GrupoMonitoramentoExame } from './../../../model/grupo-monitoramento-exame';
-import { GrupoMonitoramentoExameBuilder } from './../../grupo-monitoramento-exame/grupo-monitoramento-exame.builder';
-import { Exame } from './../../../model/exame';
-import { ExameBuilder } from './../../exame/exame.builder';
-import { Criterio } from './../../../model/criterio';
-import { CriterioBuilder } from './../../criterio/criterio.builder';
-import { Periodicidade } from './../../../model/periodicidade';
-import { PeriodicidadeBuilder } from './../../periodicidade/periodicidade.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { GrupoMonitoramentoBuilder } from './../grupo-monitoramento.builder';
 import { GrupoMonitoramentoService } from './../grupo-monitoramento.service';
@@ -27,16 +20,9 @@ import { GrupoMonitoramentoService } from './../grupo-monitoramento.service';
 export class GrupoMonitoramentoFormComponent extends GenericFormComponent implements OnInit {
     tiposGrupoMonitoramento: Array<TipoGrupoMonitoramento>;
     grupoMonitoramento: GrupoMonitoramento;
-    exames: Array<Exame>;
-    criterios: Array<Criterio>;
-    arrayCriterio: Array<Criterio>;
-    gruposMonitoramentoExame: Array<GrupoMonitoramentoExame>;
-    periodicidades: Array<Periodicidade>;
 
     globalActions = new EventEmitter<string|MaterializeAction>();
     toastParams = ['', 4000];
-
-    selectedExm = null;
     
     constructor( private route: ActivatedRoute,
             private grupoMonitoramentoService: GrupoMonitoramentoService,
@@ -44,10 +30,7 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             super(grupoMonitoramentoService, router);
             this.goTo = "grupo-monitoramento";
             
-            this.arrayCriterio = new Array<Criterio>();
-            this.gruposMonitoramentoExame = new Array<GrupoMonitoramentoExame>();
             this.grupoMonitoramento = new GrupoMonitoramentoBuilder().initialize(this.grupoMonitoramento);
-            this.periodicidades = new PeriodicidadeBuilder().initializeList(this.periodicidades);
         }
     
     ngOnInit() {
@@ -68,30 +51,7 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
                 }
             } );
         
-        this.getExames();
-        this.getCriterios();
         this.getTiposGrupoMonitoramento();
-        this.getPeriodicidades();
-    }
-    
-    getExames() {
-        this.grupoMonitoramentoService.getExames()
-            .then(res => {
-                this.exames = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-    
-    getCriterios() {
-        this.grupoMonitoramentoService.getCriterios()
-            .then(res => {
-                this.criterios = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
     }
     
     getTiposGrupoMonitoramento() {
@@ -104,61 +64,21 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             })
     }
     
-    getPeriodicidades() {
-        this.grupoMonitoramentoService.getPeriodicidades()
-            .then(res => {
-                this.periodicidades = res.json();
-            })
-            .catch(error => {
-                console.log(error);
-            })
+    addAvaliacao(nome) {
+        if(nome && nome.length > 0 && this.grupoMonitoramento.getAvaliacoes().filter(
+                a=>a.getNome() == nome).length == 0){
+            let ava:Avaliacao = new Avaliacao();
+            ava.setNome(nome);
+            this.grupoMonitoramento.getAvaliacoes().push(ava);
+        }
+    }
+    
+    removeAvaliacao(i: number) {
+        this.grupoMonitoramento.getAvaliacoes().splice(i, 1);
     }
     
     save() {
         super.save(new GrupoMonitoramentoBuilder().clone(this.grupoMonitoramento));
-    }   
-    
-    addExame(valor: number) {
-        if ( valor == 0 ) {
-            this.toastParams = ['Por favor, selecione um exame', 4000];
-            this.globalActions.emit('toast');
-        } else {
-            let exame = this.exames.find(o => o["id"] == valor);
-            let grupoMonitoramentoExame = new GrupoMonitoramentoExameBuilder().initialize(new GrupoMonitoramentoExame());
-            grupoMonitoramentoExame.setExame(new ExameBuilder().clone(exame));
-            grupoMonitoramentoExame.setCriterios(new CriterioBuilder().initializeList(new Array<Criterio>()));
-            
-            this.grupoMonitoramento.getGrupoMonitoramentoExames().push(grupoMonitoramentoExame);
-        }
-    }
-
-    removeExame(i: number) {
-        this.grupoMonitoramento.getGrupoMonitoramentoExames().splice(i, 1);
-    }
-    
-    selectExame(index: number) {
-        this.selectedExm = this.grupoMonitoramento.getGrupoMonitoramentoExames()[index].getExame();
-        this.arrayCriterio = this.grupoMonitoramento.getGrupoMonitoramentoExames()[index].getCriterios();
-    }
-    
-    selectedExame(e: number) {
-        if ( this.grupoMonitoramento.getGrupoMonitoramentoExames()[e].getExame() === this.selectedExm ) {
-            return "active";
-        } else return "";
-    }
-    
-    addCriterio(valor: number) {
-        if ( this.selectedExm === null ) { 
-            this.toastParams = ['Por favor, escolha um exame', 4000];
-            this.globalActions.emit('toast');
-        } else {
-            let criterio = this.criterios.find(o => o["id"] == valor);
-            this.arrayCriterio.push(criterio);
-        }
-    }
-
-    removeCriterio(i: number) {
-        this.arrayCriterio.splice(i, 1);
     }
     
 }

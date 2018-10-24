@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Criterio } from './../../../model/criterio';
-import { Funcao } from './../../../model/funcao';
 import { Cargo } from './../../../model/cargo';
+import { Enfase } from './../../../model/enfase';
+import { Periodicidade } from './../../../model/periodicidade';
 import { CriterioService } from './../criterio.service';
 import { CriterioFilter } from './../criterio.filter';
 import { CriterioBuilder } from './../criterio.builder';
@@ -19,13 +20,16 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 export class CriterioFormComponent extends GenericFormComponent implements OnInit {
     criterio: Criterio;
     tipos: Array<string>;
-    funcoes: Array<Funcao>;
     cargos: Array<Cargo>;
+    enfases: Array<Enfase>;
+    periodicidades: Array<Periodicidade>;
     sexos: Array<string>;
     operadores: Array<string>;
+    
     selectedIdadeOrExame: boolean;
-    selectedFuncao: boolean;
     selectedCargo: boolean;
+    selectedEnfase: boolean;
+    selectedPeriodicidade: boolean;
     selectedSexo: boolean;
     selectedRelatorioMedico: boolean;
     
@@ -35,14 +39,16 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         super(criterioService, router);
         this.goTo = "criterio";
         
-        this.cargos = new Array<Cargo>();
+        this.enfases = new Array<Enfase>();
         this.tipos = new Array<string>();
-        this.funcoes = new Array<Funcao>();
+        this.periodicidades = new Array<Periodicidade>();
         this.sexos = new Array<string>();
         this.operadores = new Array<string>();
-        this.selectedFuncao = false;
-        this.selectedIdadeOrExame = false;
+        
+        this.selectedEnfase = false;
         this.selectedCargo = false;
+        this.selectedIdadeOrExame = false;
+        this.selectedPeriodicidade = false;
         this.selectedSexo = false;
         this.selectedRelatorioMedico = false;
         this.criterio = new CriterioBuilder().initialize(this.criterio);
@@ -100,9 +106,17 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
               console.log(error);
           })
       
-      this.criterioService.getFuncoes()
+      this.criterioService.getEnfases()
           .then(res => {
-              this.funcoes = res.json();
+              this.enfases = res.json();
+          })
+          .catch(error => {
+              console.log(error);
+          })
+      
+      this.criterioService.getPeriodicidades()
+          .then(res => {
+              this.periodicidades = res.json();
           })
           .catch(error => {
               console.log(error);
@@ -116,15 +130,16 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
     
     selectTipo() {
         this.selectedIdadeOrExame = false;
-        this.selectedFuncao = false;
         this.selectedCargo = false;
+        this.selectedEnfase = false;
+        this.selectedPeriodicidade = false;
         this.selectedSexo = false;
         this.selectedRelatorioMedico = false;
         
         let tipo = this.criterio.getTipo();
         
-        if ( tipo.includes("FUN") )
-            tipo = "FUNCAO"
+        if ( tipo.includes("NFASE") )
+            tipo = "ENFASE"
         if ( tipo.includes("EXIGE RELAT"))
             tipo = "EXIGE RELATORIO MEDICO"
             
@@ -135,11 +150,14 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         case "EXAME":
             this.selectedIdadeOrExame = true;
             break;
-        case "FUNCAO":
-            this.selectedFuncao = true;
-            break;
         case "CARGO":
             this.selectedCargo = true;
+            break;
+        case "ENFASE":
+            this.selectedEnfase = true;
+            break;
+        case "PERIODICIDADE":
+            this.selectedPeriodicidade = true;
             break;
         case "SEXO":
             this.selectedSexo = true;

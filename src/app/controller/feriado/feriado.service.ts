@@ -23,4 +23,11 @@ export class FeriadoService extends GenericService {
             .toPromise();
     }
     
+    getDaysBetweenDates(date1: Date, date2: Date) {
+        let urlGet = this.URL + "/get-days-between-dates"
+        return this.http
+            .get( urlGet + "?data1=" + date1.toString() +"&data2="+ date2.toString(), { headers: this.headers } )
+            .toPromise();
+    }
+    
 }

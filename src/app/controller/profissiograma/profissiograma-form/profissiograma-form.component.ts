@@ -9,14 +9,14 @@ import { Profissiograma } from './../../../model/profissiograma';
 import { ProfissiogramaService } from './../profissiograma.service';
 import { ProfissiogramaFilter } from './../profissiograma.filter';
 import { GrupoMonitoramento } from './../../../model/grupo-monitoramento';
-import { GrupoMonitoramentoExame } from './../../../model/grupo-monitoramento-exame';
-import { GrupoMonitoramentoExameBuilder } from './../../grupo-monitoramento-exame/grupo-monitoramento-exame.builder';
+import { GrupoMonitoramentoProfissiograma } from './../../../model/grupo-monitoramento-profissiograma';
+import { GrupoMonitoramentoProfissiogramaBuilder } from './../../grupo-monitoramento-profissiograma/grupo-monitoramento-profissiograma.builder';
+import { GrupoMonitoramentoProfissiogramaExame } from './../../../model/grupo-monitoramento-profissiograma-exame';
+import { GrupoMonitoramentoProfissiogramaExameBuilder } from './../../grupo-monitoramento-profissiograma-exame/grupo-monitoramento-profissiograma-exame.builder';
 import { Exame } from './../../../model/exame';
 import { ExameBuilder } from './../../exame/exame.builder';
 import { Criterio } from './../../../model/criterio';
 import { CriterioBuilder } from './../../criterio/criterio.builder';
-import { Periodicidade } from './../../../model/periodicidade';
-import { PeriodicidadeBuilder } from './../../periodicidade/periodicidade.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ProfissiogramaBuilder } from './../profissiograma.builder';
 import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-monitoramento.builder';
@@ -29,11 +29,10 @@ import { GrupoMonitoramentoBuilder } from './../../grupo-monitoramento/grupo-mon
 export class ProfissiogramaFormComponent extends GenericFormComponent {
     profissiograma: Profissiograma;
     gruposMonitoramento: Array<GrupoMonitoramento>;
-    gruposMonitoramentoExame: Array<GrupoMonitoramentoExame>;
+    gruposMonitoramentoProfissiogramaExame: Array<GrupoMonitoramentoProfissiogramaExame>;
     exames: Array<Exame>;
     criterios: Array<Criterio>;
     arrayCriterio: Array<Criterio>;
-    periodicidades: Array<Periodicidade>;
 
     selectedGM = null;
     selectedExm = null;
@@ -48,9 +47,8 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
 
         this.profissiograma = new ProfissiogramaBuilder().initialize( this.profissiograma );
 
-        this.gruposMonitoramentoExame = new Array<GrupoMonitoramentoExame>();
+        this.gruposMonitoramentoProfissiogramaExame = new Array<GrupoMonitoramentoProfissiogramaExame>();
         this.arrayCriterio = new Array<Criterio>();
-        this.periodicidades = new PeriodicidadeBuilder().initializeList( this.periodicidades );
     }
 
     ngOnInit() {
@@ -74,13 +72,19 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
         this.getGruposMonitoramento();
         this.getExames();
         this.getCriterios();
-        this.getPeriodicidades();
     }
 
     getGruposMonitoramento() {
         this.profissiogramaService.getGruposMonitoramento()
             .then( res => {
-                this.gruposMonitoramento = res.json();
+                this.gruposMonitoramento = new GrupoMonitoramentoBuilder().cloneList(res.json());
+                this.gruposMonitoramento.sort(function(a, b){
+                    if ( a['nome'] > b['nome'] )
+                        return 1;
+                    else if ( a['nome'] < b['nome'] )
+                        return -1;
+                    else return 0;
+                });
             } )
             .catch( error => {
                 console.log( error );
@@ -107,16 +111,6 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
             } )
     }
 
-    getPeriodicidades() {
-        this.profissiogramaService.getPeriodicidade()
-            .then( res => {
-                this.periodicidades = res.json();
-            } )
-            .catch( error => {
-                console.log( error );
-            } )
-    }
-
     save() {
         super.save( new ProfissiogramaBuilder().clone( this.profissiograma ) );
     }
@@ -126,25 +120,32 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
             this.toastParams = ['Por favor, selecione um grupo monitoramento', 4000];
             this.globalActions.emit( 'toast' );
         } else {
-            this.profissiogramaService.getGrupoMonitoramentoById( valor )
-                .then( res => {
-                    let grupoMonitoramento = res.json();
-                    this.profissiograma.getGrupoMonitoramentos().push( new GrupoMonitoramentoBuilder().clone( grupoMonitoramento ) );
-                } )
-                .catch( error => {
-                    console.log( error );
-                } )
+            let grupoMonitoramentoProfissiograma =  this.profissiograma.getGrupoMonitoramentoProfissiogramas().find(g=>
+                g.getGrupoMonitoramento().getId() == valor );
+            
+            if(grupoMonitoramentoProfissiograma){
+                this.toastParams = ['Este grupo já foi adicionado', 4000];
+                this.globalActions.emit( 'toast' );
+            }else{
+                let grupoMonitoramento = this.gruposMonitoramento.find(g => g.getId() == valor);
+                grupoMonitoramentoProfissiograma = new GrupoMonitoramentoProfissiogramaBuilder().initialize(undefined);
+                grupoMonitoramentoProfissiograma.setGrupoMonitoramento(grupoMonitoramento);
+                this.profissiograma.getGrupoMonitoramentoProfissiogramas().push(grupoMonitoramentoProfissiograma);
+            }            
         }
     }
 
 
     removeGrupoMonitoramento( i: number ) {
-        this.profissiograma.getGrupoMonitoramentos().splice( i, 1 );
+        this.profissiograma.getGrupoMonitoramentoProfissiogramas().splice( i, 1 );
     }
 
-    selectGrupoMonitoramento( index: number ) {
-        this.selectedGM = this.gruposMonitoramento[index];
-        this.gruposMonitoramentoExame = this.profissiograma.getGrupoMonitoramentos()[index].getGrupoMonitoramentoExames();
+    selectGrupoMonitoramento( id: number ) {
+        this.selectedGM = this.gruposMonitoramento.find(g=>g.getId() == id);        
+        this.gruposMonitoramentoProfissiogramaExame = this.profissiograma
+            .getGrupoMonitoramentoProfissiogramas()
+            .find(g=>g.getGrupoMonitoramento().getId() == this.selectedGM.getId())
+            .getGrupoMonitoramentoProfissiogramaExames();
         this.arrayCriterio = new Array<Criterio>();
         this.selectedExm = null;
     }
@@ -155,21 +156,22 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
             this.globalActions.emit( 'toast' );
         } else {
             let exame = this.exames.find( o => o["id"] == valor );
-            let grupoMonitoramentoExame = new GrupoMonitoramentoExameBuilder().initialize( new GrupoMonitoramentoExame() );
-            grupoMonitoramentoExame.setExame( new ExameBuilder().clone( exame ) );
-            grupoMonitoramentoExame.setCriterios( new CriterioBuilder().initializeList( new Array<Criterio>() ) );
+            let grupoMonitoramentoProfissiogramaExame = new GrupoMonitoramentoProfissiogramaExameBuilder()
+                .initialize( new GrupoMonitoramentoProfissiogramaExame() );
+            grupoMonitoramentoProfissiogramaExame.setExame( new ExameBuilder().clone( exame ) );
+            grupoMonitoramentoProfissiogramaExame.setCriterios( new CriterioBuilder().initializeList( new Array<Criterio>() ) );
 
-            this.gruposMonitoramentoExame.push( grupoMonitoramentoExame );
+            this.gruposMonitoramentoProfissiogramaExame.push(grupoMonitoramentoProfissiogramaExame);
         }
     }
 
     removeExame( i: number ) {
-        this.gruposMonitoramentoExame.splice( i, 1 );
+        this.gruposMonitoramentoProfissiogramaExame.splice( i, 1 );
     }
 
     selectExame( index: number ) {
-        this.selectedExm = this.gruposMonitoramentoExame[index].getExame();
-        this.arrayCriterio = this.gruposMonitoramentoExame[index].getCriterios();
+        this.selectedExm = this.gruposMonitoramentoProfissiogramaExame[index].getExame();
+        this.arrayCriterio = this.gruposMonitoramentoProfissiogramaExame[index].getCriterios();
     }
 
     addCriterio( valor: number ) {
@@ -186,14 +188,14 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
         this.arrayCriterio.splice( i, 1 );
     }
 
-    selectedGrupoMonitoramento( gM: number ) {
-        if ( this.gruposMonitoramento != undefined ) {
-            if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
+    selectedGrupoMonitoramento( id: number ) {
+        if ( this.gruposMonitoramento != undefined && this.selectedGM) {
+            if ( id === this.selectedGM.getId() ) {
                 return "active";
             } else return "";
         } else {
             setTimeout(() => {
-                if ( this.gruposMonitoramento[gM] === this.selectedGM ) {
+                if (this.selectedGM && id === this.selectedGM.getId() ) {
                     return "active";
                 } else return "";
             }, 500 );
@@ -201,7 +203,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     }
 
     selectedExame( e: number ) {
-        if ( this.gruposMonitoramentoExame[e].getExame() === this.selectedExm ) {
+        if (this.selectedExm && this.gruposMonitoramentoProfissiogramaExame[e].getExame().getId() === this.selectedExm.getId() ) {
             return "active";
         } else return "";
     }

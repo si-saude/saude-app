@@ -1,5 +1,5 @@
 import { Profissiograma } from './../../model/profissiograma';
-import { GrupoMonitoramentoBuilder } from './../grupo-monitoramento/grupo-monitoramento.builder';
+import { GrupoMonitoramentoProfissiogramaBuilder } from './../grupo-monitoramento-profissiograma/grupo-monitoramento-profissiograma.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class ProfissiogramaBuilder extends GenericBuilder{
@@ -7,7 +7,8 @@ export class ProfissiogramaBuilder extends GenericBuilder{
     initialize(profissiograma: Profissiograma): Profissiograma {
         profissiograma = new Profissiograma();
         
-        profissiograma.setGrupoMonitoramentos(new GrupoMonitoramentoBuilder().initializeList(profissiograma.getGrupoMonitoramentos()));
+        profissiograma.setGrupoMonitoramentoProfissiogramas(new GrupoMonitoramentoProfissiogramaBuilder()
+            .initializeList(profissiograma.getGrupoMonitoramentoProfissiogramas()));
         
         return profissiograma;
     }
@@ -37,8 +38,9 @@ export class ProfissiogramaBuilder extends GenericBuilder{
         cloneProfissiograma.setNome(this.getValue(profissiograma, "getNome"));
         cloneProfissiograma.setConcluido(this.getValue(profissiograma, "getConcluido"));
         
-        cloneProfissiograma.setGrupoMonitoramentos(
-                new GrupoMonitoramentoBuilder().cloneList(this.getValue(profissiograma, "getGrupoMonitoramentos")));
+        cloneProfissiograma.setGrupoMonitoramentoProfissiogramas(
+                new GrupoMonitoramentoProfissiogramaBuilder()
+                    .cloneList(this.getValue(profissiograma, "getGrupoMonitoramentoProfissiogramas")));
         
         return cloneProfissiograma;
     }

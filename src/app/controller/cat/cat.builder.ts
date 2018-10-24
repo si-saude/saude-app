@@ -106,6 +106,16 @@ export class CatBuilder extends GenericBuilder {
         cloneCat.setCatInss(this.getValue(cat,"getCatInss"));
         cloneCat.setConvocado(this.getValue(cat,"getConvocado"));
         cloneCat.setAusenciaExames(this.getValue(cat,"getAusenciaExames"));
+        cloneCat.setRecomendacoes(this.getValue(cat,"getRecomendacoes"));
+        cloneCat.setArquivo(this.getValue(cat,"getArquivo"));
+        cloneCat.setArquivoBase64(this.getValue(cat,"getArquivoBase64"));
+        cloneCat.setJornadaTrabalho(this.getValue(cat,"getJornadaTrabalho"));
+        cloneCat.setAto1(this.getValue(cat,"getAto1"));
+        cloneCat.setAto2(this.getValue(cat,"getAto2"));
+        cloneCat.setAto3(this.getValue(cat,"getAto3"));
+        cloneCat.setAto4(this.getValue(cat,"getAto4"));
+        cloneCat.setAto5(this.getValue(cat,"getAto5"));
+        cloneCat.setJustificativa(this.getValue(cat,"getJustificativa"));
         cloneCat.setVersion(this.getValue(cat,"getVersion"));
         
         if (this.getValue(cat, "getExamesConvocacao") !== undefined) { 

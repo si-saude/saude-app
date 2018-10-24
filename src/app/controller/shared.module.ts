@@ -17,6 +17,7 @@ import { CargoService } from './cargo/cargo.service';
 import { ConvocacaoService } from './convocacao/convocacao.service';
 import { CriterioService } from './criterio/criterio.service';
 import { CidadeService } from './cidade/cidade.service';
+import { ClinicaService } from './clinica/clinica.service';
 import { CursoService } from './curso/curso.service';
 import { EmpregadoService } from './empregado/empregado.service';
 import { EquipeService } from './equipe/equipe.service';
@@ -41,7 +42,6 @@ import { RegimeService } from './regime/regime.service';
 import { TipoGrupoMonitoramentoService } from './tipo-grupo-monitoramento/tipo-grupo-monitoramento.service';
 import { VacinaService } from './vacina/vacina.service';
 import { UsuarioService } from './usuario/usuario.service';
-import { RelatorioMedicoService } from './relatorio-medico/relatorio-medico.service';
 import { ResultadoExameService } from './resultado-exame/resultado-exame.service';
 import { FeriadoService } from './feriado/feriado.service';
 import { PessoaService } from './pessoa/pessoa.service';
@@ -89,6 +89,9 @@ import { ClassificacaoAfastamentoService } from './classificacao-afastamento/cla
 import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-auditoria-atestado.service';
 import { ClassificacaoGravidadeService } from './classificacao-gravidade/classificacao-gravidade.service';
 import { CnaeService } from './cnae/cnae.service';
+import { NutricaoAlimentoService } from './nutricao-alimento/nutricao-alimento.service';
+import { MedidaAlimentarService } from './medida-alimentar/medida-alimentar.service';
+import { IndicadorConhecimentoAlimentarService } from './indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.service';
 
 @NgModule({
   declarations: [
@@ -151,7 +154,6 @@ import { CnaeService } from './cnae/cnae.service';
     TipoGrupoMonitoramentoService,
     VacinaService,
     UsuarioService,
-    RelatorioMedicoService,
     ResultadoExameService,
     FeriadoService,
     PessoaService,
@@ -196,8 +198,12 @@ import { CnaeService } from './cnae/cnae.service';
     EmpresaService,
     ClassificacaoAfastamentoService,
     ItemAuditoriaAtestadoService,
+    ClinicaService,
     ClassificacaoGravidadeService,
-    CnaeService
+    CnaeService,
+    NutricaoAlimentoService,
+    MedidaAlimentarService,
+    IndicadorConhecimentoAlimentarService
   ]
 })
 export class SharedModule { }
