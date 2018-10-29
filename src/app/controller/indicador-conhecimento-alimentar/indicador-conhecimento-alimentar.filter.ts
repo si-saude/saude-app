@@ -1,27 +1,28 @@
-import { GenericFilter } from '../../generics/generic.filter';
+import { GenericFilter } from './../../generics/generic.filter';
+import { BooleanFilter } from './../../generics/boolean.filter';
 
 export class IndicadorConhecimentoAlimentarFilter extends GenericFilter {
-    private nome: string;
-    private uf: string;
+    private enunciado: string;
+    private inativo: BooleanFilter;
    
     constructor() {
         super();
     }
 
-    public getNome() {
-        return this.nome;
+    public getEnunciado() {
+        return this.enunciado;
     }
     
-    public setNome(n: string) {
-        this.nome = n;
+    public setEnunciado(enunciado: string) {
+        this.enunciado = enunciado;
     }
     
-    public getUf() {
-        return this.uf;
+    public getInativo() {
+        return this.inativo;
     }
     
-    public setUf(uf: string) {
-        this.uf = uf;
+    public setInativo(inativo: BooleanFilter) {
+        this.inativo = inativo;
     }
        
 }

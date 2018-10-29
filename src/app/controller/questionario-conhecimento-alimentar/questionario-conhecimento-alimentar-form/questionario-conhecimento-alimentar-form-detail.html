@@ -1,0 +1,41 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+
+			<div class="input-field col s10">
+				<label for="nome">Nome</label>
+				<input id="nome" type="text" disabled
+				name="nome" [(ngModel)]="questionarioConhecimentoAlimentar.nome">
+			</div>
+			
+			<div class="input-field col s2">
+				<label for="uf">UF</label>
+				<input id="uf" type="text" disabled
+				name="uf" [(ngModel)]="questionarioConhecimentoAlimentar.uf">
+			</div>
+		
+		</div>
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/questionario-conhecimento-alimentar']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>

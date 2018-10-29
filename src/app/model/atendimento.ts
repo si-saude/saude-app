@@ -4,6 +4,7 @@ import { Tarefa } from './tarefa';
 import { Aso } from './aso';
 import { Triagem } from './triagem';
 import { RegraAtendimento } from './regra-atendimento';
+import { QuestionarioConhecimentoAlimentar } from './questionario-conhecimento-alimentar';
 
 export class Atendimento {
     private id: number;
@@ -13,6 +14,7 @@ export class Atendimento {
     private tarefa: Tarefa;
     private aso: Aso;
     private triagensTodosAtendimentos: Array<Triagem>;
+    private questionario: QuestionarioConhecimentoAlimentar;
     private version: number;
 
     getId() {
@@ -77,5 +79,13 @@ export class Atendimento {
     
     setTriagensTodosAtendimentos(triagensTodosAtendimentos: Array<Triagem>) {
         this.triagensTodosAtendimentos = triagensTodosAtendimentos;
+    }
+    
+    getQuestionario() {
+        return this.questionario;
+    }
+
+    setQuestionario(questionario) {
+        this.questionario = questionario;
     }
 }

@@ -1,0 +1,13 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<div class="btns">
+		<a [class.disabled]="atendimento == undefined || atendimento.id < 1" 
+			class="btn btn-primary"
+			target="_blank" [href]="'/questionario-conhecimento-alimentar/cadastrar/'+atendimento.id">
+				Novo Questionário
+		</a>
+	</div>
+</div>

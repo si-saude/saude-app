@@ -92,6 +92,7 @@ import { CnaeService } from './cnae/cnae.service';
 import { NutricaoAlimentoService } from './nutricao-alimento/nutricao-alimento.service';
 import { MedidaAlimentarService } from './medida-alimentar/medida-alimentar.service';
 import { IndicadorConhecimentoAlimentarService } from './indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.service';
+import { QuestionarioConhecimentoAlimentarService } from './questionario-conhecimento-alimentar/questionario-conhecimento-alimentar.service';
 
 @NgModule({
   declarations: [
@@ -203,7 +204,8 @@ import { IndicadorConhecimentoAlimentarService } from './indicador-conhecimento-
     CnaeService,
     NutricaoAlimentoService,
     MedidaAlimentarService,
-    IndicadorConhecimentoAlimentarService
+    IndicadorConhecimentoAlimentarService,
+    QuestionarioConhecimentoAlimentarService
   ]
 })
 export class SharedModule { }

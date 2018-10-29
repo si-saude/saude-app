@@ -13,6 +13,7 @@ import { SharedModule } from './../shared.module';
 import { FichaColetaModule } from './../ficha-coleta.module';
 import { TriagemModule } from './../triagem.module';
 import { AcolhimentoModule } from './../acolhimento.module';
+import { MenuAtendimentoNutricaoModule } from './../../includes/menu-atendimento-nutricao/menu-atendimento-nutricao.module';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { AcolhimentoModule } from './../acolhimento.module';
         PlanejamentoModule,
         FichaColetaModule,
         TriagemModule,
-        AcolhimentoModule
+        AcolhimentoModule,
+        MenuAtendimentoNutricaoModule
      ],
      providers: [
         AtendimentoService

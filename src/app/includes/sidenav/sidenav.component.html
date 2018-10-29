@@ -93,6 +93,9 @@
 			<a [routerLink]="['/possivel-dano-saude']" *ngIf="checkPermissao('POSSIVEL-DANO-SAUDE_LISTAR')">Possível Dano à Saúde</a>
 			<a [routerLink]="['/profissiograma']" *ngIf="checkPermissao('PROFISSIOGRAMA_LISTAR')">Profissiograma</a>
 			<a [routerLink]="['/profissional-saude']" *ngIf="checkPermissao('PROFISSIONAL-SAUDE_LISTAR')">Profissional de Saúde</a>
+			<a [routerLink]="['/questionario-conhecimento-alimentar']" *ngIf="checkPermissao('QUESTIONARIO-CONHECIMENTO-ALIMENTAR_LISTAR')">
+				Questionário de Conhecimento Alimentar
+			</a>
 			<a [routerLink]="['/regime']" *ngIf="checkPermissao('REGIME_LISTAR')">Regime</a>
 			<a [routerLink]="['/regra-atendimento']" *ngIf="checkPermissao('REGRA-ATENDIMENTO_LISTAR')">Regra de Atendimento</a>
 			<a [routerLink]="['/relatorio-medico']" *ngIf="checkPermissao('RELATORIO-MEDICO_LISTAR')">Relatorio Médico</a>
