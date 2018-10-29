@@ -93,9 +93,6 @@
 			<a [routerLink]="['/possivel-dano-saude']" *ngIf="checkPermissao('POSSIVEL-DANO-SAUDE_LISTAR')">Possível Dano à Saúde</a>
 			<a [routerLink]="['/profissiograma']" *ngIf="checkPermissao('PROFISSIOGRAMA_LISTAR')">Profissiograma</a>
 			<a [routerLink]="['/profissional-saude']" *ngIf="checkPermissao('PROFISSIONAL-SAUDE_LISTAR')">Profissional de Saúde</a>
-			<a [routerLink]="['/questionario-conhecimento-alimentar']" *ngIf="checkPermissao('QUESTIONARIO-CONHECIMENTO-ALIMENTAR_LISTAR')">
-				Questionário de Conhecimento Alimentar
-			</a>
 			<a [routerLink]="['/regime']" *ngIf="checkPermissao('REGIME_LISTAR')">Regime</a>
 			<a [routerLink]="['/regra-atendimento']" *ngIf="checkPermissao('REGRA-ATENDIMENTO_LISTAR')">Regra de Atendimento</a>
 			<a [routerLink]="['/relatorio-medico']" *ngIf="checkPermissao('RELATORIO-MEDICO_LISTAR')">Relatorio Médico</a>
@@ -144,6 +141,9 @@
 			<a [routerLink]="['/kanban']" *ngIf="checkPermissao('KANBAN')">Kanban</a>			
 			<a [routerLink]="['/mudanca-funcao']" *ngIf="checkPermissao('MUDANCA-FUNCAO_LISTAR')">Mudança de Função</a>
 			<a [routerLink]="['/home']" *ngIf="checkPermissao('NOTIFICACAO')">Notificação</a>
+			<a [routerLink]="['/questionario-conhecimento-alimentar']" *ngIf="checkPermissao('QUESTIONARIO-CONHECIMENTO-ALIMENTAR_LISTAR')">
+				Questionário de Conhecimento Alimentar
+			</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		</div>
 	</li>
