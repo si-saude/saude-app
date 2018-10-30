@@ -34,6 +34,8 @@ export class AvaliacaoBuilder extends GenericBuilder {
         cloneAvaliacao.setId(this.getValue( avaliacao, "getId" ));
         cloneAvaliacao.setVersion(this.getValue( avaliacao, "getVersion" ));
         cloneAvaliacao.setNome(this.getValue( avaliacao, "getNome" ));
+        cloneAvaliacao.setAuditoriaAso(this.getValue( avaliacao, "getAuditoriaAso" ));
+        cloneAvaliacao.setAuditoriaMedico(this.getValue( avaliacao, "getAuditoriaMedico" ));
         
         cloneAvaliacao.setGrupoMonitoramento(new GrupoMonitoramentoBuilder()
             .clone( this.getValue( avaliacao, "getGrupoMonitoramento" ) ))

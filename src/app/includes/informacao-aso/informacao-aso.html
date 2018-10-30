@@ -31,7 +31,32 @@
 				</div>
 		   </div>
 		</div>
-	</table>
+	</table>	
+	<div class="row">
+		<table class="striped">
+			<thead>
+				<tr class="row col s12">
+					<th class="col s10">Avaliação</th>
+					<th class="col s2">Conforme</th>
+				</tr>
+			</thead>
+			<div *ngFor="let avaliacao of atendimento.aso.asoAvaliacoes; let e = index">
+				<tbody class="col s12">
+					<tr class="col s12">
+						<td  class="col s10">{{avaliacao.descricao}}</td>
+						<td>											
+							<div class=" input-field checkboxtable col s2">
+								<input type="checkbox"
+									[(ngModel)]="avaliacao.conforme"
+										name="avaliacao.conforme{{e}}"> <label
+										for="avaliacao.conforme{{e}}"></label>
+							</div>												
+						</td>
+					</tr>
+				</tbody>
+			</div>
+		</table>
+	</div>
 	<div class="row">
 		<div class="input-field col s3 checkbox">
 			<input type="checkbox" id="atendimento.aso.ausenciaExames"
@@ -64,6 +89,7 @@
 				class="btn">Exames para Convocação</button>
 		</div>
 	</div>
+
 </div>
 <app-modal-confirm (value)="functionModalConfirm($event)"></app-modal-confirm>
 <app-modal-exame [examesConvocacao]="atendimento.aso.examesConvocacao" (exame)="addExame($event)"></app-modal-exame>

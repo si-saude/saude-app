@@ -81,38 +81,64 @@
 			</div>
 
 			<div id="avaliacoes">
-				<fieldset>
-					<legend>
-						Avaliações
-					</legend>
-					
-					<div class="row row-avaliacao">
-						<div class="input-field col s5">
-							<label for="nome">Avaliação</label> <input id="avaliacao" type="text" 
-								 maxlength="128" name="avaliacao" #avaliacao>
-						</div>						
-						<div class="col s2">
-							<a class="btn-floating waves-effect waves-light green btn-add"
-								(click)="addAvaliacao(avaliacao.value)"> <i
-								class="material-icons center-icon">add</i>
-							</a>
+						<div class="row">
+							<div class="input-field col s5">
+								<label for="nome">Avaliação</label> <input id="nome" type="text"
+									[(ngModel)]="avaliacao.nome" maxlength="128"
+									name="nome">
+							</div>	
+							<div class="input-field col s2 checkbox">
+								<input type="checkbox" id="auditoriaAso"
+									[(ngModel)]="avaliacao.auditoriaAso"
+									name="avaliacao.auditoriaAso"> <label
+									for="avaliacao.auditoriaAso">Auditoria do ASO</label>
+							</div>
+							<div class="input-field col s3 checkbox">
+								<input type="checkbox" id="auditoriaMedico"
+									[(ngModel)]="avaliacao.auditoriaMedico"
+									name="avaliacao.auditoriaMedico"> <label
+									for="avaliacao.auditoriaMedico">Auditoria do Médico</label>
+							</div>	
+							<div class="col s1">
+								<a class="btn-floating waves-effect waves-light green btn-add"
+									(click)="addAvaliacao(avaliacao.value)"> <i
+									class="material-icons center-icon">add</i>
+								</a>
+							</div>
 						</div>
-					</div>
-					
+											
 					<div class="row">
 						<table class="striped">
 							<thead>
-								<tr class="row col s8">
+								<tr class="row col s12">
 									<th class="col s5">Avaliação</th>
-									<th class="col s3">Remover</th>
+									<th class="col s2">Auditoria do ASO</th>
+									<th class="col s3">Auditoria do Médico</th>
+									<th class="col s1">Remover</th>
 								</tr>
 							</thead>
 							<div *ngFor="let ava of grupoMonitoramento.avaliacoes;let i = index">
 								<tbody class="col s12">
 									<tr class="col s12">
-										<td class="col s5 avaliacao">{{ava.nome}}</td>
-										<td class="col s3 botao-remover"><a
-											class="btn-floating waves-effect waves-light red btn-remove"
+										<td class="col s5" >{{ava.nome}}</td>
+										<td class="col s2">											
+											<div class="checkboxtable">
+												<input type="checkbox" id="auditoriaAso"
+													[(ngModel)]="ava.auditoriaAso" disabled 
+														name="ava.auditoriaAso{{i}}"> <label
+														for="ava.auditoriaAso"></label>
+											</div>												
+										</td>
+										<td class="col s3">
+											 <div class="checkboxtable">
+												<input type="checkbox" id="auditoriaMedico"
+													[(ngModel)]="ava.auditoriaMedico"disabled 
+														name="ava.auditoriaMedico{{i}}"> <label
+														for="ava.auditoriaMedico"></label>
+											</div>	
+										</td>
+										<td class="col s1 btn-delete"><a
+											class="btn-floating waves-effect waves-light red"
 											(click)="removeAvaliacao(i)"> <i
 												class="material-icons center-icon">delete</i>
 										</a></td>
@@ -121,7 +147,6 @@
 							</div>
 						</table>
 					</div>
-				</fieldset>
 			</div>
 		</div>
 
