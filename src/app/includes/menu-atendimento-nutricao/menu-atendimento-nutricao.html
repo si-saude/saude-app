@@ -4,12 +4,13 @@
 
 <div class="row">
 	<div class="btns">
-		<a class="btn btn-primary"
-			[class.disabled]="this.atendimento == undefined || 
-				this.atendimento.getId() == undefined || 
-				this.atendimento.getId() == 0 "
-			target="_blank" [href]="'/questionario-conhecimento-alimentar/cadastrar/'+atendimento.id">
+		<button type="button" class="btn btn-primary" (click)="newQuestionario()"
+			[class.disabled]="disableNovoQuestionario ||
+				atendimento == undefined || 
+				atendimento.id == undefined || 
+				atendimento.id == 0 ||
+				atendimento.questionario.id != undefined">
 				Novo Questionário
-		</a>
+		</button>
 	</div>
 </div>

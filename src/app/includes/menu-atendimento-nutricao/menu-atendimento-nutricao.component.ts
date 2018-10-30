@@ -1,4 +1,4 @@
-import { EventEmitter, SimpleChanges, Component, Input, OnInit } from '@angular/core';
+import { EventEmitter, SimpleChanges, Component, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
@@ -13,7 +13,23 @@ import { Atendimento } from './../../model/atendimento';
 } )
 export class MenuAtendimentoNutricaoComponent{
     @Input() atendimento: Atendimento;
+    @Output() btnNovoQuestionario = new EventEmitter<boolean>();
+    private disableNovoQuestionario = false;
     
     constructor() {}
+    
+    newQuestionario() {
+        this.btnNovoQuestionario.emit(true);
+    }
+    
+    //RECEBE O INDICATIVO DE QUE DEVE SER REDIRECIONADO OU NAO PARA A PAGINA DE NOVO QUESTIONARIO
+    //CASO TRUE, NAO REDIRECIONA, CASO CONTRARIO, REDIRECIONA
+    callBtnNewQuestionario( bool ) {
+        console.log('teste')
+        if ( bool )
+            this.disableNovoQuestionario = true;
+        else  
+            window.open('/questionario-conhecimento-alimentar/cadastrar/'+this.atendimento.getId());
+    }
     
 }

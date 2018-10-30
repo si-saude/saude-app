@@ -222,7 +222,7 @@
 	</div>
 	
 	<div id="nutricao">
-		<app-menu-atendimento-nutricao [atendimento]="atendimento"></app-menu-atendimento-nutricao>
+		<app-menu-atendimento-nutricao (btnNovoQuestionario)="clickBtnNovoQuestionario($event)" [atendimento]="atendimento"></app-menu-atendimento-nutricao>
 	</div>
 
 	<div id="fichaColeta" disabled>
