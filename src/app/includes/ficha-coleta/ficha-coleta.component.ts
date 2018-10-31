@@ -85,13 +85,13 @@ export class FichaColetaComponent{
     seachPathsConteudoPerguntas() {
         this.innerFichaColeta.getRespostaFichaColetas().forEach(rFC => {
             if ( rFC.getPergunta().getTipo().includes("SIM") ) {
-                this.conteudoEnumOrSimNao.set(rFC.getId(), this.simNao);
+                this.conteudoEnumOrSimNao.set(rFC.getPergunta().getId(), this.simNao);
                 this.constructItensRespostaMap(rFC);
             }
             else if ( rFC.getPergunta().getTipo() == "ENUM" )
                 this.service.getEnums( rFC.getPergunta().getPath() )
                     .then(res => {
-                        this.conteudoEnumOrSimNao.set(rFC.getId(), Object.keys(res.json()));
+                        this.conteudoEnumOrSimNao.set(rFC.getPergunta().getId(), Object.keys(res.json()));
                         this.constructItensRespostaMap(rFC);
                     })
                     .catch(error => {
@@ -107,7 +107,7 @@ export class FichaColetaComponent{
                 
                 this.service.getEnums( resposta.getPergunta().getItens()[i].getPath() )
                     .then(res => {
-                        this.itensResposta.set(resposta.getId()+""+i, Object.keys(res.json()));
+                        this.itensResposta.set(resposta.getPergunta().getId()+""+i, Object.keys(res.json()));
                     })
                     .catch(error => {
                         console.log("Erro ao buscar path itens respostas")
@@ -222,11 +222,11 @@ export class FichaColetaComponent{
     }
     
     getConteudoEnumOrSimNao(resposta: RespostaFichaColeta) {
-        return this.conteudoEnumOrSimNao.get( resposta.getId() );
+        return this.conteudoEnumOrSimNao.get( resposta.getPergunta().getId() );
     }
     
     getItensResposta(resposta: RespostaFichaColeta, indexItemDoItem: number) {
-        return this.itensResposta.get( resposta.getId()+""+indexItemDoItem );
+        return this.itensResposta.get( resposta.getPergunta().getId()+""+indexItemDoItem );
     }
     
     isPossibleAddItem(resposta: RespostaFichaColeta) {

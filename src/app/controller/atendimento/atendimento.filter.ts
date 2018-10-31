@@ -4,6 +4,7 @@ import { FilaAtendimentoOcupacionalFilter } from './../fila-atendimento-ocupacio
 import { FilaEsperaOcupacionalFilter } from './../fila-espera-ocupacional/fila-espera-ocupacional.filter';
 import { AsoFilter } from './../aso/aso.filter';
 import { RegraAtendimentoFilter } from './../regra-atendimento/regra-atendimento.filter';
+import { BooleanFilter } from './../../generics/boolean.filter';
 
 export class AtendimentoFilter extends GenericFilter {
     private tarefa: TarefaFilter = new TarefaFilter();
@@ -11,6 +12,7 @@ export class AtendimentoFilter extends GenericFilter {
     private filaEsperaOcupacional: FilaEsperaOcupacionalFilter;
     private aso: AsoFilter;
     private regra: RegraAtendimentoFilter;
+    
 
     getTarefa() {
         return this.tarefa;
@@ -50,5 +52,6 @@ export class AtendimentoFilter extends GenericFilter {
 
     setAso(aso: AsoFilter) {
         this.aso = aso;
-    }
+    }   
+
 }

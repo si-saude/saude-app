@@ -5,8 +5,11 @@ import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { Usuario } from './../../model/usuario';
 import { UsuarioBuilder } from './../usuario/usuario.builder';
 import { AsoAlteracao } from './../../model/aso-alteracao';
+import { AptidaoBuilder } from './../aptidao/aptidao.builder';
+import { Aptidao } from './../../model/aptidao';
 import { AsoAlteracaoBuilder } from './../aso-alteracao/aso-alteracao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
+import { ExameBuilder } from './../exame/exame.builder';
 
 export class AsoBuilder extends GenericBuilder {
     
@@ -17,6 +20,8 @@ export class AsoBuilder extends GenericBuilder {
         aso.setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
         aso.setUsuario(new UsuarioBuilder().initialize(new Usuario()));
         aso.setAsoAlteracoes(new AsoAlteracaoBuilder().initializeList(new Array<AsoAlteracao>()));
+        aso.setAptidoes(new AptidaoBuilder().initializeList(new Array<Aptidao>()));
+        aso.setExamesConvocacao(new ExameBuilder().initializeList(aso.getExamesConvocacao()));
         
         return aso;
     }
@@ -36,10 +41,8 @@ export class AsoBuilder extends GenericBuilder {
     }
     
     clone(aso: Aso): Aso {
-        
         if (aso === null || aso === undefined)
             aso = new Aso();
-        
         let cloneAso = new Aso();
         cloneAso.setId(this.getValue(aso,"getId"));
         cloneAso.setVersion(this.getValue(aso,"getVersion"));
@@ -48,6 +51,11 @@ export class AsoBuilder extends GenericBuilder {
         cloneAso.setConforme(this.getValue(aso,"getConforme"));
         cloneAso.setNaoConformidades(this.getValue(aso,"getNaoConformidades"));
         cloneAso.setValidade(this.getValue(aso,"getValidade"));
+        cloneAso.setAusenciaExames(this.getValue(aso,"getAusenciaExames"));
+        cloneAso.setImpressoSd2000(this.getValue(aso,"getImpressoSd2000"));
+        cloneAso.setPendente(this.getValue(aso,"getPendente"));
+        cloneAso.setDataRestricao(this.getValue( aso, "getDataRestricao" ) ); 
+        cloneAso.setConvocado(this.getValue(aso,"getConvocado"));
         
         if(this.getValue(aso,"getAtendimento") != undefined){
             let atendimento: Atendimento = new Atendimento();
@@ -55,11 +63,18 @@ export class AsoBuilder extends GenericBuilder {
             cloneAso.setAtendimento(atendimento);            
         }else
             cloneAso.setAtendimento(new Atendimento());
+
+        if (this.getValue(aso, "getExamesConvocacao") !== undefined) { 
+            cloneAso.setExamesConvocacao(
+                    new ExameBuilder().cloneList(this.getValue(aso,"getExamesConvocacao")));
+        } else {
+            cloneAso.setExamesConvocacao(new ExameBuilder().initializeList(null));
+        }
         
         cloneAso.setEmpregado(new EmpregadoBuilder().clone(this.getValue(aso,"getEmpregado")));
         cloneAso.setAsoAlteracoes(new AsoAlteracaoBuilder().cloneList(this.getValue(aso,"getAsoAlteracoes")));
+        cloneAso.setAptidoes(new AptidaoBuilder().cloneList(this.getValue(aso,"getAptidoes")));
         cloneAso.setUsuario(new UsuarioBuilder().clone(this.getValue(aso,"getUsuario")));
-        
         return cloneAso;
     }
     

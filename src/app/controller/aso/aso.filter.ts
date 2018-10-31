@@ -11,6 +11,7 @@ export class AsoFilter extends GenericFilter {
     private validade: DateFilter;
     private status: string;
     private conforme: BooleanFilter;
+    private convocado: BooleanFilter;
     
     getEmpregado() {
         return this.empregado;
@@ -48,4 +49,10 @@ export class AsoFilter extends GenericFilter {
     setConforme(conforme: BooleanFilter) {
         this.conforme = conforme;
     }
+    getConvocado() {
+        return this.convocado;
+    }
+    setConvocado(convocado) {
+        this.convocado = convocado;
+    }    
 }

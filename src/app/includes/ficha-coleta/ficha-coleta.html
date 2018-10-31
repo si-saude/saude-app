@@ -30,7 +30,7 @@
 					
 					<div class="resposta-itens col s12" *ngIf="existItem(resposta)">
 					
-						<div *ngFor="let item of resposta.pergunta.itens" 
+						<div *ngFor="let item of resposta.pergunta.itens; let re = index" 
 							[class]="getClassItensResposta(resposta)" class="pergunta-label-item">
 							<p><b>{{item.label}}</b></p>
 						</div>
@@ -45,7 +45,7 @@
 								</div>
 								
 								<div *ngIf="itemHasPath(resposta, i, ii)">
-									<select name="resposta-conteudo" [disabled]="isDisabledResposta(resposta)"
+									<select name="resposta-conteudo{{re}}" [disabled]="isDisabledResposta(resposta)"
 										class="browser-default" [(ngModel)]="itemDoItem.conteudo">
 										<option disabled selected value="">Selecione uma resposta</option>
 										<option *ngFor="let value of getItensResposta(resposta,ii)" value="{{value}}">{{value}}</option>

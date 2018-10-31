@@ -19,6 +19,7 @@ import { PipesModule } from './../pipes.module';
 import { FichaColetaModule } from './../ficha-coleta.module';
 import { TriagemModule } from './../triagem.module';
 import { PlanejamentoModule } from './../planejamento.module';
+import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-aso.module';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,9 @@ import { PlanejamentoModule } from './../planejamento.module';
         FichaColetaModule,
         TriagemModule,
         PlanejamentoModule,
-        SharedModule
+        SharedModule,
+        InformacaoAsoModule
+        
      ],
      providers: [
         AtendimentoService
