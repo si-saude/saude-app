@@ -6,6 +6,7 @@ import { GlobalVariable } from './../../../global';
 import { Criterio } from './../../../model/criterio';
 import { Cargo } from './../../../model/cargo';
 import { Enfase } from './../../../model/enfase';
+import { Ghee } from './../../../model/ghee';
 import { Periodicidade } from './../../../model/periodicidade';
 import { CriterioService } from './../criterio.service';
 import { CriterioFilter } from './../criterio.filter';
@@ -22,6 +23,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
     tipos: Array<string>;
     cargos: Array<Cargo>;
     enfases: Array<Enfase>;
+    ghees: Array<Ghee>;
     periodicidades: Array<Periodicidade>;
     sexos: Array<string>;
     operadores: Array<string>;
@@ -29,6 +31,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
     selectedIdadeOrExame: boolean;
     selectedCargo: boolean;
     selectedEnfase: boolean;
+    selectedGhee: boolean;
     selectedPeriodicidade: boolean;
     selectedSexo: boolean;
     selectedRelatorioMedico: boolean;
@@ -40,6 +43,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         this.goTo = "criterio";
         
         this.enfases = new Array<Enfase>();
+        this.ghees = new Array<Ghee>();
         this.tipos = new Array<string>();
         this.periodicidades = new Array<Periodicidade>();
         this.sexos = new Array<string>();
@@ -47,6 +51,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         
         this.selectedEnfase = false;
         this.selectedCargo = false;
+        this.selectedGhee = false;
         this.selectedIdadeOrExame = false;
         this.selectedPeriodicidade = false;
         this.selectedSexo = false;
@@ -114,6 +119,14 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
               console.log(error);
           })
       
+      this.criterioService.getGhees()
+          .then(res => {
+              this.ghees = res.json();
+          })
+          .catch(error => {
+              console.log(error);
+          })
+      
       this.criterioService.getPeriodicidades()
           .then(res => {
               this.periodicidades = res.json();
@@ -132,6 +145,7 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
         this.selectedIdadeOrExame = false;
         this.selectedCargo = false;
         this.selectedEnfase = false;
+        this.selectedGhee = false;
         this.selectedPeriodicidade = false;
         this.selectedSexo = false;
         this.selectedRelatorioMedico = false;
@@ -155,6 +169,9 @@ export class CriterioFormComponent extends GenericFormComponent implements OnIni
             break;
         case "ENFASE":
             this.selectedEnfase = true;
+            break;
+        case "GHEE":
+            this.selectedGhee = true;
             break;
         case "PERIODICIDADE":
             this.selectedPeriodicidade = true;
