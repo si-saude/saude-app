@@ -170,7 +170,7 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
     }
 
     selectExame( index: number ) {
-        this.selectedExm = this.gruposMonitoramentoProfissiogramaExame[index].getExame();
+        this.selectedExm = this.gruposMonitoramentoProfissiogramaExame[index];
         this.arrayCriterio = this.gruposMonitoramentoProfissiogramaExame[index].getCriterios();
     }
 
@@ -202,8 +202,11 @@ export class ProfissiogramaFormComponent extends GenericFormComponent {
         }
     }
 
-    selectedExame( e: number ) {
-        if (this.selectedExm && this.gruposMonitoramentoProfissiogramaExame[e].getExame().getId() === this.selectedExm.getId() ) {
+    //DIFERENCIAR AQUI. PERMITIR EXAMES IGUAIS
+    selectedExame( grupoMonitoramentoProfissiogramaExame) {
+        if (this.selectedExm 
+                && grupoMonitoramentoProfissiogramaExame.getExame().getId() === this.selectedExm.getExame().getId()
+                && grupoMonitoramentoProfissiogramaExame.getId() === this.selectedExm.getId()) {
             return "active";
         } else return "";
     }

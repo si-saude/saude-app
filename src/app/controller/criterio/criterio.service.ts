@@ -6,6 +6,7 @@ import { Criterio } from './../../model/criterio';
 import { CriterioFilter } from './criterio.filter';
 import { CargoService } from './../cargo/cargo.service';
 import { EnfaseService } from './../enfase/enfase.service';
+import { GheeService } from './../ghee/ghee.service';
 import { PeriodicidadeService } from './../periodicidade/periodicidade.service';
 import { GenericService } from './../../generics/generic.service';
 import { GlobalVariable } from './../../global';
@@ -16,7 +17,8 @@ export class CriterioService extends GenericService {
     constructor( http: Http, router: Router,
             private enfaseService: EnfaseService,
             private periodicidadeService: PeriodicidadeService,
-            private cargoService: CargoService) { 
+            private cargoService: CargoService,
+            private gheeService: GheeService) { 
         super(http,router,"criterio");
     }
     
@@ -51,6 +53,10 @@ export class CriterioService extends GenericService {
     
     getCargos() {
         return this.cargoService.getCargos();
+    }
+    
+    getGhees() {
+        return this.gheeService.getGhees();
     }
     
     getPeriodicidades() {
