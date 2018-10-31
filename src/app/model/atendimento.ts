@@ -4,6 +4,7 @@ import { Tarefa } from './tarefa';
 import { Aso } from './aso';
 import { Triagem } from './triagem';
 import { RegraAtendimento } from './regra-atendimento';
+import { QuestionarioConhecimentoAlimentar } from './questionario-conhecimento-alimentar';
 
 export class Atendimento {
     private id: number;
@@ -12,14 +13,15 @@ export class Atendimento {
     private triagens: Array<Triagem>;
     private tarefa: Tarefa;
     private aso: Aso;
-    private triagensTodosAtendimentos: Array<Triagem>;    
+    private triagensTodosAtendimentos: Array<Triagem>;
+    private questionario: QuestionarioConhecimentoAlimentar;
     private version: number;
 
     getId() {
         return this.id;
     }
 
-    setId(id: number) {
+    setId( id: number ) {
         this.id = id;
     }
 
@@ -27,7 +29,7 @@ export class Atendimento {
         return this.filaAtendimentoOcupacional;
     }
 
-    setFilaAtendimentoOcupacional(filaAtendimentoOcupacional: FilaAtendimentoOcupacional) {
+    setFilaAtendimentoOcupacional( filaAtendimentoOcupacional: FilaAtendimentoOcupacional ) {
         this.filaAtendimentoOcupacional = filaAtendimentoOcupacional;
     }
 
@@ -35,7 +37,7 @@ export class Atendimento {
         return this.filaEsperaOcupacional;
     }
 
-    setFilaEsperaOcupacional(filaEsperaOcupacional: FilaEsperaOcupacional) {
+    setFilaEsperaOcupacional( filaEsperaOcupacional: FilaEsperaOcupacional ) {
         this.filaEsperaOcupacional = filaEsperaOcupacional;
     }
 
@@ -43,15 +45,15 @@ export class Atendimento {
         return this.tarefa;
     }
 
-    setTarefa(tarefa: Tarefa) {
+    setTarefa( tarefa: Tarefa ) {
         this.tarefa = tarefa;
     }
-    
+
     getTriagens() {
         return this.triagens;
     }
-    
-    setTriagens(triagens: Array<Triagem>) {
+
+    setTriagens( triagens: Array<Triagem> ) {
         this.triagens = triagens;
     }
 
@@ -59,7 +61,7 @@ export class Atendimento {
         return this.version;
     }
 
-    setVersion(version: number) {
+    setVersion( version: number ) {
         this.version = version;
     }
 
@@ -67,16 +69,23 @@ export class Atendimento {
         return this.aso;
     }
 
-    setAso(aso: Aso) {
+    setAso( aso: Aso ) {
         this.aso = aso;
     }
-    
+
     getTriagensTodosAtendimentos() {
         return this.triagensTodosAtendimentos;
     }
-    
-    setTriagensTodosAtendimentos(triagensTodosAtendimentos: Array<Triagem>) {
+
+    setTriagensTodosAtendimentos( triagensTodosAtendimentos: Array<Triagem> ) {
         this.triagensTodosAtendimentos = triagensTodosAtendimentos;
     }
-    
+
+    getQuestionario() {
+        return this.questionario;
+    }
+
+    setQuestionario( questionario ) {
+        this.questionario = questionario;
+    }
 }

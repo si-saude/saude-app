@@ -35,3 +35,14 @@ tbody{
 .btn-remove {
 	margin-left: 40%;
 }
+
+.checkbox {
+	margin-top: 30px;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    opacity: 0;
+    margin-top: 15px;
+    pointer-events: auto;
+}

@@ -21,7 +21,7 @@
 		<div id="dadosGerais">
 			<div class="row">
 	
-				<div class="input-field col s10">
+				<div class="input-field col s8">
 					<label for="enunciado">Enunciado</label>
 					<input id="enunciado" type="text" maxlength="1024"
 					name="enunciado" [(ngModel)]="indicadorConhecimentoAlimentar.enunciado">
@@ -33,6 +33,13 @@
 					name="ordem" [(ngModel)]="indicadorConhecimentoAlimentar.ordem">
 				</div>
 			
+				<div class="input-field col s2 checkbox">
+					<input type="checkbox" id="inativo"
+						[(ngModel)]="indicadorConhecimentoAlimentar.inativo"
+						name="indicadorConhecimentoAlimentar.inativo"> <label
+						for="inativo">Inativo</label>
+				</div>
+				
 			</div>
 		</div>
 		

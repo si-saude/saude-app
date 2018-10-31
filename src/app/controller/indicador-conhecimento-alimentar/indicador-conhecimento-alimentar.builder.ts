@@ -36,6 +36,7 @@ export class IndicadorConhecimentoAlimentarBuilder extends GenericBuilder {
         cloneIndicadorConhecimentoAlimentar.setId(this.getValue(indicadorConhecimentoAlimentar,"getId"));
         cloneIndicadorConhecimentoAlimentar.setEnunciado(this.getValue(indicadorConhecimentoAlimentar, "getEnunciado"));
         cloneIndicadorConhecimentoAlimentar.setOrdem(this.getValue(indicadorConhecimentoAlimentar, "getOrdem"));
+        cloneIndicadorConhecimentoAlimentar.setInativo(this.getValue(indicadorConhecimentoAlimentar, "getInativo"));
         cloneIndicadorConhecimentoAlimentar.setItemIndicadorConhecimentoAlimentares(
                 new ItemIndicadorConhecimentoAlimentarBuilder().cloneList(
                         this.getValue(indicadorConhecimentoAlimentar, "getItemIndicadorConhecimentoAlimentares")));

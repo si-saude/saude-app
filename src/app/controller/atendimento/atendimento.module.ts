@@ -14,6 +14,7 @@ import { FichaColetaModule } from './../ficha-coleta.module';
 import { TriagemModule } from './../triagem.module';
 import { AcolhimentoModule } from './../acolhimento.module';
 import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-aso.module';
+import { MenuAtendimentoNutricaoModule } from './../../includes/menu-atendimento-nutricao/menu-atendimento-nutricao.module';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-
         TriagemModule,
         AcolhimentoModule,
         InformacaoAsoModule
+        MenuAtendimentoNutricaoModule
      ],
      providers: [
         AtendimentoService
