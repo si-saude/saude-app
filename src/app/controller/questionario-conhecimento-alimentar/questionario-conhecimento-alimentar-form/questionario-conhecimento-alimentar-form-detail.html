@@ -18,8 +18,7 @@
 					<p class="resposta-enunciado"><b>{{resposta.indicador.enunciado}}</b></p>
 				</div>
 				<div class="itens" *ngFor="let item of resposta.indicador.itemIndicadorConhecimentoAlimentares; let i = index">
-					<p class="item-descricao item-{{r}}-{{i}}" 
-						(click)="questionarioUtil.selectItem(resposta, item, r)">
+					<p class="item-descricao item-{{r}}-{{i}}">
 						{{item.descricao}}
 					</p>
 				</div>
@@ -37,10 +36,6 @@
 			<div class="col s6">
 				<a [routerLink]="['/questionario-conhecimento-alimentar']"
 					class="btn btn-primary btn-listar">Listar</a>
-			</div>
-			<div class="col s6">
-				<button type="submit"
-				class="btn btn-primary btn-salvar">Salvar</button>
 			</div>
 		</div>
 	</form>
