@@ -30,7 +30,7 @@ import { MenuAtendimentoNutricaoModule } from './../../includes/menu-atendimento
         FichaColetaModule,
         TriagemModule,
         AcolhimentoModule,
-        InformacaoAsoModule
+        InformacaoAsoModule,
         MenuAtendimentoNutricaoModule
      ],
      providers: [

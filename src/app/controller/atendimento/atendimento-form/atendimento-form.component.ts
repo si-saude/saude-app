@@ -50,7 +50,6 @@ import { TriagemUtil } from './../../../generics/utils/triagem.util';
 import { FichaColetaUtil } from './../../../generics/utils/ficha-coleta.util';
 import { Util } from './../../../generics/utils/util';
 import { MenuAtendimentoNutricaoComponent } from './../../../includes/menu-atendimento-nutricao/menu-atendimento-nutricao.component';
->>>>>>> refs/heads/fabio
 
 @Component( {
     selector: 'app-atendimento-form',
