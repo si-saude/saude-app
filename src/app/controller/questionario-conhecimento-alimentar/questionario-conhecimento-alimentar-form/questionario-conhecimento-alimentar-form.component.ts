@@ -9,6 +9,7 @@ import { RespostaQuestionarioConhecimentoAlimentar } from './../../../model/resp
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { QuestionarioConhecimentoAlimentarBuilder } from './../questionario-conhecimento-alimentar.builder';
 import { QuestionarioConhecimentoAlimentarService } from './../questionario-conhecimento-alimentar.service';
+import { QuestionarioConhecimentoAlimentarUtil } from './../questionario-conhecimento-alimentar.util';
 
 @Component( {
     selector: 'app-questionario-conhecimento-alimentar-form',
@@ -17,6 +18,7 @@ import { QuestionarioConhecimentoAlimentarService } from './../questionario-conh
 } )
 export class QuestionarioConhecimentoAlimentarFormComponent extends GenericFormComponent implements OnInit {
     private questionario: QuestionarioConhecimentoAlimentar;
+    private questionarioUtil: QuestionarioConhecimentoAlimentarUtil;
     
     constructor( private route: ActivatedRoute,
         private questionarioConhecimentoAlimentarService: QuestionarioConhecimentoAlimentarService,
@@ -25,6 +27,7 @@ export class QuestionarioConhecimentoAlimentarFormComponent extends GenericFormC
 
         this.goTo = "questionario-conhecimento-alimentar";
         this.questionario = new QuestionarioConhecimentoAlimentarBuilder().initialize( this.questionario );
+        this.questionarioUtil = new QuestionarioConhecimentoAlimentarUtil();
     }
 
     ngOnInit() {
@@ -43,7 +46,7 @@ export class QuestionarioConhecimentoAlimentarFormComponent extends GenericFormC
                             setTimeout(() => {
                                 if ( this.questionario != undefined && this.questionario.getRespostas() != undefined )
                                     for ( let i = 0; i < this.questionario.getRespostas().length; i++ )
-                                        this.setBackgroundItens(this.questionario.getRespostas()[i], this.questionario.getRespostas()[i].getItem(), i)
+                                        this.questionarioUtil.setBackgroundItens(this.questionario.getRespostas()[i], this.questionario.getRespostas()[i].getItem(), i)
                             }, 300);
                         } )
                         .catch( error => {
@@ -71,22 +74,6 @@ export class QuestionarioConhecimentoAlimentarFormComponent extends GenericFormC
         this.questionario = new QuestionarioConhecimentoAlimentarBuilder().clone( this.questionario );
         this.questionario.getAtendimento().setId(idAtendimento);
         super.save( this.questionario );
-    }
-    
-    selectItem(resposta: RespostaQuestionarioConhecimentoAlimentar, item: ItemIndicadorConhecimentoAlimentar, r) {
-        if ( resposta.getItem() != undefined && item.getId() == resposta.getItem().getId() )
-            resposta.setItem(undefined);
-        else resposta.setItem(item);
-        this.setBackgroundItens(resposta, item, r);
-    }
-    
-    setBackgroundItens(resposta: RespostaQuestionarioConhecimentoAlimentar, item: ItemIndicadorConhecimentoAlimentar, r) {
-        let itens = resposta.getIndicador().getItemIndicadorConhecimentoAlimentares();
-        for (let i = 0; i < itens.length; i++) {
-            if ( resposta.getItem() != undefined && itens[i].getId() == item.getId() )
-                $(".item-"+r+"-"+i).css("background-color", "#5e93ff");
-            else $(".item-"+r+"-"+i).css("background-color", "#ddd");
-        }
     }
     
     ngOnDestroy() {

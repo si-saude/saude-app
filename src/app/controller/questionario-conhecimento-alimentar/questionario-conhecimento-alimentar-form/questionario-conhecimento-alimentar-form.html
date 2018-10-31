@@ -18,7 +18,8 @@
 					<p class="resposta-enunciado"><b>{{resposta.indicador.enunciado}}</b></p>
 				</div>
 				<div class="itens" *ngFor="let item of resposta.indicador.itemIndicadorConhecimentoAlimentares; let i = index">
-					<p class="item-descricao item-{{r}}-{{i}}" (click)="selectItem(resposta, item, r)">{{item.descricao}}</p>
+					<p class="item-descricao item-{{r}}-{{i}}" 
+						(click)="questionarioUtil.selectItem(resposta, item, r)">{{item.descricao}}</p>
 				</div>
 			</div>
 		</div>

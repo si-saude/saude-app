@@ -7,6 +7,7 @@ import { QuestionarioConhecimentoAlimentar } from './../../../model/questionario
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { QuestionarioConhecimentoAlimentarBuilder } from './../questionario-conhecimento-alimentar.builder';
 import { QuestionarioConhecimentoAlimentarService } from './../questionario-conhecimento-alimentar.service';
+import { QuestionarioConhecimentoAlimentarUtil } from './../questionario-conhecimento-alimentar.util';
 
 @Component( {
     selector: 'app-questionario-conhecimento-alimentar-form-detail',
@@ -14,15 +15,17 @@ import { QuestionarioConhecimentoAlimentarService } from './../questionario-conh
     styleUrls: ['./questionario-conhecimento-alimentar-form.css', './../../../../assets/css/form-component.css']
 } )
 export class QuestionarioConhecimentoAlimentarFormDetailComponent extends GenericFormComponent implements OnInit {
-    questionarioConhecimentoAlimentar: QuestionarioConhecimentoAlimentar;
+    private questionario: QuestionarioConhecimentoAlimentar;
+    private questionarioUtil: QuestionarioConhecimentoAlimentarUtil;
 
     constructor( private route: ActivatedRoute,
         private questionarioConhecimentoAlimentarService: QuestionarioConhecimentoAlimentarService,
         router: Router) {
         super( questionarioConhecimentoAlimentarService, router );
 
-        this.goTo = "questionarioConhecimentoAlimentar";
-        this.questionarioConhecimentoAlimentar = new QuestionarioConhecimentoAlimentarBuilder().initialize( this.questionarioConhecimentoAlimentar );
+        this.goTo = "questionario-conhecimento-alimentar";
+        this.questionario = new QuestionarioConhecimentoAlimentarBuilder().initialize( this.questionario );
+        this.questionarioUtil = new QuestionarioConhecimentoAlimentarUtil();
     }
 
     ngOnInit() {
@@ -34,7 +37,12 @@ export class QuestionarioConhecimentoAlimentarFormDetailComponent extends Generi
                 this.service.get( id )
                     .then( res => {
                         this.showPreload = false;
-                        this.questionarioConhecimentoAlimentar = new QuestionarioConhecimentoAlimentarBuilder().clone( res.json() );
+                        this.questionario = new QuestionarioConhecimentoAlimentarBuilder().clone( res.json() );
+                        setTimeout(() => {
+                            if ( this.questionario != undefined && this.questionario.getRespostas() != undefined )
+                                for ( let i = 0; i < this.questionario.getRespostas().length; i++ )
+                                    this.questionarioUtil.setBackgroundItens(this.questionario.getRespostas()[i], this.questionario.getRespostas()[i].getItem(), i)
+                        }, 300);
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
