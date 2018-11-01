@@ -111,7 +111,7 @@
 						*ngFor="let grupoMonitoramentoProfissiogramaExame of gruposMonitoramentoProfissiogramaExame; let gME = index">
 						<div class="row row-collection">
 							<div class="col s5">
-								<a [ngClass]="selectedExame(gME)"
+								<a [ngClass]="selectedExame(grupoMonitoramentoProfissiogramaExame)"
 									[routerLinkActive]="['active']" class="collection-item"
 									(click)="selectExame(gME)">
 									{{grupoMonitoramentoProfissiogramaExame.exame.codigo}} -

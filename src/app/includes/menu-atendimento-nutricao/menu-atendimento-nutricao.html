@@ -1,0 +1,16 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<div class="btns">
+		<button type="button" class="btn btn-primary" (click)="newQuestionario()"
+			[class.disabled]="disableNovoQuestionario ||
+				atendimento == undefined || 
+				atendimento.id == undefined || 
+				atendimento.id == 0 ||
+				atendimento.questionario.id != undefined">
+				Novo Questionário
+		</button>
+	</div>
+</div>

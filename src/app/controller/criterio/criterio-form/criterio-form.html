@@ -73,6 +73,17 @@
 					</select>
 				</fieldset>
 			</div>
+			
+			<div class="input-field col s6" *ngIf="selectedGhee">
+				<fieldset>
+					<legend>GHEE</legend>
+					<select name="valor" class="browser-default"
+						[(ngModel)]="criterio.valor">
+						<option disabled selected value="">Selecione um GHEE</option>
+						<option *ngFor="let ghee of ghees" value="{{ghee.id}}">{{ghee.codigo}}</option>
+					</select>
+				</fieldset>
+			</div>
 
 			<div class="input-field col s6" *ngIf="selectedPeriodicidade">
 				<fieldset>

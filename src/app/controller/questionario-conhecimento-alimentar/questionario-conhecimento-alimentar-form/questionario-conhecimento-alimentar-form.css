@@ -1,0 +1,27 @@
+.respostas {
+	background-color: #ddd;
+	margin-bottom: 2%;
+}
+
+.resposta-ordem {
+	padding-left: 1%;
+	padding-right: 1%;
+	background-color: #bbb;
+	float: left;
+	margin: 0;
+}
+
+.resposta-enunciado {
+	padding-left: 1%;
+	background-color: #ccc;
+	padding-left: 3.3%;
+}
+
+.itens > p {
+	margin: 0;
+	margin-left: 3.3%;
+}
+
+.item-descricao {
+	cursor: pointer;
+}

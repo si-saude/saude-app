@@ -41,7 +41,7 @@ export class AtendimentoOcupacionalComponent {
         }
     }
 
-    next() {        
+    next() {
         this.solicitacaoServicoService.registrarAtendimento(new AtendimentoBuilder().clone(this.atendimento) )
             .then(res => {
                 this.showConfirmSave = true;

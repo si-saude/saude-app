@@ -85,13 +85,14 @@ import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao
 import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
 import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
 import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
+import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'contato', component: ContatoComponent },
-  { path: 'permissao', component: PermissaoComponent },
   { path: 'home', loadChildren: 'app/home/home.module#HomeModule',
       canActivate: [AuthGuard]},
+  { path: 'contato', component: ContatoComponent },
+  { path: 'permissao', component: PermissaoComponent },
   { path: 'agenda', loadChildren: 'app/agenda/agenda.module#AgendaModule',
       canActivateChild: [AgendaGuard]},
   { path: 'agenda-periodico', loadChildren: 'app/agenda-periodico/agenda-periodico.module#AgendaPeriodicoModule',
@@ -297,6 +298,9 @@ const routes: Routes = [
   { path: 'indicador-conhecimento-alimentar', 
       loadChildren: 'app/controller/indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.module#IndicadorConhecimentoAlimentarModule',
       canActivateChild: [IndicadorConhecimentoAlimentarGuard]},
+  { path: 'questionario-conhecimento-alimentar', 
+    loadChildren: 'app/controller/questionario-conhecimento-alimentar/questionario-conhecimento-alimentar.module#QuestionarioConhecimentoAlimentarModule',
+    canActivateChild: [QuestionarioConhecimentoAlimentarGuard]},
   { path: '', pathMatch: 'full', redirectTo: '/home'},
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/404' }

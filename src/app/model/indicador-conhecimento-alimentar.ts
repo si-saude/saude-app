@@ -5,6 +5,7 @@ export class IndicadorConhecimentoAlimentar {
     private enunciado: string;
     private ordem: number;
     private itemIndicadorConhecimentoAlimentares: Array<ItemIndicadorConhecimentoAlimentar>;
+    private inativo: boolean;
     private version: number;
     
     getEnunciado() {
@@ -45,5 +46,13 @@ export class IndicadorConhecimentoAlimentar {
 
     setVersion(version) {
         this.version = version;
+    }
+    
+    getInativo() {
+        return this.inativo;
+    }
+
+    setInativo(inativo) {
+        this.inativo = inativo;
     }
 }
