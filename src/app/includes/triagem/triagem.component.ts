@@ -12,42 +12,24 @@ import { Triagem } from './../../model/triagem';
     styleUrls: ['./triagem.css']
 } )
 export class TriagemComponent{
-    @Input() triagens;
-    private innerTriagens;
-    private triagemIndices: Map<number, number>;
+    @Input() triagens: Array<Triagem>;
 
-    constructor( router: Router ) {
-    }
+      ngOnChanges( changes: SimpleChanges ) {
+          if ( changes["triagens"] != undefined ) {
+              this.autoPaintTriagem();
+          }
+      }
     
-    ngOnInit() { 
-    }
-    
-    ngOnChanges( changes: SimpleChanges ) {
-        if ( changes["triagens"] != undefined ) {
-            this.innerTriagens = changes["triagens"].currentValue;
-            
-            setTimeout(() => {
-                this.triagemIndices = new Map<number, number>();
-                
-                for ( let idx = 0; idx < this.innerTriagens.length; idx++ ) {
-                    this.triagemIndices.set( idx, this.innerTriagens[idx].getIndice() );
-                    if ( this.innerTriagens[idx].getIndice() != -1 ) {
-                        let i: string = "indice" + this.triagemIndices.get( idx ) + "_" + idx;
-                        $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
-                    }
-                }
-            }, 200 );
-            
-            this.innerTriagens.sort(function(a, b) {
-                if ( a.getIndicadorSast().getCodigo() < b.getIndicadorSast().getCodigo() )
-                    return -1;
-                if ( a.getIndicadorSast().getCodigo() > b.getIndicadorSast().getCodigo() )
-                    return 1;
-                return 0;
-            })
-        }
-    }
-    
+      autoPaintTriagem() {
+          setTimeout(() => {
+              for ( let t = 0; t < this.triagens.length; t++ ){
+                  if ( this.triagens[t].getIndice() > -1 ) {
+                      this.selectTriagem(t, this.triagens[t].getIndice())
+                  }
+              }
+          }, 300);
+      }
+  
     verifyObrigatoriedadeIndicador( triagem: Triagem ) {
         if ( triagem.getIndicadorSast().getObrigatorio() ) 
             return "triagem-indicador-bold";
@@ -56,24 +38,21 @@ export class TriagemComponent{
     }
     
     selectTriagem( indexTriagem, indice ) {
-        let i: string = "indice" + indice + "_" + indexTriagem.toString();
-
-        if ( this.triagemIndices.get( indexTriagem ) != undefined ) {
-            if ( this.triagemIndices.get( indexTriagem ) == Number( indice ) ) {
-                $( "td[title=" + i + "]" ).css( "background", "" );
-                this.innerTriagens[indexTriagem].setIndice( -1 );
-                this.triagemIndices.delete( indexTriagem );
-                return;
-            }
-            let iAntigo: string = "indice" + this.triagemIndices.get( indexTriagem ) + "_" + indexTriagem.toString();
-            $( "td[title=" + iAntigo + "]" ).css( "background", "" );
+        let i: string = "indice" + indice + "_" + indexTriagem;
+        let p: string = "";
+        let print: boolean = true;
+    
+        if ( $( "td[title=" + i + "]" ).css( "backgroundColor" ) != "transparent" ) {
+            print = false;
+        }  
+        for ( let ii = 0; ii <= 4; ii++ ) {
+            p = "indice" + ii + "_" + indexTriagem;
+            $( "td[title=" + p + "]" ).css( "backgroundColor", "" );
         }
-
-        $( "td[title=" + i + "]" ).css( "background", "#D4D4D4" );
-        
-        this.triagemIndices.set( indexTriagem, Number( indice ) );
-
-        this.innerTriagens[indexTriagem].setIndice( Number( indice ) );
+        if ( print ) {
+            $( "td[title=" + i + "]" ).css( "backgroundColor", "#D4D4D4" );
+            this.triagens[indexTriagem].setIndice(indice);
+        } else this.triagens[indexTriagem].setIndice(-1);
     }
     
 }

@@ -68,16 +68,25 @@
 				<table class="striped">
 					<thead>
 						<tr class="row col s12">
-							<th class="col s9">Descrição</th>
+							<th class="col s8">Descrição</th>
 							<th class="col s2">Ordem</th>
+							<th class="col s1">Certo</th>
 							<th class="col s1">Remover</th>
 						</tr>
 					</thead>
 					<div *ngFor="let iica of indicadorConhecimentoAlimentar.itemIndicadorConhecimentoAlimentares;let i = index">
 						<tbody class="col s12">
 							<tr class="col s12">
-								<td class="col s9 iica-descricao">{{iica.descricao}}</td>
+								<td class="col s8 iica-descricao">{{iica.descricao}}</td>
 								<td class="col s2 iica-ordem">{{iica.ordem}}</td>
+								<td class="col s1 iica-certo">
+								<div class="input-field col s2 certo-checkbox">
+									<input type="checkbox" id="ic certo{{i}}"
+										[(ngModel)]="iica.certo" (click)="reselectItens(iica)"
+										name="iica.certo{{i}}"><label
+										for="iica.certo{{i}}"></label>
+								</div>
+								</td>
 								<td class="col s1 botao-remover"><a
 									class="btn-floating waves-effect waves-light red btn-remove"
 									(click)="removeItem(i)"> <i

@@ -221,7 +221,10 @@
 	</div>
 	
 	<div id="nutricao">
-		<app-menu-atendimento-nutricao (btnNovoQuestionario)="clickBtnNovoQuestionario($event)" [atendimento]="atendimento"></app-menu-atendimento-nutricao>
+		<app-menu-atendimento-nutricao
+			(btnCarregarQuestionario)="loadQuestionario($event)"
+			(btnNovoQuestionario)="clickBtnNovoQuestionario($event)" 
+			[atendimento]="atendimento"></app-menu-atendimento-nutricao>
 	</div>
 
 	<div id="fichaColeta" disabled>

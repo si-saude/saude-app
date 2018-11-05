@@ -71,4 +71,12 @@ export class IndicadorConhecimentoAlimentarFormComponent extends GenericFormComp
     removeItem(index) {
         this.indicadorConhecimentoAlimentar.getItemIndicadorConhecimentoAlimentares().splice(index, 1);
     }
+    
+    reselectItens(iica: ItemIndicadorConhecimentoAlimentar) {
+        this.indicadorConhecimentoAlimentar.getItemIndicadorConhecimentoAlimentares().forEach(i => {
+            i.setCerto(false);
+            if ( i.getId() == iica.getId() )
+                i.setCerto(true);
+        })
+    }
 }

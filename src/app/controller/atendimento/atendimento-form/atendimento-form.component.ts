@@ -233,6 +233,14 @@ export class AtendimentoFormComponent {
             this.atualizacao( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
+                        this.calcularPontuacaoQuestionario();
+                        if ( this.atendimento.getQuestionario() != undefined &&
+                                this.atendimento.getQuestionario().getId() > 0 )
+                            this.menuNutricao.setDisabledNovoQuestionario(true);
+                        else this.menuNutricao.setDisabledNovoQuestionario(false);
+                    }
+                    
                     if ( this.atendimento.getTriagens() != undefined )
                         this.atendimento.getTriagens().forEach(t => {
                             if ( t.getDiagnostico() == undefined )
@@ -658,6 +666,42 @@ export class AtendimentoFormComponent {
                     this.catchConfiguration(error);
                 })
         }
+    }
+    
+    loadQuestionario( bool ) {
+        this.atualizar();
+    }
+    
+    calcularPontuacaoQuestionario() {
+        if ( this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" ).getIndice() != -1 )
+            return;
+    
+        let soma: number = 0;
+        if ( this.atendimento.getQuestionario() != undefined && this.atendimento.getQuestionario().getId() > 0 ) {
+            this.atendimento.getQuestionario().getRespostas().forEach(r => {
+                if ( r.getItem().getId() == 
+                    r.getIndicador().getItemIndicadorConhecimentoAlimentares().find(rii => rii.getCerto() == true).getId() )
+                    soma++;
+            })
+        }
+        
+        this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" )
+            .setIndice(this.definirIndiceTriagemQuestionario(soma));
+    }
+    
+    definirIndiceTriagemQuestionario(soma) {
+        let indice: number = 0;
+        if ( soma <= 2)
+            indice = 0;
+        else if ( soma >= 3 && soma <= 4 )
+            indice = 1;
+        else if ( soma >= 5 && soma <= 6 )
+            indice = 2;
+        else if ( soma >= 7 && soma <= 8 )
+            indice = 3;
+        else if ( soma >= 9 && soma <= 10 )
+            indice = 4;
+        return indice;
     }
     
     ngOnDestroy() {
