@@ -10,7 +10,9 @@ import { Avaliacao } from './../../../model/avaliacao';
 import { TipoGrupoMonitoramento } from './../../../model/tipo-grupo-monitoramento';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { GrupoMonitoramentoBuilder } from './../grupo-monitoramento.builder';
+import { AvaliacaoBuilder } from './../../avaliacao/avaliacao.builder';
 import { GrupoMonitoramentoService } from './../grupo-monitoramento.service';
+import { Util } from './../../../generics/utils/util';
 
 @Component( {
     selector: 'app-grupo-monitoramento-form',
@@ -20,6 +22,7 @@ import { GrupoMonitoramentoService } from './../grupo-monitoramento.service';
 export class GrupoMonitoramentoFormComponent extends GenericFormComponent implements OnInit {
     tiposGrupoMonitoramento: Array<TipoGrupoMonitoramento>;
     grupoMonitoramento: GrupoMonitoramento;
+    avaliacao: Avaliacao;
 
     globalActions = new EventEmitter<string|MaterializeAction>();
     toastParams = ['', 4000];
@@ -31,6 +34,7 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             this.goTo = "grupo-monitoramento";
             
             this.grupoMonitoramento = new GrupoMonitoramentoBuilder().initialize(this.grupoMonitoramento);
+            this.avaliacao = new AvaliacaoBuilder().initialize(this.avaliacao);
         }
     
     ngOnInit() {
@@ -64,13 +68,14 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
             })
     }
     
-    addAvaliacao(nome) {
-        if(nome && nome.length > 0 && this.grupoMonitoramento.getAvaliacoes().filter(
-                a=>a.getNome() == nome).length == 0){
-            let ava:Avaliacao = new Avaliacao();
-            ava.setNome(nome);
-            this.grupoMonitoramento.getAvaliacoes().push(ava);
-        }
+    addAvaliacao() {
+        
+        if(Util.isNotNull(this.avaliacao.getNome()) && this.grupoMonitoramento.getAvaliacoes().filter(
+                a=>a.getNome() == this.avaliacao.getNome()).length == 0){
+            
+            this.grupoMonitoramento.getAvaliacoes().push(new AvaliacaoBuilder().clone(this.avaliacao));
+            this.avaliacao = new AvaliacaoBuilder().initialize(null);
+        }     
     }
     
     removeAvaliacao(i: number) {
@@ -79,6 +84,7 @@ export class GrupoMonitoramentoFormComponent extends GenericFormComponent implem
     
     save() {
         super.save(new GrupoMonitoramentoBuilder().clone(this.grupoMonitoramento));
+        console.log(this.grupoMonitoramento.getAvaliacoes());
     }
     
 }

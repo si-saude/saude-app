@@ -1,6 +1,5 @@
 .btn-add {
 	margin-top: 15px;
-	margin-left: 155px;
 }
 
 .collection .collection-item:last-child { 
@@ -22,6 +21,10 @@
 
 .checkbox {
 	margin-top: 30px;
+}
+
+.checkboxtable{
+	margin-top: 0px;
 }
 
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
@@ -60,8 +63,4 @@ td > a > i {
 tbody{
 	margin-top: 10px;
 	border-bottom: 1px solid #c0c0c0;	
-}
-
-#avaliacao {
-	margin-top: 20px;
 }

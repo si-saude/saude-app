@@ -2,6 +2,8 @@ import { GrupoMonitoramento } from './grupo-monitoramento';
 
 export class Avaliacao {
     private id: number;
+    private auditoriaAso: boolean;
+    private auditoriaMedico: boolean;
     private nome: string;
     private grupoMonitoramento: GrupoMonitoramento;
     private version: number;
@@ -12,6 +14,22 @@ export class Avaliacao {
     
     setId(id: number) {
         this.id = id;
+    }
+    
+    getAuditoriaAso() {
+        return this.auditoriaAso;
+    }
+    
+    setAuditoriaAso( auditoriaAso: boolean ) {
+        this.auditoriaAso = auditoriaAso;
+    }
+    
+    getAuditoriaMedico() {
+        return this.auditoriaMedico;
+    }
+    
+    setAuditoriaMedico( auditoriaMedico: boolean ) {
+        this.auditoriaMedico = auditoriaMedico;
     }
     
     getNome() {
