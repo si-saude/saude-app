@@ -32,6 +32,7 @@ export class ItemIndicadorConhecimentoAlimentarBuilder extends GenericBuilder {
         cloneItemIndicadorConhecimentoAlimentar.setDescricao(this.getValue(itemIndicadorConhecimentoAlimentar, "getDescricao"));
         cloneItemIndicadorConhecimentoAlimentar.setOrdem(this.getValue(itemIndicadorConhecimentoAlimentar, "getOrdem"));
         cloneItemIndicadorConhecimentoAlimentar.setVersion(this.getValue(itemIndicadorConhecimentoAlimentar, "getVersion"));
+        cloneItemIndicadorConhecimentoAlimentar.setCerto(this.getValue(itemIndicadorConhecimentoAlimentar, "getCerto"))
         return cloneItemIndicadorConhecimentoAlimentar;
     }
     

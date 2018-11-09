@@ -6,6 +6,7 @@ export class ItemIndicadorConhecimentoAlimentar {
     private descricao: string;
     private ordem: number;
     private version: number;
+    private certo: boolean;
     
     getDescricao() {
         return this.descricao;
@@ -46,5 +47,12 @@ export class ItemIndicadorConhecimentoAlimentar {
     setOrdem(ordem) {
         this.ordem = ordem;
     }
-    
+
+    getCerto() {
+        return this.certo;
+    }
+
+    setCerto(certo) {
+        this.certo = certo;
+    }
 }

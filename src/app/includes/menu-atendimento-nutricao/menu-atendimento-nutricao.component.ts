@@ -14,6 +14,7 @@ import { Atendimento } from './../../model/atendimento';
 export class MenuAtendimentoNutricaoComponent{
     @Input() atendimento: Atendimento;
     @Output() btnNovoQuestionario = new EventEmitter<boolean>();
+    @Output() btnCarregarQuestionario = new EventEmitter<boolean>();
     private disableNovoQuestionario = false;
     
     constructor() {}
@@ -25,11 +26,17 @@ export class MenuAtendimentoNutricaoComponent{
     //RECEBE O INDICATIVO DE QUE DEVE SER REDIRECIONADO OU NAO PARA A PAGINA DE NOVO QUESTIONARIO
     //CASO TRUE, NAO REDIRECIONA, CASO CONTRARIO, REDIRECIONA
     callBtnNewQuestionario( bool ) {
-        console.log('teste')
         if ( bool )
             this.disableNovoQuestionario = true;
         else  
             window.open('/questionario-conhecimento-alimentar/cadastrar/'+this.atendimento.getId());
     }
     
+    setDisabledNovoQuestionario( bool ) {
+        this.disableNovoQuestionario = bool ? true : false;
+    }
+    
+    loadQuestionario() {
+        this.btnCarregarQuestionario.emit(true);
+    }
 }
