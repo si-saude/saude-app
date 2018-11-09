@@ -534,7 +534,7 @@ export class AtendimentoFormComponent {
                 this.atendimento.getAso().getAptidoes().find(x => x.getAptidaoAso() !='APTO')){
                    
                 this.atendimento.getAso().getAptidoes().forEach(x=>{
-                    if(x.getAptidaoAso() !='APTO' && (!Util.isNotNull(this.atendimento.getAso().getDataRestricao()))){
+                    if(x.getAptidaoAso() !='APTO' && (!Util.isNotNull(this.atendimento.getAso().getDataRestricao())) || (!Util.isNotNull(x.getAptidaoAso())) ){
                         ret = false;
                     }
                 }); 

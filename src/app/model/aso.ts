@@ -4,6 +4,7 @@ import { AsoAlteracao } from './aso-alteracao';
 import { Usuario } from './usuario';
 import { Aptidao } from './aptidao';
 import { AsoAvaliacao } from './aso-avaliacao';
+import { ItemAuditoriaAso } from './item-auditoria-aso';
 import { Exame } from './exame';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
@@ -16,6 +17,7 @@ export class Aso {
     private status: string;
     private asoAvaliacoes: Array<AsoAvaliacao>;
     private asoAlteracoes: Array<AsoAlteracao>;
+    private itemAuditoriaAsos: Array<ItemAuditoriaAso>;
     private conforme: boolean;
     private naoConformidades: string;
     private usuario: Usuario;
@@ -92,6 +94,14 @@ export class Aso {
     
     setAptidoes( aptidoes: Array<Aptidao> ) {
         this.aptidoes = aptidoes;
+    }
+    
+    getItemAuditoriaAsos( ) {
+        return this.itemAuditoriaAsos;
+    }
+    
+    setItemAuditoriaAsos( itemAuditoriaAsos: Array<ItemAuditoriaAso> ) {
+        this.itemAuditoriaAsos = itemAuditoriaAsos;
     }
     
     

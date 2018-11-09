@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-
-import { RequisitoAso } from './../../../model/requisito-aso';
-import { RequisitoAsoBuilder } from './../../requisito-aso/requisito-aso.builder'; 
 import { Usuario } from './../../../model/usuario';
 import { UsuarioBuilder } from './../../usuario/usuario.builder';
+import { ItemAuditoriaAsoBuilder } from './../../item-auditoria-aso/item-auditoria-aso.builder';
 import { Aso } from './../../../model/aso';
 import { AsoBuilder } from './../../aso/aso.builder';
 import { AuditoriaAsoService } from './../auditoria-aso.service';
@@ -19,7 +17,6 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 export class AuditoriaAsoFormComponent extends GenericFormComponent implements OnInit {
     aso: Aso;
     usuario: Usuario;
-    requisitosAso: Array<RequisitoAso>;
     selectAll: boolean;
 
     constructor( private route: ActivatedRoute,
@@ -29,7 +26,6 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
 
         this.goTo = "auditoria-aso";
         this.aso = new AsoBuilder().initialize( this.aso );
-        this.requisitosAso = new RequisitoAsoBuilder().initializeList(new Array<RequisitoAso>());
     }
 
     ngOnInit() {
@@ -44,9 +40,7 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
                             this.showPreload = false;
                             this.aso = new AsoBuilder().clone( res.json() );
                             this.aso.setConforme(false);
-                            
                             this.getAndSetUsuario();
-                            this.getRequisitos();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -59,34 +53,13 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
     selecionarTodos() {
         setTimeout(() => {
             if ( this.selectAll )
-                this.requisitosAso.forEach(rA => rA.setConforme(true))
-            else this.requisitosAso.forEach(rA => rA.setConforme(false));
+                this.aso.getItemAuditoriaAsos().forEach(rA => rA.setConforme(true))
+            else this.aso.getItemAuditoriaAsos().forEach(rA => rA.setConforme(false));
         }, 100);
     }
     
-    getRequisitos() {
-        this.auditoriaAsoService.getListExame(this.aso).then(res => {
-            this.requisitosAso = new RequisitoAsoBuilder().cloneList(res.json());
-        }).catch(error => {
-            console.log("Erro ao retornar os requisitos do aso.");
-        });
-    }
-    
     save() {
-        this.getRequisitosNaoConformes();
         super.save( new AsoBuilder().clone( this.aso ) );
-    }
-    
-    getRequisitosNaoConformes() {
-        let conteudoRequisito: string = "";
-        this.requisitosAso.forEach(rA => {
-            if ( rA.getConforme() == false && !rA.getConteudo().includes("(OPCIONAL)") )
-                conteudoRequisito += rA.getConteudo() + "/";
-        })
-        
-        if ( conteudoRequisito.length > 0 )
-            this.aso.setNaoConformidades(conteudoRequisito.slice(0, -1));
-        else this.aso.setNaoConformidades( "" );
     }
     
     getAndSetUsuario() {
