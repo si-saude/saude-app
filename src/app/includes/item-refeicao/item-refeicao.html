@@ -1,0 +1,40 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<div class="input-field col s6">
+		<label for="alimento">Alimento</label> <input type="text"
+			materialize="autocomplete" autocomplete="off"
+			name="itemRefeicao.alimento.nome" 
+			[(ngModel)]="itemRefeicao.alimento.nome"
+			(blur)="alimentoAutocomplete.getAutocomplete().getObj($event,itemRefeicao,'setAlimento','getNome')"
+			(ngModelChange)="alimentoAutocomplete.getAutocomplete().getList(itemRefeicao.alimento, 'getNome');"
+			(keydown.enter)="alimentoAutocomplete.getAutocomplete().pressEnter($event,itemRefeicao,'setAlimento','getNome');"
+			[materializeParams]="alimentoAutocomplete.getAutocomplete().getObjAutoComplete()">
+	</div>
+	<div class="input-field col s6">
+		<label for="medidaAlimentar">Medida Caseira</label> <input 
+			type="text" materialize="autocomplete" autocomplete="off"
+			name="itemRefeicao.medidaCaseira.descricao"
+			[(ngModel)]="itemRefeicao.medidaCaseira.descricao"
+			(blur)="medidaAutocomplete.getAutocomplete().getObj($event,itemRefeicao,'setMedidaCaseira','getDescricao')"
+			(ngModelChange)="medidaAutocomplete.getAutocomplete().getList(itemRefeicao.medidaCaseira, 'getDescricao');"
+			(keydown.enter)="medidaAutocomplete.getAutocomplete().pressEnter($event,itemRefeicao,'setMedidaCaseira','getDescricao');"
+			[materializeParams]="medidaAutocomplete.getAutocomplete().getObjAutoComplete()">
+	</div>
+</div>
+<div class="row">
+	<div class="input-field col s4">
+		<label for="quantidade">Quantidade</label> <input id="quantidade"
+			type="number" name="nome" (change)="calculeVe()" [(ngModel)]="itemRefeicao.quantidade">
+	</div>
+	<div class="input-field col s4">
+		<label for="ve">VE</label> <input id="ve" type="number" disabled
+			name="ve" [(ngModel)]="itemRefeicao.ve">
+	</div>
+	<div class="input-field col s4">
+		<label for="ne">NE</label> <input id="ne" type="number" disabled
+			name="ne" [(ngModel)]="itemRefeicao.ne">
+	</div>
+</div>

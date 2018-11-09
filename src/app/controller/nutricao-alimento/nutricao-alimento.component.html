@@ -16,7 +16,7 @@
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
 				<div class="col s9">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.alimento}}</a>
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.nome}}</a>
 				</div>
 				<div class="col s1">
 					<a [routerLink]="['/nutricao-alimento/detalhe', a.id]"><i

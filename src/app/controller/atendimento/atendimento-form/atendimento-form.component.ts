@@ -232,13 +232,19 @@ export class AtendimentoFormComponent {
             this.showPreload = true;
             this.atualizacao( this.atendimento )
                 .then( res => {
+                    console.log(res.json())
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    console.log(this.atendimento)
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
-                        this.calcularPontuacaoQuestionario();
                         if ( this.atendimento.getQuestionario() != undefined &&
-                                this.atendimento.getQuestionario().getId() > 0 )
+                                this.atendimento.getQuestionario().getId() > 0 ) {
+                            this.calcularPontuacaoQuestionario();
                             this.menuNutricao.setDisabledNovoQuestionario(true);
-                        else this.menuNutricao.setDisabledNovoQuestionario(false);
+                        } else this.menuNutricao.setDisabledNovoQuestionario(false);
+                        if ( this.atendimento.getRecordatorio() != undefined &&
+                                this.atendimento.getRecordatorio().getId() > 0 )
+                            this.menuNutricao.setDisabledNovoRecordatorio(true);
+                        else this.menuNutricao.setDisabledNovoRecordatorio(false);
                     }
                     
                     if ( this.atendimento.getTriagens() != undefined )
@@ -658,6 +664,14 @@ export class AtendimentoFormComponent {
                 .then(res => {
                     this.showPreload = false;
                     this.atendimento = new AtendimentoBuilder().clone(res.json());
+                    this.atendimento.getTriagens().forEach(t => {
+                        if ( t.getDiagnostico() == undefined )
+                            t.setDiagnostico(new DiagnosticoBuilder().initialize(null));
+                        if ( t.getIntervencao() == undefined )
+                            t.setIntervencao(new IntervencaoBuilder().initialize(null));
+                        if ( t.getEquipeAbordagem() == undefined )
+                            t.setEquipeAbordagem(new EquipeBuilder().initialize(null));
+                    })
                     if ( this.atendimento.getQuestionario() != undefined && this.atendimento.getQuestionario().getId() > 0)
                         this.menuNutricao.callBtnNewQuestionario(true);
                     else this.menuNutricao.callBtnNewQuestionario(false); 
@@ -668,7 +682,33 @@ export class AtendimentoFormComponent {
         }
     }
     
-    loadQuestionario( bool ) {
+    clickBtnNovoRecordatorio(click: boolean) {
+        if ( this.atendimento != undefined ) {
+            this.showPreload = true;
+            this.atualizacao(this.atendimento)
+                .then(res => {
+                    this.showPreload = false;
+                    this.atendimento = new AtendimentoBuilder().clone(res.json());
+                    this.atendimento.getTriagens().forEach(t => {
+                        if ( t.getDiagnostico() == undefined )
+                            t.setDiagnostico(new DiagnosticoBuilder().initialize(null));
+                        if ( t.getIntervencao() == undefined )
+                            t.setIntervencao(new IntervencaoBuilder().initialize(null));
+                        if ( t.getEquipeAbordagem() == undefined )
+                            t.setEquipeAbordagem(new EquipeBuilder().initialize(null));
+                    })
+                    console.log(this.atendimento)
+                    if ( this.atendimento.getRecordatorio() != undefined && this.atendimento.getRecordatorio().getId() > 0)
+                        this.menuNutricao.callBtnNewRecordatorio(true);
+                    else this.menuNutricao.callBtnNewRecordatorio(false); 
+                })
+                .catch(error => {
+                    this.catchConfiguration(error);
+                })
+        }
+    }
+    
+    loadNutricao( bool ) {
         this.atualizar();
     }
     

@@ -14,13 +14,19 @@ import { Atendimento } from './../../model/atendimento';
 export class MenuAtendimentoNutricaoComponent{
     @Input() atendimento: Atendimento;
     @Output() btnNovoQuestionario = new EventEmitter<boolean>();
-    @Output() btnCarregarQuestionario = new EventEmitter<boolean>();
+    @Output() btnNovoRecordatorio = new EventEmitter<boolean>();
+    @Output() btnCarregar = new EventEmitter<boolean>();
     private disableNovoQuestionario = false;
+    private disableNovoRecordatorio = false;
     
     constructor() {}
     
     newQuestionario() {
         this.btnNovoQuestionario.emit(true);
+    }
+    
+    newRecordatorio() {
+        this.btnNovoRecordatorio.emit(true);
     }
     
     //RECEBE O INDICATIVO DE QUE DEVE SER REDIRECIONADO OU NAO PARA A PAGINA DE NOVO QUESTIONARIO
@@ -32,11 +38,24 @@ export class MenuAtendimentoNutricaoComponent{
             window.open('/questionario-conhecimento-alimentar/cadastrar/'+this.atendimento.getId());
     }
     
-    setDisabledNovoQuestionario( bool ) {
-        this.disableNovoQuestionario = bool ? true : false;
+  //RECEBE O INDICATIVO DE QUE DEVE SER REDIRECIONADO OU NAO PARA A PAGINA DE NOVO QUESTIONARIO
+    //CASO TRUE, NAO REDIRECIONA, CASO CONTRARIO, REDIRECIONA
+    callBtnNewRecordatorio( bool ) {
+        if ( bool )
+            this.disableNovoRecordatorio = true;
+        else  
+            window.open('/recordatorio/cadastrar/'+this.atendimento.getId());
     }
     
-    loadQuestionario() {
-        this.btnCarregarQuestionario.emit(true);
+    setDisabledNovoQuestionario( bool ) {
+        this.disableNovoQuestionario = bool;
+    }
+    
+    setDisabledNovoRecordatorio( bool ) {
+        this.disableNovoRecordatorio = bool;
+    }
+    
+    functionLoad() {
+        this.btnCarregar.emit(true);
     }
 }

@@ -10,6 +10,8 @@ import { Aso } from './../../model/aso';
 import { AsoBuilder } from './../aso/aso.builder';
 import { Triagem } from './../../model/triagem';
 import { TriagemBuilder } from './../triagem/triagem.builder';
+import { Recordatorio } from './../../model/recordatorio';
+import { RecordatorioBuilder } from './../recordatorio/recordatorio.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
  
 export class AtendimentoBuilder extends GenericBuilder {
@@ -24,6 +26,7 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setTriagens(new TriagemBuilder().initializeList(new Array<Triagem>()));
         atendimento.setTriagensTodosAtendimentos(new TriagemBuilder().cloneList(new Array<Triagem>()));
         atendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(undefined));
+        atendimento.setRecordatorio(new RecordatorioBuilder().initialize(undefined));
         return atendimento;
     }
 
@@ -59,6 +62,8 @@ export class AtendimentoBuilder extends GenericBuilder {
                 new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));
         cloneAtendimento.setQuestionario(
                 new QuestionarioConhecimentoAlimentarBuilder().clone(this.getValue( atendimento, "getQuestionario" )));
+        cloneAtendimento.setRecordatorio(
+                new RecordatorioBuilder().clone(this.getValue( atendimento, "getRecordatorio" )));
         return cloneAtendimento;
     }
     

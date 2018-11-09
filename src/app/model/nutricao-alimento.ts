@@ -2,7 +2,7 @@ import { NutricaoAlimentoMedidaAlimentar } from './nutricao-alimento-medida-alim
 
 export class NutricaoAlimento {
     private id: number;
-    private alimento: string;
+    private nome: string;
     private tipo: string;
     private padrao: number;
     private energia: number;
@@ -43,11 +43,11 @@ export class NutricaoAlimento {
     public setId(id) {
         this.id = id;
     }
-    public getAlimento() {
-        return this.alimento;
+    public getNome() {
+        return this.nome;
     }
-    public setAlimento(alimento) {
-        this.alimento = alimento;
+    public setNome(nome) {
+        this.nome = nome;
     }
     public getTipo() {
         return this.tipo;

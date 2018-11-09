@@ -34,7 +34,7 @@ export class NutricaoAlimentoBuilder extends GenericBuilder {
         
         let cloneNutricaoAlimento = new NutricaoAlimento();
         cloneNutricaoAlimento.setId(this.getValue(nutricaoAlimento,"getId"));
-        cloneNutricaoAlimento.setAlimento(this.getValue(nutricaoAlimento,"getAlimento"));
+        cloneNutricaoAlimento.setNome(this.getValue(nutricaoAlimento,"getNome"));
         cloneNutricaoAlimento.setTipo(this.getValue(nutricaoAlimento,"getTipo"));
         cloneNutricaoAlimento.setPadrao(Util.treatDouble(this.getValue(nutricaoAlimento,"getPadrao")));
         cloneNutricaoAlimento.setEnergia(Util.treatDouble(this.getValue(nutricaoAlimento,"getEnergia")));
