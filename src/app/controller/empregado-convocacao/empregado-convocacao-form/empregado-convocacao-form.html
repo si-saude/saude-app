@@ -13,7 +13,7 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
-			<div class="input-field col s10">
+			<div class="input-field col s7">
 				<label for="nome">Nome</label> <input id="nome" type="text" disabled
 					[(ngModel)]="empregadoConvocacao.empregado.pessoa.nome" name="nome">
 			</div>
@@ -22,12 +22,12 @@
 					[(ngModel)]="empregadoConvocacao.auditado"
 					name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
 			</div>
-<!-- 						<div class="input-field col s2 checkbox checkbox-auditado"> -->
-<!-- 				<input type="checkbox" id="auditado"   -->
-<!-- 											[disabled]="verifyConformidadeConvocacaoExame()"" -->
-<!-- 					[(ngModel)]="empregadoConvocacao.auditado" -->
-<!-- 					name="empregadoDetail.auditado"> <label for="auditado">Resultado Auditado</label> -->
-<!-- 			</div> -->
+			<div class="input-field col s3 checkbox checkbox-auditado">
+				<input type="checkbox" id="empregadoConvocacao.resultadoAuditado"  
+					[disabled]="habilidataResultadoAuditar"
+					[(ngModel)]="empregadoConvocacao.resultadoAuditado"
+					name="empregadoConvocacao.resultadoAuditado"> <label for="auditado">Resultado Auditado</label>
+			</div>
 		</div>
 
 		<div class="row">

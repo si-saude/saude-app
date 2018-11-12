@@ -36,6 +36,7 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     indexEmpregadoConvocacaoExame: number;
     private modalConteudo;
     private conteudo: string;
+    private habilidataResultadoAuditar: boolean = false;
     
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
@@ -64,9 +65,13 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
                                 this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().clone( res.json() );
                                 for (let i=0; i<this.empregadoConvocacao.getEmpregadoConvocacaoExames().length; i++) {
                                     if ( this.empregadoConvocacao.getEmpregadoConvocacaoExames()[i].getConforme() == true )
-                                        this.conformList[i] = true;
+                                    this.conformList[i] = true;
                                     else this.conformList[i] = false; 
+
+                                if( this.empregadoConvocacao.getEmpregadoConvocacaoExames()[i].getResultadoConforme() == false)
+                                    this.habilidataResultadoAuditar = true;        
                                 }
+                                
                             } )
                             .catch( error => {
                                 this.catchConfiguration( error );
@@ -82,15 +87,6 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
         if(!Util.isNotNull(empregadoConvocacaoExame.getAuditoriaCustomDate().getAppDate()))
             empregadoConvocacaoExame.getAuditoriaCustomDate().setApiDate(new Date(Date.now()))
         
-    }
-    
-    verifyConformidadeConvocacaoExame(){        
-       this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(x=>
-       {
-          if( x.getConforme() == false)
-              return true;
-               
-       });        
     }
                 
     getExames() {
