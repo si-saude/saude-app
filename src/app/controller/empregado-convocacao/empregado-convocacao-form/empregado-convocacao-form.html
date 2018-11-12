@@ -56,7 +56,7 @@
 		</div>
 
 		<input type="checkbox" id="selectAll"
-			[(ngModel)]="selecionarTodos"
+			[(ngModel)]="selecionarTodos"	
 			(change)="selectAll($event)"
 			name="selectAll"> <label
 			for="selectAll">Selecionar/Desselecionar todos</label>
@@ -67,7 +67,9 @@
 				<thead>
 					<tr class="row col s12">
 						<th class="col s1">Código</th>
-						<th class="col s7">Descrição</th>
+						<th class="col s3">Descrição</th>
+						<th class="col s2">Resultado</th>
+						<th class="col s2">Auditoria</th>
 						<th class="col s2">Realização</th>
 						<th class="col s1">Conforme</th>
 						<th class="col s1">Excluir</th>
@@ -79,15 +81,33 @@
 						<tbody class="col s12">
 							<tr class="col s12">
 								<td class="col s1 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
-								<td class="col s7 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
+								<td class="col s3 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
+								<td class="col s2 resultado">
+									<div class="input-field col s12">
+										    <input id="resultado"
+											type="text" 
+											(ngModelChange)="verifyAuditoria(empregadoConvocacaoExame);"
+											[(ngModel)]="empregadoConvocacaoExame.resultado"
+											name="resultado{{eCE}}">
+									</div>
+								</td>
+								<td class="col s2 resultado">
+									<div class="input-field col s12">
+										    <input
+										    name ="auditoria{{eCE}}"	 
+											type="text" disabled
+											[(ngModel)]="empregadoConvocacaoExame.auditoriaCustomDate.appDate">
+									</div>
+								</td>
 								<div class="input-field col s2" style="margin-top: 0">
 										<app-date-picker [nome]="'empregadoConvocacaoExame['+eCE+'].realizacaoCustomDate'" 
 											[customDate]="empregadoConvocacaoExame.realizacaoCustomDate" 									
 											[legenda]="'Realização'"									
 											></app-date-picker>					
-								</div>
+								</div>							
 								<td class="col s1 checkbox-conforme">
-									<input [disabled]="empregadoConvocacaoExame.pendenteRelatorio"
+									<input [disabled]="empregadoConvocacaoExame.pendenteRelatorio || empregadoConvocacaoExame.resultado == undefined 
+													  || empregadoConvocacaoExame.resultado == ''  "
 									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].conforme"
 									[(ngModel)]="empregadoConvocacaoExame.conforme"
 									name="empregadoConvocacaoExame[{{eCE}}].conforme"> 

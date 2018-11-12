@@ -35,6 +35,10 @@ export class CustomDate {
         return this.appDate;
     }
     
+    getAppTime(){ 
+        return this.appTime;
+    }
+    
     setAppDate(date:any){        
         this.appDate = date;
         this.getApiDate();

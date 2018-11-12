@@ -12,6 +12,7 @@ export class EmpregadoConvocacaoExame {
     private realizacao: Date;
     private recebimento: Date;
     private auditoria: Date;
+    private resultado: string;
     private version: number;
 
     private realizacaoCustomDate: CustomDate = new CustomDate(this.realizacao);
@@ -40,6 +41,14 @@ export class EmpregadoConvocacaoExame {
     
     setExame(exame: Exame) {
         this.exame = exame;
+    }
+    
+    getResultado() {
+        return this.resultado;
+    }
+
+    setResultado(resultado: string) {
+        this.resultado = resultado;
     }
     
     getConforme() {

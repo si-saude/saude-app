@@ -32,6 +32,10 @@ tbody{
 	padding-left: 5px;	
 }
 
+.resultado {
+	padding-left: 1px;	
+}
+
 .checkbox-conforme {
 	padding-left: 45px;
 }

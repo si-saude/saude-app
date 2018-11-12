@@ -18,6 +18,7 @@ import { EmpregadoConvocacaoFilter } from './../empregado-convocacao.filter';
 import { EmpregadoConvocacaoBuilder } from './../empregado-convocacao.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { HttpUtil } from './../../../generics/utils/http.util';
+import { Util } from './../../../generics/utils/util';
 
 @Component( {
     selector: 'app-empregado-convocacao-form',
@@ -69,8 +70,14 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
                     }
                 } );
 
-        this.getExames();
-    
+        this.getExames();    
+    }
+                
+    verifyAuditoria(empregadoConvocacaoExame: EmpregadoConvocacaoExame){
+        
+        if(!Util.isNotNull(empregadoConvocacaoExame.getAuditoriaCustomDate().getAppDate()))
+            empregadoConvocacaoExame.getAuditoriaCustomDate().setApiDate(new Date(Date.now()))
+        
     }
                 
     getExames() {
