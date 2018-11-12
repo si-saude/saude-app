@@ -8,6 +8,7 @@ export class EmpregadoConvocacaoExame {
     private empregadoConvocacao: EmpregadoConvocacao;
     private exame: Exame;
     private conforme: boolean;
+    private resultadoConforme: boolean;
     private exigeRelatorio: boolean;
     private realizacao: Date;
     private recebimento: Date;
@@ -57,6 +58,14 @@ export class EmpregadoConvocacaoExame {
     
     setConforme(conforme: boolean) {
         this.conforme = conforme;
+    }
+
+    getResultadoConforme() {
+        return this.resultadoConforme;
+    }
+    
+    setResultadoConforme(resultadoConforme: boolean) {
+        this.resultadoConforme = resultadoConforme;
     }
     
     getExigeRelatorio() {
