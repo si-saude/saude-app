@@ -8,6 +8,7 @@
 table {
 	border: 1px solid #c0c0c0;
     margin-top: 25px;
+    width: 105%;
 }
 
 thead > tr {
@@ -25,7 +26,8 @@ tbody{
 }
 
 .codigo {
-	padding-left: 0px;	
+	padding-left: 0px;
+	margin-left: 0px;
 }
 
 .descricao {
@@ -37,7 +39,7 @@ tbody{
 }
 
 .checkbox-conforme {
-	padding-left: 45px;
+	text-align: center;
 }
 
 .btn-remover {

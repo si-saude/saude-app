@@ -48,7 +48,6 @@ export class AtendimentoBuilder extends GenericBuilder {
         let cloneAtendimento = new Atendimento();
         cloneAtendimento.setId( this.getValue( atendimento, "getId" ) );
         cloneAtendimento.setVersion( this.getValue( atendimento, "getVersion" ) );        
-        cloneAtendimento.setAso(new AsoBuilder().clone(this.getValue( atendimento, "getAso" ) ));        
         cloneAtendimento.setFilaAtendimentoOcupacional(new FilaAtendimentoOcupacionalBuilder().clone(
                 this.getValue( atendimento, "getFilaAtendimentoOcupacional" ) ));
         cloneAtendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().clone(
@@ -57,7 +56,15 @@ export class AtendimentoBuilder extends GenericBuilder {
         cloneAtendimento.setTriagens(new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagens" ) ));
         cloneAtendimento.setTriagensTodosAtendimentos(
                 new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));
-        
+
+        if (this.getValue(atendimento, "getAso") !== undefined) { 
+            cloneAtendimento.setAso(new AsoBuilder().clone(this.getValue( atendimento, "getAso" ) ));
+            if((cloneAtendimento.getAso() != null && cloneAtendimento.getAso().getValidade() == null)  )
+                cloneAtendimento.setAso(undefined);
+        }else{
+            cloneAtendimento.setAso(new AsoBuilder().initialize(null));
+        }
+            
         if (this.getValue(atendimento, "getQuestionario") !== undefined) { 
             cloneAtendimento.setQuestionario(
                     new QuestionarioConhecimentoAlimentarBuilder().clone(this.getValue(atendimento,"getQuestionario")));
