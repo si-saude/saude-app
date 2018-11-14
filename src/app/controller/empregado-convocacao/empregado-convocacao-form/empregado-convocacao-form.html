@@ -87,7 +87,7 @@
 						*ngFor="let empregadoConvocacaoExame of empregadoConvocacao.empregadoConvocacaoExames; let eCE = index">
 						<tbody class="col s12">
 							<tr class="col s12">
-								<td class="col s3 codigo">{{empregadoConvocacaoExame.exame.codigo+'-'+empregadoConvocacaoExame.exame.descricao}}</td>
+								<td class="col s3 codigo" [ngStyle]="{'font-weight': !empregadoConvocacaoExame.opcional ? 'bold' : 'normal' }">{{empregadoConvocacaoExame.exame.codigo+'-'+empregadoConvocacaoExame.exame.descricao}}</td>
 								<td class="col s1 checkbox-conforme">
 									<input
 									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].conforme"
@@ -108,7 +108,7 @@
 											[legenda]="'Recebimento'"									
 											></app-date-picker>
 								</div>
-								<td class="col s1">{{empregadoConvocacaoExame.auditoriaCustomDate.appDate}}</td>
+								<td class="col s1" [ngStyle]="{'font-weight': !empregadoConvocacaoExame.opcional ? 'bold' : 'normal' }">{{empregadoConvocacaoExame.auditoriaCustomDate.appDate}}</td>
 								<div class="input-field col s1" style="margin-top: 0">
 									<input id="resultado"
 											type="text"
@@ -160,7 +160,7 @@
 		<h5 class="title-modal">Resultado</h5>
 		
 		<div class="div-conteudo col s12 center">
-			<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudo" maxlength="256"
+			<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudo" maxlength="1048"
 				class="materialize-textarea conteudo" name="conteudo"></textarea>
 		</div>
 	</div>

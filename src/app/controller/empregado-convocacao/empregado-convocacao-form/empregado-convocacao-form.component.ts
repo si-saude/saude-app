@@ -90,7 +90,7 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     
     verifyResultadoAuditado(){        
         
-        if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getResultadoConforme() == false).length > 0){
+        if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getResultadoConforme() == false && x.getOpcional() == false).length > 0){
            this.desabilitarResultadoAuditar = true;
            this.empregadoConvocacao.setResultadoAuditado(false);
         }else{
