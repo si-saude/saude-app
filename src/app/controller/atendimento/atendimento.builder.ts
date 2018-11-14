@@ -62,8 +62,16 @@ export class AtendimentoBuilder extends GenericBuilder {
                 new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));
         cloneAtendimento.setQuestionario(
                 new QuestionarioConhecimentoAlimentarBuilder().clone(this.getValue( atendimento, "getQuestionario" )));
-        cloneAtendimento.setRecordatorio(
-                new RecordatorioBuilder().clone(this.getValue( atendimento, "getRecordatorio" )));
+        
+        if (this.getValue(atendimento, "getRecordatorio") !== undefined) { 
+            cloneAtendimento.setRecordatorio(
+                    new RecordatorioBuilder().clone(this.getValue(atendimento,"getRecordatorio")));
+            if(!this.idGtZero(cloneAtendimento.getRecordatorio()))
+                cloneAtendimento.setRecordatorio(undefined);
+        } else {
+            cloneAtendimento.setRecordatorio(new RecordatorioBuilder().initialize(null));
+        }
+        
         return cloneAtendimento;
     }
     

@@ -92,9 +92,12 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         super.save( this.recordatorio );
     }
     
-    selectRefeicao(r: Refeicao) {
-        this.refeicao = r;
+    selectRefeicao(ref: Refeicao, r: number) {
+        this.refeicao = ref;
         this.editRefeicao = true;
+        for(let i=0; i<this.recordatorio.getRefeicoes().length;i++)
+            $("."+i).css("background-color", "#fff");
+        $("."+r).css("background-color", "#4ff7f1");
     }
     
     selectItemRefeicao(it: ItemRefeicao) {
@@ -131,7 +134,22 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     }
     
     addRefeicao(refeicao: Refeicao) {
-        console.log(refeicao)
         this.recordatorio.getRefeicoes().push(refeicao);
+    }
+        
+    sumVe(r: number) {
+        let sum = 0;
+        this.recordatorio.getRefeicoes()[r].getItens().forEach(i => {
+            sum += i.getVe();
+        })
+        return sum;
+    }
+    
+    sumNe(r: number) {
+        let sum = 0;
+        this.recordatorio.getRefeicoes()[r].getItens().forEach(i => {
+            sum += i.getNe();
+        })
+        return sum;
     }
 }

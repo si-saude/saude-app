@@ -51,8 +51,27 @@ export class RecordatorioFormDetailComponent extends GenericFormComponent implem
         this.inscricao.unsubscribe();
     }
     
-    selectRefeicao(r: Refeicao) {
-        this.refeicao = r;
+    selectRefeicao(ref: Refeicao, r: number) {
+        this.refeicao = ref;
         this.editRefeicao = true;
+        for(let i=0; i<this.recordatorio.getRefeicoes().length;i++)
+            $("."+i).css("background-color", "#fff");
+        $("."+r).css("background-color", "#4ff7f1");
+    }
+        
+    sumVe(r: number) {
+        let sum = 0;
+        this.recordatorio.getRefeicoes()[r].getItens().forEach(i => {
+            sum += i.getVe();
+        })
+        return sum;
+    }
+    
+    sumNe(r: number) {
+        let sum = 0;
+        this.recordatorio.getRefeicoes()[r].getItens().forEach(i => {
+            sum += i.getNe();
+        })
+        return sum;
     }
 }
