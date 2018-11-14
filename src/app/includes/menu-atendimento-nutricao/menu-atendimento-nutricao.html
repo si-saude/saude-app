@@ -1,0 +1,23 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<div class="btns" style="display: grid;">
+		<button type="button" class="btn btn-primary" (click)="newQuestionario()"
+			[class.disabled]="disableNovoQuestionario ||
+				atendimento == undefined || 
+				atendimento.id == undefined || 
+				atendimento.id == 0 ||
+				atendimento.questionario.id != undefined">
+				Novo Questionário
+		</button>
+		
+		<button type="button" class="btn btn-primary" (click)="loadQuestionario()"
+			[class.disabled]="atendimento == undefined || 
+				atendimento.id == undefined || 
+				atendimento.id == 0">
+				Carregar Questionário
+		</button>
+	</div>
+</div>

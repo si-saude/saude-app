@@ -15,7 +15,11 @@
 
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
-				<div class="col s9">
+				<div class="col s5">
+					<a *ngIf="a.pessoa != undefined"[routerLinkActive]="['active']" class="collection-item">{{a.pessoa.nome}}</a>
+				</div>
+				
+				<div class="col s4">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.chave}}</a>
 				</div>
 				<div class="col s1">

@@ -62,14 +62,14 @@
 						</tr>
 					</thead>
 					<div class="container-requisito-aso">
-						<div *ngFor="let requisitoAso of requisitosAso; let rA = index">
+						<div *ngFor="let item of aso.itemAuditoriaAsos; let rA = index">
 							<tbody class="col s12">
 								<tr class="col s12">
-									<td class="col s10 requisito">{{requisitoAso.conteudo}}</td>
+									<td class="col s10 requisito">{{item.descricao}}</td>
 									<td class="col s2 conforme">
-										<input type="checkbox" id="requisitoAso[{{rA}}].conforme" 
-											[(ngModel)]="requisitoAso.conforme"	name="requisitoAso[{{rA}}].conforme">
-											<label for="requisitoAso[{{rA}}].conforme"></label>
+										<input type="checkbox" id="item[{{rA}}].conforme" 
+											[(ngModel)]="item.conforme"	name="item[{{rA}}].conforme">
+											<label for="item[{{rA}}].conforme"></label>
 									</td>
 								</tr>
 							</tbody>

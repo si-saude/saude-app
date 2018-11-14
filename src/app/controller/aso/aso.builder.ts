@@ -5,11 +5,15 @@ import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { Usuario } from './../../model/usuario';
 import { UsuarioBuilder } from './../usuario/usuario.builder';
 import { AsoAlteracao } from './../../model/aso-alteracao';
+import { AsoAvaliacao } from './../../model/aso-avaliacao';
 import { AptidaoBuilder } from './../aptidao/aptidao.builder';
 import { Aptidao } from './../../model/aptidao';
+import { ItemAuditoriaAso } from './../../model/item-auditoria-aso';
 import { AsoAlteracaoBuilder } from './../aso-alteracao/aso-alteracao.builder';
+import { AsoAvaliacaoBuilder } from './../aso-avaliacao/aso-avaliacao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 import { ExameBuilder } from './../exame/exame.builder';
+import { ItemAuditoriaAsoBuilder } from './../item-auditoria-aso/item-auditoria-aso.builder';
 
 export class AsoBuilder extends GenericBuilder {
     
@@ -22,6 +26,8 @@ export class AsoBuilder extends GenericBuilder {
         aso.setAsoAlteracoes(new AsoAlteracaoBuilder().initializeList(new Array<AsoAlteracao>()));
         aso.setAptidoes(new AptidaoBuilder().initializeList(new Array<Aptidao>()));
         aso.setExamesConvocacao(new ExameBuilder().initializeList(aso.getExamesConvocacao()));
+        aso.setAsoAvaliacoes(new AsoAvaliacaoBuilder().initializeList(new Array<AsoAvaliacao>()));
+        aso.setItemAuditoriaAsos(new ItemAuditoriaAsoBuilder().initializeList(new Array<ItemAuditoriaAso>()));
         
         return aso;
     }
@@ -75,6 +81,8 @@ export class AsoBuilder extends GenericBuilder {
         cloneAso.setAsoAlteracoes(new AsoAlteracaoBuilder().cloneList(this.getValue(aso,"getAsoAlteracoes")));
         cloneAso.setAptidoes(new AptidaoBuilder().cloneList(this.getValue(aso,"getAptidoes")));
         cloneAso.setUsuario(new UsuarioBuilder().clone(this.getValue(aso,"getUsuario")));
+        cloneAso.setAsoAvaliacoes(new AsoAvaliacaoBuilder().cloneList(this.getValue(aso,"getAsoAvaliacoes")));
+        cloneAso.setItemAuditoriaAsos(new ItemAuditoriaAsoBuilder().cloneList(this.getValue(aso,"getItemAuditoriaAsos")));
         return cloneAso;
     }
     

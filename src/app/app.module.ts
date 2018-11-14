@@ -109,6 +109,7 @@ import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sa
 import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
 import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
 import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
+import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
 
 @NgModule({
   declarations: [
@@ -222,7 +223,8 @@ import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indic
     ReportAcompanhamentoSastGuard,
     NutricaoAlimentoGuard,
     MedidaAlimentarGuard,
-    IndicadorConhecimentoAlimentarGuard
+    IndicadorConhecimentoAlimentarGuard,
+    QuestionarioConhecimentoAlimentarGuard
   ],
   bootstrap: [ 
     AppComponent

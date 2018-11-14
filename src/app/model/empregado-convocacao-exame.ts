@@ -8,10 +8,13 @@ export class EmpregadoConvocacaoExame {
     private empregadoConvocacao: EmpregadoConvocacao;
     private exame: Exame;
     private conforme: boolean;
+    private resultadoConforme: boolean;
     private exigeRelatorio: boolean;
+    private opcional: boolean;
     private realizacao: Date;
     private recebimento: Date;
     private auditoria: Date;
+    private resultado: string;
     private version: number;
 
     private realizacaoCustomDate: CustomDate = new CustomDate(this.realizacao);
@@ -42,12 +45,35 @@ export class EmpregadoConvocacaoExame {
         this.exame = exame;
     }
     
+    getResultado() {
+        return this.resultado;
+    }
+
+    setResultado(resultado: string) {
+        this.resultado = resultado;
+    }
+    
     getConforme() {
         return this.conforme;
     }
     
     setConforme(conforme: boolean) {
         this.conforme = conforme;
+    }
+    getOpcional() {
+        return this.opcional;
+    }
+    
+    setOpcional(opcional: boolean) {
+        this.opcional = opcional;
+    }
+
+    getResultadoConforme() {
+        return this.resultadoConforme;
+    }
+    
+    setResultadoConforme(resultadoConforme: boolean) {
+        this.resultadoConforme = resultadoConforme;
     }
     
     getExigeRelatorio() {

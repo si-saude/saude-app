@@ -3,6 +3,7 @@ import { FilaAtendimentoOcupacional } from './../../model/fila-atendimento-ocupa
 import { FilaAtendimentoOcupacionalBuilder } from './../fila-atendimento-ocupacional/fila-atendimento-ocupacional.builder';
 import { FilaEsperaOcupacional } from './../../model/fila-espera-ocupacional';
 import { FilaEsperaOcupacionalBuilder } from './../fila-espera-ocupacional/fila-espera-ocupacional.builder';
+import { QuestionarioConhecimentoAlimentarBuilder } from './../questionario-conhecimento-alimentar/questionario-conhecimento-alimentar.builder';
 import { Tarefa } from './../../model/tarefa';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { Aso } from './../../model/aso';
@@ -22,7 +23,7 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setTarefa(new TarefaBuilder().initialize(new Tarefa()));
         atendimento.setTriagens(new TriagemBuilder().initializeList(new Array<Triagem>()));
         atendimento.setTriagensTodosAtendimentos(new TriagemBuilder().cloneList(new Array<Triagem>()));
-        
+        atendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(undefined));
         return atendimento;
     }
 
@@ -47,7 +48,6 @@ export class AtendimentoBuilder extends GenericBuilder {
         let cloneAtendimento = new Atendimento();
         cloneAtendimento.setId( this.getValue( atendimento, "getId" ) );
         cloneAtendimento.setVersion( this.getValue( atendimento, "getVersion" ) );        
-        cloneAtendimento.setAso(new AsoBuilder().clone(this.getValue( atendimento, "getAso" ) ));        
         cloneAtendimento.setFilaAtendimentoOcupacional(new FilaAtendimentoOcupacionalBuilder().clone(
                 this.getValue( atendimento, "getFilaAtendimentoOcupacional" ) ));
         cloneAtendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().clone(
@@ -55,7 +55,25 @@ export class AtendimentoBuilder extends GenericBuilder {
         cloneAtendimento.setTarefa(new TarefaBuilder().clone(this.getValue( atendimento, "getTarefa" ) ));
         cloneAtendimento.setTriagens(new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagens" ) ));
         cloneAtendimento.setTriagensTodosAtendimentos(
-                new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));;
+                new TriagemBuilder().cloneList(this.getValue( atendimento, "getTriagensTodosAtendimentos" ) ));
+
+        if (this.getValue(atendimento, "getAso") !== undefined) { 
+            cloneAtendimento.setAso(new AsoBuilder().clone(this.getValue( atendimento, "getAso" ) ));
+            if((cloneAtendimento.getAso() != null && cloneAtendimento.getAso().getValidade() == null)  )
+                cloneAtendimento.setAso(undefined);
+        }else{
+            cloneAtendimento.setAso(new AsoBuilder().initialize(null));
+        }
+            
+        if (this.getValue(atendimento, "getQuestionario") !== undefined) { 
+            cloneAtendimento.setQuestionario(
+                    new QuestionarioConhecimentoAlimentarBuilder().clone(this.getValue(atendimento,"getQuestionario")));
+            if(!this.idGtZero(cloneAtendimento.getQuestionario()))
+                cloneAtendimento.setQuestionario(undefined);
+        } else {
+            cloneAtendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(null));
+        }
+        
         return cloneAtendimento;
     }
     

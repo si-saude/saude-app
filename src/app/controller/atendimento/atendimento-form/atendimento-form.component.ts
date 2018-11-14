@@ -49,6 +49,7 @@ import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
 import { TriagemUtil } from './../../../generics/utils/triagem.util';
 import { FichaColetaUtil } from './../../../generics/utils/ficha-coleta.util';
 import { Util } from './../../../generics/utils/util';
+import { MenuAtendimentoNutricaoComponent } from './../../../includes/menu-atendimento-nutricao/menu-atendimento-nutricao.component';
 
 @Component( {
     selector: 'app-atendimento-form',
@@ -56,6 +57,7 @@ import { Util } from './../../../generics/utils/util';
     styleUrls: ['./atendimento-form.css']
 } )
 export class AtendimentoFormComponent {
+    @ViewChild( MenuAtendimentoNutricaoComponent ) menuNutricao: MenuAtendimentoNutricaoComponent;
     private inscricao: Subscription;
     private atendimento: Atendimento;
     private atendimentos: Array<Atendimento>;
@@ -228,9 +230,17 @@ export class AtendimentoFormComponent {
         this.atualizarLista();
         if ( this.atendimento != undefined ) {
             this.showPreload = true;
-            this.atendimentoService.atualizar( this.atendimento )
+            this.atualizacao( this.atendimento )
                 .then( res => {
-                    this.atendimento = new AtendimentoBuilder().clone( res.json() );                    
+                    this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
+                        this.calcularPontuacaoQuestionario();
+                        if ( this.atendimento.getQuestionario() != undefined &&
+                                this.atendimento.getQuestionario().getId() > 0 )
+                            this.menuNutricao.setDisabledNovoQuestionario(true);
+                        else this.menuNutricao.setDisabledNovoQuestionario(false);
+                    }
+                    
                     if ( this.atendimento.getTriagens() != undefined )
                         this.atendimento.getTriagens().forEach(t => {
                             if ( t.getDiagnostico() == undefined )
@@ -290,6 +300,10 @@ export class AtendimentoFormComponent {
             this.primeiraAtualizacao();
             console.log( "Fila de atendimento nao preenchida." );
         }
+    }
+    
+    atualizacao(atendimento) {
+        return this.atendimentoService.atualizar( atendimento );
     }
 
     atualizarLista() {
@@ -528,7 +542,7 @@ export class AtendimentoFormComponent {
                 this.atendimento.getAso().getAptidoes().find(x => x.getAptidaoAso() !='APTO')){
                    
                 this.atendimento.getAso().getAptidoes().forEach(x=>{
-                    if(x.getAptidaoAso() !='APTO' && (!Util.isNotNull(this.atendimento.getAso().getDataRestricao()))){
+                    if(x.getAptidaoAso() !='APTO' && (!Util.isNotNull(this.atendimento.getAso().getDataRestricao())) || (!Util.isNotNull(x.getAptidaoAso())) ){
                         ret = false;
                     }
                 }); 
@@ -635,6 +649,59 @@ export class AtendimentoFormComponent {
             this.atendimento.getFilaEsperaOcupacional().getRiscoPotencial().getAbreviacaoEquipeAcolhimento())
             return true
         else return false;
+    }
+    
+    clickBtnNovoQuestionario(click: boolean) {
+        if ( this.atendimento != undefined ) {
+            this.showPreload = true;
+            this.atualizacao(this.atendimento)
+                .then(res => {
+                    this.showPreload = false;
+                    this.atendimento = new AtendimentoBuilder().clone(res.json());
+                    if ( this.atendimento.getQuestionario() != undefined && this.atendimento.getQuestionario().getId() > 0)
+                        this.menuNutricao.callBtnNewQuestionario(true);
+                    else this.menuNutricao.callBtnNewQuestionario(false); 
+                })
+                .catch(error => {
+                    this.catchConfiguration(error);
+                })
+        }
+    }
+    
+    loadQuestionario( bool ) {
+        this.atualizar();
+    }
+    
+    calcularPontuacaoQuestionario() {
+        if ( this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" ).getIndice() != -1 )
+            return;
+    
+        let soma: number = 0;
+        if ( this.atendimento.getQuestionario() != undefined && this.atendimento.getQuestionario().getId() > 0 ) {
+            this.atendimento.getQuestionario().getRespostas().forEach(r => {
+                if ( r.getItem().getId() == 
+                    r.getIndicador().getItemIndicadorConhecimentoAlimentares().find(rii => rii.getCerto() == true).getId() )
+                    soma++;
+            })
+        }
+        
+        this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" )
+            .setIndice(this.definirIndiceTriagemQuestionario(soma));
+    }
+    
+    definirIndiceTriagemQuestionario(soma) {
+        let indice: number = 0;
+        if ( soma <= 2)
+            indice = 0;
+        else if ( soma >= 3 && soma <= 4 )
+            indice = 1;
+        else if ( soma >= 5 && soma <= 6 )
+            indice = 2;
+        else if ( soma >= 7 && soma <= 8 )
+            indice = 3;
+        else if ( soma >= 9 && soma <= 10 )
+            indice = 4;
+        return indice;
     }
     
     ngOnDestroy() {

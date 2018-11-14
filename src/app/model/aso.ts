@@ -3,6 +3,8 @@ import { Atendimento } from './atendimento';
 import { AsoAlteracao } from './aso-alteracao';
 import { Usuario } from './usuario';
 import { Aptidao } from './aptidao';
+import { AsoAvaliacao } from './aso-avaliacao';
+import { ItemAuditoriaAso } from './item-auditoria-aso';
 import { Exame } from './exame';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
@@ -13,7 +15,9 @@ export class Aso {
     private data: Date;
     private validade: Date;
     private status: string;
+    private asoAvaliacoes: Array<AsoAvaliacao>;
     private asoAlteracoes: Array<AsoAlteracao>;
+    private itemAuditoriaAsos: Array<ItemAuditoriaAso>;
     private conforme: boolean;
     private naoConformidades: string;
     private usuario: Usuario;
@@ -92,6 +96,14 @@ export class Aso {
         this.aptidoes = aptidoes;
     }
     
+    getItemAuditoriaAsos( ) {
+        return this.itemAuditoriaAsos;
+    }
+    
+    setItemAuditoriaAsos( itemAuditoriaAsos: Array<ItemAuditoriaAso> ) {
+        this.itemAuditoriaAsos = itemAuditoriaAsos;
+    }
+    
     
     getAsoAlteracoes( ) {
         return this.asoAlteracoes;
@@ -99,6 +111,14 @@ export class Aso {
     
     setAsoAlteracoes( asoAlteracoes: Array<AsoAlteracao> ) {
         this.asoAlteracoes = asoAlteracoes;
+    }
+    
+    getAsoAvaliacoes( ) {
+        return this.asoAvaliacoes;
+    }
+    
+    setAsoAvaliacoes( asoAvaliacoes: Array<AsoAvaliacao> ) {
+        this.asoAvaliacoes = asoAvaliacoes;
     }
     
     getConforme() {

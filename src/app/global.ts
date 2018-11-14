@@ -10,7 +10,7 @@ export const GlobalVariable = Object.freeze({
         today: 'Hoje',
         clear: 'Limpar',
         close: 'Fechar',
-        editable: false,
+        editable: true,
         labelMonthNext: 'Próximo mês',
         labelMonthPrev: 'Mês anterior',
         format: 'dd/mm/yyyy',

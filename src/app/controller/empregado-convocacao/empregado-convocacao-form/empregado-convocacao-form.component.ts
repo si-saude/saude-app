@@ -18,6 +18,7 @@ import { EmpregadoConvocacaoFilter } from './../empregado-convocacao.filter';
 import { EmpregadoConvocacaoBuilder } from './../empregado-convocacao.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { HttpUtil } from './../../../generics/utils/http.util';
+import { Util } from './../../../generics/utils/util';
 
 @Component( {
     selector: 'app-empregado-convocacao-form',
@@ -32,6 +33,11 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     selecionarTodos: boolean;
     canAuditar: boolean;
     httpUtil: HttpUtil;
+    indexEmpregadoConvocacaoExame: number;
+    private modalConteudo;
+    private conteudo: string;
+    private desabilitarResultadoAuditar: boolean = false;
+    private desabilitarAuditar: boolean = false;
     
     constructor( private route: ActivatedRoute,
         private empregadoConvocacaoService: EmpregadoConvocacaoService,
@@ -41,7 +47,7 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
         
         this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().initialize( this.empregadoConvocacao );
         this.exames = new ExameBuilder().initializeList(this.exames);
-        this.conformList = new Array<boolean>();
+        this.modalConteudo = new EventEmitter<string | MaterializeAction>();
         this.canAuditar = false;
         this.httpUtil = new HttpUtil();
     }
@@ -58,10 +64,15 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
                                 this.showPreload = false;
                                 this.empregadoConvocacao = new EmpregadoConvocacaoBuilder().clone( res.json() );
                                 for (let i=0; i<this.empregadoConvocacao.getEmpregadoConvocacaoExames().length; i++) {
-                                    if ( this.empregadoConvocacao.getEmpregadoConvocacaoExames()[i].getConforme() == true )
-                                        this.conformList[i] = true;
-                                    else this.conformList[i] = false; 
+                                    if( this.empregadoConvocacao.getEmpregadoConvocacaoExames()[i].getConforme() == false )
+                                        this.desabilitarAuditar = true   
+
+                                    if( this.empregadoConvocacao.getEmpregadoConvocacaoExames()[i].getResultadoConforme() == false)
+                                        this.desabilitarResultadoAuditar = true;   
+                                
+                                
                                 }
+                                
                             } )
                             .catch( error => {
                                 this.catchConfiguration( error );
@@ -69,8 +80,31 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
                     }
                 } );
 
-        this.getExames();
+        this.getExames();    
+    }
+                
+    verifyAuditoria(empregadoConvocacaoExame: EmpregadoConvocacaoExame){        
+        if(!Util.isNotNull(empregadoConvocacaoExame.getAuditoriaCustomDate().getAppDate()))
+            empregadoConvocacaoExame.getAuditoriaCustomDate().setApiDate(new Date(Date.now()))        
+    }
     
+    verifyResultadoAuditado(){        
+        
+        if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getResultadoConforme() == false && x.getOpcional() == false).length > 0){
+           this.desabilitarResultadoAuditar = true;
+           this.empregadoConvocacao.setResultadoAuditado(false);
+        }else{
+            this.desabilitarResultadoAuditar = false;
+        }
+    }
+    
+    verifyAuditado(){        
+        if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getConforme() == false).length > 0){
+           this.desabilitarAuditar = true;
+           this.empregadoConvocacao.setAuditado(false);
+        }else{
+            this.desabilitarAuditar = false;
+        }
     }
                 
     getExames() {
@@ -98,36 +132,36 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
         this.empregadoConvocacao.getEmpregadoConvocacaoExames().push(empregadoConvocacaoExame);
         
         this.empregadoConvocacao.setAuditado(false);
-        this.conformList[this.empregadoConvocacao.getEmpregadoConvocacaoExames().length-1] = false;
     }
 
     removeExame( value ) {
         this.empregadoConvocacao.getEmpregadoConvocacaoExames().splice(value, 1);
-        this.conformList.splice(value, 1);
-    }
-
-    verifyAuditado() {
-        let ret: boolean = this.conformList.find( cL => cL == false );
-        if ( ret == undefined ) return true;
-        else {
-            this.empregadoConvocacao.setAuditado( false );
-            return false;
-        }
     }
 
     selectAll(evento) {
         if ($("#selectAll").is(':checked') == false)
             this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
                 eCE.setConforme(false);
-                for (let i=0; i<this.conformList.length; i++)
-                    this.conformList[i] = false;
             });
         else
             this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
                 eCE.setConforme(true);
-                for (let i=0; i<this.conformList.length; i++)
-                    this.conformList[i] = true;
-            });
-    
+            });    
+    }                
+                
+    openModalConteudoItem(empregadoConvocacaoExame: EmpregadoConvocacaoExame, index: number) {
+        this.indexEmpregadoConvocacaoExame = index;
+        this.modalConteudo.emit( { action: "modal", params: ['open'] } );
+        this.conteudo = empregadoConvocacaoExame.getResultado();
+    }
+            
+    confirmarModalConteudo() {
+                this.empregadoConvocacao.getEmpregadoConvocacaoExames()[this.indexEmpregadoConvocacaoExame].setResultado(this.conteudo)
+                this.verifyAuditoria(this.empregadoConvocacao.getEmpregadoConvocacaoExames()[this.indexEmpregadoConvocacaoExame])
+                this.modalConteudo.emit( { action: "modal", params: ['close'] } );
+    }
+            
+    cancelarModalConteudo() {
+                this.modalConteudo.emit( { action: "modal", params: ['close'] } );
     }
 }

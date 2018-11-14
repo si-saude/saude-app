@@ -13,14 +13,20 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
 		<div class="row">
-			<div class="input-field col s10">
+			<div class="input-field col s7">
 				<label for="nome">Nome</label> <input id="nome" type="text" disabled
 					[(ngModel)]="empregadoConvocacao.empregado.pessoa.nome" name="nome">
 			</div>
 			<div class="input-field col s2 checkbox checkbox-auditado">
-				<input type="checkbox" id="auditado" [disabled]="!verifyAuditado()"
+				<input type="checkbox" id="auditado" [disabled]="desabilitarAuditar"
 					[(ngModel)]="empregadoConvocacao.auditado"
 					name="empregadoDetail.auditado"> <label for="auditado">Auditado</label>
+			</div>
+			<div class="input-field col s3 checkbox checkbox-auditado">
+				<input type="checkbox" id="empregadoConvocacao.resultadoAuditado"  
+					[disabled]="desabilitarResultadoAuditar"
+					[(ngModel)]="empregadoConvocacao.resultadoAuditado"
+					name="empregadoConvocacao.resultadoAuditado"> <label for="auditado">Resultado Auditado</label>
 			</div>
 		</div>
 
@@ -56,7 +62,7 @@
 		</div>
 
 		<input type="checkbox" id="selectAll"
-			[(ngModel)]="selecionarTodos"
+			[(ngModel)]="selecionarTodos"	
 			(change)="selectAll($event)"
 			name="selectAll"> <label
 			for="selectAll">Selecionar/Desselecionar todos</label>
@@ -66,10 +72,13 @@
 			<table class="striped">
 				<thead>
 					<tr class="row col s12">
-						<th class="col s1">Código</th>
-						<th class="col s7">Descrição</th>
-						<th class="col s2">Realização</th>
+						<th class="col s3">Exame</th>
 						<th class="col s1">Conforme</th>
+						<th class="col s2">Realização</th>
+						<th class="col s2">Recebimento</th>
+						<th class="col s1">Auditoria</th>
+						<th class="col s1">Resultado</th>
+						<th class="col s1">R.Conforme</th>
 						<th class="col s1">Excluir</th>
 					</tr>
 				</thead>
@@ -78,20 +87,43 @@
 						*ngFor="let empregadoConvocacaoExame of empregadoConvocacao.empregadoConvocacaoExames; let eCE = index">
 						<tbody class="col s12">
 							<tr class="col s12">
-								<td class="col s1 codigo">{{empregadoConvocacaoExame.exame.codigo}}</td>
-								<td class="col s7 descricao">{{empregadoConvocacaoExame.exame.descricao}}</td>
+								<td class="col s3 codigo" [ngStyle]="{'font-weight': !empregadoConvocacaoExame.opcional ? 'bold' : 'normal' }">{{empregadoConvocacaoExame.exame.codigo+'-'+empregadoConvocacaoExame.exame.descricao}}</td>
+								<td class="col s1 checkbox-conforme">
+									<input
+									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].conforme"
+									[(ngModel)]="empregadoConvocacaoExame.conforme"
+									(ngModelChange)="verifyAuditado()"
+									name="empregadoConvocacaoExame[{{eCE}}].conforme"> 
+									<label for="empregadoConvocacaoExame[{{eCE}}].conforme"></label>
+								</td>
 								<div class="input-field col s2" style="margin-top: 0">
 										<app-date-picker [nome]="'empregadoConvocacaoExame['+eCE+'].realizacaoCustomDate'" 
 											[customDate]="empregadoConvocacaoExame.realizacaoCustomDate" 									
 											[legenda]="'Realização'"									
 											></app-date-picker>					
 								</div>
+								<div class="input-field col s2" style="margin-top: 0">
+										<app-date-picker [nome]="'empregadoConvocacaoExame['+eCE+'].recebimentoCustomDate'" 
+											[customDate]="empregadoConvocacaoExame.recebimentoCustomDate" 									
+											[legenda]="'Recebimento'"									
+											></app-date-picker>
+								</div>
+								<td class="col s1" [ngStyle]="{'font-weight': !empregadoConvocacaoExame.opcional ? 'bold' : 'normal' }">{{empregadoConvocacaoExame.auditoriaCustomDate.appDate}}</td>
+								<div class="input-field col s1" style="margin-top: 0">
+									<input id="resultado"
+											type="text"
+											[(ngModel)]="empregadoConvocacaoExame.resultado"
+											(click)="openModalConteudoItem(empregadoConvocacaoExame,eCE)"
+											[readonly]="true"
+											name="resultado{{eCE}}">
+								</div>
 								<td class="col s1 checkbox-conforme">
-									<input [disabled]="empregadoConvocacaoExame.pendenteRelatorio"
-									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].conforme"
-									[(ngModel)]="empregadoConvocacaoExame.conforme"
-									name="empregadoConvocacaoExame[{{eCE}}].conforme"> 
-									<label for="empregadoConvocacaoExame[{{eCE}}].conforme"></label>
+									<input 
+									type="checkbox" id="empregadoConvocacaoExame[{{eCE}}].resultadoConforme"
+									[(ngModel)]="empregadoConvocacaoExame.resultadoConforme"
+									(ngModelChange)="verifyResultadoAuditado()"
+									name="empregadoConvocacaoExame[{{eCE}}].resultadoConforme"> 
+									<label for="empregadoConvocacaoExame[{{eCE}}].resultadoConforme"></label>
 								</td>
 								<td class="col s1 btn-remover"><a
 									(click)="removeExame(eCE)" [ngStyle]="{'cursor': 'pointer'}"><i
@@ -114,4 +146,30 @@
 		</div>
 
 	</form>
+</div>
+
+
+
+
+
+<div id="modal" class="modal" materialize="modal" 
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalConteudo">
+
+	<div class="modal-content">
+		<h5 class="title-modal">Resultado</h5>
+		
+		<div class="div-conteudo col s12 center">
+			<textarea id="conteudo-resposta" type="text" [(ngModel)]="conteudo" maxlength="1048"
+				class="materialize-textarea conteudo" name="conteudo"></textarea>
+		</div>
+	</div>
+ 
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat btn"
+			(click)="cancelarModalConteudo()">Cancelar</a>
+		<a class="waves-effect waves-green btn-flat btn"
+			(click)="confirmarModalConteudo()">Confirmar</a>
+	</div>
+
 </div>

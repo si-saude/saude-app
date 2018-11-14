@@ -17,7 +17,7 @@ table {
 	border: 1px solid #c0c0c0;
     display: inline-table;
 	margin-top: 40px;
-	margin-bottom: 50px;
+	margin-bottom: 0px;
 }
 
 thead > tr {
@@ -29,18 +29,21 @@ th {
 	margin-bottom: 0px;
 }
 
-.btn-floating i {
-	font-size: 1.3rem;
-}
-
 td > a > i {
 	margin-top: -5px;
+}
+
+tbody{
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
 }
 
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
     position: absolute;
     opacity: 0;
-    margin-top: 15px;
     pointer-events: auto;
 }
 
@@ -48,8 +51,12 @@ td > a > i {
 	margin-top: 30px;
 }
 
+.checkboxtable{
+	margin-top: 0px;
+}
+
 tbody{
-	margin-top: 10px;
+	margin-top: 0px;
 	border-bottom: 1px solid #c0c0c0;	
 	display: flex !important;
 	padding: 0;
@@ -90,4 +97,20 @@ input {
     margin-bottom: 3px;
 	width: 30px;
     height: 30px;
+}
+
+td, th {
+  	padding: 15px 5px;
+    padding-top: 0px;
+    padding-right: 5px;
+    padding-bottom: 15px;
+    padding-left: 5px;
+ 	display: table-cell;
+	text-align: left;
+ 	vertical-align: middle;
+ 	border-radius: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
 }
