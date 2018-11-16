@@ -40,4 +40,11 @@ export class ProfissiogramaService extends GenericService {
         let profissiogramaFilter: ProfissiogramaFilter = new ProfissiogramaFilter();
         return this.selectList(profissiogramaFilter);
     }    
+    
+    getVinculos() {
+        let urlVinculos = GlobalVariable.BASE_API_URL + "/generic/vinculo-empregado";
+        return this.http
+            .get( urlVinculos + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
 }

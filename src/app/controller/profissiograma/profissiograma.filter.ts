@@ -3,6 +3,7 @@ import { BooleanFilter } from './../../generics/boolean.filter';
 
 export class ProfissiogramaFilter extends GenericFilter {
     private nome:string;
+    private vinculo: string;
     private concluido: BooleanFilter = new BooleanFilter();
 
     getNome():string{
@@ -11,6 +12,14 @@ export class ProfissiogramaFilter extends GenericFilter {
     
     setNome(nome:string){
         this.nome = nome;
+    }
+    
+    getVinculo(): string{
+        return this.vinculo;
+    }
+    
+    setVinculo(vinculo: string){
+        this.vinculo = vinculo;
     }
           
     getConcluido():BooleanFilter{

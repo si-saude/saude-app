@@ -33,7 +33,7 @@ export class ProfissiogramaFormDetailComponent extends GenericFormComponent {
     exames: Array<Exame>;
     criterios: Array<Criterio>;
     arrayCriterio: Array<Criterio>;
-    
+    vinculos: Array<string>;
     selectedGM = null;
     selectedExm = null;
     
@@ -70,6 +70,7 @@ export class ProfissiogramaFormDetailComponent extends GenericFormComponent {
         this.getGruposMonitoramento();
         this.getExames();
         this.getCriterios();
+        this.getVinculos();
       }
     
     getGruposMonitoramento() {
@@ -117,6 +118,16 @@ export class ProfissiogramaFormDetailComponent extends GenericFormComponent {
             .getGrupoMonitoramentoProfissiogramaExames();
         this.arrayCriterio = new Array<Criterio>();
         this.selectedExm = null;
+    }
+    
+    getVinculos() {
+        this.profissiogramaService.getVinculos()
+            .then( res => {
+                this.vinculos = Object.keys( res.json() ).sort();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
     }
     
     selectExame( index: number ) {

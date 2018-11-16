@@ -42,6 +42,14 @@ export class ProfissiogramaBuilder extends GenericBuilder{
                 new GrupoMonitoramentoProfissiogramaBuilder()
                     .cloneList(this.getValue(profissiograma, "getGrupoMonitoramentoProfissiogramas")));
         
+        if(this.getValue(profissiograma, "getVinculo") == "")
+            cloneProfissiograma.setVinculo(undefined);
+        else if (this.getValue(profissiograma, "getVinculo") == undefined )
+            cloneProfissiograma.setVinculo("");
+        else
+            cloneProfissiograma.setVinculo(this.getValue(profissiograma, "getVinculo"));
+        
+        
         return cloneProfissiograma;
     }
     

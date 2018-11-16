@@ -14,9 +14,25 @@
 		(ngSubmit)="save()">
 
 		<div class="row">
-			<div class="input-field col s10">
+			<div class="input-field col s7">
 				<label for="nome">Nome</label> <input id="nome" type="text" disabled
 					maxlength="400" [(ngModel)]="profissiograma.nome" name="nome">
+			</div>
+			<div class="input-field col s3">
+				<fieldset>
+					<legend>
+						Vínculo <a
+							class="btn-floating waves-effect waves-light green btn-add-fieldset"
+							(click)="getVinculos()"> <i
+							class="material-icons center-icon">cached</i>
+						</a>
+					</legend>
+					<select name="vinculo" class="browser-default" disabled
+						[(ngModel)]="profissiograma.vinculo">
+						<option disabled selected value="">Selecione um vínculo</option>
+						<option *ngFor="let vinculo of vinculos" value="{{vinculo}}">{{vinculo}}</option>
+					</select>
+				</fieldset>
 			</div>
 
 			<div class="input-field col s2 checkbox">
