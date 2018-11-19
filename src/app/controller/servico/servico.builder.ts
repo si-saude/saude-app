@@ -37,6 +37,7 @@ export class ServicoBuilder extends GenericBuilder {
         cloneServico.setCodigo(this.getValue(servico, "getCodigo"));
         cloneServico.setNome(this.getValue(servico, "getNome"));
         cloneServico.setPublico(this.getValue(servico, "getPublico"));
+        cloneServico.setInativo(this.getValue(servico, "getInativo"));        
         cloneServico.setUrl(this.getValue(servico, "getUrl"));
         cloneServico.setIntervalo(this.getValue(servico, "getIntervalo"));
         cloneServico.setQuantidadeSolicitacaoIntervalo(this.getValue(servico, "getQuantidadeSolicitacaoIntervalo"));

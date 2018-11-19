@@ -19,6 +19,7 @@ import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-so
 import { EquipeService } from './../controller/equipe/equipe.service';
 import { AtestadoService } from './../controller/atestado/atestado.service';
 import { InstalacaoService } from './../controller/instalacao/instalacao.service';
+import { BooleanFilter } from './../generics/boolean.filter';
  
 @Injectable()
 export class SolicitacaoServicoService {
@@ -58,6 +59,9 @@ export class SolicitacaoServicoService {
     }
     
     getServicos( servicoFilter ) {
+        let booleanFilter: BooleanFilter = new BooleanFilter();
+        booleanFilter.setValue( 2 );
+        servicoFilter.setInativo( booleanFilter );
         return this.servicoService.selectList( servicoFilter );
     }
     

@@ -30,10 +30,16 @@
 						<label for="nome">Nome</label> <input id="nome" type="text"
 							disabled name="nome" [(ngModel)]="servico.nome">
 					</div>
-					<div class="input-field col s3 checkbox">
+					<div class="input-field col s2 checkbox">
 						<input type="checkbox" id="publico" disabled
 							[(ngModel)]="servico.publico" name="servico.publico"> <label
 							for="publico">Público</label>
+					</div>
+					<div class="input-field col s2 checkbox">
+						<input type="checkbox" id="inativo" disabled
+							[(ngModel)]="servico.inativo"
+							name="servico.inativo"> <label
+							for="publico">Inativo</label>
 					</div>
 
 				</div>

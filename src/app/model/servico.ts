@@ -8,6 +8,7 @@ export class Servico {
     private grupo: string = "";
     private url: string;
     private publico: boolean;
+    private inativo: boolean;
     private atividades: Array<Atividade>;
     private intervalo: number;
     private quantidadeSolicitacaoIntervalo: number;
@@ -59,6 +60,14 @@ export class Servico {
 
     setPublico(publico: boolean) {
         this.publico = publico;
+    }
+    
+    isInativo() {
+        return this.inativo;
+    }
+
+    setInativo(inativo: boolean) {
+        this.inativo = inativo;
     }
     
     getAtividades() {

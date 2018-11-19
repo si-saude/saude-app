@@ -8,6 +8,7 @@ export class ServicoFilter extends GenericFilter {
     private intervalo: number;
     private quantidadeSolicitacaoIntervalo: number;
     private publico: BooleanFilter = new BooleanFilter();
+    private inativo: BooleanFilter = new BooleanFilter();
     
     getNome() {
         return this.nome;
@@ -39,6 +40,14 @@ export class ServicoFilter extends GenericFilter {
     
     setPublico(publico: BooleanFilter) {
         this.publico = publico;
+    }
+    
+    getInativo() {
+        return this.inativo;
+    }
+    
+    setInativo(inativo: BooleanFilter) {
+        this.inativo = inativo;
     }
     
     setIntervalo(intervalo: number) {
