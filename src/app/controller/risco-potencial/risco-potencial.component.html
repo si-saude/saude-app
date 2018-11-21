@@ -92,7 +92,7 @@
 								href="/risco-potencial/ficha-coleta/{{item.id}}/{{item.empregadoNome}}" target="_blank"
 								class="btn btn-primary btn-ranking">Ficha Coleta</a>
 						</div>
-						<div style="display: inline;">
+						<div style="display: inline;" *ngIf="verifyTriagemPlanejamento(item)">
 							<a
 								href="/risco-potencial/triagem/{{item.id}}" target="_blank"
 								class="btn btn-primary btn-ranking">Triagem/Planejamento</a>

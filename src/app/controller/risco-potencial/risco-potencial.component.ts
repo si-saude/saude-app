@@ -294,6 +294,13 @@ export class RiscoPotencialComponent {
         return false;
     }
     
+    verifyTriagemPlanejamento(item){
+        if ( item.getStatus() != "VALIDADO" ){
+            return true;
+        }
+        return false;        
+    }
+    
     verifyStatusAcao( item: RiscoPotencialDto ) {
         if ( item.getStatus() == "VALIDADO" &&
             item.getEquipeResponsavelNome() == this.profissional.getEquipe().getNome() )
