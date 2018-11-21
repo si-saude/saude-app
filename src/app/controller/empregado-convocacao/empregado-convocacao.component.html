@@ -81,7 +81,7 @@
 		<h5 class="title-modal-import">Importar Arquivo</h5>
 
 		<div class="row file-import">
-			<div class="file-field input-field col s12">
+			<div class="file-field input-field col s8">
 				<div class="btn">
 					<span>Realizações de Exames</span> <input id="arquivo" type="file" #arquivo
 						name="arquivo" accept=".xls">
@@ -90,12 +90,29 @@
 					<input class="file-path validate" type="text">
 				</div>
 			</div>
+			<div class="file-field input-field col s4">
+				<a type="submit" class="waves-effect waves-green btn-flat"
+					(click)="importFile()">Importar Realização</a>
+			</div>			
 		</div>
-
-		<div class="modal-footer">
-			<a type="submit" class="waves-effect waves-green btn-flat"
-				(click)="importFile()">Importar Realização</a> <a
-				class="waves-effect waves-green btn-flat"
+		<div class="row file-import">
+			<div class="file-field input-field col s8">
+				<div class="btn">
+					<span>Resultados de Exames</span> <input id="arquivoTxt" type="file" #arquivoTxt
+						name="arquivoTxt" accept=".txt">
+				</div> 
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text">
+				</div>
+				
+			</div>
+			<div class="file-field input-field col s4">
+				<a type="submit" class="waves-effect waves-green btn-flat"
+				(click)="importFileTxt()">Importar Resultado</a>
+			</div>
+		</div>
+		<div class="modal-footer">	
+			 <a	class="waves-effect waves-green btn-flat"
 				(click)="closeModalImport()">Fechar</a>
 		</div>
 
