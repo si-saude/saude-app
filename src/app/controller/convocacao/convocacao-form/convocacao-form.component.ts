@@ -407,10 +407,10 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     this.showPreload = true;
                     
                     let convocacaoAux:Convocacao = new ConvocacaoBuilder().clone(this.convocacao);
-                    convocacaoAux.setEmpregadoConvocacoes(this.empregadoConvocacoes);
-                    console.log(convocacaoAux);
+                    convocacaoAux.setEmpregadoConvocacoes(this.empregadoConvocacoes);                    
                     this.convocacaoService.getConvocacao( convocacaoAux )
                         .then( res => {
+                            location.reload();
                             this.downloadFile( res, convocacaoAux.getTitulo()+".zip" )
                             this.showPreload = false;
                         } )
