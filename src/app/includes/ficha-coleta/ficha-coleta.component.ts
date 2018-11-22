@@ -148,10 +148,12 @@ export class FichaColetaComponent{
     }
     
     autoAddItem(resposta: RespostaFichaColeta) {
-        if ( resposta.getPergunta().getTipo().includes("SIM") ) {
+        if ( resposta.getPergunta().getTipo().includes("SIM")) {
             if ( resposta.getConteudo().includes("N") )
                 resposta.setItens(undefined);
             else if ( resposta.getItens() == undefined || resposta.getItens().length == 0 ) {
+                
+                
                 let addItem: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
                 let item = addItem;
                 for ( let i = 0; i < resposta.getPergunta().getItens().length - 1; i++ ) {
@@ -161,13 +163,31 @@ export class FichaColetaComponent{
                 if ( resposta.getItens() == undefined ) resposta.setItens(new Array<ItemRespostaFichaColeta>())
                 resposta.getItens().push(item);
             }
-                    
         }
+
+        if(resposta.getPergunta().getGrupo() == "ANAMNESE" && resposta.getPergunta().getCodigo() == "0008" && (!resposta.getConteudo().includes("NÃO"))){
+                
+             if ( resposta.getItens() == undefined || resposta.getItens().length == 0 ) {
+                     let addItem: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
+                     let item = addItem;
+                     for ( let i = 0; i < resposta.getPergunta().getItens().length - 1; i++ ) {
+                         addItem.setItem(new ItemRespostaFichaColeta());
+                         addItem = item.getItem();
+                     }
+                     if ( resposta.getItens() == undefined ) resposta.setItens(new Array<ItemRespostaFichaColeta>())
+                     resposta.getItens().push(item);            
+             }
+        }
+        
     }
     
     existItem(resposta: RespostaFichaColeta) {
         if ( resposta.getConteudo() == "SIM" && resposta.getPergunta().getItens().length > 0 && resposta.getItens().length > 0 )
             return true;
+        if(resposta.getPergunta().getGrupo() == "ANAMNESE" && resposta.getPergunta().getCodigo() == "0008" && (!resposta.getConteudo().replace(/[^\w\s]/gi, '').includes("NO")) &&
+                resposta.getPergunta().getItens().length > 0 && resposta.getItens().length > 0){
+            return true;
+        }
         return false;
     }
     
@@ -201,7 +221,7 @@ export class FichaColetaComponent{
         let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);
         if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
             if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
-                if ( this.fuma.getConteudo() == "SIM" && equipe != undefined ){
+                if ( this.fuma.getConteudo() == "FUMANTE" && equipe != undefined ){
                     ret = false;
                 }
                 else{                        
