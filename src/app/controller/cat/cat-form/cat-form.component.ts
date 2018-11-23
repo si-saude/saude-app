@@ -83,8 +83,6 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private conformeNaoConforme: Array<string>;
     private aplicavelNaoAplicavel: Array<string>;
     
-    private timeActions;
-    
     constructor( private route: ActivatedRoute,
         private catService: CatService,
         router: Router) {
@@ -123,8 +121,6 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.classificacoes = new ClassificacaoAfastamentoBuilder().initializeList(this.classificacoes);
         this.nexoCausais = new Array<string>();
         this.profissional = new ProfissionalSaudeBuilder().initialize(null);
-        
-        this.timeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {
@@ -544,9 +540,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             this.cat.setAusenciaExames(false);
     }
     
-    downloadComunicacaoOcorrencia() {
-        if ( this.verifyDownloadRelatorio() ) return;
-        
+    downloadComunicacaoOcorrencia() {        
         this.catService.getComunicacaoOcorrencia( new CatBuilder().clone( this.cat ) )
             .then(res => {
                 this.baixar( res, this.cat.getEmpregado().getMatricula().trim()+".pdf", 'relatorio' );
@@ -565,8 +559,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     verifyDownloadRelatorio() {
         if ( this.cat.getEmpregado() == undefined || this.cat.getEmpregado().getId() == 0 ||
                 this.cat.getEmpregado() == undefined || this.cat.getEmpregado().getId() == 0 ||
-                this.cat.getGerenteContrato() == undefined || this.cat.getTelefoneGerente() == "" ||
-                this.cat.getFiscalContrato() == undefined || this.cat.getTelefoneFiscal() == "" ||
+                this.cat.getGerenteContrato() == undefined || this.cat.getGerenteContrato() == "" || this.cat.getTelefoneGerente() == "" ||
+                this.cat.getFiscalContrato() == undefined || this.cat.getFiscalContrato() == "" || this.cat.getTelefoneFiscal() == "" ||
                 this.cat.getDataOcorrencia() == undefined ||
                 this.cat.getDataInformacao() == undefined ||
                 this.cat.getProfissionalCaracterizacao() == undefined || this.cat.getProfissionalCaracterizacao().getId() == 0 ||
@@ -577,6 +571,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                 this.cat.getClassificacao() == undefined || this.cat.getClassificacao().getId() == 0 )
             return true;
     }
+    
+    
     
     verifyDownloadArquivo() {
         if ( this.cat.getArquivoBase64() == undefined )

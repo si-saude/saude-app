@@ -32,7 +32,6 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
     private localizacoes: Array<Localizacao>;
     private ensaioVedacoes: Array<string>;
     private empregadoNomeAutocomplete: EmpregadoNomeAutocomplete;
-    timeActions ;
     
     constructor( private route: ActivatedRoute,
         private avaliacaoHigieneOcupacionalService: AvaliacaoHigieneOcupacionalService,
@@ -43,7 +42,6 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
         this.avaliacaoHigieneOcupacional = new AvaliacaoHigieneOcupacionalBuilder().initialize( this.avaliacaoHigieneOcupacional );
         this.empregadoNomeAutocomplete = new EmpregadoNomeAutocomplete( this.avaliacaoHigieneOcupacionalService.getEmpregadoService());
         this.ensaioVedacoes = new Array<string>();
-        this.timeActions = new EventEmitter<string|MaterializeAction>();
         
     }
 

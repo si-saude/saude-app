@@ -5,7 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterializeModule } from 'angular2-materialize';
 
+import { IntegerMaskDirectiveModule } from './../directives/integer-mask-directive/integer-mask-directive.module';
 import { DatePickerModule } from './../includes/date-picker/date-picker.module';
+import { TimePickerModule } from './../includes/time-picker/time-picker.module';
 import { MensagemFormModule } from './../includes/mensagem-form/mensagem-form.module';
 import { PreloadComponent } from './../includes/preload/preload.component';
 import { ConfirmSaveModule } from './../includes/confirm-save/confirm-save.module';
@@ -109,7 +111,9 @@ import { QuestionarioConhecimentoAlimentarService } from './questionario-conheci
     MaterializeModule,
     ReactiveFormsModule,
     DatePickerModule,
-    MensagemFormModule
+    TimePickerModule,
+    MensagemFormModule,
+    IntegerMaskDirectiveModule
   ],
   exports: [ 
     CommonModule,
@@ -122,7 +126,9 @@ import { QuestionarioConhecimentoAlimentarService } from './questionario-conheci
     ConfirmSaveModule,
     ConfirmDeleteComponent,
     PaginacaoComponent,
-    DatePickerModule
+    DatePickerModule,
+    TimePickerModule,
+    IntegerMaskDirectiveModule
   ],
   providers: [
     PerfilService,

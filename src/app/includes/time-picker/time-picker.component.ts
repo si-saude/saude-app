@@ -1,4 +1,4 @@
-import { EventEmitter, Component, Input, Output} from '@angular/core';
+import { EventEmitter, SimpleChanges, Component, Input, Output} from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalVariable } from './../../../../src/app/global';
 import { CustomDate} from './../../generics/utils/custom-date.util';
@@ -6,25 +6,23 @@ import { CustomDate} from './../../generics/utils/custom-date.util';
 import { MaterializeAction } from "angular2-materialize";
 
 @Component( {
-    selector: 'app-date-picker',
-    templateUrl: './date-picker.html',
-    styleUrls: ['./date-picker.css']
+    selector: 'app-time-picker',
+    templateUrl: './time-picker.html',
+    styleUrls: ['./time-picker.css']
 } )
-export class DatePickerComponent {
+export class TimePickerComponent {
 
     @Input() customDate:CustomDate;
     @Input() nome;
-    @Input() legenda;
     @Input() obrigatorio : boolean;
     @Input() desabilitar : boolean;
     @Output() change: EventEmitter<CustomDate>;
     
-    private dateActions: EventEmitter<string|MaterializeAction>;
-    params;
+    private horaAux:string = "";
+    private timeActions: EventEmitter<string|MaterializeAction>;
     
     constructor( router: Router) {
-        this.params = GlobalVariable.PARAMS_DATE;
-        this.dateActions = new EventEmitter<string|MaterializeAction>();
+        this.timeActions = new EventEmitter<string|MaterializeAction>();
         this.change = new EventEmitter<CustomDate>();
     }
     
@@ -32,12 +30,19 @@ export class DatePickerComponent {
         return false;
     }
 
-    public openDatePicker(){
+    public openTimePicker(){
         if(!this.desabilitar)
-            this.dateActions.emit({action:"pickadate",params:["open"]});
+           this.timeActions.emit({action:"pickatime",params:["show"]});
     }
     
-    changeDatePicker() {
+    setarHora(){
+        $("#"+this.nome).val(this.horaAux)
+        this.customDate.setAppTime(this.horaAux);
+        
+    }
+    
+    changeTimePicker() {        
         this.change.emit(this.customDate);
+        
     }
 }

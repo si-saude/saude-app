@@ -76,12 +76,9 @@
 									></app-date-picker>
 								</div>
 								<div class="input-field col s6">
-								<input id="inicio" name="inicio"
-									[(ngModel)]="avaliacaoHigieneOcupacional.inicioCustomDate.appTime"
-									materialize="pickatime" 
-									[materializeActions]="timeActions" 
-									[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-									class="validate" type="text">
+									<app-time-picker [nome]="'horainicio'"
+									[customDate]="avaliacaoHigieneOcupacional.inicioCustomDate">
+									</app-time-picker>
 					            </div>
 				            </div>
 						</div>
@@ -96,12 +93,9 @@
 											></app-date-picker>
 								</div>
 								<div class="input-field col s6">
-										<input id="fim" name="fim"
-											[(ngModel)]="avaliacaoHigieneOcupacional.fimCustomDate.appTime"
-											materialize="pickatime" 
-											[materializeActions]="timeActions" 
-											[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-											class="validate" type="text">
+									<app-time-picker [nome]="'horafim'"
+									[customDate]="avaliacaoHigieneOcupacional.fimCustomDate">
+									</app-time-picker>
 					            </div>
 				            </div>
 						</div>

@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 </head>
 <div style="width: 100%; overflow: hidden;">
-	<div style="width: 80%; float: left;">
+	<div style="width: 80%; float: left;" *ngIf="!desabilitar">
 		<input id="{{nome}}" name="{{nome}}"
 					   materialize="pickadate" [ngModel]="customDate.appDate" 
 					   [materializeActions]="dateActions" [required]="obrigatorio"
@@ -10,8 +10,14 @@
 					   (ngModelChange)="customDate.appDate=$event"
 					   (change)="changeDatePicker()"
 					   type="text" placeholder="{{legenda}}" dateMaskDirective="99/99/9999" />
-	</div>				   
-<div style="margin-left: 81%;" >
-	<i class="material-icons" style="cursor: pointer; font-size: 28px;margin-top:5px" (click) ="openDatePicker()">date_range</i>
-</div>
+	</div>		
+	<div style="width: 80%; float: left;" *ngIf="desabilitar" >
+		<input id="{{nome}}" name="{{nome}}"
+			   [ngModel]="customDate.appDate"
+			   [disabled]="desabilitar" 
+			   type="text"/>
+	</div>			   
+	<div style="margin-left: 81%;" >
+		<i class="material-icons" style="cursor: pointer; font-size: 28px;margin-top:5px" (click) ="openDatePicker()">date_range</i>
+	</div>
 </div>

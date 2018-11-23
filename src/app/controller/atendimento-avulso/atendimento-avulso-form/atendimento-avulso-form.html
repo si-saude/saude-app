@@ -86,27 +86,21 @@
 											></app-date-picker>
 										
 									</div>				
-									<div class="input-field col s3">
+									<div class="input-field col s2">
 									<label>Hora Inicio</label>
-										<input id="diaHoraTarefa" name="diaHoraInicioTarefa"
-											[disabled]="atendimentoCarregado || atendimento.tarefa.id == undefined"
-											[(ngModel)]="atendimento.tarefa.inicioCustomDate.appTime"
-											materialize="pickatime" 
-											[materializeActions]="timeActions" 
-											[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-											class="validate" type="text">
+										<app-time-picker [nome]="'diaHoraTarefa'"
+											[desabilitar]="atendimentoCarregado || atendimento.tarefa.id == undefined"
+											[customDate]="atendimento.tarefa.inicioCustomDate">
+										</app-time-picker>
 									</div>
-									<div class="input-field col s3">
+									<div class="input-field col s2">
 									<label>Hora Fim</label>
-										<input id="diaHoraTarefa" name="diaHoraFimTarefa"
-											[disabled]="atendimentoCarregado || atendimento.tarefa.id == undefined"
-											[(ngModel)]="atendimento.tarefa.fimCustomDate.appTime"
-											materialize="pickatime" 
-											[materializeActions]="timeActions" 
-											[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-											class="validate" type="text">
+										<app-time-picker [nome]="'diaHoraFimTarefa'"
+											[desabilitar]="atendimentoCarregado || atendimento.tarefa.id == undefined"
+											[customDate]="atendimento.tarefa.fimCustomDate">
+										</app-time-picker>
 									</div>	    
-									<div class="input-field col s3">
+									<div class="input-field col s5">
 										<a class="btn-floating btn-large pulse" 
 										[class.disabled]="atendimento.tarefa.id == 0 || atendimento.tarefa.id == undefined" 
 										(click)="carregarComplementoAtendimento()">

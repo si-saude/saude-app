@@ -231,12 +231,10 @@
 					</div>
 					<div class="input-field col s3">
 						<label>Hora da Ocorrência</label>
-						<input id="hora-dataOcorrencia" name="hora-dataOcorrencia"
-							[(ngModel)]="cat.dataOcorrenciaCustomDate.appTime"
-							materialize="pickatime"  disabled
-							[materializeActions]="timeActions" 
-							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-							class="validate" type="text">
+							<app-time-picker [nome]="'hora-dataOcorrencia'"
+							[desabilitar]="'true'"
+							[customDate]="cat.dataOcorrenciaCustomDate">
+							</app-time-picker>
 					</div>
 					<div class="input-field col s3">
 						<label for="local">Local</label> 
@@ -261,12 +259,10 @@
 					</div>
 					<div class="input-field col s3">
 						<label>Hora da Informação</label>
-						<input id="hora-dataInformacao" name="hora-dataInformacao" disabled
-							[(ngModel)]="cat.dataInformacaoCustomDate.appTime"
-							materialize="pickatime" 
-							[materializeActions]="timeActions" 
-							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-							class="validate" type="text">
+							<app-time-picker [nome]="'hora-dataInformacao'"
+							[desabilitar]="'true'"
+							[customDate]="cat.dataInformacaoCustomDate">
+							</app-time-picker>
 					</div>
 					<div class="input-field col s4 checkbox">
 						<input type="checkbox" id="ocorrenciaAmbienteTrabalho" disabled
@@ -322,12 +318,10 @@
 					</div>
 					<div class="input-field col s3">
 						<label>Hora da Informação</label>
-						<input id="hora-dataCaracterizacao" name="hora-dataCaracterizacao" disabled
-							[(ngModel)]="cat.dataCaracterizacaoCustomDate.appTime"
-							materialize="pickatime" 
-							[materializeActions]="timeActions" 
-							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-							class="validate" type="text">
+							<app-time-picker [nome]="'hora-dataCaracterizacao'"
+							[desabilitar]="'true'"
+							[customDate]="cat.dataCaracterizacaoCustomDate">
+							</app-time-picker>
 					</div>
 				</div>
 				
@@ -442,13 +436,11 @@
 							[obrigatorio]="'false'" [legenda]="'Data da Classificação'"></app-date-picker>
 					</div>
 					<div class="input-field col s3">
-						<label>Hora da Classificacao</label>
-						<input id="hora-dataClassificacao" name="hora-dataClassificacao" disabled
-							[(ngModel)]="cat.dataClassificacaoCustomDate.appTime"
-							materialize="pickatime" 
-							[materializeActions]="timeActions" 
-							[materializeParams]="[{twelvehour: false}]" placeholder="00:00"
-							class="validate" type="text">
+						<label>Hora da Classificacao</label>						
+						<app-time-picker [nome]="'hora-dataClassificacao'"
+							[desabilitar]="'true'"
+							[customDate]="cat.dataClassificacaoCustomDate">
+							</app-time-picker>
 					</div>
 				</div>
 			

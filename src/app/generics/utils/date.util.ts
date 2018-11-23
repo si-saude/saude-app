@@ -20,8 +20,30 @@ export class DateUtil {
     public getTimeStringDataUTC(value) {
         if(value){              
             let date : Date = new Date(this.removeUTCDate(value));
-            return date.getHours().toString()+":"+ date.getMinutes();     
+            
+            let h = this.addZero(date.getHours());
+            let m = this.addZero(date.getMinutes());
+            return  h +":"+ m ;     
         }
+    }
+    
+    public addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+    
+    public verifyTimeMask(timeString: string){
+        let arrayTimeString:Array<string> ;
+        if(timeString != '' &&  timeString != undefined){
+            arrayTimeString =  timeString.split(":");
+            if(Number(arrayTimeString[0]) > 23 || Number(arrayTimeString[1]) > 59)
+                return false;
+            else            
+                return true;
+            }
+        return false;
     }
     
     public parseStringPtBrToDate(dataString ,timeString: string){

@@ -33,8 +33,6 @@ export class CatFormDetailComponent extends GenericFormComponent implements OnIn
     private funcoes: Array<Funcao>;
     private classificacoes: Array<ClassificacaoAfastamento>;
     private nexoCausais: Array<string>;
-
-    private timeActions;
     
     constructor( private route: ActivatedRoute,
         private catService: CatService,
@@ -50,8 +48,6 @@ export class CatFormDetailComponent extends GenericFormComponent implements OnIn
         this.funcoes = new FuncaoBuilder().initializeList( this.funcoes );
         this.classificacoes = new ClassificacaoAfastamentoBuilder().initializeList(this.classificacoes);
         this.nexoCausais = new Array<string>();
-        
-        this.timeActions = new EventEmitter<string|MaterializeAction>();
     }
 
     ngOnInit() {

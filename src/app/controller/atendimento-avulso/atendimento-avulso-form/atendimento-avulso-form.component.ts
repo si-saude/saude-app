@@ -47,7 +47,6 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
     private planejamentoUtil: PlanejamentoUtil;
     private triagemUtil: TriagemUtil;
     
-    timeActions ;
     @ViewChild( ModalFilaAtendimentoOcupacionalComponent ) modalFilaAtendimento: ModalFilaAtendimentoOcupacionalComponent;
     @ViewChild( ModalFilaEsperaOcupacionalComponent ) modalFilaEspera: ModalFilaEsperaOcupacionalComponent;
     @ViewChild( ModalTarefaComponent ) modalTarefa: ModalTarefaComponent;
@@ -62,7 +61,6 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         this.localizacoes = new LocalizacaoBuilder().initializeList( this.localizacoes );
         this.atendimento = new AtendimentoBuilder().initialize( this.atendimento );
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
-        this.timeActions = new EventEmitter<string|MaterializeAction>();
         this.atendimentoCarregado =  false;
         this.fichaColetaUtil = new FichaColetaUtil();
         this.planejamentoUtil = new PlanejamentoUtil();
