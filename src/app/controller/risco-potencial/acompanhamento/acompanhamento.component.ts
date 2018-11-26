@@ -388,4 +388,17 @@ export class AcompanhamentoComponent extends GenericFormComponent implements OnI
         if ( this.inscricao != undefined )
             this.inscricao.unsubscribe();
     }
+    
+    colorColumn(triagem : Triagem){        
+        if(triagem.getAcoes() == undefined || triagem.getAcoes().length == 0)
+           return '#fff'
+        else
+           return '#FFA500' 
+    }
+    colorColumnAcao(acao: Acao){        
+        if(acao.getAcompanhamentos() == undefined || acao.getAcompanhamentos().length == 0)
+            return '#fff'
+         else
+            return '#FFA500' 
+    }
 }

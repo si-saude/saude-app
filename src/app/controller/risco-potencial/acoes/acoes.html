@@ -17,7 +17,7 @@
 			<div class="listClick collection">
 				<p  *ngIf="triagens.length > 0" style="color: #26a69a; text-align: center;"><b>Indicador</b></p>
 			     <div class="row row-collection"  *ngFor="let triagem of triagens; let t = index">
-			     	<a (click)="selectTriagem(t)" class="collection-item"  [ngClass]="triagem.selecionado" [routerLinkActive]="['active']">
+			     	<a (click)="selectTriagem(t)" [style.background-color]="colorColumn(triagem)"class="collection-item"  [ngClass]="triagem.selecionado" [routerLinkActive]="['active']">
 			     	{{triagem.equipeAbordagem.abreviacao}} - {{triagem.indicadorSast.nome}}</a>
 			     </div>			
 			</div>

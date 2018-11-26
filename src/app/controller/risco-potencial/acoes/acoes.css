@@ -109,3 +109,8 @@ td > a > i {
 .btn-add {
     margin-top: 0% !important;
 }
+
+.collection .collection-item.active {
+    background-color: #26a69a !important;
+    color: #eafaf9;
+}

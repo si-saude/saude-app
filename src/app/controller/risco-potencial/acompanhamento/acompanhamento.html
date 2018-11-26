@@ -22,18 +22,20 @@
 				<div class="listClick collection">
 					<p *ngIf="triagens.length > 0" style="color: #26a69a; text-align: center;"><b>Indicador</b></p>
 				     <div class="row row-collection"  *ngFor="let triagem of triagens; let t = index">
-				     	<a (click)="selectTriagem(t)" class="collection-item" [ngClass]="triagem.selecionado" [routerLinkActive]="['active']">
+				     	<a (click)="selectTriagem(t)" class="collection-item"  [style.background-color]="colorColumn(triagem)" [ngClass]="triagem.selecionado" [routerLinkActive]="['active']">
 				     	{{triagem.equipeAbordagem.abreviacao}} - {{triagem.indicadorSast.nome}}</a>
 				     </div>
 				</div>
 				<div class="listClick2 collection" *ngIf="triagemAux.id > 0">
 						 <p *ngIf="triagemAux.acoes.length > 0" style="color: #26a69a; text-align: center;"><b>Ação</b></p>
 					     <div class="row row-collection" *ngFor="let acao of triagemAux.acoes ; let a = index">
-					     	<a (click)="selectAcao(a)" class="collection-item" [ngClass]="acao.selecionado" [routerLinkActive]="['active']">
+					     	<a (click)="selectAcao(a)" class="collection-item"  [style.background-color]="colorColumnAcao(acao)"[ngClass]="acao.selecionado" [routerLinkActive]="['active']">
 					     	{{textUtil.shortText(acao.acaoIntervencao.descricao)}}</a>		
 					     </div>				
 				</div>
-				<div class="lado" *ngIf="acaoAux.id > 0">
+				 
+			</div>
+			<div class="lado" *ngIf="acaoAux.id > 0">
 				<div class="col s10" >
 					<div class="col s12">
 				         <p><b>TIPO: {{acaoAux.tipo}}</b></p>
@@ -100,8 +102,7 @@
 					</div>
 			        
 			    </div>  
-		    </div>  
-			</div>
+		    </div> 
 			
 		</div>
 		<div class='row'>

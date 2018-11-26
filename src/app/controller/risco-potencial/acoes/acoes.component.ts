@@ -323,4 +323,11 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         if ( this.inscricao != undefined ) 
             this.inscricao.unsubscribe();
     }
+    
+    colorColumn(triagem : Triagem){        
+        if(triagem.getAcoes() == undefined || triagem.getAcoes().length == 0)
+           return '#fff'
+        else
+           return '#FFA500' 
+    }
 }
