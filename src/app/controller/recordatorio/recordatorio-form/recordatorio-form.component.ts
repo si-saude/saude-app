@@ -11,13 +11,14 @@ import { Refeicao } from './../../../model/refeicao';
 import { RefeicaoBuilder} from './../../refeicao/refeicao.builder';
 import { ItemRefeicao } from './../../../model/item-refeicao';
 import { ItemRefeicaoBuilder} from './../../item-refeicao/item-refeicao.builder';
-import { NutricaoAlimentoNomeAutocomplete } from './../../nutricao-alimento/nutricao-alimento-nome.autocomplete';
+import { AlimentoNomeAutocomplete } from './../../alimento/alimento-nome.autocomplete';
 import { MedidaAlimentarDescricaoAutocomplete } from './../../medida-alimentar/medida-alimentar-descricao.autocomplete';
 import { RecordatorioRefeicaoComponent } from './../../../includes/recordatorio-refeicao/recordatorio-refeicao.component';
+import { ItemRefeicaoComponent } from './../../../includes/item-refeicao/item-refeicao.component';
 
-import { NutricaoAlimentoBuilder } from './../../nutricao-alimento/nutricao-alimento.builder';
+import { AlimentoBuilder } from './../../alimento/alimento.builder';
 import { MedidaAlimentarBuilder } from './../../medida-alimentar/medida-alimentar.builder';
-import { NutricaoAlimento } from './../../../model/nutricao-alimento';
+import { Alimento } from './../../../model/alimento';
 
 @Component( {
     selector: 'app-recordatorio-form',
@@ -25,6 +26,7 @@ import { NutricaoAlimento } from './../../../model/nutricao-alimento';
     styleUrls: ['./recordatorio-form.css', './../../../../assets/css/form-component.css']
 } )
 export class RecordatorioFormComponent extends GenericFormComponent implements OnInit {
+    private empregado: string;
     private recordatorio: Recordatorio;
     private refeicao: Refeicao;
     private itemNew: ItemRefeicao;
@@ -35,7 +37,9 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     private medidaAlimentarEdit;
     private editRefeicao: boolean;
     private editItem: boolean;
+    private somatorioVe: number = 0;
     @ViewChild( RecordatorioRefeicaoComponent ) modalRefeicao: RecordatorioRefeicaoComponent;
+    @ViewChild( ItemRefeicaoComponent ) itemRefeicaoComponent: ItemRefeicaoComponent;
 
     constructor( private route: ActivatedRoute,
         private recordatorioService: RecordatorioService,
@@ -47,8 +51,8 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         this.refeicao = new RefeicaoBuilder().initialize( this.refeicao );
         this.itemEdit = new ItemRefeicaoBuilder().initialize( this.itemEdit );
         this.itemNew = new ItemRefeicaoBuilder().initialize( this.itemNew );
-        this.alimentoAutocompleteNew = new NutricaoAlimentoNomeAutocomplete(recordatorioService.getNutricaoAlimentoService());
-        this.alimentoAutocompleteEdit = new NutricaoAlimentoNomeAutocomplete(recordatorioService.getNutricaoAlimentoService());
+        this.alimentoAutocompleteNew = new AlimentoNomeAutocomplete(recordatorioService.getAlimentoService());
+        this.alimentoAutocompleteEdit = new AlimentoNomeAutocomplete(recordatorioService.getAlimentoService());
         this.medidaAlimentarNew = new MedidaAlimentarDescricaoAutocomplete(recordatorioService.getMedidaAlimentarService());
         this.medidaAlimentarEdit = new MedidaAlimentarDescricaoAutocomplete(recordatorioService.getMedidaAlimentarService());
         this.modalRefeicao = new RecordatorioRefeicaoComponent();
@@ -57,6 +61,8 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     ngOnInit() {
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
+                if ( params['empregado'] !== undefined )
+                    this.empregado = params['empregado'];
                 if ( params['id'] !== undefined ) {
                     let id = params['id'];
                     this.showPreload = true;
@@ -67,6 +73,8 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
                             let idAtendimento = res.json()['atendimento']['id'];
                             this.recordatorio = new RecordatorioBuilder().clone( res.json() );
                             this.recordatorio.getAtendimento().setId(idAtendimento);
+                            
+                            this.recordatorio.getRefeicoes().forEach(r => this.sumVe(r));
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -77,8 +85,28 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
                     this.showPreload = false;
                     this.recordatorio = new RecordatorioBuilder().initialize( null );
                     this.recordatorio.getAtendimento().setId(id);
+                    this.getNe();
                 }
-            } );    
+            } );
+    }
+    
+    getNe() {
+        this.recordatorioService.getNe(this.recordatorio)
+            .then(res => {
+                let atendimento = res.json()["atendimento"];
+                this.recordatorio = new RecordatorioBuilder().clone( res.json() );
+                this.recordatorio.setAtendimento(atendimento);
+            })
+            .catch(error => {
+                this.catchConfiguration( error );
+            })
+    }
+    
+    calculateSumVe() {
+        this.somatorioVe = 0;
+        this.recordatorio.getRefeicoes().forEach(r => {
+            this.somatorioVe += r.getSomatorio();
+        })
     }
     
     ngOnDestroy() {
@@ -86,9 +114,10 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     }
     
     save() {
-        let idAtendimento = this.recordatorio.getAtendimento().getId();
-        this.recordatorio = new RecordatorioBuilder().clone( this.recordatorio );
+        let idAtendimento = this.recordatorio.getAtendimento()["id"];  
+        this.recordatorio = new RecordatorioBuilder().clone( this.recordatorio );  
         this.recordatorio.getAtendimento().setId(idAtendimento);
+        console.log(this.recordatorio)
         super.save( this.recordatorio );
     }
     
@@ -97,7 +126,7 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         this.editRefeicao = true;
         for(let i=0; i<this.recordatorio.getRefeicoes().length;i++)
             $("."+i).css("background-color", "#fff");
-        $("."+r).css("background-color", "#4ff7f1");
+        $("."+r).css("background-color", "#d8d8d8");
     }
     
     selectItemRefeicao(it: ItemRefeicao) {
@@ -110,23 +139,30 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         this.editRefeicao = false;
     }
     
-    removeItemRefeicao(i) {
-        this.refeicao.getItens().splice(i, 1);
-        this.editItem = false;
-    }
-    
     addItemRefeicao() {
         if ( this.itemNew.getAlimento() == undefined ||
                 this.itemNew.getAlimento().getId() == undefined ||
                 this.itemNew.getAlimento().getId() <= 0 ||
                 this.itemNew.getMedidaCaseira() == undefined ||
-                this.itemNew.getMedidaCaseira().getId() == undefined ||
-                this.itemNew.getMedidaCaseira().getId() <= 0 ) {
+                this.itemNew.getMedidaCaseira()["id"] == undefined ||
+                this.itemNew.getMedidaCaseira()["id"] <= 0 &&
+                this.itemNew.getQuantidade() == undefined || 
+                this.itemNew.getQuantidade() <= 0 ) {
             this.callToast("Por favor, preencha todos os campos corretamente.", 4000)
             return;
         }
-        this.refeicao.getItens().push(new ItemRefeicaoBuilder().clone(this.itemNew));
+        //this.refeicao.getItens().push(new ItemRefeicaoBuilder().clone(this.itemNew));
+        this.refeicao.getItens().push(this.itemNew);
         this.itemNew = new ItemRefeicaoBuilder().initialize(null);
+        this.sumVe(this.refeicao);
+        this.calculateSumVe();
+    }
+     
+    removeItemRefeicao(i) {
+        this.refeicao.getItens().splice(i, 1);
+        this.editItem = false;
+        this.sumVe(this.refeicao);
+        this.calculateSumVe();
     }
     
     callAddRefeicao() {
@@ -137,19 +173,16 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         this.recordatorio.getRefeicoes().push(refeicao);
     }
         
-    sumVe(r: number) {
+    sumVe(refeicao: Refeicao) {
         let sum = 0;
-        this.recordatorio.getRefeicoes()[r].getItens().forEach(i => {
+        refeicao.getItens().forEach(i => {
             sum += i.getVe();
-        })
-        return sum;
+        });
+        refeicao.setSomatorio(sum);
+        this.calculateSumVe();
     }
     
-    sumNe(r: number) {
-        let sum = 0;
-        this.recordatorio.getRefeicoes()[r].getItens().forEach(i => {
-            sum += i.getNe();
-        })
-        return sum;
+    roundComparacao(valor) {
+        return Math.round(valor);
     }
 }

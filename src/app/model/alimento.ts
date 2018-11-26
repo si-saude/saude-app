@@ -1,6 +1,6 @@
-import { NutricaoAlimentoMedidaAlimentar } from './nutricao-alimento-medida-alimentar';
+import { AlimentoMedidaAlimentar } from './alimento-medida-alimentar';
 
-export class NutricaoAlimento {
+export class Alimento {
     private id: number;
     private nome: string;
     private tipo: string;
@@ -34,7 +34,8 @@ export class NutricaoAlimento {
     private vitd: number;
     private vite: number;
     private inativo: boolean;
-    private nutricaoAlimentoMedidaAlimentares: Array<NutricaoAlimentoMedidaAlimentar>;
+    private alimentoMedidaAlimentares: Array<AlimentoMedidaAlimentar>;
+
     private version: number;
     
     public getId() {
@@ -241,10 +242,10 @@ export class NutricaoAlimento {
     public setInativo(inativo) {
         this.inativo = inativo;
     }
-    public getNutricaoAlimentoMedidaAlimentares() {
-        return this.nutricaoAlimentoMedidaAlimentares;
+    public getAlimentoMedidaAlimentares() {
+        return this.alimentoMedidaAlimentares;
     }
-    public setNutricaoAlimentoMedidaAlimentares(nutricaoAlimentoMedidaAlimentares) {
-        this.nutricaoAlimentoMedidaAlimentares = nutricaoAlimentoMedidaAlimentares;
+    public setAlimentoMedidaAlimentares(alimentoMedidaAlimentares) {
+        this.alimentoMedidaAlimentares = alimentoMedidaAlimentares;
     }
 }

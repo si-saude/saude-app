@@ -5,6 +5,8 @@ export class Recordatorio {
     private id: number;
     private refeicoes: Array<Refeicao> ;
     private atendimento: Atendimento;
+    private ne: number;
+    private tmb: number;
     private version: number;
 
     public getId() {
@@ -31,6 +33,14 @@ export class Recordatorio {
         this.atendimento = atendimento;
     }
 
+    public getNe() {
+        return this.ne;
+    }
+
+    public setNe(ne) {
+        this.ne = ne;
+    }
+    
     public getVersion() {
         return this.version;
     }
@@ -39,4 +49,11 @@ export class Recordatorio {
         this.version = version;
     }
     
+    public getTmb() {
+        return this.tmb;
+    }
+
+    public setTmb(tmb) {
+        this.tmb = tmb;
+    }
 }

@@ -12,13 +12,35 @@
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
+		<div class="resume">
+			<p><b>Empregado:</b> {{empregado}}</p>
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s3">TMB</th>
+						<th class="col s3">VE</th>
+						<th class="col s3">NE</th>
+						<th class="col s3">Comparação</th>
+					</tr>
+				</thead>
+				<tbody class="col s12">
+					<tr class="col s12">
+						<td class="col s3" style="padding: 0;">{{recordatorio.tmb}}</td>
+						<td class="col s3" style="padding: 0;">{{somatorioVe}}</td>
+						<td class="col s3" style="padding: 0;">{{recordatorio.ne}}</td>
+						<td class="col s3" style="padding-left: 4%;">{{roundComparacao(recordatorio.ne - somatorioVe)}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
 		<ul class="tabs" materialize="tabs">
 			<li class="tab col s6"><a RouterLinkActive="active"
 				href="#dadosGerais">Dados Gerais</a></li>
 			<li class="tab col s6"><a RouterLinkActive="active"
 				href="#todasRefeicoes">Todas as Refeições</a></li>
 		</ul>
-
+		
 		<div id="dadosGerais">
 			<div class="content-recordatorio">
 				<div class="menu-refeicao">
@@ -46,36 +68,41 @@
 						</div>
 						<div class="row">
 							<p style="text-align: center;">
-								<b style="color: #26a69a;">Adicionar Itens na Refeição</b> <a
-									class="btn-add-item-refeicao btn-tiny waves-effect waves-light"
-									(click)="addItemRefeicao()"> <i class="tiny material-icons">add</i>
-								</a>
+								<b style="color: #26a69a;">Adicionar Itens na Refeição</b> 
 							</p>
 						</div>
-						<app-item-refeicao [itemRefeicao]="itemNew"
-							[alimentoAutocomplete]="alimentoAutocompleteNew"
-							[medidaAutocomplete]="medidaAlimentarNew"> </app-item-refeicao>
+						<div class="row">
+							<div class="col s10">
+								<app-item-refeicao [itemRefeicao]="itemNew"
+									[alimentoAutocomplete]="alimentoAutocompleteNew"
+									[medidaAutocomplete]="medidaAlimentarNew"> </app-item-refeicao>
+							</div>
+							<div class="col s2">
+								<a style="margin-top: 40%;" class="btn-floating waves-effect waves-light"
+									(click)="addItemRefeicao()"> <i class="tiny material-icons">add</i>
+								</a>
+							</div>
+						</div>
+						
 
 						<div class="row">
 							<table class="striped">
 								<thead>
 									<tr class="row col s12">
-										<th class="col s3">Alimento</th>
+										<th class="col s4">Alimento</th>
 										<th class="col s3">Medida</th>
 										<th class="col s3">Quantidade</th>
 										<th class="col s1">VE</th>
-										<th class="col s1">NE</th>
 										<th class="col s1">Remover</th>
 									</tr>
 								</thead>
 								<div *ngFor="let it of refeicao.itens; let i = index">
 									<tbody class="col s12">
 										<tr class="col s12">
-											<td class="col s3 alimento-nome">{{it.alimento.nome}}</td>
+											<td class="col s4 alimento-nome">{{it.alimento.nome}}</td>
 											<td class="col s3 medida">{{it.medidaCaseira.descricao}}</td>
 											<td class="col s3 quantidade">{{it.quantidade}}</td>
-											<td id="{{i}}" class="col s1 ve">{{it.ve | money : i}}</td>
-											<td class="col s1 ne">{{it.ne}}</td>
+											<td id="{{i}}" class="col s1 ve">{{it.ve | number}}</td>
 											<td class="col s1 botao-remover"><a class="col s1"
 												style="cursor: pointer" (click)="removeItemRefeicao(i)">
 													<i class="material-icons">delete</i>
@@ -102,27 +129,24 @@
 					<thead>
 						<tr class="row col s12">
 							<th class="col s4">Alimento</th>
-							<th class="col s3">Medida</th>
+							<th class="col s4">Medida</th>
 							<th class="col s3">Quantidade</th>
 							<th class="col s1">VE</th>
-							<th class="col s1">NE</th>
 						</tr>
 					</thead>
 					<div *ngFor="let it of refeicao.itens; let i = index">
 						<tbody class="col s12">
 							<tr class="col s12">
 								<td class="col s4 alimento-nome">{{it.alimento.nome}}</td>
-								<td class="col s3 medida">{{it.medidaCaseira.descricao}}</td>
-								<td class="col s3 quantidade">{{it.quantidade}}</td>
-								<td id="{{i}}" class="col s1 ve">{{it.ve | money : i}}</td>
-								<td class="col s1 ne">{{it.ne | money : i}}</td>
+								<td class="col s4 medida">{{it.medidaCaseira.descricao}}</td>
+								<td style="padding-left: 5%;" class="col s3 quantidade">{{it.quantidade}}</td>
+								<td id="{{i}}" class="col s1 ve">{{it.ve | number }}</td>
 							</tr>
 						</tbody>
 					</div>
 					<p>
 						<span style="margin-left:2%"><b>Total:</b></span>
-						<span style="margin-left:77%"><b>{{sumVe(r) | money : i}}</b></span>
-						<span style="margin-left:3%"><b>{{sumNe(r) | money : i}}</b></span>
+						<span style="margin-left:84%"><b>{{refeicao.somatorio | number}}</b></span>
 					</p>
 				</table>
 			</div>

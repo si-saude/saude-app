@@ -5,7 +5,7 @@ import { Http } from '@angular/http';
 import { GlobalVariable } from './../../global';
 import { Recordatorio } from './../../model/recordatorio';
 import { RecordatorioFilter } from './../recordatorio/recordatorio.filter';
-import { NutricaoAlimentoService } from './../nutricao-alimento/nutricao-alimento.service';
+import { AlimentoService } from './../alimento/alimento.service';
 import { MedidaAlimentarService } from './../medida-alimentar/medida-alimentar.service';
 import { GenericService } from './../../generics/generic.service';
 
@@ -13,7 +13,7 @@ import { GenericService } from './../../generics/generic.service';
 export class RecordatorioService extends GenericService {
 
     constructor( http: Http, router: Router,
-            private nutricaoAlimentoService: NutricaoAlimentoService,
+            private alimentoService: AlimentoService,
             private medidaAlimentarService: MedidaAlimentarService) { 
         super(http,router,"recordatorio");
     }
@@ -22,12 +22,18 @@ export class RecordatorioService extends GenericService {
         return this.selectList(new RecordatorioFilter());
     }
     
-    getNutricaoAlimentoService() {
-        return this.nutricaoAlimentoService;
+    getAlimentoService() {
+        return this.alimentoService;
     }
     
     getMedidaAlimentarService() {
         return this.medidaAlimentarService;
     }
     
+    getNe(recordatorio) {
+        let urlGetNe = this.URL + "/get-ne";
+        return this.http
+            .post( urlGetNe, recordatorio, { headers: this.headers } )
+            .toPromise();
+    }
 }

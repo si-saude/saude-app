@@ -309,7 +309,7 @@ export class AtendimentoFormComponent {
     }
     
     atualizacao(atendimento) {
-        return this.atendimentoService.atualizar( atendimento );
+        return this.atendimentoService.atualizar( new AtendimentoBuilder().clone(atendimento) );
     }
 
     atualizarLista() {

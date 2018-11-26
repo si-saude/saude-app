@@ -106,7 +106,7 @@ import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
 import { ReportMudancaFuncaoGuard } from './guards/report-mudanca-funcao.guard';
 import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sast.guard';
-import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
+import { AlimentoGuard } from './guards/guards-child/alimento.guard';
 import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
 import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
@@ -222,7 +222,7 @@ import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
     ClassificacaoGravidadeGuard,
     ReportMudancaFuncaoGuard,
     ReportAcompanhamentoSastGuard,
-    NutricaoAlimentoGuard,
+    AlimentoGuard,
     MedidaAlimentarGuard,
     IndicadorConhecimentoAlimentarGuard,
     QuestionarioConhecimentoAlimentarGuard,

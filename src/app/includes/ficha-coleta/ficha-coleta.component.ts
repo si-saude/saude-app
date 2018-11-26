@@ -147,6 +147,12 @@ export class FichaColetaComponent{
         return false;
     }
     
+    isDouble(resposta) {
+        if ( resposta.getPergunta().getTipo() == "DOUBLE" )
+            return true;
+        return false;
+    }
+    
     autoAddItem(resposta: RespostaFichaColeta) {
         if ( resposta.getPergunta().getTipo().includes("SIM") ) {
             if ( resposta.getConteudo().includes("N") )

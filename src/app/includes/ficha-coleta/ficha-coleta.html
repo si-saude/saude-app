@@ -8,7 +8,7 @@
 		<fieldset>
 			<legend>{{grupo}}</legend>
 			
-			<div *ngFor="let resposta of getRespostasByGrupo(grupo)" class="pergunta col s12" >
+			<div *ngFor="let resposta of getRespostasByGrupo(grupo); let r = index" class="pergunta col s12" >
 				<p><b>{{resposta.pergunta.descricao}}</b></p>
 				
 				<div class="resposta-select col s12" *ngIf="isEnumOrSimNao(resposta)">
@@ -65,9 +65,21 @@
 					
 				</div>
 				
-				<div class="resposta" *ngIf="!isEnumOrSimNao(resposta)">
+				<div class="resposta" *ngIf="!isEnumOrSimNao(resposta) && !isDouble(resposta)">
 					<textarea [disabled]="isDisabledResposta(resposta)" maxlength="2048"
 						[(ngModel)]="resposta.conteudo">
+					</textarea>
+				</div>
+				
+				<div class="resposta" *ngIf="isDouble(resposta) && isDisabledResposta(resposta)">
+					<textarea disabled maxlength="64" 
+						[(ngModel)]="resposta.conteudo" numberMaskDirective="">
+					</textarea>
+				</div>
+				
+				<div class="resposta" *ngIf="isDouble(resposta) && !isDisabledResposta(resposta)">
+					<textarea maxlength="64" 
+						[(ngModel)]="resposta.conteudo" numberMaskDirective="">
 					</textarea>
 				</div>
 				

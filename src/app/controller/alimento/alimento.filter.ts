@@ -1,7 +1,7 @@
 import { GenericFilter } from '../../generics/generic.filter';
 import { BooleanFilter } from './../../generics/boolean.filter';
 
-export class NutricaoAlimentoFilter extends GenericFilter {
+export class AlimentoFilter extends GenericFilter {
     private inativo: BooleanFilter;
     private nome: string;
     

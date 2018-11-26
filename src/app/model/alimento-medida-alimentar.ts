@@ -1,9 +1,9 @@
-import { NutricaoAlimento } from './nutricao-alimento';
+import { Alimento } from './alimento';
 import { MedidaAlimentar } from './medida-alimentar';
 
-export class NutricaoAlimentoMedidaAlimentar {
+export class AlimentoMedidaAlimentar {
     private id: number;
-    private nutricaoAlimento: NutricaoAlimento;
+    private alimento: Alimento;
     private medidaAlimentar: MedidaAlimentar;
     private referencia: string;
     private quantidade: number;
@@ -21,11 +21,11 @@ export class NutricaoAlimentoMedidaAlimentar {
     public setVersion(version) {
         this.version = version;
     }
-    public getNutricaoAlimento() {
-        return this.nutricaoAlimento;
+    public getAlimento() {
+        return this.alimento;
     }
-    public setNutricaoAlimento(nutricaoAlimento) {
-        this.nutricaoAlimento = nutricaoAlimento;
+    public setAlimento(alimento) {
+        this.alimento = alimento;
     }
     public getMedidaAlimentar() {
         return this.medidaAlimentar;

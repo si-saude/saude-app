@@ -1,14 +1,13 @@
-import { NutricaoAlimento } from './nutricao-alimento';
+import { Alimento } from './alimento';
 import { MedidaAlimentar } from './medida-alimentar';
 import { Refeicao } from './refeicao';
 
 export class ItemRefeicao {
     private id: number;
-    private alimento: NutricaoAlimento;
+    private alimento: Alimento;
     private medidaCaseira: MedidaAlimentar;
     private refeicao: Refeicao;
     private quantidade: number;
-    private ne: number;
     private ve: number;
     private version: number;
 
@@ -42,14 +41,6 @@ export class ItemRefeicao {
 
     public setQuantidade(quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public getNe() {
-        return this.ne;
-    }
-
-    public setNe(ne) {
-        this.ne = ne;
     }
 
     public getVe() {

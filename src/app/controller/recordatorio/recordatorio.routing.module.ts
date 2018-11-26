@@ -10,11 +10,11 @@ import { RecordatorioGuard } from './../../guards/guards-child/recordatorio.guar
 
 const recordatorioRoutes: Routes = [
     { path: '', component: RecordatorioComponent},
-    { path: 'cadastrar/:atendimento_id', component: RecordatorioFormComponent,
+    { path: 'cadastrar/:atendimento_id/:empregado', component: RecordatorioFormComponent,
         canDeactivate: [CanDeactivateGuard]},
-    { path: 'editar/:id', component: RecordatorioFormComponent,
+    { path: 'editar/:id/:empregado', component: RecordatorioFormComponent,
         canDeactivate: [CanDeactivateGuard]},
-    { path: 'detalhe/:id', component: RecordatorioFormDetailComponent}
+    { path: 'detalhe/:id/:empregado', component: RecordatorioFormDetailComponent}
 ];
 
 @NgModule({

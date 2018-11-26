@@ -7,7 +7,7 @@ import { AuthService } from './../../login/auth.service';
 import { ChildGuard } from './../../generics/child.guard';
 
 @Injectable()
-export class NutricaoAlimentoGuard extends ChildGuard implements CanActivateChild {   
+export class AlimentoGuard extends ChildGuard implements CanActivateChild {   
     
     constructor(router: Router) {
         super(router);
@@ -17,7 +17,7 @@ export class NutricaoAlimentoGuard extends ChildGuard implements CanActivateChil
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot
     ): boolean | Observable<boolean> | Promise<boolean> {
-        if ( state.url.includes( "nutricao-alimento" ) ) {
+        if ( state.url.includes( "alimento" ) ) {
             return true;
         }
 

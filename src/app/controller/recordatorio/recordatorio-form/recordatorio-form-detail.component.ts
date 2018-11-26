@@ -19,6 +19,7 @@ export class RecordatorioFormDetailComponent extends GenericFormComponent implem
     recordatorio: Recordatorio;
     private refeicao: Refeicao;
     private editRefeicao: boolean;
+    private empregado: string;
 
     constructor( private route: ActivatedRoute,
         private recordatorioService: RecordatorioService,
@@ -33,6 +34,9 @@ export class RecordatorioFormDetailComponent extends GenericFormComponent implem
     ngOnInit() {
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
+                if ( params['empregado'] !== undefined )
+                    this.empregado = params['empregado'];
+                
                 let id = params['id'];
                 this.service.get( id )
                     .then( res => {
@@ -67,11 +71,4 @@ export class RecordatorioFormDetailComponent extends GenericFormComponent implem
         return sum;
     }
     
-    sumNe(r: number) {
-        let sum = 0;
-        this.recordatorio.getRefeicoes()[r].getItens().forEach(i => {
-            sum += i.getNe();
-        })
-        return sum;
-    }
 }

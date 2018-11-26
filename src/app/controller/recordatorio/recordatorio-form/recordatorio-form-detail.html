@@ -11,6 +11,10 @@
 
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+	
+		<div class="resume">
+			<p><b>Empregado:</b> {{empregado}}</p>
+		</div>
 
 		<ul class="tabs" materialize="tabs">
 			<li class="tab col s6"><a RouterLinkActive="active"
@@ -43,10 +47,9 @@
 								<thead>
 									<tr class="row col s12">
 										<th class="col s4">Alimento</th>
-										<th class="col s3">Medida</th>
+										<th class="col s4">Medida</th>
 										<th class="col s3">Quantidade</th>
 										<th class="col s1">VE</th>
-										<th class="col s1">NE</th>
 									</tr>
 								</thead>
 								<div *ngFor="let it of refeicao.itens; let i = index">
@@ -56,7 +59,6 @@
 											<td class="col s3 medida">{{it.medidaCaseira.descricao}}</td>
 											<td class="col s3 quantidade">{{it.quantidade}}</td>
 											<td id="{{i}}" class="col s1 ve">{{it.ve | money : i}}</td>
-											<td class="col s1 ne">{{it.ne}}</td>
 										</tr>
 									</tbody>
 								</div>
@@ -79,27 +81,24 @@
 					<thead>
 						<tr class="row col s12">
 							<th class="col s4">Alimento</th>
-							<th class="col s3">Medida</th>
+							<th class="col s4">Medida</th>
 							<th class="col s3">Quantidade</th>
 							<th class="col s1">VE</th>
-							<th class="col s1">NE</th>
 						</tr>
 					</thead>
 					<div *ngFor="let it of refeicao.itens; let i = index">
 						<tbody class="col s12">
 							<tr class="col s12">
 								<td class="col s4 alimento-nome">{{it.alimento.nome}}</td>
-								<td class="col s3 medida">{{it.medidaCaseira.descricao}}</td>
+								<td class="col s4 medida">{{it.medidaCaseira.descricao}}</td>
 								<td class="col s3 quantidade">{{it.quantidade}}</td>
 								<td id="{{i}}" class="col s1 ve">{{it.ve | money : i}}</td>
-								<td class="col s1 ne">{{it.ne | money : i}}</td>
 							</tr>
 						</tbody>
 					</div>
 					<p>
 						<span style="margin-left:2%"><b>Total:</b></span>
-						<span style="margin-left:77%"><b>{{sumVe(r) | money : i}}</b></span>
-						<span style="margin-left:3%"><b>{{sumNe(r) | money : i}}</b></span>
+						<span style="margin-left:80%"><b>{{sumVe(r) | money : i}}</b></span>
 					</p>
 				</table>
 			</div>

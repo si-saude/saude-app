@@ -35,7 +35,8 @@ export class MenuAtendimentoNutricaoComponent{
         if ( bool )
             this.disableNovoQuestionario = true;
         else  
-            window.open('/questionario-conhecimento-alimentar/cadastrar/'+this.atendimento.getId());
+            window.open('/questionario-conhecimento-alimentar/cadastrar/'+this.atendimento.getId()+"/"+
+                    this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getNome());
     }
     
   //RECEBE O INDICATIVO DE QUE DEVE SER REDIRECIONADO OU NAO PARA A PAGINA DE NOVO QUESTIONARIO
@@ -44,7 +45,8 @@ export class MenuAtendimentoNutricaoComponent{
         if ( bool )
             this.disableNovoRecordatorio = true;
         else  
-            window.open('/recordatorio/cadastrar/'+this.atendimento.getId());
+            window.open('/recordatorio/cadastrar/'+this.atendimento.getId()+"/"+
+                    this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getNome());
     }
     
     setDisabledNovoQuestionario( bool ) {

@@ -2,6 +2,7 @@ import { Recordatorio } from './../../model/recordatorio';
 import { Atendimento } from './../../model/atendimento';
 import { RefeicaoBuilder } from './../refeicao/refeicao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
+import { Util } from './../../generics/utils/util';
 
 export class RecordatorioBuilder extends GenericBuilder {
 
@@ -35,6 +36,8 @@ export class RecordatorioBuilder extends GenericBuilder {
         
         let cloneRecordatorio = new Recordatorio();
         cloneRecordatorio.setId(this.getValue(recordatorio,"getId"));
+        cloneRecordatorio.setNe(this.getValue(recordatorio, "getNe"));
+        cloneRecordatorio.setTmb(this.getValue(recordatorio, "getTmb"));
         cloneRecordatorio.setVersion(this.getValue(recordatorio, "getVersion"));
         
         cloneRecordatorio.setAtendimento(new Atendimento());
@@ -56,6 +59,13 @@ export class RecordatorioBuilder extends GenericBuilder {
         }
         
         return array;
+    }
+    
+    treatNe( value: string ) {
+        if ( value != undefined ) {
+            let realValue = value.toString().replace(/\.|\,||/gi, "");
+            return Number(realValue.substring(0, realValue.length - 2)+"."+realValue.substring(realValue.length-2, realValue.length));
+        }
     }
     
 }

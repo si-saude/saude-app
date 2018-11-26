@@ -1,5 +1,5 @@
 import { ItemRefeicao } from './../../model/item-refeicao';
-import { NutricaoAlimentoBuilder } from './../nutricao-alimento/nutricao-alimento.builder';
+import { AlimentoBuilder } from './../alimento/alimento.builder';
 import { MedidaAlimentarBuilder } from './../medida-alimentar/medida-alimentar.builder';
 import { RefeicaoBuilder } from './../refeicao/refeicao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
@@ -8,7 +8,7 @@ export class ItemRefeicaoBuilder extends GenericBuilder{
     
     initialize(itemRefeicao: ItemRefeicao): ItemRefeicao {
         itemRefeicao = new ItemRefeicao();
-        itemRefeicao.setAlimento(new NutricaoAlimentoBuilder().initialize(null));
+        itemRefeicao.setAlimento(new AlimentoBuilder().initialize(null));   
         itemRefeicao.setMedidaCaseira(new MedidaAlimentarBuilder().initialize(null));
         itemRefeicao.setRefeicao(new RefeicaoBuilder().initialize(null) );
         
@@ -37,13 +37,12 @@ export class ItemRefeicaoBuilder extends GenericBuilder{
         
         cloneItemRefeicao.setId(this.getValue(itemRefeicao, "getId"));
         cloneItemRefeicao.setVersion(this.getValue(itemRefeicao, "getVersion"));
-        cloneItemRefeicao.setNe(this.getValue(itemRefeicao, "getNe"));
         cloneItemRefeicao.setVe(this.getValue(itemRefeicao, "getVe"));
         cloneItemRefeicao.setQuantidade(this.getValue(itemRefeicao, "getQuantidade"));
         
         if ( this.getValue(itemRefeicao, "getAlimento") != undefined )
             cloneItemRefeicao.setAlimento(
-                    new NutricaoAlimentoBuilder().clone(this.getValue(itemRefeicao, "getAlimento")));
+                    new AlimentoBuilder().clone(this.getValue(itemRefeicao, "getAlimento")));
         
         if ( this.getValue(itemRefeicao, "getMedidaCaseira") != undefined )
             cloneItemRefeicao.setMedidaCaseira(

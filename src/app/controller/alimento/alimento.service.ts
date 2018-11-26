@@ -3,21 +3,28 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { GlobalVariable } from '../../global';
-import { NutricaoAlimento } from '../../model/nutricao-alimento';
-import { NutricaoAlimentoFilter } from '../nutricao-alimento/nutricao-alimento.filter';
+import { Alimento } from '../../model/alimento';
+import { AlimentoFilter } from '../alimento/alimento.filter';
 import { GenericService } from '../../generics/generic.service';
 import { MedidaAlimentarService } from './../medida-alimentar/medida-alimentar.service';
 
 @Injectable()
-export class NutricaoAlimentoService extends GenericService {
+export class AlimentoService extends GenericService {
 
     constructor( http: Http, router: Router,
             private medidaAlimentarService: MedidaAlimentarService ) { 
-        super(http,router,"nutricao-alimento");
+        super(http,router,"alimento");
     }
     
-    getNutricaoAlimentos() {
-        return this.selectList(new NutricaoAlimentoFilter());
+    getAlimentos() {
+        return this.selectList(new AlimentoFilter());
+    }
+    
+    getListAll(filter) {
+        let urlListAll = this.URL + "/get-list-all";
+        return this.http
+            .post( urlListAll, filter, { headers: this.headers } )
+            .toPromise();
     }
     
     getTipos() {

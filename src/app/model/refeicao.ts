@@ -7,6 +7,7 @@ export class Refeicao {
     private itens: Array<ItemRefeicao>;
     private recordatorio: Recordatorio;
     private version: number;
+    private somatorio:number = 0;
 
     public getId() {
         return this.id;
@@ -48,4 +49,11 @@ export class Refeicao {
         this.recordatorio = recordatorio;
     }
     
+    public getSomatorio(){
+        return this.somatorio;
+    }
+    
+    public setSomatorio(somatorio){
+        this.somatorio = somatorio;
+    }
 }

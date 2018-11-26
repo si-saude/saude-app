@@ -82,7 +82,7 @@ import { ClinicaGuard } from './guards/guards-child/clinica.guard';
 import { ClassificacaoAfastamentoGuard } from './guards/guards-child/classificacao-afastamento.guard';
 import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria-atestado.guard';
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
-import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
+import { AlimentoGuard } from './guards/guards-child/alimento.guard';
 import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
 import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
@@ -447,9 +447,9 @@ const routes: Routes = [
         canActivateChild: [ClassificacaoGravidadeGuard]
     },
     {
-        path: 'nutricao-alimento',
-        loadChildren: 'app/controller/nutricao-alimento/nutricao-alimento.module#NutricaoAlimentoModule',
-        canActivateChild: [NutricaoAlimentoGuard]
+        path: 'alimento',
+        loadChildren: 'app/controller/alimento/alimento.module#AlimentoModule',
+        canActivateChild: [AlimentoGuard]
     },
     {
         path: 'medida-alimentar',

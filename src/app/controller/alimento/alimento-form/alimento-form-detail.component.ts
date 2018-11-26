@@ -3,27 +3,27 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
-import { NutricaoAlimento } from './../../../model/nutricao-alimento';
+import { Alimento } from './../../../model/alimento';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
-import { NutricaoAlimentoBuilder } from './../nutricao-alimento.builder';
-import { NutricaoAlimentoService } from './../nutricao-alimento.service';
+import { AlimentoBuilder } from './../alimento.builder';
+import { AlimentoService } from './../alimento.service';
 
 @Component( {
-    selector: 'app-nutricao-alimento-form-detail',
-    templateUrl: './nutricao-alimento-form-detail.html',
-    styleUrls: ['./nutricao-alimento-form.css', './../../../../assets/css/form-component.css']
+    selector: 'app-alimento-form-detail',
+    templateUrl: './alimento-form-detail.html',
+    styleUrls: ['./alimento-form.css', './../../../../assets/css/form-component.css']
 } )
-export class NutricaoAlimentoFormDetailComponent extends GenericFormComponent implements OnInit {
-    nutricaoAlimento: NutricaoAlimento;
+export class AlimentoFormDetailComponent extends GenericFormComponent implements OnInit {
+    alimento: Alimento;
     private tipos: Array<string>;
 
     constructor( private route: ActivatedRoute,
-        private nutricaoAlimentoService: NutricaoAlimentoService,
+        private alimentoService: AlimentoService,
         router: Router) {
-        super( nutricaoAlimentoService, router );
+        super( alimentoService, router );
 
-        this.goTo = "nutricao-alimento";
-        this.nutricaoAlimento = new NutricaoAlimentoBuilder().initialize( this.nutricaoAlimento );
+        this.goTo = "alimento";
+        this.alimento = new AlimentoBuilder().initialize( this.alimento );
         this.tipos = new Array<string>();
     }
 
@@ -36,7 +36,7 @@ export class NutricaoAlimentoFormDetailComponent extends GenericFormComponent im
                 this.service.get( id )
                     .then( res => {
                         this.showPreload = false;
-                        this.nutricaoAlimento = new NutricaoAlimentoBuilder().clone( res.json() );
+                        this.alimento = new AlimentoBuilder().clone( res.json() );
                     } )
                     .catch( error => {
                         this.catchConfiguration( error );
@@ -47,7 +47,7 @@ export class NutricaoAlimentoFormDetailComponent extends GenericFormComponent im
     }
     
     getTipos() {
-        this.nutricaoAlimentoService.getTipos()
+        this.alimentoService.getTipos()
             .then(res => {
                 this.tipos = Object.keys( res.json() ).sort();
             })

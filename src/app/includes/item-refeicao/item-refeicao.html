@@ -3,7 +3,7 @@
 </head>
 
 <div class="row">
-	<div class="input-field col s6">
+	<div class="input-field col s5">
 		<label for="alimento">Alimento</label> <input type="text"
 			materialize="autocomplete" autocomplete="off"
 			name="itemRefeicao.alimento.nome" 
@@ -13,28 +13,19 @@
 			(keydown.enter)="alimentoAutocomplete.getAutocomplete().pressEnter($event,itemRefeicao,'setAlimento','getNome');"
 			[materializeParams]="alimentoAutocomplete.getAutocomplete().getObjAutoComplete()">
 	</div>
-	<div class="input-field col s6">
-		<label for="medidaAlimentar">Medida Caseira</label> <input 
-			type="text" materialize="autocomplete" autocomplete="off"
-			name="itemRefeicao.medidaCaseira.descricao"
-			[(ngModel)]="itemRefeicao.medidaCaseira.descricao"
-			(blur)="medidaAutocomplete.getAutocomplete().getObj($event,itemRefeicao,'setMedidaCaseira','getDescricao')"
-			(ngModelChange)="medidaAutocomplete.getAutocomplete().getList(itemRefeicao.medidaCaseira, 'getDescricao');"
-			(keydown.enter)="medidaAutocomplete.getAutocomplete().pressEnter($event,itemRefeicao,'setMedidaCaseira','getDescricao');"
-			[materializeParams]="medidaAutocomplete.getAutocomplete().getObjAutoComplete()">
+	<div class="input-field col s5">
+		<fieldset>
+			<legend>Medida Caseira</legend>
+				<select [(ngModel)]="itemRefeicao.medidaCaseira" [disabled]="itemRefeicao.alimento.id == 0" (change)="calculeVe()">
+					<option disabled selected value="undefined">Selecione uma medida</option>
+					<option *ngFor="let medida of itemRefeicao.alimento.alimentoMedidaAlimentares" [ngValue]="medida.medidaAlimentar">{{medida.medidaAlimentar.descricao}}</option>
+				</select>
+		</fieldset>
 	</div>
-</div>
-<div class="row">
-	<div class="input-field col s4">
-		<label for="quantidade">Quantidade</label> <input id="quantidade"
-			type="number" name="nome" (change)="calculeVe()" [(ngModel)]="itemRefeicao.quantidade">
-	</div>
-	<div class="input-field col s4">
-		<label for="ve">VE</label> <input id="ve" type="number" disabled
-			name="ve" [(ngModel)]="itemRefeicao.ve">
-	</div>
-	<div class="input-field col s4">
-		<label for="ne">NE</label> <input id="ne" type="number" disabled
-			name="ne" [(ngModel)]="itemRefeicao.ne">
+	<div class="row">
+		<div class="input-field col s2">
+			<label for="quantidade">Quantidade</label> <input id="quantidade" (change)="calculeVe()"
+				type="number" name="nome" [(ngModel)]="itemRefeicao.quantidade">
+		</div>
 	</div>
 </div>
