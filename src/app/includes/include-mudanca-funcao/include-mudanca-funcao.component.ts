@@ -3,10 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MaterializeAction } from "angular2-materialize";
 
 import { MudancaFuncao } from './../../model/mudanca-funcao';
+import { GrupoMonitoramento } from './../../model/grupo-monitoramento';
 import { Regime } from './../../model/regime';
 import { Instalacao } from './../../model/instalacao';
 import { MudancaFuncaoBuilder } from './../../controller/mudanca-funcao/mudanca-funcao.builder';
 import { InstalacaoBuilder } from './../../controller/instalacao/instalacao.builder';
+import { GrupoMonitoramentoBuilder } from './../../controller/grupo-monitoramento/grupo-monitoramento.builder';
 import { RegimeService } from './../../controller/regime/regime.service';
 import { GheNomeAutocomplete } from './../../controller/ghe/ghe-nome.autocomplete';
 import { GerenciaCodigoCompletoAutocomplete } from './../../controller/gerencia/gerencia-codigo-completo.autocomplete';
@@ -36,7 +38,9 @@ export class IncludeMudancaFuncaoComponent {
     regimes: Array<Regime>;
     private modalInstalacao;
     private instalacao: Instalacao;
+    private grupoMonitoramento: GrupoMonitoramento;
     instalacoes: Array<Instalacao>;
+    gruposMonitoramento: Array<GrupoMonitoramento>;
     
     constructor( private route: ActivatedRoute, private router: Router) {
         
@@ -50,9 +54,11 @@ export class IncludeMudancaFuncaoComponent {
         this.autoCompleteGhee = new GheeNomeAutocomplete(this.service.getGheeService());
         this.autoCompleteBase = new BaseNomeAutocomplete(this.service.getBaseService());     
         this.modalInstalacao = new EventEmitter<string | MaterializeAction>();
-        this.instalacao = new InstalacaoBuilder().initialize(new Instalacao());
+        this.instalacao = new InstalacaoBuilder().initialize(new Instalacao());GrupoMonitoramentoBuilder
+        this.grupoMonitoramento = new GrupoMonitoramentoBuilder().initialize(new GrupoMonitoramento());
         this.getRegimes();
         this.getInstalacoes();
+        this.getGruposMonitoramento();
     }   
     
     ngOnChanges( changes: SimpleChanges ) {
@@ -72,6 +78,16 @@ export class IncludeMudancaFuncaoComponent {
         this.service.getInstalacaoService().getInstalacoes()
             .then( res => {
                 this.instalacoes = new InstalacaoBuilder().cloneList( res.json() );
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
+    getGruposMonitoramento() {
+        this.service.getGruposMonitoramentoService().getGruposMonitoramento()
+            .then( res => {
+                this.gruposMonitoramento = new GrupoMonitoramentoBuilder().cloneList( res.json() );
             } )
             .catch( error => {
                 console.log( error );
@@ -106,6 +122,23 @@ export class IncludeMudancaFuncaoComponent {
     addInstalacao() {
         this.instalacao = new InstalacaoBuilder().initialize(new Instalacao( ));        
         this.openModal();
+    }
+
+    addGrupoMonitoramento() {
+        console.log(this.grupoMonitoramento);
+        
+        
+        if(this.mudancaFuncao.getGrupoMonitoramentos() == undefined){
+            this.mudancaFuncao.setGrupoMonitoramentos(new GrupoMonitoramentoBuilder().initializeList(undefined));
+        }
+        if(this.mudancaFuncao.getGrupoMonitoramentos().find(i => i.getId() == this.grupoMonitoramento.getId()) == undefined){
+            this.grupoMonitoramento = new GrupoMonitoramentoBuilder().clone(this.gruposMonitoramento.find(i => i.getId() == this.grupoMonitoramento.getId()))
+            this.mudancaFuncao.getGrupoMonitoramentos().push(new GrupoMonitoramentoBuilder().clone(this.grupoMonitoramento));            
+        }
+               
+    }
+    removeGrupoMonitoramento(indexGrupoMonitoramento: number) {
+        this.mudancaFuncao.getGrupoMonitoramentos().splice(indexGrupoMonitoramento, 1);
     }
     
     removeInstalacao(indexInstalacao: number) {

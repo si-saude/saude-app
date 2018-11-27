@@ -18,6 +18,7 @@ import { BaseService } from './../base/base.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
 import { UsuarioService } from './../usuario/usuario.service';
 import { EquipeService } from './../equipe/equipe.service';
+import { GrupoMonitoramentoService } from './../grupo-monitoramento/grupo-monitoramento.service';
 
 @Injectable()
 export class MudancaFuncaoService extends GenericService {
@@ -34,6 +35,7 @@ export class MudancaFuncaoService extends GenericService {
                 private regimeService: RegimeService,
                 private gheeService: GheeService,
                 private baseService: BaseService,
+                private grupoMonitoramentoService: GrupoMonitoramentoService,
                 private empregadoService: EmpregadoService) { 
         super(http,router,"mudanca-funcao");
     }
@@ -78,6 +80,10 @@ export class MudancaFuncaoService extends GenericService {
     }
     getEquipeService() {
         return this.equipeService;
+    }
+    
+    getGruposMonitoramentoService() {
+        return this.grupoMonitoramentoService;
     }
     
     getInstalacaoService() {

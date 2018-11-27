@@ -28,8 +28,6 @@
 .right {
 	float: right;
 }
-
-
 table {
 	border: 1px solid #c0c0c0;
     margin-top: 25px;
@@ -54,4 +52,28 @@ tbody{
 }
 .material-icons {
     margin-top: 0rem;
+}
+
+select {
+	display: inline;
+}
+
+.input-field>select {
+	display: block;
+	position: absolute;
+	width: auto;
+	pointer-events: all;
+	height: 50px;
+	top: 0;
+	left: 20px;
+	opacity: 10;
+}
+
+
+.grupo-monitoramento-nome {
+	padding-left: 0px;
+}
+
+.botao-remover {
+	padding-left: 35px;
 }

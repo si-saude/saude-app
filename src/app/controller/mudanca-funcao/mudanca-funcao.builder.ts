@@ -16,7 +16,7 @@ import { BaseBuilder } from './../base/base.builder';
 import { Tarefa } from './../../model/tarefa';
 import { TarefaBuilder } from './../tarefa/tarefa.builder';
 import { InstalacaoBuilder } from './../instalacao/instalacao.builder';
-
+import { GrupoMonitoramentoBuilder } from './../grupo-monitoramento/grupo-monitoramento.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
 
 export class MudancaFuncaoBuilder extends GenericBuilder {
@@ -114,6 +114,9 @@ export class MudancaFuncaoBuilder extends GenericBuilder {
         }
         if (this.getValue(mudancaFuncao, "getInstalacoes") !== undefined) { 
             cloneMudancaFuncao.setInstalacoes(new InstalacaoBuilder().cloneList(this.getValue(mudancaFuncao,"getInstalacoes")));
+        }
+        if (this.getValue(mudancaFuncao, "getGrupoMonitoramentos") !== undefined) { 
+            cloneMudancaFuncao.setGrupoMonitoramentos(new GrupoMonitoramentoBuilder().cloneList(this.getValue(mudancaFuncao,"getGrupoMonitoramentos")));
         }
         
         return cloneMudancaFuncao;

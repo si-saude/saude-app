@@ -101,6 +101,61 @@
 			</fieldset>
 		</div>
 	</div>
+	<div class="row col s12">
+	<div class="input-field col s12">
+		<fieldset>
+			<legend>
+				Grupos Monitoramento <a
+					class="btn-floating waves-effect waves-light green btn-add-fieldset"
+					(click)="getGruposMonitoramento()"> <i
+					class="material-icons center-icon">cached</i>
+				</a>
+			</legend>
+			<div class="row row-curso">
+				<div class="input-field col s5">
+					<select name="grupoMonitoramento.id" class="browser-default" [(ngModel)]="grupoMonitoramento.id">
+						<option disabled selected value=null>Selecione um grupo monitoramento</option>
+						<option *ngFor="let grupoMonitoramento of gruposMonitoramento" value="{{grupoMonitoramento.id}}">{{grupoMonitoramento.nome}}</option>
+					</select>
+				</div>
+				<div class="col s2">
+					<a class="btn-floating waves-effect waves-light green btn-add"
+						(click)="addGrupoMonitoramento()">
+						<i class="material-icons center-icon">add</i>
+					</a>
+				</div>
+			</div>
+	
+			<div class="row" style="margin-top:5% ">
+	
+				<table class="striped">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s11">Nome</th>
+							<th class="col s1">Remoção</th>
+						</tr>
+					</thead>
+					<div
+						*ngFor="let grupoMonitoramentoAux of mudancaFuncao.grupoMonitoramentos;let i = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s11 grupo-monitoramento-nome">{{grupoMonitoramentoAux.nome}}</td>
+								<td class="col s1 botao-remover"><a
+									class="waves-effect waves-light"
+									(click)="removeGrupoMonitoramento(i)"> <i
+										class="material-icons center-icon">delete</i>
+								</a></td>
+							</tr>
+						</tbody>
+					</div>
+	
+				</table>
+	
+			</div>
+		</fieldset>
+	</div>	
+</div>	
+	
 	<div class="row">
 		<div class="col s9">
 		</div>		

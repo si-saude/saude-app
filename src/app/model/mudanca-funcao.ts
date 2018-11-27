@@ -8,6 +8,7 @@ import { Base } from './base';
 import { Profissional } from './profissional';
 import { Tarefa } from './tarefa';
 import { Instalacao } from './instalacao';
+import { GrupoMonitoramento } from './grupo-monitoramento';
 import { DateUtil } from './../generics/utils/date.util';
 import { CustomDate} from './../generics/utils/custom-date.util';
 
@@ -27,6 +28,8 @@ export class MudancaFuncao {
     private version: number;
     private atividades : string;
     private instalacoes: Array<Instalacao>;
+    private grupoMonitoramentos: Array<GrupoMonitoramento>;
+
 
     getId() {
         return this.id;
@@ -117,6 +120,14 @@ export class MudancaFuncao {
     
     setInstalacoes(instalacoes:Array<Instalacao>){
         this.instalacoes = instalacoes;
+    }    
+    
+    getGrupoMonitoramentos(): Array<GrupoMonitoramento>{
+        return this.grupoMonitoramentos;
+    }
+    
+    setGrupoMonitoramentos(grupoMonitoramentos: Array<GrupoMonitoramento>){
+        this.grupoMonitoramentos = grupoMonitoramentos;
     }
     
     getTarefas():Array<Tarefa>{

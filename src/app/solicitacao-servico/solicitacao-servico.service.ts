@@ -19,6 +19,7 @@ import { TipoSolicitacaoService } from './../controller/tipo-solicitacao/tipo-so
 import { EquipeService } from './../controller/equipe/equipe.service';
 import { AtestadoService } from './../controller/atestado/atestado.service';
 import { InstalacaoService } from './../controller/instalacao/instalacao.service';
+import { GrupoMonitoramentoService } from './../controller/grupo-monitoramento/grupo-monitoramento.service';
 import { BooleanFilter } from './../generics/boolean.filter';
  
 @Injectable()
@@ -41,6 +42,7 @@ export class SolicitacaoServicoService {
             private empregadoService: EmpregadoService,
             private tipoSolicitacaoService: TipoSolicitacaoService,
             private equipeService: EquipeService,
+            private grupoMonitoramentoService: GrupoMonitoramentoService,
             private atestadoService: AtestadoService) {
         this.headers = new Headers( { 'Content-Type': 'application/json' } );
         this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
@@ -116,6 +118,11 @@ export class SolicitacaoServicoService {
     getInstalacaoService() {
         return this.instalacaoService;
     }
+    
+    getGruposMonitoramentoService() {
+        return this.grupoMonitoramentoService;
+    }
+    
     
     registrarAtestado( atestado ) {
         let urlAtestado = this.URL + "/atestado/registrar-atestado"
