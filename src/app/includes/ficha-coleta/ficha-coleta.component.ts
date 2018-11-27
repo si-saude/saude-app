@@ -74,7 +74,8 @@ export class FichaColetaComponent{
     getStatusSimNao() {
         this.service.getStatusSimNao()
             .then(res => {
-                this.simNao = Object.keys(res.json());
+                this.simNao = Object.keys(res.json()).sort();;
+                
                 this.seachPathsConteudoPerguntas();
             })
             .catch(error => {
