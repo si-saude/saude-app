@@ -310,7 +310,7 @@
 					<div class="input-field col s3">
 						<label for="data.dataOcorrencia">Data de Ocorrência</label>
 						<app-date-picker [nome]="'data.dataOcorrencia'"
-							[customDate]="cat.dataOcorrenciaCustomDate" (change)="changeAto1(); changeAto4()"
+							[customDate]="cat.dataOcorrenciaCustomDate" (change)="changeAto1();"
 							[obrigatorio]="'false'" [legenda]="'Data de Ocorrencia'"></app-date-picker>
 					</div>
 					<div class="input-field col s2">
@@ -719,7 +719,7 @@
 					<div class="input-field col s3">
 						<label for="dataEmissao">Data de Emissão</label>
 						<app-date-picker [nome]="'dataEmissao'"
-							[customDate]="cat.dataEmissaoCustomDate" (change)="changeAto1(); changeAto4(); changeAto3()"
+							[customDate]="cat.dataEmissaoCustomDate" (change)="changeAto1(); changeAto3()"
 							[obrigatorio]="'false'" [legenda]="'Data de Emissão'"></app-date-picker>
 					</div>
 				</div>
@@ -822,9 +822,7 @@
 					<div class="input-field col s8">
 						<label for="numeroCartaMulta">Número da Carta da Multa</label> 
 						<input id="numeroCartaMulta" 
-							type="text" maxlength="64"
-							(change)="changeNumeroCartaMulta()"
-							[(ngModel)]="cat.numeroCartaMulta" name="numeroCartaMulta">
+							type="text" maxlength="64" [(ngModel)]="cat.numeroCartaMulta" name="numeroCartaMulta">
 					</div>
 					<div class="input-field col s4">
 						<label for="dataComunicacaoSindicato">Data da Comunicação do Sindicato</label>
