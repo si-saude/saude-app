@@ -668,9 +668,8 @@
 					</div>
 					<div class="input-field col s4">
 						<label for="remuneracao">Remuneração</label> 
-							<input id="remuneracao" type="text" maxlength="17"
-							(ngModelChange)="cat.remuneracao=$event" 
-							[ngModel]="cat.remuneracao | money : 'remuneracao'"
+							<input id="remuneracao" type="text" maxlength="17" numberMaskDirective=""
+							[(ngModel)]="cat.remuneracao"
 							name="remuneracao">
 					</div>
 				</div>

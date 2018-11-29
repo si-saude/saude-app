@@ -95,6 +95,7 @@ import { ReportCatGuard } from './guards/report-cat.guard';
 import { ReportControleAtestadoGuard } from './guards/report-controle-atestado.guard';
 import { ReportAvaliacaoHigieneOcupacionalGuard } from './guards/report-avaliacao-higiene-ocupacional.guard';
 import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisitos-agendamento.guard';
+import { ReportSugestaoAgendamentoGuard } from './guards/report-sugestao-agendamento.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
@@ -106,10 +107,11 @@ import { ItemAuditoriaAtestadoGuard } from './guards/guards-child/item-auditoria
 import { ClassificacaoGravidadeGuard } from './guards/guards-child/classificacao-gravidade.guard';
 import { ReportMudancaFuncaoGuard } from './guards/report-mudanca-funcao.guard';
 import { ReportAcompanhamentoSastGuard } from './guards/report-acompanhamento-sast.guard';
-import { NutricaoAlimentoGuard } from './guards/guards-child/nutricao-alimento.guard';
+import { AlimentoGuard } from './guards/guards-child/alimento.guard';
 import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.guard';
 import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
+import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
 
 @NgModule({
   declarations: [
@@ -221,10 +223,12 @@ import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/qu
     ClassificacaoGravidadeGuard,
     ReportMudancaFuncaoGuard,
     ReportAcompanhamentoSastGuard,
-    NutricaoAlimentoGuard,
+    AlimentoGuard,
     MedidaAlimentarGuard,
     IndicadorConhecimentoAlimentarGuard,
-    QuestionarioConhecimentoAlimentarGuard
+    QuestionarioConhecimentoAlimentarGuard,
+    RecordatorioGuard,
+    ReportSugestaoAgendamentoGuard
   ],
   bootstrap: [ 
     AppComponent

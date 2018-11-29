@@ -1,0 +1,38 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row form-container">
+
+	<div class="row div-select">
+		<fieldset class="col s8 fieldset-select">
+			<legend> Convocação </legend>
+			<select name="uf" class="browser-default" [(ngModel)]="convocacaoId">
+				<option disabled selected value='undefined'>Selecione um convocação</option>
+				<option *ngFor="let convocacao of convocacoes" value="{{convocacao.id}}">{{convocacao.titulo}}</option>
+			</select>
+			<button center class="btn btn-primary btn-filtrar"
+				(click)="selectConvocacao()">Filtrar</button>
+		</fieldset>
+	</div>
+	
+	<angular2-fullcalendar [options]="calendarOptions"></angular2-fullcalendar>
+	
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]" [materializeActions]="modalConfirm">
+
+	<h5 class="title-modal">Empregados do dia</h5>
+	<div class="div-paragraph-modal" *ngFor="let obj of selectedObjetos; let o = index">
+		<p class="paragraph-modal">{{obj.nome}}</p>
+		<p class="paragraph-modal">{{obj.gerencia}} - Data do Aso: {{obj.data}}</p>
+	</div>
+	
+	<div class="modal-footer">
+		<a class="waves-effect modal-close modal-close waves-green btn-flat"
+			(click)="cancel()">Fechar</a>
+	</div>
+
+</div>

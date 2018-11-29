@@ -1,0 +1,31 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row">
+	<div class="input-field col s5">
+		<label for="alimento">Alimento</label> <input type="text"
+			materialize="autocomplete" autocomplete="off"
+			name="itemRefeicao.alimento.nome" 
+			[(ngModel)]="itemRefeicao.alimento.nome"
+			(blur)="alimentoAutocomplete.getAutocomplete().getObj($event,itemRefeicao,'setAlimento','getNome')"
+			(ngModelChange)="alimentoAutocomplete.getAutocomplete().getList(itemRefeicao.alimento, 'getNome');"
+			(keydown.enter)="alimentoAutocomplete.getAutocomplete().pressEnter($event,itemRefeicao,'setAlimento','getNome');"
+			[materializeParams]="alimentoAutocomplete.getAutocomplete().getObjAutoComplete()">
+	</div>
+	<div class="input-field col s5">
+		<fieldset>
+			<legend>Medida Caseira</legend>
+				<select [(ngModel)]="itemRefeicao.medidaCaseira" [disabled]="itemRefeicao.alimento.id == 0" (change)="calculeVe()">
+					<option disabled selected value="undefined">Selecione uma medida</option>
+					<option *ngFor="let medida of itemRefeicao.alimento.alimentoMedidaAlimentares" [ngValue]="medida.medidaAlimentar">{{medida.medidaAlimentar.descricao}}</option>
+				</select>
+		</fieldset>
+	</div>
+	<div class="row">
+		<div class="input-field col s2">
+			<label for="quantidade">Quantidade</label> <input id="quantidade" (change)="calculeVe()"
+				type="number" name="nome" [(ngModel)]="itemRefeicao.quantidade">
+		</div>
+	</div>
+</div>

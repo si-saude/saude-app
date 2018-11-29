@@ -5,6 +5,7 @@ import { PerguntaFichaColetaBuilder } from './../pergunta-ficha-coleta/pergunta-
 import { ItemRespostaFichaColeta } from './../../model/item-resposta-ficha-coleta';
 import { ItemRespostaFichaColetaBuilder } from './../item-resposta-ficha-coleta/item-resposta-ficha-coleta.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
+import { Util } from './../../generics/utils/util';
 
 export class RespostaFichaColetaBuilder extends GenericBuilder{
     
@@ -45,8 +46,11 @@ export class RespostaFichaColetaBuilder extends GenericBuilder{
 
         if (this.getValue(respostaFichaColeta, "getConteudo") == undefined )
             cloneRespostaFichaColeta.setConteudo("");
-        else
-            cloneRespostaFichaColeta.setConteudo(this.getValue(respostaFichaColeta, "getConteudo"));
+        else {
+            if ( this.getValue(this.getValue(respostaFichaColeta, "getPergunta"), "getTipo") == 'DOUBLE' )
+                cloneRespostaFichaColeta.setConteudo(Util.treatDouble(this.getValue(respostaFichaColeta, "getConteudo")));
+            else cloneRespostaFichaColeta.setConteudo(this.getValue(respostaFichaColeta, "getConteudo"));
+        }
         
         cloneRespostaFichaColeta.setFicha(new FichaColeta());
         cloneRespostaFichaColeta.setItens(

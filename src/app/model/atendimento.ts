@@ -5,6 +5,7 @@ import { Aso } from './aso';
 import { Triagem } from './triagem';
 import { RegraAtendimento } from './regra-atendimento';
 import { QuestionarioConhecimentoAlimentar } from './questionario-conhecimento-alimentar';
+import { Recordatorio } from './recordatorio';
 
 export class Atendimento {
     private id: number;
@@ -15,6 +16,7 @@ export class Atendimento {
     private aso: Aso;
     private triagensTodosAtendimentos: Array<Triagem>;
     private questionario: QuestionarioConhecimentoAlimentar;
+    private recordatorio: Recordatorio;
     private version: number;
 
     getId() {
@@ -87,5 +89,13 @@ export class Atendimento {
 
     setQuestionario( questionario ) {
         this.questionario = questionario;
+    }
+    
+    getRecordatorio() {
+        return this.recordatorio;
+    }
+
+    setRecordatorio( recordatorio ) {
+        this.recordatorio = recordatorio;
     }
 }

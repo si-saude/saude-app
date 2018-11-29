@@ -8,17 +8,17 @@ import { QuestionarioConhecimentoAlimentarFormDetailComponent } from './question
 import { CanDeactivateGuard } from './../../guards/can-deactivate.guard';
 import { QuestionarioConhecimentoAlimentarGuard } from './../../guards/guards-child/questionario-conhecimento-alimentar.guard';
 
-const baseRoutes: Routes = [
+const questionarioRoutes: Routes = [
     { path: '', component: QuestionarioConhecimentoAlimentarComponent},
-    { path: 'cadastrar/:atendimento_id', component: QuestionarioConhecimentoAlimentarFormComponent,
+    { path: 'cadastrar/:atendimento_id/:empregado', component: QuestionarioConhecimentoAlimentarFormComponent,
         canDeactivate: [CanDeactivateGuard]},
-    { path: 'editar/:id', component: QuestionarioConhecimentoAlimentarFormComponent,
+    { path: 'editar/:id/:empregado', component: QuestionarioConhecimentoAlimentarFormComponent,
         canDeactivate: [CanDeactivateGuard]},
-    { path: 'detalhe/:id', component: QuestionarioConhecimentoAlimentarFormDetailComponent}
+    { path: 'detalhe/:id/:empregado', component: QuestionarioConhecimentoAlimentarFormDetailComponent}
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(baseRoutes)],
+    imports: [RouterModule.forChild(questionarioRoutes)],
     exports: [RouterModule]
 })
 export class QuestionarioConhecimentoAlimentarRoutingModule {}

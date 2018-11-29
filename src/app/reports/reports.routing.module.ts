@@ -11,7 +11,9 @@ import { PreRequisitosAgendamentoReportComponent } from './pre-requisitos-agenda
 import { AvaliacaoHigieneOcupacionalReportComponent } from './avaliacao-higiene-ocupacional-report/avaliacao-higiene-ocupacional-report.component';
 import { MudancaFuncaoReportComponent } from './mudanca-funcao-report/mudanca-funcao-report.component';
 import { AcompanhamentoSastReportComponent } from './acompanhamento-sast-report/acompanhamento-sast-report.component';
+import { SugestaoAgendamentoReportComponent } from './sugestao-agendamento-report/sugestao-agendamento-report.component';
 import { ReportSolicitacaoCentralIntegraGuard } from './../guards/report-solicitacao-central-integra.guard';
+import { ReportSugestaoAgendamentoGuard } from './../guards/report-sugestao-agendamento.guard';
 import { PanoramaGuard } from './../guards/panorama.guard';
 import { EmpregadosPorGrupoGuard } from './../guards/guards-child/empregados-por-grupo.guard';
 import { ReportControleAtestadoGuard } from './../guards/report-controle-atestado.guard';
@@ -40,7 +42,9 @@ const reportsRoutes: Routes = [
     { path: 'mudanca-funcao', component: MudancaFuncaoReportComponent, 
         canActivate: [ReportMudancaFuncaoGuard] },
     { path: 'acompanhamento-sast', component: AcompanhamentoSastReportComponent, 
-        canActivate: [ReportAcompanhamentoSastGuard] }
+        canActivate: [ReportAcompanhamentoSastGuard] },
+    { path: 'sugestao-agendamento', component: SugestaoAgendamentoReportComponent, 
+        canActivate: [ReportSugestaoAgendamentoGuard] }
 ];
 
 @NgModule({

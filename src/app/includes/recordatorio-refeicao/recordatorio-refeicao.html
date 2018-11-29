@@ -1,0 +1,27 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="[{dismissible: false}]"
+	[materializeActions]="modalRefeicao">
+
+	<h5 class="title-modal title-modal-planejamento">Refeição</h5>
+	
+	<div class="row">
+		<div class="input-field col s10" style="margin-left: 5%; margin-right: 5%">
+			<label for="nome">Nome</label>
+			<input id="nome" maxlength="64"
+				name="nome" [(ngModel)]="refeicao.nome">
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		 <a class="waves-effect waves-green btn-flat"
+			(click)="confirmModalRefeicao()">Confirmar</a>
+		<a class="waves-effect waves-green btn-flat"
+			(click)="cancelModalRefeicao()">Cancelar</a>
+	</div>
+
+</div>

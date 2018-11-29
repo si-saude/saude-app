@@ -14,13 +14,19 @@ import { Atendimento } from './../../model/atendimento';
 export class MenuAtendimentoNutricaoComponent{
     @Input() atendimento: Atendimento;
     @Output() btnNovoQuestionario = new EventEmitter<boolean>();
-    @Output() btnCarregarQuestionario = new EventEmitter<boolean>();
+    @Output() btnNovoRecordatorio = new EventEmitter<boolean>();
+    @Output() btnCarregar = new EventEmitter<boolean>();
     private disableNovoQuestionario = false;
+    private disableNovoRecordatorio = false;
     
     constructor() {}
     
     newQuestionario() {
         this.btnNovoQuestionario.emit(true);
+    }
+    
+    newRecordatorio() {
+        this.btnNovoRecordatorio.emit(true);
     }
     
     //RECEBE O INDICATIVO DE QUE DEVE SER REDIRECIONADO OU NAO PARA A PAGINA DE NOVO QUESTIONARIO
@@ -29,14 +35,29 @@ export class MenuAtendimentoNutricaoComponent{
         if ( bool )
             this.disableNovoQuestionario = true;
         else  
-            window.open('/questionario-conhecimento-alimentar/cadastrar/'+this.atendimento.getId());
+            window.open('/questionario-conhecimento-alimentar/cadastrar/'+this.atendimento.getId()+"/"+
+                    this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getNome());
+    }
+    
+  //RECEBE O INDICATIVO DE QUE DEVE SER REDIRECIONADO OU NAO PARA A PAGINA DE NOVO QUESTIONARIO
+    //CASO TRUE, NAO REDIRECIONA, CASO CONTRARIO, REDIRECIONA
+    callBtnNewRecordatorio( bool ) {
+        if ( bool )
+            this.disableNovoRecordatorio = true;
+        else  
+            window.open('/recordatorio/cadastrar/'+this.atendimento.getId()+"/"+
+                    this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getNome());
     }
     
     setDisabledNovoQuestionario( bool ) {
-        this.disableNovoQuestionario = bool ? true : false;
+        this.disableNovoQuestionario = bool;
     }
     
-    loadQuestionario() {
-        this.btnCarregarQuestionario.emit(true);
+    setDisabledNovoRecordatorio( bool ) {
+        this.disableNovoRecordatorio = bool;
+    }
+    
+    functionLoad() {
+        this.btnCarregar.emit(true);
     }
 }

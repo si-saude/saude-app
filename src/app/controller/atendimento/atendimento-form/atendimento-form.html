@@ -222,8 +222,9 @@
 	
 	<div id="nutricao">
 		<app-menu-atendimento-nutricao
-			(btnCarregarQuestionario)="loadQuestionario($event)"
-			(btnNovoQuestionario)="clickBtnNovoQuestionario($event)" 
+			(btnCarregar)="loadNutricao($event)"
+			(btnNovoQuestionario)="clickBtnNovoQuestionario($event)"
+			(btnNovoRecordatorio)="clickBtnNovoRecordatorio($event)" 
 			[atendimento]="atendimento"></app-menu-atendimento-nutricao>
 	</div>
 

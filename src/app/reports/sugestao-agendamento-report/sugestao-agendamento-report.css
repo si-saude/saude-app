@@ -1,0 +1,38 @@
+.form-container {
+	margin-bottom: 35%;
+	height: 800px;
+}
+
+.div-select {
+	width: 50%;
+    margin-left: 35%;
+    margin-bottom: 5%;
+}
+
+.btn-filtrar {
+	width: 100%;
+}
+
+.fc-more-popover {
+  width:500px;
+}
+
+.fc-more-popover .fc-event {
+  width:470px;
+}
+
+.title-modal {
+	color: #26a69a;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.paragraph-modal {
+	margin: 0;
+	font-size: 12px;
+}
+
+.div-paragraph-modal {
+	margin-left: 5%;
+	margin-bottom: 2%;	
+}

@@ -1,0 +1,329 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+	
+		<ul class="tabs" materialize="tabs">
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#dadosGerais">Dados Gerais</a></li>
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#outrasInformacoes">Outras Informações</a></li>
+		</ul>
+
+		<div id="dadosGerais">
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="nome">Nome</label>
+					<input id="nome" type="text" maxlength="256" required
+					name="nome" [(ngModel)]="alimento.nome">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s4">
+					<fieldset>
+						<legend> Tipo </legend>
+						<select name="alimento.tipo" required 
+							class="browser-default" [(ngModel)]="alimento.tipo">
+							<option disabled selected value=undefined>Selecione um tipo</option>
+							<option *ngFor="let tipo of tipos" value="{{tipo}}">{{tipo}}</option>
+						</select>
+					</fieldset>
+				</div>
+				<div class="input-field col s4">
+					<label for="padrao">Padrão (g)</label>
+					<input id="padrao" type="text" style="width: 100%;" required
+						maxlength="16" [(ngModel)]="alimento.padrao" numberMaskDirective=""
+						name="padrao">
+				</div>
+				<div class="input-field col s4">
+					<label for="energia">Energia (kcal)</label>
+					<input id="energia" type="text" style="width: 100%;"
+						name="energia" required numberMaskDirective=""
+						maxlength="16" [(ngModel)]="alimento.energia">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s4">
+					<label for="medidaAlimentar">Medida Caseira</label> 
+					<input type="text" materialize="autocomplete" autocomplete="off" name="nutrucaoAlimento.medidaAlimentar"
+						[(ngModel)]="alimentoMedidaAlimentar.medidaAlimentar.descricao"
+						(blur)="medidaAlimentarAutocomplete.getAutocomplete().getObj($event,alimentoMedidaAlimentar,'setMedidaAlimentar','getDescricao')"
+						(ngModelChange)="medidaAlimentarAutocomplete.getAutocomplete().getList(alimentoMedidaAlimentar.medidaAlimentar, 'getDescricao');"
+						(keydown.enter)="medidaAlimentarAutocomplete.getAutocomplete().pressEnter($event,alimentoMedidaAlimentar,'setMedidaAlimentar','getDescricao');"
+						[materializeParams]="medidaAlimentarAutocomplete.getAutocomplete().getObjAutoComplete()">
+				</div>
+				<div class="input-field col s3">
+					<label for="quantidade">Quantidade (g ou ml)</label>
+					<input id="quantidade" type="text"
+						name="quantidade" numberMaskDirective="" 
+						maxlength="16" [(ngModel)]="alimentoMedidaAlimentar.quantidade">
+				</div>
+				<div class="input-field col s3">
+					<label for="referencia">Referência</label>
+					<input id="referencia" type="text" maxlength="64"
+					name="referencia" [(ngModel)]="alimentoMedidaAlimentar.referencia">
+				</div>
+				<div class="col s2">
+					<a style='margin-top: 25%;'
+						class="btn-floating waves-effect waves-light green btn-add"
+						(click)="addAlimentoMedidaAlimentar()"> <i
+						class="material-icons center-icon">add</i>
+					</a>
+				</div>
+			</div>
+			
+			<div class="row">
+
+				<table class="striped">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s3">Medida Alimentar</th>
+							<th class="col s3">Quantidade (g ou ml)</th>
+							<th class="col s3">Referência</th>
+							<th class="col s3">Remover</th>
+						</tr>
+					</thead>
+					<div *ngFor="let nama of alimento.alimentoMedidaAlimentares;let i = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s3 nama-descricao">{{nama.medidaAlimentar.descricao}}</td>
+								<td class="col s3 nama-quantidade">{{nama.quantidade | money : 'nama-quantidade'}}</td>
+								<td class="col s3 nama-referencia">{{nama.referencia}}</td>
+								<td class="col s3 botao-remover"><a
+									class="btn-floating waves-effect waves-light red btn-remove"
+									(click)="removeAlimentoMedidaAlimentares(i)"> <i
+										class="material-icons center-icon">delete</i>
+								</a></td>
+							</tr>
+						</tbody>
+					</div>
+
+				</table>
+
+			</div>
+			
+		</div>
+		<div id="outrasInformacoes">	
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="proteina">Proteina (g)</label>
+					<input id="proteina" type="text" style="width: 100%;"
+						name="proteina" numberMaskDirective=""
+						[(ngModel)]="alimento.proteina" maxlength="16">
+				</div>
+				<div class="input-field col s3">
+					<label for="saturada">Gordura Saturada (g)</label>
+					<input id="saturada" type="text" 
+						style="width: 100%;" maxlength="16" numberMaskDirective=""
+						name="saturada" [(ngModel)]="alimento.saturada">
+				</div>
+				<div class="input-field col s3">
+					<label for="monoinsaturada">Gordura Monoinsaturada (g)</label>
+					<input id="monoinsaturada" type="text" style="width: 100%;"
+						name="monoinsaturada" maxlength="16"  numberMaskDirective=""
+						[(ngModel)]="alimento.monoinsaturada">
+				</div>
+    			<div class="input-field col s3">
+					<label for="poliinsaturada">Gordura Poliinsaturada (g)</label>
+					<input id="poliinsaturada" type="text" style="width: 100%;"
+						name="poliinsaturada" maxlength="16"  numberMaskDirective=""
+						[(ngModel)]="alimento.poliinsaturada">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s2">
+					<label for="lipideos">Lipídeos (g)</label>
+					<input id="lipideos" type="text" numberMaskDirective=""
+						name="lipideos" maxlength="16" 
+						[(ngModel)]="alimento.lipideos">
+				</div>
+				<div class="input-field col s2">
+					<label for="omega3">Ômega 3</label>
+					<input id="omega3" type="text" numberMaskDirective=""
+						name="omega3" maxlength="16" 
+						[(ngModel)]="alimento.omega3">
+				</div>
+    			<div class="input-field col s2">
+					<label for="colesterol">Colesterol (mg)</label>
+					<input id="colesterol" type="text" numberMaskDirective=""
+						name="colesterol" maxlength="16" 
+						[(ngModel)]="alimento.colesterol">
+				</div>
+				<div class="input-field col s3">
+					<label for="cho">Carboidratos (g)</label>
+					<input id="cho" type="text" style="width: 100%;"
+						name="cho" maxlength="16"  numberMaskDirective=""
+						[(ngModel)]="alimento.cho">
+				</div>
+    			<div class="input-field col s3">
+					<label for="fibra">Fibra (g)</label>
+					<input id="fibra" type="text" numberMaskDirective=""
+						name="fibra" maxlength="16" 
+						[(ngModel)]="alimento.fibra">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="calcio">Cálcio (mg)</label>
+					<input id="calcio" type="text" numberMaskDirective=""
+						name="calcio" maxlength="16" 
+						[(ngModel)]="alimento.calcio">
+				</div>
+    			<div class="input-field col s3">
+					<label for="mg">Magnésio (mg)</label>
+					<input id="mg" type="text" style="width: 100%;"
+						name="mg" maxlength="16" numberMaskDirective=""
+						[(ngModel)]="alimento.mg">
+				</div>
+    			<div class="input-field col s3">
+					<label for="mn">Manganês (mg)</label>
+					<input id="mn" type="text" style="width: 100%;"
+						name="mn" maxlength="16" numberMaskDirective=""
+						[(ngModel)]="alimento.mn">
+				</div>
+    			<div class="input-field col s3">
+					<label for="p">Fósforo (mg)</label>
+					<input id="p" type="text" style="width: 100%;"
+						name="p" maxlength="16"  numberMaskDirective=""
+						[(ngModel)]="alimento.p">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="ferro">Ferro (mg)</label>
+					<input id="ferro" type="text" maxlength="16" 
+						[(ngModel)]="alimento.ferro" numberMaskDirective=""
+						name="ferro">
+				</div>
+    			<div class="input-field col s3">
+					<label for="sodio">Sódio (mg)</label>
+					<input id="sodio" type="text" numberMaskDirective=""
+						name="sodio" maxlength="16" 
+						[(ngModel)]="alimento.sodio">
+				</div>
+    			<div class="input-field col s3">
+					<label for="potassio">Potássio (mg)</label>
+					<input id="potassio" type="text" numberMaskDirective=""
+						name="potassio" maxlength="16" 
+						[(ngModel)]="alimento.potassio">
+				</div>
+    			<div class="input-field col s3">
+					<label for="cobre">Cobre (mg)</label>
+					<input id="cobre" type="text" numberMaskDirective=""
+						name="cobre" maxlength="16" 
+						[(ngModel)]="alimento.cobre">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="zinco">Zinco (mg)</label>
+					<input id="zinco" type="text" numberMaskDirective=""
+						name="zinco" maxlength="16" 
+						[(ngModel)]="alimento.zinco">
+				</div>
+    			<div class="input-field col s3">
+					<label for="retinol">Retinol (mg)</label>
+					<input id="retinol" type="text" numberMaskDirective=""
+						name="retinol" maxlength="16" 
+						[(ngModel)]="alimento.retinol">
+				</div>
+    			<div class="input-field col s3">
+					<label for="tiamina">Tiamina (mg)</label>
+					<input id="tiamina" type="text" numberMaskDirective=""
+						name="tiamina"  maxlength="16" 
+						[(ngModel)]="alimento.tiamina">
+				</div>
+    			<div class="input-field col s3">
+					<label for="riboflavina">Riboflavina (mg)</label>
+					<input id="riboflavina" type="text" maxlength="16" 
+						[(ngModel)]="alimento.riboflavina" numberMaskDirective=""
+						name="riboflavina">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="piridoxina">Piridoxina (mg)</label>
+					<input id="piridoxina" type="text" numberMaskDirective=""
+						name="piridoxina" maxlength="16" 
+						[(ngModel)]="alimento.piridoxina">
+				</div>
+				<div class="input-field col s3">
+					<label for="niacina">Niacina (mg)</label>
+					<input id="niacina" type="text" numberMaskDirective=""
+						name="niacina" maxlength="16"
+						[(ngModel)]="alimento.niacina">
+				</div>
+    			<div class="input-field col s3">
+					<label for="vitc">Vitamica C (mg)</label>
+					<input id="vitc" type="text" style="width: 100%;"
+						name="vitc" maxlength="16"  numberMaskDirective=""
+						[(ngModel)]="alimento.vitc">
+				</div>
+				<div class="input-field col s3">
+					<label for="vitd">Vitamina D (mg)</label>
+					<input id="vitd" type="text" numberMaskDirective=""
+						name="vitd" maxlength="16" 
+						[(ngModel)]="alimento.vitd">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="omega6">Ômega 6</label>
+					<input id="omega6" type="text" numberMaskDirective=""
+						name="omega6" maxlength="16" 
+						[(ngModel)]="alimento.omega6">
+				</div>
+				<div class="input-field col s3">
+					<label for="vite">Vitamina E (mg)</label>
+					<input id="vite" type="text" numberMaskDirective=""
+						name="vite" maxlength="16"
+						[(ngModel)]="alimento.vite">
+				</div>
+				<div class="input-field col s3 checkbox">
+					<input type="checkbox" id="inativo"
+						[(ngModel)]="alimento.inativo"
+						name="alimento.inativo"> <label
+						for="inativo">Inativo</label>
+				</div>
+			</div>
+			
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="alimento.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="alimento.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/alimento']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit"
+				class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

@@ -59,4 +59,8 @@ export class AtendimentoOcupacionalComponent {
         this.router.navigate(["/solicitacao-servico/selecao-servico"]);
     }
     
+    sendEditEmpregado(id) {
+        window.open('empregado/editar/'+id,'_blank');
+    }
+    
 }
