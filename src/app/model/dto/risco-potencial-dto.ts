@@ -7,6 +7,9 @@ export class RiscoPotencialDto {
     private data: string;
     private status: string;
     private abreviacaoEquipeAcolhimento: string;
+    private pendenciaEncerramento: boolean;
+    private pendenciaValidacao: boolean;
+    private pendenciaReavaliacao: boolean;
     
     getId() {
         return this.id;
@@ -56,5 +59,22 @@ export class RiscoPotencialDto {
     setAbreviacaoEquipeAcolhimento(abreviacaoEquipeAcolhimento: string) {
         this.abreviacaoEquipeAcolhimento = abreviacaoEquipeAcolhimento;
     }
-    
+    getPendenciaEncerramento() {
+        return this.pendenciaEncerramento;
+    }
+    setPendenciaEncerramento(pendenciaEncerramento: boolean) {
+        this.pendenciaEncerramento = pendenciaEncerramento;
+    }
+    getPendenciaValidacao() {
+        return this.pendenciaValidacao;
+    }
+    setPendenciaValidacao(pendenciaValidacao: boolean) {
+        this.pendenciaValidacao = pendenciaValidacao;
+    }
+    getPendenciaReavaliacao() {
+        return this.pendenciaReavaliacao;
+    }
+    setPendenciaReavaliacao(pendenciaReavaliacao: boolean) {
+        this.pendenciaReavaliacao = pendenciaReavaliacao;
+    }
 }

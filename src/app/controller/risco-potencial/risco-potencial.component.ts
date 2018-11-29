@@ -56,6 +56,9 @@ export class RiscoPotencialComponent {
     private toastParams;
     private showPreload: boolean;
 
+    private countCheckbox: number = 0;
+    private booleanDropdownValue: string;
+    
     constructor( private riscoPotencialService: RiscoPotencialService, 
             riscoGuard: RiscoPotencialGuard, 
             private router: Router ) {
@@ -76,6 +79,7 @@ export class RiscoPotencialComponent {
     }
 
     ngOnInit() {
+        this.showPreload = true;
         if ( localStorage.getItem( "usuario-id" ) != undefined ) {
             this.riscoPotencialService.getUsuario( Number( localStorage.getItem( "usuario-id" ) ) )
                 .then( res => {
@@ -89,16 +93,17 @@ export class RiscoPotencialComponent {
 
                         this.riscoPotencialService.getProfissional( profissionalFilter )
                             .then( res => {
-                                this.showPreload = false;
                                 if ( res.json().list[0] != undefined )
                                     this.profissional = new ProfissionalSaudeBuilder().clone( res.json().list[0] );
                                 else {
                                     this.router.navigate( ["/login"] );
                                     return;
                                 }
+                                this.showPreload = false;
                             } )
                             .catch( error => {
                                 console.log( "Erro no servidor ao buscar o profissional. Tentar mais tarde." );
+                                this.showPreload = false;
                             } )
                     } else {
                         this.router.navigate( ["/login"] );
@@ -107,6 +112,7 @@ export class RiscoPotencialComponent {
                 } )
                 .catch( error => {
                     console.log( "Erro no servidor ao buscar o usuario." );
+                    this.showPreload = false;
                 } )
         } else {
             console.log( "Usuario nao logada." );
@@ -246,10 +252,11 @@ export class RiscoPotencialComponent {
     selectUf() {
         if ( this.uf != '' ) {
             this.showPreload = true;
-            this.riscoPotencialService.getRiscoPotenciais( this.uf )
+            this.riscoPotencialService.getRiscoPotenciais( this.uf, this.profissional.getEquipe().getId() )
                 .then( res => {
                     this.showPreload = false;
                     this.riscoPotenciais = new RiscoPotencialReportBuilder().cloneList( res.json() );
+                    console.log(this.riscoPotenciais)
                     this.riscoPotenciais.sort(function(a, b){
                         if ( a['ranking'] > b['ranking'] )
                             return -1;
@@ -350,6 +357,7 @@ export class RiscoPotencialComponent {
         $( "#dropdown" ).empty();
 
         let count = 0;
+        
         for ( let item of arrayDropDown ) {
             let el = $( "<li id='" + item + "' title='" + tipo + "'><input type='checkbox' id='" + item + ( ++count ) + "' value='false'>" +
                 "<label for='" + ( item + count ) + "'>" + item + "</label></li>" );
@@ -383,21 +391,78 @@ export class RiscoPotencialComponent {
 
         }
 
-        $( '#dropdown' ).toggleClass( 'show' );
-        $( '#dropdown' ).insertAfter( "#" + tipo );
-        $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
-
-        for ( let t of this.arrayTypes ) {
-            this.arrayObjects[t].forEach( aO => {
-                if ( document.getElementById( aO ) != null && document.getElementById( aO ) != undefined ) {
-                    document.getElementById( aO ).children.item( 0 ).setAttribute( 'checked', 'true' );
-                    document.getElementById( aO ).children.item( 0 ).setAttribute( 'value', 'true' );
-                }
-            } )
-        }
+        this.showDropdown( tipo );
 
     }
+    
+    dropDownBoolean( tipo: string) {
+            $( '#dropdown' ).empty();
+            
+            $( '#dropdown' ).append( 
+                "<li id='true' title='" + tipo + "'>" +
+                "<input type='checkbox' id=true1>" +
+                "<label for='true1'>" + tipo + "</label></li>" );
+            let el: HTMLInputElement = <HTMLInputElement>document.getElementById( 'true1' );
+            el.indeterminate = true;
+            el.checked = true;
 
+            let component = this;
+            
+            $( "#true1" ).click( function() {
+                if ( !el.checked ) {
+                    component.countCheckbox++;
+                    el.value = 'false';
+                } else el.value = 'true';
+                if ( component.countCheckbox % 2 == 0 ) {
+                    el.indeterminate = true;
+                    el.checked = true;
+                    component.countCheckbox = 0;
+                }
+
+                component.tipoFiltro = tipo;
+                component.value = tipo;
+
+                if ( el.indeterminate ) {
+                    component.filter = undefined;
+                    component.booleanDropdownValue = 'indeterminate';
+                } else if ( el.checked ) {
+                    component.filter = true;
+                    component.booleanDropdownValue = 'true';
+                } else {
+                    component.filter = false;
+                    component.booleanDropdownValue = 'false';
+                }
+            } );
+
+            if ( this.booleanDropdownValue == 'indeterminate' ) {
+                el.indeterminate = true;
+                el.checked = true;
+            } else if ( this.booleanDropdownValue == 'true' ) {
+                el.indeterminate = false;
+                el.checked = true;
+            } else if ( this.booleanDropdownValue == 'false' ) {
+                el.indeterminate = false;
+                el.checked = false;
+            }
+            
+            this.showDropdown(tipo);
+        }
+
+        showDropdown( tipo ) {
+            $( '#dropdown' ).toggleClass( 'show' );
+            $( '#dropdown' ).insertAfter( "#" + tipo );
+//            $( '#dropdown' ).css( "margin-left", "-" + $( ".list-container" ).scrollLeft() + "px" );
+
+            for ( let t of this.arrayTypes ) {
+                this.arrayObjects[t].forEach( aO => {
+                    if ( document.getElementById( aO ) != null && document.getElementById( aO ) != undefined ) {
+                        document.getElementById( aO ).children.item( 0 ).setAttribute( 'checked', 'true' );
+                        document.getElementById( aO ).children.item( 0 ).setAttribute( 'value', 'true' );
+                    }
+                } )
+            }
+        }
+    
     selectItemDropDown( item, tipo ) {
         this.tipoFiltro = tipo;
         this.filter = item;
