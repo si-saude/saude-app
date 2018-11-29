@@ -1,6 +1,6 @@
 import { Directive, HostListener, Input, EventEmitter, Output, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import {Util} from './../generics/utils/util';
+import {Util} from '../../generics/utils/util';
 
 @Directive( {
     selector: '[numberMaskDirective]',

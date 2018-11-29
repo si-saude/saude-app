@@ -10,19 +10,19 @@ import { AlimentoFormDetailComponent } from './../alimento/alimento-form/aliment
 import { AlimentoRoutingModule } from './../alimento/alimento.routing.module';
 import { SharedModule } from './../shared.module';
 import { PipesModule } from './../pipes.module';
-import { NumberMaskDirective } from './../../directives/number.directive';
+import { NumberMaskDirectiveModule } from '../../directives/number-mask-directive/number-mask-directive.module';
 
 @NgModule({
     declarations: [
        AlimentoComponent,
        AlimentoFormComponent,
-       AlimentoFormDetailComponent,
-       NumberMaskDirective
+       AlimentoFormDetailComponent
      ],
      imports: [
         AlimentoRoutingModule,
         SharedModule,
-        PipesModule
+        PipesModule,
+        NumberMaskDirectiveModule
      ],
      providers: [
         AlimentoService

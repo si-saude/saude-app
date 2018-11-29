@@ -75,7 +75,8 @@ export class AtendimentoBuilder extends GenericBuilder {
                 cloneAtendimento.setQuestionario(undefined);
         } else {
             cloneAtendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(null));
-
+        }
+            
         if (this.getValue(atendimento, "getRecordatorio") !== undefined) { 
             cloneAtendimento.setRecordatorio(
                     new RecordatorioBuilder().clone(this.getValue(atendimento,"getRecordatorio")));
@@ -83,7 +84,6 @@ export class AtendimentoBuilder extends GenericBuilder {
                 cloneAtendimento.setRecordatorio(undefined);
         } else {
             cloneAtendimento.setRecordatorio(new RecordatorioBuilder().initialize(null));
-
         }
         
         return cloneAtendimento;

@@ -17,7 +17,7 @@ import { PlanejamentoModule } from './../planejamento.module';
 import { PipesModule } from './../pipes.module';
 import { ModalExameModule } from './../../includes/modal-exame/modal-exame.module';
 import { ModalConfirmModule } from './../../includes/modal-confirm/modal-confirm.module';
-import { NumberMaskDirective } from './../../directives/number.directive';
+import { NumberMaskDirective } from '../../directives/number-mask-directive/number-mask-directive';
 
 @NgModule({
     declarations: [

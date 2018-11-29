@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { FichaColetaComponent } from './../includes/ficha-coleta/ficha-coleta.component';
 import { PipesModule } from './pipes.module';
-import { NumberMaskDirective } from './../directives/number.directive';
+import { NumberMaskDirectiveModule } from '../directives/number-mask-directive/number-mask-directive.module';
 
 @NgModule({
   imports: [
@@ -14,11 +14,11 @@ import { NumberMaskDirective } from './../directives/number.directive';
     FormsModule,
     CommonModule,
     RouterModule,
-    PipesModule
+    PipesModule,
+    NumberMaskDirectiveModule
   ],
   declarations: [
-    FichaColetaComponent,
-    NumberMaskDirective
+    FichaColetaComponent
   ],
   exports: [
     FichaColetaComponent

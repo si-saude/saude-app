@@ -39,7 +39,6 @@ import { UsuarioGuard } from './guards/guards-child/usuario.guard';
 import { VacinaGuard } from './guards/guards-child/vacina.guard';
 import { EmpregadoConvocacaoGuard } from './guards/guards-child/empregado-convocacao.guard';
 import { FeriadoGuard } from './guards/guards-child/feriado.guard';
-import { AuditoriaResultadoExameGuard } from './guards/guards-child/auditoria-resultado-exame.guard';
 import { RegraAtendimentoGuard } from './guards/guards-child/regra-atendimento.guard';
 import { ResultadoExameGuard } from './guards/guards-child/resultado-exame.guard';
 import { RequisitoAsoGuard } from './guards/guards-child/requisito-aso.guard';
@@ -244,11 +243,6 @@ const routes: Routes = [
     {
         path: 'servico', loadChildren: 'app/controller/servico/servico.module#ServicoModule',
         canActivateChild: [ServicoGuard]
-    },
-    {
-        path: 'auditoria-resultado-exame',
-        loadChildren: 'app/controller/auditoria-resultado-exame/auditoria-resultado-exame.module#AuditoriaResultadoExameModule',
-        canActivateChild: [AuditoriaResultadoExameGuard]
     },
     {
         path: 'regra-atendimento',
