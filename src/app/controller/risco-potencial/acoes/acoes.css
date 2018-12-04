@@ -114,3 +114,38 @@ td > a > i {
     background-color: #26a69a !important;
     color: #eafaf9;
 }
+
+.icon-right{
+	position: absolute;
+	right: 2%;
+	top: 1%;
+}
+
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+	display: flex !important;
+	padding: 0;
+}
+
+.container-triagens-planejamento tbody {
+	margin-top: 0px !important;
+}
+
+.container-triagens-planejamento tr {
+	margin-bottom: 0px !important;
+}
+
+.container-triagens-planejamento .row {
+	margin-bottom: 5px;
+}
+
+.container-triagens-planejamento input {
+	margin-bottom: 5px;
+}
+
+.fieldset-planejamento-triagem {
+	background: #e6fdff;
+	margin: 20px;
+}

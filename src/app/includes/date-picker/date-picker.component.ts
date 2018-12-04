@@ -2,7 +2,7 @@ import { EventEmitter, Component, Input, Output} from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalVariable } from './../../../../src/app/global';
 import { CustomDate} from './../../generics/utils/custom-date.util';
-
+import { Util } from './../../generics/utils/util';
 import { MaterializeAction } from "angular2-materialize";
 
 @Component( {
@@ -22,8 +22,8 @@ export class DatePickerComponent {
     private dateActions: EventEmitter<string|MaterializeAction>;
     params;
     
-    constructor( router: Router) {
-        this.params = GlobalVariable.PARAMS_DATE;
+    constructor( router: Router) {    
+        this.params =  GlobalVariable.PARAMS_DATE;
         this.dateActions = new EventEmitter<string|MaterializeAction>();
         this.change = new EventEmitter<CustomDate>();
     }
@@ -31,13 +31,16 @@ export class DatePickerComponent {
     readOnly(){        
         return false;
     }
+    
 
     public openDatePicker(){
         if(!this.desabilitar)
             this.dateActions.emit({action:"pickadate",params:["open"]});
     }
     
-    changeDatePicker() {
-        this.change.emit(this.customDate);
+    changeDatePicker(event) {
+        this.customDate.setAppDate(event);  
+        if(Util.isNotNull(this.customDate.getApiDate()))
+            this.change.emit(this.customDate);
     }
 }

@@ -48,16 +48,19 @@ export class DateUtil {
     
     public parseStringPtBrToDate(dataString ,timeString: string){
         
-        let arrayDateString:Array<string> =  dataString.split("/");
-        let dateAux:Date ;
-        let arrayTimeString:Array<string> ;
-        if(timeString != '' &&  timeString != undefined){
-            arrayTimeString =  timeString.split(":");
-            dateAux= new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]),Number(arrayTimeString[0]), Number(arrayTimeString[1]), 0, 0);
-        }else        
-            dateAux = new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]));       
-    
-        return dateAux;
+        if(dataString.includes("/")){
+            let arrayDateString:Array<string> =  dataString.split("/");
+            let dateAux:Date ;
+            let arrayTimeString:Array<string> ;
+            if(timeString != '' &&  timeString != undefined){
+                arrayTimeString =  timeString.split(":");
+                dateAux= new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]),Number(arrayTimeString[0]), Number(arrayTimeString[1]), 0, 0);
+            }else        
+                dateAux = new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]));       
+        
+            return dateAux;
+        }
+        return undefined;
    }
    
     

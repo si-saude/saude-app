@@ -18,6 +18,7 @@ import { IndicadorSastService } from './../indicador-sast/indicador-sast.service
 import { IndicadorSastFilter } from './../indicador-sast/indicador-sast.filter';
 import { EquipeFilter } from './../equipe/equipe.filter';
 import { AcaoIntervencaoService } from './../acao-intervencao/acao-intervencao.service';
+import { EixoService } from './../eixo/eixo.service';
 
 @Injectable()
 export class RiscoPotencialService extends GenericService {
@@ -31,7 +32,8 @@ export class RiscoPotencialService extends GenericService {
             private equipeService: EquipeService,
             private indicadorSastService: IndicadorSastService,
             private acaoIntervencaoService: AcaoIntervencaoService,
-            private baseService: BaseService ) { 
+            private baseService: BaseService,
+            private eixoService: EixoService ) { 
         super(http,router,"risco-potencial");
     }
     
@@ -40,6 +42,10 @@ export class RiscoPotencialService extends GenericService {
     }
     getAcaoIntervencaoService(){        
         return this.acaoIntervencaoService;
+    }
+    
+    getIndicadorSastService(){        
+        return this.indicadorSastService;
     }
     
     getUsuario( id: number ) {
@@ -184,6 +190,17 @@ export class RiscoPotencialService extends GenericService {
         return this.http
             .post( urlFile, array, { headers: this.headers } )
             .toPromise();
+    }
+    getEixosByEquipe( idEquipe ) {
+        return this.eixoService.getEixosByEquipe( idEquipe );
+     }
+    
+    getDiagnosticoByEixo( idEixo, idEquipe ) {
+        return this.diagnosticoService.getDiagnosticoByEixo( idEixo, idEquipe );
+    }
+    
+    getIntervencoesByEquipe( idEquipe ) {
+        return this.intervencaoService.getIntervencoesByEquipe( idEquipe );
     }
     
 }

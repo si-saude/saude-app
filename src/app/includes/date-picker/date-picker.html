@@ -7,9 +7,8 @@
 					   materialize="pickadate" [ngModel]="customDate.appDate" 
 					   [materializeActions]="dateActions" [required]="obrigatorio"
 					   [materializeParams]="params" [disabled]="desabilitar"
-					   (ngModelChange)="customDate.appDate=$event"
-					   (change)="changeDatePicker()"
-					   type="text" placeholder="{{legenda}}" dateMaskDirective="99/99/9999" />
+					   (ngModelChange)="changeDatePicker($event)"
+					   type="text" placeholder="{{legenda}}"  dateMaskDirective="99/99/9999" />
 	</div>		
 	<div style="width: 80%; float: left;" *ngIf="desabilitar" >
 		<input id="{{nome}}" name="{{nome}}"

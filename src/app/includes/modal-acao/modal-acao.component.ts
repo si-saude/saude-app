@@ -37,6 +37,7 @@ export class ModalAcaoComponent{
     
     openModalAcao( ) {
         this.modalAcao.emit( { action: "modal", params: ['open'] } );
+        $("#modal4").css("z-index",'2000')
     }
     
     getAcoes() {

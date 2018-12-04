@@ -17,7 +17,9 @@ export class IndicadorSastService extends GenericService {
     getIndicadorSasts() {
         return this.selectList(new IndicadorSastFilter());
     }
-    
+    getIndicadoresSasts(indicadorSastFilter: IndicadorSastFilter) {
+        return this.selectList(indicadorSastFilter);
+    }
     getEquipes() {
         return this.equipeService.getEquipes();
     }
