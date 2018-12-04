@@ -23,24 +23,70 @@ export class Util {
         } return undefined;
     }
     
-    public static treatDouble(value: string) {
-        let ret: any = undefined;
-        if ( value != undefined && value.toString() != '0' ) {
+    public static treatDouble( value ) {
+        if(value){
+            
             value = value.toString();
-            if ( value.indexOf(',') > -1 ) {
-                let indexComma = value.indexOf(',');
-                value = value.substring(0, indexComma) + 
-                    value.substring(indexComma+1, indexComma+2) +
-                    value.substring(indexComma+2, value.length);
-                let realValue = value.replace(/\./gi, "");
-                ret = Number(realValue.replace(/\,/gi, "."));
-            } else {
-                if ( value.indexOf('.') == -1 ) 
-                    ret = Number(value);
-                else ret = value.replace(/\.|\,||/gi, "");
-            }
+            
+            if(!value.includes(',')){
+                if(!value.includes('.')){
+                    value += '00';
+                }else{
+                    let values = value.split('.');
+                    
+                    if(values[values.length - 1].length == 1)
+                        value += '0';
+                }
+                value = Util.formatNumber(value);
+            }else
+                value = value.replace(/\./g, '').replace(',', '.');
+            
         }
-        return ret; 
+        if ( value == 0 ) value = undefined;
+        return value;
+    }
+    
+    public static formatNumber( value ) {        
+        value = value.toString().replace(/\D/g, "");
+        value = Number(value).toString();
+        let len = value.length;
+
+        if ( 1 == len )
+            value = value.replace( /(\d)/, "0,0$1" );
+        else if ( 2 == len )
+            value = value.replace( /(\d)/, "0,$1" );
+        else if ( len > 2 ) {
+
+            let length = 1;
+            let qtd = value.length - 2;
+            let mod = qtd % 3;
+            qtd = Math.floor( qtd / 3 );
+
+            let regex = "";
+            if ( mod > 0 ) {
+                regex = "(\\d{" + mod + "})";
+                length++;
+            }
+            for ( let x = 0; x < qtd; x++ ) {
+                regex += "(\\d{3})";
+                length++;
+            }
+
+            regex += "(\\d{2})";
+
+            let pattern = "";
+
+            for ( let x = 1; x < length; x++ ) {
+                if ( x > 1 )
+                    pattern += ".";
+                pattern += "$" + x;
+            }
+
+            pattern += ",$" + ( length );
+            value = value.replace( new RegExp( regex ), pattern );
+        }
+        
+        return value;
     }
 
 }

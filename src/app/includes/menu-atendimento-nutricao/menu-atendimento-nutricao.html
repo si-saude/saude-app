@@ -13,11 +13,20 @@
 				Novo Questionário
 		</button>
 		
-		<button type="button" class="btn btn-primary" (click)="loadQuestionario()"
+		<button type="button" class="btn btn-primary" (click)="newRecordatorio()"
+			[class.disabled]="disableNovoRecordatorio ||
+				atendimento == undefined || 
+				atendimento.id == undefined || 
+				atendimento.id == 0 ||
+				atendimento.questionario.id != undefined">
+				Novo Recordatório
+		</button>
+		
+		<button type="button" class="btn btn-primary" (click)="functionLoad()"
 			[class.disabled]="atendimento == undefined || 
 				atendimento.id == undefined || 
 				atendimento.id == 0">
-				Carregar Questionário
+				Carregar
 		</button>
 	</div>
 </div>

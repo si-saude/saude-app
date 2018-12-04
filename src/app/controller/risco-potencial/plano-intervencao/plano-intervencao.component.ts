@@ -51,7 +51,8 @@ export class PlanoIntervencaoComponent extends GenericFormComponent implements O
                     this.riscoPotencialService.getAcoes( id )
                         .then( res => {
                             this.showPreload = false;
-                            this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );                            
+                            this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
+                            console.log(this.riscoPotencial)
                             this.equipesSelecteds = this.riscoPotencial.getEquipes();
                             this.getTriagensEquipeAbordagem();
                         } )

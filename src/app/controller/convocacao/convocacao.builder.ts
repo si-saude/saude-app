@@ -16,6 +16,20 @@ export class ConvocacaoBuilder extends GenericBuilder {
         return convocacao;
     }
     
+    initializeList(convocacaos: Array<Convocacao>) {
+        
+        let array:Array<Convocacao> = new Array<Convocacao>();
+        
+        if(convocacaos === null || convocacaos === undefined)
+            convocacaos = new Array<Convocacao>();
+        
+        for (let convocacao of convocacaos) {
+            array.push(this.initialize(convocacao));
+        }
+        
+        return array;
+    }
+    
     clone(convocacao: Convocacao) {
         let cloneConvocacao = new Convocacao();
         
@@ -45,5 +59,16 @@ export class ConvocacaoBuilder extends GenericBuilder {
                 new ProfissiogramaBuilder().clone(this.getValue(convocacao, "getProfissiograma")));
 
         return cloneConvocacao;
+    }
+    
+    cloneList(convocacaos: Array<Convocacao>): Array<Convocacao> {
+        let array:Array<Convocacao> = new Array<Convocacao>();
+        if (convocacaos !== null && convocacaos !== undefined) { 
+            for (let convocacao of convocacaos) {
+                array.push(this.clone(convocacao));
+            }
+        }
+        
+        return array;
     }
 }

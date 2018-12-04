@@ -91,10 +91,11 @@ import { ClassificacaoAfastamentoService } from './classificacao-afastamento/cla
 import { ItemAuditoriaAtestadoService } from './item-auditoria-atestado/item-auditoria-atestado.service';
 import { ClassificacaoGravidadeService } from './classificacao-gravidade/classificacao-gravidade.service';
 import { CnaeService } from './cnae/cnae.service';
-import { NutricaoAlimentoService } from './nutricao-alimento/nutricao-alimento.service';
+import { AlimentoService } from './alimento/alimento.service';
 import { MedidaAlimentarService } from './medida-alimentar/medida-alimentar.service';
 import { IndicadorConhecimentoAlimentarService } from './indicador-conhecimento-alimentar/indicador-conhecimento-alimentar.service';
 import { QuestionarioConhecimentoAlimentarService } from './questionario-conhecimento-alimentar/questionario-conhecimento-alimentar.service';
+import { RecordatorioService } from './recordatorio/recordatorio.service';
 
 @NgModule({
   declarations: [
@@ -208,10 +209,11 @@ import { QuestionarioConhecimentoAlimentarService } from './questionario-conheci
     ClinicaService,
     ClassificacaoGravidadeService,
     CnaeService,
-    NutricaoAlimentoService,
+    AlimentoService,
     MedidaAlimentarService,
     IndicadorConhecimentoAlimentarService,
-    QuestionarioConhecimentoAlimentarService
+    QuestionarioConhecimentoAlimentarService,
+    RecordatorioService
   ]
 })
 export class SharedModule { }

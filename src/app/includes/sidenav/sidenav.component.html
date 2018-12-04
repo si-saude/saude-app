@@ -36,7 +36,7 @@
 			<a [routerLink]="['/acao-intervencao']" *ngIf="checkPermissao('ACAO-INTERVENCAO_LISTAR')">Ação</a>
 			<a [routerLink]="['/agente-causador']" *ngIf="checkPermissao('AGENTE-CAUSADOR_LISTAR')">Agente Causador</a>
 			<a [routerLink]="['/agente-risco']" *ngIf="checkPermissao('AGENTE-RISCO_LISTAR')">Agente de Risco</a>
-			<a [routerLink]="['/nutricao-alimento']" *ngIf="checkPermissao('NUTRICAO-ALIMENTO_LISTAR')">Alimento</a>
+			<a [routerLink]="['/alimento']" *ngIf="checkPermissao('ALIMENTO_LISTAR')">Alimento</a>
 			<a [routerLink]="['/base']" *ngIf="checkPermissao('BASE_LISTAR')">Base</a>
 			<a [routerLink]="['/cargo']" *ngIf="checkPermissao('CARGO_LISTAR')">Cargo</a>
 			<a [routerLink]="['/categoria-risco']" *ngIf="checkPermissao('CATEGORIA-RISCO_LISTAR')">Categoria de Risco</a>
@@ -143,6 +143,7 @@
 			<a [routerLink]="['/questionario-conhecimento-alimentar']" *ngIf="checkPermissao('QUESTIONARIO-CONHECIMENTO-ALIMENTAR_LISTAR')">
 				Questionário de Conhecimento Alimentar
 			</a>
+			<a [routerLink]="['/recordatorio']" *ngIf="checkPermissao('RECORDATORIO_LISTAR')">Recordatório</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		</div>
 	</li>
@@ -190,6 +191,7 @@
 			<a [routerLink]="['/reports/panorama']" *ngIf="checkPermissao('REPORT-PANORAMA')">Panorama</a>
 			<a [routerLink]="['/reports/pre-requisitos-agendamento']" *ngIf="checkPermissao('REPORT-PRE-REQUISITOS-AGENDAMENTO')">Pré Requisitos Agendamento</a>
 			<a [routerLink]="['/reports/solicitacao-central-integra']" *ngIf="checkPermissao('REPORT-SOLICITACAO-CENTRAL-INTEGRA')">Solicitação Central Integra</a>
+			<a [routerLink]="['/reports/sugestao-agendamento']" *ngIf="checkPermissao('REPORT-SUGESTAO-AGENDAMENTO')">Sugestão de Agendamento</a>
 		</div>
 	</li>
 </ul>

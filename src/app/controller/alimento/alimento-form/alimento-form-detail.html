@@ -1,0 +1,319 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+	
+		<ul class="tabs" materialize="tabs">
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#dadosGerais">Dados Gerais</a></li>
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#outrasInformacoes">Outras Informações</a></li>
+		</ul>
+
+		<div id="dadosGerais">
+			<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s4">Medida Alimentar</th>
+								<th class="col s4">Quantidade (g ou ml)</th>
+								<th class="col s4">Referência</th>
+							</tr>
+						</thead>
+						<div *ngFor="let nama of alimento.alimentoMedidaAlimentares;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<td class="col s4 nama-descricao">{{nama.medidaAlimentar.descricao}}</td>
+									<td class="col s4 nama-quantidade">{{nama.quantidade | money : 'nama-quantidade'}}</td>
+									<td class="col s4 nama-referencia">{{nama.referencia}}</td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
+				</div>
+			
+			<div class="row">
+				<div class="input-field col s12">
+					<label for="nome">Nome</label>
+					<input id="nome" type="text" maxlength="256" disabled
+					name="nome" [(ngModel)]="alimento.nome">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s4">
+					<fieldset>
+						<legend> Tipo </legend>
+						<select name="alimento.tipo"  disabled
+							class="browser-default" [(ngModel)]="alimento.tipo">
+							<option disabled selected value=undefined>Selecione um tipo</option>
+							<option *ngFor="let tipo of tipos" value="{{tipo}}">{{tipo}}</option>
+						</select>
+					</fieldset>
+				</div>
+				<div class="input-field col s4">
+					<label for="padrao">Padrão (g)</label>
+					<input id="padrao" type="text" style="width: 100%;" disabled
+						(ngModelChange)="alimento.padrao=$event"  maxlength="16"
+						[ngModel]="alimento.padrao | money : 'padrao'"
+						name="padrao">
+				</div>
+				<div class="input-field col s4">
+					<label for="energia">Energia (kcal)</label>
+					<input id="energia" type="text" style="width: 100%;"
+						name="energia" disabled
+						(ngModelChange)="alimento.energia=$event" maxlength="16" 
+						[ngModel]="alimento.energia | money : 'energia'">
+				</div>
+			</div>
+			
+		</div>
+		<div id="outrasInformacoes">	
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="proteina">Proteina (g)</label>
+					<input id="proteina" type="text" style="width: 100%;"
+						name="proteina"  disabled
+						(ngModelChange)="alimento.proteina=$event" maxlength="16"
+						[ngModel]="alimento.proteina | money : 'proteina'">
+				</div>
+				<div class="input-field col s3">
+					<label for="saturada">Gordura Saturada (g)</label>
+					<input id="saturada" type="text" style="width: 100%;" maxlength="16"
+						name="saturada"  disabled
+						(ngModelChange)="alimento.saturada=$event" 
+						[ngModel]="alimento.saturada | money : 'saturada'">
+				</div>
+				<div class="input-field col s3">
+					<label for="monoinsaturada">Gordura Monoinsaturada (g)</label>
+					<input id="monoinsaturada" type="text" style="width: 100%;"
+						name="monoinsaturada" maxlength="16" disabled
+						(ngModelChange)="alimento.monoinsaturada=$event" 
+						[ngModel]="alimento.monoinsaturada | money : 'monoinsaturada'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="poliinsaturada">Gordura Poliinsaturada (g)</label>
+					<input id="poliinsaturada" type="text" style="width: 100%;"
+						name="poliinsaturada" maxlength="16" disabled
+						(ngModelChange)="alimento.poliinsaturada=$event" 
+						[ngModel]="alimento.poliinsaturada | money : 'poliinsaturada'">
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s2">
+					<label for="lipideos">Lipídeos (g)</label>
+					<input id="lipideos" type="text" disabled
+						name="lipideos" maxlength="16"
+						(ngModelChange)="alimento.lipideos=$event" 
+						[ngModel]="alimento.lipideos | money : 'lipideos'">
+				</div>
+				<div class="input-field col s2">
+					<label for="omega3">Ômega 3</label>
+					<input id="omega3" type="text" disabled
+						name="omega3" maxlength="16"
+						(ngModelChange)="alimento.omega3=$event" 
+						[ngModel]="alimento.omega3 | money : 'omega3'">
+				</div>
+    			<div class="input-field col s2">
+					<label for="colesterol">Colesterol (mg)</label>
+					<input id="colesterol" type="text" disabled
+						name="colesterol" maxlength="16"
+						(ngModelChange)="alimento.colesterol=$event" 
+						[ngModel]="alimento.colesterol | money : 'colesterol'">
+				</div>
+				<div class="input-field col s3">
+					<label for="cho">Carboidratos (g)</label>
+					<input id="cho" type="text" style="width: 100%;"
+						name="cho" maxlength="16" disabled
+						(ngModelChange)="alimento.cho=$event" 
+						[ngModel]="alimento.cho | money : 'cho'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="fibra">Fibra (g)</label>
+					<input id="fibra" type="text" disabled
+						name="fibra" maxlength="16"
+						(ngModelChange)="alimento.fibra=$event" 
+						[ngModel]="alimento.fibra | money : 'fibra'">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="calcio">Cálcio (mg)</label>
+					<input id="calcio" type="text" disabled
+						name="calcio" maxlength="16"
+						(ngModelChange)="alimento.calcio=$event" 
+						[ngModel]="alimento.calcio | money : 'calcio'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="mg">Magnésio (mg)</label>
+					<input id="mg" type="text" style="width: 100%;"
+						name="mg" maxlength="16" disabled
+						(ngModelChange)="alimento.mg=$event" 
+						[ngModel]="alimento.mg | money : 'mg'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="mn">Manganês (mg)</label>
+					<input id="mn" type="text" style="width: 100%;"
+						name="mn" maxlength="16" disabled
+						(ngModelChange)="alimento.mn=$event" 
+						[ngModel]="alimento.mn | money : 'mn'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="p">Fósforo (mg)</label>
+					<input id="p" type="text" style="width: 100%;"
+						name="p" maxlength="16" disabled
+						(ngModelChange)="alimento.p=$event" 
+						[ngModel]="alimento.p | money : 'p'">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="ferro">Ferro (mg)</label>
+					<input id="ferro" type="text" maxlength="16" disabled
+						(ngModelChange)="alimento.ferro=$event" 
+						[ngModel]="alimento.ferro | money : 'ferro'"
+						name="ferro">
+				</div>
+    			<div class="input-field col s3">
+					<label for="sodio">Sódio (mg)</label>
+					<input id="sodio" type="text"
+						name="sodio" maxlength="16" disabled
+						(ngModelChange)="alimento.sodio=$event" 
+						[ngModel]="alimento.sodio | money : 'sodio'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="potassio">Potássio (mg)</label>
+					<input id="potassio" type="text" disabled
+						name="potassio" maxlength="16"
+						(ngModelChange)="alimento.potassio=$event" 
+						[ngModel]="alimento.potassio | money : 'potassio'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="cobre">Cobre (mg)</label>
+					<input id="cobre" type="text" disabled
+						name="cobre" maxlength="16"
+						(ngModelChange)="alimento.cobre=$event" 
+						[ngModel]="alimento.cobre | money : 'cobre'">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="zinco">Zinco (mg)</label>
+					<input id="zinco" type="text"
+						name="zinco" maxlength="16" disabled
+						(ngModelChange)="alimento.zinco=$event" 
+						[ngModel]="alimento.zinco | money : 'zinco'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="retinol">Retinol (mg)</label>
+					<input id="retinol" type="text" disabled
+						name="retinol" maxlength="16"
+						(ngModelChange)="alimento.retinol=$event" 
+						[ngModel]="alimento.retinol | money : 'retinol'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="tiamina">Tiamina (mg)</label>
+					<input id="tiamina" type="text" disabled
+						name="tiamina"  maxlength="16"
+						(ngModelChange)="alimento.tiamina=$event" 
+						[ngModel]="alimento.tiamina | money : 'tiamina'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="riboflavina">Riboflavina (mg)</label>
+					<input id="riboflavina" type="text" maxlength="16" disabled
+						(ngModelChange)="alimento.riboflavina=$event" 
+						[ngModel]="alimento.riboflavina | money : 'riboflavina'"
+						name="riboflavina">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="piridoxina">Piridoxina (mg)</label>
+					<input id="piridoxina" type="text" disabled
+						name="piridoxina" maxlength="16"
+						(ngModelChange)="alimento.piridoxina=$event" 
+						[ngModel]="alimento.piridoxina | money : 'piridoxina'">
+				</div>
+				<div class="input-field col s3">
+					<label for="niacina">Niacina (mg)</label>
+					<input id="niacina" type="text" disabled
+						name="niacina" maxlength="16"
+						(ngModelChange)="alimento.niacina=$event" 
+						[ngModel]="alimento.niacina | money : 'niacina'">
+				</div>
+    			<div class="input-field col s3">
+					<label for="vitc">Vitamica C (mg)</label>
+					<input id="vitc" type="text" style="width: 100%;"
+						name="vitc" maxlength="16" disabled
+						(ngModelChange)="alimento.vitc=$event" 
+						[ngModel]="alimento.vitc | money : 'vitc'">
+				</div>
+				<div class="input-field col s3">
+					<label for="vitd">Vitamina D (mg)</label>
+					<input id="vitd" type="text" disabled
+						name="vitd" maxlength="16"
+						(ngModelChange)="alimento.vitd=$event" 
+						[ngModel]="alimento.vitd | money : 'vitd'">
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s3">
+					<label for="omega6">Ômega 6</label>
+					<input id="omega6" type="text" disabled
+						name="omega6" maxlength="16"
+						(ngModelChange)="alimento.omega6=$event" 
+						[ngModel]="alimento.omega6 | money : 'omega6'">
+				</div>
+				<div class="input-field col s3">
+					<label for="vite">Vitamina E (mg)</label>
+					<input id="vite" type="text"  disabled
+						name="vite" maxlength="16"
+						(ngModelChange)="alimento.vite=$event" 
+						[ngModel]="alimento.vite | money : 'vite'">
+				</div>
+				<div class="input-field col s3 checkbox">
+					<input type="checkbox" id="inativo" disabled
+						[(ngModel)]="alimento.inativo"
+						name="alimento.inativo"> <label
+						for="inativo">Inativo</label>
+				</div>
+			</div>
+			
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="alimento.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="alimento.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/alimento']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit"
+				class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	</form>
+</div>

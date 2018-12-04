@@ -11,6 +11,10 @@
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 
+		 <div class="resume">
+			<p><b>Empregado:</b> {{empregado}}</p>
+		</div>
+
 		<div class="row">
 			<div class="respostas" *ngFor="let resposta of questionario.respostas; let r = index">
 				<div>

@@ -15,23 +15,19 @@
 
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
-				<div class="col s6">
+				<div class="col s7">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.atendimento.filaEsperaOcupacional.empregado.pessoa.nome}}</a>
 				</div>
 				<div class="col s3">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.atendimento.tarefa.inicio | transformDate}}</a>
 				</div>
 				<div class="col s1">
-					<a [routerLink]="['/questionario-conhecimento-alimentar/detalhe', a.id]"><i
+					<a [routerLink]="['/questionario-conhecimento-alimentar/detalhe', a.id, a.atendimento.filaEsperaOcupacional.empregado.pessoa.nome]"><i
 						class="material-icons">details</i></a>
 				</div>
 				<div class="col s1">
-					<a [routerLink]="['/questionario-conhecimento-alimentar/editar', a.id]"><i
+					<a [routerLink]="['/questionario-conhecimento-alimentar/editar', a.id, a.atendimento.filaEsperaOcupacional.empregado.pessoa.nome]"><i
 						class="material-icons">mode_edit</i></a>
-				</div>
-				<div class="col s1">
-					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
-						class="material-icons">delete</i></a>
 				</div>
 			</div>
 		</div>
@@ -45,9 +41,6 @@
 	<div class="row bts">
 		<div class="col s6">
 			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
-		</div>
-		<div class="col s6 button-import">
-			<a class="waves-effect waves-light btn" (click)="openModalImport()">Importar</a>
 		</div>
 	</div>
 

@@ -19,7 +19,8 @@ import { QuestionarioConhecimentoAlimentarUtil } from './../questionario-conheci
 export class QuestionarioConhecimentoAlimentarFormComponent extends GenericFormComponent implements OnInit {
     private questionario: QuestionarioConhecimentoAlimentar;
     private questionarioUtil: QuestionarioConhecimentoAlimentarUtil;
-    
+    private empregado: string;
+
     constructor( private route: ActivatedRoute,
         private questionarioConhecimentoAlimentarService: QuestionarioConhecimentoAlimentarService,
         router: Router) {
@@ -35,6 +36,9 @@ export class QuestionarioConhecimentoAlimentarFormComponent extends GenericFormC
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if ( params['id'] !== undefined ) {
+                    if ( params['empregado'] !== undefined )
+                        this.empregado = params['empregado'];
+                    
                     let id = params['id'];
                     this.showPreload = true;
 

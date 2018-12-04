@@ -155,12 +155,6 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                         .then( res => {
                             this.showPreload = false;
                             this.cat = new CatBuilder().clone( res.json() );
-                            
-                            this.changeAto1();
-                            if ( this.cat.getDataAvaliacaoMedicaCustomDate().getAppDate() != undefined )
-                                this.changeAto2();
-                            this.changeAto3();
-                            this.changeAto4();
                         
                             if ( this.cat.getEmpregado() )
                                 this.autoCompleteEmpregado.getAutocomplete().initializeLastValue(
@@ -610,70 +604,74 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     }
     
     changeAto1() {
-        if ( this.cat.getAto1() == undefined || this.cat.getAto1() == "" ) {
-            if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
-                this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
-                let prazo = this.getPrazo();
-                if ( prazo != undefined )
-                    prazo.then(res => {
-                            this.cat.setAto1( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
-                        })
-                        .catch(error => {
-                            this.catchConfiguration(error);
-                        })
-               }
-        }
+        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+            this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
+            let prazo = this.getPrazo();
+            if ( prazo != undefined )
+                prazo.then(res => {
+                    
+                    this.cat.setAto1( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                    
+                    if(this.cat.getEmpregado()){
+                        if(this.cat.getEmpregado().getVinculo() == "CONTRATADO")
+                            this.cat.setAto4( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                        else
+                            this.cat.setAto4(this.aplicavelNaoAplicavel[1]);
+                    }
+                    
+                    this.changeAto2();
+                })
+                .catch(error => {
+                    this.catchConfiguration(error);
+                })
+       }
     }
     
     changeAto2() {
-        if ( this.cat.getAto2() == undefined || this.cat.getAto2() == "" ) {
-            this.cat.setAto2( this.cat.getDataAvaliacaoMedica() == undefined ?
-                this.conformeNaoConforme[1] : this.conformeNaoConforme[0] );
-        }
+        this.cat.setAto2( this.cat.getDataAvaliacaoMedica() == undefined ?
+            this.conformeNaoConforme[1] : this.conformeNaoConforme[0] );
     }
     
     changeAto3() {
-        if ( this.cat.getAto3() == undefined || this.cat.getAto3() == "" ) {
-            if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
-                    this.cat.getDataComunicacaoSindicatoCustomDate().getAppDate() != undefined ) {
-                this.catService.getFeriadoService().getDaysBetweenDates(
-                    this.cat.getDataEmissao(), this.cat.getDataComunicacaoSindicato())
-                        .then(res => {
+        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
+                this.cat.getDataComunicacaoSindicatoCustomDate().getAppDate() != undefined ) {
+            this.catService.getFeriadoService().getDaysBetweenDates(
+                this.cat.getDataEmissao(), this.cat.getDataComunicacaoSindicato())
+                    .then(res => {
+                        if(this.cat.getEmpregado()){
                             if ( this.cat.getEmpregado().getVinculo() == "CONTRATADO" )
                                 this.cat.setAto3( (Number(res.json()) > 10) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
-                            else this.cat.setAto3( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
-                        })
-                        .catch(error => {
-                            this.catchConfiguration(error);
-                        })
-            }
-        }
-    }
-   
-    changeAto4() {
-        if ( this.cat.getAto4() == undefined || this.cat.getAto4() == "" ) {
-            this.changeNumeroCartaMulta();
-        }
-    }
-    
-    changeNumeroCartaMulta() {
-        if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
-                this.cat.getDataOcorrenciaCustomDate().getAppDate() != undefined ) {
-                let prazo = this.getPrazo();
-                if ( prazo != undefined )
-                    prazo.then(res => {
-                        if ( Number(res.json()) <= 1 )
-                            this.cat.setAto4(this.aplicavelNaoAplicavel[1]);
-                        else {
-                            if ( this.cat.getNumeroCartaMulta() != undefined && this.cat.getNumeroCartaMulta() != "" )
-                                this.cat.setAto4( this.conformeNaoConforme[0] )
-                            else this.cat.setAto4( this.conformeNaoConforme[1] );
+                            else {
+                                if(Number(res.json()) > 1){
+                                    this.cat.setAto3(this.conformeNaoConforme[1]);
+                                }else{
+                                    //OBTER A QUANTIDADE DE HORAS
+                                    if(this.cat.getDataEmissaoCustomDate().getAppTime() && 
+                                            this.cat.getDataComunicacaoSindicatoCustomDate().getAppTime()){
+                                        
+                                        let emissao = this.cat.getDataEmissaoCustomDate().getAppTime().split(':');
+                                        let comunicacao = this.cat.getDataComunicacaoSindicatoCustomDate().getAppTime().split(':');
+                                        
+                                        if (emissao.length > 1 && comunicacao.length > 1){
+                                            
+                                            let emissaoInstante = (Number(emissao[0])*60) + Number(emissao[1]);
+                                            let comunicacaoInstante = (Number(comunicacao[0])*60) + Number(comunicacao[1]);
+                                            
+                                            if (comunicacaoInstante > emissaoInstante){
+                                                this.cat.setAto3(this.conformeNaoConforme[1]);
+                                            }else{
+                                                this.cat.setAto3(this.conformeNaoConforme[0]);
+                                            }
+                                        }
+                                    }
+                                } 
+                            }
                         }
                     })
                     .catch(error => {
                         this.catchConfiguration(error);
                     })
-            }
+        }
     }
     
     getPrazo() {

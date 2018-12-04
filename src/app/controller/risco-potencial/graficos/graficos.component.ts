@@ -73,7 +73,7 @@ export class GraficosComponent extends GenericFormComponent {
                         .then( res => {
                             this.showPreload = false;
                             this.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
-                            
+                            console.log(this.riscoPotencial)
                             let lineColor:string;
                             
                             if ( this.riscoPotencial.getStatusRPSat().includes("INACEIT") )

@@ -11,7 +11,9 @@
 
 <div class="form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
-
+		<p style="color: #26a69a;">
+			<b>Empregado:  {{riscoPotencial.empregado.pessoa.nome}}</b>
+		</p>
 		<app-acolhimento [service]="riscoPotencialService" [riscoPotencial]="riscoPotencial"
  			[triagensTodosAtendimentos]="triagensTodosAtendimentos"></app-acolhimento>
 	
