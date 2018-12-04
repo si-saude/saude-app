@@ -15,6 +15,7 @@ import { PessoaFilter } from './../../pessoa/pessoa.filter';
 import { AcaoIntervencaoFilter } from './../../acao-intervencao/acao-intervencao.filter';
 import { GlobalVariable } from './../../../global';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
+import { BooleanFilter } from './../../../generics/boolean.filter';
 import { RiscoPotencialService } from './../risco-potencial.service';
 import { Triagem } from './../../../model/triagem';
 import { TriagemBuilder } from './../../triagem/triagem.builder';
@@ -22,8 +23,12 @@ import { Equipe } from './../../../model/equipe';
 import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { EquipeFilter } from './../../equipe/equipe.filter';
 import { Acao } from './../../../model/acao';
+import { RiscoEmpregado } from './../../../model/risco-empregado';
 import { AcaoBuilder } from './../../acao/acao.builder';
 import { RiscoPotencial } from './../../../model/risco-potencial';
+import { IndicadorSast } from './../../../model/indicador-sast';
+import { IndicadorSastBuilder } from './../../indicador-sast/indicador-sast.builder';
+import { IndicadorSastFilter } from './../../indicador-sast/indicador-sast.filter';
 import { RiscoPotencialBuilder } from './../risco-potencial.builder';
 import { RiscoPotencialFilter } from './../risco-potencial.filter';
 import { ConfirmSaveComponent } from './../../../includes/confirm-save/confirm-save.component';
@@ -39,6 +44,7 @@ import { ModalAcaoComponent } from './../../../includes/modal-acao/modal-acao.co
 export class AcoesComponent extends GenericFormComponent implements OnInit {
     private equipesAbordagemTriagens: Array<Equipe>;
     private triagens: Array<Triagem>;
+    private indicadoresSastAusenteCalculo: Array<IndicadorSast>;
     private triagensByEquipeAbordagem = [[]];
     private riscoPotencial: RiscoPotencial;
     private flagAcao: Acao;
@@ -47,13 +53,31 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     private tipoContatoAcoes: Array<string>;
     private flagTriagem: Triagem;
     private flagIndexAcao: number = -1;
-    private flagEditAcao: boolean;
+    private flagEditAcao: boolean ;
     private triagemAux : Triagem;
-    private modalAcao;
+    private modalAcao = new EventEmitter<string|MaterializeAction>();
+    private modalIndicador = new EventEmitter<string|MaterializeAction>();
     private profissional: Profissional;
+    private triagemModal: Triagem;
     @ViewChild( ConfirmSaveComponent) confirmSaveComponent: ConfirmSaveComponent;
     private textUtil: TextUtil;
     @ViewChild( ModalAcaoComponent ) modalAcaoComponent: ModalAcaoComponent;
+    private prazos: Array<string>;
+    
+    private activeDiagnostico:boolean;
+    private activeEquipe :boolean;
+    private activeIntervencao:boolean;
+    private innerIdEquipe: number;
+    
+    private showModalDiagnostico: boolean;
+    private showModalIntervencao: boolean;
+    private showModalEquipe: boolean;
+
+    model1Params = [
+      {
+        dismissible: false, 
+      }
+    ];    
     
     constructor( private route: ActivatedRoute,
             private riscoPotencialService: RiscoPotencialService,
@@ -64,13 +88,13 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             
             this.equipesAbordagemTriagens = new EquipeBuilder().initializeList(new Array<Equipe>());
             this.riscoPotencial = new RiscoPotencialBuilder().initialize(new RiscoPotencial());
-            this.modalAcao = new EventEmitter<string | MaterializeAction>();
             this.flagAcao = new AcaoBuilder().initialize(new Acao());
             this.profissional = new ProfissionalSaudeBuilder().initialize(new Profissional());
             this.triagemAux = new TriagemBuilder().initialize(new Triagem());
+            this.triagemModal = new TriagemBuilder().initialize(new Triagem());
             this.textUtil = new TextUtil();
-            this.triagens = new TriagemBuilder().initializeList(undefined);
-           
+            this.triagens = new TriagemBuilder().initializeList(undefined);      
+            this.indicadoresSastAusenteCalculo = new IndicadorSastBuilder().initializeList(undefined);      
     }
     
     ngOnInit() {
@@ -102,22 +126,9 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
                                                         component.showPreload = false;
                                                         component.riscoPotencial = new RiscoPotencialBuilder().clone( res.json() );
                                                         component.getTriagensEquipeAbordagem();
+                                                        this.createListTriagem();
                                                         
-                                                        this.riscoPotencial.getRiscoEmpregados().filter(r => r.getAtivo()).forEach(r=>{
-                                                            r.getTriagens().forEach(t => {
-                                                                if(t.getEquipeAbordagem() && t.getEquipeAbordagem().getId() > 0 && this.verificarTriagens(t)){
-                                                                   this.triagens.push(t);
-                                                                   this.triagens.sort(function(a, b){
-                                                                       
-                                                                       if ( a['equipeAbordagem']['abreviacao'] > b['equipeAbordagem']['abreviacao'] )
-                                                                           return 1;
-                                                                       else if ( a['equipeAbordagem']['abreviacao'] < b['equipeAbordagem']['abreviacao'] )
-                                                                           return -1;
-                                                                       else return 0;
-                                                                   });
-                                                                }
-                                                            });
-                                                        });
+
                                                     } )
                                                     .catch( error => {
                                                         component.showPreload = false;
@@ -128,6 +139,8 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
                                     this.getTipoAcao();
                                     this.getStatusAcao();
                                     this.getTipoContatoAcao();
+                                    this.getPrazos();     
+                                    this.getIndicadoresAusenteCalculo();
                             } else {
                                 component.router.navigate( ["/risco-potencial"] );
                                     return;
@@ -150,7 +163,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             console.log( "Usuario nao logada." );
             component.router.navigate( ["/login"] );
         }
-    }
+    }    
     
     getTipoAcao() {
         this.riscoPotencialService.getTipoAcao(new RiscoPotencialFilter())
@@ -161,6 +174,32 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
                 console.log( error );
             } )
     }
+    createListTriagem(){
+        this.riscoPotencial.getRiscoEmpregados().filter(r => r.getAtivo()).forEach(r=>{
+            r.getTriagens().forEach(t => {
+                if(t.getEquipeAbordagem() && t.getEquipeAbordagem().getId() > 0 && this.verificarTriagens(t)){
+                   this.triagens.push(t);
+                   this.sortTriagem();
+                }
+            });
+        });
+        
+        console.log(this.triagens);
+    } 
+    
+    sortTriagem(){
+
+        this.triagens.sort(function(a, b){
+            
+            if ( a['equipeAbordagem']['abreviacao'] > b['equipeAbordagem']['abreviacao'] )
+                return 1;
+            else if ( a['equipeAbordagem']['abreviacao'] < b['equipeAbordagem']['abreviacao'] )
+                return -1;
+            else return 0;
+        });
+        
+    }
+    
     
     getStatusAcao() {
         this.riscoPotencialService.getStatusAcao(new RiscoPotencialFilter())
@@ -170,6 +209,23 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             .catch( error => {
                 console.log( error );
             } )
+    }
+    
+    getIndicadoresAusenteCalculo() {
+        
+        let indicadorSastFilter: IndicadorSastFilter = new IndicadorSastFilter();
+        let booleanFilter: BooleanFilter = new BooleanFilter()
+        booleanFilter.setValue(1);
+        indicadorSastFilter.setAusenteCalculoInterdisciplinar(booleanFilter);
+        
+        this.riscoPotencialService.getIndicadorSastService().getIndicadoresSasts(indicadorSastFilter)
+            .then( res => {
+                this.indicadoresSastAusenteCalculo  = new IndicadorSastBuilder().cloneList(res.json());
+            } )
+            .catch( error => {
+                console.log( "Erro ao retornar os indicadores." );
+            } )
+        
     }
     
     getTipoContatoAcao() {
@@ -210,8 +266,6 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
                 acaoIntervencaoFilter.getEquipe().setId(this.profissional.getEquipe().getId());
           }
     }
-    
-    
     validar() {
         
     }
@@ -244,7 +298,14 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     }
     
     getIndiceDescricao( triagem: Triagem ) {
-        return triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];
+        let returnIndice = ''
+        if(triagem.getIndice() > -1){
+            returnIndice = triagem.getIndice() + " - " + triagem["indicadorSast"]["indice" + triagem.getIndice()];           
+        }
+        else
+            returnIndice = triagem.getIndice().toString();
+        
+        return returnIndice;
     }
     
     addAcao(equipeId, indexTriagem) {
@@ -275,8 +336,8 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
             this.triagemAux.getAcoes().push(this.flagAcao);
         
         this.flagEditAcao = false;
-    }
-    
+    }   
+
     removeAcao(indexAcao: number) {
         
         if ( this.riscoPotencial.getAcoesDelete() == undefined )
@@ -301,12 +362,19 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     reopenAcao(acao: Acao) {
         acao.setStatus("ABERTA");
     }
+    openModalIndicador(){
+        this.modalIndicador.emit( { action: "modal", params: ['open'] } );
+    }
+    
+    closeModalIndicador() {
+        this.modalIndicador.emit( { action: "modal", params: ['close'] } );
+    }
     
     openModal() {
         this.modalAcao.emit( { action: "modal", params: ['open'] } );
     }
 
-    closeModal() {
+    closeModal() {        
         this.modalAcao.emit( { action: "modal", params: ['close'] } );
     }
     
@@ -317,7 +385,6 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
     hiddenActions(indexAcao) {
         $(".btn-action"+indexAcao).hide();
     }
-    
     ngOnDestroy() {
         $( ".container" ).get( 0 ).style.width = "70%";
         if ( this.inscricao != undefined ) 
@@ -329,5 +396,86 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
            return '#fff'
         else
            return '#FFA500' 
+    }
+    getPrazos() {
+        this.riscoPotencialService.getPrazos()
+            .then( res => {
+                this.prazos = Object.keys( res.json() ).sort();
+            } )
+            .catch( error => {
+                console.log( "Erro ao retornar os prazos." );
+            } )
+    }
+    
+    openModalDiagnostico() {
+        this.activeDiagnostico = true;
+        this.activeIntervencao = false;
+        this.showModalDiagnostico = true;
+        this.activeEquipe = false;
+    }
+    
+    selectDiagnostico( diagnostico) {
+        this.triagemModal.setDiagnostico(diagnostico);
+        this.showModalDiagnostico = false; 
+    }
+    
+    cancelarModalDiagnostico() {
+        this.showModalDiagnostico = false;
+    }
+    
+    openModalIntervencao() {
+        this.activeDiagnostico = false;
+        this.activeEquipe = false;
+        this.activeIntervencao = true;
+        this.showModalIntervencao = true;
+    }
+    
+    selectIntervencao( intervencao) {
+        this.triagemModal.setIntervencao(intervencao);
+        this.showModalIntervencao = false;
+    }
+    
+    cancelarModalIntervencao() {
+        this.showModalIntervencao = false;
+    }    
+    
+    setEquipe(){    
+       this.innerIdEquipe = this.triagemModal.getIndicadorSast().getEquipe().getId();
+    }
+    
+    cancelarModalEquipe() {
+        this.showModalEquipe = false;
+    }
+    
+    selectEquipe( equipe: Equipe ) {
+        this.triagemModal.setEquipeAbordagem(equipe);
+        this.showModalEquipe = false;
+    }
+    openModalEquipe() {
+        this.showModalEquipe = true;
+        this.activeEquipe = true;
+        this.activeDiagnostico = false;
+        this.activeIntervencao = false;
+    }
+    
+    confirmAddTriagem(){
+        if(Util.isNotNull(this.triagemModal.getDiagnostico()) && this.triagemModal.getDiagnostico().getId() > 0 &&
+        Util.isNotNull(this.triagemModal.getIntervencao()) && this.triagemModal.getIntervencao().getId() > 0 &&
+        Util.isNotNull(this.triagemModal.getEquipeAbordagem()) && this.triagemModal.getEquipeAbordagem().getId() > 0 && 
+        Util.isNotNull(this.triagemModal.getPrazo())){
+            
+            let riscoEmpregado: RiscoEmpregado = this.riscoPotencial.getRiscoEmpregados().find(x=>x.getProfissional().getId() == this.profissional.getId() && x.getAtivo());
+            this.triagemModal.setAtendimento(riscoEmpregado.getTriagens()[0].getAtendimento()); 
+            let triagemAdd = new TriagemBuilder().clone(this.triagemModal); 
+            
+            if(!this.riscoPotencial.getEquipes().find(x=> x.getId() == triagemAdd.getEquipeAbordagem().getId()))
+                this.riscoPotencial.getEquipes().push(new EquipeBuilder().clone(triagemAdd.getEquipeAbordagem()));
+                        
+            triagemAdd.setIndicadorSast(this.indicadoresSastAusenteCalculo.find(i=> i.getId() == this.triagemModal.getIndicadorSast().getId()));
+            riscoEmpregado.getTriagens().push(triagemAdd);  
+            this.triagens.push(triagemAdd);
+            this.sortTriagem();            
+            this.triagemModal = new TriagemBuilder().initialize(undefined);
+        }        
     }
 }

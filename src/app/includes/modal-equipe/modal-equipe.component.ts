@@ -37,7 +37,13 @@ export class ModalEquipeComponent{
 
     ngOnChanges( changes: SimpleChanges ) {
         if ( changes["showModalEquipe"].currentValue === true )
-            setTimeout(() => this.modalEquipe.emit( { action: "modal", params: ["open"] } ), 1 );
+            setTimeout(() => this.openModalEquipe(), 1 );
+    }
+    
+    
+    openModalEquipe( ) {
+        this.modalEquipe.emit( { action: "modal", params: ['open'] } );
+        $("#modal6").css("z-index",'2000')
     }
     
     fetchEquipe() {

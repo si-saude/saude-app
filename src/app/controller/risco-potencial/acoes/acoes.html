@@ -15,13 +15,13 @@
 	<form #form="ngForm" (ngSubmit)="save()">
 		<div class='row'>
 			<div class="listClick collection">
-				<p  *ngIf="triagens.length > 0" style="color: #26a69a; text-align: center;"><b>Indicador</b></p>
+				<p  *ngIf="triagens.length > 0" style="color: #26a69a; text-align: center;"><b>Indicador</b> <a (click)="openModalIndicador()" class="btn-floating pulse icon-right"><i class="material-icons center-icon">add</i></a></p>
 			     <div class="row row-collection"  *ngFor="let triagem of triagens; let t = index">
 			     	<a (click)="selectTriagem(t)" [style.background-color]="colorColumn(triagem)"class="collection-item"  [ngClass]="triagem.selecionado" [routerLinkActive]="['active']">
 			     	{{triagem.equipeAbordagem.abreviacao}} - {{triagem.indicadorSast.nome}}</a>
 			     </div>			
 			</div>
-			<div class="col s8" *ngIf="triagemAux.id > 0">
+			<div class="col s8" *ngIf="triagemAux.selecionado == 'active'">
 				<div class="col s12">
 			         <p><b>INDICADOR: {{triagemAux.indicadorSast.nome}}</b></p>
 			         <p><b>ÍNDICE: {{getIndiceDescricao(triagemAux)}}</b></p>
@@ -38,7 +38,7 @@
 					<div class="input-field col s4">
 						<p>
 							<a class="btn-floating waves-effect waves-light green btn-add"
-								(click)="addAcao()"> <i
+								(click)="openModal()"> <i
 								class="material-icons center-icon">add</i>
 							  </a>
 					        <label style="color: #26a69a;">Adicionar Ação</label>
@@ -106,9 +106,7 @@
 </div>
 
 <!-- Modal Structure -->
-<div id="modal" class="modal" materialize="modal"
-	[materializeParams]="[{dismissible: false}]" [materializeActions]="modalAcao">
-
+<div id="modal1" class="modal" materialize="modal" [materializeParams]="model1Params" [materializeActions]="modalAcao">
 	<div class="row row-modal-acao">
 
 		<div class="row">
@@ -134,25 +132,137 @@
 						<option *ngFor="let tipo of tipoAcoes" value="{{tipo}}">{{tipo}}</option>
 					</select>
 				</fieldset>
+			</div>
+			<div class="input-field col s12">
+				<fieldset>
+					<label for="flagAcao.acaoIntervencao" >Ação</label> 
+					<input id="descricao" type="text"
+					name="descricao" [(ngModel)]="flagAcao.acaoIntervencao.descricao" (click)="modalAcaoComponent.openModalAcao()">		
+				</fieldset>
+			</div>	
 		</div>
-		<div class="input-field col s12">
-			<fieldset>
-				<label for="flagAcao.acaoIntervencao" >Ação</label> 
-				<input id="descricao" type="text"
-				name="descricao" [(ngModel)]="flagAcao.acaoIntervencao.descricao" (click)="modalAcaoComponent.openModalAcao()">		
-			</fieldset>
-		</div>	
 	</div>
-
 	<div class="modal-footer">
 		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
 		<a class="modal-action modal-close waves-effect waves-green btn-flat"
 			(click)="confirmAddAcao()">Confirmar</a>
 	</div>
-
 </div>
+
+<!-- Modal Structure -->
+<div id="modal2" class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalIndicador">
+	<table style="width: 100%">
+		<div class="container-triagens-planejamento">
+			<fieldset class="fieldset-planejamento-triagem">
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-indicador">Indicador</td>
+						<td class="col s9 indicador">
+							<select name="indicador" class="browser-default"
+								[(ngModel)]="triagemModal.indicadorSast.id" (change)="setEquipe()">
+								<option disabled selected value=0>Selecione um Indicador</option>
+								<option *ngFor="let indicador of indicadoresSastAusenteCalculo" value="{{indicador.id}}">{{indicador.nome}}</option>
+							</select>
+						</td>
+					</tr>
+				</div>
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-indice-descricao">Índice Descrição</td>
+		<!-- 				<td class="col s9 indice-descricao">{{getIndiceDescricao(triagem)}}</td> -->
+					</tr>
+				</div>
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-eixo-clinico">Eixo Clínico</td>
+						<td class="col s9 eixo-clinico"><input type="text"
+							name="eixo-clinico" disabled
+							[(ngModel)]="triagemModal.diagnostico.eixo.titulo"></td>
+					</tr>
+				</div>
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-diagnostico">Diagnóstico</td>
+						<td class="col s9 diagnostico"><input
+							(click)="openModalDiagnostico(triagemModal)"
+							id="triagemModal.diagnostico.descricao" type="text"
+							name="triagemModal.diagnostico.descricao" [disabled]="triagemModal.indicadorSast.id == undifined ||  triagemModal.indicadorSast.id==0"
+							[(ngModel)]="triagemModal.diagnostico.descricao"></td>
+					</tr>
+				</div>
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-intervencao">Intervenção</td>
+						<td class="col s9 intervencao"><input
+							(click)="openModalIntervencao(triagemModal)"
+							id="triagemModal.intervencao.descricao" type="text"
+							name="triagemModal.intervencao.descricao"[disabled] =" triagemModal.indicadorSast.id == undifined ||  triagemModal.indicadorSast.id==0"
+							[(ngModel)]="triagemModal.intervencao.descricao"></td>
+					</tr>
+				</div>
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-equipe-abordagem">Equipe de
+							Abordagem</td>
+						<td class="col s9 equipe-abordagem">
+							<input
+								[disabled] ="triagemModal.indicadorSast.id == undifined || triagemModal.indicadorSast.id == 0"
+								(click)="openModalEquipe(triagemModal)"
+								id="triagemModal.equipeAbordagem.nome" type="text"
+								name="triagemModal.equipeAbordagem.nome"
+								[(ngModel)]="triagemModal.equipeAbordagem.nome">
+						
+						</td>
+					</tr>
+				</div>
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-prazo-inicio">Sugestão de prazo de
+							início</td>
+						<td class="col s9 prazo-inicio"><select name="triagemModal.prazo"
+							class="resposta-conteudo" class="browser-default" [disabled] =" triagemModal.indicadorSast.id == undifined || triagemModal.indicadorSast.id==0"
+							[(ngModel)]="triagemModal.prazo">
+								<option disabled selected value="">Selecione um prazo</option>
+								<option *ngFor="let prazo of prazos" value="{{prazo}}">{{prazo}}</option>
+						</select></td>
+					</tr>
+				</div>
+				<div class="row">
+					<tr class="row col s12">
+						<td class="col s3 label-justificativa">Justificativa/Observação</td>
+						<td class="col s9 justificativa">
+						<input type="text" maxlength="2048"
+							name="triagemModal.justificativa" class="resposta-conteudo" [disabled] ="triagemModal.indicadorSast.id == undifined || triagemModal.indicadorSast.id == 0"
+							[(ngModel)]="triagemModal.justificativa"></td>
+					</tr>
+				</div>
+			</fieldset>
+		</div>
+	</table>
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModalIndicador()">Fechar</a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="confirmAddTriagem()">Confirmar</a>
+	</div>
+</div>
+
+
+
 
 <div materialize [materializeParams]="toastParams"
 	[materializeActions]="globalActions"></div>
 	
-<app-modal-acao [service]="riscoPotencialService"  [model]="flagAcao"></app-modal-acao>
+<app-modal-acao	[service]="riscoPotencialService"  [model]="flagAcao"></app-modal-acao>
+
+
+<app-modal-diagnostico *ngIf="activeDiagnostico" [service]="riscoPotencialService" 
+	(diagnostico)="selectDiagnostico($event)" (cancelModalDiagnostico)="cancelarModalDiagnostico($event)"
+	[showModalDiagnostico]="showModalDiagnostico" [idEquipeProfissional]="innerIdEquipe"></app-modal-diagnostico>
+
+<app-modal-intervencao *ngIf="activeIntervencao" [service]="riscoPotencialService"
+	(intervencao)="selectIntervencao($event)" (cancelModalIntervencao)="cancelarModalIntervencao($event)"
+	[showModalIntervencao]="showModalIntervencao" [idEquipeProfissional]="innerIdEquipe"></app-modal-intervencao>
+	
+	
+	<app-modal-equipe (equipe)="selectEquipe($event)" [service]="riscoPotencialService" 
+	(cancelModalEquipe)="cancelarModalEquipe($event)" [showModalEquipe]="showModalEquipe"></app-modal-equipe>
