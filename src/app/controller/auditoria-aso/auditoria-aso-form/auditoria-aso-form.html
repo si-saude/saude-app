@@ -26,7 +26,7 @@
 			</div>
 			
 			<div class="input-field col s2 checkbox-conforme">
-				<input type="checkbox" id="aso.conforme"
+				<input type="checkbox" id="aso.conforme"[disabled] ="desabilitarConforme"
 					[(ngModel)]="aso.conforme" name="aso.conforme"> 
 					<label for="aso.conforme">Conforme</label>
 			</div>
@@ -67,7 +67,7 @@
 								<tr class="col s12">
 									<td class="col s10 requisito">{{item.descricao}}</td>
 									<td class="col s2 conforme">
-										<input type="checkbox" id="item[{{rA}}].conforme" 
+										<input type="checkbox" id="item[{{rA}}].conforme" (click)="verifiyConformeItens()"
 											[(ngModel)]="item.conforme"	name="item[{{rA}}].conforme">
 											<label for="item[{{rA}}].conforme"></label>
 									</td>

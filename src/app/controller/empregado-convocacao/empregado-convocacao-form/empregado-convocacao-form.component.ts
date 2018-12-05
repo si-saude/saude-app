@@ -89,22 +89,25 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     }
     
     verifyResultadoAuditado(){        
-        
-        if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getResultadoConforme() == false && x.getOpcional() == false).length > 0){
-           this.desabilitarResultadoAuditar = true;
-           this.empregadoConvocacao.setResultadoAuditado(false);
-        }else{
-            this.desabilitarResultadoAuditar = false;
-        }
+        setTimeout(() => {
+            if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getResultadoConforme() == false && x.getOpcional() == false).length > 0){
+               this.desabilitarResultadoAuditar = true;
+               this.empregadoConvocacao.setResultadoAuditado(false);
+            }else{
+                this.desabilitarResultadoAuditar = false;
+            }
+        }, 100);     
     }
     
-    verifyAuditado(){        
-        if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getConforme() == false).length > 0){
-           this.desabilitarAuditar = true;
-           this.empregadoConvocacao.setAuditado(false);
-        }else{
-            this.desabilitarAuditar = false;
-        }
+    verifyAuditado(){     
+        setTimeout(() => {
+            if(this.empregadoConvocacao.getEmpregadoConvocacaoExames().filter(x=>x.getConforme() == false).length > 0){
+               this.desabilitarAuditar = true;
+               this.empregadoConvocacao.setAuditado(false);
+            }else{
+                this.desabilitarAuditar = false;
+            }
+        }, 100);
     }
                 
     getExames() {
@@ -139,14 +142,17 @@ export class EmpregadoConvocacaoFormComponent extends GenericFormComponent imple
     }
 
     selectAll(evento) {
-        if ($("#selectAll").is(':checked') == false)
-            this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
-                eCE.setConforme(false);
-            });
-        else
-            this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
-                eCE.setConforme(true);
-            });    
+        setTimeout(() => {
+            if (this.selecionarTodos)
+                this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
+                    eCE.setConforme(true);
+                });
+            else
+                this.empregadoConvocacao.getEmpregadoConvocacaoExames().forEach(eCE => {
+                    eCE.setConforme(false);                    
+                });    
+                    this.verifyAuditado();
+        }, 100);
     }                
                 
     openModalConteudoItem(empregadoConvocacaoExame: EmpregadoConvocacaoExame, index: number) {
