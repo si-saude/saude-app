@@ -703,7 +703,7 @@
 							type="text" maxlength="16"
 							[(ngModel)]="cat.codigoCartaSindicato" name="codigoCartaSindicato">
 					</div>
-					<div class="input-field col s3">
+					<div class="input-field col s2">
 						<label for="numeroCat">Número da CAT</label> 
 						<input id="numeroCat" 
 							type="text" maxlength="32"
@@ -715,11 +715,17 @@
 							[(ngModel)]="cat.classificacaoAnomalia" name="classificacaoAnomalia">
 					</div>
 					
-					<div class="input-field col s3">
+					<div class="input-field col s2">
 						<label for="dataEmissao">Data de Emissão</label>
 						<app-date-picker [nome]="'dataEmissao'"
 							[customDate]="cat.dataEmissaoCustomDate" (change)="changeAto1(); changeAto3()"
 							[obrigatorio]="'false'" [legenda]="'Data de Emissão'"></app-date-picker>
+					</div>
+					<div class="input-field col s2">
+						<label>Hora da Emissão</label>
+						<app-time-picker [nome]="'hora-dataEmissao'"
+							[customDate]="cat.dataEmissaoCustomDate"
+							></app-time-picker>
 					</div>
 				</div>
 				
@@ -823,13 +829,20 @@
 						<input id="numeroCartaMulta" 
 							type="text" maxlength="64" [(ngModel)]="cat.numeroCartaMulta" name="numeroCartaMulta">
 					</div>
-					<div class="input-field col s4">
+					<div class="input-field col s2">
 						<label for="dataComunicacaoSindicato">Data da Comunicação do Sindicato</label>
 						<app-date-picker [nome]="'dataComunicacaoSindicato'"
 							[customDate]="cat.dataComunicacaoSindicatoCustomDate"
 							(change)="changeAto3()"
 							[obrigatorio]="'false'" [legenda]="'Data da Comunicacao do Sindicato'"></app-date-picker>
 					</div>
+					<div class="input-field col s2">
+						<label>Hora da Comunicação do Sindicato</label>
+						<app-time-picker [nome]="'hora-dataComunicacaoSindicato'"
+							[customDate]="cat.dataComunicacaoSindicatoCustomDate"
+							></app-time-picker>
+					</div>
+					
 				</div>
 				
 				<div class="row">
