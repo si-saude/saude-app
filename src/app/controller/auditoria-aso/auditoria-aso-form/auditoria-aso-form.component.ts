@@ -18,6 +18,7 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
     aso: Aso;
     usuario: Usuario;
     selectAll: boolean;
+    desabilitarConforme: boolean = true;
 
     constructor( private route: ActivatedRoute,
         private auditoriaAsoService: AuditoriaAsoService,
@@ -39,8 +40,8 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
                         .then( res => {
                             this.showPreload = false;
                             this.aso = new AsoBuilder().clone( res.json() );
-                            this.aso.setConforme(false);
                             this.getAndSetUsuario();
+                            this.verifiyConformeItens();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -49,12 +50,26 @@ export class AuditoriaAsoFormComponent extends GenericFormComponent implements O
             } );
         
     }
+    verifiyConformeItens() {
+        setTimeout(() => {
+              if( this.aso.getItemAuditoriaAsos().filter(x=>x.getConforme() == false).length > 0){
+                  this.desabilitarConforme = true;       
+                  this.aso.setConforme(false);
+              }
+              else
+                  this.desabilitarConforme = false;
+        }, 100);
+    }
     
     selecionarTodos() {
         setTimeout(() => {
-            if ( this.selectAll )
-                this.aso.getItemAuditoriaAsos().forEach(rA => rA.setConforme(true))
-            else this.aso.getItemAuditoriaAsos().forEach(rA => rA.setConforme(false));
+            if ( this.selectAll ){
+                this.aso.getItemAuditoriaAsos().forEach(rA => rA.setConforme(true));               
+            }
+            else{ 
+                this.aso.getItemAuditoriaAsos().forEach(rA => rA.setConforme(false));
+            }
+            this.verifiyConformeItens();
         }, 100);
     }
     

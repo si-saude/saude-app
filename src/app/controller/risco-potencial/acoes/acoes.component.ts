@@ -308,8 +308,7 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         return returnIndice;
     }
     
-    addAcao(equipeId, indexTriagem) {
-        this.flagAcao = new AcaoBuilder().initialize( new Acao( ) );        
+    addAcao(equipeId, indexTriagem) {         
         this.openModal( );
     }
     
@@ -333,9 +332,11 @@ export class AcoesComponent extends GenericFormComponent implements OnInit {
         if ( this.flagEditAcao ) 
             this.triagemAux.getAcoes()[this.flagIndexAcao] = this.flagAcao;
         else 
-            this.triagemAux.getAcoes().push(this.flagAcao);
+            this.triagemAux.getAcoes().push(new AcaoBuilder().clone(this.flagAcao));
         
         this.flagEditAcao = false;
+        
+        this.flagAcao = new AcaoBuilder().initialize( new Acao( ) );    
     }   
 
     removeAcao(indexAcao: number) {

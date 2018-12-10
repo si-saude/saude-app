@@ -168,11 +168,13 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
             if ( sG == undefined )
                 this.selectedGerenciaConvocacaoCC.push(gerenciaConvocacao.getGerencia().getCodigoCompleto());
             
-            let sendConvocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
+            let sendConvocacao = new ConvocacaoBuilder().initialize( null );
             sendConvocacao.setProfissiograma( this.convocacao.getProfissiograma() );
             sendConvocacao.getGerenciaConvocacoes().push(
                 new GerenciaConvocacaoBuilder().clone( this.gerenciaConvocacoes[index] ) );
             sendConvocacao.setId( this.convocacao.getId() );
+            sendConvocacao.setFim(this.convocacao.getFim());
+            sendConvocacao.setInicio(this.convocacao.getInicio());
 
             this.convocacaoService.getEmpregadosByGerencia( sendConvocacao )
                 .then( res => {
@@ -224,10 +226,12 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     
             if ( empregado == undefined ) {
                 let eC = new EmpregadoConvocacaoBuilder().initialize( new EmpregadoConvocacao() );
-                let convocacao = new ConvocacaoBuilder().initialize( new Convocacao() );
+                let convocacao = new ConvocacaoBuilder().initialize( null );
                 eC.setEmpregado( new EmpregadoBuilder().clone(this.empregadoConvocacao.getEmpregado()) );
                 convocacao.setProfissiograma( this.convocacao.getProfissiograma() );
                 convocacao.getEmpregadoConvocacoes().push( eC );
+                convocacao.setFim(this.convocacao.getFim());
+                convocacao.setInicio(this.convocacao.getInicio());
     
                 this.convocacaoService.getEmpregadoConvocacao( convocacao )
                     .then( res => {
