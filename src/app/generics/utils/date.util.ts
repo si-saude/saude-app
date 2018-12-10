@@ -47,7 +47,6 @@ export class DateUtil {
     }
     
     public parseStringPtBrToDate(dataString ,timeString: string){
-        
         if(dataString.includes("/")){
             let arrayDateString:Array<string> =  dataString.split("/");
             let dateAux:Date ;

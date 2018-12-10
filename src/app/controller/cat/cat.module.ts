@@ -12,7 +12,6 @@ import { CatFormComponent } from './cat-form/cat-form.component';
 import { CatFormDetailComponent } from './cat-form/cat-form-detail.component';
 import { CatRoutingModule } from './cat.routing.module';
 import { SharedModule } from './../shared.module';
-import { CpfPipe } from './../../pipes/cpf.pipe';
 import { PlanejamentoModule } from './../planejamento.module';
 import { PipesModule } from './../pipes.module';
 import { ModalExameModule } from './../../includes/modal-exame/modal-exame.module';
@@ -23,8 +22,7 @@ import { NumberMaskDirectiveModule } from '../../directives/number-mask-directiv
     declarations: [
        CatComponent,
        CatFormComponent,
-       CatFormDetailComponent,
-       CpfPipe
+       CatFormDetailComponent
      ],
      imports: [
         MyDatePickerModule,

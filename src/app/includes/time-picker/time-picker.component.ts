@@ -2,6 +2,7 @@ import { EventEmitter, SimpleChanges, Component, Input, Output} from '@angular/c
 import { Router } from '@angular/router';
 import { GlobalVariable } from './../../../../src/app/global';
 import { CustomDate} from './../../generics/utils/custom-date.util';
+import { Util } from './../../generics/utils/util';
 
 import { MaterializeAction } from "angular2-materialize";
 
@@ -41,8 +42,9 @@ export class TimePickerComponent {
         
     }
     
-    changeTimePicker() {        
-        this.change.emit(this.customDate);
-        
+    changeTimePicker(event) {        
+        this.customDate.setAppTime(event)
+        if(Util.isNotNull(this.customDate.getAppTime()))
+            this.change.emit(this.customDate);
     }
 }

@@ -82,6 +82,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
     private cnaeFilter: CnaeFilter;
     private conformeNaoConforme: Array<string>;
     private aplicavelNaoAplicavel: Array<string>;
+    private dentroForaPrazo: Array<string>;
+    private simNao: Array<string>;
     
     constructor( private route: ActivatedRoute,
         private catService: CatService,
@@ -96,6 +98,8 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.vinculos = new Array<string>();
         this.conformeNaoConforme = new Array<string>();
         this.aplicavelNaoAplicavel = new Array<string>();
+        this.simNao = new Array<string>();
+        this.dentroForaPrazo = new Array<string>();
         this.sexos = new Array<string>();
         this.tipoAcidentes = new Array<string>();
         this.tipoCats = new Array<string>();
@@ -231,6 +235,9 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.getTipoCats();
         this.getConformeNaoConforme();
         this.getAplicavelNaoAplicavel();
+        this.getDentroForaPrazo();
+        this.getDentroForaPrazo();
+        this.getSimNao();
     }
     
     getCargos() {
@@ -347,6 +354,26 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
         this.catService.getAplicavelNaoAplicavel()
             .then(res => {
                 this.aplicavelNaoAplicavel = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
+    getDentroForaPrazo() {
+        this.catService.getDentroForaPrazo()
+            .then(res => {
+                this.dentroForaPrazo = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
+    
+    getSimNao() {
+        this.catService.getSimNao()
+            .then(res => {
+                this.simNao = Object.keys(res.json());
             })
             .catch(error => {
                 this.catchConfiguration(error);
@@ -610,11 +637,11 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             if ( prazo != undefined )
                 prazo.then(res => {
                     
-                    this.cat.setAto1( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                    this.cat.setAto1( (Number(res.json()) > 1) ? this.dentroForaPrazo[1] : this.dentroForaPrazo[0]);
                     
                     if(this.cat.getEmpregado()){
                         if(this.cat.getEmpregado().getVinculo() == "CONTRATADO")
-                            this.cat.setAto4( (Number(res.json()) > 1) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                            this.cat.setAto4( (Number(res.json()) > 1) ? this.simNao[0] : this.simNao[1]);
                         else
                             this.cat.setAto4(this.aplicavelNaoAplicavel[1]);
                     }
@@ -622,6 +649,10 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                     this.changeAto2();
                 })
                 .catch(error => {
+                    if (error["_body"].includes("Unparseable") ) {
+                        console.log(error);
+                        return;
+                    }
                     this.catchConfiguration(error);
                 })
        }
@@ -632,7 +663,7 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             this.conformeNaoConforme[1] : this.conformeNaoConforme[0] );
     }
     
-    changeAto3() {
+    changeAto3(evento) {
         if ( this.cat.getDataEmissaoCustomDate().getAppDate() != undefined && 
                 this.cat.getDataComunicacaoSindicatoCustomDate().getAppDate() != undefined ) {
             this.catService.getFeriadoService().getDaysBetweenDates(
@@ -640,10 +671,10 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                     .then(res => {
                         if(this.cat.getEmpregado()){
                             if ( this.cat.getEmpregado().getVinculo() == "CONTRATADO" )
-                                this.cat.setAto3( (Number(res.json()) > 10) ? this.conformeNaoConforme[1] : this.conformeNaoConforme[0]);
+                                this.cat.setAto3( (Number(res.json()) > 10) ? this.dentroForaPrazo[1] : this.dentroForaPrazo[0]);
                             else {
                                 if(Number(res.json()) > 1){
-                                    this.cat.setAto3(this.conformeNaoConforme[1]);
+                                    this.cat.setAto3(this.dentroForaPrazo[1]);
                                 }else{
                                     //OBTER A QUANTIDADE DE HORAS
                                     if(this.cat.getDataEmissaoCustomDate().getAppTime() && 
@@ -658,9 +689,9 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                                             let comunicacaoInstante = (Number(comunicacao[0])*60) + Number(comunicacao[1]);
                                             
                                             if (comunicacaoInstante > emissaoInstante){
-                                                this.cat.setAto3(this.conformeNaoConforme[1]);
+                                                this.cat.setAto3(this.dentroForaPrazo[1]);
                                             }else{
-                                                this.cat.setAto3(this.conformeNaoConforme[0]);
+                                                this.cat.setAto3(this.dentroForaPrazo[0]);
                                             }
                                         }
                                     }
@@ -669,6 +700,10 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
                         }
                     })
                     .catch(error => {
+                        if (error["_body"].includes("Unparseable") ) {
+                            console.log(error);
+                            return;
+                        }
                         this.catchConfiguration(error);
                     })
         }
@@ -679,5 +714,12 @@ export class CatFormComponent extends GenericFormComponent implements OnInit {
             return this.catService.getFeriadoService().getDaysBetweenDates(
                     this.cat.getDataOcorrencia(), this.cat.getDataEmissao());
         else undefined;
+    }
+    
+    setDataComunicacaoSindicato(evento) {
+        if ( evento["appDate"] != undefined ) {
+            $('#dataComunicacaoSindicato').val(evento['appDate']);        
+            this.cat.setDataComunicacaoSindicatoCustomDate(evento);
+        }
     }
 }

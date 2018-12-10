@@ -718,13 +718,14 @@
 					<div class="input-field col s2">
 						<label for="dataEmissao">Data de Emissão</label>
 						<app-date-picker [nome]="'dataEmissao'"
-							[customDate]="cat.dataEmissaoCustomDate" (change)="changeAto1(); changeAto3()"
+							[customDate]="cat.dataEmissaoCustomDate" (change)="changeAto1(); setDataComunicacaoSindicato($event)"
 							[obrigatorio]="'false'" [legenda]="'Data de Emissão'"></app-date-picker>
 					</div>
 					<div class="input-field col s2">
 						<label>Hora da Emissão</label>
 						<app-time-picker [nome]="'hora-dataEmissao'"
 							[customDate]="cat.dataEmissaoCustomDate"
+							(change)="changeAto3($event)"
 							></app-time-picker>
 					</div>
 				</div>
@@ -833,12 +834,12 @@
 						<label for="dataComunicacaoSindicato">Data da Comunicação do Sindicato</label>
 						<app-date-picker [nome]="'dataComunicacaoSindicato'"
 							[customDate]="cat.dataComunicacaoSindicatoCustomDate"
-							(change)="changeAto3()"
 							[obrigatorio]="'false'" [legenda]="'Data da Comunicacao do Sindicato'"></app-date-picker>
 					</div>
 					<div class="input-field col s2">
 						<label>Hora da Comunicação do Sindicato</label>
 						<app-time-picker [nome]="'hora-dataComunicacaoSindicato'"
+							(change)="changeAto3($event)"
 							[customDate]="cat.dataComunicacaoSindicatoCustomDate"
 							></app-time-picker>
 					</div>

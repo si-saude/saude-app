@@ -7,6 +7,7 @@ import { CellPhonePipe } from './../pipes/cell-phone.pipe';
 import { CnpjPipe } from './../pipes/cnpj.pipe';
 import { CepPipe } from './../pipes/cep.pipe';
 import { MoneyPipe } from './../pipes/money.pipe';
+import { CpfPipe } from './../pipes/cpf.pipe';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MoneyPipe } from './../pipes/money.pipe';
     CellPhonePipe,
     CnpjPipe,
     CepPipe,
-    MoneyPipe
+    MoneyPipe,
+    CpfPipe
   ],
   exports: [
     FilterDataPipe,
@@ -25,7 +27,8 @@ import { MoneyPipe } from './../pipes/money.pipe';
     CellPhonePipe,
     CnpjPipe,
     CepPipe,
-    MoneyPipe
+    MoneyPipe,
+    CpfPipe
   ]
 })
 export class PipesModule { }

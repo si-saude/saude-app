@@ -194,4 +194,18 @@ export class CatService extends GenericService {
             .get( urlAplicavelNaoAplicavel + "?filter=", { headers: this.headers } )
             .toPromise();
     }
+    
+    getDentroForaPrazo() {
+        let urlDentroForaPrazo = GlobalVariable.BASE_API_URL + "/generic/dentro-fora-prazo";
+        return this.http
+            .get( urlDentroForaPrazo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getSimNao() {
+        let urlSimNao = GlobalVariable.BASE_API_URL + "/generic/status-sim-nao";
+        return this.http
+            .get( urlSimNao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
 }
