@@ -13,9 +13,9 @@ export class IndicadorSastFilter extends GenericFilter {
     private codigo: string;
     private codigoExcludente: string;
     private equipe: EquipeFilter;
-    private obrigatorio: BooleanFilter;
-    private inativo: BooleanFilter;
-    private ausenteCalculoInterdisciplinar: BooleanFilter;
+    private obrigatorio: BooleanFilter = new BooleanFilter();
+    private inativo: BooleanFilter = new BooleanFilter();;
+    private ausenteCalculoInterdisciplinar: BooleanFilter = new BooleanFilter();
     
     getNome() {
         return this.nome;

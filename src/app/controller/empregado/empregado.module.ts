@@ -12,15 +12,13 @@ import { EmpregadoRoutingModule } from './empregado.routing.module';
 import { SharedModule } from './../shared.module';
 import { EmpregadoFormComponent } from './empregado-form/empregado-form.component';
 import { EmpregadoFormDetailComponent } from './empregado-form/empregado-form-detail.component';
-import { CpfPipe } from './../../pipes/cpf.pipe';
 import { PipesModule } from './../pipes.module';
 
 @NgModule({
     declarations: [
        EmpregadoComponent,
        EmpregadoFormComponent,
-       EmpregadoFormDetailComponent,
-       CpfPipe
+       EmpregadoFormDetailComponent
      ],
      imports: [
         EmpregadoRoutingModule,

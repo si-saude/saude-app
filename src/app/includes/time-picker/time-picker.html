@@ -5,7 +5,7 @@
 	<div style="width: 80%; float: left;" *ngIf="!desabilitar"> 
 	<input id="{{nome}}" name="{{nome}}"
 							[ngModel]="customDate.appTime"
-							(ngModelChange)="customDate.appTime=$event"
+							(ngModelChange)="changeTimePicker($event)"
 							[disabled]="desabilitar"
 							placeholder="00:00" timeMaskDirective="99:99"
 							class="validate" type="text">

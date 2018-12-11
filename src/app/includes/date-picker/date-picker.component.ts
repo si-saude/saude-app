@@ -39,7 +39,7 @@ export class DatePickerComponent {
     }
     
     changeDatePicker(event) {
-        this.customDate.setAppDate(event);  
+        this.customDate.setAppDate(event);
         if(Util.isNotNull(this.customDate.getApiDate()))
             this.change.emit(this.customDate);
     }
