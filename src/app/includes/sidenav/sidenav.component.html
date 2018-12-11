@@ -185,6 +185,7 @@
 				Avaliação de Higiene Ocupacional
 			</a>
 			<a [routerLink]="['/reports/cat']" *ngIf="checkPermissao('REPORT-CAT')">CAT - Comunicado de Acidente de Trabalho</a>
+			<a [routerLink]="['/reports/conformidade-aso']" *ngIf="checkPermissao('REPORT-CONFORMIDADE-ASO')">Conformidade ASO</a>
 			<a [routerLink]="['/reports/atestado']" *ngIf="checkPermissao('REPORT-ATESTADO')">Controle de Atestado</a>
 			<a [routerLink]="['/reports/empregados-por-grupo']" *ngIf="checkPermissao('REPORT-EMPREGADOS-POR-GRUPO')">Empregados por Grupo</a>
 			<a [routerLink]="['/reports/mudanca-funcao']" *ngIf="checkPermissao('REPORT-MUDANCA-FUNCAO')">Mudança de Função</a>

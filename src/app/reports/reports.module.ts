@@ -17,9 +17,11 @@ import { PreRequisitosAgendamentoReportComponent } from './pre-requisitos-agenda
 import { MudancaFuncaoReportComponent } from './mudanca-funcao-report/mudanca-funcao-report.component';
 import { AcompanhamentoSastReportComponent } from './acompanhamento-sast-report/acompanhamento-sast-report.component';
 import { SugestaoAgendamentoReportComponent } from './sugestao-agendamento-report/sugestao-agendamento-report.component';
+import { ConformidadeAsoReportComponent } from './conformidade-aso-report/conformidade-aso-report.component';
 import { PanoramaReportService } from './panorama-report/panorama-report.service';
 import { ControleAtestadoReportService } from './controle-atestado-report/controle-atestado-report.service';
 import { CatReportService } from './cat-report/cat-report.service';
+import { ConformidadeAsoReportService } from './conformidade-aso-report/conformidade-aso-report.service';
 import { SugestaoAgendamentoReportService } from './sugestao-agendamento-report/sugestao-agendamento-report.service';
 import { PreRequisitosAgendamentoReportService } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.service';
 import { MudancaFuncaoReportService } from './mudanca-funcao-report/mudanca-funcao-report.service';
@@ -43,7 +45,8 @@ import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
        MudancaFuncaoReportComponent,
        AcompanhamentoSastReportComponent,
        SugestaoAgendamentoReportComponent,
-       CalendarComponent
+       CalendarComponent,
+       ConformidadeAsoReportComponent
      ],
      imports: [
         ReportsRoutingModule,
@@ -63,7 +66,8 @@ import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
         PreRequisitosAgendamentoReportService,
         MudancaFuncaoReportService,
         AcompanhamentoSastReportService,
-        SugestaoAgendamentoReportService
+        SugestaoAgendamentoReportService,
+        ConformidadeAsoReportService
      ]
 })
 export class ReportsModule{}

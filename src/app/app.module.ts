@@ -96,6 +96,7 @@ import { ReportControleAtestadoGuard } from './guards/report-controle-atestado.g
 import { ReportAvaliacaoHigieneOcupacionalGuard } from './guards/report-avaliacao-higiene-ocupacional.guard';
 import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisitos-agendamento.guard';
 import { ReportSugestaoAgendamentoGuard } from './guards/report-sugestao-agendamento.guard';
+import { ReportConformidadeAsoGuard } from './guards/report-conformidade-aso.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
@@ -228,7 +229,8 @@ import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
     IndicadorConhecimentoAlimentarGuard,
     QuestionarioConhecimentoAlimentarGuard,
     RecordatorioGuard,
-    ReportSugestaoAgendamentoGuard
+    ReportSugestaoAgendamentoGuard,
+    ReportConformidadeAsoGuard
   ],
   bootstrap: [ 
     AppComponent
