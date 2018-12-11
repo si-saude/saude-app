@@ -54,7 +54,7 @@ export class IncludeMudancaFuncaoComponent {
         this.autoCompleteGhee = new GheeNomeAutocomplete(this.service.getGheeService());
         this.autoCompleteBase = new BaseNomeAutocomplete(this.service.getBaseService());     
         this.modalInstalacao = new EventEmitter<string | MaterializeAction>();
-        this.instalacao = new InstalacaoBuilder().initialize(new Instalacao());GrupoMonitoramentoBuilder
+        this.instalacao = new InstalacaoBuilder().initialize(new Instalacao());
         this.grupoMonitoramento = new GrupoMonitoramentoBuilder().initialize(new GrupoMonitoramento());
         this.getRegimes();
         this.getInstalacoes();
@@ -124,9 +124,7 @@ export class IncludeMudancaFuncaoComponent {
         this.openModal();
     }
 
-    addGrupoMonitoramento() {
-        console.log(this.grupoMonitoramento);
-        
+    addGrupoMonitoramento() {        
         
         if(this.mudancaFuncao.getGrupoMonitoramentos() == undefined){
             this.mudancaFuncao.setGrupoMonitoramentos(new GrupoMonitoramentoBuilder().initializeList(undefined));

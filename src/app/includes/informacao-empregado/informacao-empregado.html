@@ -3,7 +3,7 @@
 </head>			
 <div *ngIf="empregado != undefined">
 	<div class="row col s12">
-		<div class="input-field col s6">
+		<div class="input-field col s4">
 				<fieldset>
 					<label>Cargo</label> <input
 						type="text" disabled
@@ -11,33 +11,23 @@
 						[ngModel]="empregado.cargo?.nome">
 						</fieldset>
 	    </div>	
-	    <div class="input-field col s6">
+	    <div class="input-field col s4">
 				<fieldset>
 					<label>Ênfase</label> <input
 						type="text" disabled
 						name="empregado.enfase.descricao"
 						[ngModel]="empregado.enfase?.descricao">
 						</fieldset>
-	    </div>	
-	</div>					
-	<div class="row col s12">
-		<div class="input-field col s6">
-				<fieldset>
-					<label>Função</label> <input
-						type="text" disabled
-						name="empregado.funcao.nome"
-						[ngModel]="empregado.funcao?.nome">
-						</fieldset>
-	    </div>	
-	    <div class="input-field col s6">
-				<fieldset>
-					<label>Gerência</label> <input
-						type="text" disabled
-						name="empregado.gerencia.codigoCompleto"
-						[ngModel]="empregado.gerencia?.codigoCompleto">
-						</fieldset>
-	    </div>	
-	</div>
+	    </div>
+   		<div class="input-field col s4">
+			<fieldset>
+				<label>Função</label> <input
+					type="text" disabled
+					name="empregado.funcao.nome"
+					[ngModel]="empregado.funcao?.nome">
+			</fieldset>
+	    </div>		
+	</div>	
 	<div class="row col s12">
 	    <div class="input-field col s6">
 				<fieldset>
@@ -55,7 +45,33 @@
 						[ngModel]="empregado.ghee?.nome">
 						</fieldset>
 	    </div>	
-	</div>			
+	</div>	
+	<div class="row col s12">
+	    <div class="input-field col s4">
+			<fieldset>
+				<label>Gerência</label> <input
+					type="text" disabled
+					name="empregado.gerencia.codigoCompleto"
+					[ngModel]="empregado.gerencia?.codigoCompleto">
+			</fieldset>
+	    </div>
+	    <div class="input-field col s4">
+			<fieldset>
+				<label>Base</label> <input
+					type="text" disabled
+					name="empregado.base.nome"
+					[ngModel]="empregado.base?.nome">
+			</fieldset>
+	    </div>	
+   		<div class="input-field col s4">
+			<fieldset>
+				<label>Regime</label> <input
+					type="text" disabled
+					name="empregado.regime.nome"
+					[ngModel]="empregado.regime?.nome">
+			</fieldset>
+	    </div>		
+	</div>		
 	<div class="row">
 			<table class="striped">
 				<thead>

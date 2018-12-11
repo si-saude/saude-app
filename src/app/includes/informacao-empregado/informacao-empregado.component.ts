@@ -23,7 +23,7 @@ export class InformacaoEmpregadoComponent {
     }
     
     filterItemsOfType(type){
-        return this.empregado.getGrupoMonitoramentos().filter(x => x.getId() == type);
+        return this.empregado.getGrupoMonitoramentos().filter(x => x.getTipoGrupoMonitoramento().getId() == type);
     }
     
     getEmpregado(){
