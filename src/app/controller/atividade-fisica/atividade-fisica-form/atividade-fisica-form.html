@@ -1,0 +1,119 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave" [goTo]="goTo"></app-confirm-save>  
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="descricao">Descrição</label>
+				<input id="descricao" type="text" maxlength="128"
+				name="descricao" [(ngModel)]="atividadeFisica.descricao">
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s1.5 checkbox">
+				<input type="checkbox" id="domingo" (change)="changeTotal()"
+					[(ngModel)]="atividadeFisica.domingo"
+					name="atividadeFisica.domingo"> <label
+					for="domingo">Domingo</label>
+			</div>
+			<div class="input-field col s1.5 checkbox">
+				<input type="checkbox" id="segunda" (change)="changeTotal()"
+					[(ngModel)]="atividadeFisica.segunda"
+					name="atividadeFisica.segunda"> <label
+					for="segunda">Segunda</label>
+			</div>
+			<div class="input-field col s1.5 checkbox">
+				<input type="checkbox" id="terca" (change)="changeTotal()"
+					[(ngModel)]="atividadeFisica.terca"
+					name="atividadeFisica.terca"> <label
+					for="terca">Terça</label>
+			</div>
+			<div class="input-field col s1.5 checkbox">
+				<input type="checkbox" id="quarta" (change)="changeTotal()"
+					[(ngModel)]="atividadeFisica.quarta"
+					name="atividadeFisica.quarta"> <label
+					for="quarta">Quarta</label>
+			</div>
+			<div class="input-field col s1.5 checkbox">
+				<input type="checkbox" id="quinta" (change)="changeTotal()"
+					[(ngModel)]="atividadeFisica.quinta"
+					name="atividadeFisica.quinta"> <label
+					for="quinta">Quinta</label>
+			</div>
+			<div class="input-field col s1.5 checkbox">
+				<input type="checkbox" id="sexta" (change)="changeTotal()"
+					[(ngModel)]="atividadeFisica.sexta"
+					name="atividadeFisica.sexta"> <label
+					for="sexta">Sexta</label>
+			</div>
+			<div class="input-field col s1.5 checkbox">
+				<input type="checkbox" id="sabado" (change)="changeTotal()"
+					[(ngModel)]="atividadeFisica.sabado"
+					name="atividadeFisica.sabado"> <label
+					for="sabado">Sábado</label>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="input-field col s2">
+				<label for="minuto">Minuto</label>
+				<input id="minuto" type="number" (change)="changeTotal()"
+				name="minuto" [(ngModel)]="atividadeFisica.minuto">
+			</div>
+			<div class="input-field col s2">
+				<label for="total">Total</label>
+				<input id="total" type="number" disabled
+				name="total" [(ngModel)]="atividadeFisica.totalMinuto">
+			</div>
+			<div class="col s6">
+				<fieldset>
+					<legend>Classificação da Atividade</legend>
+					<select name="atividadeFisica.classificacao"
+						class="browser-default"
+						[(ngModel)]="atividadeFisica.classificacao">
+						<option disabled selected value="undefined">Selecione uma Classificação</option>
+						<option
+							*ngFor="let classificacao of classificacoes"
+							value="{{classificacao}}">{{classificacao}}</option>
+					</select>
+				</fieldset>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="input-field col s12">
+				<label for="observacao">Observação</label>
+				<textarea class="materialize-textarea" id="observacao" maxlength="2048"
+					[(ngModel)]="atividadeFisica.observacao" name="atividadeFisica.observacao"></textarea>
+			</div>
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="atividadeFisica.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="atividadeFisica.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/atividade-fisica']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+			<div class="col s6">
+				<button type="submit"
+				class="btn btn-primary btn-salvar">Salvar</button>
+			</div>
+		</div>
+	</form>
+</div>
