@@ -113,6 +113,7 @@ import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.gua
 import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
 import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
+import { AtividadeFisicaGuard } from './guards/guards-child/atividade-fisica.guard';
 
 @NgModule({
   declarations: [
@@ -230,7 +231,8 @@ import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
     QuestionarioConhecimentoAlimentarGuard,
     RecordatorioGuard,
     ReportSugestaoAgendamentoGuard,
-    ReportConformidadeAsoGuard
+    ReportConformidadeAsoGuard,
+    AtividadeFisicaGuard
   ],
   bootstrap: [ 
     AppComponent

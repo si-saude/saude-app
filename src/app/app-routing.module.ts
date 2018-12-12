@@ -86,6 +86,7 @@ import { MedidaAlimentarGuard } from './guards/guards-child/medida-alimentar.gua
 import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indicador-conhecimento-alimentar.guard';
 import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
 import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
+import { AtividadeFisicaGuard } from './guards/guards-child/atividade-fisica.guard';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -465,6 +466,11 @@ const routes: Routes = [
         loadChildren: 'app/controller/recordatorio/recordatorio.module#RecordatorioModule',
         canActivateChild: [RecordatorioGuard]
     },
+    {
+        path: 'atividade-fisica',
+        loadChildren: 'app/controller/atividade-fisica/atividade-fisica.module#AtividadeFisicaModule',
+        canActivateChild: [AtividadeFisicaGuard]
+    }, 
     { path: '', pathMatch: 'full', redirectTo: '/home' },
     { path: '404', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/404' }
