@@ -32,16 +32,18 @@
 	    <div class="input-field col s6">
 				<fieldset>
 					<label>Ghe</label> <input
-						type="text" disabled
+						type="text" readonly
 						name="empregado.ghe.nome"
+						(dblclick)="modalDisplayTextComponent.openModal(empregado.ghe?.risco?.titulo)"
 						[ngModel]="empregado.ghe?.nome">
 						</fieldset>
 	    </div>	
 	    <div class="input-field col s6">
 				<fieldset>
 					<label>Ghee</label> <input
-						type="text" disabled
+						type="text" readonly
 						name="empregado.ghee.nome"
+						(dblclick)="modalDisplayTextComponent.openModal(empregado.ghee?.descricao)"
 						[ngModel]="empregado.ghee?.nome">
 						</fieldset>
 	    </div>	
@@ -109,3 +111,5 @@
 			</table>
 	</div>	
 </div>	
+
+<app-modal-display-text></app-modal-display-text>

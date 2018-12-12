@@ -3,7 +3,7 @@
 </head>
 
 	<div class="row col s12">
-	<div class="input-field col s6">
+	<div class="input-field col s4">
 			<fieldset>
 				<label for="enfase">Ênfase</label> <input
 					type="text" materialize="autocomplete" autocomplete="off"
@@ -16,7 +16,7 @@
 					[materializeParams]="autoCompleteEnfase.getAutocomplete().getObjAutoComplete()">
 					</fieldset>
     </div>
-    <div class="input-field col s6">
+    <div class="input-field col s4">
 			<fieldset>
 				<label for="funcao">Função</label> <input
 					type="text" materialize="autocomplete" autocomplete="off"
@@ -28,6 +28,17 @@
 					[materializeParams]="autoCompleteFuncao.getAutocomplete().getObjAutoComplete()">
 					</fieldset>
     </div>
+        <div class="input-field col s4">
+			<fieldset>
+				<label for="dataTransferencia">Data de Transferência</label> 
+					<app-date-picker [nome]="dataTransferencia" 
+					[customDate]="mudancaFuncao.dataTransferenciaCustomDate" 
+					[obrigatorio]="'true'"
+					[desabilitar]="(mudancaFuncao.id > 0)"
+					[legenda]="Data"									
+					></app-date-picker>	
+			</fieldset>
+    </div>
 	</div>
 	<div class="row col s12" *ngIf="(mudancaFuncao.id > 0)">
 		<div class="input-field col s6">
@@ -35,11 +46,12 @@
 						<label for="mudancaFuncao.ghe" >GHE</label> 						
 						<input type="text" materialize="autocomplete" autocomplete="off"
 						name="mudancaFuncao.ghe.nome"
-						[disabled]="desabilitarGhe"
+						[readonly]="desabilitarGhe"
 						[(ngModel)]="mudancaFuncao.ghe.nome"
 						(blur)="autoCompleteGhe.getAutocomplete().getObj($event,mudancaFuncao,'setGhe','getNome')"
 						(ngModelChange)="autoCompleteGhe.getAutocomplete().getList(mudancaFuncao.ghe, 'getNome');"
-						[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()">
+						[materializeParams]="autoCompleteGhe.getAutocomplete().getObjAutoComplete()"
+						(dblclick)="modalDisplayTextComponent2.openModal(mudancaFuncao.ghe.risco.titulo)">
 					</fieldset>
 		</div>
 		<div class="input-field col s6">
@@ -47,11 +59,12 @@
 					<label for="ghee">GHEE</label> <input
 						type="text" materialize="autocomplete" autocomplete="off"
 						name="mudancaFuncao.ghee.nome"
-						[disabled]="desabilitarGhee"
+						[readonly]="desabilitarGhee"
 						[(ngModel)]="mudancaFuncao.ghee.nome"
 						(blur)="autoCompleteGhee.getAutocomplete().getObj($event,mudancaFuncao,'setGhee','getNome')"
 						(ngModelChange)="autoCompleteGhee.getAutocomplete().getList(mudancaFuncao.ghee, 'getNome');"
-						[materializeParams]="autoCompleteGhee.getAutocomplete().getObjAutoComplete()">
+						[materializeParams]="autoCompleteGhee.getAutocomplete().getObjAutoComplete()"
+						(dblclick)="modalDisplayTextComponent2.openModal(mudancaFuncao.ghee.descricao)">
 						</fieldset>
 	    </div>	
 	</div>
@@ -200,6 +213,7 @@
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalInstalacao">
 
+
 	<div class="row row-modal-instalacao">
 		<div class="input-field col s11">
 				<fieldset>
@@ -210,11 +224,13 @@
 					</select>
 				</fieldset>
 		</div>
-	<div class="modal-footer">
-		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
-		<a class="modal-action modal-close waves-effect waves-green btn-flat"
-			(click)="confirmAddInstalacao()">Confirmar</a>
+		<div class="modal-footer">
+			<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+			<a class="modal-action modal-close waves-effect waves-green btn-flat"
+				(click)="confirmAddInstalacao()">Confirmar</a>
+		</div>
 	</div>
 
 </div>
 	
+<app-modal-display-text></app-modal-display-text>

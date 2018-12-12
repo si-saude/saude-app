@@ -1,6 +1,7 @@
 import { EventEmitter, SimpleChanges, Component, Input, Output } from '@angular/core';
 
 import { MaterializeAction } from "angular2-materialize";
+import * as $ from 'jquery';
 
 @Component( {
     selector: 'app-modal-display-text',
@@ -16,6 +17,7 @@ export class ModalDisplayTextComponent {
     }
     
     openModal(text: string) {
+        $("#modal50").css("z-index",'2000')
         this.msn = text;
         this.modalDisplayText.emit( { action: "modal", params: ["open"] } );
     }

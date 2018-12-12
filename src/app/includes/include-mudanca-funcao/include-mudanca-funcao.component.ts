@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MaterializeAction } from "angular2-materialize";
 
@@ -16,6 +16,7 @@ import { GheeNomeAutocomplete } from './../../controller/ghee/ghee-nome.autocomp
 import { FuncaoNomeAutocomplete } from './../../controller/funcao/funcao-nome.autocomplete';
 import { BaseNomeAutocomplete } from './../../controller/base/base-nome.autocomplete';
 import { EnfaseDescricaoAutocomplete } from './../../controller/enfase/enfase-descricao.autocomplete';
+import { ModalDisplayTextComponent } from './../modal-display-text/modal-display-text.component';
 
 @Component( {
     selector: 'app-include-mudanca-funcao',
@@ -41,6 +42,7 @@ export class IncludeMudancaFuncaoComponent {
     private grupoMonitoramento: GrupoMonitoramento;
     instalacoes: Array<Instalacao>;
     gruposMonitoramento: Array<GrupoMonitoramento>;
+    @ViewChild( ModalDisplayTextComponent ) modalDisplayTextComponent2: ModalDisplayTextComponent;
     
     constructor( private route: ActivatedRoute, private router: Router) {
         

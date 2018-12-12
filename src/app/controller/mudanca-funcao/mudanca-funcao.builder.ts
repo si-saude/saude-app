@@ -46,6 +46,7 @@ export class MudancaFuncaoBuilder extends GenericBuilder {
         cloneMudancaFuncao.setId(this.getValue(mudancaFuncao,"getId"));
         cloneMudancaFuncao.setVersion(this.getValue(mudancaFuncao,"getVersion"));
         cloneMudancaFuncao.setAtividades(this.getValue(mudancaFuncao,"getAtividades"));
+        cloneMudancaFuncao.setDataTransferencia(this.getValue(mudancaFuncao,"getDataTransferencia"));
         cloneMudancaFuncao.setTarefas(new TarefaBuilder().cloneList(this.getValue(mudancaFuncao,"getTarefas")));
         
         if (this.getValue(mudancaFuncao, "getEnfase") !== undefined) { 

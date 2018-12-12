@@ -27,8 +27,10 @@ export class MudancaFuncao {
     private tarefas: Array<Tarefa>;
     private version: number;
     private atividades : string;
+    private dataTransferencia: Date;
     private instalacoes: Array<Instalacao>;
     private grupoMonitoramentos: Array<GrupoMonitoramento>;
+    private dataTransferenciaCustomDate: CustomDate = new CustomDate(this.dataTransferencia);
 
 
     getId() {
@@ -45,6 +47,25 @@ export class MudancaFuncao {
 
     setAbertura(abertura: Date) {
         this.abertura = abertura;
+    }
+
+    getDataTransferencia() {
+        this.dataTransferencia = this.dataTransferenciaCustomDate.getApiDate();
+        return this.dataTransferencia;
+    }
+
+    setDataTransferencia(dataTransferencia: Date) {
+        this.dataTransferenciaCustomDate.setApiDate(dataTransferencia);
+        this.dataTransferencia = dataTransferencia;
+    }
+    
+    
+    getDataTransferenciaCustomDate(){
+        return this.dataTransferenciaCustomDate;
+    }
+    
+    setDataTransferenciaCustomDate(dataTransferenciaCustomDate: CustomDate){
+        this.dataTransferenciaCustomDate = dataTransferenciaCustomDate;
     }
     
     getStatus():string {

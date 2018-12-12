@@ -3,6 +3,7 @@ import { MaterializeModule } from 'angular2-materialize';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ModalDisplayTextModule } from './../modal-display-text/modal-display-text.module';
 
 import { InformacaoEmpregadoComponent } from './informacao-empregado.component';
 
@@ -14,7 +15,8 @@ import { InformacaoEmpregadoComponent } from './informacao-empregado.component';
     MaterializeModule,
     FormsModule,
     CommonModule,
-    RouterModule
+    RouterModule,
+    ModalDisplayTextModule
   ],
   exports: [
     InformacaoEmpregadoComponent
