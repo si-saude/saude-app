@@ -131,8 +131,9 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
             })
     }
 
-    setarResponsavel(i: number) {
-        this.mudancaFuncao.getTarefas()[i].setResponsavel(this.profissional);
+    setarResponsavel(i: number) { 
+        if(this.profissional.getEquipe().getId() == this.mudancaFuncao.getTarefas()[i].getEquipe().getId())
+            this.mudancaFuncao.getTarefas()[i].setResponsavel(this.profissional);
     }
     ngOnDestroy() {
         this.inscricao.unsubscribe();

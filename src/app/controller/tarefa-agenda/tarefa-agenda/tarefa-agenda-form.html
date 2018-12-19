@@ -1,0 +1,65 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+
+		<div class="row">
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="tarefa.cliente.pessoa.nome">Empregado</label>
+					<input id="tarefa.cliente.pessoa.nome" type="text" disabled
+					[(ngModel)]="tarefa.cliente.pessoa.nome" name="tarefa.cliente.pessoa.nome">
+				</div>
+				<div class="input-field col s4">
+					<label for="data">Data</label>
+					<app-date-picker [nome]="'data'" 
+										[customDate]="tarefa.inicioCustomDate" 									
+										[legenda]="'Data'"									
+										></app-date-picker>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<label for="equipe">Equipe</label>
+					<input id="equipe" type="text" disabled
+					[(ngModel)]="tarefa.equipe.nome" name="tarefa.equipe.nome">
+				</div>
+				<div class="input-field col s6">
+					<label for="tarefa.servico.nome">Serviço</label>
+					<input id="tarefa.servico.nome" type="text" disabled
+					[(ngModel)]="tarefa.servico.nome" name="tarefa.servico.nome">
+				</div>
+			</div>
+
+
+			<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+			</div>
+		
+			<div class='row row-btns'>
+				<div class="col s6">
+					<a [routerLink]="['/tarefa-agenda']"
+					class="btn btn-primary btn-listar">Listar</a>
+				</div>
+				<div class="col s6">
+					<button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+				</div>
+			</div>
+			
+		</div>
+		
+	</form>
+	
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

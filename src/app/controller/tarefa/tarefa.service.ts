@@ -22,6 +22,10 @@ export class TarefaService extends GenericService {
         super(http,router,"tarefa");
     }
     
+    getServicoService(){
+        return this.servicoService;        
+    }
+    
     getTarefas() {
         return this.selectList(new TarefaFilter());
     }
@@ -48,7 +52,6 @@ export class TarefaService extends GenericService {
             .post( urlList, tarefaFilter, { headers: this.headers } )
             .toPromise();
     }
-    
     getProfissionalByName(nome: string) {
         return this.profissionalSaudeService.getProfissionalByName(nome);
     }

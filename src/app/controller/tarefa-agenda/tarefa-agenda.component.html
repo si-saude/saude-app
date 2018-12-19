@@ -1,0 +1,127 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- -->
+<app-mensagem-form *ngIf="verifyEmptyPaginas" [msg]="msgEmptyPaginas"
+	[color]="colorEmptyPaginas"> </app-mensagem-form>
+
+<!-- Preload  --> 
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<div class="list-container">
+
+	<div class="collection">
+
+		<div *ngFor="let a of array">
+			<div class="row row-collection">
+				<div class="col s9">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.cliente.pessoa.nome}} - {{a.equipe.nome}} - {{a.servico.nome}}</a>
+				</div>
+				<div class="col s2">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.inicio | transformDate}}</a>
+				</div>
+
+				<div class="col s1">
+					<a [routerLink]="['/tarefa-agenda/editar', a.id]"><i
+						class="material-icons">mode_edit</i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Paginação -->
+	<app-paginacao [filter]="filter" [paginasAtuais]="paginasAtuais"
+		[paginas]="paginas" [listComponent]="listComponent"
+		[verifyEmptyPaginas]="verifyEmptyPaginas"></app-paginacao>
+
+	<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal altura-modal" materialize="modal" (keypress)="enterFilter($event)"
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+
+<div class="row">
+			<div class="input-field col s12">			
+				<div class="input-field col s9">
+					<label for="filter.cliente.pessoa.nome">Empregado</label>
+					<input id="filter.cliente.pessoa.nome" type="text"
+					[(ngModel)]="filter.cliente.pessoa.nome" name="filter.cliente.pessoa.nome">
+				</div>
+				<div class="input-field col s3">
+					<label for="filter.cliente.chave">Chave</label>
+					<input id="filter.cliente.chave" type="text"
+					[(ngModel)]="filter.cliente.chave" name="filter.cliente.chave">
+				</div>
+			</div>
+			<div class="input-field col s12">	
+				<div class="input-field col s6">
+					<fieldset>
+						<legend>Servico</legend>
+						<select name="equipe" class="browser-default"
+							[(ngModel)]="filter.servico.id">
+							<option selected value=0>Selecione um servico</option>
+							<option *ngFor="let servico of servicos" value="{{servico.id}}">{{servico.nome}}</option>
+						</select>
+					</fieldset>
+				</div>			
+				<div class="input-field col s6">
+					<fieldset>
+						<legend>Equipe</legend>
+						<select name="equipe" class="browser-default"
+							[(ngModel)]="filter.equipe.id">
+							<option selected value=0>Selecione uma equipe</option>
+							<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+						</select>
+					</fieldset>
+				</div>
+				
+			</div>
+			<div class="input-field col s12">
+				<div class="input-field col s4">
+					<label for="data">Data de Agendamento
+						Inicial</label>
+						<app-date-picker [nome]="'inicio'" 
+									[customDate]="filter.inicio.inicioCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data Inicial'"									
+									></app-date-picker>
+				</div>
+				<div class="input-field col s4">
+					<label for="dataRevisao">Data de Agendamento Final</label>
+							<app-date-picker [nome]="'inicio'" 
+									[customDate]="filter.inicio.fimCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Revisão Final'"									
+									></app-date-picker>
+				</div>
+
+				<div class="input-field col s4">
+					<fieldset>
+						<legend>Tipo do Filtro</legend>
+						<select name="tipo" class="browser-default"
+							[(ngModel)]="filter.inicio.typeFilter">
+							<option disabled selected value=0>Selecione um tipo</option>
+							<option *ngFor="let item of typeFilters()" value="{{item}}">{{item}}</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>			
+</div>
+
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat"
+			(click)="setFilter()">Filtrar</a>
+	</div>
+
+</div>
+
+<app-confirm-delete [service]="service" [idDelete]="tempDelete" (cancelDelete)="closeModalDelete($event)"
+	[show]="openModalDelete"></app-confirm-delete>
+	
+<div class="mensagem">
+	<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+		[msg]="msgError"></app-mensagem-form>
+</div>
