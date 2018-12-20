@@ -28,6 +28,7 @@ import { ServicoBuilder } from './../../servico/servico.builder';
 import { EmpregadoBuilder } from './../../empregado/empregado.builder';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { ProfissionalSaudeBuilder } from './../profissional-saude.builder';
+import { EquipeBuilder } from './../../equipe/equipe.builder';
 import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
 
 @Component( {
@@ -44,6 +45,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     servicos: Array<Servico>;
     servicosSelecteds: Array<Servico>;
     autocompleteEmpregado;
+    equipeAux: Equipe;
     
     vencimentoProfissionalConselho: any;
     assinaturaSrc: any;
@@ -62,6 +64,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
         this.servicos = new ServicoBuilder().initializeList( this.servicos );
         this.servicosSelecteds = new Array<Servico>();
         this.autoCompleteEmp = new EmpregadoNomeAutocomplete(this.profissionalSaudeService.getEmpregadoService());
+        this.equipeAux = new EquipeBuilder().initialize(this.equipeAux);
     }
 
     ngOnInit() {
@@ -114,7 +117,7 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
     getEquipes() {
         this.profissionalSaudeService.getEquipe()
             .then( res => {
-                this.equipes = res.json();
+                this.equipes = new EquipeBuilder().cloneList(res.json());
             } )
             .catch( error => {
                 console.log( error );
@@ -169,9 +172,19 @@ export class ProfissionalSaudeFormComponent extends GenericFormComponent impleme
             }
         }
     }
-
     removeServico(i: number) {
         this.profissionalSaude.getServicos().splice(i, 1);
+    }
+    
+    addEquipe() {
+        if(this.equipeAux.getId() > 0 && (this.profissionalSaude.getEquipes().find(e=> e.getId() == this.equipeAux.getId() ) == undefined)){
+            this.equipeAux = new EquipeBuilder().clone(this.equipes.find(e=> e.getId() == this.equipeAux.getId()));
+            this.profissionalSaude.getEquipes().push(new EquipeBuilder().clone(this.equipeAux));
+        }
+    }
+    
+    removeEquipe(i: number) {
+        this.profissionalSaude.getEquipes().splice(i, 1);
     }
 
     onDestroy() {

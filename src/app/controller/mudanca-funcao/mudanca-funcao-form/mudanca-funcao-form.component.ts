@@ -89,6 +89,7 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
                                                                 this.tarefaHigieneOcupacional = this.mudancaFuncao.getTarefas().find(x => x.getEquipe().getAbreviacao() == 'HIG');                                                                
                                                                 this.tarefaMedicinaOcupacional.getInicioCustomDate().setAppTime("08:00");
                                                                 this.loadingEmpregado();
+                                                                this.verifyEquipes();
                                                         } )
                                                             .catch( error => {
                                                                 this.catchConfiguration( error );
@@ -132,8 +133,10 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
     }
 
     setarResponsavel(i: number) { 
-        if(this.profissional.getEquipe().getId() == this.mudancaFuncao.getTarefas()[i].getEquipe().getId())
+        if(this.profissional.getEquipe().getId() == this.mudancaFuncao.getTarefas()[i].getEquipe().getId() ||
+           this.profissional.getEquipes().find(e=> e.getId() == this.mudancaFuncao.getTarefas()[i].getEquipe().getId())){
             this.mudancaFuncao.getTarefas()[i].setResponsavel(this.profissional);
+        }
     }
     ngOnDestroy() {
         this.inscricao.unsubscribe();
@@ -173,4 +176,16 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
                console.log( error );
            } )
     }
+    
+    
+    
+    verifyEquipes(){
+        this.mudancaFuncao.getTarefas().forEach(x=>{
+            if(this.profissional.getEquipe().getId() == x.getEquipe().getId() || this.profissional.getEquipes().find(e=>e.getId() == x.getEquipe().getId())){
+                x.setDesabilitarTarefaMundancaFuncao(false);
+             }else
+                x.setDesabilitarTarefaMundancaFuncao(true);
+        });
+    }
+    
 }

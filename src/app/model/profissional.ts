@@ -14,6 +14,7 @@ export class Profissional {
     private dataAso: Date;
     private localizacao: Localizacao;
     private equipe: Equipe;
+    private equipes: Array<Equipe>;
     private mi: string;
     private curriculo: Curriculo;
     private profissionalConselho: ProfissionalConselho;
@@ -45,6 +46,14 @@ export class Profissional {
     
     setEmpregado(empregado: Empregado) {
         this.empregado = empregado;
+    }
+    
+    getEquipes() {
+        return this.equipes;
+    }
+
+    setEquipes(equipes: Array<Equipe>) {
+        this.equipes = equipes;
     }
     
     getDataAso() {
