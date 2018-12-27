@@ -228,7 +228,8 @@ export class FichaColetaComponent{
         let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);
         if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
             if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
-                if ( this.fuma.getConteudo() == "FUMANTE" && equipe != undefined ){
+                console.log(this.fuma.getItens());
+                if ( this.fuma.getConteudo() == "SIM" && equipe != undefined){
                     ret = false;
                 }
                 else{                        
