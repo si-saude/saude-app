@@ -1,0 +1,488 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="naf">
+	<fieldset>
+		<legend>NAF (Nível de Atividade Física)</legend>
+	
+		<div class="atividades-realizadas">
+			<div class="col s12">
+				<p class="subtitle">REALIZADAS
+					<a class="btn-floating waves-effect waves-light green btn-add-fieldset" (click)="addAtividade('REALIZADA')"> 
+						<i class="material-icons center-icon">add</i>
+					</a>
+				</p>
+			</div>
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s2">Atividade</th>
+						<th class="col s1">Dias</th>
+						<th class="col s1">Min</th>
+						<th class="col s1">Total</th>
+						<th class="col s2">Classificação</th>
+						<th class="col s3">Observação</th>
+						<th class="col s1" style="padding: 0">Finalizada</th>
+						<th class="col s1">Remover</th>
+					</tr>
+				</thead>
+				<div *ngFor="let afaf of afafsRealizadas; let i = index">
+					<tbody class="col s12">
+						<tr class="col s12 row">
+							<td class="col s2 atividade">
+								<input type="text" materialize="autocomplete" autocomplete="off"
+									name="afaf.atividadeFisica.descricao{{i}}"
+									[(ngModel)]="afaf.atividadeFisica.descricao"
+									(blur)="autocompleteAF.getAutocomplete().getObj($event,afaf,'setAtividadeFisica','getDescricao')"
+									(ngModelChange)="autocompleteAF.getAutocomplete().getList(afaf.atividadeFisica, 'getDescricao');"
+									(keydown.enter)="autocompleteAF.getAutocomplete().pressEnter($event,afaf,'setAtividadeFisica','getDescricao');"
+									[materializeParams]="autocompleteAF.getAutocomplete().getObjAutoComplete()">
+							</td>
+							<td class="col s1 dias">
+								<a class="btn-dias btn-tiny waves-effect waves-light"
+									(click)="openModelDias(afaf)"> <i class="tiny material-icons">add</i>
+								</a>
+							</td>
+							<td class="col s1 minuto"> 
+								<input id="minuto{{i}}" type="number"
+									[(ngModel)]="afaf.minuto" (change)="changeTotal(afaf)"
+									name="afaf.minuto{{i}}">
+							</td>
+							<td class="col s1 total"> 
+								<input id="total{{i}}" type="number" disabled
+									[(ngModel)]="afaf.totalMinuto"
+									name="afaf.totalMinuto{{i}}">
+							</td>
+							<td class="col s2 classificacao">
+								<select name="classificacao{{i}}" class="browser-default"
+									[(ngModel)]="afaf.classificacao">
+									<option disabled selected value="">Selecione uma Classificação</option>
+									<option *ngFor="let classificacao of classificacoes" value="{{classificacao}}">{{classificacao}}</option>
+								</select>
+							</td>
+							<td class="col s3 observacao">
+								<textarea class="materialize-textarea" id="afaf.observacao{{i}}" 
+									[(ngModel)]="afaf.observacao" name="afaf.observacao{{i}}"></textarea>
+							</td>
+							<td class="col s1"><a
+								class="btn-floating waves-effect waves-light red btn-remove"
+								(click)="replicateAtividade(afaf)"> <i
+									class="material-icons center-icon">check</i>
+							</a></td>
+							<td class="col s1 botao-remover"><a
+								class="btn-floating waves-effect waves-light red btn-remove"
+								(click)="removeAtividade('REALIZADA', i)"> <i
+									class="material-icons center-icon">delete</i>
+							</a></td>
+						</tr>
+					</tbody>
+				</div>
+			
+			</table>
+		</div>
+		<div class="atividades-orientadas">
+			<div class="col s12">
+				<p class="subtitle">ORIENTADAS
+					<a class="btn-floating waves-effect waves-light green btn-add-fieldset" (click)="addAtividade('ORIENTADA')"> 
+						<i class="material-icons center-icon">add</i>
+					</a>
+				</p>
+			</div>
+			<table class="striped">
+				<thead>
+					<tr class="row col s12">
+						<th class="col s3">Atividade</th>
+						<th class="col s1">Dias</th>
+						<th class="col s1">Min</th>
+						<th class="col s1">Total</th>
+						<th class="col s2">Classificação</th>
+						<th class="col s3">Observação</th>
+						<th class="col s1">Remover</th>
+					</tr>
+				</thead>
+				<div *ngFor="let afaf of afafsOrientadas; let i = index">
+					<tbody class="col s12">
+						<tr class="col s12">
+							<td class="col s3 atividade">
+								<input type="text" materialize="autocomplete" autocomplete="off"
+									name="afaf.atividadeFisica.descricao{{i}}"
+									[(ngModel)]="afaf.atividadeFisica.descricao"
+									(blur)="autocompleteAF.getAutocomplete().getObj($event,afaf,'setAtividadeFisica','getDescricao')"
+									(ngModelChange)="autocompleteAF.getAutocomplete().getList(afaf.atividadeFisica, 'getDescricao');"
+									(keydown.enter)="autocompleteAF.getAutocomplete().pressEnter($event,afaf,'setAtividadeFisica','getDescricao');"
+									[materializeParams]="autocompleteAF.getAutocomplete().getObjAutoComplete()">
+							</td>
+							<td class="col s1 dias">
+								<a class="btn-dias btn-tiny waves-effect waves-light"
+									(click)="openModelDias(afaf)"> <i class="tiny material-icons">add</i>
+								</a>
+							</td>
+							<td class="col s1 minuto"> 
+								<input id="minuto" type="number"
+									[(ngModel)]="afaf.minuto" (change)="changeTotal(afaf)"
+									name="afaf.minuto">
+							</td>
+							<td class="col s1 total"> 
+								<input id="total" type="number" disabled
+									[(ngModel)]="afaf.totalMinuto"
+									name="afaf.totalMinuto">
+							</td>
+							<td class="col s2 classificacao">
+								<select name="classificacao" class="browser-default"
+									[(ngModel)]="afaf.classificacao">
+									<option disabled selected value="">Selecione uma Classificação</option>
+									<option *ngFor="let classificacao of classificacoes" value="{{classificacao}}">{{classificacao}}</option>
+								</select>
+							</td>
+							<td class="col s3 observacao">
+								<textarea class="materialize-textarea" id="afaf.observacao{{i}}" 
+									[(ngModel)]="afaf.observacao" name="afaf.observacao{{i}}"></textarea>
+							</td>
+							<td class="col s1 botao-remover"><a
+								class="btn-floating waves-effect waves-light red btn-remove"
+								(click)="removeAtividade('ORIENTADA', i)"> <i
+									class="material-icons center-icon">delete</i>
+							</a></td>
+						</tr>
+					</tbody>
+				</div>
+			
+			</table>
+		</div>
+	</fieldset>
+</div>
+
+<div class="estagioContemplacao">
+	<fieldset>
+		<legend>Estágio de Contemplação</legend>
+		<table>
+			<tr class="col s12"><th class="col s10">Questão</th><th class="col s1">Sim</th><th class="col s1">Não</th></tr>
+			<tr class="col s12">
+				<td  class="col s10"><p>Pratica algum exercício físico?</p></td>
+				<td class="col s1 pratica-exercicio-fisico-sim">
+					<input type="checkbox" id="pratica-exercicio-fisico-sim"
+						[checked]="verifyEstagioContemplacao('praticaExercicioFisico')" 
+						(change)="changePraticaExercicioFisico(true)"
+						name="pratica-exercicio-fisico-sim"> 
+					<label for="pratica-exercicio-fisico-sim"></label>
+				</td>
+				<td class="col s1 pratica-exercicio-fisico-nao">
+					<input type="checkbox" id="pratica-exercicio-fisico-nao"
+						[checked]="!verifyEstagioContemplacao('praticaExercicioFisico')" 
+						(change)="changePraticaExercicioFisico(false)"
+						name="pratica-exercicio-fisico-nao"> 
+					<label for="pratica-exercicio-fisico-nao"></label>
+				</td>
+				<td class="col s1"></td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s10"><p>Tem interesse em iniciar um programa de exercício físico?</p></td>
+				<td class="col s1 interesse-programa-fisico-sim">
+					<input type="checkbox" id="interesse-programa-fisico-sim"
+						[checked]="verifyEstagioContemplacao('interesseProgramaFisico')" 
+						(change)="changeInteresseProgramaFisico(true)"
+						[disabled]="verifyEstagioContemplacao('praticaExercicioFisico')"
+						name="interesse-programa-fisico-sim"> 
+					<label for="interesse-programa-fisico-sim"></label>
+				</td>
+				<td class="col s1 interesse-programa-fisico-nao">
+					<input type="checkbox" id="interesse-programa-fisico-nao"
+						[checked]="!verifyEstagioContemplacao('interesseProgramaFisico')" 
+						(change)="changeInteresseProgramaFisico(false)"
+						[disabled]="verifyEstagioContemplacao('praticaExercicioFisico')"
+						name="interesse-programa-fisico-nao"> 
+					<label for="interesse-programa-fisico-nao"></label>
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s10"><p>Já fez alguma ação para iniciar um programa de exercício físico?</p></td>
+				<td class="col s1 interesse-programa-fisico-sim">
+					<input type="checkbox" id="acao-iniciar-exercicio-fisico-sim"
+						[checked]="verifyEstagioContemplacao('acaoIniciarExercicioFisico')" 
+						(change)="changeAcaoIniciarExercicioFisico(true)"
+						[disabled]="!verifyEstagioContemplacao('interesseProgramaFisico')"
+						name="acao-iniciar-exercicio-fisico-sim"> 
+					<label for="acao-iniciar-exercicio-fisico-sim"></label>
+				</td>	
+				<td class="col s1 interesse-programa-fisico-nao">
+					<input type="checkbox" id="acao-iniciar-exercicio-fisico-nao"
+						[checked]="!verifyEstagioContemplacao('acaoIniciarExercicioFisico')" 
+						(change)="changeAcaoIniciarExercicioFisico(false)"
+						[disabled]="!verifyEstagioContemplacao('interesseProgramaFisico')"
+						name="acao-iniciar-exercicio-fisico-nao"> 
+					<label for="acao-iniciar-exercicio-fisico-nao"></label>
+				</td>
+				<td class="col s1"></td>
+			</tr>
+			<tr class="col s12">
+				<span>Observações:</span>
+				<textarea class="materialize-textarea" id="observacaoEstagioContemplacao" 
+					[(ngModel)]="atendimento.avaliacaoFisica.observacaoEstagioContemplacao" 
+					name="observacaoEstagioContemplacao"></textarea>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<div class="composicaoCorporal">
+	<fieldset>
+		<legend>Composição Corporal</legend>
+		<table>
+			<p>Dados primários</p>
+			<tr class="col s12">
+				<td class="col s6">
+					<label>Peso (Kg)</label>
+					<input id="ficha-coleta-peso" type="text"
+						value="{{getFichaColetaValue('peso')}}" disabled
+						name="ficha-coleta-peso">
+				</td>
+				<td class="col s6">
+					<label>Estatura (cm)</label>
+					<input id="ficha-coleta-estatura" type="text"
+						value="{{getFichaColetaValue('estatura')}}" disabled
+						name="ficha-coleta-estatura">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td class="col s4">
+					<label>Circurferência Abdomial (cm)</label>
+					<input id="ficha-coleta-circunferencia-abdominal" type="text"
+						value="{{getFichaColetaValue('circunferenciaAbdominal')}}" disabled
+						name="ficha-coleta-circunferencia-abdominal">
+				</td>
+				<td class="col s4">
+					<label>Circunferência da Cintura (cm)</label>
+					<input id="ficha-coleta-circunferencia-cintura" type="text"
+						value="{{getFichaColetaValue('circunferenciaCintura')}}" disabled
+						name="ficha-coleta-circunferencia-cintura">
+				</td>
+				<td class="col s4">
+					<label>Circuferência do Quadril (cm)</label>
+					<input id="ficha-coleta-circunferencia-quadril" type="text"
+						value="{{getFichaColetaValue('circunferenciaQuadril')}}" disabled
+						name="ficha-coleta-circunferencia-quadril">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td class="col s3">
+					<label>Dobra Tricipal (mm)</label>
+					<input id="dobra-tricipital" type="text"
+						value="{{getFichaColetaValue('dobraTricipal')}}" disabled
+						name="ficha-coleta-dobra-tricipital">
+				</td>
+				<td class="col s3">
+					<label>Dobra Subscapular (mm)</label>
+					<input id="ficha-coleta-dobra-subscapular" type="text"
+						value="{{getFichaColetaValue('dobraSubscapular')}}" disabled
+						name="ficha-coleta-dobra-subscapular">
+				</td>
+				<td class="col s3">
+					<label>Dobra Toracica (mm)</label>
+					<input id="ficha-coleta-dobra-toracica" type="text"
+						value="{{getFichaColetaValue('dobraToracica')}}" disabled
+						name="ficha-coleta-dobra-toracica">
+				</td>
+				<td class="col s3">
+					<label>Dobra Aux. Média (mm)</label>
+					<input id="ficha-coleta-dobra-aux-media" type="text"
+						value="{{getFichaColetaValue('dobraAuxMedia')}}" disabled
+						name="ficha-coleta-dobra-aux-media">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td class="col s3">
+					<label>Dobra Supra-ilíaca (mm)</label>
+					<input id="ficha-coleta-dobra-supra-iliaca" type="text"
+						value="{{getFichaColetaValue('dobraSupraIliaca')}}" disabled
+						name="ficha-coleta-dobra-supra-iliaca">
+				</td>
+				<td class="col s3">
+					<label>Dobra Abdmonial (mm)</label>
+					<input id="ficha-coleta-dobra-abdominal" type="text"
+						value="{{getFichaColetaValue('dobraAbdominal')}}" disabled
+						name="ficha-coleta-dobra-abdominal">
+				</td>
+				<td class="col s3">
+					<label>Dobra Coxa Medial (mm)</label>
+					<input id="ficha-coleta-dobra-coxa-medial" type="text"
+						value="{{getFichaColetaValue('dobraCoxaMedial')}}" disabled
+						name="ficha-coleta-dobra-coxa-medial">
+				</td>
+				<td class="col s3">
+					<button style="margin-top: 10%;" class="btn" type="button" (click)="calcularComposicaoCorporal()">Calcular</button>
+				</td>
+			</tr>
+			<p>Dados Secundários</p>
+			<tr class="col s12">
+				<td class="col s3">
+					<label>IMC (Kg/m²)</label>
+					<input id="avaliacaoFisica.imc" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.imc" disabled
+						name="avaliacaoFisica.imc">
+				</td>
+				<td class="col s3">
+					<label>Razão Cintura/Estatura</label>
+					<input id="avaliacaoFisica.razaoCinturaEstatura" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.razaoCinturaEstatura" disabled
+						name="avaliacaoFisica.razaoCinturaEstatura">
+				</td>
+				<td class="col s3">
+					<label>% Gordura (%G)</label>
+					<input id="avaliacaoFisica.percentualGordura" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.percentualGordura" disabled
+						name="avaliacaoFisica.percentualGordura">
+				</td>
+				<td class="col s3">
+					<label>% Massa Magra (%MCM)</label>
+					<input id="avaliacaoFisica.percentualMassaMagra" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.percentualMassaMagra" disabled
+						name="avaliacaoFisica.percentualMassaMagra">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td class="col s3">
+					<label>Massa Magra (kg)</label>
+					<input id="avaliacaoFisica.massaMagra" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.massaMagra" disabled
+						name="avaliacaoFisica.massaMagra">
+				</td>
+				<td class="col s3">
+					<label>Gordura Absoluta (kg)</label>
+					<input id="avaliacaoFisica.gorduraAbsoluta" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.gorduraAbsoluta" disabled
+						name="avaliacaoFisica.gorduraAbsoluta">
+				</td>
+				<td class="col s3">
+					<label>Carência Muscular (kg)</label>
+					<input id="avaliacaoFisica.carenciaMuscular" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.carenciaMuscular" disabled
+						name="avaliacaoFisica.carenciaMuscular">
+				</td>
+				<td class="col s3">
+					<label>% Gordura Ideal</label>
+					<input id="avaliacaoFisica.percentualGorduraIdeal" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.percentualGorduraIdeal" disabled
+						name="avaliacaoFisica.percentualGorduraIdeal">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td class="col s4">
+					<label>% Massa Magra Ideal</label>
+					<input id="avaliacaoFisica.percentualMassaMagraIdeal" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.percentualMassaMagraIdeal" disabled
+						name="avaliacaoFisica.percentualMassaMagraIdeal">
+				</td>
+				<td class="col s4">
+					<label>Peso Ideal (kg)</label>
+					<input id="avaliacaoFisica.pesoIdeal" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.pesoIdeal" disabled
+						name="avaliacaoFisica.pesoIdeal">
+				</td>
+				<td class="col s4">
+					<label>Peso em Excesso (kg)</label>
+					<input id="avaliacaoFisica.pesoExcesso" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.pesoExcesso" disabled
+						name="avaliacaoFisica.pesoExcesso">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td class="col s3">
+					<label>% Gordura Negociada</label>
+					<input id="avaliacaoFisica.percentualGorduraNegociada" type="number"
+						[(ngModel)]="atendimento.avaliacaoFisica.percentualGorduraNegociada"
+						name="avaliacaoFisica.percentualGorduraNegociada">
+				</td>
+				<td class="col s3">
+					<label>% Massa Magra Negociada</label>
+					<input id="avaliacaoFisica.percentualMassaMagraNegociada" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.percentualMassaMagraNegociada" disabled
+						name="avaliacaoFisica.percentualMassaMagraNegociada">
+				</td>
+				<td class="col s3">
+					<label>Peso Negociado (kg)</label>
+					<input id="avaliacaoFisica.pesoNegociado" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.pesoNegociado" disabled
+						name="avaliacaoFisica.pesoNegociado">
+				</td>
+				<td class="col s3">
+					<label>Peso em Excesso Negociado (kg)</label>
+					<input id="avaliacaoFisica.pesoExcessoNegociado" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.pesoExcessoNegociado" disabled
+						name="avaliacaoFisica.pesoExcessoNegociado">
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal" class="modal" materialize="modal"
+	[materializeParams]="modelParams" [materializeActions]="modalActions">
+	
+		<div class="title" style="width: 50%; margin: 0 auto;"><p style="margin: 0 auto">Dias</p></div>
+		<table class="striped">
+			<thead>
+				<tr class="row col s12">
+					<th class="col s2">Domingo</th>
+					<th class="col s2">Segunda</th>
+					<th class="col s1">Terça</th>
+					<th class="col s2">Quarta</th>
+					<th class="col s2">Quinta</th>
+					<th class="col s1">Sexta</th>
+					<th class="col s2">Sabado</th>
+				</tr>
+			</thead>
+			<tbody class="col s12">
+				<tr class="col s12">
+					<td class="col s2 domingo dia">
+						<input type="checkbox" id="domingo"
+							[(ngModel)]="afafDias.domingo" (change)="changeTotal(afafDias)"
+							name="afafDias.domingo"> <label
+							for="domingo"></label>
+					</td>
+					<td class="col s2 segunda dia">
+						<input type="checkbox" id="segunda"
+							[(ngModel)]="afafDias.segunda" (change)="changeTotal(afafDias)"
+							name="afaf.segunda"> <label
+							for="segunda"></label>
+					</td>
+					<td class="col s1 terca  dia">
+						<input type="checkbox" id="terca"
+							[(ngModel)]="afafDias.terca" (change)="changeTotal(afafDias)"
+							name="afafDias.terca"> <label
+							for="terca"></label>
+					</td>
+					<td class="col s2 quarta dia">
+						<input type="checkbox" id="quarta"
+							[(ngModel)]="afafDias.quarta" (change)="changeTotal(afafDias)"
+							name="afafDias.quarta"> <label
+							for="quarta"></label>
+					</td>
+					<td class="col s2 quinta dia">
+						<input type="checkbox" id="quinta"
+							[(ngModel)]="afafDias.quinta" (change)="changeTotal(afafDias)"
+							name="afafDias.quinta"> <label
+							for="quinta"></label>
+					</td>
+					<td class="col s1 sexta dia">
+						<input type="checkbox" id="sexta"
+							[(ngModel)]="afafDias.sexta" (change)="changeTotal(afafDias)"
+							name="afafDias.sexta"> <label
+							for="sexta"></label>
+					</td>
+					<td class="col s2 sabado dia">
+						<input type="checkbox" id="sabado"
+							[(ngModel)]="afafDias.sabado" (change)="changeTotal(afafDias)"
+							name="afafDias.sabado"> <label
+							for="sabado"></label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	
+	<div class="modal-footer">
+		<a class="waves-effect waves-green btn-flat" (click)="closeModal()">Fechar</a>
+	</div>
+
+</div>

@@ -23,6 +23,7 @@
 			<li class="tab col s1"><a href="#aso">Aso</a></li>
 			<li class="tab col s2"><a href="#fichaColeta">Ficha de Coleta</a></li>
 			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'NUT'"><a href="#nutricao">Nutrição</a></li>
+			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'EDF'"><a href="#educacaoFisica">Educação Física</a></li>			
 			<li class="tab"><a href="#triagem">Triagem</a></li>
 			<li class="tab"><a href="#planejamento">Planejamento</a></li>
 			<li class="tab" [ngClass]="disabledTab"><a href="#acolhimento">Acolhimento</a></li>
@@ -226,6 +227,10 @@
 			(btnNovoQuestionario)="clickBtnNovoQuestionario($event)"
 			(btnNovoRecordatorio)="clickBtnNovoRecordatorio($event)" 
 			[atendimento]="atendimento"></app-menu-atendimento-nutricao>
+	</div>
+	
+	<div id="educacaoFisica">
+		<app-atendimento-proaf [service]="atendimentoService" [atendimento]="atendimento"></app-atendimento-proaf>
 	</div>
 
 	<div id="fichaColeta" disabled>

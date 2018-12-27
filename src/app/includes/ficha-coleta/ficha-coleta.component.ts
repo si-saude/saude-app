@@ -31,6 +31,7 @@ export class FichaColetaComponent{
     private conteudoEnumOrSimNao: Map<number, Array<string>> = new Map<number, Array<string>>();
     private itensResposta: Map<string, Array<string>> = new Map<string, Array<string>>();
     private fuma: RespostaFichaColeta;
+    private aptidaoFisicaBrigadista: Array<string> = new Array<string>();
     
     private modalConteudo;
     private conteudo: string;
@@ -54,6 +55,7 @@ export class FichaColetaComponent{
             this.innerFichaColeta = changes["fichaColeta"].currentValue;
             this.getFuma();
             this.getStatusSimNao();
+            this.getAptidaoFisicaBrigadista();
         }
         if ( changes["idEquipeProfissional"] != undefined ) {
             this.innerIdEquipeProfissional = changes["idEquipeProfissional"].currentValue;
@@ -61,6 +63,17 @@ export class FichaColetaComponent{
         if ( changes["statusFila"] != undefined && changes["statusFila"].currentValue != "") {
             this.statusFila = changes["statusFila"].currentValue;
         }
+    }
+    
+    getAptidaoFisicaBrigadista() {
+        this.service.getAptidaoFisicaBrigadista()
+            .then(res => {
+                this.aptidaoFisicaBrigadista = Object.keys(res.json()).sort();
+                console.log(this.aptidaoFisicaBrigadista)
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
     
     getFuma() {
@@ -343,13 +356,28 @@ export class FichaColetaComponent{
         return false;   
     }
     
-    verifyFuma(resposta){
+    verifyFuma(resposta: RespostaFichaColeta){
         if(resposta.getPergunta().getGrupo() == "ANAMNESE" && resposta.getPergunta().getCodigo() == "0008"){
             this.innerFichaColeta.getRespostaFichaColetas().forEach(rFC =>  {
                if(rFC.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4]){
                    this.permissaoCampo(rFC);    
                }
             });
+        }
+    }
+    
+    configureBrigadista(resposta: RespostaFichaColeta) {
+        if( resposta.getPergunta().getGrupo().includes("EXAME F") 
+                && ( resposta.getPergunta().getCodigo() == "0017" || 
+                resposta.getPergunta().getCodigo() == "0016" || 
+                resposta.getPergunta().getCodigo() == "0014" ) ) {
+            if ( resposta.getConteudo().includes("DIO") ) 
+                this.innerFichaColeta.getRespostaFichaColetas().find(rfc => {
+                    if ( rfc.getPergunta().getGrupo().includes("EXAME F") &&
+                            rfc.getPergunta().getCodigo() == "0019" )
+                        return true;
+                    return false;
+                }).setConteudo(this.aptidaoFisicaBrigadista[0]);
         }
     }
     

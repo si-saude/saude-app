@@ -131,8 +131,14 @@ export class FilaEsperaOcupacionalService extends GenericService {
         let urlSaveFilaEsperaOcupacional = this.URL + "/save-fila-espera-ocupacional-retroativo";
         return this.http
             .post( urlSaveFilaEsperaOcupacional, filaEsperaOcupacionalFilter, { headers: this.headers } )
+            .toPromise();   
+    }
+    
+    getAptidaoFisicaBrigadista() {
+        let urlAptidaoFisicaBrigadista = GlobalVariable.BASE_API_URL + "/generic/aptidao-fisica-brigadista";
+        return this.http
+            .get( urlAptidaoFisicaBrigadista + "?filter=", { headers: this.headers } )
             .toPromise();
-        
     }
     
 }

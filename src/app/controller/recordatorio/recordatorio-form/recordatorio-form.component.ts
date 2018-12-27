@@ -185,4 +185,13 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     roundComparacao(valor) {
         return Math.round(valor);
     }
+    
+    sumNutriente(ref: Refeicao, campo) {
+        let sum: number = 0;
+        ref.getItens().forEach(i => {
+            if ( i.getAlimento()[campo] != undefined )
+                sum += Number(Number(i.getAlimento()[campo].replace('.','').replace(',','.'))*i.getQuantidade());
+        })
+        return sum;
+    }
 }

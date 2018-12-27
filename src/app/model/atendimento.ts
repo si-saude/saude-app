@@ -6,6 +6,7 @@ import { Triagem } from './triagem';
 import { RegraAtendimento } from './regra-atendimento';
 import { QuestionarioConhecimentoAlimentar } from './questionario-conhecimento-alimentar';
 import { Recordatorio } from './recordatorio';
+import { AvaliacaoFisica } from './avaliacao-fisica';
 
 export class Atendimento {
     private id: number;
@@ -17,6 +18,7 @@ export class Atendimento {
     private triagensTodosAtendimentos: Array<Triagem>;
     private questionario: QuestionarioConhecimentoAlimentar;
     private recordatorio: Recordatorio;
+    private avaliacaoFisica: AvaliacaoFisica;
     private version: number;
 
     getId() {
@@ -97,5 +99,13 @@ export class Atendimento {
 
     setRecordatorio( recordatorio ) {
         this.recordatorio = recordatorio;
+    }
+    
+    getAvaliacaoFisica () {
+        return this.avaliacaoFisica;
+    }
+
+    setAvaliacaoFisica ( avaliacaoFisica ) {
+        this.avaliacaoFisica = avaliacaoFisica;
     }
 }
