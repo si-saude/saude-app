@@ -258,9 +258,10 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
                 return '';
             }
             case "arquivo": {
-                if ( this.profissional.getEquipe().getAbreviacao() != "ARQ" ) 
-                    return 'disabled';
-                return '';
+                if ( this.profissional.getEquipe().getAbreviacao() == "ARQ" || 
+                        this.profissional.getEquipes().find(e => e.getAbreviacao() == "ARQ") != undefined ) 
+                    return '';
+                return 'disabled';
             }
         }
     }
