@@ -280,4 +280,11 @@ export class AtendimentoService extends GenericService {
             .get( urlClassificacaoAtividade + "?filter=", { headers: this.headers } )
             .toPromise();
     }
+    
+    calcularComposicaoCorporal( atendimento ) {
+        let urlCalcularComposicaoCorporal = this.URL + "/calcular-composicao-corporal";
+        return this.http
+            .post( urlCalcularComposicaoCorporal, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
 }
