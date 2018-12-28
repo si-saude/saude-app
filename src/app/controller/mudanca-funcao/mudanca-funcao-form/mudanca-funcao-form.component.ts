@@ -149,7 +149,9 @@ export class MudancaFuncaoFormComponent extends GenericFormComponent implements 
     solicitarConvocacao(){        
         this.mudancaFuncaoService.solicitarConvocacao(new MudancaFuncaoBuilder().clone(this.mudancaFuncao))
         .then(res => {  
-                 localStorage.setItem("tarefa", JSON.stringify(this.tarefaMedicinaOcupacional));
+                 let tarefaAux: Tarefa = new TarefaBuilder().clone(this.tarefaMedicinaOcupacional)
+                 tarefaAux.setId(0);
+                 localStorage.setItem("tarefa", JSON.stringify(tarefaAux));
                  window.open("/solicitacao-servico/solicitacao-central-integra");              
         })
         .catch(error => {
