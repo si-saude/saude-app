@@ -16,6 +16,7 @@ import { AcolhimentoModule } from './../acolhimento.module';
 import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-aso.module';
 import { MenuAtendimentoNutricaoModule } from './../../includes/menu-atendimento-nutricao/menu-atendimento-nutricao.module';
 import { AtendimentoProafModule } from './../../includes/atendimento-proaf/atendimento-proaf.module';
+import { AtendimentoInformacoesEmpregadoModule } from './../../includes/atendimento-informacoes-empregado/atendimento-informacoes-empregado.module';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { AtendimentoProafModule } from './../../includes/atendimento-proaf/atend
         AcolhimentoModule,
         InformacaoAsoModule,
         MenuAtendimentoNutricaoModule,
-        AtendimentoProafModule
+        AtendimentoProafModule,
+        AtendimentoInformacoesEmpregadoModule
      ],
      providers: [
         AtendimentoService

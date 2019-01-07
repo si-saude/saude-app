@@ -69,7 +69,6 @@ export class FichaColetaComponent{
         this.service.getAptidaoFisicaBrigadista()
             .then(res => {
                 this.aptidaoFisicaBrigadista = Object.keys(res.json()).sort();
-                console.log(this.aptidaoFisicaBrigadista)
             })
             .catch(error => {
                 console.log(error)
@@ -367,18 +366,32 @@ export class FichaColetaComponent{
     }
     
     configureBrigadista(resposta: RespostaFichaColeta) {
-        if( resposta.getPergunta().getGrupo().includes("EXAME F") 
-                && ( resposta.getPergunta().getCodigo() == "0017" || 
-                resposta.getPergunta().getCodigo() == "0016" || 
-                resposta.getPergunta().getCodigo() == "0014" ) ) {
-            if ( resposta.getConteudo().includes("DIO") ) 
+        if( resposta.getPergunta().getGrupo().includes("EXAME F") ) 
+            if ( resposta.getPergunta().getCodigo() == "0014" )
+                if ( resposta.getConteudo().includes("MODERADO") ) 
+                    this.innerFichaColeta.getRespostaFichaColetas().find(rfc => {
+                        if ( rfc.getPergunta().getGrupo().includes("EXAME F") &&
+                                rfc.getPergunta().getCodigo() == "0019" )
+                            return true;
+                        return false;
+                    }).setConteudo(this.aptidaoFisicaBrigadista[0]);
+            else if ( resposta.getPergunta().getCodigo() == "0016" || 
+                    resposta.getPergunta().getCodigo() == "0017" ) {
+                if ( resposta.getConteudo().includes("DIO") ) 
+                    this.innerFichaColeta.getRespostaFichaColetas().find(rfc => {
+                        if ( rfc.getPergunta().getGrupo().includes("EXAME F") &&
+                                rfc.getPergunta().getCodigo() == "0019" )
+                            return true;
+                        return false;
+                    }).setConteudo(this.aptidaoFisicaBrigadista[0]);
+            } else {
                 this.innerFichaColeta.getRespostaFichaColetas().find(rfc => {
                     if ( rfc.getPergunta().getGrupo().includes("EXAME F") &&
                             rfc.getPergunta().getCodigo() == "0019" )
                         return true;
                     return false;
-                }).setConteudo(this.aptidaoFisicaBrigadista[0]);
-        }
+                }).setConteudo(this.aptidaoFisicaBrigadista[3]);
+            }
     }
     
 }

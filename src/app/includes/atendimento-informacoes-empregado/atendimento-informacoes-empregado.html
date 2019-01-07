@@ -1,0 +1,97 @@
+<head>
+<meta charset="utf-8">
+</head>
+<fieldset>
+	<legend>Empregado</legend>
+
+	<div class="row-empregado row">
+
+		<div class="input-field-empregado input-field col s4">
+			<label for="nomeServico">Serviço</label> <input id="nomeServico"
+				type="text" disabled class="input-empregado"
+				[(ngModel)]="atendimento.tarefa.servico.nome" name="nomeServico">
+		</div>
+
+		<div class="input-field-empregado input-field col s8">
+			<label for="profissional">Profissional Responsável</label> <input
+				id="profissional" type="text" name="profissional" disabled
+				class="input-empregado"
+				[(ngModel)]="atendimento.filaAtendimentoOcupacional.profissional.empregado.pessoa.nome">
+		</div>
+
+	</div>
+
+	<div class="row-empregado row">
+
+		<div class="input-field-empregado input-field col s2">
+			<label for="chave">Chave</label> <input id="chave" type="text"
+				disabled class="input-empregado"
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.chave"
+				name="chave">
+		</div>
+
+		<div class="input-field-empregado input-field col s2">
+			<label for="matricula">Matrícula</label> <input id="matricula"
+				type="text" disabled class="input-empregado"
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.matricula"
+				name="matricula">
+		</div>
+
+		<div class="input-field-empregado input-field col s8">
+			<label for="nomeEmpregado">Nome</label> <input id="nomeEmpregado"
+				type="text" disabled class="input-empregado"
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.nome"
+				name="nomeEmpregado">
+		</div>
+
+	</div>
+
+	<div class="row-empregado row">
+
+		<div class="input-field-empregado input-field col s3">
+			<label for="dataNascimento">Nascimento</label> <input
+				name="dataNascimento"
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.dataNascimentoCustomDate.appDate"
+				disabled type="text" />
+		</div>
+		<div class="input-field-empregado input-field col s3">
+			<label for="idade">Idade</label> <input id="idade" type="text"
+				disabled
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.idade"
+				name="idade" class="input-empregado">
+		</div>
+
+		<div class="input-field-empregado input-field col s3">
+			<label for="sexo">Sexo</label> <input id="sexo" type="text" disabled
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.sexo"
+				name="sexo" class="input-empregado">
+		</div>
+
+		<div class="input-field-empregado input-field col s3">
+			<label for="base">Base</label> <input id="base.nome" type="text"
+				disabled
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.base.nome"
+				name="base" class="input-empregado">
+		</div>
+
+	</div>
+
+	<div class="row-empregado row">
+
+		<div class="input-field-empregado input-field col s6">
+			<label for="cargo">Cargo</label> <input id="cargo.nome" type="text"
+				disabled
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
+				name="cargo" class="input-empregado">
+		</div>
+
+		<div class="input-field-empregado input-field col s6">
+			<label for="gerencia">Gerência</label> <input
+				id="gerencia.codigoCompleto" type="text" disabled
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto"
+				name="gerencia" class="input-empregado">
+		</div>
+
+	</div>
+
+</fieldset>

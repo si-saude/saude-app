@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { AtendimentoProafComponent } from './atendimento-proaf.component';
+import { NumberMaskDirectiveModule } from './../../directives/number-mask-directive/number-mask-directive.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { AtendimentoProafComponent } from './atendimento-proaf.component';
     FormsModule,
     CommonModule,
     RouterModule,
-    MaterializeModule
+    MaterializeModule,
+    NumberMaskDirectiveModule
     ],
   exports: [
     AtendimentoProafComponent

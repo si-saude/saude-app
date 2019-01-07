@@ -31,10 +31,18 @@ export class AvaliacaoFisica {
     private pesoNegociado: number;
     private pesoExcessoNegociado: number;
     private observacoes: string;
-    private aptidaoCardiorespiratoria: number;
-    private forcaAbdominal: number;
-    private flexibilidade: number;
-    private forcaPreensaoManual: number;
+    private aptidaoCardiorrespiratoriaValor: number;
+    private aptidaoCardiorrespiratoriaClassificacao: string;
+    private aptidaoCardiorrespiratoriaObservacao: string;
+    private forcaAbdominalValor: number;
+    private forcaAbdominalClassificacao: string;
+    private forcaAbdominalObservacao: string;
+    private flexibilidadeValor: number;
+    private flexibilidadeClassificacao: string;
+    private flexibilidadeObservacao: string;
+    private forcaPreensaoManualValor: number;
+    private forcaPreensaoManualClassificacao: string;
+    private forcaPreensaoManualObservacao: string;
     private version: number;
     
     public getAtendimento() {
@@ -187,30 +195,6 @@ export class AvaliacaoFisica {
     public setObservacoes(observacoes) {
         this.observacoes = observacoes;
     }
-    public getAptidaoCardiorespiratoria() {
-        return this.aptidaoCardiorespiratoria;
-    }
-    public setAptidaoCardiorespiratoria(aptidaoCardiorespiratoria) {
-        this.aptidaoCardiorespiratoria = aptidaoCardiorespiratoria;
-    }
-    public getForcaAbdominal() {
-        return this.forcaAbdominal;
-    }
-    public setForcaAbdominal(forcaAbdominal) {
-        this.forcaAbdominal = forcaAbdominal;
-    }
-    public getFlexibilidade() {
-        return this.flexibilidade;
-    }
-    public setFlexibilidade(flexibilidade) {
-        this.flexibilidade = flexibilidade;
-    }
-    public getForcaPreensaoManual() {
-        return this.forcaPreensaoManual;
-    }
-    public setForcaPreensaoManual(forcaPreensaoManual) {
-        this.forcaPreensaoManual = forcaPreensaoManual;
-    }
     public getId() {
         return this.id;
     }
@@ -240,5 +224,77 @@ export class AvaliacaoFisica {
     }
     public setPercentualMassaMagraNegociada(percentualMassaMagraNegociada) {
         this.percentualMassaMagraNegociada = percentualMassaMagraNegociada;
+    }
+    public getAptidaoCardiorrespiratoriaValor() {
+        return this.aptidaoCardiorrespiratoriaValor;
+    }
+    public setAptidaoCardiorrespiratoriaValor(aptidaoCardiorrespiratoriaValor) {
+        this.aptidaoCardiorrespiratoriaValor = aptidaoCardiorrespiratoriaValor;
+    }
+    public getAptidaoCardiorrespiratoriaClassificacao() {
+        return this.aptidaoCardiorrespiratoriaClassificacao;
+    }
+    public setAptidaoCardiorrespiratoriaClassificacao(aptidaoCardiorrespiratoriaClassificacao) {
+        this.aptidaoCardiorrespiratoriaClassificacao = aptidaoCardiorrespiratoriaClassificacao;
+    }
+    public getAptidaoCardiorrespiratoriaObservacao() {
+        return this.aptidaoCardiorrespiratoriaObservacao;
+    }
+    public setAptidaoCardiorrespiratoriaObservacao(aptidaoCardiorrespiratoriaObservacao) {
+        this.aptidaoCardiorrespiratoriaObservacao = aptidaoCardiorrespiratoriaObservacao;
+    }
+    public getForcaAbdominalValor() {
+        return this.forcaAbdominalValor;
+    }
+    public setForcaAbdominalValor(forcaAbdominalValor) {
+        this.forcaAbdominalValor = forcaAbdominalValor;
+    }
+    public getForcaAbdominalClassificacao() {
+        return this.forcaAbdominalClassificacao;
+    }
+    public setForcaAbdominalClassificacao(forcaAbdominalClassificacao) {
+        this.forcaAbdominalClassificacao = forcaAbdominalClassificacao;
+    }
+    public getForcaAbdominalObservacao() {
+        return this.forcaAbdominalObservacao;
+    }
+    public setForcaAbdominalObservacao(forcaAbdominalObservacao) {
+        this.forcaAbdominalObservacao = forcaAbdominalObservacao;
+    }
+    public getFlexibilidadeValor() {
+        return this.flexibilidadeValor;
+    }
+    public setFlexibilidadeValor(flexibilidadeValor) {
+        this.flexibilidadeValor = flexibilidadeValor;
+    }
+    public getFlexibilidadeClassificacao() {
+        return this.flexibilidadeClassificacao;
+    }
+    public setFlexibilidadeClassificacao(flexibilidadeClassificacao) {
+        this.flexibilidadeClassificacao = flexibilidadeClassificacao;
+    }
+    public getFlexibilidadeObservacao() {
+        return this.flexibilidadeObservacao;
+    }
+    public setFlexibilidadeObservacao(flexibilidadeObservacao) {
+        this.flexibilidadeObservacao = flexibilidadeObservacao;
+    }
+    public getForcaPreensaoManualValor() {
+        return this.forcaPreensaoManualValor;
+    }
+    public setForcaPreensaoManualValor(forcaPreensaoManualValor) {
+        this.forcaPreensaoManualValor = forcaPreensaoManualValor;
+    }
+    public getForcaPreensaoManualClassificacao() {
+        return this.forcaPreensaoManualClassificacao;
+    }
+    public setForcaPreensaoManualClassificacao(forcaPreensaoManualClassificacao) {
+        this.forcaPreensaoManualClassificacao = forcaPreensaoManualClassificacao;
+    }
+    public getForcaPreensaoManualObservacao() {
+        return this.forcaPreensaoManualObservacao;
+    }
+    public setForcaPreensaoManualObservacao(forcaPreensaoManualObservacao) {
+        this.forcaPreensaoManualObservacao = forcaPreensaoManualObservacao;
     }
 }

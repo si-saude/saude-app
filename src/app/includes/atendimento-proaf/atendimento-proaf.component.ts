@@ -5,10 +5,12 @@ import { MaterializeAction } from "angular2-materialize";
 import * as $ from 'jquery';
 
 import { Atendimento } from './../../model/atendimento';
+import { RespostaFichaColeta } from './../../model/resposta-ficha-coleta';
 import { AtendimentoBuilder } from './../../controller/atendimento/atendimento.builder';
 import { AtividadeFisicaDescricaoAutocomplete } from './../../controller/atividade-fisica/atividade-fisica-descricao.autocomplete';
 import { AvaliacaoFisicaAtividadeFisica } from './../../model/avaliacao-fisica-atividade-fisica';
 import { AvaliacaoFisicaAtividadeFisicaBuilder } from './../../controller/avaliacao-fisica-atividade-fisica/avaliacao-fisica-atividade-fisica.builder';
+import { Util } from './../../generics/utils/util';
 
 @Component( {
     selector: 'app-atendimento-proaf',
@@ -24,12 +26,19 @@ export class AtendimentoProafComponent {
     private afafsOrientadas: Array<AvaliacaoFisicaAtividadeFisica>;
     private afafDias: AvaliacaoFisicaAtividadeFisica;
     private modalActions;
+    private percentualGorduraNegociada;
+    private aptidaoCardiorrespiratorias: Array<string>;
+    private forcaAbdominais: Array<string>;
+    private flexibilidades: Array<string>;
     
     constructor() {
         this.afafsRealizadas = new Array<AvaliacaoFisicaAtividadeFisica>();
         this.afafsOrientadas = new Array<AvaliacaoFisicaAtividadeFisica>();
         this.afafDias = new AvaliacaoFisicaAtividadeFisicaBuilder().initialize(null);
         this.modalActions = new EventEmitter<string | MaterializeAction>();
+        this.aptidaoCardiorrespiratorias = new Array<string>();
+        this.forcaAbdominais = new Array<string>();
+        this.flexibilidades = new Array<string>();
     }
     
     ngOnInit() {
@@ -57,6 +66,46 @@ export class AtendimentoProafComponent {
         this.service.getClassificacaoAtividade()
             .then(res => {
                 this.classificacoes = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    
+    getAptidaoCardiorrespiratoria() {
+        this.service.getEnums( "aptidao-cardiorrespiratoria" )
+            .then( res => {
+                this.aptidaoCardiorrespiratorias = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    
+    getForcaAbdomianl() {
+        this.service.getEnums( "forca-abdominal" )
+            .then( res => {
+                this.aptidaoCardiorrespiratorias = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    
+    getFlexibilidade() {
+        this.service.getEnums( "flexibilidade" )
+            .then( res => {
+                this.flexibilidades = Object.keys(res.json()).sort();
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    
+    getForcaPreensaoManual() {
+        this.service.getEnums( "forca-prenssao" )
+            .then( res => {
+                this.flexibilidades = Object.keys(res.json()).sort();
             })
             .catch(error => {
                 console.log(error);
@@ -189,17 +238,57 @@ export class AtendimentoProafComponent {
                 case "dobraCoxaMedial" :
                     return this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(r =>
                         r.getPergunta().getGrupo().includes("EXAME F") && r.getPergunta().getCodigo() == '0026').getConteudo();
-           }    
+           }
        }
     }
     
-    calcularComposicaoCorporal() { 
-        this.service.calcularComposicaoCorporal( this.atendimento )
-            .then(res => {
-                this.atendimento = new AtendimentoBuilder().clone(res.json()); 
-            })
-            .catch(error => {
-                console.log(error);
-            })
+    calcularComposicaoCorporal() {
+        if ( this.percentualGorduraNegociada != undefined ) {
+            this.atendimento.getAvaliacaoFisica().setPercentualGorduraNegociada(
+                    Util.treatDouble(this.percentualGorduraNegociada));
+            this.service.calcularComposicaoCorporal( this.atendimento )
+                .then(res => {
+                    this.setDadosSecundarioComposicaoCorporal(new AtendimentoBuilder().clone(res.json())); 
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
+    
+    setDadosSecundarioComposicaoCorporal( atendimento: Atendimento ) {
+        this.atendimento.getAvaliacaoFisica().setImc(atendimento.getAvaliacaoFisica().getImc());
+        this.atendimento.getAvaliacaoFisica().setRazaoCinturaEstatura(atendimento.getAvaliacaoFisica().getRazaoCinturaEstatura());
+        this.atendimento.getAvaliacaoFisica().setPercentualGordura(atendimento.getAvaliacaoFisica().getPercentualGordura());
+        this.atendimento.getAvaliacaoFisica().setPercentualMassaMagra(atendimento.getAvaliacaoFisica().getPercentualMassaMagra());
+        this.atendimento.getAvaliacaoFisica().setMassaMagra(atendimento.getAvaliacaoFisica().getMassaMagra());
+        this.atendimento.getAvaliacaoFisica().setGorduraAbsoluta(atendimento.getAvaliacaoFisica().getGorduraAbsoluta());
+        this.atendimento.getAvaliacaoFisica().setCarenciaMuscular(atendimento.getAvaliacaoFisica().getCarenciaMuscular());
+        this.atendimento.getAvaliacaoFisica().setPercentualGorduraIdeal(atendimento.getAvaliacaoFisica().getPercentualGorduraIdeal());
+        this.atendimento.getAvaliacaoFisica().setPercentualMassaMagraIdeal(atendimento.getAvaliacaoFisica().getPercentualMassaMagraIdeal());
+        this.atendimento.getAvaliacaoFisica().setPesoIdeal(atendimento.getAvaliacaoFisica().getPesoIdeal());
+        this.atendimento.getAvaliacaoFisica().setPesoExcesso(atendimento.getAvaliacaoFisica().getPesoExcesso());
+        this.atendimento.getAvaliacaoFisica().setPercentualGorduraNegociada(atendimento.getAvaliacaoFisica().getPercentualGorduraNegociada());
+        this.atendimento.getAvaliacaoFisica().setPercentualMassaMagraNegociada(atendimento.getAvaliacaoFisica().getPercentualMassaMagraNegociada());
+        this.atendimento.getAvaliacaoFisica().setPesoNegociado(atendimento.getAvaliacaoFisica().getPesoNegociado());
+        this.atendimento.getAvaliacaoFisica().setPesoExcessoNegociado(atendimento.getAvaliacaoFisica().getPesoExcessoNegociado());
+    }
+    
+    changeAptidaoCardiorespiratoriaValor() {
+        
+    }
+    
+    changeForcaAbdominalValor() {
+        
+    }
+    
+    changeFlexibilidadeValor() {
+        
+    }
+    
+    changeForcaPreensaoManualValor() {
+        
+    }
+    
+    
 }

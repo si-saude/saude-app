@@ -266,9 +266,9 @@
 			</tr>
 			<tr class="col s12">
 				<td class="col s3">
-					<label>Dobra Tricipal (mm)</label>
+					<label>Dobra Tricipital (mm)</label>
 					<input id="dobra-tricipital" type="text"
-						value="{{getFichaColetaValue('dobraTricipal')}}" disabled
+						value="{{getFichaColetaValue('dobraTricipital')}}" disabled
 						name="ficha-coleta-dobra-tricipital">
 				</td>
 				<td class="col s3">
@@ -385,13 +385,13 @@
 						[(ngModel)]="atendimento.avaliacaoFisica.pesoExcesso" disabled
 						name="avaliacaoFisica.pesoExcesso">
 				</td>
-			</tr>
+			</tr>	
 			<tr class="col s12">
 				<td class="col s3">
 					<label>% Gordura Negociada</label>
-					<input id="avaliacaoFisica.percentualGorduraNegociada" type="number"
-						[(ngModel)]="atendimento.avaliacaoFisica.percentualGorduraNegociada"
-						name="avaliacaoFisica.percentualGorduraNegociada">
+					<input id="percentualGorduraNegociada" type="text"
+						[(ngModel)]="percentualGorduraNegociada" numberMaskDirective=""
+						name="percentualGorduraNegociada" maxlength="16">
 				</td>
 				<td class="col s3">
 					<label>% Massa Magra Negociada</label>
@@ -416,11 +416,93 @@
 	</fieldset>
 </div>
 
+<div class="testesFisicos">
+	<fieldset>
+		<legend>Testes Físicos</legend>
+		<table>
+			<tr class="col s12">
+				<th class="col s3">Teste</th>
+				<th class="col s2">Valor</th>
+				<th class="col s3">Classificação</th>
+				<th class="col s4">Observação</th>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>Aptidão Cardiorespiratória (VO2):</p></td>
+				<td class="col s2">
+					<input type="text" numberMaskDirective="" 
+						name="aptidaoCardiorrespiratoriaValor" (change)="changeAptidaoCardiorrespiratoriaValor()"
+						[(ngModel)]="atendimento.avaliacaoFisica.aptidaoCardiorrespiratoriaValor">
+				</td>
+				<td class="col s3">
+					<input type="text" name="aptidaoCardiorrespiratoriaClassificacao"
+						[(ngModel)]="atendimento.avaliacaoFisica.aptidaoCardiorrespiratoriaClassificacao">
+				</td>
+				<td class="col s4">
+					<textarea class="materialize-textarea" id="aptidaoCardiorrespiratoriaObservacao" 
+						[(ngModel)]="atendimento.avaliacaoFisica.aptidaoCardiorrespiratoriaObservacao" 
+						name="aptidaoCardiorrespiratoriaObservacao"></textarea>
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>Força Abdominal:</p></td>
+				<td class="col s2">
+					<input type="text" numberMaskDirective="" 
+						name="forcaAbdominalValor" (change)="changeForcaAbdominalValor()"
+						[(ngModel)]="atendimento.avaliacaoFisica.forcaAbdominalValor">
+				</td>
+				<td class="col s3">
+					<input type="text" name="forcaAbdominalClassificacao"
+						[(ngModel)]="atendimento.avaliacaoFisica.forcaAbdominalClassificacao">
+				</td>
+				<td class="col s4">
+					<textarea class="materialize-textarea" id="forcaAbdominalObservacao" 
+						[(ngModel)]="atendimento.avaliacaoFisica.forcaAbdominalObservacao" 
+						name="forcaAbdominalObservacao"></textarea>
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>Flexibilidade:</p></td>
+				<td class="col s2">
+					<input type="text" numberMaskDirective="" 
+						name="flexibilidadeValor" (change)="changeFlexibilidadeValor()"
+						[(ngModel)]="atendimento.avaliacaoFisica.flexibilidadeValor">
+				</td>
+				<td class="col s3">
+					<input type="text" name="flexibilidadeClassificacao"
+						[(ngModel)]="atendimento.avaliacaoFisica.flexibilidadeClassificacao">
+				</td>
+				<td class="col s4">
+					<textarea class="materialize-textarea" id="flexibilidadeObservacao" 
+						[(ngModel)]="atendimento.avaliacaoFisica.flexibilidadeObservacao" 
+						name="flexibilidadeObservacao"></textarea>
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>Força de Preensão Manual:</p></td>
+				<td class="col s2">
+					<input type="text" numberMaskDirective="" 
+						name="forcaPreensaoManualValor" (change)="changeForcaPreensaoManualValor()"
+						[(ngModel)]="atendimento.avaliacaoFisica.forcaPreensaoManualValor">
+				</td>
+				<td class="col s3">
+					<input type="text" name="forcaPreensaoManualClassificacao"
+						[(ngModel)]="atendimento.avaliacaoFisica.forcaPreensaoManualClassificacao">
+				</td>
+				<td class="col s4">
+					<textarea class="materialize-textarea" id="forcaPreensaoManualObservacao" 
+						[(ngModel)]="atendimento.avaliacaoFisica.forcaPreensaoManualObservacao" 
+						name="forcaPreensaoManualObservacao"></textarea>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+
 <!-- Modal Structure -->
 <div id="modal" class="modal" materialize="modal"
 	[materializeParams]="modelParams" [materializeActions]="modalActions">
 	
-		<div class="title" style="width: 50%; margin: 0 auto;"><p style="margin: 0 auto">Dias</p></div>
+		<div class="title" style="width: 50%; margin: 0 auto;"><b><p style="margin: 0 auto; text-align: center">Dias</p></b></div>
 		<table class="striped">
 			<thead>
 				<tr class="row col s12">

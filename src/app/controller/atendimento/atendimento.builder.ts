@@ -92,8 +92,6 @@ export class AtendimentoBuilder extends GenericBuilder {
         if (this.getValue(atendimento, "getAvaliacaoFisica") !== undefined) { 
             cloneAtendimento.setAvaliacaoFisica(
                     new AvaliacaoFisicaBuilder().clone(this.getValue(atendimento,"getAvaliacaoFisica")));
-            if(!this.idGtZero(cloneAtendimento.getAvaliacaoFisica()))
-                cloneAtendimento.setAvaliacaoFisica(undefined);
         } else {
             cloneAtendimento.setAvaliacaoFisica(new AvaliacaoFisicaBuilder().initialize(null));
         }

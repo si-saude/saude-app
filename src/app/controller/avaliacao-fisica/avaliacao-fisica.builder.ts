@@ -37,12 +37,8 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
         cloneAvaliacaoFisica.setVersion(this.getValue( avaliacaoFisica, "getVersion" ));
         cloneAvaliacaoFisica.setAcaoIniciarExercicioFisico(this.getValue( avaliacaoFisica, "getAcaoIniciarExercicioFisico" ));
         cloneAvaliacaoFisica.setObservacaoEstagioContemplacao(this.getValue( avaliacaoFisica, "getObservacaoEstagioContemplacao" ));
-        cloneAvaliacaoFisica.setAptidaoCardiorespiratoria(this.getValue( avaliacaoFisica, "getAptidaoCardiorespiratoria" ));
         cloneAvaliacaoFisica.setCarenciaMuscular(this.getValue( avaliacaoFisica, "getCarenciaMuscular" ));
         cloneAvaliacaoFisica.setFcRepouso(this.getValue( avaliacaoFisica, "getFcRepouso" ));
-        cloneAvaliacaoFisica.setFlexibilidade(this.getValue( avaliacaoFisica, "getFlexibilidade" ));
-        cloneAvaliacaoFisica.setForcaAbdominal(this.getValue( avaliacaoFisica, "getForcaAbdominal" ));
-        cloneAvaliacaoFisica.setForcaPreensaoManual(this.getValue( avaliacaoFisica, "getForcaPreensaoManual" ));
         cloneAvaliacaoFisica.setGorduraAbsoluta(this.getValue( avaliacaoFisica, "getGorduraAbsoluta" ));
         cloneAvaliacaoFisica.setImc(this.getValue( avaliacaoFisica, "getImc" ));
         cloneAvaliacaoFisica.setInteresseProgramaFisico(this.getValue( avaliacaoFisica, "getInteresseProgramaFisico" ));
@@ -65,6 +61,18 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
         cloneAvaliacaoFisica.setRazaoCinturaEstatura(this.getValue( avaliacaoFisica, "getRazaoCinturaEstatura" ));
         cloneAvaliacaoFisica.setTipoAtendimento(this.getValue( avaliacaoFisica, "getTipoAtendimento" ));
         cloneAvaliacaoFisica.setPercentualMassaMagraNegociada(this.getValue( avaliacaoFisica, "getPercentualMassaMagraNegociada" ))
+        cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaValor(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaValor" ));
+        cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaClassificacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaClassificacao" ));
+        cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaObservacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaObservacao" ));
+        cloneAvaliacaoFisica.setForcaAbdominalValor(this.getValue( avaliacaoFisica, "getForcaAbdominalValor" ));
+        cloneAvaliacaoFisica.setForcaAbdominalClassificacao(this.getValue( avaliacaoFisica, "getForcaAbdominalClassificacao" ));
+        cloneAvaliacaoFisica.setForcaAbdominalObservacao(this.getValue( avaliacaoFisica, "getForcaAbdominalObservacao" ));
+        cloneAvaliacaoFisica.setFlexibilidadeValor(this.getValue( avaliacaoFisica, "getFlexibilidadeValor" ));
+        cloneAvaliacaoFisica.setFlexibilidadeClassificacao(this.getValue( avaliacaoFisica, "getFlexibilidadeClassificacao" ));
+        cloneAvaliacaoFisica.setFlexibilidadeObservacao(this.getValue( avaliacaoFisica, "getFlexibilidadeObservacao" ));
+        cloneAvaliacaoFisica.setForcaPreensaoManualValor(this.getValue( avaliacaoFisica, "getForcaPreensaoManualValor" ));
+        cloneAvaliacaoFisica.setForcaPreensaoManualClassificacao(this.getValue( avaliacaoFisica, "getForcaPreensaoManualClassificacao" ));
+        cloneAvaliacaoFisica.setForcaPreensaoManualObservacao(this.getValue( avaliacaoFisica, "getForcaPreensaoManualObservacao" ));
         
         cloneAvaliacaoFisica.setAtendimento(new Atendimento());
         cloneAvaliacaoFisica.setAvaliacaoFisicaAtividadeFisicas(
