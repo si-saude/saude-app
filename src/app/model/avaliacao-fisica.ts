@@ -44,6 +44,16 @@ export class AvaliacaoFisica {
     private forcaPreensaoManualClassificacao: string;
     private forcaPreensaoManualObservacao: string;
     private version: number;
+    private dobraTricipital: number;
+    private dobraSubscapular: number;
+    private dobraToracica: number;
+    private dobraAuxiliarMedia: number;
+    private dobraSupraIliaca: number;
+    private dobraAbdominal: number;
+    private dobraCoxaMedial: number;    
+    private pressaoArterialSistolica: number;
+    private pressaoArterialDiastolica: number;
+    private frequenciaCardiaca: number;
     
     public getAtendimento() {
         return this.atendimento;
@@ -296,5 +306,65 @@ export class AvaliacaoFisica {
     }
     public setForcaPreensaoManualObservacao(forcaPreensaoManualObservacao) {
         this.forcaPreensaoManualObservacao = forcaPreensaoManualObservacao;
+    }
+    public getDobraTricipital() {
+        return this.dobraTricipital;
+    }
+    public setDobraTricipital(dobraTricipital) {
+        this.dobraTricipital = dobraTricipital;
+    }
+    public getDobraSubscapular() {
+        return this.dobraSubscapular;
+    }
+    public setDobraSubscapular(dobraSubscapular) {
+        this.dobraSubscapular = dobraSubscapular;
+    }
+    public getDobraToracica() {
+        return this.dobraToracica;
+    }
+    public setDobraToracica(dobraToracica) {
+        this.dobraToracica = dobraToracica;
+    }
+    public getDobraAuxiliarMedia() {
+        return this.dobraAuxiliarMedia;
+    }
+    public setDobraAuxiliarMedia(dobraAuxiliarMedia) {
+        this.dobraAuxiliarMedia = dobraAuxiliarMedia;
+    }
+    public getDobraSupraIliaca() {
+        return this.dobraSupraIliaca;
+    }
+    public setDobraSupraIliaca(dobraSupraIliaca) {
+        this.dobraSupraIliaca = dobraSupraIliaca;
+    }
+    public getDobraAbdominal() {
+        return this.dobraAbdominal;
+    }
+    public setDobraAbdominal(dobraAbdominal) {
+        this.dobraAbdominal = dobraAbdominal;
+    }
+    public getDobraCoxaMedial() {
+        return this.dobraCoxaMedial;
+    }
+    public setDobraCoxaMedial(dobraCoxaMedial) {
+        this.dobraCoxaMedial = dobraCoxaMedial;
+    }
+    public getPressaoArterialSistolica() {
+        return this.pressaoArterialSistolica;
+    }
+    public setPressaoArterialSistolica(pressaoArterialSistolica) {
+        this.pressaoArterialSistolica = pressaoArterialSistolica;
+    }
+    public getPressaoArterialDiastolica() {
+        return this.pressaoArterialDiastolica;
+    }
+    public setPressaoArterialDiastolica(pressaoArterialDiastolica) {
+        this.pressaoArterialDiastolica = pressaoArterialDiastolica;
+    }
+    public getFrequenciaCardiaca() {
+        return this.frequenciaCardiaca;
+    }
+    public setFrequenciaCardiaca(frequenciaCardiaca) {
+        this.frequenciaCardiaca = frequenciaCardiaca;
     }
 }

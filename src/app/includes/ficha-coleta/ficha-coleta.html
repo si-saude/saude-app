@@ -14,7 +14,7 @@
 				<div class="resposta-select col s12" *ngIf="isEnumOrSimNao(resposta)">
 				
 					<div class="div-resposta-select col s4">
-						<select name="resposta-conteudo" [disabled]="isDisabledResposta(resposta)" (change)="autoAddItem(resposta);verifyFuma(resposta); configureBrigadista(resposta)"
+						<select name="resposta-conteudo" [disabled]="isDisabledResposta(resposta)" (change)="autoAddItem(resposta);verifyFuma(resposta);configureBrigadista(resposta)"
 							class="browser-default" [(ngModel)]="resposta.conteudo">
 							<option disabled selected value="">Selecione uma resposta</option>
 							<option *ngFor="let value of getConteudoEnumOrSimNao(resposta)" value="{{value}}">{{value}}</option>
@@ -45,7 +45,7 @@
 								</div>
 								
 								<div *ngIf="itemHasPath(resposta, i, ii)">
-									<select name="resposta-conteudo{{re}}" [disabled]="isDisabledResposta(resposta)"
+									<select name="resposta-conteudo{{re}}" [disabled]="isDisabledResposta(resposta)" (change)="changeItem(resposta, itemDoItem, ii)"
 										class="browser-default" [(ngModel)]="itemDoItem.conteudo">
 										<option disabled selected value="">Selecione uma resposta</option>
 										<option *ngFor="let value of getItensResposta(resposta,ii)" value="{{value}}">{{value}}</option>

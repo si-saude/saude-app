@@ -18,12 +18,13 @@
 
 	<div class="col s12">
 		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs" style="overflow-x: auto;">
-			<li class="tab col s1"><a href="#filaAtendimento">Fila</a></li>
-			<li class="tab col s2"><a href="#atendimento">Atendimento</a></li>
-			<li class="tab col s1"><a href="#aso">Aso</a></li>
-			<li class="tab col s2"><a href="#fichaColeta">Ficha de Coleta</a></li>
+			<li class="tab"><a href="#filaAtendimento">Fila</a></li>
+			<li class="tab"><a href="#atendimento">Atendimento</a></li>
+			<li class="tab"><a href="#aso">Aso</a></li>
 			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'NUT'"><a href="#nutricao">Nutrição</a></li>
-			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'EDF'"><a href="#educacaoFisica">Educação Física</a></li>			
+			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'EDF' || 
+				atendimento.filaAtendimentoOcupacional.status != 'EM ATENDIMENTO'"><a href="#educacaoFisica">Educação Física</a></li>
+			<li class="tab"><a href="#fichaColeta">Ficha de Coleta</a></li>			
 			<li class="tab"><a href="#triagem">Triagem</a></li>
 			<li class="tab"><a href="#planejamento">Planejamento</a></li>
 			<li class="tab" [ngClass]="disabledTab"><a href="#acolhimento">Acolhimento</a></li>
@@ -136,12 +137,19 @@
 	</div>
 	
 	<div id="educacaoFisica">
-		<app-atendimento-proaf [service]="atendimentoService" [atendimento]="atendimento"></app-atendimento-proaf>
+		<div *ngIf="profissional.equipe.abreviacao == 'EDF'">
+			<app-atendimento-proaf [service]="atendimentoService"
+			 	(nivelAtividadeFisica)="setNivelAtividadeFisica($event)"
+				[atendimento]="atendimento"></app-atendimento-proaf>
+		</div>
 	</div>
 
 	<div id="fichaColeta" disabled>
-		<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta" [statusFila]="atendimento?.filaAtendimentoOcupacional.status"
-			[service]="atendimentoService" [idEquipeProfissional]="profissional.equipe.id"></app-ficha-coleta>
+		<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta" 
+			[statusFila]="atendimento?.filaAtendimentoOcupacional.status"
+			[service]="atendimentoService" [idEquipeProfissional]="profissional.equipe.id"
+			[nivelAtividadeFisica]="nivelAtividadeFisica"
+			(dor)="triagemUtil.selectDor(atendimento,$event)"></app-ficha-coleta>
 	</div>
 
 	<div id="triagem">

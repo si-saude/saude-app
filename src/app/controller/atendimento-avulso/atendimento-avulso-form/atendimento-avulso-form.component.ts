@@ -51,7 +51,8 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
     @ViewChild( ModalFilaEsperaOcupacionalComponent ) modalFilaEspera: ModalFilaEsperaOcupacionalComponent;
     @ViewChild( ModalTarefaComponent ) modalTarefa: ModalTarefaComponent;
 
-
+    private nivelAtividadeFisica: string;
+    
     constructor( private route: ActivatedRoute,
         private atendimentoService: AtendimentoService,
         router: Router ) {
@@ -187,5 +188,27 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         }
         return ret;
     }
+    
+    setNivelAtividadeFisica(evento: string) {
+        let indice = this.definirIndiceTriagemNivelAtividadeFisica(evento);
+        this.atendimento.getTriagens()[0].setIndice(indice);
+        this.triagemUtil.selectTriagem(0, indice);
+        //input para ficha coleta
+        this.nivelAtividadeFisica = evento;
+    }
+
+    definirIndiceTriagemNivelAtividadeFisica(valor: string) {
+        if ( valor == "IRREGULAR ATIVO A")
+            return 2;
+        else if ( valor == "IRREGULAR ATIVO B")
+            return 1;
+        else if ( valor == "REGULARMENTE ATIVO")
+            return 3;
+        else if ( valor == "MUITO ATIVO")
+            return 4;
+        else return 0; 
+    }
+    
+    
 
 }

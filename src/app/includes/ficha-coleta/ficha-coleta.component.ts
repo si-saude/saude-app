@@ -1,4 +1,4 @@
-import { EventEmitter, SimpleChanges, Component, Input, OnInit } from '@angular/core';
+import { EventEmitter, SimpleChanges, Component, Input, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MaterializeAction } from "angular2-materialize";
@@ -23,6 +23,8 @@ export class FichaColetaComponent{
     @Input() service;
     @Input() idEquipeProfissional;
     @Input() statusFila;
+    @Input() nivelAtividadeFisica;
+    @Output() dor: EventEmitter<string>;
     private innerFichaColeta: FichaColeta;
     private innerIdEquipeProfissional: number;
     
@@ -40,7 +42,11 @@ export class FichaColetaComponent{
     private pattern: string;
     private errorPattern: string;
     
+    private intensidades: Array<string>;
+    
     constructor( router: Router ) {
+       this.dor = new EventEmitter<string | MaterializeAction>();
+       this.intensidades = new Array<string>();
     }
     
     ngOnInit() {
@@ -48,6 +54,7 @@ export class FichaColetaComponent{
         this.modalConteudo = new EventEmitter<string | MaterializeAction>();
         this.getGrupoPerguntaFichaColeta();
         this.dadosElemento = new Array<any>();
+        this.getIntensidade();
     }
     
     ngOnChanges( changes: SimpleChanges ) {
@@ -62,6 +69,10 @@ export class FichaColetaComponent{
         }
         if ( changes["statusFila"] != undefined && changes["statusFila"].currentValue != "") {
             this.statusFila = changes["statusFila"].currentValue;
+        }
+        if ( changes["nivelAtividadeFisica"] != undefined && changes["nivelAtividadeFisica"].currentValue != undefined ) {
+            this.nivelAtividadeFisica = changes["nivelAtividadeFisica"].currentValue;
+            this.setNivelAtividadeFisica();
         }
     }
     
@@ -93,6 +104,17 @@ export class FichaColetaComponent{
             .catch(error => {
                 console.log("Erro ao buscar sim nao");
             })
+    }
+    
+    getIntensidade() {
+        this.service.getEnums( "intensidade" )
+        .then( res => {
+            this.intensidades = Object.keys(res.json()).sort();
+            console.log(this.intensidades)
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
     
     seachPathsConteudoPerguntas() {
@@ -171,13 +193,13 @@ export class FichaColetaComponent{
             if ( resposta.getConteudo().includes("N") )
                 resposta.setItens(undefined);
             else if ( resposta.getItens() == undefined || resposta.getItens().length == 0 ) {
-                
-                
-                let addItem: ItemRespostaFichaColeta = new ItemRespostaFichaColeta();
+                let itens = resposta.getPergunta().getItens();
+                let addItem: ItemRespostaFichaColeta = new ItemRespostaFichaColeta;
                 let item = addItem;
-                for ( let i = 0; i < resposta.getPergunta().getItens().length - 1; i++ ) {
+                
+                for (let i = 0; i < itens.length - 1; i++) {
                     addItem.setItem(new ItemRespostaFichaColeta());
-                    addItem = item.getItem();
+                    addItem = addItem.getItem();
                 }
                 if ( resposta.getItens() == undefined ) resposta.setItens(new Array<ItemRespostaFichaColeta>())
                 resposta.getItens().push(item);
@@ -211,6 +233,10 @@ export class FichaColetaComponent{
     }
     
     getClassItensResposta(resposta: RespostaFichaColeta) {
+        if ( resposta.getPergunta().getGrupo() == "ANAMNESE" && resposta.getPergunta().getCodigo() == "0006" ) {
+            return 'col s2';
+        }
+        
         let numCol = resposta.getPergunta().getItens().length;
         return "col s"+Math.floor((10/numCol));
     }
@@ -394,4 +420,62 @@ export class FichaColetaComponent{
             }
     }
     
+    changeItem( resposta: RespostaFichaColeta, itemDoItem: ItemRespostaFichaColeta, indexItemItem: number ) {
+        if ( resposta.getPergunta().getGrupo() == "ANAMNESE" && resposta.getPergunta().getCodigo() == "0006" )
+            if ( resposta.getPergunta().getItens()[indexItemItem].getLabel() == "Intensidade" ) {
+                if ( resposta.getItens().length == 0 ) {
+                    this.dor.emit("AUSENTE");
+                } else {
+                    let maiorDor = 0;
+                    resposta.getItens().forEach(i => {
+                        let item: ItemRespostaFichaColeta;
+                        item = i.getItem();
+                        for (let ii=0; ii<indexItemItem - 1; ii++) 
+                            item = item.getItem();
+                        if ( this.checkIndiceDor(item.getConteudo()) > maiorDor )
+                            maiorDor = this.checkIndiceDor(item.getConteudo());
+                    })  
+                    this.dor.emit(this.getIndiceDor(maiorDor));
+                }
+            }
+    }
+    
+    checkIndiceDor(evento: string) {
+        if ( evento.includes("INSUPORT") ) {
+            return 5;
+        }
+        else if ( evento == "SEVERA" ) {
+            return 4;
+        }
+        else if ( evento == "MODERADA" ) {
+            return 3;
+        }
+        else if ( evento == "PEQUENA") {
+            return 2;
+        }
+        else if ( evento == "AUSENTE"  ) {
+            return 1;
+        }
+    }
+    
+    getIndiceDor(valor) {
+        switch(valor) {
+            case 1:
+                return this.intensidades[0];
+            case 2:
+                return this.intensidades[3];
+            case 3:
+                return this.intensidades[2];
+            case 4:
+                return this.intensidades[4];
+            case 5:
+                return this.intensidades[1];
+        }
+    }
+    
+    setNivelAtividadeFisica() {
+        this.innerFichaColeta.getRespostaFichaColetas().find(rfc => {
+            return rfc.getPergunta().getGrupo().includes("EXAME F") && rfc.getPergunta().getCodigo() == "0018";
+        }).setConteudo(this.nivelAtividadeFisica);
+    }
 }

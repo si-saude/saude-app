@@ -97,6 +97,7 @@ import { IndicadorConhecimentoAlimentarService } from './indicador-conhecimento-
 import { QuestionarioConhecimentoAlimentarService } from './questionario-conhecimento-alimentar/questionario-conhecimento-alimentar.service';
 import { RecordatorioService } from './recordatorio/recordatorio.service';
 import { AtividadeFisicaService } from './atividade-fisica/atividade-fisica.service';
+import { UtilService } from './../generics/util.service';
 
 @NgModule({
   declarations: [
@@ -215,7 +216,8 @@ import { AtividadeFisicaService } from './atividade-fisica/atividade-fisica.serv
     IndicadorConhecimentoAlimentarService,
     QuestionarioConhecimentoAlimentarService,
     RecordatorioService,
-    AtividadeFisicaService
+    AtividadeFisicaService,
+    UtilService
   ]
 })
 export class SharedModule { }

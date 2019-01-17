@@ -17,6 +17,7 @@ import { EmpregadoService } from './../../controller/empregado/empregado.service
 import { ServicoService } from './../../controller/servico/servico.service';
 import { ServicoFilter } from './../servico/servico.filter';
 import { AtividadeFisicaService } from './../atividade-fisica/atividade-fisica.service';
+import { UtilService } from './../../generics/util.service';
 
 @Injectable()
 export class AtendimentoService extends GenericService {
@@ -32,7 +33,8 @@ export class AtendimentoService extends GenericService {
         private intervencaoService: IntervencaoService,
         private equipeService: EquipeService,
         private eixoService: EixoService,
-        private atividadeFisicaService: AtividadeFisicaService ) {
+        private atividadeFisicaService: AtividadeFisicaService,
+        private utilService: UtilService) {
         super( http, router, "atendimento" );
     }
 
@@ -286,5 +288,9 @@ export class AtendimentoService extends GenericService {
         return this.http
             .post( urlCalcularComposicaoCorporal, atendimento, { headers: this.headers } )
             .toPromise();
+    }
+    
+    getUtilService() {
+        return this.utilService;
     }
 }

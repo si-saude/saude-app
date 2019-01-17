@@ -46,7 +46,7 @@
 							</td>
 							<td class="col s1 minuto"> 
 								<input id="minuto{{i}}" type="number"
-									[(ngModel)]="afaf.minuto" (change)="changeTotal(afaf)"
+									[(ngModel)]="afaf.minuto" (change)="changeTotal(afaf); changeNivelAtividadeFisica()"
 									name="afaf.minuto{{i}}">
 							</td>
 							<td class="col s1 total"> 
@@ -56,7 +56,7 @@
 							</td>
 							<td class="col s2 classificacao">
 								<select name="classificacao{{i}}" class="browser-default"
-									[(ngModel)]="afaf.classificacao">
+									[(ngModel)]="afaf.classificacao" (change)="changeNivelAtividadeFisica()">
 									<option disabled selected value="">Selecione uma Classificação</option>
 									<option *ngFor="let classificacao of classificacoes" value="{{classificacao}}">{{classificacao}}</option>
 								</select>
@@ -72,7 +72,7 @@
 							</a></td>
 							<td class="col s1 botao-remover"><a
 								class="btn-floating waves-effect waves-light red btn-remove"
-								(click)="removeAtividade('REALIZADA', i)"> <i
+								(click)="removeAtividade('REALIZADA', i); changeNivelAtividadeFisica()"> <i
 									class="material-icons center-icon">delete</i>
 							</a></td>
 						</tr>
@@ -231,83 +231,89 @@
 		<table>
 			<p>Dados primários</p>
 			<tr class="col s12">
-				<td class="col s6">
+				<td class="col s4">
 					<label>Peso (Kg)</label>
 					<input id="ficha-coleta-peso" type="text"
-						value="{{getFichaColetaValue('peso')}}" disabled
-						name="ficha-coleta-peso">
+						[(ngModel)]="peso" (change)="changePeso()"
+						name="ficha-coleta-peso" numberMaskDirective="">
 				</td>
-				<td class="col s6">
+				<td class="col s4">
 					<label>Estatura (cm)</label>
 					<input id="ficha-coleta-estatura" type="text"
-						value="{{getFichaColetaValue('estatura')}}" disabled
-						name="ficha-coleta-estatura">
+						[(ngModel)]="estatura" (change)="changeEstatura()"
+						name="ficha-coleta-estatura" numberMaskDirective="">
 				</td>
-			</tr>
-			<tr class="col s12">
 				<td class="col s4">
 					<label>Circurferência Abdomial (cm)</label>
 					<input id="ficha-coleta-circunferencia-abdominal" type="text"
-						value="{{getFichaColetaValue('circunferenciaAbdominal')}}" disabled
-						name="ficha-coleta-circunferencia-abdominal">
+						[(ngModel)]="circunferenciaAbdominal" (change)="changeCircunferenciaAbdominal()"
+						name="ficha-coleta-circunferencia-abdominal" numberMaskDirective="">
 				</td>
+			</tr>
+			<tr class="col s12">
 				<td class="col s4">
 					<label>Circunferência da Cintura (cm)</label>
 					<input id="ficha-coleta-circunferencia-cintura" type="text"
-						value="{{getFichaColetaValue('circunferenciaCintura')}}" disabled
-						name="ficha-coleta-circunferencia-cintura">
+						[(ngModel)]="circunferenciaCintura" (change)="changeCircunferenciaCintura()"
+						name="ficha-coleta-circunferencia-cintura" numberMaskDirective="">
 				</td>
 				<td class="col s4">
-					<label>Circuferência do Quadril (cm)</label>
+					<label>Circunferência do Quadril (cm)</label>
 					<input id="ficha-coleta-circunferencia-quadril" type="text"
-						value="{{getFichaColetaValue('circunferenciaQuadril')}}" disabled
-						name="ficha-coleta-circunferencia-quadril">
+						[(ngModel)]="circunferenciaQuadril" (change)="changeCircunferenciaQuadril()"
+						name="ficha-coleta-circunferencia-quadril" numberMaskDirective="">
+				</td>
+				<td class="col s4">
+					<label>Dobra Tricipital (mm)</label>
+					<input id="dobra-tricipital" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.dobraTricipital" 
+						name="ficha-coleta-dobra-tricipital" numberMaskDirective="">
 				</td>
 			</tr>
 			<tr class="col s12">
 				<td class="col s3">
-					<label>Dobra Tricipital (mm)</label>
-					<input id="dobra-tricipital" type="text"
-						value="{{getFichaColetaValue('dobraTricipital')}}" disabled
-						name="ficha-coleta-dobra-tricipital">
-				</td>
-				<td class="col s3">
 					<label>Dobra Subscapular (mm)</label>
 					<input id="ficha-coleta-dobra-subscapular" type="text"
-						value="{{getFichaColetaValue('dobraSubscapular')}}" disabled
-						name="ficha-coleta-dobra-subscapular">
+						[(ngModel)]="atendimento.avaliacaoFisica.dobraSubscapular"
+						name="ficha-coleta-dobra-subscapular" numberMaskDirective="">
 				</td>
 				<td class="col s3">
 					<label>Dobra Toracica (mm)</label>
 					<input id="ficha-coleta-dobra-toracica" type="text"
-						value="{{getFichaColetaValue('dobraToracica')}}" disabled
-						name="ficha-coleta-dobra-toracica">
+						[(ngModel)]="atendimento.avaliacaoFisica.dobraToracica" 
+						name="ficha-coleta-dobra-toracica" numberMaskDirective="">
 				</td>
 				<td class="col s3">
 					<label>Dobra Aux. Média (mm)</label>
 					<input id="ficha-coleta-dobra-aux-media" type="text"
-						value="{{getFichaColetaValue('dobraAuxMedia')}}" disabled
-						name="ficha-coleta-dobra-aux-media">
+						[(ngModel)]="atendimento.avaliacaoFisica.dobraAuxiliarMedia" 
+						name="ficha-coleta-dobra-aux-media" numberMaskDirective="">
+				</td>
+				<td class="col s3">
+					<label>Dobra Supra-ilíaca (mm)</label>
+					<input id="ficha-coleta-dobra-supra-iliaca" type="text"
+						[(ngModel)]="atendimento.avaliacaoFisica.dobraSupraIliaca" 
+						name="ficha-coleta-dobra-supra-iliaca" numberMaskDirective="">
 				</td>
 			</tr>
 			<tr class="col s12">
 				<td class="col s3">
-					<label>Dobra Supra-ilíaca (mm)</label>
-					<input id="ficha-coleta-dobra-supra-iliaca" type="text"
-						value="{{getFichaColetaValue('dobraSupraIliaca')}}" disabled
-						name="ficha-coleta-dobra-supra-iliaca">
-				</td>
-				<td class="col s3">
 					<label>Dobra Abdmonial (mm)</label>
 					<input id="ficha-coleta-dobra-abdominal" type="text"
-						value="{{getFichaColetaValue('dobraAbdominal')}}" disabled
-						name="ficha-coleta-dobra-abdominal">
+						[(ngModel)]="atendimento.avaliacaoFisica.dobraAbdominal" 
+						name="ficha-coleta-dobra-abdominal" numberMaskDirective="">
 				</td>
 				<td class="col s3">
 					<label>Dobra Coxa Medial (mm)</label>
 					<input id="ficha-coleta-dobra-coxa-medial" type="text"
-						value="{{getFichaColetaValue('dobraCoxaMedial')}}" disabled
-						name="ficha-coleta-dobra-coxa-medial">
+						[(ngModel)]="atendimento.avaliacaoFisica.dobraCoxaMedial"
+						name="ficha-coleta-dobra-coxa-medial" numberMaskDirective="">
+				</td>
+				<td class="col s3">
+					<label>% Gordura Negociada</label>
+					<input id="percentualGorduraNegociada" type="text"
+						[(ngModel)]="percentualGorduraNegociada" numberMaskDirective=""
+						name="percentualGorduraNegociada" maxlength="16">
 				</td>
 				<td class="col s3">
 					<button style="margin-top: 10%;" class="btn" type="button" (click)="calcularComposicaoCorporal()">Calcular</button>
@@ -387,25 +393,19 @@
 				</td>
 			</tr>	
 			<tr class="col s12">
-				<td class="col s3">
-					<label>% Gordura Negociada</label>
-					<input id="percentualGorduraNegociada" type="text"
-						[(ngModel)]="percentualGorduraNegociada" numberMaskDirective=""
-						name="percentualGorduraNegociada" maxlength="16">
-				</td>
-				<td class="col s3">
+				<td class="col s4">
 					<label>% Massa Magra Negociada</label>
 					<input id="avaliacaoFisica.percentualMassaMagraNegociada" type="text"
 						[(ngModel)]="atendimento.avaliacaoFisica.percentualMassaMagraNegociada" disabled
 						name="avaliacaoFisica.percentualMassaMagraNegociada">
 				</td>
-				<td class="col s3">
+				<td class="col s4">
 					<label>Peso Negociado (kg)</label>
 					<input id="avaliacaoFisica.pesoNegociado" type="text"
 						[(ngModel)]="atendimento.avaliacaoFisica.pesoNegociado" disabled
 						name="avaliacaoFisica.pesoNegociado">
 				</td>
-				<td class="col s3">
+				<td class="col s4">
 					<label>Peso em Excesso Negociado (kg)</label>
 					<input id="avaliacaoFisica.pesoExcessoNegociado" type="text"
 						[(ngModel)]="atendimento.avaliacaoFisica.pesoExcessoNegociado" disabled
@@ -434,7 +434,7 @@
 						[(ngModel)]="atendimento.avaliacaoFisica.aptidaoCardiorrespiratoriaValor">
 				</td>
 				<td class="col s3">
-					<input type="text" name="aptidaoCardiorrespiratoriaClassificacao"
+					<input type="text" name="aptidaoCardiorrespiratoriaClassificacao" disabled
 						[(ngModel)]="atendimento.avaliacaoFisica.aptidaoCardiorrespiratoriaClassificacao">
 				</td>
 				<td class="col s4">
@@ -451,7 +451,7 @@
 						[(ngModel)]="atendimento.avaliacaoFisica.forcaAbdominalValor">
 				</td>
 				<td class="col s3">
-					<input type="text" name="forcaAbdominalClassificacao"
+					<input type="text" name="forcaAbdominalClassificacao" disabled
 						[(ngModel)]="atendimento.avaliacaoFisica.forcaAbdominalClassificacao">
 				</td>
 				<td class="col s4">
@@ -468,7 +468,7 @@
 						[(ngModel)]="atendimento.avaliacaoFisica.flexibilidadeValor">
 				</td>
 				<td class="col s3">
-					<input type="text" name="flexibilidadeClassificacao"
+					<input type="text" name="flexibilidadeClassificacao" disabled
 						[(ngModel)]="atendimento.avaliacaoFisica.flexibilidadeClassificacao">
 				</td>
 				<td class="col s4">
@@ -485,13 +485,47 @@
 						[(ngModel)]="atendimento.avaliacaoFisica.forcaPreensaoManualValor">
 				</td>
 				<td class="col s3">
-					<input type="text" name="forcaPreensaoManualClassificacao"
+					<input type="text" name="forcaPreensaoManualClassificacao" disabled
 						[(ngModel)]="atendimento.avaliacaoFisica.forcaPreensaoManualClassificacao">
 				</td>
 				<td class="col s4">
 					<textarea class="materialize-textarea" id="forcaPreensaoManualObservacao" 
 						[(ngModel)]="atendimento.avaliacaoFisica.forcaPreensaoManualObservacao" 
 						name="forcaPreensaoManualObservacao"></textarea>
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>Preensão Arterial Sistólica:</p></td>
+				<td class="col s9">
+					<input type="text" numberMaskDirective="" 
+						name="pressaoArterialSistolica" (change)="changePreensaoArterialSistolica()"
+						[(ngModel)]="atendimento.avaliacaoFisica.pressaoArterialSistolica">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>Preensão Arterial Diastólica:</p></td>
+				<td class="col s9">
+					<input type="text" numberMaskDirective="" 
+						name="pressaoArterialDiastolica" (change)="changePreensaoArterialDiastolica()"
+						[(ngModel)]="atendimento.avaliacaoFisica.pressaoArterialDiastolica">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>Frequência Cardiaca:</p></td>
+				<td class="col s9">
+					<input type="text" numberMaskDirective="" 
+						name="frequenciaCardiaca" (change)="changeFrequenciaCardiaca()"
+						[(ngModel)]="atendimento.avaliacaoFisica.frequenciaCardiaca">
+				</td>
+			</tr>
+			<tr class="col s12">
+				<td  class="col s3"><p>IPAQ Anterior:</p></td>
+				<td class="col s9">
+					<select name="ipaqAnterior" class="browser-default"
+						[(ngModel)]="atendimento.avaliacaoFisica.ipaqAnterior">
+						<option disabled selected value="">Selecione IPAQ Anterior</option>
+						<option *ngFor="let ipaq of nivelAtividadeFisicas" value="{{ipaq}}">{{ipaq}}</option>
+					</select>
 				</td>
 			</tr>
 		</table>
@@ -519,43 +553,43 @@
 				<tr class="col s12">
 					<td class="col s2 domingo dia">
 						<input type="checkbox" id="domingo"
-							[(ngModel)]="afafDias.domingo" (change)="changeTotal(afafDias)"
+							[(ngModel)]="afafDias.domingo" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.domingo"> <label
 							for="domingo"></label>
 					</td>
 					<td class="col s2 segunda dia">
 						<input type="checkbox" id="segunda"
-							[(ngModel)]="afafDias.segunda" (change)="changeTotal(afafDias)"
+							[(ngModel)]="afafDias.segunda" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
 							name="afaf.segunda"> <label
 							for="segunda"></label>
 					</td>
 					<td class="col s1 terca  dia">
 						<input type="checkbox" id="terca"
-							[(ngModel)]="afafDias.terca" (change)="changeTotal(afafDias)"
+							[(ngModel)]="afafDias.terca" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.terca"> <label
 							for="terca"></label>
 					</td>
 					<td class="col s2 quarta dia">
 						<input type="checkbox" id="quarta"
-							[(ngModel)]="afafDias.quarta" (change)="changeTotal(afafDias)"
+							[(ngModel)]="afafDias.quarta" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.quarta"> <label
 							for="quarta"></label>
 					</td>
 					<td class="col s2 quinta dia">
 						<input type="checkbox" id="quinta"
-							[(ngModel)]="afafDias.quinta" (change)="changeTotal(afafDias)"
+							[(ngModel)]="afafDias.quinta" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.quinta"> <label
 							for="quinta"></label>
 					</td>
 					<td class="col s1 sexta dia">
 						<input type="checkbox" id="sexta"
-							[(ngModel)]="afafDias.sexta" (change)="changeTotal(afafDias)"
+							[(ngModel)]="afafDias.sexta" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.sexta"> <label
 							for="sexta"></label>
 					</td>
 					<td class="col s2 sabado dia">
 						<input type="checkbox" id="sabado"
-							[(ngModel)]="afafDias.sabado" (change)="changeTotal(afafDias)"
+							[(ngModel)]="afafDias.sabado" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.sabado"> <label
 							for="sabado"></label>
 					</td>

@@ -56,7 +56,7 @@ export class ExamePericialComponent {
             })
     }
 
-    next() {        
+    next() {
         this.solicitacaoServicoService.registrarExamePericial( new AtendimentoBuilder().clone(this.atendimento ))
             .then(res => {
                 this.showConfirmSave = true;

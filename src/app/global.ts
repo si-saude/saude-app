@@ -16,5 +16,19 @@ export const GlobalVariable = Object.freeze({
         format: 'dd/mm/yyyy',
         closeOnSelect: true,       
         selectYears: 200
-    }],     
+    }],
+    CHAVE_NORTE: [
+        "BFDI",
+        "BY6N",
+        "BUX8",
+        "KJ4S",
+        "BUX6",
+        "LCX7",
+        "W7DX",
+        "XBYC",
+        "A3H9",
+        "R6MG",
+        "BUX7"
+    ],
+    TIME_TO_ADD: 1
 });

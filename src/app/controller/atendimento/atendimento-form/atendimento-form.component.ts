@@ -87,6 +87,8 @@ export class AtendimentoFormComponent {
     private idEquipe: number;
     private timeout: Subscription;
     
+    private nivelAtividadeFisica: string;
+    
     constructor( private route: ActivatedRoute, private router: Router,
         private atendimentoService: AtendimentoService ) {
         this.profissional = new ProfissionalSaudeBuilder().initialize( new Profissional() );
@@ -203,6 +205,7 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    console.log(this.atendimento)
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
@@ -232,9 +235,7 @@ export class AtendimentoFormComponent {
             this.showPreload = true;
             this.atualizacao( this.atendimento )
                 .then( res => {
-                    console.log(res.json())
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento)
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
                         if ( this.atendimento.getQuestionario() != undefined &&
                                 this.atendimento.getQuestionario().getId() > 0 ) {
@@ -525,7 +526,8 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+            console.log(new AtendimentoBuilder().clone(this.atendimento))
+            console.log(this.atendimento)
             this.atendimentoService.finalizar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
@@ -697,7 +699,6 @@ export class AtendimentoFormComponent {
                         if ( t.getEquipeAbordagem() == undefined )
                             t.setEquipeAbordagem(new EquipeBuilder().initialize(null));
                     })
-                    console.log(this.atendimento)
                     if ( this.atendimento.getRecordatorio() != undefined && this.atendimento.getRecordatorio().getId() > 0)
                         this.menuNutricao.callBtnNewRecordatorio(true);
                     else this.menuNutricao.callBtnNewRecordatorio(false); 
@@ -744,6 +745,26 @@ export class AtendimentoFormComponent {
         return indice;
     }
     
+    setNivelAtividadeFisica(evento: string) {
+        let indice = this.definirIndiceTriagemNivelAtividadeFisica(evento);
+        this.atendimento.getTriagens()[0].setIndice(indice);
+        this.triagemUtil.selectTriagem(0, indice);
+        //input para ficha coleta
+        this.nivelAtividadeFisica = evento;
+    }
+    
+    definirIndiceTriagemNivelAtividadeFisica(valor: string) {
+        if ( valor == "IRREGULAR ATIVO A")
+            return 2;
+        else if ( valor == "IRREGULAR ATIVO B")
+            return 1;
+        else if ( valor == "REGULARMENTE ATIVO")
+            return 3;
+        else if ( valor == "MUITO ATIVO")
+            return 4;
+        else return 0; 
+    }
+    
     ngOnDestroy() {
         this.alive = false;
         if ( this.inscricao != undefined )
@@ -751,5 +772,4 @@ export class AtendimentoFormComponent {
         if ( this.timeout != undefined )
             this.timeout.unsubscribe();
     }
-    
 }

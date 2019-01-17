@@ -3,6 +3,7 @@ import { MaterializeModule } from 'angular2-materialize';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { UtilService } from './../../generics/util.service';
 
 import { AtendimentoInformacoesEmpregadoComponent } from './atendimento-informacoes-empregado.component';
 
@@ -18,6 +19,9 @@ import { AtendimentoInformacoesEmpregadoComponent } from './atendimento-informac
   ],
   exports: [
     AtendimentoInformacoesEmpregadoComponent
+  ],
+  providers: [
+    UtilService
   ]
 })
 export class AtendimentoInformacoesEmpregadoModule { }

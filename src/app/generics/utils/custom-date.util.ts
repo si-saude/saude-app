@@ -40,11 +40,12 @@ export class CustomDate {
     }
     
     setAppDate(date:any){
+        
         this.appDate = date;
         this.getApiDate();
     }    
     
-    setAppTime(time :any){        
+    setAppTime(time :any){
         this.appTime = time;
         this.getApiDate();
     }

@@ -20,8 +20,10 @@
 					href="#dadosGerais">Dados Gerais</a></li>
 				<li class="tab"><a RouterLinkActive="active"
 					href="#informacoesEmpregado">Informações do Empregado</a></li>
-				<li class="tab col s2" [class.disabled]="!atendimentoCarregado"><a
+				<li class="tab" [class.disabled]="!atendimentoCarregado"><a
 					RouterLinkActive="active" href="#aso">Aso</a></li>
+				<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'EDF' || atendimento.filaAtendimentoOcupacional.status != 'EM ATENDIMENTO'">
+					<a href="#educacaoFisica">Educação Física</a></li>
 				<li class="tab" [class.disabled]="!atendimentoCarregado"><a
 					RouterLinkActive="active" href="#fichaColeta">Ficha de Coleta</a></li>
 				<li class="tab" [class.disabled]="!atendimentoCarregado"><a
@@ -125,12 +127,19 @@
 						[atendimento]="atendimento"></app-informacao-aso>
 				</div>
 			</div>
+			<div id="educacaoFisica">
+				<div *ngIf="profissional.equipe.abreviacao == 'EDF'">
+					<app-atendimento-proaf [service]="atendimentoService"
+					 	(nivelAtividadeFisica)="setNivelAtividadeFisica($event)"
+						[atendimento]="atendimento"></app-atendimento-proaf>
+				</div>
+			</div>
 			<div id="fichaColeta" disabled>
-				<app-ficha-coleta
-					[fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta"
-					[statusFila]="atendimento?.filaAtendimentoOcupacional.status"
-					[service]="atendimentoService"
-					[idEquipeProfissional]="profissional.equipe.id"></app-ficha-coleta>
+			<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta" 
+				[statusFila]="atendimento?.filaAtendimentoOcupacional.status"
+				[service]="atendimentoService" [idEquipeProfissional]="profissional.equipe.id"
+				[nivelAtividadeFisica]="nivelAtividadeFisica"
+				(dor)="triagemUtil.selectDor(atendimento,$event)"></app-ficha-coleta>
 			</div>
 			<div id="triagem">
 				<app-triagem [triagens]="atendimento.triagens"></app-triagem>

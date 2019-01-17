@@ -3,6 +3,7 @@ import { Atendimento } from './../../model/atendimento';
 import { AvaliacaoFisicaAtividadeFisica } from './../../model/avaliacao-fisica-atividade-fisica';
 import { AvaliacaoFisicaAtividadeFisicaBuilder } from './../avaliacao-fisica-atividade-fisica/avaliacao-fisica-atividade-fisica.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
+import { Util } from './../../generics/utils/util';
 
 export class AvaliacaoFisicaBuilder extends GenericBuilder {
     
@@ -61,18 +62,28 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
         cloneAvaliacaoFisica.setRazaoCinturaEstatura(this.getValue( avaliacaoFisica, "getRazaoCinturaEstatura" ));
         cloneAvaliacaoFisica.setTipoAtendimento(this.getValue( avaliacaoFisica, "getTipoAtendimento" ));
         cloneAvaliacaoFisica.setPercentualMassaMagraNegociada(this.getValue( avaliacaoFisica, "getPercentualMassaMagraNegociada" ))
-        cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaValor(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaValor" ));
+        cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaValor" )));
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaClassificacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaClassificacao" ));
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaObservacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaObservacao" ));
-        cloneAvaliacaoFisica.setForcaAbdominalValor(this.getValue( avaliacaoFisica, "getForcaAbdominalValor" ));
+        cloneAvaliacaoFisica.setForcaAbdominalValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getForcaAbdominalValor" )));
         cloneAvaliacaoFisica.setForcaAbdominalClassificacao(this.getValue( avaliacaoFisica, "getForcaAbdominalClassificacao" ));
         cloneAvaliacaoFisica.setForcaAbdominalObservacao(this.getValue( avaliacaoFisica, "getForcaAbdominalObservacao" ));
-        cloneAvaliacaoFisica.setFlexibilidadeValor(this.getValue( avaliacaoFisica, "getFlexibilidadeValor" ));
+        cloneAvaliacaoFisica.setFlexibilidadeValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getFlexibilidadeValor" )));
         cloneAvaliacaoFisica.setFlexibilidadeClassificacao(this.getValue( avaliacaoFisica, "getFlexibilidadeClassificacao" ));
         cloneAvaliacaoFisica.setFlexibilidadeObservacao(this.getValue( avaliacaoFisica, "getFlexibilidadeObservacao" ));
-        cloneAvaliacaoFisica.setForcaPreensaoManualValor(this.getValue( avaliacaoFisica, "getForcaPreensaoManualValor" ));
+        cloneAvaliacaoFisica.setForcaPreensaoManualValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getForcaPreensaoManualValor" )));
         cloneAvaliacaoFisica.setForcaPreensaoManualClassificacao(this.getValue( avaliacaoFisica, "getForcaPreensaoManualClassificacao" ));
         cloneAvaliacaoFisica.setForcaPreensaoManualObservacao(this.getValue( avaliacaoFisica, "getForcaPreensaoManualObservacao" ));
+        cloneAvaliacaoFisica.setDobraTricipital(Util.treatDouble(this.getValue( avaliacaoFisica, "getDobraTricipital" )));
+        cloneAvaliacaoFisica.setDobraSubscapular(Util.treatDouble(this.getValue( avaliacaoFisica, "getDobraSubscapular" )));
+        cloneAvaliacaoFisica.setDobraToracica(Util.treatDouble(this.getValue( avaliacaoFisica, "getDobraToracica" )));
+        cloneAvaliacaoFisica.setDobraAuxiliarMedia(Util.treatDouble(this.getValue( avaliacaoFisica, "getDobraAuxiliarMedia" )));
+        cloneAvaliacaoFisica.setDobraSupraIliaca(Util.treatDouble(this.getValue( avaliacaoFisica, "getDobraSupraIliaca" )));
+        cloneAvaliacaoFisica.setDobraAbdominal(Util.treatDouble(this.getValue( avaliacaoFisica, "getDobraAbdominal" )));
+        cloneAvaliacaoFisica.setDobraCoxaMedial(Util.treatDouble(this.getValue( avaliacaoFisica, "getDobraCoxaMedial" )));
+        cloneAvaliacaoFisica.setPressaoArterialSistolica(Util.treatDouble(this.getValue( avaliacaoFisica, "getPressaoArterialSistolica")));
+        cloneAvaliacaoFisica.setPressaoArterialDiastolica(Util.treatDouble(this.getValue( avaliacaoFisica, "getPressaoArterialDiastolica")));
+        cloneAvaliacaoFisica.setFrequenciaCardiaca(Util.treatDouble(this.getValue( avaliacaoFisica, "getFrequenciaCardiaca")));
         
         cloneAvaliacaoFisica.setAtendimento(new Atendimento());
         cloneAvaliacaoFisica.setAvaliacaoFisicaAtividadeFisicas(
