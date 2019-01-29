@@ -14,7 +14,7 @@
 		
 		<div class="input-field-tipo input-field col s3" style="margin-top: 0">
 			<label for="tipo">Tipo</label> 
-			<select class="browser-default">
+			<select class="browser-default" [(ngModel)]="atendimento.tipo">
 				<option disabled selected value='undefined'>Selecione um tipo</option>
 				<option *ngFor="let tipoAtendimento of tipoAtendimentos" value="{{tipoAtendimento}}">{{tipoAtendimento}}</option>
 			</select>

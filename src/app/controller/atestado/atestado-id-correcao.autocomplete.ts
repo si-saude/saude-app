@@ -29,9 +29,9 @@ export class AtestadoIdCorrecaoAutocomplete {
     }
 
     public getFilter( a: Atestado, aF: AtestadoFilter ) {
-        aF.setMotivoRecusa(new MotivoRecusaAtestadoFilter() );
-        aF.getMotivoRecusa().setPermiteReabertura(new BooleanFilter() );
-        aF.getMotivoRecusa().getPermiteReabertura().setValue(1);
+        aF.setMotivoRecusa( new MotivoRecusaAtestadoFilter() );
+        aF.getMotivoRecusa().setPermiteReabertura( new BooleanFilter() );
+        aF.getMotivoRecusa().getPermiteReabertura().setValue( 1 );
         aF.setEmpregado( new EmpregadoFilter() );
         aF.getEmpregado().setId(a.getEmpregado().getId());
         aF.setId(Number( a.getId().toString().replace(/\D/g, "")));

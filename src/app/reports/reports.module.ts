@@ -18,6 +18,7 @@ import { MudancaFuncaoReportComponent } from './mudanca-funcao-report/mudanca-fu
 import { AcompanhamentoSastReportComponent } from './acompanhamento-sast-report/acompanhamento-sast-report.component';
 import { SugestaoAgendamentoReportComponent } from './sugestao-agendamento-report/sugestao-agendamento-report.component';
 import { ConformidadeAsoReportComponent } from './conformidade-aso-report/conformidade-aso-report.component';
+import { ExamesImportadosReportComponent } from './exames-importados-report/exames-importados-report.component';
 import { PanoramaReportService } from './panorama-report/panorama-report.service';
 import { ControleAtestadoReportService } from './controle-atestado-report/controle-atestado-report.service';
 import { CatReportService } from './cat-report/cat-report.service';
@@ -26,6 +27,7 @@ import { SugestaoAgendamentoReportService } from './sugestao-agendamento-report/
 import { PreRequisitosAgendamentoReportService } from './pre-requisitos-agendamento-report/pre-requisitos-agendamento-report.service';
 import { MudancaFuncaoReportService } from './mudanca-funcao-report/mudanca-funcao-report.service';
 import { AcompanhamentoSastReportService } from './acompanhamento-sast-report/acompanhamento-sast-report.service';
+import { ExamesImportadosReportService } from './exames-importados-report/exames-importados-report.service';
 import { ReportsRoutingModule } from './reports.routing.module';
 import { SharedModule } from './../controller/shared.module';
 import { PipesModule } from './../controller/pipes.module';
@@ -46,7 +48,8 @@ import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
        AcompanhamentoSastReportComponent,
        SugestaoAgendamentoReportComponent,
        CalendarComponent,
-       ConformidadeAsoReportComponent
+       ConformidadeAsoReportComponent,
+       ExamesImportadosReportComponent
      ],
      imports: [
         ReportsRoutingModule,
@@ -67,7 +70,8 @@ import { CalendarComponent } from "angular2-fullcalendar/src/calendar/calendar";
         MudancaFuncaoReportService,
         AcompanhamentoSastReportService,
         SugestaoAgendamentoReportService,
-        ConformidadeAsoReportService
+        ConformidadeAsoReportService,
+        ExamesImportadosReportService
      ]
 })
 export class ReportsModule{}

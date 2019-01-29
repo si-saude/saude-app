@@ -252,18 +252,18 @@ export class RiscoPotencialComponent {
     selectUf() {
         if ( this.uf != '' ) {
             this.showPreload = true;
-            this.riscoPotencialService.getRiscoPotenciais( this.uf, this.profissional.getEquipe().getId() )
+            let ufProfissional = [this.uf,JSON.stringify(this.profissional)];  
+            this.riscoPotencialService.getRiscoPotenciais( ufProfissional )
                 .then( res => {
                     this.showPreload = false;
                     this.riscoPotenciais = new RiscoPotencialReportBuilder().cloneList( res.json() );
-                    console.log(this.riscoPotenciais)
                     this.riscoPotenciais.sort(function(a, b){
                         if ( a['ranking'] > b['ranking'] )
                             return -1;
                         else if ( a['ranking'] < b['ranking'] )
                             return 1;
                         else return 0;
-                    });             
+                    });
                     
                     for ( let i = 0; i < this.riscoPotenciais.length; i++)
                         this.riscoPotenciais[i].setRanking(i+1)

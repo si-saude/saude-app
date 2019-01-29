@@ -205,7 +205,6 @@ export class AtendimentoFormComponent {
             this.atendimentoService.atualizar( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento)
                     if ( this.atendimento.getFilaAtendimentoOcupacional() != undefined ) {
                         this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
                         this.filaAtendimentoOcupacional = new FilaAtendimentoOcupacionalBuilder().initialize( this.filaAtendimentoOcupacional );
@@ -526,8 +525,6 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            console.log(new AtendimentoBuilder().clone(this.atendimento))
-            console.log(this.atendimento)
             this.atendimentoService.finalizar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];

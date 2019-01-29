@@ -25,6 +25,7 @@ export class ControleAtestadoDto {
     private observacao: string;
     private statusAtestado: string;
     private justificativa: string;
+    private codigoCid: string;
     
     getNomeEmpregado() {
         return this.nomeEmpregado;
@@ -163,5 +164,11 @@ export class ControleAtestadoDto {
     }
     setJustificativa(justificativa) {
         this.justificativa = justificativa;
+    }
+    getCodigoCid() {
+        return this.codigoCid;
+    }
+    setCodigoCid(codigoCid) {
+        this.codigoCid = codigoCid;
     }
 }

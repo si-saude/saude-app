@@ -6,12 +6,15 @@ import * as $ from 'jquery';
 
 import { Atendimento } from './../../model/atendimento';
 import { RespostaFichaColeta } from './../../model/resposta-ficha-coleta';
+import { ItemRespostaFichaColeta } from './../../model/item-resposta-ficha-coleta';
+import { ItemRespostaFichaColetaBuilder } from './../../controller/item-resposta-ficha-coleta/item-resposta-ficha-coleta.builder';
 import { AtendimentoBuilder } from './../../controller/atendimento/atendimento.builder';
 import { AtendimentoService } from './../../controller/atendimento/atendimento.service';
 import { AtividadeFisicaDescricaoAutocomplete } from './../../controller/atividade-fisica/atividade-fisica-descricao.autocomplete';
 import { AvaliacaoFisicaAtividadeFisica } from './../../model/avaliacao-fisica-atividade-fisica';
 import { AvaliacaoFisicaAtividadeFisicaBuilder } from './../../controller/avaliacao-fisica-atividade-fisica/avaliacao-fisica-atividade-fisica.builder';
 import { Util } from './../../generics/utils/util';
+import { UtilService } from './../../generics/util.service';
 import { TriagemComponent } from './../../includes/triagem/triagem.component';
 
 @Component( {
@@ -43,8 +46,12 @@ export class AtendimentoProafComponent {
     private circunferenciaCintura: number;
     private circunferenciaQuadril: number;
     private testesFisicos: Array<number>;
+    private simNao: Array<string>;
+    private statusFilaAtendimentoOcupacional: Array<string>; 
+    private tempIndex: number;
+    private realizada: boolean;
 
-    constructor() {
+    constructor(private utilService: UtilService) {
         this.afafsRealizadas = new Array<AvaliacaoFisicaAtividadeFisica>();
         this.afafsOrientadas = new Array<AvaliacaoFisicaAtividadeFisica>();
         this.afafDias = new AvaliacaoFisicaAtividadeFisicaBuilder().initialize( null );
@@ -57,6 +64,8 @@ export class AtendimentoProafComponent {
         this.nivelAtividadeFisicas = new Array<string>();
         this.testesFisicos = new Array<number>();
         this.nivelAtividadeFisica = new EventEmitter<string | MaterializeAction>();
+        this.simNao = new Array<string>();
+        this.statusFilaAtendimentoOcupacional = new Array<string>();
     }
 
     ngOnInit() {
@@ -68,24 +77,19 @@ export class AtendimentoProafComponent {
         this.getForcaPreensaoManual();
         this.getAptidaoFisicaBrigadista();
         this.getNivelAtividadeFisica();
+        this.getSimNao();
+        this.getStatusFilaAtendimentoOcupacional();
     }
 
     ngOnChanges( changes: SimpleChanges ) {
         if ( changes["atendimento"] != undefined ) {
             this.atendimento = changes["atendimento"].currentValue;
-            this.constructAfafs();
-            if ( this.atendimento.getId() > 0 )
+            if ( this.atendimento.getId() > 0 ) {
+                if ( this.atendimento.getFilaEsperaOcupacional() != undefined && 
+                        this.atendimento.getFilaAtendimentoOcupacional().getStatus() != this.statusFilaAtendimentoOcupacional[7] )
                 this.setEstagioContemplacaoTriagem();
+            }
         }
-    }
-
-    constructAfafs() {
-        this.afafsRealizadas = this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter( afaf => {
-            afaf.getTipo() == "REALIZADAS";
-        } );
-        this.afafsOrientadas = this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter( afaf => {
-            afaf.getTipo() == "ORIENTADAS";
-        } );
     }
 
     getClassificacoes() {
@@ -155,40 +159,119 @@ export class AtendimentoProafComponent {
                 console.log( error );
             } )
     }
+    
+    getSimNao() {
+        this.service.getUtilService().getGenericPath( 'status-sim-nao' )
+            .then( res => {
+                this.simNao = Object.keys( res.json() ).sort();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
+    
+    getStatusFilaAtendimentoOcupacional() {
+        this.utilService.getGenericPath("status-fila-atendimento-ocupacional")
+            .then(res => {
+                this.statusFilaAtendimentoOcupacional = Object.keys( res.json() ).sort();
+                console.log(this.statusFilaAtendimentoOcupacional);
+            })
+            .catch( error => {
+                console.log( error );
+            } )
+    }
 
-    addAtividade( tipo ) {
+    addAtividade( tipo: string ) {
         let afaf = new AvaliacaoFisicaAtividadeFisicaBuilder().initialize( null );
         afaf.setTipo( tipo );
-        if ( tipo == "REALIZADA" )
-            this.afafsRealizadas.push( afaf );
-        else this.afafsOrientadas.push( afaf );
+        if ( afaf.getTipo() == "REALIZADA" ) {
+            let resposta: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
+            );
+            resposta.setConteudo("SIM");
+            if ( resposta.getItens() == undefined )
+                resposta.setItens(new Array<ItemRespostaFichaColeta>());
+            this.addItemResposta(resposta);
+        }
         this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().push( afaf );
     }
 
-    removeAtividade( tipo, index: number ) {
-        if ( tipo == "REALIZADA" ) {
-            let afaf = this.afafsRealizadas.splice( index, 1 );
-            let idxAfaf = this.afafsOrientadas.findIndex( a => {
-                if ( afaf[0].getAtividadeFisica().getDescricao() == a.getAtividadeFisica().getDescricao() &&
-                    afaf[0].getMinuto() == a.getMinuto() ) return true;
-                else return false;
-            } );
-            if ( idxAfaf > -1 )
-                this.afafsOrientadas.splice( idxAfaf, 1 );
-        } else this.afafsOrientadas.splice( index, 1 );
-        this.atendimento.getAvaliacaoFisica().setAvaliacaoFisicaAtividadeFisicas( new Array<AvaliacaoFisicaAtividadeFisica>() );
-        this.afafsRealizadas.forEach( aR => this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().push( aR ) );
-        this.afafsOrientadas.forEach( aO => this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().push( aO ) );
+    removeAtividade( afaf: AvaliacaoFisicaAtividadeFisica ) {
+        let index = this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().findIndex(afaf1 => 
+            afaf1.getTipo() == afaf.getTipo() && 
+            afaf1.getAtividadeFisica().getDescricao() == afaf.getAtividadeFisica().getDescricao() &&
+            afaf1.getMinuto() == afaf.getMinuto()
+        );
+        this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().splice(index, 1);
+        if ( afaf.getTipo() == "REALIZADA" ) {
+            let resposta: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
+            );
+            if ( this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().find(a1 => a1.getTipo() == "REALIZADA") == undefined ) {
+                resposta.setConteudo(this.simNao[0]);
+                resposta.setItens(undefined);
+            }
+            if ( resposta.getItens() != undefined && resposta.getItens().length > 0 ) {
+                let index2 = resposta.getItens().findIndex(r => 
+                    r.getConteudo() == afaf.getAtividadeFisica().getDescricao() &&
+                    r.getItem().getItem().getConteudo() == afaf.getMinuto().toString()
+                );
+                resposta.getItens().splice(index2, 1);
+            }
+        }   
     }
-
+    
+    addItemResposta(resposta: RespostaFichaColeta) {
+        let item = new ItemRespostaFichaColetaBuilder().initialize(new ItemRespostaFichaColeta());
+        let itemAux = item;
+        for ( let i = 0; i < 2; i++ ) {
+            item.setItem(new ItemRespostaFichaColetaBuilder().initialize(new ItemRespostaFichaColeta()))
+            item = item.getItem();
+        }
+        resposta.getItens().push(itemAux);
+    }
+    
+    changeAtividade(afaf: AvaliacaoFisicaAtividadeFisica, i: number, realizada: boolean) {
+        if ( realizada ) {
+            this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
+            ).getItens()[i].setConteudo(afaf.getAtividadeFisica().getDescricao());
+        }
+    }
+    
+    changeDias(afaf: AvaliacaoFisicaAtividadeFisica) {
+        let qtdDias: number = this.changeTotal(afaf);
+        if ( this.realizada ) {
+            let r = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
+            ).getItens()[this.tempIndex].getItem().setConteudo(qtdDias.toString());
+        }
+    }
+    
+    changeMinuto(afaf: AvaliacaoFisicaAtividadeFisica, i: number, realizada: boolean) {
+        this.changeTotal(afaf);
+        if ( realizada ) {
+            this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
+            ).getItens()[i].getItem().getItem().setConteudo(afaf.getMinuto().toString());
+        }
+    }
+    
+    changeClassificacao(afaf: AvaliacaoFisicaAtividadeFisica, i: number) {
+        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+            rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
+        ).getItens()[i].getItem().getItem().getItem().setConteudo(afaf.getClassificacao())
+    }
+    
     replicateAtividade( afaf: AvaliacaoFisicaAtividadeFisica ) {
-        if ( this.afafsOrientadas.find( a =>
-            a.getAtividadeFisica().getDescricao() == afaf.getAtividadeFisica().getDescricao() &&
-            a.getMinuto() == afaf.getMinuto() ) != undefined ) return;
-        this.afafsOrientadas.push( afaf );
+        let afaf1 = new AvaliacaoFisicaAtividadeFisicaBuilder().clone(afaf);
+        afaf1.setTipo("ORIENTADA");
+        this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().push(afaf1);
     }
 
-    openModelDias( afaf: AvaliacaoFisicaAtividadeFisica ) {
+    openModelDias( afaf: AvaliacaoFisicaAtividadeFisica, i: number, realizada: boolean ) {
+        this.realizada = realizada;
+        this.tempIndex = i;
         this.afafDias = afaf;
         this.modalActions.emit( { action: "modal", params: ['open'] } );
     }
@@ -196,26 +279,20 @@ export class AtendimentoProafComponent {
     closeModal() {
         this.modalActions.emit( { action: "modal", params: ['close'] } );
     }
-
+    
     changeTotal( afaf: AvaliacaoFisicaAtividadeFisica ) {
         let sumDias = 0;
+        if ( afaf.getDomingo() ) sumDias++;
+        if ( afaf.getSegunda() ) sumDias++;
+        if ( afaf.getTerca() ) sumDias++;
+        if ( afaf.getQuarta() ) sumDias++;
+        if ( afaf.getQuinta() ) sumDias++;
+        if ( afaf.getSexta() ) sumDias++;
+        if ( afaf.getSabado() ) sumDias++;
         if ( afaf.getMinuto() != undefined ) {
-            if ( afaf.getDomingo() )
-                sumDias++;
-            if ( afaf.getSegunda() )
-                sumDias++;
-            if ( afaf.getTerca() )
-                sumDias++;
-            if ( afaf.getQuarta() )
-                sumDias++;
-            if ( afaf.getQuinta() )
-                sumDias++;
-            if ( afaf.getSexta() )
-                sumDias++;
-            if ( afaf.getSabado() )
-                sumDias++;
             afaf.setTotalMinuto( sumDias * afaf.getMinuto() );
         }
+        return sumDias;
     }
 
     verifyEstagioContemplacao( campo ) {
@@ -312,6 +389,10 @@ export class AtendimentoProafComponent {
         this.atendimento.getAvaliacaoFisica().setPercentualMassaMagraNegociada( atendimento.getAvaliacaoFisica().getPercentualMassaMagraNegociada() );
         this.atendimento.getAvaliacaoFisica().setPesoNegociado( atendimento.getAvaliacaoFisica().getPesoNegociado() );
         this.atendimento.getAvaliacaoFisica().setPesoExcessoNegociado( atendimento.getAvaliacaoFisica().getPesoExcessoNegociado() );
+        let respostas: Array<RespostaFichaColeta> = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().filter(r => 
+            r.getPergunta().getGrupo().includes("EXAME F"));
+        respostas.find(r => r.getPergunta().getCodigo() == "0003").setConteudo(this.atendimento.getAvaliacaoFisica().getImc().toString());
+        respostas.find(r => r.getPergunta().getCodigo() == "0004").setConteudo(this.atendimento.getAvaliacaoFisica().getPercentualGordura().toString());
     }
 
     changePeso() {
@@ -476,7 +557,7 @@ export class AtendimentoProafComponent {
                 } else if ( aptCardio > 43 ) {
                     this.setAptidaoCardiorespiratoria( 2 );
                 }
-            } else if ( idade >= 60 && idade <= 65 ) {
+            } else if ( idade >= 60 ) {
                 if ( aptCardio < 21 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
                 } else if ( aptCardio >= 21 && aptCardio <= 24 ) {
@@ -622,7 +703,7 @@ export class AtendimentoProafComponent {
                 } else if ( aptCardio > 33 ) {
                     this.setAptidaoCardiorespiratoria( 2 );
                 }
-            } else if ( idade >= 60 && idade <= 65 ) {
+            } else if ( idade >= 60 ) {
                 if ( aptCardio < 16 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
                 } else if ( aptCardio >= 16 && aptCardio <= 18 ) {
@@ -794,6 +875,7 @@ export class AtendimentoProafComponent {
                 }
             }
         }
+        
     }
 
     changeFlexibilidadeValor() {
@@ -993,6 +1075,9 @@ export class AtendimentoProafComponent {
             r.getPergunta().getGrupo().includes( "EXAME F" ) && r.getPergunta().getCodigo() == "0014" )
             .setConteudo( this.aptidaoCardiorrespiratorias[i] );
         this.atendimento.getAvaliacaoFisica().setAptidaoCardiorrespiratoriaClassificacao( this.aptidaoCardiorrespiratorias[i] );
+        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(r => 
+        r.getPergunta().getGrupo().includes("EXAME F") && r.getPergunta().getCodigo() == "0013")
+            .setConteudo(this.atendimento.getAvaliacaoFisica().getAptidaoCardiorrespiratoriaValor().toString());
         if ( i == 4 || i == 0 ) {
             this.atendimento.getTriagens()[3].setIndice( 0 );
             this.selectTriagem( 3, 0 );
@@ -1236,5 +1321,41 @@ export class AtendimentoProafComponent {
         }
 
         $( "td[title=" + i + "]" ).css( "backgroundColor", "#D4D4D4" );
+    }
+    
+    downloadRelatorioProaf() {        
+        this.service.getRelatorioProaf( new AtendimentoBuilder().clone( this.atendimento ))
+            .then(res => {
+                this.baixar( res, this.atendimento.getFilaEsperaOcupacional().getEmpregado().getMatricula().trim()+".pdf" );
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+    
+    baixar( data, fileName ) {
+        let byteCharacters = atob(data._body);
+        let byteArrays = [];
+        let sliceSize = 1024;
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            let byteNumbers = new Array(slice.length);
+            for (var i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            let byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+        
+        let blob = new Blob(byteArrays);
+        let url = window.URL.createObjectURL(blob);
+        var anchor = document.createElement("a");
+        anchor.download = fileName;
+        anchor.href = url;
+        document.body.appendChild(anchor);
+        anchor.click();
     }
 }

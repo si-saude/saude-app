@@ -97,7 +97,7 @@ export class FichaColetaComponent{
     getStatusSimNao() {
         this.service.getStatusSimNao()
             .then(res => {
-                this.simNao = Object.keys(res.json()).sort();;
+                this.simNao = Object.keys(res.json()).sort();
                 
                 this.seachPathsConteudoPerguntas();
             })
@@ -253,6 +253,8 @@ export class FichaColetaComponent{
     }
     
     isDisabledResposta(resposta: RespostaFichaColeta) {
+        if ( resposta.getPergunta().getCodigo() == "0020" && resposta.getPergunta().getGrupo() == "ANAMNESE" )
+            return true;
         if((!resposta.getVerified())){
             this.permissaoCampo(resposta);
         }

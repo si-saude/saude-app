@@ -2,6 +2,10 @@
 <meta charset="utf-8">
 </head>
 
+<div class="btns-aside">
+	<a (click)="downloadRelatorioProaf()"><i style="cursor: pointer;" class="small material-icons icon">file_download</i>Relatório</a>
+</div>
+
 <div class="naf">
 	<fieldset>
 		<legend>NAF (Nível de Atividade Física)</legend>
@@ -27,26 +31,26 @@
 						<th class="col s1">Remover</th>
 					</tr>
 				</thead>
-				<div *ngFor="let afaf of afafsRealizadas; let i = index">
+				<div *ngFor="let afaf of atendimento.avaliacaoFisica.avaliacaoFisicaAtividadeFisicas; let i = index">
 					<tbody class="col s12">
-						<tr class="col s12 row">
+						<tr class="col s12 row" *ngIf="afaf.tipo == 'REALIZADA'">
 							<td class="col s2 atividade">
 								<input type="text" materialize="autocomplete" autocomplete="off"
 									name="afaf.atividadeFisica.descricao{{i}}"
 									[(ngModel)]="afaf.atividadeFisica.descricao"
-									(blur)="autocompleteAF.getAutocomplete().getObj($event,afaf,'setAtividadeFisica','getDescricao')"
-									(ngModelChange)="autocompleteAF.getAutocomplete().getList(afaf.atividadeFisica, 'getDescricao');"
+									(blur)="autocompleteAF.getAutocomplete().getObj($event,afaf,'setAtividadeFisica','getDescricao'); changeAtividade(afaf, i, true)"
+									(ngModelChange)="autocompleteAF.getAutocomplete().getList(afaf.atividadeFisica, 'getDescricao')"
 									(keydown.enter)="autocompleteAF.getAutocomplete().pressEnter($event,afaf,'setAtividadeFisica','getDescricao');"
 									[materializeParams]="autocompleteAF.getAutocomplete().getObjAutoComplete()">
 							</td>
 							<td class="col s1 dias">
 								<a class="btn-dias btn-tiny waves-effect waves-light"
-									(click)="openModelDias(afaf)"> <i class="tiny material-icons">add</i>
+									(click)="openModelDias(afaf, i, true)"> <i class="tiny material-icons">add</i>
 								</a>
 							</td>
 							<td class="col s1 minuto"> 
 								<input id="minuto{{i}}" type="number"
-									[(ngModel)]="afaf.minuto" (change)="changeTotal(afaf); changeNivelAtividadeFisica()"
+									[(ngModel)]="afaf.minuto" (change)="changeMinuto(afaf, i, true); changeNivelAtividadeFisica();"
 									name="afaf.minuto{{i}}">
 							</td>
 							<td class="col s1 total"> 
@@ -56,7 +60,7 @@
 							</td>
 							<td class="col s2 classificacao">
 								<select name="classificacao{{i}}" class="browser-default"
-									[(ngModel)]="afaf.classificacao" (change)="changeNivelAtividadeFisica()">
+									[(ngModel)]="afaf.classificacao" (change)="changeClassificacao(afaf, i); changeNivelAtividadeFisica()">
 									<option disabled selected value="">Selecione uma Classificação</option>
 									<option *ngFor="let classificacao of classificacoes" value="{{classificacao}}">{{classificacao}}</option>
 								</select>
@@ -66,13 +70,13 @@
 									[(ngModel)]="afaf.observacao" name="afaf.observacao{{i}}"></textarea>
 							</td>
 							<td class="col s1"><a
-								class="btn-floating waves-effect waves-light red btn-remove"
+								class="btn-floating waves-effect waves-light green btn-validar"
 								(click)="replicateAtividade(afaf)"> <i
 									class="material-icons center-icon">check</i>
 							</a></td>
 							<td class="col s1 botao-remover"><a
 								class="btn-floating waves-effect waves-light red btn-remove"
-								(click)="removeAtividade('REALIZADA', i); changeNivelAtividadeFisica()"> <i
+								(click)="removeAtividade(afaf); changeNivelAtividadeFisica()"> <i
 									class="material-icons center-icon">delete</i>
 							</a></td>
 						</tr>
@@ -101,9 +105,9 @@
 						<th class="col s1">Remover</th>
 					</tr>
 				</thead>
-				<div *ngFor="let afaf of afafsOrientadas; let i = index">
+				<div *ngFor="let afaf of atendimento.avaliacaoFisica.avaliacaoFisicaAtividadeFisicas; let i = index">
 					<tbody class="col s12">
-						<tr class="col s12">
+						<tr class="col s12 row" *ngIf="afaf.tipo == 'ORIENTADA'">
 							<td class="col s3 atividade">
 								<input type="text" materialize="autocomplete" autocomplete="off"
 									name="afaf.atividadeFisica.descricao{{i}}"
@@ -115,12 +119,12 @@
 							</td>
 							<td class="col s1 dias">
 								<a class="btn-dias btn-tiny waves-effect waves-light"
-									(click)="openModelDias(afaf)"> <i class="tiny material-icons">add</i>
+									(click)="openModelDias(afaf, i, false)"> <i class="tiny material-icons">add</i>
 								</a>
 							</td>
 							<td class="col s1 minuto"> 
 								<input id="minuto" type="number"
-									[(ngModel)]="afaf.minuto" (change)="changeTotal(afaf)"
+									[(ngModel)]="afaf.minuto" (change)="changeMinuto(afaf,i,false)"
 									name="afaf.minuto">
 							</td>
 							<td class="col s1 total"> 
@@ -141,7 +145,7 @@
 							</td>
 							<td class="col s1 botao-remover"><a
 								class="btn-floating waves-effect waves-light red btn-remove"
-								(click)="removeAtividade('ORIENTADA', i)"> <i
+								(click)="removeAtividade(afaf)"> <i
 									class="material-icons center-icon">delete</i>
 							</a></td>
 						</tr>
@@ -521,15 +525,20 @@
 			<tr class="col s12">
 				<td  class="col s3"><p>IPAQ Anterior:</p></td>
 				<td class="col s9">
-					<select name="ipaqAnterior" class="browser-default"
+					<input type="text" disabled
+						name="ipaqAnterior"
 						[(ngModel)]="atendimento.avaliacaoFisica.ipaqAnterior">
-						<option disabled selected value="">Selecione IPAQ Anterior</option>
-						<option *ngFor="let ipaq of nivelAtividadeFisicas" value="{{ipaq}}">{{ipaq}}</option>
-					</select>
 				</td>
 			</tr>
 		</table>
 	</fieldset>
+	
+	<div class="col s12">
+		<label>Parecer Conclusivo e Orientações</label>
+		<textarea class="materialize-textarea" id="atendimento.avaliacaoFisica.observacoes" 
+			[(ngModel)]="atendimento.avaliacaoFisica.observacoes" name="atendimento.avaliacaoFisica.observacoes"></textarea>
+	</div>
+	
 </div>
 
 <!-- Modal Structure -->
@@ -553,43 +562,43 @@
 				<tr class="col s12">
 					<td class="col s2 domingo dia">
 						<input type="checkbox" id="domingo"
-							[(ngModel)]="afafDias.domingo" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
+							[(ngModel)]="afafDias.domingo" (change)="changeDias(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.domingo"> <label
 							for="domingo"></label>
 					</td>
 					<td class="col s2 segunda dia">
 						<input type="checkbox" id="segunda"
-							[(ngModel)]="afafDias.segunda" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
+							[(ngModel)]="afafDias.segunda" (change)="changeDias(afafDias);changeNivelAtividadeFisica()"
 							name="afaf.segunda"> <label
 							for="segunda"></label>
 					</td>
 					<td class="col s1 terca  dia">
 						<input type="checkbox" id="terca"
-							[(ngModel)]="afafDias.terca" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
+							[(ngModel)]="afafDias.terca" (change)="changeDias(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.terca"> <label
 							for="terca"></label>
 					</td>
 					<td class="col s2 quarta dia">
 						<input type="checkbox" id="quarta"
-							[(ngModel)]="afafDias.quarta" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
+							[(ngModel)]="afafDias.quarta" (change)="changeDias(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.quarta"> <label
 							for="quarta"></label>
 					</td>
 					<td class="col s2 quinta dia">
 						<input type="checkbox" id="quinta"
-							[(ngModel)]="afafDias.quinta" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
+							[(ngModel)]="afafDias.quinta" (change)="changeDias(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.quinta"> <label
 							for="quinta"></label>
 					</td>
 					<td class="col s1 sexta dia">
 						<input type="checkbox" id="sexta"
-							[(ngModel)]="afafDias.sexta" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
+							[(ngModel)]="afafDias.sexta" (change)="changeDias(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.sexta"> <label
 							for="sexta"></label>
 					</td>
 					<td class="col s2 sabado dia">
 						<input type="checkbox" id="sabado"
-							[(ngModel)]="afafDias.sabado" (change)="changeTotal(afafDias);changeNivelAtividadeFisica()"
+							[(ngModel)]="afafDias.sabado" (change)="changeDias(afafDias);changeNivelAtividadeFisica()"
 							name="afafDias.sabado"> <label
 							for="sabado"></label>
 					</td>

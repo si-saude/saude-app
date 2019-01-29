@@ -293,4 +293,11 @@ export class AtendimentoService extends GenericService {
     getUtilService() {
         return this.utilService;
     }
+    
+    getRelatorioProaf( atendimento ) {
+        let urlRelatorio = this.URL + "/get-relatorio-proaf";
+        return this.http
+            .post( urlRelatorio, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
 }

@@ -19,6 +19,7 @@ export class Atendimento {
     private questionario: QuestionarioConhecimentoAlimentar;
     private recordatorio: Recordatorio;
     private avaliacaoFisica: AvaliacaoFisica;
+    private tipo: string;
     private version: number;
 
     getId() {
@@ -107,5 +108,13 @@ export class Atendimento {
 
     setAvaliacaoFisica ( avaliacaoFisica ) {
         this.avaliacaoFisica = avaliacaoFisica;
+    }
+    
+    getTipo() {
+        return this.tipo;
+    }
+
+    setTipo( tipo: string ) {
+        this.tipo = tipo;
     }
 }
