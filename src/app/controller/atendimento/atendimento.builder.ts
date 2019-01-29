@@ -12,6 +12,8 @@ import { Triagem } from './../../model/triagem';
 import { TriagemBuilder } from './../triagem/triagem.builder';
 import { Recordatorio } from './../../model/recordatorio';
 import { RecordatorioBuilder } from './../recordatorio/recordatorio.builder';
+import { AvaliacaoFisica } from './../../model/avaliacao-fisica';
+import { AvaliacaoFisicaBuilder } from './../avaliacao-fisica/avaliacao-fisica.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
  
 export class AtendimentoBuilder extends GenericBuilder {
@@ -27,6 +29,7 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setTriagensTodosAtendimentos(new TriagemBuilder().cloneList(new Array<Triagem>()));
         atendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(undefined));
         atendimento.setRecordatorio(new RecordatorioBuilder().initialize(undefined));
+        atendimento.setAvaliacaoFisica(new AvaliacaoFisicaBuilder().initialize(undefined));
         return atendimento;
     }
 
@@ -50,7 +53,8 @@ export class AtendimentoBuilder extends GenericBuilder {
             atendimento = new Atendimento();
         let cloneAtendimento = new Atendimento();
         cloneAtendimento.setId( this.getValue( atendimento, "getId" ) );
-        cloneAtendimento.setVersion( this.getValue( atendimento, "getVersion" ) );        
+        cloneAtendimento.setVersion( this.getValue( atendimento, "getVersion" ) );
+        cloneAtendimento.setTipo( this.getValue( atendimento, "getTipo" ) );
         cloneAtendimento.setFilaAtendimentoOcupacional(new FilaAtendimentoOcupacionalBuilder().clone(
                 this.getValue( atendimento, "getFilaAtendimentoOcupacional" ) ));
         cloneAtendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().clone(
@@ -84,6 +88,13 @@ export class AtendimentoBuilder extends GenericBuilder {
                 cloneAtendimento.setRecordatorio(undefined);
         } else {
             cloneAtendimento.setRecordatorio(new RecordatorioBuilder().initialize(null));
+        }
+        
+        if (this.getValue(atendimento, "getAvaliacaoFisica") !== undefined) { 
+            cloneAtendimento.setAvaliacaoFisica(
+                    new AvaliacaoFisicaBuilder().clone(this.getValue(atendimento,"getAvaliacaoFisica")));
+        } else {
+            cloneAtendimento.setAvaliacaoFisica(new AvaliacaoFisicaBuilder().initialize(null));
         }
         
         return cloneAtendimento;

@@ -13,6 +13,7 @@ import { MudancaFuncaoReportComponent } from './mudanca-funcao-report/mudanca-fu
 import { AcompanhamentoSastReportComponent } from './acompanhamento-sast-report/acompanhamento-sast-report.component';
 import { SugestaoAgendamentoReportComponent } from './sugestao-agendamento-report/sugestao-agendamento-report.component';
 import { ConformidadeAsoReportComponent } from './conformidade-aso-report/conformidade-aso-report.component';
+import { ExamesImportadosReportComponent } from './exames-importados-report/exames-importados-report.component';
 import { ReportSolicitacaoCentralIntegraGuard } from './../guards/report-solicitacao-central-integra.guard';
 import { ReportSugestaoAgendamentoGuard } from './../guards/report-sugestao-agendamento.guard';
 import { PanoramaGuard } from './../guards/panorama.guard';
@@ -24,6 +25,7 @@ import { ReportPreRequisitosAgendamentoGuard } from './../guards/report-pre-requ
 import { ReportMudancaFuncaoGuard } from './../guards/report-mudanca-funcao.guard';
 import { ReportAcompanhamentoSastGuard } from './../guards/report-acompanhamento-sast.guard';
 import { ReportConformidadeAsoGuard } from './../guards/report-conformidade-aso.guard';
+import { ReportExamesImportadosGuard } from './../guards/report-exames-importados.guard';
 
 const reportsRoutes: Routes = [
     { path: '', redirectTo: 'empregados-por-grupo', pathMatch: 'full' },
@@ -48,7 +50,9 @@ const reportsRoutes: Routes = [
     { path: 'sugestao-agendamento', component: SugestaoAgendamentoReportComponent, 
         canActivate: [ReportSugestaoAgendamentoGuard] },
     { path: 'conformidade-aso', component: ConformidadeAsoReportComponent, 
-        canActivate: [ReportConformidadeAsoGuard] }
+        canActivate: [ReportConformidadeAsoGuard] },
+    { path: 'exames-importados', component: ExamesImportadosReportComponent, 
+        canActivate: [ReportExamesImportadosGuard] }
 ];
 
 @NgModule({

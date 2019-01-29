@@ -61,6 +61,12 @@
 					</div>
 				</th>
 				<th style="width: 2%">
+		            <mfDefaultSorter by="nome">CID do Atestado</mfDefaultSorter>
+		            <input type="text" name="codigoCid" style="width: 90%" 
+							placeholder="filtrar código do CID" maxlength="32"
+							(input)="selectFilter($event, 'codigoCid')">
+		        </th>
+				<th style="width: 2%">
 		            <mfDefaultSorter by="inicioAtestado">Início do Atestado</mfDefaultSorter>
 		            <input type="text" name="inicioAtestado" style="width: 90%" 
 							placeholder="filtrar início do atestado"  maxlength="10"
@@ -200,6 +206,7 @@
 		    	<td>{{item.matricula}}</td>
 		    	<td>{{item.gerencia}}</td>
 		    	<td>{{item.base}}</td>
+		    	<td>{{item.codigoCid}}</td>
 		    	<td>{{item.inicioAtestado}}</td>
 		    	<td>{{item.fimAtestado}}</td>
 		    	<td>{{item.numeroDias}}</td>

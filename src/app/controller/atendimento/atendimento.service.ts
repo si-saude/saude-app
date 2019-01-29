@@ -16,6 +16,9 @@ import { FilaAtendimentoOcupacionalService } from './../fila-atendimento-ocupaci
 import { EmpregadoService } from './../../controller/empregado/empregado.service';
 import { ServicoService } from './../../controller/servico/servico.service';
 import { ServicoFilter } from './../servico/servico.filter';
+import { AtividadeFisicaService } from './../atividade-fisica/atividade-fisica.service';
+import { UtilService } from './../../generics/util.service';
+
 @Injectable()
 export class AtendimentoService extends GenericService {
 
@@ -29,7 +32,9 @@ export class AtendimentoService extends GenericService {
         private diagnosticoService: DiagnosticoService,
         private intervencaoService: IntervencaoService,
         private equipeService: EquipeService,
-        private eixoService: EixoService ) {
+        private eixoService: EixoService,
+        private atividadeFisicaService: AtividadeFisicaService,
+        private utilService: UtilService) {
         super( http, router, "atendimento" );
     }
 
@@ -257,6 +262,42 @@ export class AtendimentoService extends GenericService {
         let urlaptidaoAso = GlobalVariable.BASE_API_URL + "/generic/aptidao-aso";
         return this.http
             .get( urlaptidaoAso + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getAptidaoFisicaBrigadista() {
+        let urlAptidaoFisicaBrigadista = GlobalVariable.BASE_API_URL + "/generic/aptidao-fisica-brigadista";
+        return this.http
+            .get( urlAptidaoFisicaBrigadista + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getAtividadeFisicaService() {
+        return this.atividadeFisicaService;
+    }
+    
+    getClassificacaoAtividade() {
+        let urlClassificacaoAtividade = GlobalVariable.BASE_API_URL + "/generic/classificacao-atividade";
+        return this.http
+            .get( urlClassificacaoAtividade + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    calcularComposicaoCorporal( atendimento ) {
+        let urlCalcularComposicaoCorporal = this.URL + "/calcular-composicao-corporal";
+        return this.http
+            .post( urlCalcularComposicaoCorporal, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getUtilService() {
+        return this.utilService;
+    }
+    
+    getRelatorioProaf( atendimento ) {
+        let urlRelatorio = this.URL + "/get-relatorio-proaf";
+        return this.http
+            .post( urlRelatorio, atendimento, { headers: this.headers } )
             .toPromise();
     }
 }

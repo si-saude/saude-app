@@ -1,10 +1,11 @@
 import * as moment from 'moment';
+import { GlobalVariable } from './../../global';
 
 export class DateUtil {
     
     public getDateStringDataUTC(value) {
         if(value){
-            let date : Date = new Date(this.removeUTCDate(value));          
+            let date : Date = new Date(this.removeUTCDate(value));
             return date.toLocaleDateString('pt-br');     
         }
     }
@@ -12,7 +13,6 @@ export class DateUtil {
     public removeUTCDate(value){        
         if((typeof value === 'string'))
         value = value.replace("[UTC]","");
-        
         return value;
     }
     
@@ -54,9 +54,12 @@ export class DateUtil {
             if(timeString != '' &&  timeString != undefined){
                 arrayTimeString =  timeString.split(":");
                 dateAux= new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]),Number(arrayTimeString[0]), Number(arrayTimeString[1]), 0, 0);
-            }else        
-                dateAux = new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]));       
-        
+            }else {
+                dateAux = new Date(Number(arrayDateString[2]), Number(arrayDateString[1])-1, Number(arrayDateString[0]));
+            }
+            let chavesNorte: Array<string> = GlobalVariable.CHAVE_NORTE;
+            if ( chavesNorte.find(cn => cn == localStorage.getItem('usuario-chave')) != undefined )
+                dateAux.setHours(dateAux.getHours() + GlobalVariable.TIME_TO_ADD);
             return dateAux;
         }
         return undefined;

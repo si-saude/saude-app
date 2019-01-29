@@ -18,11 +18,13 @@
 
 	<div class="col s12">
 		<ul materialize="tabs" [materializeActions]="tabsActions" class="tabs" style="overflow-x: auto;">
-			<li class="tab col s1"><a href="#filaAtendimento">Fila</a></li>
-			<li class="tab col s2"><a href="#atendimento">Atendimento</a></li>
-			<li class="tab col s1"><a href="#aso">Aso</a></li>
-			<li class="tab col s2"><a href="#fichaColeta">Ficha de Coleta</a></li>
+			<li class="tab"><a href="#filaAtendimento">Fila</a></li>
+			<li class="tab"><a href="#atendimento">Atendimento</a></li>
+			<li class="tab"><a href="#aso">Aso</a></li>
 			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'NUT'"><a href="#nutricao">Nutrição</a></li>
+			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'EDF' || 
+				atendimento.filaAtendimentoOcupacional.status != 'EM ATENDIMENTO'"><a href="#educacaoFisica">Educação Física</a></li>
+			<li class="tab"><a href="#fichaColeta">Ficha de Coleta</a></li>			
 			<li class="tab"><a href="#triagem">Triagem</a></li>
 			<li class="tab"><a href="#planejamento">Planejamento</a></li>
 			<li class="tab" [ngClass]="disabledTab"><a href="#acolhimento">Acolhimento</a></li>
@@ -100,101 +102,7 @@
 	<div id="atendimento">
 
 		<div class="row">
-			<fieldset>
-				<legend>Empregado</legend>
-
-				<div class="row-empregado row">
-
-					<div class="input-field-empregado input-field col s4">
-						<label for="nomeServico">Serviço</label> <input id="nomeServico"
-							type="text" disabled class="input-empregado"
-							[(ngModel)]="atendimento.tarefa.servico.nome" name="nomeServico">
-					</div>
-
-					<div class="input-field-empregado input-field col s8">
-						<label for="profissional">Profissional Responsável</label> <input
-							id="profissional" type="text" name="profissional" disabled
-							class="input-empregado"
-							[(ngModel)]="atendimento.filaAtendimentoOcupacional.profissional.empregado.pessoa.nome">
-					</div>
-
-				</div>
-
-				<div class="row-empregado row">
-
-					<div class="input-field-empregado input-field col s2">
-						<label for="chave">Chave</label> <input id="chave" type="text"
-							disabled class="input-empregado"
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.chave"
-							name="chave">
-					</div>
-
-					<div class="input-field-empregado input-field col s2">
-						<label for="matricula">Matrícula</label> <input id="matricula"
-							type="text" disabled class="input-empregado"
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.matricula"
-							name="matricula">
-					</div>
-
-					<div class="input-field-empregado input-field col s8">
-						<label for="nomeEmpregado">Nome</label> <input id="nomeEmpregado"
-							type="text" disabled class="input-empregado"
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.nome"
-							name="nomeEmpregado">
-					</div>
-
-				</div>
-
-				<div class="row-empregado row">
-
-					<div class="input-field-empregado input-field col s3">
-						<label for="dataNascimento">Nascimento</label>
-						<input name="dataNascimento"
-								   [(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.dataNascimentoCustomDate.appDate" disabled
-								   type="text" />
-					</div>
-					<div class="input-field-empregado input-field col s3">
-						<label for="idade">Idade</label> <input id="idade" type="text"
-							disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.idade"
-							name="idade" class="input-empregado">
-					</div>
-
-					<div class="input-field-empregado input-field col s3">
-						<label for="sexo">Sexo</label> <input id="sexo" type="text"
-							disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.pessoa.sexo"
-							name="sexo" class="input-empregado">
-					</div>
-
-					<div class="input-field-empregado input-field col s3">
-						<label for="base">Base</label> <input id="base.nome" type="text"
-							disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.base.nome"
-							name="base" class="input-empregado">
-					</div>
-
-				</div>
-
-				<div class="row-empregado row">
-
-					<div class="input-field-empregado input-field col s6">
-						<label for="cargo">Cargo</label> <input id="cargo.nome"
-							type="text" disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
-							name="cargo" class="input-empregado">
-					</div>
-
-					<div class="input-field-empregado input-field col s6">
-						<label for="gerencia">Gerência</label> <input
-							id="gerencia.codigoCompleto" type="text" disabled
-							[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto"
-							name="gerencia" class="input-empregado">
-					</div>
-
-				</div>
-
-			</fieldset>
+			<app-atendimento-informacoes-empregado [atendimento]="atendimento"></app-atendimento-informacoes-empregado>
 		</div>
 
 		<div class="content-quiz"></div>
@@ -227,10 +135,21 @@
 			(btnNovoRecordatorio)="clickBtnNovoRecordatorio($event)" 
 			[atendimento]="atendimento"></app-menu-atendimento-nutricao>
 	</div>
+	
+	<div id="educacaoFisica">
+		<div *ngIf="profissional.equipe.abreviacao == 'EDF'">
+			<app-atendimento-proaf [service]="atendimentoService"
+			 	(nivelAtividadeFisica)="setNivelAtividadeFisica($event)"
+				[atendimento]="atendimento"></app-atendimento-proaf>
+		</div>
+	</div>
 
 	<div id="fichaColeta" disabled>
-		<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta" [statusFila]="atendimento?.filaAtendimentoOcupacional.status"
-			[service]="atendimentoService" [idEquipeProfissional]="profissional.equipe.id"></app-ficha-coleta>
+		<app-ficha-coleta [fichaColeta]="atendimento.filaEsperaOcupacional.fichaColeta" 
+			[statusFila]="atendimento?.filaAtendimentoOcupacional.status"
+			[service]="atendimentoService" [idEquipeProfissional]="profissional.equipe.id"
+			[nivelAtividadeFisica]="nivelAtividadeFisica"
+			(dor)="triagemUtil.selectDor(atendimento,$event)"></app-ficha-coleta>
 	</div>
 
 	<div id="triagem">

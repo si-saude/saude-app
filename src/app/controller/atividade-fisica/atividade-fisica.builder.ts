@@ -29,18 +29,7 @@ export class AtividadeFisicaBuilder extends GenericBuilder {
         
         let cloneAtividadeFisica = new AtividadeFisica();
         cloneAtividadeFisica.setId(this.getValue(atividadeFisica,"getId"));
-        cloneAtividadeFisica.setClassificacao(this.getValue(atividadeFisica, "getClassificacao"));
         cloneAtividadeFisica.setDescricao(this.getValue(atividadeFisica, "getDescricao"));
-        cloneAtividadeFisica.setDomingo(this.getValue(atividadeFisica, "getDomingo"));
-        cloneAtividadeFisica.setMinuto(this.getValue(atividadeFisica, "getMinuto"));
-        cloneAtividadeFisica.setObservacao(this.getValue(atividadeFisica, "getObservacao"));
-        cloneAtividadeFisica.setQuarta(this.getValue(atividadeFisica, "getQuarta"));
-        cloneAtividadeFisica.setQuinta(this.getValue(atividadeFisica, "getQuinta"));
-        cloneAtividadeFisica.setSabado(this.getValue(atividadeFisica, "getSabado"));
-        cloneAtividadeFisica.setSegunda(this.getValue(atividadeFisica, "getSegunda"));
-        cloneAtividadeFisica.setSexta(this.getValue(atividadeFisica, "getSexta"));
-        cloneAtividadeFisica.setTerca(this.getValue(atividadeFisica, "getTerca"));
-        cloneAtividadeFisica.setTotalMinuto(this.getValue(atividadeFisica, "getTotalMinuto"));
         cloneAtividadeFisica.setVersion(this.getValue(atividadeFisica, "getVersion"));
         return cloneAtividadeFisica;
     }

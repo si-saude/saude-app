@@ -54,7 +54,7 @@ export class FilaAtendimentoOcupacionalBuilder extends GenericBuilder {
             cloneFilaAtendimentoOcupacional.setStatus(this.getValue(filaAtendimentoOcupacional, "getStatus"));
         
         cloneFilaAtendimentoOcupacional.setAtualizacoes(new FilaAtendimentoOcupacionalAtualizacaoBuilder().cloneList(
-                new Array<FilaAtendimentoOcupacionalAtualizacao>()));
+                this.getValue( filaAtendimentoOcupacional, "getAtualizacoes" ) ));
         cloneFilaAtendimentoOcupacional.setLocalizacao(new LocalizacaoBuilder().clone(
                 this.getValue( filaAtendimentoOcupacional, "getLocalizacao" ) ));
         cloneFilaAtendimentoOcupacional.setProfissional(new ProfissionalSaudeBuilder().clone(

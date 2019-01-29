@@ -44,18 +44,6 @@ export class AtividadeFisicaFormComponent extends GenericFormComponent implement
                         } )
                 }
             } );
-        
-        this.getClassificacao();
-    }
-    
-    getClassificacao() {
-        this.atividadeFisicaService.getClassificacao() 
-            .then(res => {
-                this.classificacoes = Object.keys(res.json()).sort();
-            })
-            .catch(error => {
-                console.log(error);
-            })
     }
     
     ngOnDestroy() {
@@ -64,28 +52,5 @@ export class AtividadeFisicaFormComponent extends GenericFormComponent implement
     
     save() {
         super.save( new AtividadeFisicaBuilder().clone( this.atividadeFisica ) );
-    }
-    
-    changeTotal() {
-        let mult: number = 0;
-        setTimeout(() => {
-            if ( this.atividadeFisica.getMinuto() != undefined ) {
-                if ( this.atividadeFisica.getSegunda() )
-                    mult++;
-                if ( this.atividadeFisica.getTerca() )
-                    mult++;
-                if ( this.atividadeFisica.getQuarta() )
-                    mult++;
-                if ( this.atividadeFisica.getQuinta() )
-                    mult++;
-                if ( this.atividadeFisica.getSexta() )
-                    mult++;
-                if ( this.atividadeFisica.getSabado() )
-                    mult++;
-                if ( this.atividadeFisica.getDomingo() )
-                    mult++;
-                this.atividadeFisica.setTotalMinuto(mult*this.atividadeFisica.getMinuto());
-            }
-        }, 200);
     }
 }

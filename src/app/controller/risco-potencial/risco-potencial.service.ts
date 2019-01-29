@@ -178,10 +178,10 @@ export class RiscoPotencialService extends GenericService {
             .toPromise();
     }
     
-    getRiscoPotenciais( uf, equipeId ) {
+    getRiscoPotenciais( ufProfissional ) {
         let urlRiscoPotenciais = this.URL + "/get-risco-potenciais";
         return this.http
-            .get( urlRiscoPotenciais + "?uf=" + uf + "&equipeId=" + equipeId, { headers: this.headers } )
+            .post( urlRiscoPotenciais, ufProfissional, { headers: this.headers } )
             .toPromise();
     }
     

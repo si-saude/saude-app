@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterializeModule } from 'angular2-materialize';
 
-
 import { AtendimentoAvulsoComponent } from './atendimento-avulso.component';
 import { AtendimentoService } from './../atendimento/atendimento.service';
 import { AtendimentoAvulsoRoutingModule } from './atendimento-avulso.routing.module';
@@ -20,6 +19,8 @@ import { FichaColetaModule } from './../ficha-coleta.module';
 import { TriagemModule } from './../triagem.module';
 import { PlanejamentoModule } from './../planejamento.module';
 import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-aso.module';
+import { AtendimentoInformacoesEmpregadoModule } from './../../includes/atendimento-informacoes-empregado/atendimento-informacoes-empregado.module';
+import { AtendimentoProafModule } from './../../includes/atendimento-proaf/atendimento-proaf.module';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,9 @@ import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-
         TriagemModule,
         PlanejamentoModule,
         SharedModule,
-        InformacaoAsoModule
+        InformacaoAsoModule,
+        AtendimentoInformacoesEmpregadoModule,
+        AtendimentoProafModule
         
      ],
      providers: [

@@ -13,7 +13,7 @@ export class AtestadoFilter extends GenericFilter {
     private presencial: BooleanFilter;
     private possuiFeriasAgendadas: BooleanFilter;
     private ciente: BooleanFilter;
-    private empregado: EmpregadoFilter = new EmpregadoFilter();;
+    private empregado: EmpregadoFilter = new EmpregadoFilter();
     private motivoRecusa: MotivoRecusaAtestadoFilter;
     private dataAuditoria: DateFilter;
     private convocado: BooleanFilter;

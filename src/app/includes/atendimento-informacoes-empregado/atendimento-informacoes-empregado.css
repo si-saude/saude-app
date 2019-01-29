@@ -1,0 +1,43 @@
+.input-field-empregado {
+	margin: 0 auto;
+}
+
+.row-empregado {
+	margin: 0 auto;
+}
+
+.input-empregado {
+	height: 30px !important;
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+select {
+	display: inline;
+}
+
+.input-field>select {
+	height: 35px !important;
+	display: block;
+	pointer-events: all;
+	opacity: 10;
+	width: 100%;
+	position: relative !important;
+}

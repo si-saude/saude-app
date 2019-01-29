@@ -97,6 +97,7 @@ import { ReportAvaliacaoHigieneOcupacionalGuard } from './guards/report-avaliaca
 import { ReportPreRequisitosAgendamentoGuard } from './guards/report-pre-requisitos-agendamento.guard';
 import { ReportSugestaoAgendamentoGuard } from './guards/report-sugestao-agendamento.guard';
 import { ReportConformidadeAsoGuard } from './guards/report-conformidade-aso.guard';
+import { ReportExamesImportadosGuard } from './guards/report-exames-importados.guard';
 import { AvaliacaoHigieneOcupacionalGuard } from './guards/guards-child/avaliacao-higiene-ocupacional.guard';
 import { EnfaseGuard } from './guards/guards-child/enfase.guard';
 import { ImovelGuard } from './guards/guards-child/imovel.guard';
@@ -235,7 +236,8 @@ import{ TarefaAgendaGuard } from'./guards/guards-child/tarefa-agenda.guard'
     ReportSugestaoAgendamentoGuard,
     ReportConformidadeAsoGuard,
     AtividadeFisicaGuard,
-    TarefaAgendaGuard
+    TarefaAgendaGuard,
+    ReportExamesImportadosGuard
   ],
   bootstrap: [ 
     AppComponent
