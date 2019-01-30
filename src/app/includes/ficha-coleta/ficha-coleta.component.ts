@@ -253,8 +253,6 @@ export class FichaColetaComponent{
     }
     
     isDisabledResposta(resposta: RespostaFichaColeta) {
-        if ( resposta.getPergunta().getCodigo() == "0020" && resposta.getPergunta().getGrupo() == "ANAMNESE" )
-            return true;
         if((!resposta.getVerified())){
             this.permissaoCampo(resposta);
         }
