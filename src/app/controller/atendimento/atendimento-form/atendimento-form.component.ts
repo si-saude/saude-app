@@ -235,6 +235,7 @@ export class AtendimentoFormComponent {
             this.atualizacao( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
+                    console.log(this.atendimento)
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
                         if ( this.atendimento.getQuestionario() != undefined &&
                                 this.atendimento.getQuestionario().getId() > 0 ) {
@@ -525,6 +526,8 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
+            console.log(this.atendimento)
+            console.log(new AtendimentoBuilder().clone(this.atendimento))
             this.atendimentoService.finalizar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
