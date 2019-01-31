@@ -97,7 +97,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                             this.showPreload = false;
                             this.existProfissiograma = true;
                             this.convocacao = new ConvocacaoBuilder().clone( res.json() );
-                            this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
+                            this.gerenciaConvocacoes = new GerenciaConvocacaoBuilder().cloneList(this.convocacao.getGerenciaConvocacoes());
                             this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(this.convocacao.getEmpregadoConvocacoes());
                             this.selectedsGerenciaConvocacoes();
                         } )
@@ -109,7 +109,7 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     .then( res => {
                         this.convocacao = new ConvocacaoBuilder().clone( res.json() );
                         this.convocacao.setProfissiograma( new ProfissiogramaBuilder().initialize( new Profissiograma() ) );
-                        this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes();
+                        this.gerenciaConvocacoes = new GerenciaConvocacaoBuilder().cloneList(this.convocacao.getGerenciaConvocacoes());
                         this.empregadoConvocacoes = new EmpregadoConvocacaoBuilder().cloneList(this.convocacao.getEmpregadoConvocacoes());
                     } )
                     .catch( error => {
@@ -146,16 +146,17 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
     save() {
         this.setSelectedsGerencias();
         super.save( new ConvocacaoBuilder().clone( this.convocacao ) );
+        
     }
 
     filterGerenciaConvocacoes( evento: string ) {
         if ( this.convocacao.getGerenciaConvocacoes().length > 0 ) {
-            this.gerenciaConvocacoes = this.convocacao.getGerenciaConvocacoes().filter( gC => {
+            this.gerenciaConvocacoes = new GerenciaConvocacaoBuilder().cloneList(this.convocacao.getGerenciaConvocacoes().filter( gC => {
                 evento = evento.toLowerCase();
                 let lowerCaseCC = gC.getGerencia().getCodigoCompleto().toLowerCase();
                 return lowerCaseCC.includes( evento );
-            } )
-        }
+            } ));
+        }       
     }
 
     selectGerenciaConvocacao( index: number, gerenciaConvocacao: GerenciaConvocacao ) {
@@ -393,11 +394,11 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
         }
     }
 
-    setSelectedsGerencias() {
-        this.convocacao.setGerenciaConvocacoes( this.gerenciaConvocacoes.filter( gC => {
+    setSelectedsGerencias() {        
+        this.convocacao.setGerenciaConvocacoes( this.convocacao.getGerenciaConvocacoes().filter( gC => {
             return gC.getSelecionado() === true;
         } )
-        )
+        );
     }
 
     convocar() {        

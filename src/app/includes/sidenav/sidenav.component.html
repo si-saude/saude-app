@@ -123,7 +123,7 @@
 			<a [routerLink]="['/atendimento-avulso']" *ngIf="checkPermissao('ATENDIMENTO-AVULSO_LISTAR')">Atendimento Avulso</a>
 			<a [routerLink]="['/atestado']" *ngIf="checkPermissao('ATESTADO_LISTAR')">Atestado</a>
 			<a [routerLink]="['/auditoria-aso']" *ngIf="checkPermissao('AUDITORIA-ASO_LISTAR')">Auditoria De Aso</a>
-			<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('EMPREGADO-CONVOCACAO_LISTAR')">Auditoria De Exame</a>
+			<a [routerLink]="['/auditoria-exame']" *ngIf="checkPermissao('AUDITORIA-EXAME_LISTAR')">Auditoria De Exame</a>
 			<a [routerLink]="['/avaliacao-higiene-ocupacional']" *ngIf="checkPermissao('AVALIACAO-HIGIENE-OCUPACIONAL_LISTAR')">
 				Avaliação Higiene Ocupacional
 			</a>
@@ -144,6 +144,7 @@
 			<a [routerLink]="['/questionario-conhecimento-alimentar']" *ngIf="checkPermissao('QUESTIONARIO-CONHECIMENTO-ALIMENTAR_LISTAR')">
 				Questionário de Conhecimento Alimentar
 			</a>
+			<a [routerLink]="['/tarefa-agenda']" *ngIf="checkPermissao('TAREFA-AGENDA_LISTAR')">Reagendamento</a>
 			<a [routerLink]="['/recordatorio']" *ngIf="checkPermissao('RECORDATORIO_LISTAR')">Recordatório</a>
 			<a [routerLink]="['/solicitacao-servico']">Solicitação de Serviço</a>
 		</div>

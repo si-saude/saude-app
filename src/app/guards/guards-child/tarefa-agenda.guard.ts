@@ -7,7 +7,7 @@ import { ChildGuard } from './../../generics/child.guard';
 import { AuthService } from './../../login/auth.service';
 
 @Injectable()
-export class EmpregadoConvocacaoGuard extends ChildGuard implements CanActivateChild {   
+export class TarefaAgendaGuard extends ChildGuard implements CanActivateChild {
     
     constructor(router: Router) {
         super(router);
@@ -17,6 +17,7 @@ export class EmpregadoConvocacaoGuard extends ChildGuard implements CanActivateC
         route: ActivatedRouteSnapshot, 
         state: RouterStateSnapshot
     ): boolean | Observable<boolean> | Promise<boolean> {
-        return super.activateChild("auditoria-exame", route, state);
+        return super.activateChild("tarefa-agenda", route, state);
+
     }
 }

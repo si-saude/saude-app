@@ -34,7 +34,7 @@ export class ProfissionalSaudeBuilder extends GenericBuilder {
         profissionalSaude.setProfissionalVacinas(
             new ProfissionalVacinaBuilder().initializeList( profissionalSaude.getProfissionalVacinas() ) );
         profissionalSaude.setServicos(new ServicoBuilder().initializeList(profissionalSaude.getServicos()));
-
+        profissionalSaude.setEquipes(new EquipeBuilder().initializeList(new Array<Equipe>()));
         return profissionalSaude;
     }
 
@@ -113,6 +113,9 @@ export class ProfissionalSaudeBuilder extends GenericBuilder {
 
         cloneProfissionalSaude.setServicos(
                 new ServicoBuilder().cloneList( this.getValue( profissionalSaude, "getServicos" ) ) );
+        
+        cloneProfissionalSaude.setEquipes(new EquipeBuilder().cloneList(
+                this.getValue(profissionalSaude,"getEquipes")));
         
         return cloneProfissionalSaude;
     }

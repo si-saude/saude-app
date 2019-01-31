@@ -15,12 +15,13 @@ export class Tarefa {
     private equipe: Equipe;
     private status: string;
     private version: number;
-
+    
     private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
     private fimCustomDate: CustomDate = new CustomDate(this.fim);
     private atualizacaoCustomDate: CustomDate = new CustomDate(this.atualizacao);
 
-
+    private desabilitarTarefaMundancaFuncao: boolean;
+    
     getId() {
         return this.id;
     }
@@ -29,6 +30,14 @@ export class Tarefa {
         this.id = id;
     }
 
+    getDesabilitarTarefaMundancaFuncao() {
+        return this.desabilitarTarefaMundancaFuncao;
+    }
+    
+    setDesabilitarTarefaMundancaFuncao(desabilitarTarefaMundancaFuncao : boolean) {
+        this.desabilitarTarefaMundancaFuncao = desabilitarTarefaMundancaFuncao;
+    }
+    
     getAtualizacao() {
         this.atualizacao = this.atualizacaoCustomDate.getApiDate();
         return this.atualizacao;

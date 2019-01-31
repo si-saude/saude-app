@@ -6,7 +6,7 @@ import { DateFilter } from './../../generics/date.filter';
 import { GenericFilter } from './../../generics/generic.filter';
 
 export class TarefaFilter extends GenericFilter {
-    private inicio: DateFilter;
+    private inicio: DateFilter = new DateFilter();
     private fim: DateFilter;
     private horario: DateFilter;
     private atualizacao: DateFilter;

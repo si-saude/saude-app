@@ -22,6 +22,12 @@ export class ServicoService extends GenericService {
         return this.selectList(new ServicoFilter());
     }
     
+    getServicosAtendimentoOcupacional() {
+        let filter = new ServicoFilter()
+        filter.setGrupo("ATENDIMENTO OCUPACIONAL");        
+        return this.selectList(filter);
+    }
+    
     getEquipes() {
         return this.equipeService.getEquipes();
     }

@@ -87,6 +87,7 @@ import { IndicadorConhecimentoAlimentarGuard } from './guards/guards-child/indic
 import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/questionario-conhecimento-alimentar.guard';
 import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
 import { AtividadeFisicaGuard } from './guards/guards-child/atividade-fisica.guard';
+import { TarefaAgendaGuard } from './guards/guards-child/tarefa-agenda.guard';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -204,6 +205,10 @@ const routes: Routes = [
     {
         path: 'criterio', loadChildren: 'app/controller/criterio/criterio.module#CriterioModule',
         canActivateChild: [CriterioGuard]
+    },
+    {
+        path: 'tarefa-agenda', loadChildren: 'app/controller/tarefa-agenda/tarefa-agenda.module#TarefaAgendaModule',
+        canActivateChild: [TarefaAgendaGuard]
     },
     {
         path: 'exame', loadChildren: 'app/controller/exame/exame.module#ExameModule',

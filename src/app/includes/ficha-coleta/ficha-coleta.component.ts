@@ -253,8 +253,6 @@ export class FichaColetaComponent{
     }
     
     isDisabledResposta(resposta: RespostaFichaColeta) {
-        if ( resposta.getPergunta().getCodigo() == "0020" && resposta.getPergunta().getGrupo() == "ANAMNESE" )
-            return true;
         if((!resposta.getVerified())){
             this.permissaoCampo(resposta);
         }
@@ -268,7 +266,7 @@ export class FichaColetaComponent{
         let equipe = resposta.getPergunta().getEquipes().find(e => e.getId() == this.innerIdEquipeProfissional);
         if ( this.statusFila == "EM ATENDIMENTO" || this.statusFila == "*" ) {
             if ( resposta.getPergunta().getGrupo() == this.gruposPerguntaFichaColeta[4] ) {
-                if ( this.fuma.getConteudo() == "FUMANTE" && equipe != undefined ){
+                if ( this.fuma.getConteudo() == "FUMANTE" && equipe != undefined){
                     ret = false;
                 }
                 else{                        

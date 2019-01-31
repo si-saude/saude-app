@@ -18,12 +18,14 @@
 				<ul class="tabs" materialize="tabs">
 					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#dadosGerais">Dados Gerais</a></li>
-					<li class="tab col s3"><a RouterLinkActive="active"
+					<li class="tab col s2"><a RouterLinkActive="active"
 						href="#servicos">Serviços</a></li>
 					<li class="tab col s3"><a RouterLinkActive="active"
 						href="#curriculo">Currículo</a></li>
-					<li class="tab col s3"><a RouterLinkActive="active"
+					<li class="tab col s2"><a RouterLinkActive="active"
 						href="#profissionalConselho">Conselho</a></li>
+					<li class="tab col s2"><a RouterLinkActive="active"
+						href="#equipes">Equipes</a></li>
 				</ul>
 			</div>
 
@@ -96,7 +98,7 @@
 					<div class="input-field col s6">
 						<fieldset>
 							<legend>
-								Equipe <a
+								Equipe Principal<a
 									class="btn-floating waves-effect waves-light green btn-add-fieldset"
 									(click)="getEquipes()"> <i
 									class="material-icons center-icon">cached</i>
@@ -326,6 +328,61 @@
 						[(ngModel)]="profissionalSaude.profissionalConselho.id"> <input
 						id="version" name="version" type="hidden"
 						[(ngModel)]="profissionalSaude.profissionalConselho.version">
+				</div>
+
+			</div>
+			<div id="equipes">
+
+				<fieldset>
+					<legend>Equipe<a
+								class="btn-floating waves-effect waves-light green btn-add-fieldset"
+								(click)="getEquipes()"> <i
+								class="material-icons center-icon">cached</i>
+							</a></legend>
+					<div class="row row-servico">
+
+						<div class="input-field col s4">
+							<select name="equipeAux" class="browser-default"
+								[(ngModel)]="equipeAux.id">
+								<option selected value=0>Selecione uma equipe</option>
+								<option *ngFor="let equipe of equipes" value="{{equipe.id}}">{{equipe.nome}}</option>
+							</select>
+						</div>
+						<div class="col s2">
+							<a
+								class="btn-floating waves-effect waves-light green btn-add"
+								(click)="addEquipe()"> <i
+								class="material-icons center-icon">add</i>
+							</a>
+						</div>
+
+					</div>
+
+				</fieldset>
+
+				<div class="row">
+
+					<table class="striped">
+						<thead>
+							<tr class="row col s12">
+								<th class="col s12">Nome</th>
+							</tr>
+						</thead>
+						<div *ngFor="let equipeProfissional of profissionalSaude.equipes;let i = index">
+							<tbody class="col s12">
+								<tr class="col s12">
+									<td class="col s3 codigo">{{equipeProfissional.nome}}</td>
+									<td class="col s3 botao-remover"><a
+										class="btn-floating waves-effect waves-light red btn-remove"
+										(click)="removeEquipe(i)"> <i
+											class="material-icons center-icon">delete</i>
+									</a></td>
+								</tr>
+							</tbody>
+						</div>
+
+					</table>
+
 				</div>
 
 			</div>
