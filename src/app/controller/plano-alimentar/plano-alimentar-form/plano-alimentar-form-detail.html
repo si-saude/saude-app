@@ -1,0 +1,125 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<!-- Preload -->
+<app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
+
+<!-- Confirm Save -->
+<app-confirm-save [show]="showConfirmSave" [msg]="msgConfirmSave"
+	[goTo]="goTo"></app-confirm-save>
+
+<div class="row form-container">
+	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+	
+		<div class="resume">
+			<p><b>Empregado:</b> {{empregado}}</p>
+		</div>
+
+		<ul class="tabs" materialize="tabs">
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#dadosGerais">Dados Gerais</a></li>
+			<li class="tab col s6"><a RouterLinkActive="active"
+				href="#todasRefeicoes">Todas as Refeições</a></li>
+		</ul>
+
+		<div id="dadosGerais">
+			<div class="content-recordatorio">
+				<div class="menu-refeicao">
+					<p style="text-align: center;">
+						<b style="color: #26a69a;">Refeições</b>
+					</p>
+					<div class="col s12 btn-refeicao {{r}}"
+						(click)="selectRefeicao(ref, r)"
+						*ngFor="let ref of recordatorio.refeicoes; let r = index">
+						<p class="col s9 refeicao-nome">{{ref.nome}}</p>
+					</div>
+				</div>
+
+				<div class="edit row" style="margin-left: 20%">
+					<div class="row" *ngIf="editRefeicao">
+						<div class="input-field col s12">
+							<label for="nome">Nome da Refeição</label> <input id="nome" disabled
+								maxlength="64" name="nome" [(ngModel)]="refeicao.nome">
+						</div>
+						<div class="row">
+							<table class="striped">
+								<thead>
+									<tr class="row col s12">
+										<th class="col s4">Alimento</th>
+										<th class="col s4">Medida</th>
+										<th class="col s3">Quantidade</th>
+										<th class="col s1">VE</th>
+									</tr>
+								</thead>
+								<div *ngFor="let it of refeicao.itens; let i = index">
+									<tbody class="col s12">
+										<tr class="col s12">
+											<td class="col s4 alimento-nome">{{it.alimento.nome}}</td>
+											<td class="col s3 medida">{{it.medidaCaseira.descricao}}</td>
+											<td class="col s3 quantidade">{{it.quantidade}}</td>
+											<td id="{{i}}" class="col s1 ve">{{it.ve | money : i}}</td>
+										</tr>
+									</tbody>
+								</div>
+
+							</table>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="todasRefeicoes">
+			<div class="row"
+				*ngFor="let refeicao of recordatorio.refeicoes; let r = index">
+				<p>
+					<b>{{refeicao.nome}}</b>
+				</p>
+				<table class="striped">
+					<thead>
+						<tr class="row col s12">
+							<th class="col s4">Alimento</th>
+							<th class="col s4">Medida</th>
+							<th class="col s3">Quantidade</th>
+							<th class="col s1">VE</th>
+						</tr>
+					</thead>
+					<div *ngFor="let it of refeicao.itens; let i = index">
+						<tbody class="col s12">
+							<tr class="col s12">
+								<td class="col s4 alimento-nome">{{it.alimento.nome}}</td>
+								<td class="col s4 medida">{{it.medidaCaseira.descricao}}</td>
+								<td class="col s3 quantidade">{{it.quantidade}}</td>
+								<td id="{{i}}" class="col s1 ve">{{it.ve | money : i}}</td>
+							</tr>
+						</tbody>
+					</div>
+					<p>
+						<span style="margin-left:2%"><b>Total:</b></span>
+						<span style="margin-left:80%"><b>{{sumVe(r) | money : i}}</b></span>
+					</p>
+				</table>
+			</div>
+		</div>
+		<input id="id" name="id" type="hidden" [(ngModel)]="recordatorio.id">
+		<input id="version" name="version" type="hidden"
+			[(ngModel)]="recordatorio.version">
+
+		<div class="mensagem">
+			<app-mensagem-form *ngIf="verifyError" [color]="colorError"
+				[msg]="msgError"></app-mensagem-form>
+		</div>
+
+		<div class='row row-btns'>
+			<div class="col s6">
+				<a [routerLink]="['/recordatorio']"
+					class="btn btn-primary btn-listar">Listar</a>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div materialize [materializeParams]="toastParams"
+	[materializeActions]="globalActions"></div>

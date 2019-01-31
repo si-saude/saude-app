@@ -3,6 +3,7 @@ import { AlimentoBuilder } from './../alimento/alimento.builder';
 import { MedidaAlimentarBuilder } from './../medida-alimentar/medida-alimentar.builder';
 import { RefeicaoBuilder } from './../refeicao/refeicao.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
+import { Util } from './../../generics/utils/util';
 
 export class ItemRefeicaoBuilder extends GenericBuilder{
     
@@ -38,7 +39,7 @@ export class ItemRefeicaoBuilder extends GenericBuilder{
         cloneItemRefeicao.setId(this.getValue(itemRefeicao, "getId"));
         cloneItemRefeicao.setVersion(this.getValue(itemRefeicao, "getVersion"));
         cloneItemRefeicao.setVe(this.getValue(itemRefeicao, "getVe"));
-        cloneItemRefeicao.setQuantidade(this.getValue(itemRefeicao, "getQuantidade"));
+        cloneItemRefeicao.setQuantidade(Util.treatDouble(this.getValue(itemRefeicao, "getQuantidade")));
         
         if ( this.getValue(itemRefeicao, "getAlimento") != undefined )
             cloneItemRefeicao.setAlimento(

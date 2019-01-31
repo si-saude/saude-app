@@ -14,6 +14,9 @@ import { GlobalVariable } from './../../../global';
 import { Atendimento } from './../../../model/atendimento';
 import { Usuario } from './../../../model/usuario';
 import { Aso } from './../../../model/aso';
+import { Recordatorio } from './../../../model/recordatorio';
+import { RecordatorioBuilder } from './../../recordatorio/recordatorio.builder';
+import { AtendimentoFilter } from './../../atendimento/atendimento.filter';
 import { UsuarioBuilder } from './../../usuario/usuario.builder';
 import { Localizacao } from './../../../model/localizacao';
 import { FilaAtendimentoOcupacional } from './../../../model/fila-atendimento-ocupacional';
@@ -44,6 +47,7 @@ import { IndicadorSastBuilder } from './../../indicador-sast/indicador-sast.buil
 import { RiscoPotencial } from './../../../model/risco-potencial';
 import { RiscoPotencialBuilder } from './../../risco-potencial/risco-potencial.builder';
 import { EmpregadoFilter } from './../../empregado/empregado.filter';
+import { RecordatorioFilter } from './../../recordatorio/recordatorio.filter';
 import { DateUtil } from '../../../generics/utils/date.util';
 import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
 import { TriagemUtil } from './../../../generics/utils/triagem.util';
@@ -232,19 +236,9 @@ export class AtendimentoFormComponent {
             this.showPreload = true;
             this.atualizacao( this.atendimento )
                 .then( res => {
-                    console.log(res.json())
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento)
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
-                        if ( this.atendimento.getQuestionario() != undefined &&
-                                this.atendimento.getQuestionario().getId() > 0 ) {
-                            this.calcularPontuacaoQuestionario();
-                            this.menuNutricao.setDisabledNovoQuestionario(true);
-                        } else this.menuNutricao.setDisabledNovoQuestionario(false);
-                        if ( this.atendimento.getRecordatorio() != undefined &&
-                                this.atendimento.getRecordatorio().getId() > 0 )
-                            this.menuNutricao.setDisabledNovoRecordatorio(true);
-                        else this.menuNutricao.setDisabledNovoRecordatorio(false);
+                            this.tratamentoNutricao();
                     }
                     
                     if ( this.atendimento.getTriagens() != undefined )
@@ -662,7 +656,8 @@ export class AtendimentoFormComponent {
             this.showPreload = true;
             this.atualizacao(this.atendimento)
                 .then(res => {
-                    this.showPreload = false;
+                    this.showPreload = false;                    
+                    
                     this.atendimento = new AtendimentoBuilder().clone(res.json());
                     this.atendimento.getTriagens().forEach(t => {
                         if ( t.getDiagnostico() == undefined )
@@ -672,9 +667,9 @@ export class AtendimentoFormComponent {
                         if ( t.getEquipeAbordagem() == undefined )
                             t.setEquipeAbordagem(new EquipeBuilder().initialize(null));
                     })
-                    if ( this.atendimento.getQuestionario() != undefined && this.atendimento.getQuestionario().getId() > 0)
-                        this.menuNutricao.callBtnNewQuestionario(true);
-                    else this.menuNutricao.callBtnNewQuestionario(false); 
+                    
+                    
+                    this.menuNutricao.callBtnNewQuestionario();
                 })
                 .catch(error => {
                     this.catchConfiguration(error);
@@ -696,11 +691,8 @@ export class AtendimentoFormComponent {
                             t.setIntervencao(new IntervencaoBuilder().initialize(null));
                         if ( t.getEquipeAbordagem() == undefined )
                             t.setEquipeAbordagem(new EquipeBuilder().initialize(null));
-                    })
-                    console.log(this.atendimento)
-                    if ( this.atendimento.getRecordatorio() != undefined && this.atendimento.getRecordatorio().getId() > 0)
-                        this.menuNutricao.callBtnNewRecordatorio(true);
-                    else this.menuNutricao.callBtnNewRecordatorio(false); 
+                    })      
+                        this.menuNutricao.callBtnNewRecordatorio();
                 })
                 .catch(error => {
                     this.catchConfiguration(error);
@@ -708,10 +700,75 @@ export class AtendimentoFormComponent {
         }
     }
     
-    loadNutricao( bool ) {
-        this.atualizar();
+    
+    clickBtnNovoPlanoAlimentar(click: boolean) {
+        if ( this.atendimento != undefined ) {
+            this.showPreload = true;
+            this.atualizacao(this.atendimento)
+                .then(res => {
+                    this.showPreload = false;
+                    this.atendimento = new AtendimentoBuilder().clone(res.json());
+                    this.atendimento.getTriagens().forEach(t => {
+                        if ( t.getDiagnostico() == undefined )
+                            t.setDiagnostico(new DiagnosticoBuilder().initialize(null));
+                        if ( t.getIntervencao() == undefined )
+                            t.setIntervencao(new IntervencaoBuilder().initialize(null));
+                        if ( t.getEquipeAbordagem() == undefined )
+                            t.setEquipeAbordagem(new EquipeBuilder().initialize(null));
+                    })                 
+                        this.menuNutricao.callBtnNewPlanoAlimentar();
+                })
+                .catch(error => {
+                    this.catchConfiguration(error);
+                })
+        }
     }
     
+    tratamentoNutricao(){
+        if ( this.atendimento.getQuestionario() != undefined &&
+                this.atendimento.getQuestionario().getId() > 0 ) {
+            this.calcularPontuacaoQuestionario();
+        }
+        
+       let triagemImc = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N08" );
+       
+       if(triagemImc.getIndice() == -1){
+           let imc = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(x=>x.getPergunta().getGrupo().includes("EXAME F") && x.getPergunta().getCodigo()=="0003").getConteudo()
+           triagemImc.setIndice(this.definirIndiceTriagemImc(imc));
+       }
+       
+       let recordatorio: Recordatorio = new RecordatorioBuilder().initialize(new Recordatorio());
+       let recordatorioFilter : RecordatorioFilter = new RecordatorioFilter(); 
+       recordatorioFilter.setAtendimento(new AtendimentoFilter);
+       recordatorioFilter.getAtendimento().setId(this.atendimento.getId());
+       
+       
+           this.atendimentoService.getRecordatorioService().verifyRecordatorio(recordatorioFilter).then(res =>{
+               recordatorio =  new RecordatorioBuilder().clone(res.json());                
+               
+               if(recordatorio.getId() > 0){                   
+//                   let triagemBE = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N01" );
+                   let triagemSodio = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N04" );
+                   let triagemFibra = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N05" );
+                   
+//                   if(triagemBE.getIndice() == -1)
+//                       triagemBE.setIndice(this.definirIndiceTriagemBE(recordatorio));                  
+
+                   if(triagemSodio.getIndice() == -1)
+                       triagemSodio.setIndice(this.definirIndiceTriagemSodio(recordatorio));
+                   
+                   if(triagemFibra.getIndice() == -1)
+                       triagemFibra.setIndice(this.definirIndiceTriagemFibra(recordatorio));
+               }               
+           });         
+    }
+    
+    
+    
+    loadNutricao( bool ) {
+        if(bool)
+            this.atualizar();
+    }
     calcularPontuacaoQuestionario() {
         if ( this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" ).getIndice() != -1 )
             return;
@@ -723,11 +780,41 @@ export class AtendimentoFormComponent {
                     r.getIndicador().getItemIndicadorConhecimentoAlimentares().find(rii => rii.getCerto() == true).getId() )
                     soma++;
             })
-        }
-        
+        }      
         this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" )
             .setIndice(this.definirIndiceTriagemQuestionario(soma));
     }
+    
+    
+    //FALTA
+    definirIndiceTriagemBE(recordatorio :Recordatorio) {   
+        let somaVE = 0;
+        recordatorio.getRefeicoes().forEach(x=>{
+            x.getItens().forEach(i=> {
+                somaVE +=i.getVe();
+                        });
+        }); 
+        let indice: number = 0;
+        
+        return indice;
+    }
+    
+    definirIndiceTriagemImc(imc) {
+       let imcAux =  Util.treatDouble(imc);
+       
+        let indice: number = 0;
+        if ( imcAux >= 40 || imcAux <= 16)
+            indice = 0;
+        else if ((imcAux >= 30 && imcAux <= 39.9) || (imcAux > 16 && imcAux <= 17))
+            indice = 1;
+        else if ( (imcAux >= 25 && imcAux <= 29.9) || (imcAux > 17  && imcAux <= 18.5) )
+            indice = 2;
+        else if ( imcAux > 18.5 && imcAux < 24.9)
+            indice = 3;
+        
+        return indice;
+    }
+ 
     
     definirIndiceTriagemQuestionario(soma) {
         let indice: number = 0;
@@ -741,6 +828,50 @@ export class AtendimentoFormComponent {
             indice = 3;
         else if ( soma >= 9 && soma <= 10 )
             indice = 4;
+        return indice;
+    }
+    
+    definirIndiceTriagemSodio(recordatorio: Recordatorio){
+        let indice: number = 0;
+        let somaSodio = 0;
+        recordatorio.getRefeicoes().forEach(x=>{
+            x.getItens().forEach(i=> {
+                if(i.getAlimento().getSodio() != undefined)
+                    somaSodio += Util.treatDouble(i.getAlimento().getSodio()) * Util.treatDouble(i.getQuantidade());
+            });
+        }); 
+        
+        if ( somaSodio > 5)
+            indice = 0;
+        else if ( somaSodio > 3.5)
+            indice = 1;
+        else if ( somaSodio > 2)
+            indice = 2;
+        else if ( somaSodio <= 2)
+            indice = 3; 
+        
+        return indice;
+    }
+    
+    definirIndiceTriagemFibra(recordatorio: Recordatorio){
+        let indice: number = 0;
+        let somaFibra = 0;
+        recordatorio.getRefeicoes().forEach(x=>{
+            x.getItens().forEach(i=> {
+                if(i.getAlimento().getFibra() != undefined)
+                    somaFibra += Util.treatDouble(i.getAlimento().getFibra()) * Util.treatDouble(i.getQuantidade());                   
+            });
+        }); 
+        
+        if ( somaFibra < 22)
+            indice = 0;
+        else if ( somaFibra < 23.5)
+            indice = 1;
+        else if ( somaFibra < 25)
+            indice = 2;
+        else if ( somaFibra >= 25)
+            indice = 3; 
+        
         return indice;
     }
     

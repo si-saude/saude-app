@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 
 import { GlobalVariable } from './../../../global';
 import { Alimento } from './../../../model/alimento';
+import { ItemRefeicaoBuilder } from './../../item-refeicao/item-refeicao.builder';
+import { ItemRefeicao } from './../../../model/item-refeicao';
 import { MedidaAlimentar } from './../../../model/medida-alimentar';
 import { MedidaAlimentarBuilder } from './../../medida-alimentar/medida-alimentar.builder';
 import { AlimentoMedidaAlimentar } from './../../../model/alimento-medida-alimentar';
@@ -12,6 +14,7 @@ import { GenericFormComponent } from './../../../generics/generic.form.component
 import { AlimentoBuilder } from './../alimento.builder';
 import { AlimentoService } from './../alimento.service';
 import { MedidaAlimentarDescricaoAutocomplete } from './../../medida-alimentar/medida-alimentar-descricao.autocomplete';
+import { AlimentoNomeAutocomplete } from './../../alimento/alimento-nome.autocomplete';
 
 @Component( {
     selector: 'app-alimento-form',
@@ -20,9 +23,11 @@ import { MedidaAlimentarDescricaoAutocomplete } from './../../medida-alimentar/m
 } )
 export class AlimentoFormComponent extends GenericFormComponent implements OnInit {
     private alimento: Alimento;
+    private itemRefeicao: ItemRefeicao;;
     private tipos: Array<string>;
     private medidaAlimentarAutocomplete: MedidaAlimentarDescricaoAutocomplete;
     private alimentoMedidaAlimentar: AlimentoMedidaAlimentar;
+    private alimentoAutocomplete: AlimentoNomeAutocomplete;
 
     constructor( private route: ActivatedRoute,
         private alimentoService: AlimentoService,
@@ -31,10 +36,12 @@ export class AlimentoFormComponent extends GenericFormComponent implements OnIni
 
         this.goTo = "alimento";
         this.alimento = new AlimentoBuilder().initialize( this.alimento );
+        this.itemRefeicao = new ItemRefeicaoBuilder().initialize( this.itemRefeicao );
         this.tipos = new Array<string>();
         this.medidaAlimentarAutocomplete = new MedidaAlimentarDescricaoAutocomplete(
                 this.alimentoService.getMedidaAlimentarService());
         this.alimentoMedidaAlimentar = new AlimentoMedidaAlimentarBuilder().initialize(null);
+        this.alimentoAutocomplete = new AlimentoNomeAutocomplete(this.alimentoService);
     }
 
     ngOnInit() {
@@ -71,10 +78,22 @@ export class AlimentoFormComponent extends GenericFormComponent implements OnIni
     ngOnDestroy() {
         this.inscricao.unsubscribe();
     }
+    addAlimento(){
+        
+        if(this.itemRefeicao.getAlimento().getId() > 0 && 
+            this.itemRefeicao.getAlimento().getId() != this.alimento.getId() &&
+           (this.alimento.getSubstituicoes().find(s=>s.getId() == this.itemRefeicao.getAlimento().getId()) == undefined)){
+            this.alimento.getSubstituicoes().push(this.itemRefeicao.getAlimento())
+            this.itemRefeicao = new ItemRefeicaoBuilder().initialize(null);
+        }
+            
+        
+    }
+    removeAlimento(i: number) {
+        this.alimento.getSubstituicoes().splice(i, 1);
+    }
     
     save() {
-        console.log( this.alimento )
-        console.log(new AlimentoBuilder().clone( this.alimento ))
         super.save( new AlimentoBuilder().clone( this.alimento ) );
     }
     

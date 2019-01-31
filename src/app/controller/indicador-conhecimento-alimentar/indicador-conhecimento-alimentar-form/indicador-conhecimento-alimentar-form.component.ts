@@ -63,20 +63,18 @@ export class IndicadorConhecimentoAlimentarFormComponent extends GenericFormComp
             return;
         }
         
-        this.indicadorConhecimentoAlimentar.getItemIndicadorConhecimentoAlimentares().push(
-                new ItemIndicadorConhecimentoAlimentarBuilder().clone(this.item));
-        this.item = new ItemIndicadorConhecimentoAlimentar();
+        this.indicadorConhecimentoAlimentar.getItemIndicadorConhecimentoAlimentares().push(this.item);
+        this.item = new ItemIndicadorConhecimentoAlimentarBuilder().initialize(null);
     }
     
     removeItem(index) {
         this.indicadorConhecimentoAlimentar.getItemIndicadorConhecimentoAlimentares().splice(index, 1);
     }
     
-    reselectItens(iica: ItemIndicadorConhecimentoAlimentar) {
+    reselectItens(index) {
         this.indicadorConhecimentoAlimentar.getItemIndicadorConhecimentoAlimentares().forEach(i => {
             i.setCerto(false);
-            if ( i.getId() == iica.getId() )
-                i.setCerto(true);
         })
+        this.indicadorConhecimentoAlimentar.getItemIndicadorConhecimentoAlimentares()[index].setCerto(true);
     }
 }

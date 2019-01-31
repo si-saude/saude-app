@@ -35,6 +35,7 @@ export class Alimento {
     private vite: number;
     private inativo: boolean;
     private alimentoMedidaAlimentares: Array<AlimentoMedidaAlimentar>;
+    private substituicoes: Array<Alimento>;
 
     private version: number;
     
@@ -247,5 +248,11 @@ export class Alimento {
     }
     public setAlimentoMedidaAlimentares(alimentoMedidaAlimentares) {
         this.alimentoMedidaAlimentares = alimentoMedidaAlimentares;
+    }
+    public getSubstituicoes() {
+        return this.substituicoes;
+    }
+    public setSubstituicoes(substituicoes) {
+        this.substituicoes = substituicoes;
     }
 }

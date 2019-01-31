@@ -36,4 +36,20 @@ export class RecordatorioService extends GenericService {
             .post( urlGetNe, recordatorio, { headers: this.headers } )
             .toPromise();
     }
+    
+    verifyRecordatorio(filter){
+        let urlVerifyRecordatorio = this.URL + "/verify-recordatorio";
+        return this.http
+            .post( urlVerifyRecordatorio, filter, { headers: this.headers } )
+            .toPromise();
+        
+    }
+    
+    verifyRecordatorioAlimento(filter){
+        let urlVerifyRecordatorio = this.URL + "/verify-recordatorio-alimento";
+        return this.http
+            .post( urlVerifyRecordatorio, filter, { headers: this.headers } )
+            .toPromise();
+        
+    }
 }

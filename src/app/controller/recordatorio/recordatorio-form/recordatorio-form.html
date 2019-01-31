@@ -120,6 +120,15 @@
 			</div>
 		</div>
 		<div id="todasRefeicoes">
+			<div class="col s12">
+				<div class="col s11">
+				</div>
+				<div class="col s1">					
+					<a class="btn-floating pulse waves-effect waves-light"
+						(click)="copyToClipboard()"> <i class="tiny material-icons">content_copy</i>
+					</a>
+				</div>
+			</div>
 			<div class="row"
 				*ngFor="let refeicao of recordatorio.refeicoes; let r = index">
 				<p>
@@ -128,25 +137,25 @@
 				<table class="striped">
 					<thead>
 						<tr class="row col s12">
-							<th class="col s4">Alimento</th>
-							<th class="col s4">Medida</th>
 							<th class="col s3">Quantidade</th>
+							<th class="col s4">Medida</th>
+							<th class="col s4">Alimento</th>
 							<th class="col s1">VE</th>
 						</tr>
 					</thead>
 					<div *ngFor="let it of refeicao.itens; let i = index">
 						<tbody class="col s12">
 							<tr class="col s12">
-								<td class="col s4 alimento-nome">{{it.alimento.nome}}</td>
+								<td class="col s3 quantidade">{{it.quantidade}}</td>
 								<td class="col s4 medida">{{it.medidaCaseira.descricao}}</td>
-								<td style="padding-left: 5%;" class="col s3 quantidade">{{it.quantidade}}</td>
+								<td class="col s4 alimento-nome">{{it.alimento.nome}}</td>
 								<td id="{{i}}" class="col s1 ve">{{it.ve | number }}</td>
 							</tr>
 						</tbody>
 					</div>
 					<p>
 						<span style="margin-left:2%"><b>Total:</b></span>
-						<span style="margin-left:84%"><b>{{refeicao.somatorio | number}}</b></span>
+						<span style="margin-left:85%"><b>{{refeicao.somatorio | number}}</b></span>
 					</p>
 				</table>
 			</div>

@@ -29,6 +29,7 @@ export abstract class GenericService {
     }
 
     get( id: number ) {
+        console.log(id)
         let urlGet = this.URL;
         return this.http
             .get( urlGet + "?id=" + id, { headers: this.headers } )

@@ -16,6 +16,10 @@ import { FilaAtendimentoOcupacionalService } from './../fila-atendimento-ocupaci
 import { EmpregadoService } from './../../controller/empregado/empregado.service';
 import { ServicoService } from './../../controller/servico/servico.service';
 import { ServicoFilter } from './../servico/servico.filter';
+import { RecordatorioService } from './../../controller/recordatorio/recordatorio.service';
+import { PlanoAlimentarService } from './../../controller/plano-alimentar/plano-alimentar.service';
+import { QuestionarioConhecimentoAlimentarService } from './../../controller/questionario-conhecimento-alimentar/questionario-conhecimento-alimentar.service';
+
 @Injectable()
 export class AtendimentoService extends GenericService {
 
@@ -29,6 +33,9 @@ export class AtendimentoService extends GenericService {
         private diagnosticoService: DiagnosticoService,
         private intervencaoService: IntervencaoService,
         private equipeService: EquipeService,
+        private recordatorioService: RecordatorioService,
+        private planoAlimentarService: PlanoAlimentarService,
+        private questionarioConhecimentoAlimentarService: QuestionarioConhecimentoAlimentarService,
         private eixoService: EixoService ) {
         super( http, router, "atendimento" );
     }
@@ -38,9 +45,20 @@ export class AtendimentoService extends GenericService {
        return this.filaAtendimentoOcupacionalService;
         
     }
+    getQuestionarioService(){        
+        return this.questionarioConhecimentoAlimentarService;
+    }
     getServicosService(){
         
         return this.servicoService;
+    }
+    getRecordatorioService(){
+        
+        return this.recordatorioService;
+    }
+    getPlanoAlimentarService(){
+        
+        return this.planoAlimentarService;
     }
     
     getLocalizacaoService(){

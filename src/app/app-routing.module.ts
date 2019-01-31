@@ -88,6 +88,7 @@ import { QuestionarioConhecimentoAlimentarGuard } from './guards/guards-child/qu
 import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
 import { AtividadeFisicaGuard } from './guards/guards-child/atividade-fisica.guard';
 import { TarefaAgendaGuard } from './guards/guards-child/tarefa-agenda.guard';
+import { PlanoAlimentarGuard } from './guards/guards-child/plano-alimentar.guard';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -476,6 +477,12 @@ const routes: Routes = [
         loadChildren: 'app/controller/atividade-fisica/atividade-fisica.module#AtividadeFisicaModule',
         canActivateChild: [AtividadeFisicaGuard]
     }, 
+    {
+        path: 'plano-alimentar',
+        loadChildren: 'app/controller/plano-alimentar/plano-alimentar.module#PlanoAlimentarModule',
+        canActivateChild: [PlanoAlimentarGuard]
+    },
+    
     { path: '', pathMatch: 'full', redirectTo: '/home' },
     { path: '404', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/404' }

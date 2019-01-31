@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import * as $ from 'jquery';
 
+import { Util } from './../../../generics/utils/util';
 import { GlobalVariable } from './../../../global';
 import { Recordatorio } from './../../../model/recordatorio';
 import { GenericFormComponent } from './../../../generics/generic.form.component';
@@ -56,17 +58,19 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         this.medidaAlimentarNew = new MedidaAlimentarDescricaoAutocomplete(recordatorioService.getMedidaAlimentarService());
         this.medidaAlimentarEdit = new MedidaAlimentarDescricaoAutocomplete(recordatorioService.getMedidaAlimentarService());
         this.modalRefeicao = new RecordatorioRefeicaoComponent();
-    }
-
+    }    
+    
     ngOnInit() {
         this.inscricao = this.route.params.subscribe(
             ( params: any ) => {
                 if ( params['empregado'] !== undefined )
+                
                     this.empregado = params['empregado'];
                 if ( params['id'] !== undefined ) {
                     let id = params['id'];
                     this.showPreload = true;
-
+                    
+                
                     this.service.get( id )
                         .then( res => {
                             this.showPreload = false;
@@ -80,6 +84,7 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
                             this.catchConfiguration( error );
                         } )
                 } else if ( params['atendimento_id'] !== undefined ) {
+                    
                     let id = params['atendimento_id'];
                     this.showPreload = true;
                     this.showPreload = false;
@@ -88,6 +93,27 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
                     this.getNe();
                 }
             } );
+    }   
+    
+
+    copyToClipboard(element) {
+      var $temp = $("<textarea>");
+      $("body").append($temp);
+      
+      let texto = "" ;
+      this.recordatorio.getRefeicoes().forEach(x=>{
+          
+          texto += x.getNome()+"\n";             
+          texto +="Quantidade | Medida | Alimento | VE \n";
+          x.getItens().forEach(i=>{
+          texto += i.getQuantidade() +" | "+ i.getMedidaCaseira().getDescricao()+" | "+ i.getAlimento().getNome() +" | "+ i.getVe()+" \n";
+         })
+         
+         texto += "\n"
+      });
+      $temp.val(texto).select();
+      document.execCommand("copy");
+      $temp.remove();
     }
     
     getNe() {
@@ -117,7 +143,6 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         let idAtendimento = this.recordatorio.getAtendimento()["id"];  
         this.recordatorio = new RecordatorioBuilder().clone( this.recordatorio );  
         this.recordatorio.getAtendimento().setId(idAtendimento);
-        console.log(this.recordatorio)
         super.save( this.recordatorio );
     }
     
@@ -137,25 +162,28 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     removeRefeicao(r) {
         this.recordatorio.getRefeicoes().splice(r, 1);
         this.editRefeicao = false;
+        this.calculateSumVe();
     }
     
     addItemRefeicao() {
         if ( this.itemNew.getAlimento() == undefined ||
-                this.itemNew.getAlimento().getId() == undefined ||
-                this.itemNew.getAlimento().getId() <= 0 ||
-                this.itemNew.getMedidaCaseira() == undefined ||
-                this.itemNew.getMedidaCaseira()["id"] == undefined ||
-                this.itemNew.getMedidaCaseira()["id"] <= 0 &&
-                this.itemNew.getQuantidade() == undefined || 
-                this.itemNew.getQuantidade() <= 0 ) {
+        this.itemNew.getAlimento().getId() == undefined ||
+        this.itemNew.getAlimento().getId() <= 0 ||
+        this.itemNew.getMedidaCaseira() == undefined ||
+        this.itemNew.getMedidaCaseira()["id"] == undefined ||
+        this.itemNew.getMedidaCaseira()["id"] <= 0 ||                   
+        this.itemNew.getQuantidade() == undefined ||
+        this.itemNew.getQuantidade().toString() == '0,00' ||
+        this.itemNew.getQuantidade() <= 0 ) {
             this.callToast("Por favor, preencha todos os campos corretamente.", 4000)
             return;
-        }
-        //this.refeicao.getItens().push(new ItemRefeicaoBuilder().clone(this.itemNew));
+        }else{
         this.refeicao.getItens().push(this.itemNew);
         this.itemNew = new ItemRefeicaoBuilder().initialize(null);
+        $('#quantidade_item').val(0);
         this.sumVe(this.refeicao);
         this.calculateSumVe();
+        }
     }
      
     removeItemRefeicao(i) {
@@ -175,6 +203,7 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         
     sumVe(refeicao: Refeicao) {
         let sum = 0;
+            console.log("aq", refeicao);
         refeicao.getItens().forEach(i => {
             sum += i.getVe();
         });

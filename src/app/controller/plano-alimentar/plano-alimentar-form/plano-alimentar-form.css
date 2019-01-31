@@ -1,0 +1,90 @@
+.content-recordatorio {
+	min-height: 400px;
+}
+
+.menu-refeicao {
+	width: 20%;
+	margin-left: -20%;
+	border: 1px solid #e0e0e0;
+	float: left;
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 400px;
+}
+
+.btn-refeicao, .btn-item {
+	margin: 0 auto;
+	padding: 4%;
+	cursor: pointer;
+	color: #26a69a;
+	background-color: #fff;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.btn-refeicao:nth-child(even), .btn-item:nth-child(even) {
+/*    background-color: #d9d9d9; */
+}
+
+.refeicao-nome, .item-refeicao-nome{
+	margin: 0 auto;
+	float: left;
+}
+
+.menu-itens-refeicao {
+	overflow-x: hidden;
+	overflow-y: auto;
+	height: 400px;
+	width: 20%;
+	border: 1px solid #e0e0e0;
+	float: left;
+}
+
+i {
+	margin: 0 auto !important;
+	margin-right: 2px;
+}
+
+.btn-add-refeicao {
+	border: 1px solid #e0e0e0;
+	margin-left: 2%;
+	height: 20px;
+	margin-top: -1%;
+	background-color: #26a69a;
+	color: #fff;	
+}
+
+.btn-add-item-refeicao {
+	border: 1px solid #e0e0e0;
+	margin-left: 1%;
+	height: 20px;
+	margin-top: -0.5%;
+	background-color: #26a69a;
+	color: #fff;	
+}
+
+table {
+	border: 1px solid #c0c0c0;
+    margin-top: 25px;
+}
+
+thead > tr {
+	margin-bottom: 0px;
+	border-bottom: 1px solid;
+}
+
+.btn-floating i {
+	font-size: 1.3rem;
+}
+
+td > a > i {
+	margin-top: -5px;
+}
+
+tbody{
+	margin-top: 10px;
+	border-bottom: 1px solid #c0c0c0;	
+}
+
+.resume {
+	color: #26a69a;
+}
