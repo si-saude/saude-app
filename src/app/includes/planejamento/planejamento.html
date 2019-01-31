@@ -33,32 +33,50 @@
 							<div class="row">
 								<tr class="row col s12">
 									<td class="col s3 label-diagnostico">Diagnóstico</td>
-									<td class="col s9 diagnostico"><input
+									<td class="col s7 diagnostico"><input
 										(click)="openModalDiagnostico(triagem)"
 										id="triagem{{t}}.diagnostico.descricao" type="text"
 										name="triagem{{t}}.diagnostico.descricao"
 										[(ngModel)]="triagem.diagnostico.descricao"></td>
+									<td class="col s2 botao-remover">
+										<a class="btn-floating waves-effect waves-light red btn-remove"
+											(click)="clearDiagnostico(triagem);"> <i
+											class="material-icons" style="margin-top: 2%;">close</i>
+										</a>
+									</td>
 								</tr>
 							</div>
 							<div class="row">
 								<tr class="row col s12">
 									<td class="col s3 label-intervencao">Intervenção</td>
-									<td class="col s9 intervencao"><input
+									<td class="col s7 intervencao"><input
 										(click)="openModalIntervencao(triagem)"
 										id="triagem{{t}}.intervencao.descricao" type="text"
 										name="triagem{{t}}.intervencao.descricao"
 										[(ngModel)]="triagem.intervencao.descricao"></td>
+									<td class="col s2 botao-remover">
+										<a class="btn-floating waves-effect waves-light red btn-remove"
+											(click)="clearIntervencao(triagem);"> <i
+											class="material-icons" style="margin-top: 2%;">close</i>
+										</a>
+									</td>
 								</tr>
 							</div>
 							<div class="row">
 								<tr class="row col s12">
 									<td class="col s3 label-equipe-abordagem">Equipe de
 										Abordagem</td>
-									<td class="col s9 equipe-abordagem"><input
+									<td class="col s7 equipe-abordagem"><input
 										(click)="openModalEquipe(triagem)"
 										id="triagem{{t}}.equipeAbordagem.nome" type="text"
 										name="triagem{{t}}.equipeAbordagem.nome"
 										[(ngModel)]="triagem.equipeAbordagem.nome">
+									<td class="col s2 botao-remover">
+										<a class="btn-floating waves-effect waves-light red btn-remove"
+											(click)="clearEquipeAbordagem(triagem);"> <i
+											class="material-icons" style="margin-top: 2%;">close</i>
+										</a>
+									</td>
 								</tr>
 							</div>
 							<div class="row">
@@ -68,7 +86,7 @@
 									<td class="col s9 prazo-inicio"><select name="prazo{{t}}"
 										class="resposta-conteudo" class="browser-default"
 										[(ngModel)]="triagem.prazo">
-											<option disabled selected value="">Selecione um prazo</option>
+											<option selected value="">Selecione um prazo</option>
 											<option *ngFor="let prazo of prazos" value="{{prazo}}">{{prazo}}</option>
 									</select></td>
 								</tr>

@@ -6,8 +6,11 @@ import * as $ from 'jquery';
 
 import { Triagem } from './../../model/triagem';
 import { Diagnostico } from './../../model/diagnostico';
+import { DiagnosticoBuilder } from './../../controller/diagnostico/diagnostico.builder';
 import { Intervencao } from './../../model/intervencao';
+import { IntervencaoBuilder } from './../../controller/intervencao/intervencao.builder';
 import { Equipe } from './../../model/equipe';
+import { EquipeBuilder } from './../../controller/equipe/equipe.builder';
 
 @Component( {
     selector: 'app-planejamento',
@@ -124,4 +127,15 @@ export class PlanejamentoComponent{
         this.showModalEquipe = false;
     }
     
+    clearDiagnostico( triagem: Triagem ) {
+        triagem.setDiagnostico(new DiagnosticoBuilder().initialize(null));
+    }
+    
+    clearIntervencao( triagem: Triagem ) {
+        triagem.setIntervencao(new IntervencaoBuilder().initialize(null));
+    }
+    
+    clearEquipeAbordagem( triagem: Triagem ) {
+        triagem.setEquipeAbordagem(new EquipeBuilder().initialize(null));
+    }
 }

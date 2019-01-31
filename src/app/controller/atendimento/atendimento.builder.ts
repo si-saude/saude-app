@@ -84,7 +84,7 @@ export class AtendimentoBuilder extends GenericBuilder {
             cloneAtendimento.setAvaliacaoFisica(
                     new AvaliacaoFisicaBuilder().clone(this.getValue(atendimento,"getAvaliacaoFisica")));
         } else {
-            cloneAtendimento.setAvaliacaoFisica(new AvaliacaoFisicaBuilder().initialize(null));
+            cloneAtendimento.setAvaliacaoFisica(undefined);
         }
         
         return cloneAtendimento;
