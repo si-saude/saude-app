@@ -12,6 +12,7 @@ import { RecordatorioRefeicaoComponent } from './../../includes/recordatorio-ref
 import { ItemRefeicaoComponent } from './../../includes/item-refeicao/item-refeicao.component';
 import { SharedModule } from './../shared.module';
 import { PipesModule } from './../pipes.module';
+import { NumberMaskDirectiveModule } from '../../directives/number-mask-directive/number-mask-directive.module';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { PipesModule } from './../pipes.module';
      imports: [
         RecordatorioRoutingModule,
         SharedModule,
-        PipesModule
+        PipesModule,
+        NumberMaskDirectiveModule
      ],
      providers: [
         RecordatorioService

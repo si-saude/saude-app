@@ -24,5 +24,12 @@ export class QuestionarioConhecimentoAlimentarService extends GenericService {
             .get( urlConstructQuestionario + "?id=" + id, { headers: this.headers } )
             .toPromise();
     }
+    
+    verifyQuestionario(filter){
+        let urlVerifyQuestionario = this.URL + "/verify-questionario-alimentar";
+        return this.http
+            .post( urlVerifyQuestionario, filter, { headers: this.headers } )
+            .toPromise();
+    }
  
 }

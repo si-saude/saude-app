@@ -24,8 +24,8 @@
 	</div>
 	<div class="row">
 		<div class="input-field col s2">
-			<label for="quantidade">Quantidade</label> <input id="quantidade" (change)="calculeVe()"
-				type="number" name="nome" [(ngModel)]="itemRefeicao.quantidade">
+			<label for="quantidade">Quantidade</label> <input id="quantidade_item" (change)="calculeVe()"
+				type="text" numberMaskDirective="" name="quantidadeitem" [(ngModel)]="itemRefeicao.quantidade">
 		</div>
 	</div>
 </div>

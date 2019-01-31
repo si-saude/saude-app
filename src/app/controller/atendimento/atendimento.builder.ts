@@ -28,7 +28,6 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setTriagens(new TriagemBuilder().initializeList(new Array<Triagem>()));
         atendimento.setTriagensTodosAtendimentos(new TriagemBuilder().cloneList(new Array<Triagem>()));
         atendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(undefined));
-        atendimento.setRecordatorio(new RecordatorioBuilder().initialize(undefined));
         atendimento.setAvaliacaoFisica(new AvaliacaoFisicaBuilder().initialize(undefined));
         return atendimento;
     }
@@ -79,15 +78,6 @@ export class AtendimentoBuilder extends GenericBuilder {
                 cloneAtendimento.setQuestionario(undefined);
         } else {
             cloneAtendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(null));
-        }
-            
-        if (this.getValue(atendimento, "getRecordatorio") !== undefined) { 
-            cloneAtendimento.setRecordatorio(
-                    new RecordatorioBuilder().clone(this.getValue(atendimento,"getRecordatorio")));
-            if(!this.idGtZero(cloneAtendimento.getRecordatorio()))
-                cloneAtendimento.setRecordatorio(undefined);
-        } else {
-            cloneAtendimento.setRecordatorio(new RecordatorioBuilder().initialize(null));
         }
         
         if (this.getValue(atendimento, "getAvaliacaoFisica") !== undefined) { 

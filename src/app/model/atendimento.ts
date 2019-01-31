@@ -17,7 +17,6 @@ export class Atendimento {
     private aso: Aso;
     private triagensTodosAtendimentos: Array<Triagem>;
     private questionario: QuestionarioConhecimentoAlimentar;
-    private recordatorio: Recordatorio;
     private avaliacaoFisica: AvaliacaoFisica;
     private tipo: string;
     private version: number;
@@ -92,14 +91,6 @@ export class Atendimento {
 
     setQuestionario( questionario ) {
         this.questionario = questionario;
-    }
-    
-    getRecordatorio() {
-        return this.recordatorio;
-    }
-
-    setRecordatorio( recordatorio ) {
-        this.recordatorio = recordatorio;
     }
     
     getAvaliacaoFisica () {

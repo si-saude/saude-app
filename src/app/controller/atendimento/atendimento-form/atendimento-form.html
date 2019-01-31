@@ -130,9 +130,11 @@
 	
 	<div id="nutricao">
 		<app-menu-atendimento-nutricao
-			(btnCarregar)="loadNutricao($event)"
 			(btnNovoQuestionario)="clickBtnNovoQuestionario($event)"
 			(btnNovoRecordatorio)="clickBtnNovoRecordatorio($event)" 
+			(btnNovoPlanoAlimentar)="clickBtnNovoPlanoAlimentar($event)" 
+			(btnCarregar) ="loadNutricao($event)"
+			[service]="atendimentoService"
 			[atendimento]="atendimento"></app-menu-atendimento-nutricao>
 	</div>
 	

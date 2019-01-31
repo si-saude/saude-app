@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange } from '@angular/core';
 import { MaterializeAction } from "angular2-materialize";
 import { ItemRefeicao } from './../../model/item-refeicao';
 import { ItemRefeicaoBuilder } from './../../controller/item-refeicao/item-refeicao.builder';
@@ -26,14 +26,14 @@ export class ItemRefeicaoComponent {
                 this.itemRefeicao.getAlimento().getEnergia() != undefined &&
                 this.itemRefeicao.getQuantidade() != undefined ) {
             
-            let x = Number(this.itemRefeicao.getAlimento().getEnergia().toString().replace(/\./g,'').replace(',','.')) / 
-                        Number(this.itemRefeicao.getAlimento().getPadrao().toString().replace(/\./g,'').replace(',','.'));
-            let val = Math.round(x) * 
-                        Number(this.itemRefeicao.getAlimento().getAlimentoMedidaAlimentares().find( 
-                                a => a.getMedidaAlimentar().getId() == this.itemRefeicao.getMedidaCaseira().getId() )
-                                .getQuantidade().toString().replace(/\./g,'').replace(',','.'));
-            this.itemRefeicao.setVe( Math.round( Number(val) * 
-                    Number(this.itemRefeicao.getQuantidade().toString().replace(/\./g,'').replace(',','.')) ) );
+            let energia = Number(this.itemRefeicao.getAlimento().getEnergia().toString().replace(/\./g,'').replace(',','.'));
+            let padrao =  Number(this.itemRefeicao.getAlimento().getPadrao().toString().replace(/\./g,'').replace(',','.'));
+            let irQuantidade =  Number(this.itemRefeicao.getQuantidade().toString().replace(/\./g,'').replace(',','.'));
+            let amaQuantidade = Number(this.itemRefeicao.getAlimento().getAlimentoMedidaAlimentares().find( 
+                    a => a.getMedidaAlimentar().getId() == this.itemRefeicao.getMedidaCaseira().getId() )
+                    .getQuantidade().toString().replace(/\./g,'').replace(',','.'));
+
+            this.itemRefeicao.setVe( irQuantidade*((amaQuantidade*energia)/padrao));
         }
     }
 
