@@ -86,10 +86,10 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
         cloneAvaliacaoFisica.setFrequenciaCardiaca(Util.treatDouble(this.getValue( avaliacaoFisica, "getFrequenciaCardiaca")));
         
         cloneAvaliacaoFisica.setAtendimento(new Atendimento());
+        
         cloneAvaliacaoFisica.setAvaliacaoFisicaAtividadeFisicas(
                 new AvaliacaoFisicaAtividadeFisicaBuilder().cloneList(
-                        this.getValue( avaliacaoFisica, "getAvaliacaoFisicaAtividadeFisicas" )));
-        
+                        this.getValue( avaliacaoFisica, "getAvaliacaoFisicaAtividadeFisicas" )) );
         return cloneAvaliacaoFisica;
     }
     

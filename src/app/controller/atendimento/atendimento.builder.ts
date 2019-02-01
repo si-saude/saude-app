@@ -28,7 +28,6 @@ export class AtendimentoBuilder extends GenericBuilder {
         atendimento.setTriagens(new TriagemBuilder().initializeList(new Array<Triagem>()));
         atendimento.setTriagensTodosAtendimentos(new TriagemBuilder().cloneList(new Array<Triagem>()));
         atendimento.setQuestionario(new QuestionarioConhecimentoAlimentarBuilder().initialize(undefined));
-        atendimento.setAvaliacaoFisica(new AvaliacaoFisicaBuilder().initialize(undefined));
         return atendimento;
     }
 
@@ -82,7 +81,7 @@ export class AtendimentoBuilder extends GenericBuilder {
         
         if (this.getValue(atendimento, "getAvaliacaoFisica") !== undefined) { 
             cloneAtendimento.setAvaliacaoFisica(
-                    new AvaliacaoFisicaBuilder().clone(this.getValue(atendimento,"getAvaliacaoFisica")));
+                new AvaliacaoFisicaBuilder().clone(this.getValue(atendimento,"getAvaliacaoFisica")));
         } else {
             cloneAtendimento.setAvaliacaoFisica(undefined);
         }

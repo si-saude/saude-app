@@ -22,7 +22,7 @@
 					href="#informacoesEmpregado">Informações do Empregado</a></li>
 				<li class="tab" [class.disabled]="!atendimentoCarregado"><a
 					RouterLinkActive="active" href="#aso">Aso</a></li>
-				<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'EDF' || atendimento.filaAtendimentoOcupacional.status != 'EM ATENDIMENTO'">
+				<li class="tab" [class.disabled]="true">
 					<a href="#educacaoFisica">Educação Física</a></li>
 				<li class="tab" [class.disabled]="!atendimentoCarregado"><a
 					RouterLinkActive="active" href="#fichaColeta">Ficha de Coleta</a></li>
@@ -128,9 +128,8 @@
 				</div>
 			</div>
 			<div id="educacaoFisica">
-				<div *ngIf="profissional.equipe.abreviacao == 'EDF'">
+				<div *ngIf="false">
 					<app-atendimento-proaf [service]="atendimentoService"
-					 	(nivelAtividadeFisica)="setNivelAtividadeFisica($event)"
 						[atendimento]="atendimento"></app-atendimento-proaf>
 				</div>
 			</div>

@@ -50,6 +50,7 @@ export class AtendimentoProafComponent {
     private statusFilaAtendimentoOcupacional: Array<string>; 
     private tempIndex: number;
     private realizada: boolean;
+    private respostaAtividadesFisicas: RespostaFichaColeta;
 
     constructor(private utilService: UtilService) {
         this.afafsRealizadas = new Array<AvaliacaoFisicaAtividadeFisica>();
@@ -79,6 +80,8 @@ export class AtendimentoProafComponent {
         this.getNivelAtividadeFisica();
         this.getSimNao();
         this.getStatusFilaAtendimentoOcupacional();
+        this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica();
+        
     }
 
     ngOnChanges( changes: SimpleChanges ) {
@@ -185,13 +188,13 @@ export class AtendimentoProafComponent {
         let afaf = new AvaliacaoFisicaAtividadeFisicaBuilder().initialize( null );
         afaf.setTipo( tipo );
         if ( afaf.getTipo() == "REALIZADA" ) {
-            let resposta: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
-                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
-            );
-            resposta.setConteudo("SIM");
-            if ( resposta.getItens() == undefined )
-                resposta.setItens(new Array<ItemRespostaFichaColeta>());
-            this.addItemResposta(resposta);
+            
+            if ( this.respostaAtividadesFisicas != undefined ) {
+                this.respostaAtividadesFisicas.setConteudo("SIM");
+                if ( this.respostaAtividadesFisicas.getItens() == undefined )
+                    this.respostaAtividadesFisicas.setItens(new Array<ItemRespostaFichaColeta>());
+                this.addItemResposta(this.respostaAtividadesFisicas);
+            }
         }
         this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().push( afaf );
     }
@@ -204,19 +207,19 @@ export class AtendimentoProafComponent {
         );
         this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().splice(index, 1);
         if ( afaf.getTipo() == "REALIZADA" ) {
-            let resposta: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
-                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
-            );
-            if ( this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().find(a1 => a1.getTipo() == "REALIZADA") == undefined ) {
-                resposta.setConteudo(this.simNao[0]);
-                resposta.setItens(undefined);
-            }
-            if ( resposta.getItens() != undefined && resposta.getItens().length > 0 ) {
-                let index2 = resposta.getItens().findIndex(r => 
-                    r.getConteudo() == afaf.getAtividadeFisica().getDescricao() &&
-                    r.getItem().getItem().getConteudo() == afaf.getMinuto().toString()
-                );
-                resposta.getItens().splice(index2, 1);
+            
+            if ( this.respostaAtividadesFisicas != undefined ) {
+                if ( this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().find(a1 => a1.getTipo() == "REALIZADA") == undefined ) {
+                    this.respostaAtividadesFisicas.setConteudo(this.simNao[0]);
+                    this.respostaAtividadesFisicas.setItens(undefined);
+                }
+                if ( this.respostaAtividadesFisicas.getItens() != undefined && this.respostaAtividadesFisicas.getItens().length > 0 ) {
+                    let index2 = this.respostaAtividadesFisicas.getItens().findIndex(r => 
+                        r.getConteudo() == afaf.getAtividadeFisica().getDescricao() &&
+                        r.getItem().getItem().getConteudo() == afaf.getMinuto().toString()
+                    );
+                    this.respostaAtividadesFisicas.getItens().splice(index2, 1);
+                }
             }
         }   
     }
@@ -233,34 +236,30 @@ export class AtendimentoProafComponent {
     
     changeAtividade(afaf: AvaliacaoFisicaAtividadeFisica, i: number, realizada: boolean) {
         if ( realizada ) {
-            this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
-                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
-            ).getItens()[i].setConteudo(afaf.getAtividadeFisica().getDescricao());
+            if ( this.respostaAtividadesFisicas != undefined )
+                this.respostaAtividadesFisicas.getItens()[i].setConteudo(afaf.getAtividadeFisica().getDescricao());
         }
     }
     
     changeDias(afaf: AvaliacaoFisicaAtividadeFisica) {
         let qtdDias: number = this.changeTotal(afaf);
         if ( this.realizada ) {
-            let r = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
-                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
-            ).getItens()[this.tempIndex].getItem().setConteudo(qtdDias.toString());
+            if ( this.respostaAtividadesFisicas != undefined )
+                this.respostaAtividadesFisicas.getItens()[this.tempIndex].getItem().setConteudo(qtdDias.toString());
         }
     }
     
     changeMinuto(afaf: AvaliacaoFisicaAtividadeFisica, i: number, realizada: boolean) {
         this.changeTotal(afaf);
         if ( realizada ) {
-            this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
-                rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
-            ).getItens()[i].getItem().getItem().setConteudo(afaf.getMinuto().toString());
+            if (this.respostaAtividadesFisicas != undefined )
+                this.respostaAtividadesFisicas.getItens()[i].getItem().getItem().setConteudo(afaf.getMinuto().toString());
         }
     }
     
     changeClassificacao(afaf: AvaliacaoFisicaAtividadeFisica, i: number) {
-        this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
-            rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
-        ).getItens()[i].getItem().getItem().getItem().setConteudo(afaf.getClassificacao())
+        if ( this.respostaAtividadesFisicas != undefined )
+            this.respostaAtividadesFisicas.getItens()[i].getItem().getItem().getItem().setConteudo(afaf.getClassificacao())
     }
     
     replicateAtividade( afaf: AvaliacaoFisicaAtividadeFisica ) {
@@ -1358,4 +1357,12 @@ export class AtendimentoProafComponent {
         document.body.appendChild(anchor);
         anchor.click();
     }
+    
+    getRespostaAtividadesFisica() {
+        let resposta: RespostaFichaColeta   = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+            rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020" 
+        );
+        return resposta != undefined ? resposta : undefined;  
+    }
+    
 }
