@@ -409,11 +409,24 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                     this.convocacao.getTitulo() !== '' ) {
 
                     this.setSelectedsGerencias();
-                    this.showPreload = true;
+//                    this.showPreload = true;
                     
+                    
+                    this.empregadoConvocacoes.forEach(emp =>{
+                        
+                        let empAux : EmpregadoConvocacao = this.convocacao.getEmpregadoConvocacoes().find( e=> e.getId() == emp.getId());
+                        
+                        if(empAux && emp.getSelecionado()){         
+                            empAux.setSelecionado(true);
+                            empAux.setDataConvocacao(new Date());
+                            
+                        }
+                        else
+                            this.convocacao.getEmpregadoConvocacoes().push(new EmpregadoConvocacaoBuilder().clone(emp)) 
+                    });
                     let convocacaoAux:Convocacao = new ConvocacaoBuilder().clone(this.convocacao);
-                    convocacaoAux.setEmpregadoConvocacoes(this.empregadoConvocacoes);                    
-                    this.convocacaoService.getConvocacao( convocacaoAux )
+                                    
+                    this.convocacaoService.getConvocacao(convocacaoAux)
                         .then( res => {
                             location.reload();
                             this.downloadFile( res, convocacaoAux.getTitulo()+".zip" )
