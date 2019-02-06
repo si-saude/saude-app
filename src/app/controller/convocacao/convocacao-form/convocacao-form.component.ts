@@ -416,9 +416,11 @@ export class ConvocacaoFormComponent extends GenericFormComponent implements OnI
                         
                         let empAux : EmpregadoConvocacao = this.convocacao.getEmpregadoConvocacoes().find( e=> e.getId() == emp.getId());
                         
-                        if(empAux && emp.getSelecionado()){         
-                            empAux.setSelecionado(true);
-                            empAux.setDataConvocacao(new Date());
+                        if(empAux){
+                            if(emp.getSelecionado()){
+                                empAux.setSelecionado(true);
+                                empAux.setDataConvocacao(new Date());                                
+                            }
                             
                         }
                         else
