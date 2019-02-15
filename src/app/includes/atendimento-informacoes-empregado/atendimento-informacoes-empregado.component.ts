@@ -11,25 +11,8 @@ import { UtilService } from './../../generics/util.service';
     styleUrls: ['./atendimento-informacoes-empregado.css']
 } )
 export class AtendimentoInformacoesEmpregadoComponent {
-    @Input() atendimento: Atendimento;
-    private tipoAtendimentos: Array<string>;
-    
+    @Input() atendimento: Atendimento;    
     constructor(private utilService: UtilService) {
-        this.tipoAtendimentos = new Array<string>();
-    }
-    
-    ngOnInit() {
-        this.getTipoAtendimento();
-    }
-    
-    getTipoAtendimento() {
-        this.utilService.getGenericPath("tipo-atendimento")
-            .then(res => {
-                this.tipoAtendimentos = Object.keys(res.json()).sort();
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-    
+        
+    }    
 }

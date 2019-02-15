@@ -17,8 +17,16 @@ export class AvaliacaoFisicaAtividadeFisica {
     private totalMinuto: number;
     private classificacao: string;
     private observacao: string;
+    private index: number;
     private version: number;
+
+    getIndex() {
+        return this.index;
+    }
     
+    setIndex(index: number) {
+        this.index = index;
+    }
     public getAvaliacaoFisica() {
         return this.avaliacaoFisica;
     }

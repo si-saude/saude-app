@@ -22,7 +22,7 @@
 			<li class="tab"><a href="#atendimento">Atendimento</a></li>
 			<li class="tab"><a href="#aso">Aso</a></li>
 			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'NUT'"><a href="#nutricao">Nutrição</a></li>
-			<li class="tab" [class.disabled]="true"><a href="#educacaoFisica">Educação Física</a></li>
+			<li class="tab" [class.disabled]="permicaoEducacaoFisica()"><a href="#educacaoFisica">Educação Física</a></li>
 			<li class="tab"><a href="#fichaColeta">Ficha de Coleta</a></li>			
 			<li class="tab"><a href="#triagem">Triagem</a></li>
 			<li class="tab"><a href="#planejamento">Planejamento</a></li>
@@ -138,7 +138,8 @@
 	</div>
 	
 	<div id="educacaoFisica">
-		<div *ngIf="false">
+		<div *ngIf="profissional.equipe.abreviacao == 'EDF' && 
+				(atendimento.filaAtendimentoOcupacional.status == 'EM ATENDIMENTO' || atendimento.filaAtendimentoOcupacional.status == 'LANÇAMENTO DE INFORMAÇÕES')">
 			<app-atendimento-proaf [service]="atendimentoService"
 			 	(nivelAtividadeFisica)="setNivelAtividadeFisica($event)"
 				[atendimento]="atendimento"></app-atendimento-proaf>

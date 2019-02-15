@@ -2,9 +2,15 @@ import { Atendimento } from './atendimento';
 import { AvaliacaoFisicaAtividadeFisica } from './avaliacao-fisica-atividade-fisica';
 
 export class AvaliacaoFisica {
-    private id: number;
+    private id: number; 
     private atendimento: Atendimento;
-    private tipoAtendimento: string;
+    private estatura: number;
+    private peso: number;
+    private circunferenciaAbdominal: number;
+    private circunferenciaCintura: number;
+    private circunferenciaQuadril: number;
+    private gorduraNegociada: number;
+    private tipo: string;
     private pass: number;
     private pad: number;
     private fcRepouso: number;
@@ -54,18 +60,18 @@ export class AvaliacaoFisica {
     private pressaoArterialSistolica: number;
     private pressaoArterialDiastolica: number;
     private frequenciaCardiaca: number;
-    
+
     public getAtendimento() {
         return this.atendimento;
     }
     public setAtendimento(atendimento) {
         this.atendimento = atendimento;
     }
-    public getTipoAtendimento() {
-        return this.tipoAtendimento;
+    public getTipo() {
+        return this.tipo;
     }
-    public setTipoAtendimento(tipoAtendimento) {
-        this.tipoAtendimento = tipoAtendimento;
+    public setTipo(tipo) {
+        this.tipo = tipo;
     }
     public getPass() {
         return this.pass;
@@ -366,5 +372,42 @@ export class AvaliacaoFisica {
     }
     public setFrequenciaCardiaca(frequenciaCardiaca) {
         this.frequenciaCardiaca = frequenciaCardiaca;
+    }   
+    
+    public getPeso() {
+        return  this.peso;
+    }
+    public setPeso(peso) {
+        this.peso = peso;
+    }
+    public getEstatura() {
+        return this.estatura;
+    }
+    public setEstatura(estatura) {
+        this.estatura = estatura;
+    }
+    public getCircurferenciaAbdominal() {
+        return  this.circunferenciaAbdominal;
+    }
+    public setCircunferenciaAbdominal(circunferenciaAbdominal) {
+        this.circunferenciaAbdominal = circunferenciaAbdominal;
+    }
+    public getCircunferenciaCintura() {
+        return  this.circunferenciaCintura;
+    }
+    public setCircunferenciaCintura(circunferenciaCintura) {
+        this.circunferenciaCintura = circunferenciaCintura;
+    }
+    public getCircunferenciaQuadril() {
+        return  this.circunferenciaQuadril;
+    }
+    public setCircunferenciaQuadril(circunferenciaQuadril) {
+        this.circunferenciaQuadril = circunferenciaQuadril;
+    }
+    public getGorduraNegociada() {
+        return this.gorduraNegociada;
+    }
+    public setGorduraNegociada(gorduraNegociada) {
+        this.gorduraNegociada = gorduraNegociada;
     }
 }

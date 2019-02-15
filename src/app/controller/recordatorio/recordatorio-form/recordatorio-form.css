@@ -94,3 +94,12 @@ tbody{
 .resume {
 	color: #26a69a;
 }
+
+
+.tableResumo {
+  border-collapse: collapse;
+}
+
+ .linhaResumo {
+  border: 1px solid black;
+}

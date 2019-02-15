@@ -51,6 +51,7 @@ export class SolicitacaoCentralIntegraComponent {
             this.router.navigate(["/solicitacao-servico/selecao-servico"]);
         } else {
             this.tarefa = new TarefaBuilder().clone(JSON.parse(localStorage.getItem("tarefa")));
+            this.tarefa.setId(0);
             localStorage.removeItem("tarefa");
         }
         

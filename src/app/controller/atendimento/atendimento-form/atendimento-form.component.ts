@@ -14,6 +14,7 @@ import { GlobalVariable } from './../../../global';
 import { Atendimento } from './../../../model/atendimento';
 import { Usuario } from './../../../model/usuario';
 import { Aso } from './../../../model/aso';
+import { AvaliacaoFisica } from './../../../model/avaliacao-fisica';
 import { Recordatorio } from './../../../model/recordatorio';
 import { RecordatorioBuilder } from './../../recordatorio/recordatorio.builder';
 import { AtendimentoFilter } from './../../atendimento/atendimento.filter';
@@ -239,7 +240,6 @@ export class AtendimentoFormComponent {
             this.atualizacao( this.atendimento )
                 .then( res => {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
-                    console.log(this.atendimento)
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
                             this.tratamentoNutricao();
                     }
@@ -497,7 +497,7 @@ export class AtendimentoFormComponent {
 
     finalizar() {
         if ( this.atendimento.getId() > 0 ) {
-
+            
             if ( !this.fichaColetaUtil.verifyValidFichaColeta(
                     this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
                 this.toastParams = ["Por favor, preencha os campos da Ficha de Coleta exigidos", 4000];
@@ -522,6 +522,13 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
+            
+            if ( !this.verifyAvaliacaoFisica(this.atendimento.getAvaliacaoFisica())) {
+                this.toastParams = ["Por favor, preencha os campos do Atividade Fisica exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
             this.atendimentoService.finalizar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
@@ -535,6 +542,18 @@ export class AtendimentoFormComponent {
                     this.globalActions.emit( 'toast' );
                 } )
         }
+    }
+    
+    verifyAvaliacaoFisica(avaliacaoFisica : AvaliacaoFisica){     
+        let ret: boolean = true;   
+    
+        if(avaliacaoFisica != null && (avaliacaoFisica.getTipo() == undefined|| avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas() != null && avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas().length > 0 && 
+                avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getAtividadeFisica() == undefined || 
+                        x.getMinuto() == undefined || x.getClassificacao() == undefined || x.getObservacao() == undefined ||
+                        x.getTotalMinuto() == 0 || x.getTotalMinuto() == undefined).length > 0)){
+            ret =  false;
+        }
+        return ret;
     }
     
     verifyAso(aso : Aso){     
@@ -732,7 +751,7 @@ export class AtendimentoFormComponent {
         
        let triagemImc = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N08" );
        
-       if(triagemImc.getIndice() == -1){
+       if(triagemImc != undefined && triagemImc.getIndice() == -1){
            let imc = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(x=>x.getPergunta().getGrupo().includes("EXAME F") && x.getPergunta().getCodigo()=="0003").getConteudo()
            triagemImc.setIndice(this.definirIndiceTriagemImc(imc));
        }
@@ -747,17 +766,17 @@ export class AtendimentoFormComponent {
                recordatorio =  new RecordatorioBuilder().clone(res.json());                
                
                if(recordatorio.getId() > 0){                   
-//                   let triagemBE = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N01" );
+                   let triagemBE = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N01" );
                    let triagemSodio = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N04" );
                    let triagemFibra = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N05" );
                    
-//                   if(triagemBE.getIndice() == -1)
-//                       triagemBE.setIndice(this.definirIndiceTriagemBE(recordatorio));                  
+                   if(triagemBE != undefined && triagemBE.getIndice() == -1)
+                       triagemBE.setIndice(this.definirIndiceTriagemBE(recordatorio));                  
 
-                   if(triagemSodio.getIndice() == -1)
+                   if(triagemSodio != undefined &&  triagemSodio.getIndice() == -1)
                        triagemSodio.setIndice(this.definirIndiceTriagemSodio(recordatorio));
                    
-                   if(triagemFibra.getIndice() == -1)
+                   if(triagemFibra != undefined &&  triagemFibra.getIndice() == -1)
                        triagemFibra.setIndice(this.definirIndiceTriagemFibra(recordatorio));
                }               
            });         
@@ -791,6 +810,8 @@ export class AtendimentoFormComponent {
     //FALTA
     definirIndiceTriagemBE(recordatorio :Recordatorio) {   
         let somaVE = 0;
+        
+        recordatorio.getNe()
         recordatorio.getRefeicoes().forEach(x=>{
             x.getItens().forEach(i=> {
                 somaVE +=i.getVe();
@@ -878,11 +899,12 @@ export class AtendimentoFormComponent {
     }
     
     setNivelAtividadeFisica(evento: string) {
-        let indice = this.definirIndiceTriagemNivelAtividadeFisica(evento);
-        this.atendimento.getTriagens()[0].setIndice(indice);
-        this.triagemUtil.selectTriagem(0, indice);
-        //input para ficha coleta
-        this.nivelAtividadeFisica = evento;
+        if(this.atendimento.getTriagens() != undefined && this.atendimento.getTriagens().length > 0 ){
+            let indice = this.definirIndiceTriagemNivelAtividadeFisica(evento);
+            this.atendimento.getTriagens()[0].setIndice(indice);
+            this.triagemUtil.selectTriagem(0, indice);
+            this.nivelAtividadeFisica = evento;            
+        }
     }
     
     definirIndiceTriagemNivelAtividadeFisica(valor: string) {
@@ -904,4 +926,10 @@ export class AtendimentoFormComponent {
         if ( this.timeout != undefined )
             this.timeout.unsubscribe();
     }
+    
+    permicaoEducacaoFisica(){
+        return (this.profissional.getEquipe().getAbreviacao() != 'EDF' || (this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
+                && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA')));   
+    }
+    
 }

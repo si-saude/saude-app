@@ -24,7 +24,7 @@ export class Util {
     }
     
     public static treatDouble( value ) {
-        if(value){
+        if(value != undefined){
             
             value = value.toString();
             
@@ -41,12 +41,11 @@ export class Util {
             }else
                 value = value.replace(/\./g, '').replace(',', '.');
             
-        }
-        if ( value == 0 ) value = undefined;
+        }  
         return value;
     }
     
-    public static formatNumber( value ) {        
+    public static formatNumber( value ) {    
         value = value.toString().replace(/\D/g, "");
         value = Number(value).toString();
         let len = value.length;
@@ -81,11 +80,9 @@ export class Util {
                     pattern += ".";
                 pattern += "$" + x;
             }
-
             pattern += ",$" + ( length );
             value = value.replace( new RegExp( regex ), pattern );
         }
-        
         return value;
     }
     

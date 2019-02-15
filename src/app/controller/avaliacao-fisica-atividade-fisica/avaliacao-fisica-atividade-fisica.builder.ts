@@ -34,6 +34,7 @@ export class AvaliacaoFisicaAtividadeFisicaBuilder extends GenericBuilder {
         
         let cloneAvaliacaoFisicaAtividadeFisica = new AvaliacaoFisicaAtividadeFisica();
         cloneAvaliacaoFisicaAtividadeFisica.setId(this.getValue( avaliacaoFisicaAtividadeFisica, "getId" ));
+        cloneAvaliacaoFisicaAtividadeFisica.setIndex(this.getValue( avaliacaoFisicaAtividadeFisica, "getIndex" ));
         cloneAvaliacaoFisicaAtividadeFisica.setVersion(this.getValue( avaliacaoFisicaAtividadeFisica, "getVersion" ));
         cloneAvaliacaoFisicaAtividadeFisica.setClassificacao(this.getValue( avaliacaoFisicaAtividadeFisica, "getClassificacao"));
         cloneAvaliacaoFisicaAtividadeFisica.setDomingo(this.getValue( avaliacaoFisicaAtividadeFisica, "getDomingo"));

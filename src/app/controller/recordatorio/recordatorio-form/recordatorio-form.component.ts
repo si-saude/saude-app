@@ -143,6 +143,7 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         let idAtendimento = this.recordatorio.getAtendimento()["id"];  
         this.recordatorio = new RecordatorioBuilder().clone( this.recordatorio );  
         this.recordatorio.getAtendimento().setId(idAtendimento);
+        
         super.save( this.recordatorio );
     }
     
@@ -178,11 +179,11 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
             this.callToast("Por favor, preencha todos os campos corretamente.", 4000)
             return;
         }else{
-        this.refeicao.getItens().push(this.itemNew);
-        this.itemNew = new ItemRefeicaoBuilder().initialize(null);
-        $('#quantidade_item').val(0);
-        this.sumVe(this.refeicao);
-        this.calculateSumVe();
+            this.refeicao.getItens().push(this.itemNew);
+            this.itemNew = new ItemRefeicaoBuilder().initialize(null);
+            $('#quantidade_item').val(0);
+            this.sumVe(this.refeicao);
+            this.calculateSumVe();        
         }
     }
      
@@ -203,7 +204,6 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         
     sumVe(refeicao: Refeicao) {
         let sum = 0;
-            console.log("aq", refeicao);
         refeicao.getItens().forEach(i => {
             sum += i.getVe();
         });
@@ -216,10 +216,12 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     }
     
     sumNutriente(ref: Refeicao, campo) {
-        let sum: number = 0;
+        let sum: number = 0;   
+   
         ref.getItens().forEach(i => {
-            if ( i.getAlimento()[campo] != undefined )
-                sum += Number(Number(i.getAlimento()[campo].replace('.','').replace(',','.'))*i.getQuantidade());
+            if ( i.getAlimento()[campo] != undefined ){
+                sum += Number(Number(Util.treatDouble(i.getAlimento()[campo]))*Util.treatDouble(i.getQuantidade()));
+            }
         })
         return sum;
     }

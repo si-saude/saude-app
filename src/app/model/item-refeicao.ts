@@ -7,7 +7,7 @@ export class ItemRefeicao {
     private alimento: Alimento;
     private medidaCaseira: MedidaAlimentar;
     private refeicao: Refeicao;
-    private quantidade: number;
+    private quantidade: number = 0;
     private ve: number;
     private version: number;
 

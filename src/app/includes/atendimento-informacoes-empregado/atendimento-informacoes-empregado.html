@@ -6,20 +6,11 @@
 
 	<div class="row-empregado row">
 
-		<div class="input-field-empregado input-field col s3">
+		<div class="input-field-empregado input-field col s6">
 			<label for="nomeServico">Serviço</label> <input id="nomeServico"
 				type="text" disabled class="input-empregado"
 				[(ngModel)]="atendimento.tarefa.servico.nome" name="nomeServico">
 		</div>
-		
-		<div class="input-field-tipo input-field col s3" style="margin-top: 0">
-			<label for="tipo">Tipo</label> 
-			<select class="browser-default" [(ngModel)]="atendimento.tipo">
-				<option disabled selected value='undefined'>Selecione um tipo</option>
-				<option *ngFor="let tipoAtendimento of tipoAtendimentos" value="{{tipoAtendimento}}">{{tipoAtendimento}}</option>
-			</select>
-		</div>
-
 		<div class="input-field-empregado input-field col s6">
 			<label for="profissional">Profissional Responsável</label> <input
 				id="profissional" type="text" name="profissional" disabled

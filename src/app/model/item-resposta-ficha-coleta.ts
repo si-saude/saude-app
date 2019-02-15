@@ -6,6 +6,7 @@ export class ItemRespostaFichaColeta {
     private resposta: RespostaFichaColeta;
     private conteudo: string = '';
     private version: number;
+    private index: number;
 
     getId() {
         return this.id;
@@ -13,6 +14,14 @@ export class ItemRespostaFichaColeta {
 
     setId(id: number) {
         this.id = id;
+    }
+    
+    getIndex() {
+        return this.index;
+    }
+
+    setIndex(index: number) {
+        this.index = index;
     }
     
     getResposta() {

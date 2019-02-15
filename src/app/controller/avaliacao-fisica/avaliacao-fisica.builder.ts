@@ -29,7 +29,6 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
     }
     
     clone( avaliacaoFisica: AvaliacaoFisica ): AvaliacaoFisica {
-
         if ( avaliacaoFisica === null || avaliacaoFisica === undefined )
             avaliacaoFisica = new AvaliacaoFisica();
         
@@ -38,30 +37,30 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
         cloneAvaliacaoFisica.setVersion(this.getValue( avaliacaoFisica, "getVersion" ));
         cloneAvaliacaoFisica.setAcaoIniciarExercicioFisico(this.getValue( avaliacaoFisica, "getAcaoIniciarExercicioFisico" ));
         cloneAvaliacaoFisica.setObservacaoEstagioContemplacao(this.getValue( avaliacaoFisica, "getObservacaoEstagioContemplacao" ));
-        cloneAvaliacaoFisica.setCarenciaMuscular(this.getValue( avaliacaoFisica, "getCarenciaMuscular" ));
+        cloneAvaliacaoFisica.setCarenciaMuscular(Util.treatDouble(this.getValue( avaliacaoFisica, "getCarenciaMuscular" )));
         cloneAvaliacaoFisica.setFcRepouso(this.getValue( avaliacaoFisica, "getFcRepouso" ));
-        cloneAvaliacaoFisica.setGorduraAbsoluta(this.getValue( avaliacaoFisica, "getGorduraAbsoluta" ));
-        cloneAvaliacaoFisica.setImc(this.getValue( avaliacaoFisica, "getImc" ));
+        cloneAvaliacaoFisica.setGorduraAbsoluta(Util.treatDouble(this.getValue( avaliacaoFisica, "getGorduraAbsoluta" )));
+        cloneAvaliacaoFisica.setImc(Util.treatDouble(this.getValue( avaliacaoFisica, "getImc" )));
         cloneAvaliacaoFisica.setInteresseProgramaFisico(this.getValue( avaliacaoFisica, "getInteresseProgramaFisico" ));
         cloneAvaliacaoFisica.setIpaqAnterior(this.getValue( avaliacaoFisica, "getIpaqAnterior" ));
-        cloneAvaliacaoFisica.setMassaMagra(this.getValue( avaliacaoFisica, "getMassaMagra" ));
+        cloneAvaliacaoFisica.setMassaMagra(Util.treatDouble(this.getValue( avaliacaoFisica, "getMassaMagra" )));
         cloneAvaliacaoFisica.setObservacoes(this.getValue( avaliacaoFisica, "getObservacoes" ));
         cloneAvaliacaoFisica.setPad(this.getValue( avaliacaoFisica, "getPad" ));
         cloneAvaliacaoFisica.setPass(this.getValue( avaliacaoFisica, "getPass" ));
-        cloneAvaliacaoFisica.setPercentualGordura(this.getValue( avaliacaoFisica, "getPercentualGordura" ));
-        cloneAvaliacaoFisica.setPercentualGorduraIdeal(this.getValue( avaliacaoFisica, "getPercentualGorduraIdeal" ));
-        cloneAvaliacaoFisica.setPercentualGorduraNegociada(this.getValue( avaliacaoFisica, "getPercentualGorduraNegociada" ));
-        cloneAvaliacaoFisica.setPercentualMassaMagra(this.getValue( avaliacaoFisica, "getPercentualMassaMagra" ));
-        cloneAvaliacaoFisica.setPercentualMassaMagraIdeal(this.getValue( avaliacaoFisica, "getPercentualMassaMagraIdeal" ));
-        cloneAvaliacaoFisica.setPesoExcesso(this.getValue( avaliacaoFisica, "getPesoExcesso" ));
-        cloneAvaliacaoFisica.setPesoExcessoNegociado(this.getValue( avaliacaoFisica, "getPesoExcessoNegociado" ));
-        cloneAvaliacaoFisica.setPesoIdeal(this.getValue( avaliacaoFisica, "getPesoIdeal" ));
-        cloneAvaliacaoFisica.setPesoNegociado(this.getValue( avaliacaoFisica, "getPesoNegociado" ));
+        cloneAvaliacaoFisica.setPercentualGordura(Util.treatDouble(this.getValue( avaliacaoFisica, "getPercentualGordura" )));
+        cloneAvaliacaoFisica.setPercentualGorduraIdeal(Util.treatDouble(this.getValue( avaliacaoFisica, "getPercentualGorduraIdeal" )));
+        cloneAvaliacaoFisica.setPercentualGorduraNegociada(Util.treatDouble(this.getValue( avaliacaoFisica, "getPercentualGorduraNegociada" )));
+        cloneAvaliacaoFisica.setPercentualMassaMagra(Util.treatDouble(this.getValue( avaliacaoFisica, "getPercentualMassaMagra" )));
+        cloneAvaliacaoFisica.setPercentualMassaMagraIdeal(Util.treatDouble(this.getValue( avaliacaoFisica, "getPercentualMassaMagraIdeal" )));
+        cloneAvaliacaoFisica.setPesoExcesso(Util.treatDouble(this.getValue( avaliacaoFisica, "getPesoExcesso" )));
+        cloneAvaliacaoFisica.setPesoExcessoNegociado(Util.treatDouble(this.getValue( avaliacaoFisica, "getPesoExcessoNegociado" )));
+        cloneAvaliacaoFisica.setPesoIdeal(Util.treatDouble(this.getValue( avaliacaoFisica, "getPesoIdeal" )));
+        cloneAvaliacaoFisica.setPesoNegociado(Util.treatDouble(this.getValue( avaliacaoFisica, "getPesoNegociado" )));
         cloneAvaliacaoFisica.setPraticaExercicioFisico(this.getValue( avaliacaoFisica, "getPraticaExercicioFisico" ));
         cloneAvaliacaoFisica.setProtocoloComposicaoCorporal(this.getValue( avaliacaoFisica, "getProtocoloComposicaoCorporal" ));
-        cloneAvaliacaoFisica.setRazaoCinturaEstatura(this.getValue( avaliacaoFisica, "getRazaoCinturaEstatura" ));
-        cloneAvaliacaoFisica.setTipoAtendimento(this.getValue( avaliacaoFisica, "getTipoAtendimento" ));
-        cloneAvaliacaoFisica.setPercentualMassaMagraNegociada(this.getValue( avaliacaoFisica, "getPercentualMassaMagraNegociada" ))
+        cloneAvaliacaoFisica.setRazaoCinturaEstatura(Util.treatDouble(this.getValue( avaliacaoFisica, "getRazaoCinturaEstatura" )));
+        cloneAvaliacaoFisica.setTipo(this.getValue( avaliacaoFisica, "getTipo" ));
+        cloneAvaliacaoFisica.setPercentualMassaMagraNegociada(Util.treatDouble(this.getValue( avaliacaoFisica, "getPercentualMassaMagraNegociada" )))
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaValor" )));
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaClassificacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaClassificacao" ));
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaObservacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaObservacao" ));
@@ -84,12 +83,19 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
         cloneAvaliacaoFisica.setPressaoArterialSistolica(Util.treatDouble(this.getValue( avaliacaoFisica, "getPressaoArterialSistolica")));
         cloneAvaliacaoFisica.setPressaoArterialDiastolica(Util.treatDouble(this.getValue( avaliacaoFisica, "getPressaoArterialDiastolica")));
         cloneAvaliacaoFisica.setFrequenciaCardiaca(Util.treatDouble(this.getValue( avaliacaoFisica, "getFrequenciaCardiaca")));
+        cloneAvaliacaoFisica.setPeso(Util.treatDouble(this.getValue( avaliacaoFisica, "getPeso")));
+        cloneAvaliacaoFisica.setCircunferenciaCintura(Util.treatDouble(this.getValue( avaliacaoFisica, "getCircunferenciaCintura")));
+        cloneAvaliacaoFisica.setEstatura(Util.treatDouble(this.getValue( avaliacaoFisica, "getEstatura")));
+        cloneAvaliacaoFisica.setCircunferenciaQuadril(Util.treatDouble(this.getValue( avaliacaoFisica, "getCircunferenciaQuadril")));
+        cloneAvaliacaoFisica.setCircunferenciaAbdominal(Util.treatDouble(this.getValue( avaliacaoFisica, "getCircunferenciaAbdominal")));
+        cloneAvaliacaoFisica.setGorduraNegociada(Util.treatDouble(this.getValue( avaliacaoFisica, "getGorduraNegociada")));
         
         cloneAvaliacaoFisica.setAtendimento(new Atendimento());
         
         cloneAvaliacaoFisica.setAvaliacaoFisicaAtividadeFisicas(
                 new AvaliacaoFisicaAtividadeFisicaBuilder().cloneList(
                         this.getValue( avaliacaoFisica, "getAvaliacaoFisicaAtividadeFisicas" )) );
+        
         return cloneAvaliacaoFisica;
     }
     

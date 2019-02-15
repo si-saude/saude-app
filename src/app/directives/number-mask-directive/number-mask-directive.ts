@@ -12,7 +12,6 @@ import {Util} from '../../generics/utils/util';
 } )
 
 export class NumberMaskDirective implements ControlValueAccessor, OnChanges {
-    valueLoaded: boolean = false;
     onChange: any;
     onTouched: any;
 
@@ -24,19 +23,18 @@ export class NumberMaskDirective implements ControlValueAccessor, OnChanges {
 
     }
 
-    ngOnInit() {
-
+    ngOnInit() {        
+       if(this.model != undefined)
+          this.el.nativeElement.value = this.model;
     }
 
     ngOnChanges( changes: SimpleChanges ) {
-        if ( changes["model"] && changes["model"]["currentValue"] && !this.valueLoaded ) {
+        if ( changes["model"] && changes["model"]["currentValue"]) {    
             this.el.nativeElement.value = changes["model"]["currentValue"];
-            this.valueLoaded = true;
         }
     }
 
     ngAfterViewInit() {
-        console.log( "afterinit" )
     }
 
     writeValue( value: any ): void {
@@ -54,6 +52,7 @@ export class NumberMaskDirective implements ControlValueAccessor, OnChanges {
     @HostListener( 'input', ['$event'] )
     onInput( $event: any ) {
         var value = $event.target.value.replace( /\D/g, '' );
+        $event.target.value = value;
 
         if ( value ) {
 
