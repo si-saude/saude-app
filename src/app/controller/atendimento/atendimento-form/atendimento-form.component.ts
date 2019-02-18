@@ -547,9 +547,12 @@ export class AtendimentoFormComponent {
     verifyAvaliacaoFisica(avaliacaoFisica : AvaliacaoFisica){     
         let ret: boolean = true;   
     
+        console.log(avaliacaoFisica);
+        console.log(avaliacaoFisica);
+        
         if(avaliacaoFisica != null && (avaliacaoFisica.getTipo() == undefined|| avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas() != null && avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas().length > 0 && 
                 avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getAtividadeFisica() == undefined || 
-                        x.getMinuto() == undefined || x.getClassificacao() == undefined || x.getObservacao() == undefined ||
+                        x.getMinuto() == undefined || x.getClassificacao() == undefined ||
                         x.getTotalMinuto() == 0 || x.getTotalMinuto() == undefined).length > 0)){
             ret =  false;
         }
