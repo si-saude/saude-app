@@ -311,7 +311,7 @@
 				</tr>
 				<tr class="col s12">
 					<td class="col s3">
-						<label>Dobra Abdmonial (mm)</label>
+						<label>Dobra Abdominal (mm)</label>
 						<input id="ficha-coleta-dobra-abdominal" type="text"
 							[(ngModel)]="atendimento.avaliacaoFisica.dobraAbdominal" [readonly]="isDisabledAvaliacao()" 
 							name="ficha-coleta-dobra-abdominal" numberMaskDirective="">
@@ -544,7 +544,7 @@
 		
 		<div class="col s12">
 			<label>Parecer Conclusivo e Orientações</label>
-			<textarea class="materialize-textarea" id="atendimento.avaliacaoFisica.observacoes" 
+			<textarea class="materialize-textarea" id="atendimento.avaliacaoFisica.observacoes" maxlength="2048" 
 				[(ngModel)]="atendimento.avaliacaoFisica.observacoes" name="atendimento.avaliacaoFisica.observacoes"></textarea>
 		</div>
 		

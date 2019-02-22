@@ -6,14 +6,12 @@
 <app-preload [msg]="msgPreload" [show]="showPreload"></app-preload>
 
 <div class="row infos-profissional">
-	<p class="nome-profissional">
-		<b>Profissional: {{profissional?.empregado.pessoa.nome}}</b>
-	</p>
-	<p class="status-profissional">
+	<p>
+		<b>Profissional: {{profissional?.empregado.pessoa.nome}} |</b>
 		<b>Status: {{atendimento?.filaAtendimentoOcupacional.status}}</b>
+		<span *ngIf="lancandoInformacao" style="float:right;"><a class="btn-floating pulse"  (click)="atualizar()"><i class="material-icons center-icon">refresh</i></a></span>
 	</p>
 </div>
-
 <div class="row form-container">
 
 	<div class="col s12">

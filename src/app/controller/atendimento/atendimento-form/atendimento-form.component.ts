@@ -91,6 +91,7 @@ export class AtendimentoFormComponent {
     private fichaColetaUtil: FichaColetaUtil;
     private idEquipe: number;
     private timeout: Subscription;
+    private lancandoInformacao : boolean = false;
     
     private nivelAtividadeFisica: string;
     
@@ -168,7 +169,7 @@ export class AtendimentoFormComponent {
             this.router.navigate( ["/login"] );
         }
 
-        this.getLocalizacoes();
+        this.getLocalizacoes();        
     }
 
     getLocalizacoes() {
@@ -239,6 +240,8 @@ export class AtendimentoFormComponent {
             this.showPreload = true;
             this.atualizacao( this.atendimento )
                 .then( res => {
+                    this.lancandoInformacoes();
+                    
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
                             this.tratamentoNutricao();
@@ -305,6 +308,7 @@ export class AtendimentoFormComponent {
         }
     }
     
+   
     atualizacao(atendimento) {
         return this.atendimentoService.atualizar( new AtendimentoBuilder().clone(atendimento) );
     }
@@ -465,7 +469,7 @@ export class AtendimentoFormComponent {
         }
     }
 
-    liberar() {
+    liberar() {            
         if ( this.atendimento.getId() > 0 ) {
             if ( !this.fichaColetaUtil.verifyValidFichaColeta(
                     this.atendimento.getFilaEsperaOcupacional().getFichaColeta(), this.profissional.getEquipe().getId()) ) {
@@ -486,6 +490,7 @@ export class AtendimentoFormComponent {
                     this.globalActions.emit( 'toast' );
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     this.atualizar();
+                    this.lancandoInformacoes();
                 } )
                 .catch( error => {
                     this.catchConfiguration( error );
@@ -528,7 +533,7 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
-            
+                
             this.atendimentoService.finalizar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Atendimento finalizado", 4000];
@@ -546,9 +551,6 @@ export class AtendimentoFormComponent {
     
     verifyAvaliacaoFisica(avaliacaoFisica : AvaliacaoFisica){     
         let ret: boolean = true;   
-    
-        console.log(avaliacaoFisica);
-        console.log(avaliacaoFisica);
         
         if(avaliacaoFisica != null && (avaliacaoFisica.getTipo() == undefined|| avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas() != null && avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas().length > 0 && 
                 avaliacaoFisica.getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getAtividadeFisica() == undefined || 
@@ -933,6 +935,10 @@ export class AtendimentoFormComponent {
     permicaoEducacaoFisica(){
         return (this.profissional.getEquipe().getAbreviacao() != 'EDF' || (this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
                 && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA')));   
+    }
+    
+    lancandoInformacoes(){      
+        this.lancandoInformacao = this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA'); 
     }
     
 }
