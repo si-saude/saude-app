@@ -27,13 +27,19 @@ export class AlimentoService extends GenericService {
             .toPromise();
     }
     
+    getTiposCarboidratos() {
+        let urlTipo = GlobalVariable.BASE_API_URL + "/generic/tipo-carboidrato";
+        return this.http
+            .get( urlTipo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
     getTipos() {
         let urlTipo = GlobalVariable.BASE_API_URL + "/generic/tipo-alimento";
         return this.http
             .get( urlTipo + "?filter=", { headers: this.headers } )
             .toPromise();
     }
-    
     getMedidaAlimentarService() {
         return this.medidaAlimentarService;
     }

@@ -34,6 +34,7 @@ export class Alimento {
     private vitd: number;
     private vite: number;
     private inativo: boolean;
+    private tipoCarboidrato: string;
     private alimentoMedidaAlimentares: Array<AlimentoMedidaAlimentar>;
     private substituicoes: Array<Alimento>;
 
@@ -56,7 +57,13 @@ export class Alimento {
     }
     public setTipo(tipo) {
         this.tipo = tipo;
+    }    
+    public getTipoCarboidrato() {
+        return this.tipoCarboidrato;
     }
+    public setTipoCarboidrato(tipoCarboidrato) {
+        this.tipoCarboidrato = tipoCarboidrato;
+    }        
     public getPadrao() {
         return this.padrao;
     }

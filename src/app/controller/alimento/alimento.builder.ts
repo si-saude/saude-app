@@ -36,6 +36,7 @@ export class AlimentoBuilder extends GenericBuilder {
         cloneAlimento.setId(this.getValue(alimento,"getId"));
         cloneAlimento.setNome(this.getValue(alimento,"getNome"));
         cloneAlimento.setTipo(this.getValue(alimento,"getTipo"));
+        cloneAlimento.setTipoCarboidrato(this.getValue(alimento,"getTipoCarboidrato"));
         cloneAlimento.setPadrao(Util.treatDouble(this.getValue(alimento,"getPadrao")));
         cloneAlimento.setEnergia(Util.treatDouble(this.getValue(alimento,"getEnergia")));
         cloneAlimento.setProteina(Util.treatDouble(this.getValue(alimento,"getProteina")));

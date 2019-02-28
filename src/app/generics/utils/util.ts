@@ -24,25 +24,26 @@ export class Util {
     }
     
     public static treatDouble( value ) {
-        if(value != undefined){
+        let returnAux  = value;
+        if(returnAux != undefined){
             
-            value = value.toString();
+            returnAux = returnAux.toString();
             
-            if(!value.includes(',')){
-                if(!value.includes('.')){
-                    value += '00';
+            if(!returnAux.includes(',')){
+                if(!returnAux.includes('.')){
+                    returnAux += '00';
                 }else{
-                    let values = value.split('.');
+                    let values = returnAux.split('.');
                     
                     if(values[values.length - 1].length == 1)
-                        value += '0';
+                        returnAux += '0';
                 }
-                value = Util.formatNumber(value);
+                returnAux = Util.formatNumber(returnAux);
             }else
-                value = value.replace(/\./g, '').replace(',', '.');
+                returnAux = returnAux.replace(/\./g, '').replace(',', '.');
             
-        }  
-        return value;
+        }          
+        return returnAux;
     }
     
     public static formatNumber( value ) {    
@@ -115,5 +116,7 @@ export class Util {
         document.body.appendChild(anchor);
         anchor.click();
     }
+    
+    
 
 }

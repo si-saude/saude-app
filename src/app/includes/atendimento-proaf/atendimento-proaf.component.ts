@@ -369,24 +369,23 @@ export class AtendimentoProafComponent {
                 }
         else {
             if ( this.testesFisicos.length > 0 ) {
-                let menorQue4: boolean = false;
-                if ( this.testesFisicos.forEach( tf => {
-                    if ( tf < 4 ) {
-                        this.atendimento.getTriagens()[1].setIndice( 3 );
-                        this.selectTriagem( 1, 3 );
-                        menorQue4 = true;
-                    }
-                } ) )
-                    if ( !menorQue4 ) {
-                        this.atendimento.getTriagens()[1].setIndice( 4 );
-                        this.selectTriagem( 1, 4 );
-                    }
+                let menorQue4: boolean = false;                    
+                 if(this.testesFisicos.find( x => x < 3 ) < 3){
+                     this.atendimento.getTriagens()[1].setIndice( 3 );
+                     this.selectTriagem( 1, 3 );  
+                 }else{
+                    this.atendimento.getTriagens()[1].setIndice( 4 );
+                    this.selectTriagem( 1, 4 );
+                }
             }
         }
     }
-    gorduraNegociada
     calcularComposicaoCorporal() {
-        if ( this.atendimento.getAvaliacaoFisica().getPercentualGorduraNegociada() != undefined ) {
+        if (Util.treatDouble(this.atendimento.getAvaliacaoFisica().getPeso()) > 0 &&
+            Util.treatDouble(this.atendimento.getAvaliacaoFisica().getEstatura()) > 0 &&
+            Util.treatDouble(this.atendimento.getAvaliacaoFisica().getCircurferenciaAbdominal()) > 0 &&
+            Util.treatDouble(this.atendimento.getAvaliacaoFisica().getCircunferenciaCintura()) > 0 &&
+            Util.treatDouble(this.atendimento.getAvaliacaoFisica().getCircunferenciaQuadril()) > 0) {
             this.service.calcularComposicaoCorporal( new AtendimentoBuilder().clone( this.atendimento ) )
                 .then( res => {
                     this.setDadosSecundarioComposicaoCorporal( new AtendimentoBuilder().clone( res.json() ) );
@@ -423,31 +422,31 @@ export class AtendimentoProafComponent {
     changePeso() {
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find( rfc =>
             rfc.getPergunta().getGrupo().includes( "EXAME F" ) && rfc.getPergunta().getCodigo() == "0001"
-        ).setConteudo( this.passStringByValue( this.atendimento.getAvaliacaoFisica().getPeso().toString() ) );
+        ).setConteudo(this.atendimento.getAvaliacaoFisica().getPeso().toString());
     }
 
     changeEstatura() {
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find( rfc =>
             rfc.getPergunta().getGrupo().includes( "EXAME F" ) && rfc.getPergunta().getCodigo() == "0002"
-        ).setConteudo( this.passStringByValue( this.atendimento.getAvaliacaoFisica().getEstatura().toString() ) );
+        ).setConteudo(this.atendimento.getAvaliacaoFisica().getEstatura().toString() );
     }
 
     changeCircunferenciaAbdominal() {
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find( rfc =>
             rfc.getPergunta().getGrupo().includes( "EXAME F" ) && rfc.getPergunta().getCodigo() == "0011"
-        ).setConteudo( this.passStringByValue( this.atendimento.getAvaliacaoFisica().getCircurferenciaAbdominal().toString() ) );
+        ).setConteudo(this.atendimento.getAvaliacaoFisica().getCircurferenciaAbdominal().toString() );
     }
 
     changeCircunferenciaCintura() {
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find( rfc =>
             rfc.getPergunta().getGrupo().includes( "EXAME F" ) && rfc.getPergunta().getCodigo() == "0010"
-        ).setConteudo( this.passStringByValue( this.atendimento.getAvaliacaoFisica().getCircunferenciaCintura().toString() ) );
+        ).setConteudo( this.atendimento.getAvaliacaoFisica().getCircunferenciaCintura().toString() );
     }
 
     changeCircunferenciaQuadril() {
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find( rfc =>
             rfc.getPergunta().getGrupo().includes( "EXAME F" ) && rfc.getPergunta().getCodigo() == "0012"
-        ).setConteudo( this.passStringByValue( this.atendimento.getAvaliacaoFisica().getCircunferenciaQuadril().toString() ) );
+        ).setConteudo( this.atendimento.getAvaliacaoFisica().getCircunferenciaQuadril().toString() );
     }
 
     changeAptidaoCardiorrespiratoriaValor() {
@@ -1104,6 +1103,7 @@ export class AtendimentoProafComponent {
         this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(r => 
         r.getPergunta().getGrupo().includes("EXAME F") && r.getPergunta().getCodigo() == "0013")
             .setConteudo(this.atendimento.getAvaliacaoFisica().getAptidaoCardiorrespiratoriaValor().toString());
+        
         if ( i == 4 || i == 0 ) {
             this.atendimento.getTriagens()[3].setIndice( 0 );
             this.selectTriagem( 3, 0 );
@@ -1127,7 +1127,7 @@ export class AtendimentoProafComponent {
         else if ( i == 5 || i == 2 ) {
             this.atendimento.getTriagens()[3].setIndice( 4 );
             this.selectTriagem( 3, 4 );
-            this.testesFisicos[3] = 4;
+            this.testesFisicos[0] = 4;
         }
         this.setEstagioContemplacaoTriagem();
     }
@@ -1243,13 +1243,34 @@ export class AtendimentoProafComponent {
         let sumMinutos: number = 0;
         let verifyMuitoAtivo: boolean = false;
         let exit: boolean = false;
-    
+        let afafAux: AvaliacaoFisicaAtividadeFisica = new AvaliacaoFisicaAtividadeFisica();
+     
         if ( this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").length > 0 ) {
             naf = 1;
+                     
             
+             this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").forEach( afaf => {                         
+                 
+                 if (afaf.getDomingo())
+                     afafAux.setDomingo(afaf.getDomingo());
+                 if (afaf.getSegunda())
+                     afafAux.setSegunda(afaf.getSegunda());
+                 if (afaf.getTerca())
+                     afafAux.setTerca(afaf.getTerca());
+                 if (afaf.getQuarta())
+                     afafAux.setQuarta(afaf.getQuarta());
+                 if (afaf.getQuinta())
+                     afafAux.setQuinta(afaf.getQuinta());
+                 if (afaf.getSexta())
+                     afafAux.setSexta(afaf.getSexta());
+                 if (afaf.getSabado())
+                     afafAux.setSabado(afaf.getSabado());
+             });
+            
+             sumDias = this.getQtdDays(afafAux);
+             
             this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").forEach( afaf => {
                 if ( exit ) return;
-                sumDias += this.getQtdDays( afaf );
                 sumMinutos += afaf.getTotalMinuto();
                 
                 if ( sumDias >= 5 && sumMinutos >= 150 )

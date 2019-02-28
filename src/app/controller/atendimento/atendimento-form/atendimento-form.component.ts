@@ -54,6 +54,7 @@ import { PlanejamentoUtil } from './../../../generics/utils/planejamento.util';
 import { TriagemUtil } from './../../../generics/utils/triagem.util';
 import { FichaColetaUtil } from './../../../generics/utils/ficha-coleta.util';
 import { Util } from './../../../generics/utils/util';
+import { TriagemComponent } from './../../../includes/triagem/triagem.component';
 import { MenuAtendimentoNutricaoComponent } from './../../../includes/menu-atendimento-nutricao/menu-atendimento-nutricao.component';
 
 @Component( {
@@ -63,6 +64,7 @@ import { MenuAtendimentoNutricaoComponent } from './../../../includes/menu-atend
 } )
 export class AtendimentoFormComponent {
     @ViewChild( MenuAtendimentoNutricaoComponent ) menuNutricao: MenuAtendimentoNutricaoComponent;
+    @ViewChild( TriagemComponent ) triagemComponent: TriagemComponent;
     private inscricao: Subscription;
     private atendimento: Atendimento;
     private atendimentos: Array<Atendimento>;
@@ -240,7 +242,7 @@ export class AtendimentoFormComponent {
             this.showPreload = true;
             this.atualizacao( this.atendimento )
                 .then( res => {
-                    this.lancandoInformacoes();
+                    this.lancandoInformacoes();                    
                     
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
@@ -267,8 +269,8 @@ export class AtendimentoFormComponent {
                     else this.disabledTab = 'disabled';
                     
                     if ( this.atendimento.getId() > 0 ) {
-                        this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();
-                        
+                        this.localizacao = this.atendimento.getFilaAtendimentoOcupacional().getLocalizacao();                        
+                     
                         if ( this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes("DISPON") )
                             this.alive = true;
                         else this.alive = false;
@@ -335,6 +337,7 @@ export class AtendimentoFormComponent {
             return;
         }
         if ( this.filaAtendimentoOcupacional != undefined ) {
+            
             this.atendimentoService.entrar( this.filaAtendimentoOcupacional )
                 .then( res => {
                     this.toastParams = ["Profissional inserido na fila de atendimento", 4000];
@@ -756,7 +759,7 @@ export class AtendimentoFormComponent {
         
        let triagemImc = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N08" );
        
-       if(triagemImc != undefined && triagemImc.getIndice() == -1){
+       if(triagemImc != undefined){
            let imc = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(x=>x.getPergunta().getGrupo().includes("EXAME F") && x.getPergunta().getCodigo()=="0003").getConteudo()
            triagemImc.setIndice(this.definirIndiceTriagemImc(imc));
        }
@@ -767,27 +770,61 @@ export class AtendimentoFormComponent {
        recordatorioFilter.getAtendimento().setId(this.atendimento.getId());
        
        
-           this.atendimentoService.getRecordatorioService().verifyRecordatorio(recordatorioFilter).then(res =>{
-               recordatorio =  new RecordatorioBuilder().clone(res.json());                
+           this.atendimentoService.getRecordatorioService().verifyRecordatorio(recordatorioFilter).then(res =>{               
+               
+               recordatorio =  new RecordatorioBuilder().clone(res.json());  
                
                if(recordatorio.getId() > 0){                   
                    let triagemBE = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N01" );
+                   let triagemCarboidratoSimples = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N02" );
+                   let triagemLipidiosSaturados = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N03" );
                    let triagemSodio = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N04" );
                    let triagemFibra = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N05" );
                    
-                   if(triagemBE != undefined && triagemBE.getIndice() == -1)
-                       triagemBE.setIndice(this.definirIndiceTriagemBE(recordatorio));                  
-
-                   if(triagemSodio != undefined &&  triagemSodio.getIndice() == -1)
-                       triagemSodio.setIndice(this.definirIndiceTriagemSodio(recordatorio));
                    
-                   if(triagemFibra != undefined &&  triagemFibra.getIndice() == -1)
-                       triagemFibra.setIndice(this.definirIndiceTriagemFibra(recordatorio));
+                   if(triagemBE != undefined ){
+                       let indiceTriagemBE = this.definirIndiceTriagemBE(recordatorio);
+                       this.selectTriagem( 0, indiceTriagemBE );
+                   }
+
+                   if(triagemSodio != undefined){
+                       let indiceTriagemSodio = this.definirIndiceTriagemSodio(recordatorio);
+                       this.selectTriagem( 3, indiceTriagemSodio );
+                   }
+                   
+                   if(triagemFibra != undefined ){
+                       let indiceTriagemFibra = this.definirIndiceTriagemFibra(recordatorio);
+                       this.selectTriagem( 4, indiceTriagemFibra );
+                   }
+                   
+                   if(triagemLipidiosSaturados != undefined )    {
+                       let indiceTriagemLipidiosSaturados = this.definirIndiceTriagemLipidiosSaturados(recordatorio);
+                       this.selectTriagem( 2, indiceTriagemLipidiosSaturados );
+                   }
+                   
+                   if(triagemCarboidratoSimples != undefined ) {
+                       let indiceTriagemCarboidratoSimples = this.definirIndiceTriagemCarboidratoSimples(recordatorio);
+                       this.selectTriagem( 1, indiceTriagemCarboidratoSimples );
+                   }                   
                }               
            });         
     }
     
-    
+    selectTriagem( indexTriagem, indice ) {
+        let i: string = "indice" + indice + "_" + indexTriagem;
+        let p: string = "";
+        let print: boolean = true;
+
+        if ( $( "td[title=" + i + "]" ).css( "backgroundColor" ) != "transparent" ) {
+            print = false;
+        }
+        for ( let ii = 0; ii <= 4; ii++ ) {
+            p = "indice" + ii + "_" + indexTriagem;
+            $( "td[title=" + p + "]" ).css( "backgroundColor", "" );
+        }
+        if ( print ) 
+            $( "td[title=" + i + "]" ).css( "backgroundColor", "#D4D4D4" );
+    }
     
     loadNutricao( bool ) {
         if(bool)
@@ -795,9 +832,7 @@ export class AtendimentoFormComponent {
     }
     
     calcularPontuacaoQuestionario() {
-        if ( this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" ).getIndice() != -1 )
-            return;
-    
+        
         let soma: number = 0;
         if ( this.atendimento.getQuestionario() != undefined && this.atendimento.getQuestionario().getId() > 0 ) {
             this.atendimento.getQuestionario().getRespostas().forEach(r => {
@@ -810,26 +845,96 @@ export class AtendimentoFormComponent {
         this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "N07" )
             .setIndice(this.definirIndiceTriagemQuestionario(soma));
     }
-    
-    
-    //FALTA
     definirIndiceTriagemBE(recordatorio :Recordatorio) {   
         let somaVE = 0;
-        
-        recordatorio.getNe()
+        let BE = 0;
         recordatorio.getRefeicoes().forEach(x=>{
             x.getItens().forEach(i=> {
                 somaVE +=i.getVe();
                         });
         }); 
+        BE = somaVE - recordatorio.getNe();
         let indice: number = 0;
+        if(BE > 750 || BE < -750)
+            indice = 0;
+        else if (BE > 500 || BE <-500)
+            indice = 1;   
+        else if (BE > 0 || BE < 0)
+            indice = 2;
+        else if (BE = 0)
+            indice = 3;
+        
+        return indice;
+    }
+    
+    
+    definirIndiceTriagemCarboidratoSimples(recordatorio :Recordatorio) {   
+        
+        let somaCS = 0;
+        let somaVE = 0;
+        let vet16PCT = 0;
+        let vet13PCT = 0;
+        let vet10PCT = 0;
+        
+        
+        recordatorio.getRefeicoes().forEach(x=>{
+            x.getItens().forEach(i=> {
+                somaVE +=i.getVe();
+                if(i.getAlimento().getTipoCarboidrato()!= undefined && i.getAlimento().getTipoCarboidrato().includes("SIMPLES"))
+                    somaCS += (Util.treatDouble(i.getAlimento().getCho() * i.getQuantidade()));
+            });
+        });         
+        
+        vet16PCT = somaVE*0.16;
+        vet13PCT = somaVE*0.13;
+        vet10PCT =  somaVE*0.10;
+        
+        let indice: number = 0;
+        if(somaCS >= vet16PCT)
+            indice = 0;
+        else if (somaCS >= vet13PCT)  
+            indice = 1;   
+        else if (somaCS >= vet10PCT)
+            indice = 2;
+        else if (somaCS < vet10PCT)
+            indice = 3;
+        
+        return indice;
+    }
+    
+    definirIndiceTriagemLipidiosSaturados(recordatorio :Recordatorio) {   
+        let somaLS = 0;
+        let somaVE = 0;
+        let vet10PCT = 0;
+        let vet85PCT = 0;
+        let vet7PCT = 0;
+        
+        recordatorio.getRefeicoes().forEach(x=>{
+            x.getItens().forEach(i=> {
+                somaLS += (Util.treatDouble(i.getAlimento().getSaturada()) * Util.treatDouble(i.getQuantidade()));
+                somaVE +=i.getVe();
+                        });
+        }); 
+
+        vet10PCT = somaVE*0.1;
+        vet85PCT = somaVE*0.085;
+        vet7PCT =  somaVE*0.07;
+        
+        let indice: number = 0;
+        if(somaLS >= vet10PCT)
+            indice = 0;
+        else if (somaLS >= vet85PCT)  
+            indice = 1;   
+        else if (somaLS >= vet7PCT)
+            indice = 2;
+        else if (somaLS < vet7PCT)
+            indice = 3;
         
         return indice;
     }
     
     definirIndiceTriagemImc(imc) {
        let imcAux =  Util.treatDouble(imc);
-       
         let indice: number = 0;
         if ( imcAux >= 40 || imcAux <= 16)
             indice = 0;
@@ -933,12 +1038,15 @@ export class AtendimentoFormComponent {
     }
     
     permicaoEducacaoFisica(){
-        return (this.profissional.getEquipe().getAbreviacao() != 'EDF' || (this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
+        return (this.profissional.getEquipe().getAbreviacao() != 'EDF' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
                 && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA')));   
     }
     
-    lancandoInformacoes(){      
-        this.lancandoInformacao = this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA'); 
+    lancandoInformacoes(){
+        if(this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined)
+            this.lancandoInformacao = this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA'); 
+        else
+            this.lancandoInformacao = undefined;
     }
     
 }

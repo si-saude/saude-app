@@ -41,7 +41,7 @@ export class TriagemComponent {
         return "";
     }
 
-    selectTriagem( indexTriagem, indice ) {
+    public selectTriagem( indexTriagem, indice ) {
         let i: string = "indice" + indice + "_" + indexTriagem;
         let p: string = "";
         let print: boolean = true;

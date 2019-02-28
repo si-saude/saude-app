@@ -40,17 +40,27 @@
 						</select>
 					</fieldset>
 				</div>
-				<div class="input-field col s4">
+				<div class="input-field col s2">
 					<label for="padrao">Padrão (g)</label>
 					<input id="padrao" type="text" style="width: 100%;" required
 						maxlength="16" [(ngModel)]="alimento.padrao" numberMaskDirective=""
 						name="padrao">
 				</div>
-				<div class="input-field col s4">
+				<div class="input-field col s2">
 					<label for="energia">Energia (kcal)</label>
 					<input id="energia" type="text" style="width: 100%;"
 						name="energia" required numberMaskDirective=""
 						maxlength="16" [(ngModel)]="alimento.energia">
+				</div>
+				<div class="input-field col s4">
+					<fieldset>
+						<legend> Tipo Carboidrato </legend>
+						<select name="alimento.tipoCarboidrato" required 
+							class="browser-default" [(ngModel)]="alimento.tipoCarboidrato">
+							<option disabled selected value=undefined>Selecione um tipo</option>
+							<option *ngFor="let tipoCarboidrato of tiposCarboidratos" value="{{tipoCarboidrato}}">{{tipoCarboidrato}}</option>
+						</select>
+					</fieldset>
 				</div>
 			</div>
 			

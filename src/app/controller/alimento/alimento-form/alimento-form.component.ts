@@ -25,6 +25,7 @@ export class AlimentoFormComponent extends GenericFormComponent implements OnIni
     private alimento: Alimento;
     private itemRefeicao: ItemRefeicao;;
     private tipos: Array<string>;
+    private tiposCarboidratos: Array<string>;
     private medidaAlimentarAutocomplete: MedidaAlimentarDescricaoAutocomplete;
     private alimentoMedidaAlimentar: AlimentoMedidaAlimentar;
     private alimentoAutocomplete: AlimentoNomeAutocomplete;
@@ -38,6 +39,7 @@ export class AlimentoFormComponent extends GenericFormComponent implements OnIni
         this.alimento = new AlimentoBuilder().initialize( this.alimento );
         this.itemRefeicao = new ItemRefeicaoBuilder().initialize( this.itemRefeicao );
         this.tipos = new Array<string>();
+        this.tiposCarboidratos = new Array<string>();
         this.medidaAlimentarAutocomplete = new MedidaAlimentarDescricaoAutocomplete(
                 this.alimentoService.getMedidaAlimentarService());
         this.alimentoMedidaAlimentar = new AlimentoMedidaAlimentarBuilder().initialize(null);
@@ -63,6 +65,7 @@ export class AlimentoFormComponent extends GenericFormComponent implements OnIni
             } );
         
         this.getTipos();
+        this.getTiposCarboidratos();
     }
     
     getTipos() {
@@ -75,6 +78,15 @@ export class AlimentoFormComponent extends GenericFormComponent implements OnIni
             })
     }
     
+    getTiposCarboidratos() {
+        this.alimentoService.getTiposCarboidratos()
+            .then(res => {
+                this.tiposCarboidratos = Object.keys( res.json() ).sort();
+            })
+            .catch(error => {
+                this.catchConfiguration(error);
+            })
+    }
     ngOnDestroy() {
         this.inscricao.unsubscribe();
     }
