@@ -1271,8 +1271,7 @@ export class AtendimentoProafComponent {
              
             this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").forEach( afaf => {
                 if ( exit ) return;
-                sumMinutos += afaf.getTotalMinuto();
-                
+                sumMinutos += (afaf.getTotalMinuto() != undefined ? afaf.getTotalMinuto() : 0);    
                 if ( sumDias >= 5 && sumMinutos >= 150 )
                     naf = this.setNaf(naf, 3);
                 else if ( sumDias >= 5 || sumMinutos >= 150 )

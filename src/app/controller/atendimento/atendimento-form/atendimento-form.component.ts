@@ -94,6 +94,7 @@ export class AtendimentoFormComponent {
     private idEquipe: number;
     private timeout: Subscription;
     private lancandoInformacao : boolean = false;
+    private simNao: Array<string>;
     
     private nivelAtividadeFisica: string;
     
@@ -120,6 +121,7 @@ export class AtendimentoFormComponent {
         this.planejamentoUtil = new PlanejamentoUtil();
         this.triagemUtil = new TriagemUtil();
         this.fichaColetaUtil = new FichaColetaUtil();
+        this.simNao = new Array<string>();        
     }
 
     ngOnInit() {
@@ -171,7 +173,8 @@ export class AtendimentoFormComponent {
             this.router.navigate( ["/login"] );
         }
 
-        this.getLocalizacoes();        
+        this.getLocalizacoes();     
+        this.getSimNao();
     }
 
     getLocalizacoes() {
@@ -247,6 +250,9 @@ export class AtendimentoFormComponent {
                     this.atendimento = new AtendimentoBuilder().clone( res.json() );
                     if ( this.profissional.getEquipe().getAbreviacao() == 'NUT' ) {
                             this.tratamentoNutricao();
+                    }
+                    if ( this.profissional.getEquipe().getAbreviacao() == 'EDF' ) {
+                        this.tratamentoEDF();
                     }
                     
                     if ( this.atendimento.getTriagens() != undefined )
@@ -750,7 +756,34 @@ export class AtendimentoFormComponent {
                 })
         }
     }
+    tratamentoEDF(){
+        let triagemNvl = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "P01" );
+        if(this.atendimento.getAvaliacaoFisica()!= undefined && this.atendimento.getAvaliacaoFisica().getId() > 0){
+            if(this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas() == undefined || this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").length == 0){
+                if(triagemNvl != undefined){
+                    triagemNvl.setIndice(0);
+                    this.selectTriagem(0, 0);                    
+                    this.nivelAtividadeFisica = triagemNvl.getIndicadorSast().getIndice0().toUpperCase();
+                    let resposta: RespostaFichaColeta   = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+                    rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0020"); 
+                    resposta.setConteudo(this.simNao[0]);
+                    resposta.setItens(undefined);      
+                }
+            }
+        }
+        
+        let resposta: RespostaFichaColeta = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc => 
+        rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0006");   
+        if(resposta != null && resposta.getConteudo() == "" ){
+            let triagemDor = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "P03" );
+            triagemDor.setIndice(4);
+            this.selectTriagem(2, 4);   
+            
+            
+        }
     
+            
+    }
     tratamentoNutricao(){
         if ( this.atendimento.getQuestionario() != undefined &&
                 this.atendimento.getQuestionario().getId() > 0 ) {
@@ -784,26 +817,31 @@ export class AtendimentoFormComponent {
                    
                    if(triagemBE != undefined ){
                        let indiceTriagemBE = this.definirIndiceTriagemBE(recordatorio);
+                       triagemBE.setIndice(indiceTriagemBE);
                        this.selectTriagem( 0, indiceTriagemBE );
                    }
 
                    if(triagemSodio != undefined){
                        let indiceTriagemSodio = this.definirIndiceTriagemSodio(recordatorio);
+                       triagemSodio.setIndice(indiceTriagemSodio);
                        this.selectTriagem( 3, indiceTriagemSodio );
                    }
                    
                    if(triagemFibra != undefined ){
                        let indiceTriagemFibra = this.definirIndiceTriagemFibra(recordatorio);
+                       triagemFibra.setIndice(indiceTriagemFibra);
                        this.selectTriagem( 4, indiceTriagemFibra );
                    }
                    
                    if(triagemLipidiosSaturados != undefined )    {
                        let indiceTriagemLipidiosSaturados = this.definirIndiceTriagemLipidiosSaturados(recordatorio);
+                       triagemLipidiosSaturados.setIndice(indiceTriagemLipidiosSaturados);
                        this.selectTriagem( 2, indiceTriagemLipidiosSaturados );
                    }
                    
                    if(triagemCarboidratoSimples != undefined ) {
                        let indiceTriagemCarboidratoSimples = this.definirIndiceTriagemCarboidratoSimples(recordatorio);
+                       triagemCarboidratoSimples.setIndice(indiceTriagemCarboidratoSimples);
                        this.selectTriagem( 1, indiceTriagemCarboidratoSimples );
                    }                   
                }               
@@ -1047,6 +1085,15 @@ export class AtendimentoFormComponent {
             this.lancandoInformacao = this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA'); 
         else
             this.lancandoInformacao = undefined;
-    }
+    }    
     
+    getSimNao() {
+        this.atendimentoService.getUtilService().getGenericPath( 'status-sim-nao' )
+            .then( res => {
+                this.simNao = Object.keys( res.json() ).sort();
+            } )
+            .catch( error => {
+                console.log( error );
+            } )
+    }
 }

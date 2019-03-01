@@ -110,7 +110,6 @@ export class FichaColetaComponent{
         this.service.getEnums( "intensidade" )
         .then( res => {
             this.intensidades = Object.keys(res.json()).sort();
-            console.log(this.intensidades)
         })
         .catch(error => {
             console.log(error);
@@ -353,7 +352,6 @@ export class FichaColetaComponent{
             rFC.getId() == this.dadosElemento[1]["id"] );
         
         if ( !re.test(this.conteudo) ) {
-            console.log(this.pattern);
             this.errorPattern = "Caracteres incorretos.";
             return;
         } else this.errorPattern = "";
