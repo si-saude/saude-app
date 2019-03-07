@@ -117,6 +117,7 @@ import { RecordatorioGuard } from './guards/guards-child/recordatorio.guard';
 import { AtividadeFisicaGuard } from './guards/guards-child/atividade-fisica.guard';
 import { TarefaAgendaGuard } from'./guards/guards-child/tarefa-agenda.guard'
 import { PlanoAlimentarGuard } from './guards/guards-child/plano-alimentar.guard';
+import { AvaliacaoFisicaGuard } from './guards/guards-child/avaliacao-fisica.guard';
 
  
 @NgModule({
@@ -239,7 +240,8 @@ import { PlanoAlimentarGuard } from './guards/guards-child/plano-alimentar.guard
     AtividadeFisicaGuard,
     TarefaAgendaGuard,
     ReportExamesImportadosGuard,
-    PlanoAlimentarGuard
+    PlanoAlimentarGuard,
+    AvaliacaoFisicaGuard
   ],
   bootstrap: [ 
     AppComponent

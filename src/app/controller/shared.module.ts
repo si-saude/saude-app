@@ -98,6 +98,7 @@ import { QuestionarioConhecimentoAlimentarService } from './questionario-conheci
 import { RecordatorioService } from './recordatorio/recordatorio.service';
 import { PlanoAlimentarService } from './plano-alimentar/plano-alimentar.service';
 import { AtividadeFisicaService } from './atividade-fisica/atividade-fisica.service';
+import { AvaliacaoFisicaService } from './avaliacao-fisica/avaliacao-fisica.service';
 import { UtilService } from './../generics/util.service';
 
 @NgModule({
@@ -219,7 +220,8 @@ import { UtilService } from './../generics/util.service';
     RecordatorioService,
     PlanoAlimentarService,
     AtividadeFisicaService,
-    UtilService
+    UtilService,
+    AvaliacaoFisicaService
   ]
 })
 export class SharedModule { }

@@ -183,6 +183,7 @@
 		</a>
 		<div class="groups">
 			<a [routerLink]="['/reports/acompanhamento-sast']" *ngIf="checkPermissao('REPORT-ACOMPANHAMENTO-SAST')">Acompanhamento da SAST</a>
+			<a [routerLink]="['/avaliacao-fisica']" *ngIf="checkPermissao('AVALIACAO-FISICA_LISTAR')">Avaliação Física</a>
 			<a [routerLink]="['/reports/avaliacao-higiene-ocupacional']" *ngIf="checkPermissao('REPORT-AVALIACAO-HIGIENE-OCUPACIONAL')">
 				Avaliação de Higiene Ocupacional
 			</a>
