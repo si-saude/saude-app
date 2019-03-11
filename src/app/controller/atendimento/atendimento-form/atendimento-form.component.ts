@@ -1075,8 +1075,13 @@ export class AtendimentoFormComponent {
             this.timeout.unsubscribe();
     }
     
-    permicaoEducacaoFisica(){
+    permissaoEducacaoFisica(){
         return (this.profissional.getEquipe().getAbreviacao() != 'EDF' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
+                && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA')));   
+    }
+    
+    permissaoHO(){
+        return (this.profissional.getEquipe().getAbreviacao() != 'HIG' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
                 && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA')));   
     }
     

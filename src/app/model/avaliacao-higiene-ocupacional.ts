@@ -2,32 +2,43 @@ import { Localizacao } from './localizacao';
 import { Profissional } from './profissional';
 import { Empregado } from './empregado'
 import { CustomDate } from './../generics/utils/custom-date.util';
+import { Gerencia } from './gerencia'
+import { Funcao } from './funcao'
+import { Ghe } from './ghe'
 
 export class AvaliacaoHigieneOcupacional {
     private id: number;
-    private data: Date;
-    private local: Localizacao;
-    private tecnico: Profissional; 
     private inicio: Date;
     private fim: Date;
+    private profissional: Profissional; 
     private empregado: Empregado;
+    private gerencia: Gerencia;
+    private funcao: Funcao;
+    private ghe: Ghe;
+    private aprho: string;
     private brigada: boolean;
     private espacoConfinado: boolean;
+    private opEcolEcomp: boolean;
+    private fiscalSopSg: boolean;
+    private outros: boolean;
     private usoVoluntario: boolean;
+    private ensaioVedacaoRealizado: boolean;
     private ensaioVedacao: string;
     private naoBarbeado: boolean;
     private naoUtilizaMascara: boolean;
     private testeSensibilidadeInsatisfatorio: boolean;
-    private observacao: string;
     private concordaDescricaoAprhoGhe: boolean;
+    private hOconcordaDescricaoAprhoGhe: boolean;
     private naoConcordaAgentesRiscos: boolean;
     private naoConcordaAtividades: boolean;
     private naoConcordaFrequenciaExposicaoRiscos: boolean;
     private naoConcordaCategoriaRiscos: boolean;
     private motivoAnalisePreliminar: string;
+    private observacaoGHE: string;
+    private justificativaHO: string;
+    private observacao: string;
     private version: number;
 
-    private dataCustomDate: CustomDate = new CustomDate(this.data);
     private inicioCustomDate: CustomDate = new CustomDate(this.inicio);
     private fimCustomDate: CustomDate = new CustomDate(this.fim);
 
@@ -38,23 +49,13 @@ export class AvaliacaoHigieneOcupacional {
     public setId(id: number) {
         this.id = id;
     }
+    
+    public getProfissional() {
+        return this.profissional;
+    }
 
-    getData() {
-        this.data = this.dataCustomDate.getApiDate();
-        return this.data;
-    }
-    
-    setData(data: Date) {
-        this.dataCustomDate.setApiDate(data);
-        this.data = data;
-    }
-    
-    getDataCustomDate(){
-        return this.data;
-    }
-    
-    setDataCustomDate(dataCustomDate: CustomDate){
-        this.dataCustomDate = dataCustomDate;
+    public setProfissional(profissional: Profissional) {
+        this.profissional = profissional;
     }
     
     getInicio() {
@@ -91,22 +92,6 @@ export class AvaliacaoHigieneOcupacional {
     
     setFimCustomDate(fimCustomDate: CustomDate){
         this.fimCustomDate = fimCustomDate;
-    }
-
-    public getLocal() {
-        return this.local;
-    }
-
-    public setLocal(local: Localizacao) {
-        this.local = local;
-    }
-
-    public getTecnico() {
-        return this.tecnico;
-    }
-
-    public setTecnico(tecnico: Profissional) {
-        this.tecnico = tecnico;
     }
 
     public getEmpregado() {
@@ -236,5 +221,91 @@ export class AvaliacaoHigieneOcupacional {
     public setMotivoAnalisePreliminar(motivoAnalisePreliminar: string) {
         this.motivoAnalisePreliminar = motivoAnalisePreliminar;
     }
+    
+    public getGerencia() {
+        return this.gerencia;
+    }
+
+    public setGerencia(gerencia: Gerencia) {
+        this.gerencia = gerencia;
+    }
+    
+    public getFuncao() {
+        return this.funcao;
+    }
+
+    public setFuncao(funcao: Funcao) {
+        this.funcao = funcao;
+    }    
+    
+    public getGhe() {
+        return this.ghe;
+    }
+
+    public setGhe(ghe: Ghe) {
+        this.ghe = ghe;
+    }    
+    
+    public getAprho() {
+        return this.aprho;
+    }
+
+    public setAprho(aprho: string) {
+        this.aprho = aprho;
+    }
+    
+    public getFiscalSopSg() {
+        return this.fiscalSopSg;
+    }
+
+    public setFiscalSopSg(fiscalSopSg: boolean) {
+        this.fiscalSopSg = fiscalSopSg;
+    }
+    
+    public setOpEcolEcomp(opEcolEcomp: boolean) {
+        this.opEcolEcomp = opEcolEcomp;
+    }
+    
+    public getOpEcolEcomp() {
+        return this.opEcolEcomp;
+    }
+
+    public getOutros() {
+        return this.outros;
+    }
+    
+    public setOutros(outros: boolean) {
+        this.outros = outros;
+    }
+    
+    public getEnsaioVedacaoRealizado() {
+        return this.ensaioVedacaoRealizado;
+    }
+    
+    public setEnsaioVedacaoRealizado(ensaioVedacaoRealizado: boolean) {
+        this.ensaioVedacaoRealizado = ensaioVedacaoRealizado;
+    }
+    
+    public getObservacaoGHE() {
+        return this.observacaoGHE;
+    }
+
+    public setObservacaoGHE(observacaoGHE: string) {
+        this.observacaoGHE = observacaoGHE;
+    }   
+    public getHOconcordaDescricaoAprhoGhe() {
+        return this.hOconcordaDescricaoAprhoGhe;
+    }
+
+    public setHOconcordaDescricaoAprhoGhe(hOconcordaDescricaoAprhoGhe: boolean) {
+        this.hOconcordaDescricaoAprhoGhe = hOconcordaDescricaoAprhoGhe;
+    }
+    public getJustificativaHO() {
+        return this.justificativaHO;
+    }
+
+    public setJustificativaHO(justificativaHO: string) {
+        this.justificativaHO = justificativaHO;
+    }    
         
 }
