@@ -196,8 +196,6 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
             this.callToast("Por favor, preencha todos os campos corretamente.", 4000)
             return;
         }else{
-            let alimentos = new AlimentoBuilder().cloneList(this.itemNew.getAlimento().getSubstituicoes());
-            this.itemNew.setAlimentos(new AlimentoBuilder().cloneList(alimentos));
             this.refeicao.getItens().push(this.itemNew);
             this.itemNew = new ItemRefeicaoPlanoBuilder().initialize(null);
             $('#quantidade_item_plano').val(0);
@@ -231,9 +229,8 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
     }
     
     roundComparacao(valor) {
-        return Math.round(valor);
+        return Math.round(valor*100)/100;
     }
-    
     mostrarAlimentos(alimentos: Array<Alimento>){   
         this.modalAlimento.openModalAlimento(alimentos);
     }
@@ -256,4 +253,20 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
             this.catchConfiguration(error);
         })
     }
+    
+    sumNutriente(ref: RefeicaoPlano, campo) {
+        let sum: number = 0;   
+        ref.getItens().forEach(i => {
+            if ( i.getAlimento()[campo] != undefined ){
+                
+                let alimentoMedidaAlimentar = i.getAlimento().getAlimentoMedidaAlimentares().find(a => a.getMedidaAlimentar().getId() == i.getMedidaCaseira().getId());
+                if(alimentoMedidaAlimentar != undefined)
+                    sum += Util.calculoProporcao(i.getAlimento().getPadrao(), i.getAlimento()[campo], alimentoMedidaAlimentar.getQuantidade()) * Util.treatDouble(i.getQuantidade());
+                
+            }
+        })
+        return sum;
+    }
+    
+    
 }

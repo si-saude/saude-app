@@ -12,11 +12,9 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 	
 		<ul class="tabs" materialize="tabs">
-			<li class="tab col s4"><a RouterLinkActive="active"
+			<li class="tab col s6"><a RouterLinkActive="active"
 				href="#dadosGerais">Dados Gerais</a></li>
-			<li class="tab col s4"><a RouterLinkActive="active"
-				href="#substituicoes">Substituições</a></li>
-			<li class="tab col s4"><a RouterLinkActive="active"
+			<li class="tab col s6"><a RouterLinkActive="active"
 				href="#outrasInformacoes">Outras Informações</a></li>
 		</ul>
 
@@ -124,54 +122,7 @@
 
 			</div>
 			
-		</div>
-		<div id="substituicoes">
-			<div class="row">
-				<div class="input-field col s5">
-					<label for="alimento">Alimento</label> <input type="text"
-					materialize="autocomplete" autocomplete="off"
-					name="itemRefeicao.alimento.nome" 
-					[(ngModel)]="itemRefeicao.alimento.nome"
-					(blur)="alimentoAutocomplete.getAutocomplete().getObj($event,itemRefeicao,'setAlimento','getNome')"
-					(ngModelChange)="alimentoAutocomplete.getAutocomplete().getList(itemRefeicao.alimento, 'getNome');"
-					(keydown.enter)="alimentoAutocomplete.getAutocomplete().pressEnter($event,itemRefeicao,'setAlimento','getNome');"
-					[materializeParams]="alimentoAutocomplete.getAutocomplete().getObjAutoComplete()">
-				</div>	
-				<div class="input-field col s2" style="margin-top: 30px;">
-					<a
-						class="btn-floating waves-effect waves-light green btn-add-autocomplete"
-						(click)="addAlimento()"> <i
-						class="material-icons center-icon">add</i>
-					</a>
-				</div>
-			</div>
-			<div class="row">
-				<div class="table-empregados">
-					<table class="striped">
-						<thead>
-							<tr class="row col s12">
-								<th class="col s11">Nome</th>
-								<th class="col s1"></th>
-							</tr>
-						</thead>
-						<div>
-							<div
-								*ngFor="let substituicao of alimento.substituicoes; let i = index">
-								<tbody class="col s12">
-									<tr class="col s12">
-										<td class="col s11">{{substituicao.nome}}</td>
-										<td class="col s1 btn-removerSub"><a
-											(click)="removeAlimento(i)"
-											[ngStyle]="{'cursor': 'pointer'}"><i
-												class="material-icons">delete</i></a></td>
-									</tr>
-								</tbody>
-							</div>
-						</div>
-					</table>
-				</div>
-			</div>	
-		</div>
+		</div>		
 		<div id="outrasInformacoes">	
 			
 			<div class="row">

@@ -437,7 +437,7 @@ export class AtestadoFormComponent extends GenericFormComponent implements OnIni
             this.agendamentoFilter.setEquipe(new EquipeFilter());
             this.agendamentoFilter.getEquipe().setId(this.atestado.getTarefa().getEquipe().getId());
             this.modalTarefa.callModalTarefa(this.agendamentoFilter);
-            this.modalTarefa.openModalTarefa();
+//            this.modalTarefa.openModalTarefa();
         }
     }
     

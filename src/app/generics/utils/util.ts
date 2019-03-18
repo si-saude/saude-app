@@ -117,6 +117,13 @@ export class Util {
         anchor.click();
     }
     
+    public static calculoProporcao(valorT, gramaT, valorP){        
+        
+        let proporcao = ((Util.treatDouble(valorP)*Util.treatDouble(gramaT))/Util.treatDouble(valorT));
+        
+        return proporcao
+         
+     }
     
 
 }

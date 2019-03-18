@@ -30,7 +30,7 @@
 				<tbody class="col s12">
 					<tr class="col s12">
 						<td class="col s3" style="padding: 0;">{{planoAlimentar.tmb}}</td>
-						<td class="col s3" style="padding: 0;">{{somatorioVe}}</td>
+						<td class="col s3" style="padding: 0;">{{roundComparacao(somatorioVe)}}</td>
 						<td class="col s3" style="padding: 0;">{{planoAlimentar.ne}}</td>
 						<td class="col s3" style="padding-left: 4%;">{{roundComparacao(planoAlimentar.ne - somatorioVe)}}</td>
 					</tr>
@@ -46,10 +46,12 @@
 			</div>
 		</div>
 		<ul class="tabs" materialize="tabs">
-			<li class="tab col s6"><a RouterLinkActive="active"
+			<li class="tab col s4"><a RouterLinkActive="active"
 				href="#dadosGerais">Dados Gerais</a></li>
-			<li class="tab col s6"><a RouterLinkActive="active"
+			<li class="tab col s4"><a RouterLinkActive="active"
 				href="#todasRefeicoes">Todas as Refeições</a></li>
+			<li class="tab col s4"><a RouterLinkActive="active"
+				href="#resumoNutrientes">Resumo de Nutrientes</a></li>
 		</ul>
 		
 		<div id="dadosGerais">
@@ -99,7 +101,6 @@
 										<th class="col s1">Medida</th>
 										<th class="col s2">Quantidade</th>
 										<th class="col s1">VE</th>
-										<th class="col s2">Sugestões</th>
 										<th class="col s2">Observacao</th>
 										<th class="col s1">Remover</th>
 									</tr>
@@ -111,10 +112,6 @@
 											<td class="col s1 medida">{{it.medidaCaseira.descricao}}</td>
 											<td class="col s2 quantidade">{{it.quantidade}}</td>
 											<td id="{{i}}" class="col s1 ve">{{it.ve | number}}</td>
-											<td class="col s2"><a class="col s1"
-												style="cursor: pointer" (click)="mostrarAlimentos(it.alimentos)">
-													<i class="material-icons">visibility</i>
-											</a></td>
 											<td class="col s2"><a class="col s1"
 												style="cursor: pointer" (click)="mostrarObservacao(it)">
 													<i class="material-icons">rate_review</i>
@@ -173,6 +170,95 @@
 						<span style="margin-left:2%"><b>Total:</b></span>
 						<span style="margin-left:85%"><b>{{refeicao.somatorio | number}}</b></span>
 					</p>
+				</table>
+			</div>
+		</div>
+		<div id="resumoNutrientes">
+			<div class="col s12" *ngFor="let ref of planoAlimentar.refeicoes; let r = index">
+				<p><b>{{ref.nome}}</b></p>
+				<table class="tableResumo">
+					<tr class="col s12">
+						<th class="col s3 linhaResumo" id="proteina">Proteina (g)</th>
+						<th class="col s3 linhaResumo" id="gordSaturada">Gordura Saturada (g)</th>
+						<th class="col s3 linhaResumo" id="gordMonoinsaturada">Gordura Monoinsaturada (g)</th>
+						<th class="col s3 linhaResumo" id="gordPoliinsaturada">Gordura Poliinsaturada (g)</th>
+					</tr>
+					<tr class="col s12">
+						<td class="col s3 linhaResumo" headers="proteina">{{sumNutriente(ref, "proteina") | number}}</td>
+						<td class="col s3 linhaResumo" headers="saturada">{{sumNutriente(ref, "saturada") | number}}</td>
+						<td class="col s3 linhaResumo" headers="monoinsaturada">{{sumNutriente(ref, "monoinsaturada") | number}}</td>
+						<td class="col s3 linhaResumo" headers="poliinsaturada">{{sumNutriente(ref, "poliinsaturada") | number}}</td>
+					</tr>
+					<tr class="col s12">
+						<th class="col s3 linhaResumo" id="lipidios">Lipídeos (g)</th>
+						<th class="col s3 linhaResumo" id="omega3">Ômega 3</th>
+						<th class="col s3 linhaResumo" id="colesterol">Colesterol (mg)</th>
+						<th class="col s3 linhaResumo" id="carboidratos">Carboidratos (g)</th>						
+					</tr>
+					<tr class="col s12">
+						<td class="col s3 linhaResumo" headers="lipideos">{{sumNutriente(ref, "lipideos") | number}}</td>
+						<td class="col s3 linhaResumo" headers="omega3">{{sumNutriente(ref, "omega3") | number}}</td>
+						<td class="col s3 linhaResumo" headers="colesterol">{{sumNutriente(ref, "colesterol") | number}}</td>
+						<td class="col s3 linhaResumo" headers="carboidratos">{{sumNutriente(ref, "cho") | number}}</td>
+					</tr>
+					<tr class="col s12">
+						<th class="col s3 linhaResumo" id="Fibra">Fibra (g)</th>
+						<th class="col s3 linhaResumo" id="calcio">Cálcio (mg)</th>
+						<th class="col s3 linhaResumo" id="magnesio">Magnésio (g)</th>
+						<th class="col s3 linhaResumo" id="manganes">Manganês (g)</th>
+					</tr>
+					<tr class="col s12">
+						<td class="col s3 linhaResumo" headers="Fibra">{{sumNutriente(ref, "fibra") | number}}</td>	
+						<td class="col s3 linhaResumo" headers="calcio">{{sumNutriente(ref, "calcio") | number}}</td>
+						<td class="col s3 linhaResumo" headers="magnesio">{{sumNutriente(ref, "mg") | number}}</td>
+						<td class="col s3 linhaResumo" headers="manganes">{{sumNutriente(ref, "mn") | number}}</td>						
+					</tr>
+					<tr class="col s12">
+						<th class="col s3 linhaResumo" id="fosforo">Fósforo (mg)</th>
+						<th class="col s3 linhaResumo" id="ferro">Ferro (mg)</th>
+						<th class="col s3 linhaResumo" id="sodio">Sódio (mg)</th>
+						<th class="col s3 linhaResumo" id="potassio">Potássio (mg)</th>										
+					</tr>
+					<tr class="col s12">
+						<td class="col s3 linhaResumo" headers="fosforo">{{sumNutriente(ref, "p") | number}}</td>
+						<td class="col s3 linhaResumo" headers="ferro">{{sumNutriente(ref, "ferro") | number}}</td>
+						<td class="col s3 linhaResumo" headers="sodio">{{sumNutriente(ref, "sodio") | number}}</td>
+						<td class="col s3 linhaResumo" headers="potassio">{{sumNutriente(ref, "potassio") | number}}</td>																
+					</tr>
+					<tr class="col s12">
+						<th class="col s3 linhaResumo" id="cobre">Cobre (mg)</th>		
+						<th class="col s3 linhaResumo" id="zinco">Zinco (mg)</th>
+						<th class="col s3 linhaResumo" id="retinol">Retinol (mg)</th>
+						<th class="col s3 linhaResumo" id="tiamina">Tiamina (mg)</th>												
+					</tr>
+					<tr class="col s12">
+						<td class="col s3 linhaResumo" headers="cobre">{{sumNutriente(ref, "cobre") | number}}</td>	
+						<td class="col s3 linhaResumo" headers="zinco">{{sumNutriente(ref, "zinco") | number}}</td>
+						<td class="col s3 linhaResumo" headers="retinol">{{sumNutriente(ref, "retinol") | number}}</td>
+						<td class="col s3 linhaResumo" headers="tiamina">{{sumNutriente(ref, "tiamina") | number}}</td>											
+					</tr>
+					<tr class="col s12">
+						<th class="col s3 linhaResumo" id="riboflavina">Riboflavina (mg)</th>
+						<th class="col s3 linhaResumo" id="piridoxina">Piridoxina (mg)</th>
+						<th class="col s3 linhaResumo" id="niacina">Niacina (mg)</th>
+						<th class="col s3 linhaResumo" id="vitaminaC">Vitamina C (mg)</th>						
+					</tr>
+					<tr class="col s12">
+						<td class="col s3 linhaResumo" headers="riboflavina">{{sumNutriente(ref, "riboflavina") | number}}</td>	
+						<td class="col s3 linhaResumo" headers="piridoxina">{{sumNutriente(ref, "piridoxina") | number}}</td>
+						<td class="col s3 linhaResumo" headers="niacina">{{sumNutriente(ref, "niacina") | number}}</td>
+						<td class="col s3 linhaResumo" headers="vitaminaC">{{sumNutriente(ref, "vitc") | number}}</td>						
+					</tr>
+					<tr class="col s12">
+						<th class="col s3 linhaResumo" id="vitaminaD">Vitamina D (mg)</th>
+						<th class="col s3 linhaResumo" id="omega6">Ômega 6 (mg)</th>
+						<th class="col s3 linhaResumo" id="vitaminaE">Vitamina E(mg)</th>
+					</tr>
+					 <tr class="col s12">
+					    <td class="col s3 linhaResumo" headers="vitaminaD">{{sumNutriente(ref, "vitd") | number}}</td>
+						<td class="col s3 linhaResumo" headers="omega6">{{sumNutriente(ref, "omega6") | number}}</td>
+						<td class="col s3 linhaResumo" headers="vitaminaE">{{sumNutriente(ref, "vite") | number}}</td>
+					</tr>
 				</table>
 			</div>
 		</div>

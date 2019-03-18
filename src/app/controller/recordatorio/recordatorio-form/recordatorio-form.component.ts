@@ -76,9 +76,9 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
                             this.showPreload = false;
                             let idAtendimento = res.json()['atendimento']['id'];
                             this.recordatorio = new RecordatorioBuilder().clone( res.json() );
-                            this.recordatorio.getAtendimento().setId(idAtendimento);
-                            
+                            this.recordatorio.getAtendimento().setId(idAtendimento);                            
                             this.recordatorio.getRefeicoes().forEach(r => this.sumVe(r));
+                            
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -143,7 +143,6 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
         let idAtendimento = this.recordatorio.getAtendimento()["id"];  
         this.recordatorio = new RecordatorioBuilder().clone( this.recordatorio );  
         this.recordatorio.getAtendimento().setId(idAtendimento);
-        
         super.save( this.recordatorio );
     }
     
@@ -212,17 +211,23 @@ export class RecordatorioFormComponent extends GenericFormComponent implements O
     }
     
     roundComparacao(valor) {
-        return Math.round(valor);
+        return Math.round(valor*100)/100;
     }
     
     sumNutriente(ref: Refeicao, campo) {
         let sum: number = 0;   
-   
         ref.getItens().forEach(i => {
             if ( i.getAlimento()[campo] != undefined ){
-                sum += Number(Number(Util.treatDouble(i.getAlimento()[campo]))*Util.treatDouble(i.getQuantidade()));
+                
+                let alimentoMedidaAlimentar = i.getAlimento().getAlimentoMedidaAlimentares().find(a => a.getMedidaAlimentar().getId() == i.getMedidaCaseira().getId());
+                if(alimentoMedidaAlimentar != undefined)
+                    sum += Util.calculoProporcao(i.getAlimento().getPadrao(), i.getAlimento()[campo], alimentoMedidaAlimentar.getQuantidade()) * Util.treatDouble(i.getQuantidade());
+                
             }
         })
         return sum;
     }
+    
+
+    
 }

@@ -493,6 +493,12 @@ export class AtendimentoFormComponent {
                 return;
             }
             
+            if ( !this.verifyAvaliacaoFisica(this.atendimento.getAvaliacaoFisica())) {
+                this.toastParams = ["Por favor, preencha os campos do Atividade Fisica exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
             this.atendimentoService.liberar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Empregado liberado", 4000];
@@ -817,32 +823,47 @@ export class AtendimentoFormComponent {
                    
                    if(triagemBE != undefined ){
                        let indiceTriagemBE = this.definirIndiceTriagemBE(recordatorio);
-                       triagemBE.setIndice(indiceTriagemBE);
+                       let indice  = 0;
+                       indice = indiceTriagemBE;
+                       this.selectTriagem( 0, 0);
                        this.selectTriagem( 0, indiceTriagemBE );
+                       triagemBE.setIndice(indice);
                    }
 
                    if(triagemSodio != undefined){
                        let indiceTriagemSodio = this.definirIndiceTriagemSodio(recordatorio);
-                       triagemSodio.setIndice(indiceTriagemSodio);
+                       let indice  = 0;
+                       indice = indiceTriagemSodio;
+                       this.selectTriagem( 3, 0 );
                        this.selectTriagem( 3, indiceTriagemSodio );
+                       triagemSodio.setIndice(indice);
                    }
                    
                    if(triagemFibra != undefined ){
                        let indiceTriagemFibra = this.definirIndiceTriagemFibra(recordatorio);
-                       triagemFibra.setIndice(indiceTriagemFibra);
+                       let indice  = 0;
+                       indice = indiceTriagemFibra;
+                       this.selectTriagem( 4, 0 );
                        this.selectTriagem( 4, indiceTriagemFibra );
+                       triagemFibra.setIndice(indice);
                    }
                    
                    if(triagemLipidiosSaturados != undefined )    {
                        let indiceTriagemLipidiosSaturados = this.definirIndiceTriagemLipidiosSaturados(recordatorio);
-                       triagemLipidiosSaturados.setIndice(indiceTriagemLipidiosSaturados);
+                       let indice  = 0;
+                       indice = indiceTriagemLipidiosSaturados;
+                       this.selectTriagem( 2, 0 );
                        this.selectTriagem( 2, indiceTriagemLipidiosSaturados );
+                       triagemLipidiosSaturados.setIndice(indice);
                    }
                    
                    if(triagemCarboidratoSimples != undefined ) {
                        let indiceTriagemCarboidratoSimples = this.definirIndiceTriagemCarboidratoSimples(recordatorio);
-                       triagemCarboidratoSimples.setIndice(indiceTriagemCarboidratoSimples);
+                       let indice  = 0;
+                       indice = indiceTriagemCarboidratoSimples;
+                       this.selectTriagem( 1, 0 );
                        this.selectTriagem( 1, indiceTriagemCarboidratoSimples );
+                       triagemCarboidratoSimples.setIndice(indice);
                    }                   
                }               
            });         
@@ -904,8 +925,6 @@ export class AtendimentoFormComponent {
         
         return indice;
     }
-    
-    
     definirIndiceTriagemCarboidratoSimples(recordatorio :Recordatorio) {   
         
         let somaCS = 0;
@@ -918,8 +937,11 @@ export class AtendimentoFormComponent {
         recordatorio.getRefeicoes().forEach(x=>{
             x.getItens().forEach(i=> {
                 somaVE +=i.getVe();
-                if(i.getAlimento().getTipoCarboidrato()!= undefined && i.getAlimento().getTipoCarboidrato().includes("SIMPLES"))
-                    somaCS += (Util.treatDouble(i.getAlimento().getCho() * i.getQuantidade()));
+                if( i.getAlimento().getCho() != undefined && i.getAlimento().getTipoCarboidrato()!= undefined && i.getAlimento().getTipoCarboidrato().includes("SIMPLES")
+                       && i.getAlimento().getAlimentoMedidaAlimentares() != undefined && i.getAlimento().getAlimentoMedidaAlimentares().length > 0){                
+                    let alimentoMedidaAlimentar = i.getAlimento().getAlimentoMedidaAlimentares().find(a => a.getMedidaAlimentar().getId() == i.getMedidaCaseira().getId());
+                    somaCS += (Util.calculoProporcao(i.getAlimento().getPadrao(), i.getAlimento().getCho(), alimentoMedidaAlimentar.getQuantidade()) * Util.treatDouble( i.getQuantidade())); 
+                }
             });
         });         
         
@@ -949,16 +971,20 @@ export class AtendimentoFormComponent {
         
         recordatorio.getRefeicoes().forEach(x=>{
             x.getItens().forEach(i=> {
-                somaLS += (Util.treatDouble(i.getAlimento().getSaturada()) * Util.treatDouble(i.getQuantidade()));
-                somaVE +=i.getVe();
-                        });
+                if(i.getAlimento().getSaturada() != undefined && i.getAlimento().getAlimentoMedidaAlimentares() != undefined && i.getAlimento().getAlimentoMedidaAlimentares().length > 0){
+                    let alimentoMedidaAlimentar = i.getAlimento().getAlimentoMedidaAlimentares().find(a => a.getMedidaAlimentar().getId() == i.getMedidaCaseira().getId());
+                    somaLS += (Util.calculoProporcao(i.getAlimento().getPadrao(), i.getAlimento().getSaturada(), alimentoMedidaAlimentar.getQuantidade()) * Util.treatDouble(i.getQuantidade()));
+                    somaVE +=i.getVe();   
+                }
+            });
         }); 
 
         vet10PCT = somaVE*0.1;
         vet85PCT = somaVE*0.085;
         vet7PCT =  somaVE*0.07;
         
-        let indice: number = 0;
+        
+        let indice: number = 0; 
         if(somaLS >= vet10PCT)
             indice = 0;
         else if (somaLS >= vet85PCT)  
@@ -1007,10 +1033,14 @@ export class AtendimentoFormComponent {
         let somaSodio = 0;
         recordatorio.getRefeicoes().forEach(x=>{
             x.getItens().forEach(i=> {
-                if(i.getAlimento().getSodio() != undefined)
-                    somaSodio += Util.treatDouble(i.getAlimento().getSodio()) * Util.treatDouble(i.getQuantidade());
+                if(i.getAlimento().getSodio() != undefined && i.getAlimento().getAlimentoMedidaAlimentares() != undefined && i.getAlimento().getAlimentoMedidaAlimentares().length > 0){
+                    let alimentoMedidaAlimentar = i.getAlimento().getAlimentoMedidaAlimentares().find(a => a.getMedidaAlimentar().getId() == i.getMedidaCaseira().getId());
+                    somaSodio += Util.calculoProporcao(i.getAlimento().getPadrao(), i.getAlimento().getSodio(), alimentoMedidaAlimentar.getQuantidade()) * Util.treatDouble(i.getQuantidade());
+                }
             });
         }); 
+        
+        somaSodio = somaSodio/1000;
         
         if ( somaSodio > 5)
             indice = 0;
@@ -1029,8 +1059,10 @@ export class AtendimentoFormComponent {
         let somaFibra = 0;
         recordatorio.getRefeicoes().forEach(x=>{
             x.getItens().forEach(i=> {
-                if(i.getAlimento().getFibra() != undefined)
-                    somaFibra += Util.treatDouble(i.getAlimento().getFibra()) * Util.treatDouble(i.getQuantidade());                   
+                if(i.getAlimento().getFibra() != undefined && i.getAlimento().getAlimentoMedidaAlimentares() != undefined && i.getAlimento().getAlimentoMedidaAlimentares().length > 0){
+                    let alimentoMedidaAlimentar = i.getAlimento().getAlimentoMedidaAlimentares().find(a => a.getMedidaAlimentar().getId() == i.getMedidaCaseira().getId());
+                    somaFibra += Util.calculoProporcao(i.getAlimento().getPadrao(), i.getAlimento().getFibra(), alimentoMedidaAlimentar.getQuantidade()) * Util.treatDouble(i.getQuantidade());                   
+                }
             });
         }); 
         

@@ -31,6 +31,7 @@ export class ModalTarefaSimpleComponent {
         this.tarefaService.list( tarefaFilter )
             .then( res => {
                 this.arrayTarefa = new TarefaBuilder().cloneList( res.json().list );
+                this.openModalTarefa();
             } )
             .catch( error => {
                 console.log( "Erro ao buscar a Tarefa" );

@@ -74,10 +74,16 @@ export class QuestionarioConhecimentoAlimentarFormComponent extends GenericFormC
     }
     
     save() {
-        let idAtendimento = this.questionario.getAtendimento().getId();
-        this.questionario = new QuestionarioConhecimentoAlimentarBuilder().clone( this.questionario );
-        this.questionario.getAtendimento().setId(idAtendimento);
-        super.save( this.questionario );
+       
+        if(this.questionario.getRespostas().filter(x=> x.getItem() == undefined || x.getItem().getCerto() == undefined).length > 0)
+            this.processReturn( false, "Responda todas as perguntas");
+        else{
+            let idAtendimento = this.questionario.getAtendimento().getId();
+            this.questionario = new QuestionarioConhecimentoAlimentarBuilder().clone( this.questionario );
+            this.questionario.getAtendimento().setId(idAtendimento);
+            super.save( this.questionario );            
+        }
+        
     }
     
     ngOnDestroy() {
