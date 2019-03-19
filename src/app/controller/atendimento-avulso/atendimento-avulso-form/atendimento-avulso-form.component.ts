@@ -66,7 +66,6 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         this.fichaColetaUtil = new FichaColetaUtil();
         this.planejamentoUtil = new PlanejamentoUtil();
         this.triagemUtil = new TriagemUtil();
-        this.atendimentoCarregado = false;
     }
 
     ngOnInit() {
@@ -146,16 +145,15 @@ export class AtendimentoAvulsoFormComponent extends GenericFormComponent impleme
         }     
     }
     carregarComplementoAtendimento(){ 
-       this.atendimentoCarregado = true;
         this.atendimento.getTarefa().setResponsavel(new ProfissionalSaudeBuilder().clone(this.profissional));
         this.showPreload = true;
         this.atendimentoService.getComplementoAtendimentoAvulso( new AtendimentoBuilder().clone( this.atendimento ) )
           .then( res => {
               this.atendimento = new AtendimentoBuilder().clone( res.json() );
               this.showPreload = false;
+              this.atendimentoCarregado = true;
           } )
           .catch( error => {
-              console.log(error);
               this.processReturn( false, error );
           } )
         
