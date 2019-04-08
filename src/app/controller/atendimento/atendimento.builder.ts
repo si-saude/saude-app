@@ -14,13 +14,16 @@ import { Recordatorio } from './../../model/recordatorio';
 import { RecordatorioBuilder } from './../recordatorio/recordatorio.builder';
 import { AvaliacaoFisica } from './../../model/avaliacao-fisica';
 import { AvaliacaoFisicaBuilder } from './../avaliacao-fisica/avaliacao-fisica.builder';
+import { AvaliacaoHigieneOcupacionalBuilder } from './../avaliacao-higiene-ocupacional/avaliacao-higiene-ocupacional.builder';
 import { GenericBuilder } from './../../generics/generic.builder';
- 
+import { AvaliacaoHigieneOcupacional } from './../../model/avaliacao-higiene-ocupacional';
+
 export class AtendimentoBuilder extends GenericBuilder {
 
     initialize( atendimento: Atendimento ) {
         atendimento = new Atendimento();
 
+        atendimento.setAvaliacaoHigieneOcupacional(new AvaliacaoHigieneOcupacionalBuilder().initialize(new AvaliacaoHigieneOcupacional()));
         atendimento.setAso(new AsoBuilder().initialize(new Aso()));
         atendimento.setFilaAtendimentoOcupacional(new FilaAtendimentoOcupacionalBuilder().initialize(new FilaAtendimentoOcupacional()));
         atendimento.setFilaEsperaOcupacional(new FilaEsperaOcupacionalBuilder().initialize(new FilaEsperaOcupacional()));
@@ -83,6 +86,13 @@ export class AtendimentoBuilder extends GenericBuilder {
                 new AvaliacaoFisicaBuilder().clone(this.getValue(atendimento,"getAvaliacaoFisica")));
         } else {
             cloneAtendimento.setAvaliacaoFisica(undefined);
+        }
+        
+        if (this.getValue(atendimento, "getAvaliacaoHigieneOcupacional") !== undefined) { 
+            cloneAtendimento.setAvaliacaoHigieneOcupacional(
+                new AvaliacaoHigieneOcupacionalBuilder().clone(this.getValue(atendimento,"getAvaliacaoHigieneOcupacional")));
+        } else {
+            cloneAtendimento.setAvaliacaoHigieneOcupacional(undefined);
         }
         
         return cloneAtendimento;

@@ -10,15 +10,13 @@
 
 <div class="row form-container">
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
+	
 
-		
-
-		<input id="id" name="id" type="hidden" [(ngModel)]="avaliacaoHigieneOcupacional.id"> 
-		<input id="version" name="version" type="hidden" [(ngModel)]="avaliacaoHigieneOcupacional.version">
-
-		<div class="mensagem">
-			<app-mensagem-form *ngIf="verifyError" [color]="colorError" [msg]="msgError"></app-mensagem-form>
+		<div *ngIf="(atendimento.avaliacaoHigieneOcupacional != undefined)"> 
+			<app-informacao-avaliacao-higiene-ocupacional [service]="avaliacaoHigieneOcupacionalService"
+				[atendimento]="atendimento"></app-informacao-avaliacao-higiene-ocupacional>
 		</div>
+
 
 		<div class='row row-btns'>
 			<div class="col s6">

@@ -6,8 +6,9 @@ import { GlobalVariable } from './../../global';
 import { AvaliacaoHigieneOcupacional } from './../../model/avaliacao-higiene-ocupacional';
 import { AvaliacaoHigieneOcupacionalFilter } from './avaliacao-higiene-ocupacional.filter';
 import { UsuarioService } from './../usuario/usuario.service';
+import { AtendimentoService } from './../atendimento/atendimento.service';
 import { ProfissionalSaudeService } from './../profissional-saude/profissional-saude.service';
-import { LocalizacaoService } from './../localizacao/localizacao.service';
+import { LocalizacaoService } from './../localizacao/localizacao.service'
 import { EmpregadoService } from './../empregado/empregado.service';
 import { GenericService } from './../../generics/generic.service';
 
@@ -18,6 +19,7 @@ export class AvaliacaoHigieneOcupacionalService extends GenericService {
             private usuarioService: UsuarioService,
             private profissionalService: ProfissionalSaudeService,
             private localizacaoService: LocalizacaoService,
+            private atendimentoService:AtendimentoService,
             private empregadoService: EmpregadoService ) { 
         super(http,router,"avaliacao-higiene-ocupacional");
     }
@@ -45,6 +47,21 @@ export class AvaliacaoHigieneOcupacionalService extends GenericService {
             .toPromise();
     }
     
+    
+    getTipoRespiradores() {
+        let urlPrazo = GlobalVariable.BASE_API_URL + "/generic/tipo-respirador";
+        return this.http
+            .get( urlPrazo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    } 
+    
+    getTamanhoRespiradores() {
+        let urlPrazo = GlobalVariable.BASE_API_URL + "/generic/tamanho-respirador";
+        return this.http
+            .get( urlPrazo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    } 
+    
     getEmpregadoService() {
         return this.empregadoService;
     }
@@ -56,4 +73,18 @@ export class AvaliacaoHigieneOcupacionalService extends GenericService {
             .toPromise();
     }
     
-}
+    getAvaliacaoAtendimento(id) { 
+        let urlAvaliacaoAtendimento =  this.URL + "/get-avaliacao-atendimento";
+        return this.http
+            .get( urlAvaliacaoAtendimento + "?id=" + id, { headers: this.headers } )
+            .toPromise();
+    }    
+    
+    getRelatorioAvaliacaoHo( atendimento ) {
+        return this.atendimentoService.getRelatorioAvaliacaoHo(atendimento);
+    }
+    
+    getRelatorioEnsaioVedacao( atendimento ) {
+        return this.atendimentoService.getRelatorioEnsaioVedacao(atendimento);
+    }
+ }

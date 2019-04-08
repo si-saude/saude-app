@@ -3,8 +3,9 @@ import { Profissional } from './profissional';
 import { Empregado } from './empregado'
 import { CustomDate } from './../generics/utils/custom-date.util';
 import { Gerencia } from './gerencia'
-import { Funcao } from './funcao'
+import { Cargo } from './cargo'
 import { Ghe } from './ghe'
+import { QuestionarioVedacaoMascara } from './questionario-vedacao-mascara'
 
 export class AvaliacaoHigieneOcupacional {
     private id: number;
@@ -13,9 +14,9 @@ export class AvaliacaoHigieneOcupacional {
     private profissional: Profissional; 
     private empregado: Empregado;
     private gerencia: Gerencia;
-    private funcao: Funcao;
+    private cargo: Cargo;
     private ghe: Ghe;
-    private aprho: string;
+    private questionarioVedacaoMascara: QuestionarioVedacaoMascara;
     private brigada: boolean;
     private espacoConfinado: boolean;
     private opEcolEcomp: boolean;
@@ -94,6 +95,14 @@ export class AvaliacaoHigieneOcupacional {
         this.fimCustomDate = fimCustomDate;
     }
 
+    public getQuestionarioVedacaoMascara() {
+        return this.questionarioVedacaoMascara;
+    }
+
+    public setQuestionarioVedacaoMascara(questionarioVedacaoMascara: QuestionarioVedacaoMascara) {
+        this.questionarioVedacaoMascara = questionarioVedacaoMascara;
+    }
+    
     public getEmpregado() {
         return this.empregado;
     }
@@ -230,12 +239,12 @@ export class AvaliacaoHigieneOcupacional {
         this.gerencia = gerencia;
     }
     
-    public getFuncao() {
-        return this.funcao;
+    public getCargo() {
+        return this.cargo;
     }
 
-    public setFuncao(funcao: Funcao) {
-        this.funcao = funcao;
+    public setCargo(cargo: Cargo) {
+        this.cargo = cargo;
     }    
     
     public getGhe() {
@@ -245,14 +254,6 @@ export class AvaliacaoHigieneOcupacional {
     public setGhe(ghe: Ghe) {
         this.ghe = ghe;
     }    
-    
-    public getAprho() {
-        return this.aprho;
-    }
-
-    public setAprho(aprho: string) {
-        this.aprho = aprho;
-    }
     
     public getFiscalSopSg() {
         return this.fiscalSopSg;

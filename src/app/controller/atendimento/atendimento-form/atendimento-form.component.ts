@@ -15,6 +15,7 @@ import { Atendimento } from './../../../model/atendimento';
 import { Usuario } from './../../../model/usuario';
 import { Aso } from './../../../model/aso';
 import { AvaliacaoFisica } from './../../../model/avaliacao-fisica';
+import { AvaliacaoHigieneOcupacional } from './../../../model/avaliacao-higiene-ocupacional';
 import { Recordatorio } from './../../../model/recordatorio';
 import { RecordatorioBuilder } from './../../recordatorio/recordatorio.builder';
 import { AtendimentoFilter } from './../../atendimento/atendimento.filter';
@@ -253,6 +254,10 @@ export class AtendimentoFormComponent {
                     }
                     if ( this.profissional.getEquipe().getAbreviacao() == 'EDF' ) {
                         this.tratamentoEDF();
+                    }
+                    
+                    if ( this.profissional.getEquipe().getAbreviacao() == 'HIG' ) {
+                        this.tratamentoHO();
                     }
                     
                     if ( this.atendimento.getTriagens() != undefined )
@@ -499,6 +504,12 @@ export class AtendimentoFormComponent {
                 return;
             }
             
+            if ( !this.verifyHo(this.atendimento.getAvaliacaoHigieneOcupacional())) {
+                this.toastParams = ["Por favor, preencha os campos de Higiene Ocupacional exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            
             this.atendimentoService.liberar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
                     this.toastParams = ["Empregado liberado", 4000];
@@ -548,6 +559,11 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
+            if ( !this.verifyHo(this.atendimento.getAvaliacaoHigieneOcupacional())) {
+                this.toastParams = ["Por favor, preencha os campos de Higiene Ocupacional exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
                 
             this.atendimentoService.finalizar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
@@ -564,6 +580,22 @@ export class AtendimentoFormComponent {
         }
     }
     
+    verifyHo(avaliacaoHigieneOcupacional : AvaliacaoHigieneOcupacional){
+        let ret: boolean = true;
+        if(avaliacaoHigieneOcupacional != undefined && avaliacaoHigieneOcupacional.getEnsaioVedacao() =='SIM' && avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara() != undefined && 
+                ((!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getModelo())) ||
+                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getTipoRespirador())) ||
+                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getTamanhoRespirador())) ||
+                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getNumeroCertificadoAprovacao())) ||
+                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getFiltroUtilizado())) ||
+                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getExposicaoAerodispersoide())) ||
+                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getHoraUsada())) ||
+                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getDiaUsado()))) )
+                    ret =  false;
+        
+        return ret;            
+    
+    }
     verifyAvaliacaoFisica(avaliacaoFisica : AvaliacaoFisica){     
         let ret: boolean = true;   
         
@@ -639,6 +671,16 @@ export class AtendimentoFormComponent {
                 this.globalActions.emit( 'toast' );
                 return;
             }
+            if ( !this.verifyHo(this.atendimento.getAvaliacaoHigieneOcupacional())) {
+                this.toastParams = ["Por favor, preencha os campos de Higiene Ocupacional exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }
+            if ( !this.verifyAvaliacaoFisica(this.atendimento.getAvaliacaoFisica())) {
+                this.toastParams = ["Por favor, preencha os campos do Atividade Fisica exigidos", 4000];
+                this.globalActions.emit( 'toast' );
+                return;
+            }            
 
             this.atendimentoService.finalizarPausar( new AtendimentoBuilder().clone(this.atendimento) )
                 .then( res => {
@@ -762,6 +804,14 @@ export class AtendimentoFormComponent {
                 })
         }
     }
+    tratamentoHO(){        
+        
+        let resposta: RespostaFichaColeta   = this.atendimento.getFilaEsperaOcupacional().getFichaColeta().getRespostaFichaColetas().find(rfc =>        
+        rfc.getPergunta().getGrupo() == "ANAMNESE" && rfc.getPergunta().getCodigo() == "0018"); 
+        if(resposta != undefined && (this.atendimento.getAvaliacaoHigieneOcupacional() == undefined || (!this.atendimento.getAvaliacaoHigieneOcupacional().getConcordaDescricaoAprhoGhe())))
+           resposta.setConteudo(this.simNao[0]);        
+    }
+    
     tratamentoEDF(){
         let triagemNvl = this.atendimento.getTriagens().find(t => t.getIndicadorSast().getCodigo() == "P01" );
         if(this.atendimento.getAvaliacaoFisica()!= undefined && this.atendimento.getAvaliacaoFisica().getId() > 0){
@@ -1108,13 +1158,11 @@ export class AtendimentoFormComponent {
     }
     
     permissaoEducacaoFisica(){
-        return (this.profissional.getEquipe().getAbreviacao() != 'EDF' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
-                && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA')));   
+        return (this.profissional.getEquipe().getAbreviacao() != 'EDF' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO')));   
     }
     
     permissaoHO(){
-        return (this.profissional.getEquipe().getAbreviacao() != 'HIG' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO') 
-                && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('AMENTO DE INFORMA')));   
+        return (this.profissional.getEquipe().getAbreviacao() != 'HIG' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO')));   
     }
     
     lancandoInformacoes(){

@@ -3,11 +3,13 @@ import { GenericBuilder } from '../../generics/generic.builder';
 import { EmpregadoBuilder } from './../empregado/empregado.builder';
 import { ProfissionalSaudeBuilder } from './../profissional-saude/profissional-saude.builder';
 import { GerenciaBuilder } from './../gerencia/gerencia.builder';
-import { FuncaoBuilder } from './../funcao/funcao.builder';
+import { CargoBuilder } from './../cargo/cargo.builder';
+import { QuestionarioVedacaoMascaraBuilder } from './../questionario-vedacao-mascara/questionario-vedacao-mascara.builder';
 import { GheBuilder } from './../ghe/ghe.builder';
+import { QuestionarioVedacaoMascara } from './../../model/questionario-vedacao-mascara';
 import { Empregado } from './../../model/empregado';
 import { Profissional } from './../../model/profissional';
-import { Funcao } from './../../model/funcao';
+import { Cargo } from './../../model/cargo';
 import { Gerencia } from './../../model/gerencia';
 import { Ghe } from './../../model/ghe';
 
@@ -20,7 +22,8 @@ export class AvaliacaoHigieneOcupacionalBuilder extends GenericBuilder {
         avaliacaoHigieneOcupacional.setProfissional(new ProfissionalSaudeBuilder().initialize(new Profissional()));
         avaliacaoHigieneOcupacional.setEmpregado(new EmpregadoBuilder().initialize(new Empregado()));
         avaliacaoHigieneOcupacional.setGhe(new GheBuilder().initialize(new Ghe()));
-        avaliacaoHigieneOcupacional.setFuncao(new FuncaoBuilder().initialize(new Funcao()));
+        avaliacaoHigieneOcupacional.setCargo(new CargoBuilder().initialize(new Cargo()));
+        avaliacaoHigieneOcupacional.setQuestionarioVedacaoMascara(new QuestionarioVedacaoMascaraBuilder().initialize(new QuestionarioVedacaoMascara()));
         
         return avaliacaoHigieneOcupacional;
     }
@@ -66,20 +69,20 @@ export class AvaliacaoHigieneOcupacionalBuilder extends GenericBuilder {
         cloneAvaliacaoHigieneOcupacional.setMotivoAnalisePreliminar(this.getValue(avaliacaoHigieneOcupacional,"getMotivoAnalisePreliminar"));       
         
         
-        cloneAvaliacaoHigieneOcupacional.setAprho(this.getValue(avaliacaoHigieneOcupacional,"getAprho"));
         cloneAvaliacaoHigieneOcupacional.setFiscalSopSg(this.getValue(avaliacaoHigieneOcupacional,"getFiscalSopSg"));
         cloneAvaliacaoHigieneOcupacional.setOpEcolEcomp(this.getValue(avaliacaoHigieneOcupacional,"getOpEcolEcomp"));
         cloneAvaliacaoHigieneOcupacional.setOutros(this.getValue(avaliacaoHigieneOcupacional,"getOutros"));
         cloneAvaliacaoHigieneOcupacional.setEnsaioVedacaoRealizado(this.getValue(avaliacaoHigieneOcupacional,"getEnsaioVedacaoRealizado"));
         cloneAvaliacaoHigieneOcupacional.setHOconcordaDescricaoAprhoGhe(this.getValue(avaliacaoHigieneOcupacional,"getHOconcordaDescricaoAprhoGhe"));
         cloneAvaliacaoHigieneOcupacional.setObservacaoGHE(this.getValue(avaliacaoHigieneOcupacional,"getObservacaoGHE"));
-        cloneAvaliacaoHigieneOcupacional.setJustificativaHO(this.getValue(avaliacaoHigieneOcupacional,"JustificativaHO"));
+        cloneAvaliacaoHigieneOcupacional.setJustificativaHO(this.getValue(avaliacaoHigieneOcupacional,"getJustificativaHO"));
         
         cloneAvaliacaoHigieneOcupacional.setGhe(new GheBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getGhe")));
         cloneAvaliacaoHigieneOcupacional.setGerencia(new GerenciaBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getGerencia")));
-        cloneAvaliacaoHigieneOcupacional.setFuncao(new FuncaoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getFuncao")));
+        cloneAvaliacaoHigieneOcupacional.setCargo(new CargoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getCargo")));
         cloneAvaliacaoHigieneOcupacional.setProfissional(new ProfissionalSaudeBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getProfissional")));
         cloneAvaliacaoHigieneOcupacional.setEmpregado(new EmpregadoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getEmpregado")));
+        cloneAvaliacaoHigieneOcupacional.setQuestionarioVedacaoMascara(new QuestionarioVedacaoMascaraBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getQuestionarioVedacaoMascara")));
                 
         return cloneAvaliacaoHigieneOcupacional;
     }

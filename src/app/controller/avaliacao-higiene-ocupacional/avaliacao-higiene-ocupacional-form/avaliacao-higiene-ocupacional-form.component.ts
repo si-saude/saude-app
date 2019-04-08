@@ -9,14 +9,8 @@ import { AvaliacaoHigieneOcupacional } from './../../../model/avaliacao-higiene-
 import { GenericFormComponent } from './../../../generics/generic.form.component';
 import { AvaliacaoHigieneOcupacionalBuilder } from './../avaliacao-higiene-ocupacional.builder';
 import { AvaliacaoHigieneOcupacionalService } from './../avaliacao-higiene-ocupacional.service';
-import { Usuario } from './../../../model/usuario';
-import { UsuarioBuilder } from './../../usuario/usuario.builder';
-import { ProfissionalSaudeFilter } from './../../profissional-saude/profissional-saude.filter';
-import { EmpregadoFilter } from './../../empregado/empregado.filter';
-import { PessoaFilter } from './../../pessoa/pessoa.filter';
-import { Profissional } from './../../../model/profissional';
-import { ProfissionalSaudeBuilder } from './../../profissional-saude/profissional-saude.builder';
-import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.autocomplete';
+import { Atendimento } from './../../../model/atendimento';
+import { AtendimentoBuilder } from './../../atendimento/atendimento.builder';
 
 @Component( {
     selector: 'app-avaliacao-higiene-ocupacional-form',
@@ -24,8 +18,8 @@ import { EmpregadoNomeAutocomplete } from './../../empregado/empregado-nome.auto
     styleUrls: ['./avaliacao-higiene-ocupacional-form.css', './../../../../assets/css/form-component.css']
 } )
 export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormComponent implements OnInit {
-    private avaliacaoHigieneOcupacional: AvaliacaoHigieneOcupacional;
-    private ensaioVedacoes: Array<string>;    
+    
+    private atendimento: Atendimento;
     
     constructor( private route: ActivatedRoute,
         private avaliacaoHigieneOcupacionalService: AvaliacaoHigieneOcupacionalService,
@@ -33,8 +27,7 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
         super( avaliacaoHigieneOcupacionalService, router );
 
         this.goTo = "avaliacao-higiene-ocupacional";
-        this.avaliacaoHigieneOcupacional = new AvaliacaoHigieneOcupacionalBuilder().initialize( this.avaliacaoHigieneOcupacional );
-        this.ensaioVedacoes = new Array<string>();
+        this.atendimento = new AtendimentoBuilder().initialize(this.atendimento);
         
     }
 
@@ -43,12 +36,12 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
             ( params: any ) => {
                 if ( params['id'] !== undefined ) {
                     let id = params['id'];
-                    this.showPreload = true;
-
-                    this.avaliacaoHigieneOcupacionalService.get( id )
+                    this.showPreload = true;     
+                    
+                    this.avaliacaoHigieneOcupacionalService.getAvaliacaoAtendimento( id )
                         .then( res => {
                             this.showPreload = false;
-                            this.avaliacaoHigieneOcupacional = new AvaliacaoHigieneOcupacionalBuilder().clone( res.json() );
+                            this.atendimento = new AtendimentoBuilder().clone( res.json() );
                           } )
                          .catch( error => {
                             this.catchConfiguration( error );
@@ -63,7 +56,7 @@ export class AvaliacaoHigieneOcupacionalFormComponent extends GenericFormCompone
     }
     
     save() {
-        super.save( new AvaliacaoHigieneOcupacionalBuilder().clone( this.avaliacaoHigieneOcupacional ) );
+        super.save( new AvaliacaoHigieneOcupacionalBuilder().clone( this.atendimento.getAvaliacaoHigieneOcupacional()));
     }
     
     

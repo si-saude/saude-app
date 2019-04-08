@@ -21,6 +21,7 @@ import { PlanejamentoModule } from './../planejamento.module';
 import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-aso.module';
 import { AtendimentoInformacoesEmpregadoModule } from './../../includes/atendimento-informacoes-empregado/atendimento-informacoes-empregado.module';
 import { AtendimentoProafModule } from './../../includes/atendimento-proaf/atendimento-proaf.module';
+import { InformacaoAvaliacaoHigieneOcupacionalModule } from './../../includes/informacao-avaliacao-higiene-ocupacional/informacao-avaliacao-higiene-ocupacional.module';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { AtendimentoProafModule } from './../../includes/atendimento-proaf/atend
         SharedModule,
         InformacaoAsoModule,
         AtendimentoInformacoesEmpregadoModule,
-        AtendimentoProafModule
+        AtendimentoProafModule,
+        InformacaoAvaliacaoHigieneOcupacionalModule
         
      ],
      providers: [

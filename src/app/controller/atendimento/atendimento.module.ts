@@ -17,6 +17,7 @@ import { InformacaoAsoModule } from './../../includes/informacao-aso/informacao-
 import { MenuAtendimentoNutricaoModule } from './../../includes/menu-atendimento-nutricao/menu-atendimento-nutricao.module';
 import { AtendimentoProafModule } from './../../includes/atendimento-proaf/atendimento-proaf.module';
 import { AtendimentoInformacoesEmpregadoModule } from './../../includes/atendimento-informacoes-empregado/atendimento-informacoes-empregado.module';
+import { InformacaoAvaliacaoHigieneOcupacionalModule } from './../../includes/informacao-avaliacao-higiene-ocupacional/informacao-avaliacao-higiene-ocupacional.module';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { AtendimentoInformacoesEmpregadoModule } from './../../includes/atendime
         InformacaoAsoModule,
         MenuAtendimentoNutricaoModule,
         AtendimentoProafModule,
-        AtendimentoInformacoesEmpregadoModule
+        AtendimentoInformacoesEmpregadoModule,
+        InformacaoAvaliacaoHigieneOcupacionalModule
      ],
      providers: [
         AtendimentoService

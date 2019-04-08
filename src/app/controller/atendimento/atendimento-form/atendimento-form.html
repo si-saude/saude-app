@@ -146,11 +146,11 @@
 	</div>
 	
 	<div id="ho">
-<!-- 		<div *ngIf="profissional.equipe.abreviacao == 'HIG' &&  -->
-<!-- 				(atendimento.filaAtendimentoOcupacional.status == 'EM ATENDIMENTO' || atendimento.filaAtendimentoOcupacional.status == 'LANÇAMENTO DE INFORMAÇÕES')"> -->
-<!-- 			<app-informacao-avaliacao-higiene-ocupacional [service]="atendimentoService" -->
-<!-- 				[avaliacaoHigieneOcupacional]="atendimento.avaliacaoHigieneOcupacional"></app-informacao-avaliacao-higiene-ocupacional> -->
-<!-- 		</div> -->
+		<div *ngIf="profissional.equipe.abreviacao == 'HIG' && 
+ 				(atendimento.filaAtendimentoOcupacional.status == 'EM ATENDIMENTO' || atendimento.filaAtendimentoOcupacional.status == 'LANÇAMENTO DE INFORMAÇÕES')"> 
+			<app-informacao-avaliacao-higiene-ocupacional [service]="atendimentoService"
+				[atendimento]="atendimento"></app-informacao-avaliacao-higiene-ocupacional>
+		</div>
 	</div>
 
 	<div id="fichaColeta" disabled>
