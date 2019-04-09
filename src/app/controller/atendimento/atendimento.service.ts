@@ -214,6 +214,20 @@ export class AtendimentoService extends GenericService {
             .toPromise();
     }
 
+    getTipoRespiradores() {
+        let urlPrazo = GlobalVariable.BASE_API_URL + "/generic/tipo-respirador";
+        return this.http
+            .get( urlPrazo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    } 
+    
+    getTamanhoRespiradores() {
+        let urlPrazo = GlobalVariable.BASE_API_URL + "/generic/tamanho-respirador";
+        return this.http
+            .get( urlPrazo + "?filter=", { headers: this.headers } )
+            .toPromise();
+    } 
+    
     getDiagnosticos() {
         return this.diagnosticoService.getDiagnosticos();
     }
@@ -313,6 +327,27 @@ export class AtendimentoService extends GenericService {
     
     getRelatorioProaf( atendimento ) {
         let urlRelatorio = this.URL + "/get-relatorio-proaf";
+        return this.http
+            .post( urlRelatorio, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getEnsaioVedacao() {
+        let urlEnsaioVedacao =  GlobalVariable.BASE_API_URL + "/generic/ensaio-vedacao";
+        return this.http
+            .get( urlEnsaioVedacao + "?filter=", { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getRelatorioAvaliacaoHo( atendimento ) {
+        let urlRelatorio = this.URL + "/get-relatorio-avaliacao-ho";
+        return this.http
+            .post( urlRelatorio, atendimento, { headers: this.headers } )
+            .toPromise();
+    }
+    
+    getRelatorioEnsaioVedacao( atendimento ) {
+        let urlRelatorio = this.URL + "/get-relatorio-questionario-ensaio-vedacao";
         return this.http
             .post( urlRelatorio, atendimento, { headers: this.headers } )
             .toPromise();

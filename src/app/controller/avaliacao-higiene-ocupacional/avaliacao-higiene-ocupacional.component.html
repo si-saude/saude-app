@@ -14,23 +14,15 @@
 
 		<div *ngFor="let a of array">
 			<div class="row row-collection">
-				<div class="col s5">
+				<div class="col s6">
 					<a [routerLinkActive]="['active']" class="collection-item">{{a.empregado.pessoa.nome}}</a>
 				</div>
-				<div class="col s4">
-					<a [routerLinkActive]="['active']" class="collection-item">{{a.data | transformDate }}</a>
-				</div>
-				<div class="col s1">
-					<a [routerLink]="['/avaliacao-higiene-ocupacional/detalhe', a.id]"><i
-						class="material-icons">details</i></a>
+				<div class="col s5">
+					<a [routerLinkActive]="['active']" class="collection-item">{{a.inicio | transformDate }}</a>
 				</div>
 				<div class="col s1">
 					<a [routerLink]="['/avaliacao-higiene-ocupacional/editar', a.id]"><i
 						class="material-icons">mode_edit</i></a>
-				</div>
-				<div class="col s1">
-					<a [ngStyle]="{'cursor': 'pointer'}" (click)="delete(a.id)"><i
-						class="material-icons">delete</i></a>
 				</div>
 			</div>
 		</div>
@@ -44,10 +36,6 @@
 	<div class="row bts">
 		<div class="col s6">
 			<a class="waves-effect waves-light btn" (click)="openModal()">Filtro</a>
-		</div>
-		<div class="col s6">
-			<a [routerLink]="['/avaliacao-higiene-ocupacional/cadastrar']"
-				class="waves-effect waves-light btn button-add">Adicionar</a>
 		</div>
 	</div>
 

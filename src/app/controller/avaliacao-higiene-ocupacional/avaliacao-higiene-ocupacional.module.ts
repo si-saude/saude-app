@@ -12,6 +12,7 @@ import { AvaliacaoHigieneOcupacionalFormDetailComponent } from './avaliacao-higi
 import { AvaliacaoHigieneOcupacionalRoutingModule } from './avaliacao-higiene-ocupacional.routing.module';
 import { PipesModule } from './../pipes.module';
 import { SharedModule } from '../shared.module';
+import { InformacaoAvaliacaoHigieneOcupacionalModule } from './../../includes/informacao-avaliacao-higiene-ocupacional/informacao-avaliacao-higiene-ocupacional.module';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { SharedModule } from '../shared.module';
         AvaliacaoHigieneOcupacionalRoutingModule,
         PipesModule,
         SharedModule,
-        MyDatePickerModule
+        MyDatePickerModule,
+        InformacaoAvaliacaoHigieneOcupacionalModule
      ],
      providers: [
         AvaliacaoHigieneOcupacionalService

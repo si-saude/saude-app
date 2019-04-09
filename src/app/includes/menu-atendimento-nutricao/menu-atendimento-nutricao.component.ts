@@ -128,8 +128,7 @@ export class MenuAtendimentoNutricaoComponent{
                                 
                                 x.getItens().forEach(i=>{
                                     let itemRef = new ItemRefeicaoPlano();
-                                    itemRef.setAlimento(new AlimentoBuilder().clone(i.getAlimento()));
-                                    itemRef.setAlimentos(new AlimentoBuilder().cloneList(i.getAlimento().getSubstituicoes()));                            
+                                    itemRef.setAlimento(new AlimentoBuilder().clone(i.getAlimento()));                          
                                     itemRef.setMedidaCaseira(i.getMedidaCaseira());
                                     itemRef.setQuantidade(Util.treatDouble(i.getQuantidade()));
                                     itemRef.setVe(i.getVe());

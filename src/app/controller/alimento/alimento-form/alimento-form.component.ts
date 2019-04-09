@@ -90,20 +90,6 @@ export class AlimentoFormComponent extends GenericFormComponent implements OnIni
     ngOnDestroy() {
         this.inscricao.unsubscribe();
     }
-    addAlimento(){
-        
-        if(this.itemRefeicao.getAlimento().getId() > 0 && 
-            this.itemRefeicao.getAlimento().getId() != this.alimento.getId() &&
-           (this.alimento.getSubstituicoes().find(s=>s.getId() == this.itemRefeicao.getAlimento().getId()) == undefined)){
-            this.alimento.getSubstituicoes().push(this.itemRefeicao.getAlimento())
-            this.itemRefeicao = new ItemRefeicaoBuilder().initialize(null);
-        }
-            
-        
-    }
-    removeAlimento(i: number) {
-        this.alimento.getSubstituicoes().splice(i, 1);
-    }
     
     save() {
         super.save( new AlimentoBuilder().clone( this.alimento ) );

@@ -7,6 +7,7 @@ import { RegraAtendimento } from './regra-atendimento';
 import { QuestionarioConhecimentoAlimentar } from './questionario-conhecimento-alimentar';
 import { Recordatorio } from './recordatorio';
 import { AvaliacaoFisica } from './avaliacao-fisica';
+import { AvaliacaoHigieneOcupacional } from './avaliacao-higiene-ocupacional';
 
 export class Atendimento {
     private id: number;
@@ -18,6 +19,7 @@ export class Atendimento {
     private triagensTodosAtendimentos: Array<Triagem>;
     private questionario: QuestionarioConhecimentoAlimentar;
     private avaliacaoFisica: AvaliacaoFisica;
+    private avaliacaoHigieneOcupacional: AvaliacaoHigieneOcupacional;
     private version: number;
 
     getId() {
@@ -28,6 +30,14 @@ export class Atendimento {
         this.id = id;
     }
 
+    getAvaliacaoHigieneOcupacional() {
+        return this.avaliacaoHigieneOcupacional;
+    }
+
+    setAvaliacaoHigieneOcupacional( avaliacaoHigieneOcupacional: AvaliacaoHigieneOcupacional ) {
+        this.avaliacaoHigieneOcupacional = avaliacaoHigieneOcupacional;
+    }
+    
     getFilaAtendimentoOcupacional() {
         return this.filaAtendimentoOcupacional;
     }

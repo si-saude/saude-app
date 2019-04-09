@@ -9,7 +9,6 @@ export class AlimentoBuilder extends GenericBuilder {
         alimento = new Alimento();
         
         alimento.setAlimentoMedidaAlimentares(new AlimentoMedidaAlimentarBuilder().initializeList(null));
-        alimento.setSubstituicoes(new AlimentoBuilder().initializeList(null));
         return alimento;
     }
     
@@ -71,11 +70,7 @@ export class AlimentoBuilder extends GenericBuilder {
 
         cloneAlimento.setAlimentoMedidaAlimentares(
                 new AlimentoMedidaAlimentarBuilder().cloneList(
-                        this.getValue(alimento,"getAlimentoMedidaAlimentares")))
-                        
-        cloneAlimento.setSubstituicoes(
-                new AlimentoBuilder().cloneList(
-                        this.getValue(alimento,"getSubstituicoes")))
+                        this.getValue(alimento,"getAlimentoMedidaAlimentares")))        
         
         return cloneAlimento;
     }

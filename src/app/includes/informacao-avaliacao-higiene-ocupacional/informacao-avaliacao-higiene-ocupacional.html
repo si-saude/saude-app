@@ -1,0 +1,513 @@
+<head>
+<meta charset="utf-8">
+</head>
+
+<div class="row form-container" *ngIf="(atendimento.avaliacaoHigieneOcupacional != undefined && atendimento.avaliacaoHigieneOcupacional.gerencia != undefined)">
+	
+		<div class="row">
+		
+			<ul class="tabs" materialize="tabs">
+				<li class="tab col s3"><a RouterLinkActive="active"
+					href="#dadosGeraisAvaliacao">Dados Gerais</a></li>
+				<li class="tab col s3"><a RouterLinkActive="active"
+					href="#analisePreliminar">Análise Preliminar</a></li>
+				<li class="tab col s3"><a RouterLinkActive="active"
+					href="#ensaioVedacao">Ensaio de Vedação</a></li>
+				<li class="tab col s3" [class.disabled]="getEnsaioVedacao() != 'sim'" ><a RouterLinkActive="active"
+					href="#questionarioVe">Questionário</a></li>
+			</ul>
+		
+			<div class="groups">
+				<div id="dadosGeraisAvaliacao">	
+				<fieldset>
+					<div class="btns-aside">
+						<a (click)="downloadRelatorioAvaliacao()"><i style="cursor: pointer;" class="small material-icons icon">file_download</i></a>
+					</div>
+					<legend>Dados Gerais</legend>
+					<div class="row">			
+						<div class="input-field col s4">
+							<label for="gerencia">Gerência</label> 
+							<input id="gerencia" type="text" name="gerencia" disabled
+								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.gerencia.codigoCompleto">
+						</div>
+							<div class="input-field col s4">
+							<label for="cargo">Cargo</label> 
+							<input id="cargo" type="text" name="cargo" disabled
+								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.cargo.nome">
+						</div>
+						<div class="input-field col s4">
+							<label for="matricula">Matricula</label> 
+							<input id="matricula" type="text" name="matricula" disabled
+								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.empregado.matricula">
+						</div>
+					</div>	
+					<div class="row">
+						<div class="input-field col s3">
+							<label for="inicio">Data Início</label>
+							<app-date-picker [nome]="'inicio'" 
+								[customDate]="atendimento.avaliacaoHigieneOcupacional.inicioCustomDate" 
+								[legenda]="'Início'"									
+								></app-date-picker>
+						</div>
+						<div class="input-field col s3">
+							<label for="inicio">Hora Início</label>
+							<app-time-picker [nome]="'horainicio'"
+							[customDate]="atendimento.avaliacaoHigieneOcupacional.inicioCustomDate">
+							</app-time-picker>
+			            </div>						
+						<div class="input-field col s3">
+							<label for="fim">Data Fim</label>
+							<app-date-picker [nome]="'fim'" 
+								[customDate]="atendimento.avaliacaoHigieneOcupacional.fimCustomDate" 
+								[legenda]="'Fim'"									
+								></app-date-picker>
+						</div>
+						<div class="input-field col s3">
+							<label for="fim">Hora Fim</label>
+							<app-time-picker [nome]="'horafim'"
+							[customDate]="atendimento.avaliacaoHigieneOcupacional.fimCustomDate">
+							</app-time-picker>
+			            </div>						
+					</div>	
+					<div class="row">
+						<div class="input-field col s4">
+							<label for="gheNumero">GHE (n°)</label> 
+							<input id="gheNumero" type="text" name="gheNumero" disabled
+								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.ghe.codigo">
+						</div>
+						<div class="input-field col s4">
+							<label for="ghe">GHE</label> 
+							<input id="ghe" type="text" name="ghe" disabled
+								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.ghe.nome">
+						</div>					
+					</div>		
+					<div class="row">
+						<div class="textarea-field col s12">
+							<label>Observação</label>
+							<textarea class="materialize-textarea" id="observacaoGHE"
+								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.observacaoGHE" maxlength="512"
+								name="atendimento.avaliacaoHigieneOcupacional.observacaoGHE"></textarea>
+						</div>
+					</div>	
+			</fieldset>
+			</div>
+				
+				<div id="analisePreliminar">
+				<fieldset>
+					<legend>Análise Preliminar</legend>
+					<table>
+						<tr class="tr-ensaio-vedacao" style="height: 50px">
+							<div class="input-field col s12 checkbox">
+								<input type="checkbox" id="concordaAprho" (change)="setConcordaAprho()"
+									[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.concordaDescricaoAprhoGhe"
+									name="concordaAprho"> 
+								<label for="concordaAprho">
+									O empregado concorda com as descrições contidas na APR-HO do seu respectivo GHE?
+								</label>
+							</div>
+						</tr>
+						<div *ngIf="!atendimento.avaliacaoHigieneOcupacional.concordaDescricaoAprhoGhe">
+							<tr class="tr-ensaio-vedacao" style="height: 150px">
+								<div class="input-field col s12">
+									<p style="color: #4fc3f7;"><b><span> Justificativa:</span></b></p>
+								</div>
+								<div class="input-field col s12 checkbox">
+									<input type="checkbox" id="nao-concorda-agentes-riscos"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.naoConcordaAgentesRiscos"
+										name="nao-concorda-agentes-riscos"> <label
+										for="nao-concorda-agentes-riscos">Não concorda com os agentes de riscos levantados.</label>
+								</div>
+								<div class="input-field col s12 checkbox">
+									<input type="checkbox" id="nao-concorda-atividades"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.naoConcordaAtividades"
+										name="nao-concorda-atividades"> <label
+										for="nao-concorda-atividades">Não concorda com as atividades descritas.</label>
+								</div>
+								<div class="input-field col s12 checkbox">
+									<input type="checkbox" id="nao-concorda-frequencia"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.naoConcordaFrequenciaExposicaoRiscos"
+										name="nao-concorda-frequencia"> <label
+										for="nao-concorda-frequencia">Não concorda com a frequência e/ou duração da exposição aos riscos.</label>
+								</div>
+								<div class="input-field col s12 checkbox">
+									<input type="checkbox" id="nao-concorda-categoria"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.naoConcordaCategoriaRiscos"
+										name="nao-concorda-categoria"> <label
+										for="nao-concorda-categoria">Não concorda com as categorias atribuídas aos riscos.</label>
+								</div>
+							</tr>
+							<tr class="tr-ensaio-vedacao" style="height: 50px">
+								<div class="input-field col s12 checkbox">
+									<label>Motivo:</label>
+									<textarea class="materialize-textarea" id="motivo-analise-preliminar"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.motivoAnalisePreliminar" maxlength="512"
+										name="atendimento.avaliacaoHigieneOcupacional.motivoAnalisePreliminar"></textarea>
+								</div>
+							</tr>
+						</div>
+						<tr class="tr-ensaio-vedacao" style="height: 50px">
+								<div class="input-field col s12 checkbox">
+									<input type="checkbox" id="concorda-descricao-aprho-ghe"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.hOconcordaDescricaoAprhoGhe"
+										name="atendimento.avaliacaoHigieneOcupacional.hOconcordaDescricaoAprhoGhe"> 
+									<label for="concorda-descricao-aprho-ghe">
+										A HO concorda com as descrições contidas na APR-HO do respectivo GHE?
+									</label>
+								</div>
+							</tr>
+							<tr class="tr-ensaio-vedacao" style="height: 50px">
+								<div  *ngIf="!atendimento.avaliacaoHigieneOcupacional.hOconcordaDescricaoAprhoGhe" class="input-field col s12 checkbox">
+									<label>Justificativa:</label>
+									<textarea class="materialize-textarea" id="justificativaHO"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.justificativaHO" maxlength="512"
+										name="atendimento.avaliacaoHigieneOcupacional.justificativaHO"></textarea>
+								</div>
+							</tr>
+					</table>
+				</fieldset>
+					
+				</div>
+				
+				<div id="ensaioVedacao">
+					<fieldset>
+						<legend>Ensaio de Vedação</legend>
+						<table>
+							<tr class="tr-ensaio-vedacao" style="height: 50px">
+								<div class="input-field col s4 checkbox">
+									<input type="checkbox" id="recorrente"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.brigada"
+										name="atendimento.avaliacaoHigieneOcupacional.brigada"> <label
+										for="brigada">BRIGADA</label>
+								</div>
+								<div class="input-field col s4 checkbox">
+									<input type="checkbox" id="espaco-confinado"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.espacoConfinado"
+										name="atendimento.avaliacaoHigieneOcupacional.espacoConfinado"> <label
+										for="espaco-confinado">ESPAÇO CONFINADO</label>
+								</div>
+								<div class="input-field col s4 checkbox">
+									<input type="checkbox" id="fiscalSopSg"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.fiscalSopSg"
+										name="atendimento.avaliacaoHigieneOcupacional.fiscalSopSg"> <label
+										for="fiscalSopSg">FISCAL SOP SG</label>
+								</div>
+							</tr>
+							<tr class="tr-ensaio-vedacao" style="height: 50px">
+								<div class="input-field col s4 checkbox">
+									<input type="checkbox" id="recorrente"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.opEcolEcomp"
+										name="atendimento.avaliacaoHigieneOcupacional.opEcolEcomp"> <label
+										for="opEcolEcomp">OP.ECOL/ECOMP</label>
+								</div>
+								<div class="input-field col s4 checkbox">
+									<input type="checkbox" id="uso-voluntario"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.usoVoluntario"
+										name="atendimento.avaliacaoHigieneOcupacional.usoVoluntario"> <label
+										for="uso-voluntario">USO VOLUNTÁRIO PR</label>
+								</div>
+								<div class="input-field col s4 checkbox">
+									<input type="checkbox" id="outros"
+										[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.outros"
+										name="atendimento.avaliacaoHigieneOcupacional.outros"> <label
+										for="outros">OUTROS</label>
+								</div>
+							</tr>
+							<div *ngIf="ensaioVedacao()">
+								<tr class="tr-ensaio-vedacao" style="height: 45px">
+										<p style="color: #4fc3f7;"><b><span>O ensaio de vedação foi realizado?</span></b></p>
+											<input class="radio" name="group1" type="radio" id="ensaioVedacao.sim"
+													[ngModel]="getEnsaioVedacao()" (ngModelChange)="setEnsaioVedacao('sim')"
+													value="sim"/> 
+											<label style="color: #4fc3f7;" for="ensaioVedacao.sim"><b>SIM</b></label>
+											<input class="radio" name="group1" type="radio" id="ensaioVedacao.nao"
+													[ngModel]="getEnsaioVedacao()" (ngModelChange)="setEnsaioVedacao('nao')"
+													value="nao"/> 
+											<label style="color: #4fc3f7;" for="ensaioVedacao.nao"><b>NÃO</b></label>
+											<input class="radio" name="group1" type="radio" id="ensaioVedacao.naoAplicavel"
+													[ngModel]="getEnsaioVedacao()" (ngModelChange)="setEnsaioVedacao('naoAplicavel')"
+													value="naoAplicavel"/>
+											<label style="color: #4fc3f7;" for="ensaioVedacao.naoAplicavel"><b>NÃO APLICÁVEL</b></label>
+								</tr>
+								<div *ngIf="getEnsaioVedacao() == 'nao'">
+									<tr class="tr-ensaio-vedacao" style="height: 130px">
+											<div class="input-field col s12">
+												<p style="color: #4fc3f7;"><b><span> Justificativa:</span></b></p>
+											</div>
+											<div class="input-field col s12 checkbox">
+												<input type="checkbox" id="nao-barbeado"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.naoBarbeado"
+													name="atendimento.avaliacaoHigieneOcupacional.naoBarbeado"> <label
+													for="nao-barbeado">NÃO ESTAVA DEVIDAMENTE BARBEADO</label>
+											</div>
+											<div class="input-field col s12 checkbox">
+												<input type="checkbox" id="nao-utiliza-mascara"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.naoUtilizaMascara"
+													name="atendimento.avaliacaoHigieneOcupacional.naoUtilizaMascara"> <label
+													for="nao-utiliza-mascara">DECLAROU QUE NÃO UTILIZA MÁSCARA SEMI FACIAL</label>
+											</div>
+											<div class="input-field col s12 checkbox">
+												<input type="checkbox" id="teste-sensibilidade-insatisfatorio"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.testeSensibilidadeInsatisfatorio"
+													name="atendimento.avaliacaoHigieneOcupacional.testeSensibilidadeInsatisfatorio"> <label
+													for="teste-sensibilidade-insatisfatorio">TESTE DE SENSIBILIDADE COM RESULTADO INSATISFATÓRIO</label>
+											</div>
+									</tr>
+								</div>	
+							</div>
+
+						</table>
+							<div *ngIf="ensaioVedacao()" class="row">
+									<div class="input-field col s12">
+										<label>Observação:</label>
+										<textarea class="materialize-textarea" id="observacao"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.observacao" maxlength="512"
+											name="atendimento.avaliacaoHigieneOcupacional.observacao"></textarea>
+									 </div>		
+							</div>
+					</fieldset>
+				</div>
+				<div id="questionarioVe">
+					<fieldset>
+					<div class="btns-aside">
+						<a (click)="downloadRelatorioEnsaioVedacao()"><i style="cursor: pointer;" class="small material-icons icon">file_download</i></a>
+					</div>
+					<legend>Questionário para Ensaio de Vedação da Mácara</legend>
+					
+					
+						<table>
+							<tr class="tr-ensaio-vedacao" style="height: 150px">
+								<div class="input-field col s12">
+									<p style="color: #4fc3f7;"><b><span> TIPO DE TESTE SENSITIVO</span></b></p>
+									
+										<div class="input-field col s12 checkbox">
+											<input type="checkbox" id="fumacaIrritante"
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.fumacaIrritante"
+												name="fumacaIrritante"> <label
+												for="fumacaIrritante">Fumaça irritante (cloreto de hidrogênio).</label>
+										</div>
+										<div class="input-field col s12 checkbox">
+											<input type="checkbox" id="sacarina"
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.sacarina"
+												name="sacarina"> <label
+												for="sacarina">Sacarica.</label>
+										</div>
+										<div class="input-field col s12 checkbox">
+											<input type="checkbox" id="acetatoIsoamil"
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.acetatoIsoamil"
+												name="acetatoIsoamil"> <label
+												for="acetatoIsoamil">Acetato de isoamil (óleo de banana).</label>
+										</div>
+										<div class="input-field col s12 checkbox">
+											<input type="checkbox" id="benzoatoDetonium"
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.benzoatoDetonium"
+												name="benzoatoDetonium"> <label
+												for="benzoatoDetonium">Benzoato de denatonium (Biltrex).</label>
+										</div>
+								</div>
+								<div>
+									<div class="input-field col s12">
+										<p style="color: #4fc3f7;"><b><span>RESPIRADOR</span></b></p>
+									</div>
+									<div class="row">	
+										<div class="input-field col s4">
+												<label for="modelo">Modelo</label> 
+												<input id="modelo" type="text" name="modelo" 
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.modelo">
+										</div>		
+										<div class="input-field col s4">
+											<fieldset>
+												<legend>
+													Tipo
+												</legend>
+												<select name="tipo" class="browser-default"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.tipoRespirador">
+													<option disabled selected value="">Selecione um Tipo</option>
+													<option *ngFor="let tipoRespirador of tipoRespiradores" value="{{tipoRespirador}}">{{tipoRespirador}}</option>
+												</select>
+											</fieldset>
+										</div>
+										<div class="input-field col s4">
+											<fieldset>
+												<legend>
+													Tamanho
+												</legend>
+												<select name="tamanho" class="browser-default"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.tamanhoRespirador">
+													<option disabled selected value="">Selecione um Tamanho</option>
+													<option *ngFor="let tamanhoRespirador of tamanhoRespiradores" value="{{tamanhoRespirador}}">{{tamanhoRespirador}}</option>
+												</select>
+											</fieldset>
+										</div>
+									</div>
+									<div class="row">	
+										<div class="input-field col s6">
+											<label for="numeroCertificadoAprovacao">Certificado de Aprovação n°:</label> 
+											<input id="numeroCertificadoAprovacao" type="text" name="numeroCertificadoAprovacao" 
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.numeroCertificadoAprovacao">
+										</div>									
+										<div class="input-field col s6">
+											<label for="modelo">Filtro Utilizado(fator de proteção)</label> 
+											<input id="filtroUtilizado" type="text" name="filtroUtilizado" 
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.filtroUtilizado">
+										</div>	
+									</div>
+									
+								</div>
+								<div class="col s12">
+									<p style="color: #4fc3f7;"><b><span> PELOS NA FACE</span></b></p>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="barba"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.barba"
+											name="barba"> <label
+											for="barba"  style="color: #4fc3f7;font-weight: bold;">Barba</label>
+									</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="bigode"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.bigode"
+											name="bigode"> <label
+											for="bigode"  style="color: #4fc3f7;font-weight: bold;">Bigode</label>
+									</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="costeleta"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.costeleta"
+											name="costeleta"> <label
+											for="costeleta"  style="color: #4fc3f7;font-weight: bold;">Costeleta</label>
+									</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="nAPelosFace"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.nAPelosFace"
+											name="nAPelosFace"> <label
+											for="nAPelosFace"  style="color: #4fc3f7;font-weight: bold;">N/A</label>
+									</div>
+								</div>
+								<div class="col s12">
+									<p style="color: #4fc3f7;"><b><span> CORREÇÃO DA VISÃO</span></b></p>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="oculos"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.oculos"
+											name="oculos"> <label
+											for="oculos"  style="color: #4fc3f7;font-weight: bold;">Oculos</label>
+									</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="lenteContato"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.lenteContato"
+											name="lenteContato"> <label
+											for="lenteContato" style="color: #4fc3f7;font-weight: bold;">Lente de Contato</label>
+									</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="nACorrecaoVisao"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.nACorrecaoVisao"
+											name="nACorrecaoVisao"> <label
+											for="nACorrecaoVisao"  style="color: #4fc3f7;font-weight: bold;">N/A</label>
+									</div>
+								</div>
+								<div>
+									<div class="input-field col s12">
+										<p style="color: #4fc3f7;"><b><span> TESTE QUALITATIVO DE VEDAÇÃO DE MÁSCARA</span></b></p>
+									</div>
+									<div class="input-field col s12">
+									 	<p style="color: #4fc3f7;">Teste de pressão positiva(fechar válvula de exalação)</p>
+								 	</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="satisfatoria"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.satisfatoria"
+											name="satisfatoria"> <label
+											for="satisfatoria" style="color: #4fc3f7;font-weight: bold;">Satisfatória</label>
+									</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="deficiente"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.deficiente"
+											name="deficiente"> <label
+											for="deficiente" style="color: #4fc3f7;font-weight: bold;">Deficiente</label>
+									</div>
+									<div class="col s3 checkbox">
+										<input type="checkbox" id="nATesteQualitativo"
+											[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.nATesteQualitativo"
+											name="nATesteQualitativo"> <label
+											for="nATesteQualitativo" style="color: #4fc3f7;font-weight: bold;">N/A</label>
+									</div>
+									<div>	
+										<div class="input-field col s12">
+										 	<p style="color: #4fc3f7;">Teste de pressão negativa(fechar a abertura de entrada)</p>
+										</div>									
+										<div class="col s3 checkbox">
+											<input type="checkbox" id="satisfatoriaTestePressao"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.satisfatoriaTestePressao"
+													name="satisfatoriaTestePressao"> <label
+													for="satisfatoriaTestePressao" style="color: #4fc3f7;font-weight: bold;">Satisfatória</label>
+										</div>
+										<div class="col s3 checkbox">
+											<input type="checkbox" id="deficienteTestePressao"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.deficienteTestePressao"
+													name="deficienteTestePressao"> <label
+													for="deficienteTestePressao" style="color: #4fc3f7;font-weight: bold;">Deficiente</label>
+										</div>
+										<div class="col s3 checkbox">
+											<input type="checkbox" id="nATestePressao"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.nATestePressao"
+													name="nATestePressao"> <label
+													for="nATestePressao" style="color: #4fc3f7;font-weight: bold;">N/A</label>
+										</div>
+									</div>
+									<div>
+										<div class="input-field col s12">
+										 	<p style="color: #4fc3f7;">Ensaio de vedação</p>
+										</div>		
+										<div class="col s3 checkbox">
+											<input type="checkbox" id="resultadoTesteVedacao"
+													[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.resultadoTesteVedacao"
+													name="resultadoTesteVedacao"> <label
+													for="resultadoTesteVedacao" style="color: #4fc3f7;font-weight: bold;">Satisfatório</label>
+										</div>
+									</div><br/>
+									<div>
+										<div class="textarea-field col s12">
+											<label>Comentários</label>
+											<textarea class="materialize-textarea" id="comentario"
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.comentario" maxlength="512"
+												name="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.comentario"></textarea>
+										</div>
+									</div>	
+									<div>
+										<div class="textarea-field col s12">
+											<label>O empregado realiza funções com potencial exposição aos seguintes aerodispersóides:</label>
+											<textarea class="materialize-textarea" id="exposicaoAerodispersoide"
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.exposicaoAerodispersoide" maxlength="256"
+												name="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.exposicaoAerodispersoide"></textarea>
+										</div>
+									</div>	
+									<div>
+										<div class="input-field col s6">
+											<label for="horaUsada">Quantidade de horas por dia que o respirador é usado:</label> 
+											<input id="horaUsada" type="text" name="horaUsada" maxlength="2"  integerMaskDirective=""
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.horaUsada">
+										</div>
+										<div class="input-field col s6">
+											<label for="diaUsado">Quantidade de dias por por semana que o respirador é usado:</label> 
+											<input id="diaUsado" name="diaUsado" maxlength="1"   type="text" integerMaskDirective=""
+												[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.diaUsado">
+										</div>
+									</div>
+									<div>
+										<div class="col s12 checkbox">
+											<input type="checkbox" id="esforcoFisicoUtilizandoMascara" 
+														[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.questionarioVedacaoMascara.esforcoFisicoUtilizandoMascara"
+														name="esforcoFisicoUtilizandoMascara"> <label
+														for="esforcoFisicoUtilizandoMascara" style="color: #4fc3f7;font-weight: bold;">O funcionário realizará esforços físicos de levantamento de pesos maiores de 17 kg durante o uso da máscara?</label>
+										</div>									
+									</div>
+								</div>
+								
+							</tr>
+													
+						</table>	
+						
+					</fieldset>
+				</div>
+			</div>
+			
+		</div>
+
+		<input id="id" name="id" type="hidden" [(ngModel)]="atendimento.avaliacaoHigieneOcupacional.id"> 
+		<input id="version" name="version" type="hidden" [(ngModel)]="atendimento.avaliacaoHigieneOcupacional.version">
+</div>

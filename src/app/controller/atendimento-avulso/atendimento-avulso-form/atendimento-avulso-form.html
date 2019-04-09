@@ -23,6 +23,8 @@
 				<li class="tab" [class.disabled]="!atendimentoCarregado"><a
 					RouterLinkActive="active" href="#aso">Aso</a></li>
 				<li class="tab" [class.disabled]="!atendimentoCarregado">
+					<a href="#ho">Higiene Ocupacional</a></li>
+				<li class="tab" [class.disabled]="!atendimentoCarregado">
 					<a href="#educacaoFisica">Educação Física</a></li>
 				<li class="tab" [class.disabled]="!atendimentoCarregado"><a
 					RouterLinkActive="active" href="#fichaColeta">Ficha de Coleta</a></li>
@@ -125,6 +127,12 @@
 				<div>
 					<app-informacao-aso [service]="atendimentoService"
 						[atendimento]="atendimento"></app-informacao-aso>
+				</div>
+			</div>
+			<div id="ho">
+				<div *ngIf="profissional.equipe.abreviacao == 'HIG' && atendimentoCarregado"> 
+					<app-informacao-avaliacao-higiene-ocupacional [service]="atendimentoService"
+						[atendimento]="atendimento"></app-informacao-avaliacao-higiene-ocupacional>
 				</div>
 			</div>
 			<div id="educacaoFisica">

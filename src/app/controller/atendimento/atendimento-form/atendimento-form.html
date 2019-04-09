@@ -20,7 +20,8 @@
 			<li class="tab"><a href="#atendimento">Atendimento</a></li>
 			<li class="tab"><a href="#aso">Aso</a></li>
 			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'NUT'"><a href="#nutricao">Nutrição</a></li>
-			<li class="tab" [class.disabled]="permicaoEducacaoFisica()"><a href="#educacaoFisica">Educação Física</a></li>
+			<li class="tab" [class.disabled]="permissaoHO()"><a href="#ho">Higiene Ocupacional</a></li>
+			<li class="tab" [class.disabled]="permissaoEducacaoFisica()"><a href="#educacaoFisica">Educação Física</a></li>
 			<li class="tab"><a href="#fichaColeta">Ficha de Coleta</a></li>			
 			<li class="tab"><a href="#triagem">Triagem</a></li>
 			<li class="tab"><a href="#planejamento">Planejamento</a></li>
@@ -141,6 +142,14 @@
 			<app-atendimento-proaf [service]="atendimentoService"
 			 	(nivelAtividadeFisica)="setNivelAtividadeFisica($event)"
 				[atendimento]="atendimento"></app-atendimento-proaf>
+		</div>
+	</div>
+	
+	<div id="ho">
+		<div *ngIf="profissional.equipe.abreviacao == 'HIG' && 
+ 				(atendimento.filaAtendimentoOcupacional.status == 'EM ATENDIMENTO' || atendimento.filaAtendimentoOcupacional.status == 'LANÇAMENTO DE INFORMAÇÕES')"> 
+			<app-informacao-avaliacao-higiene-ocupacional [service]="atendimentoService"
+				[atendimento]="atendimento"></app-informacao-avaliacao-higiene-ocupacional>
 		</div>
 	</div>
 
