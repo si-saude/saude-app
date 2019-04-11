@@ -13,7 +13,7 @@
 	<form #form="ngForm" class="col s12" (ngSubmit)="save()">
 		<div *ngIf="planoAlimentar.id > 0" class="col s1">					
 			<a class="btn-floating pulse waves-effect waves-light"
-				(click)="baixarPDF()"> <i class="tiny material-icons">attach_file</i>
+				(click)="baixarPDF()"> <i class="tiny material-icons">cloud_download</i>
 			</a>
 		</div>
 		<div class="resume">
@@ -32,7 +32,7 @@
 						<td class="col s3" style="padding: 0;">{{planoAlimentar.tmb}}</td>
 						<td class="col s3" style="padding: 0;">{{roundComparacao(somatorioVe)}}</td>
 						<td class="col s3" style="padding: 0;">{{planoAlimentar.ne}}</td>
-						<td class="col s3" style="padding-left: 4%;">{{roundComparacao(planoAlimentar.ne - somatorioVe)}}</td>
+						<td class="col s3" style="padding-left: 4%;">{{roundComparacao(somatorioVe - planoAlimentar.ne)}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -97,7 +97,7 @@
 							<table class="striped">
 								<thead>
 									<tr class="row col s12">
-										<th class="col s3">Alimento</th>
+										<th class="col s5">Alimento</th>
 										<th class="col s1">Medida</th>
 										<th class="col s2">Quantidade</th>
 										<th class="col s1">VE</th>
@@ -108,7 +108,7 @@
 								<div *ngFor="let it of refeicao.itens; let i = index">
 									<tbody class="col s12">
 										<tr class="col s12">
-											<td class="col s3 alimento-nome">{{it.alimento.nome}}</td>
+											<td class="col s5 alimento-nome">{{it.alimento.nome}}</td>
 											<td class="col s1 medida">{{it.medidaCaseira.descricao}}</td>
 											<td class="col s2 quantidade">{{it.quantidade}}</td>
 											<td id="{{i}}" class="col s1 ve">{{it.ve | number}}</td>

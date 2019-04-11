@@ -83,8 +83,6 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
                             let idAtendimento = res.json()['atendimento']['id'];
                             this.planoAlimentar = new PlanoAlimentarBuilder().clone( res.json() );
                             this.planoAlimentar.getAtendimento().setId(idAtendimento);
-                            
-                            this.planoAlimentar.getRefeicoes().forEach(r => this.sumVe(r));
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );
@@ -96,7 +94,7 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
                     this.showPreload = false;
                     if(localStorage.getItem("plano") != undefined){
                         this.planoAlimentar = new PlanoAlimentarBuilder().clone(JSON.parse(localStorage.getItem("plano")));
-                        this.planoAlimentar.getRefeicoes().forEach(r => this.sumVe(r));
+                        
                         localStorage.removeItem( "plano" );
                     }else
                         this.planoAlimentar = new PlanoAlimentarBuilder().initialize( null );
@@ -138,7 +136,7 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
             .then(res => {
                 this.atendimento = res.json()["atendimento"];
                 this.planoAlimentar = new PlanoAlimentarBuilder().clone( res.json() );
-                
+                this.planoAlimentar.getRefeicoes().forEach(r => this.sumVe(r));
                 this.planoAlimentar.setAtendimento(this.atendimento);
             })
             .catch(error => {
@@ -231,9 +229,7 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
     roundComparacao(valor) {
         return Math.round(valor*100)/100;
     }
-    mostrarAlimentos(alimentos: Array<Alimento>){   
-        this.modalAlimento.openModalAlimento(alimentos);
-    }
+    
     mostrarObservacao(itemRefeicaoPlano: ItemRefeicaoPlano){   
         this.modalObservacao.openModalObservacao(itemRefeicaoPlano);
     }
@@ -258,13 +254,13 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
         let sum: number = 0;   
         ref.getItens().forEach(i => {
             if ( i.getAlimento()[campo] != undefined ){
-                
                 let alimentoMedidaAlimentar = i.getAlimento().getAlimentoMedidaAlimentares().find(a => a.getMedidaAlimentar().getId() == i.getMedidaCaseira().getId());
-                if(alimentoMedidaAlimentar != undefined)
+                if(alimentoMedidaAlimentar != undefined){
                     sum += Util.calculoProporcao(i.getAlimento().getPadrao(), i.getAlimento()[campo], alimentoMedidaAlimentar.getQuantidade()) * Util.treatDouble(i.getQuantidade());
+                }
                 
             }
-        })
+        });
         return sum;
     }
     

@@ -588,7 +588,6 @@ export class AtendimentoFormComponent {
                  (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getTamanhoRespirador())) ||
                  (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getNumeroCertificadoAprovacao())) ||
                  (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getFiltroUtilizado())) ||
-                 (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getExposicaoAerodispersoide())) ||
                  (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getHoraUsada())) ||
                  (!Util.isNotNull(avaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara().getDiaUsado()))) )
                     ret =  false;
@@ -1163,6 +1162,10 @@ export class AtendimentoFormComponent {
     
     permissaoHO(){
         return (this.profissional.getEquipe().getAbreviacao() != 'HIG' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO')));   
+    }
+    
+    permissaoNutricao(){
+        return (this.profissional.getEquipe().getAbreviacao() != 'NUT' || (this.atendimento.getFilaAtendimentoOcupacional() != undefined && this.atendimento.getFilaAtendimentoOcupacional().getStatus() != undefined && !this.atendimento.getFilaAtendimentoOcupacional().getStatus().includes('EM ATENDIMENTO')));        
     }
     
     lancandoInformacoes(){

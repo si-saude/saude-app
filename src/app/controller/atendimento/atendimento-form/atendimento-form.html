@@ -19,7 +19,7 @@
 			<li class="tab"><a href="#filaAtendimento">Fila</a></li>
 			<li class="tab"><a href="#atendimento">Atendimento</a></li>
 			<li class="tab"><a href="#aso">Aso</a></li>
-			<li class="tab" [class.disabled]="profissional.equipe.abreviacao != 'NUT'"><a href="#nutricao">Nutrição</a></li>
+			<li class="tab" [class.disabled]="permissaoNutricao()"><a href="#nutricao">Nutrição</a></li>
 			<li class="tab" [class.disabled]="permissaoHO()"><a href="#ho">Higiene Ocupacional</a></li>
 			<li class="tab" [class.disabled]="permissaoEducacaoFisica()"><a href="#educacaoFisica">Educação Física</a></li>
 			<li class="tab"><a href="#fichaColeta">Ficha de Coleta</a></li>			

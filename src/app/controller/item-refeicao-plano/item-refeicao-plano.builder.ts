@@ -12,7 +12,6 @@ export class ItemRefeicaoPlanoBuilder extends GenericBuilder{
         itemRefeicao.setAlimento(new AlimentoBuilder().initialize(null));   
         itemRefeicao.setMedidaCaseira(new MedidaAlimentarBuilder().initialize(null));
         itemRefeicao.setRefeicao(new RefeicaoPlanoBuilder().initialize(null) );
-        itemRefeicao.setAlimentos(new AlimentoBuilder().initializeList(null));
         
         return itemRefeicao;
     }
@@ -42,10 +41,7 @@ export class ItemRefeicaoPlanoBuilder extends GenericBuilder{
         cloneItemRefeicaoPlano.setVe(this.getValue(itemRefeicao, "getVe"));
         cloneItemRefeicaoPlano.setQuantidade(Util.treatDouble(this.getValue(itemRefeicao, "getQuantidade")));
         cloneItemRefeicaoPlano.setObservacao(this.getValue(itemRefeicao, "getObservacao"));
-        
-        console.log("00",cloneItemRefeicaoPlano.getObservacao());
-        cloneItemRefeicaoPlano.setAlimentos(new AlimentoBuilder().cloneList(this.getValue(itemRefeicao,"getAlimentos")));
-        
+                
         if ( this.getValue(itemRefeicao, "getAlimento") != undefined )
             cloneItemRefeicaoPlano.setAlimento(
                     new AlimentoBuilder().clone(this.getValue(itemRefeicao, "getAlimento")));

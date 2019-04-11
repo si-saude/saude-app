@@ -104,7 +104,6 @@ export class MenuAtendimentoNutricaoComponent{
             planoAlimentarFilter.getAtendimento().setId(this.atendimento.getId());       
             this.service.getPlanoAlimentarService().verifyPlanoAlimentar(planoAlimentarFilter).then(p=>{
                 planoAlimentar = new PlanoAlimentarBuilder().clone(p.json());
-                console.log("aqui plano",planoAlimentar.getId());
                 if(planoAlimentar.getId() > 0){
                     window.open('/plano-alimentar/editar/'+planoAlimentar.getId()+"/"+
                             this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getNome())

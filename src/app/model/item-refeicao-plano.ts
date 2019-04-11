@@ -7,7 +7,6 @@ export class ItemRefeicaoPlano {
     private alimento: Alimento;
     private medidaCaseira: MedidaAlimentar;
     private refeicao: RefeicaoPlano;
-    private alimentos: Array<Alimento>;
     private quantidade: number;
     private observacao: string;
     private ve: number;
@@ -67,14 +66,6 @@ export class ItemRefeicaoPlano {
 
     public setRefeicao(refeicao) {
         this.refeicao = refeicao;
-    }
-    
-    getAlimentos():Array<Alimento>{
-        return this.alimentos;
-    }
-    
-    setAlimentos(alimentos:Array<Alimento>){
-        this.alimentos = alimentos;
     }
     
     getObservacao():string {
