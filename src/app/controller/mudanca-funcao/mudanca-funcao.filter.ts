@@ -1,9 +1,11 @@
 import { GenericFilter } from './../../generics/generic.filter';
 
 import { TarefaFilter } from './../tarefa/tarefa.filter';
+import { DateFilter } from './../../generics/date.filter';
 
 export class MudancaFuncaoFilter extends GenericFilter {
     private tarefa: TarefaFilter;
+    private dataTransferencia: DateFilter = new DateFilter(); ;
    
     constructor() {
         super();
@@ -15,5 +17,12 @@ export class MudancaFuncaoFilter extends GenericFilter {
     
     public setTarefa(n: TarefaFilter) {
         this.tarefa = n;
-    }       
+    }      
+    
+    getDataTransferencia() {
+        return this.dataTransferencia;
+    }
+    setDataTransferencia(dataTransferencia: DateFilter) {
+        this.dataTransferencia = dataTransferencia;
+    }
 }

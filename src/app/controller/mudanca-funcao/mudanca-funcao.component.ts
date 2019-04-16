@@ -54,4 +54,9 @@ export class MudancaFuncaoComponent extends GenericListComponent<MudancaFuncao, 
                 console.log( error );
             } )
     }
+    
+    setFilter() {
+        this.initializerDateFilter(this.filter.getDataTransferencia());
+        super.setFilter();        
+    }
 }

@@ -53,7 +53,7 @@
 				<div class="input-field col s4">
 					<fieldset>
 						<legend> Tipo Carboidrato </legend>
-						<select name="alimento.tipoCarboidrato" required 
+						<select name="alimento.tipoCarboidrato" 
 							class="browser-default" [(ngModel)]="alimento.tipoCarboidrato">
 							<option disabled selected value=undefined>Selecione um tipo</option>
 							<option *ngFor="let tipoCarboidrato of tiposCarboidratos" value="{{tipoCarboidrato}}">{{tipoCarboidrato}}</option>

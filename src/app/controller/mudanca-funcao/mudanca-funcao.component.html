@@ -66,6 +66,37 @@
 					[(ngModel)]="filter.tarefa.cliente.pessoa.nome" name="nome">
 			</div>
 		</div>	
+		<div class="row">
+			<div class="input-field col s12">
+				<div class="input-field col s4">
+					<label for="data">Data de Transferência
+						Inicial</label>
+						<app-date-picker [nome]="'dataTransferencia'" 
+									[customDate]="filter.dataTransferencia.inicioCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Transferência Inicial'"									
+									></app-date-picker>
+				</div>
+				<div class="input-field col s4">
+					<label for="dataRevisao">Data de Transferência Final</label>
+							<app-date-picker [nome]="'dataTransferencia'" 
+									[customDate]="filter.dataTransferencia.fimCustomDate" 
+									[obrigatorio]="'false'"
+									[legenda]="'Data de Transferência Final'"									
+									></app-date-picker>
+				</div>
+				<div class="input-field col s4">
+					<fieldset>
+						<legend>Tipo do Filtro</legend>
+						<select name="tipo" class="browser-default"
+							[(ngModel)]="filter.dataTransferencia.typeFilter">
+							<option disabled selected value=0>Selecione um tipo</option>
+							<option *ngFor="let item of typeFilters()" value="{{item}}">{{item}}</option>
+						</select>
+					</fieldset>
+				</div>
+			</div>			
+		</div>
 		<div class="input-field col s12">
 			<div class="modal-content col s6">
 				<label for="equipe">Equipe</label>

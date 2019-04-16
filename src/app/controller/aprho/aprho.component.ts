@@ -24,7 +24,5 @@ export class AprhoComponent extends GenericListComponent<Aprho, AprhoFilter, Apr
     setFilter() {
         this.initializerDateFilter(this.filter.getDataRevisao());
         super.setFilter();        
-    }
-    
-    
+    }    
 }
