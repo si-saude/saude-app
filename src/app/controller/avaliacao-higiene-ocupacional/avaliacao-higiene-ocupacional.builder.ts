@@ -77,13 +77,63 @@ export class AvaliacaoHigieneOcupacionalBuilder extends GenericBuilder {
         cloneAvaliacaoHigieneOcupacional.setObservacaoGHE(this.getValue(avaliacaoHigieneOcupacional,"getObservacaoGHE"));
         cloneAvaliacaoHigieneOcupacional.setJustificativaHO(this.getValue(avaliacaoHigieneOcupacional,"getJustificativaHO"));
         
-        cloneAvaliacaoHigieneOcupacional.setGhe(new GheBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getGhe")));
-        cloneAvaliacaoHigieneOcupacional.setGerencia(new GerenciaBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getGerencia")));
-        cloneAvaliacaoHigieneOcupacional.setCargo(new CargoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getCargo")));
-        cloneAvaliacaoHigieneOcupacional.setProfissional(new ProfissionalSaudeBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getProfissional")));
-        cloneAvaliacaoHigieneOcupacional.setEmpregado(new EmpregadoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getEmpregado")));
-        cloneAvaliacaoHigieneOcupacional.setQuestionarioVedacaoMascara(new QuestionarioVedacaoMascaraBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getQuestionarioVedacaoMascara")));
-                
+        
+        if (this.getValue(avaliacaoHigieneOcupacional,"getGhe") !== undefined) { 
+            cloneAvaliacaoHigieneOcupacional.setGhe(
+                    new GheBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getGhe")));
+            if(!this.idGtZero( cloneAvaliacaoHigieneOcupacional.getGhe()))
+                cloneAvaliacaoHigieneOcupacional.setGhe(undefined);
+        } else {
+            cloneAvaliacaoHigieneOcupacional.setGhe(new GheBuilder().initialize(null));
+        }        
+        
+        
+        if (this.getValue(avaliacaoHigieneOcupacional,"getGerencia") !== undefined) { 
+            cloneAvaliacaoHigieneOcupacional.setGerencia(
+                    new GerenciaBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getGerencia")));
+            if(!this.idGtZero( cloneAvaliacaoHigieneOcupacional.getGerencia()))
+                cloneAvaliacaoHigieneOcupacional.setGerencia(undefined);
+        } else {
+            cloneAvaliacaoHigieneOcupacional.setGerencia(new GerenciaBuilder().initialize(null));
+        }
+        
+        if (this.getValue(avaliacaoHigieneOcupacional,"getCargo") !== undefined) { 
+            cloneAvaliacaoHigieneOcupacional.setCargo(
+                    new CargoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getCargo")));
+            if(!this.idGtZero( cloneAvaliacaoHigieneOcupacional.getCargo()))
+                cloneAvaliacaoHigieneOcupacional.setCargo(undefined);
+        } else {
+            cloneAvaliacaoHigieneOcupacional.setCargo(new CargoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(avaliacaoHigieneOcupacional,"getProfissional") !== undefined) { 
+            cloneAvaliacaoHigieneOcupacional.setProfissional(
+                    new ProfissionalSaudeBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getProfissional")));
+            if(!this.idGtZero( cloneAvaliacaoHigieneOcupacional.getProfissional()))
+                cloneAvaliacaoHigieneOcupacional.setProfissional(undefined);
+        } else {
+            cloneAvaliacaoHigieneOcupacional.setProfissional(new ProfissionalSaudeBuilder().initialize(null));
+        }
+        
+        
+        if (this.getValue(avaliacaoHigieneOcupacional,"getEmpregado") !== undefined) { 
+            cloneAvaliacaoHigieneOcupacional.setEmpregado(
+                    new EmpregadoBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getEmpregado")));
+            if(!this.idGtZero( cloneAvaliacaoHigieneOcupacional.getEmpregado()))
+                cloneAvaliacaoHigieneOcupacional.setEmpregado(undefined);
+        } else {
+            cloneAvaliacaoHigieneOcupacional.setEmpregado(new EmpregadoBuilder().initialize(null));
+        }
+        
+        if (this.getValue(avaliacaoHigieneOcupacional,"getQuestionarioVedacaoMascara") !== undefined) { 
+            cloneAvaliacaoHigieneOcupacional.setQuestionarioVedacaoMascara(
+                    new QuestionarioVedacaoMascaraBuilder().clone(this.getValue(avaliacaoHigieneOcupacional,"getQuestionarioVedacaoMascara")));
+            if(!this.idGtZero( cloneAvaliacaoHigieneOcupacional.getQuestionarioVedacaoMascara()))
+                cloneAvaliacaoHigieneOcupacional.setQuestionarioVedacaoMascara(undefined);
+        } else {
+            cloneAvaliacaoHigieneOcupacional.setQuestionarioVedacaoMascara(new QuestionarioVedacaoMascaraBuilder().initialize(null));
+        } 
+        
         return cloneAvaliacaoHigieneOcupacional;
     }
     

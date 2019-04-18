@@ -69,13 +69,13 @@
 							</app-time-picker>
 			            </div>						
 					</div>	
-					<div class="row">
-						<div class="input-field col s4">
+					<div class="row" >
+						<div class="input-field col s4" [ngStyle]="{'background-color': atendimento.avaliacaoHigieneOcupacional.ghe.id == 0?'red':''}">
 							<label for="gheNumero">GHE (n°)</label> 
 							<input id="gheNumero" type="text" name="gheNumero" disabled
 								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.ghe.codigo">
 						</div>
-						<div class="input-field col s4">
+						<div class="input-field col s4" [ngStyle]="{'background-color': atendimento.avaliacaoHigieneOcupacional.ghe.id == 0?'red':''}">
 							<label for="ghe">GHE</label> 
 							<input id="ghe" type="text" name="ghe" disabled
 								[(ngModel)]="atendimento.avaliacaoHigieneOcupacional.ghe.nome">

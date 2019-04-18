@@ -77,18 +77,25 @@
 
 	<div class="row-empregado row">
 
-		<div class="input-field-empregado input-field col s6">
+		<div class="input-field-empregado input-field col s5">
 			<label for="cargo">Cargo</label> <input id="cargo.nome" type="text"
 				disabled
 				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.cargo.nome"
 				name="cargo" class="input-empregado">
 		</div>
 
-		<div class="input-field-empregado input-field col s6">
+		<div class="input-field-empregado input-field col s3">
 			<label for="gerencia">Gerência</label> <input
 				id="gerencia.codigoCompleto" type="text" disabled
 				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.gerencia.codigoCompleto"
 				name="gerencia" class="input-empregado">
+		</div>
+			<div class="input-field-empregado input-field col s4" 
+				[ngStyle]="{'background-color': verifyColorGhe()?'red':''}">
+			<label for="gerencia">Ghe</label> <input 
+				id="ghe.nome" type="text" disabled
+				[(ngModel)]="atendimento.filaEsperaOcupacional.empregado.ghe.nome"
+				name="ghe" class="input-empregado ">
 		</div>
 
 	</div>

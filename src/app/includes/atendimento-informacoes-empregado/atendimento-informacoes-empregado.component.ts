@@ -14,5 +14,8 @@ export class AtendimentoInformacoesEmpregadoComponent {
     @Input() atendimento: Atendimento;    
     constructor(private utilService: UtilService) {
         
-    }    
+    }   
+    verifyColorGhe(){        
+        return (this.atendimento.getFilaAtendimentoOcupacional().getProfissional().getEquipe().getAbreviacao() == 'HIG' && this.atendimento.getFilaEsperaOcupacional().getEmpregado().getId() > 0 &&this.atendimento.getFilaEsperaOcupacional().getEmpregado().getGhe().getId() == 0)              
+    }
 }
