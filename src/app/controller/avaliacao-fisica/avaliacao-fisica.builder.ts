@@ -64,7 +64,7 @@ export class AvaliacaoFisicaBuilder extends GenericBuilder {
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaValor" )));
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaClassificacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaClassificacao" ));
         cloneAvaliacaoFisica.setAptidaoCardiorrespiratoriaObservacao(this.getValue( avaliacaoFisica, "getAptidaoCardiorrespiratoriaObservacao" ));
-        cloneAvaliacaoFisica.setForcaAbdominalValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getForcaAbdominalValor" )));
+        cloneAvaliacaoFisica.setForcaAbdominalValor(this.getValue( avaliacaoFisica, "getForcaAbdominalValor" ));
         cloneAvaliacaoFisica.setForcaAbdominalClassificacao(this.getValue( avaliacaoFisica, "getForcaAbdominalClassificacao" ));
         cloneAvaliacaoFisica.setForcaAbdominalObservacao(this.getValue( avaliacaoFisica, "getForcaAbdominalObservacao" ));
         cloneAvaliacaoFisica.setFlexibilidadeValor(Util.treatDouble(this.getValue( avaliacaoFisica, "getFlexibilidadeValor" )));

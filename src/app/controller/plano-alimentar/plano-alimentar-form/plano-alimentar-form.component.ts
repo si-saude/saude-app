@@ -83,6 +83,7 @@ export class PlanoAlimentarFormComponent extends GenericFormComponent implements
                             let idAtendimento = res.json()['atendimento']['id'];
                             this.planoAlimentar = new PlanoAlimentarBuilder().clone( res.json() );
                             this.planoAlimentar.getAtendimento().setId(idAtendimento);
+                            this.getNe();
                         } )
                         .catch( error => {
                             this.catchConfiguration( error );

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AtendimentoProafComponent } from './atendimento-proaf.component';
 import { NumberMaskDirectiveModule } from './../../directives/number-mask-directive/number-mask-directive.module';
+import { IntegerMaskDirectiveModule } from './../../directives/integer-mask-directive/integer-mask-directive.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NumberMaskDirectiveModule } from './../../directives/number-mask-direct
     CommonModule,
     RouterModule,
     MaterializeModule,
-    NumberMaskDirectiveModule
+    NumberMaskDirectiveModule,
+    IntegerMaskDirectiveModule
     ],
   exports: [
     AtendimentoProafComponent

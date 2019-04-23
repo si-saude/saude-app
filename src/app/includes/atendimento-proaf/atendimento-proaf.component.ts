@@ -214,15 +214,17 @@ export class AtendimentoProafComponent {
     removeAtividade( afaf: AvaliacaoFisicaAtividadeFisica, index: number ) {
         
         if ( afaf.getTipo() == "REALIZADA" ) {
-            this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica();            
-            let respostaAux = this.respostaAtividadesFisicas.getItens().findIndex(r => r.getIndex() == afaf.getIndex());
-                if(respostaAux => 0){
-                    this.respostaAtividadesFisicas.getItens().splice(respostaAux, 1);
-                    if(this.respostaAtividadesFisicas.getItens().length == 0){
-                       this.respostaAtividadesFisicas.setConteudo(this.simNao[0]);
-                       this.respostaAtividadesFisicas.setItens(undefined);                        
-                    }                    
-                }
+            this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica(); 
+            if(this.respostaAtividadesFisicas.getItens() != undefined){
+                let respostaAux = this.respostaAtividadesFisicas.getItens().findIndex(r => r.getIndex() == afaf.getIndex());
+                    if(respostaAux => 0){
+                        this.respostaAtividadesFisicas.getItens().splice(respostaAux, 1);
+                        if(this.respostaAtividadesFisicas.getItens().length == 0){
+                           this.respostaAtividadesFisicas.setConteudo(this.simNao[0]);
+                           this.respostaAtividadesFisicas.setItens(undefined);                        
+                        }                    
+                    }
+            }
         }   
         this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().splice(index, 1);
     }
@@ -454,16 +456,16 @@ export class AtendimentoProafComponent {
         let aptCardio = Number( this.atendimento.getAvaliacaoFisica().getAptidaoCardiorrespiratoriaValor().toString().replace( ',', '.' ) );
         if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getSexo() == "MASCULINO" ) {           
             
-            if ( idade >= 18 && idade <= 24 ) {
+            if ( idade >= 20 && idade <= 24 ) {
                 if ( aptCardio < 32 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 32 && aptCardio <= 37 ) {
+                } else if ( aptCardio >= 32 && aptCardio < 38 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 38 && aptCardio <= 43 ) {
+                } else if ( aptCardio >= 38 && aptCardio < 44 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 44 && aptCardio <= 50 ) {
+                } else if ( aptCardio >= 44 && aptCardio < 51 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 51 && aptCardio <= 56 ) {
+                } else if ( aptCardio >= 51 && aptCardio < 57 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 57 && aptCardio <= 62 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -473,13 +475,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 25 && idade <= 29 ) {
                 if ( aptCardio < 31 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 31 && aptCardio <= 35 ) {
+                } else if ( aptCardio >= 31 && aptCardio < 36 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 36 && aptCardio <= 42 ) {
+                } else if ( aptCardio >= 36 && aptCardio < 43 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 43 && aptCardio <= 48 ) {
+                } else if ( aptCardio >= 43 && aptCardio < 49 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 49 && aptCardio <= 53 ) {
+                } else if ( aptCardio >= 49 && aptCardio < 54 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 54 && aptCardio <= 59 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -489,13 +491,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 30 && idade <= 34 ) {
                 if ( aptCardio < 29 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 29 && aptCardio <= 34 ) {
+                } else if ( aptCardio >= 29 && aptCardio < 35 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 35 && aptCardio <= 40 ) {
+                } else if ( aptCardio >= 35 && aptCardio < 41 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 41 && aptCardio <= 45 ) {
+                } else if ( aptCardio >= 41 && aptCardio < 46 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 46 && aptCardio <= 51 ) {
+                } else if ( aptCardio >= 46 && aptCardio < 52 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 52 && aptCardio <= 56 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -505,13 +507,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 35 && idade <= 39 ) {
                 if ( aptCardio < 28 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 28 && aptCardio <= 32 ) {
+                } else if ( aptCardio >= 28 && aptCardio < 33 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 33 && aptCardio <= 38 ) {
+                } else if ( aptCardio >= 33 && aptCardio < 39 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 39 && aptCardio <= 43 ) {
+                } else if ( aptCardio >= 39 && aptCardio < 44 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 44 && aptCardio <= 48 ) {
+                } else if ( aptCardio >= 44 && aptCardio < 49 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 49 && aptCardio <= 54 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -521,13 +523,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 40 && idade <= 44 ) {
                 if ( aptCardio < 26 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 26 && aptCardio <= 31 ) {
+                } else if ( aptCardio >= 26 && aptCardio < 32 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 32 && aptCardio <= 35 ) {
+                } else if ( aptCardio >= 32 && aptCardio < 36 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 36 && aptCardio <= 41 ) {
+                } else if ( aptCardio >= 36 && aptCardio < 42 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 42 && aptCardio <= 46 ) {
+                } else if ( aptCardio >= 42 && aptCardio < 47 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 47 && aptCardio <= 51 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -537,13 +539,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 45 && idade <= 49 ) {
                 if ( aptCardio < 25 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 25 && aptCardio <= 29 ) {
+                } else if ( aptCardio >= 25 && aptCardio < 30 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 30 && aptCardio <= 34 ) {
+                } else if ( aptCardio >= 30 && aptCardio < 35 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 35 && aptCardio <= 39 ) {
+                } else if ( aptCardio >= 35 && aptCardio < 40 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 40 && aptCardio <= 43 ) {
+                } else if ( aptCardio >= 40 && aptCardio < 44 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 44 && aptCardio <= 48 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -553,13 +555,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 50 && idade <= 54 ) {
                 if ( aptCardio < 24 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 24 && aptCardio <= 27 ) {
+                } else if ( aptCardio >= 24 && aptCardio < 28 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 28 && aptCardio <= 32 ) {
+                } else if ( aptCardio >= 28 && aptCardio < 33 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 33 && aptCardio <= 36 ) {
+                } else if ( aptCardio >= 33 && aptCardio < 37 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 37 && aptCardio <= 41 ) {
+                } else if ( aptCardio >= 37 && aptCardio < 42 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 42 && aptCardio <= 46 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -569,29 +571,29 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 55 && idade <= 59 ) {
                 if ( aptCardio < 22 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 22 && aptCardio <= 26 ) {
+                } else if ( aptCardio >= 22 && aptCardio < 27 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 27 && aptCardio <= 30 ) {
+                } else if ( aptCardio >= 27 && aptCardio < 31 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 31 && aptCardio <= 34 ) {
+                } else if ( aptCardio >= 31 && aptCardio < 35 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 35 && aptCardio <= 39 ) {
+                } else if ( aptCardio >= 35 && aptCardio < 40 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 40 && aptCardio <= 43 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
                 } else if ( aptCardio > 43 ) {
                     this.setAptidaoCardiorespiratoria( 2 );
                 }
-            } else if ( idade >= 60 ) {
+            } else if ( idade >= 60 && idade <= 65) {
                 if ( aptCardio < 21 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 21 && aptCardio <= 24 ) {
+                } else if ( aptCardio >= 21 && aptCardio < 25 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 25 && aptCardio <= 28 ) {
+                } else if ( aptCardio >= 25 && aptCardio < 29 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 29 && aptCardio <= 32 ) {
+                } else if ( aptCardio >= 29 && aptCardio < 33 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 33 && aptCardio <= 36 ) {
+                } else if ( aptCardio >= 33 && aptCardio < 37 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 37 && aptCardio <= 40 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -599,17 +601,20 @@ export class AtendimentoProafComponent {
                     this.setAptidaoCardiorespiratoria( 2 );
                 }
             }
+            else{
+                this.setAptidaoCardiorespiratoria( -1 );
+            }
         } else {
-            if ( idade >= 18 && idade <= 24 ) {
+            if ( idade >= 20 && idade <= 24 ) {
                 if ( aptCardio < 27 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 27 && aptCardio <= 31 ) {
+                } else if ( aptCardio >= 27 && aptCardio < 32 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 32 && aptCardio <= 36 ) {
+                } else if ( aptCardio >= 32 && aptCardio < 37 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 37 && aptCardio <= 41 ) {
+                } else if ( aptCardio >= 37 && aptCardio < 42 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 42 && aptCardio <= 46 ) {
+                } else if ( aptCardio >= 42 && aptCardio < 47 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 47 && aptCardio <= 51 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -619,13 +624,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 25 && idade <= 29 ) {
                 if ( aptCardio < 26 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 26 && aptCardio <= 30 ) {
+                } else if ( aptCardio >= 26 && aptCardio < 31 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 31 && aptCardio <= 35 ) {
+                } else if ( aptCardio >= 31 && aptCardio < 36 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 36 && aptCardio <= 40 ) {
+                } else if ( aptCardio >= 36 && aptCardio < 41 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 41 && aptCardio <= 44 ) {
+                } else if ( aptCardio >= 41 && aptCardio < 45 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 45 && aptCardio <= 49 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -635,13 +640,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 30 && idade <= 34 ) {
                 if ( aptCardio < 25 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 25 && aptCardio <= 29 ) {
+                } else if ( aptCardio >= 25 && aptCardio < 30 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 30 && aptCardio <= 33 ) {
+                } else if ( aptCardio >= 30 && aptCardio < 34 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 34 && aptCardio <= 37 ) {
+                } else if ( aptCardio >= 34 && aptCardio < 38 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 38 && aptCardio <= 42 ) {
+                } else if ( aptCardio >= 38 && aptCardio < 43 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 43 && aptCardio <= 46 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -651,13 +656,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 35 && idade <= 39 ) {
                 if ( aptCardio < 24 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 24 && aptCardio <= 27 ) {
+                } else if ( aptCardio >= 24 && aptCardio < 28 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 28 && aptCardio <= 31 ) {
+                } else if ( aptCardio >= 28 && aptCardio < 32 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 32 && aptCardio <= 35 ) {
+                } else if ( aptCardio >= 32 && aptCardio < 36 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 36 && aptCardio <= 40 ) {
+                } else if ( aptCardio >= 36 && aptCardio < 41 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 41 && aptCardio <= 44 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -667,13 +672,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 40 && idade <= 44 ) {
                 if ( aptCardio < 22 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 22 && aptCardio <= 25 ) {
+                } else if ( aptCardio >= 22 && aptCardio < 26 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 26 && aptCardio <= 29 ) {
+                } else if ( aptCardio >= 26 && aptCardio < 30 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 30 && aptCardio <= 33 ) {
+                } else if ( aptCardio >= 30 && aptCardio < 34 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 34 && aptCardio <= 37 ) {
+                } else if ( aptCardio >= 34 && aptCardio < 38 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 38 && aptCardio <= 41 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -683,13 +688,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 45 && idade <= 49 ) {
                 if ( aptCardio < 21 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 21 && aptCardio <= 23 ) {
+                } else if ( aptCardio >= 21 && aptCardio < 24 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 24 && aptCardio <= 27 ) {
+                } else if ( aptCardio >= 24 && aptCardio < 28 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 28 && aptCardio <= 31 ) {
+                } else if ( aptCardio >= 28 && aptCardio < 32 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 32 && aptCardio <= 35 ) {
+                } else if ( aptCardio >= 32 && aptCardio < 36 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 36 && aptCardio <= 38 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -699,13 +704,13 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 50 && idade <= 54 ) {
                 if ( aptCardio < 19 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 19 && aptCardio <= 22 ) {
+                } else if ( aptCardio >= 19 && aptCardio < 23 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 23 && aptCardio <= 25 ) {
+                } else if ( aptCardio >= 23 && aptCardio < 26 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 26 && aptCardio <= 29 ) {
+                } else if ( aptCardio >= 26 && aptCardio < 30 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 30 && aptCardio <= 32 ) {
+                } else if ( aptCardio >= 30 && aptCardio < 33 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 33 && aptCardio <= 36 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -715,29 +720,29 @@ export class AtendimentoProafComponent {
             } else if ( idade >= 55 && idade <= 59 ) {
                 if ( aptCardio < 18 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 18 && aptCardio <= 20 ) {
+                } else if ( aptCardio >= 18 && aptCardio < 21 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 21 && aptCardio <= 23 ) {
+                } else if ( aptCardio >= 21 && aptCardio < 24 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 24 && aptCardio <= 27 ) {
+                } else if ( aptCardio >= 24 && aptCardio < 28 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 28 && aptCardio <= 30 ) {
+                } else if ( aptCardio >= 28 && aptCardio < 31 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 31 && aptCardio <= 33 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
                 } else if ( aptCardio > 33 ) {
                     this.setAptidaoCardiorespiratoria( 2 );
                 }
-            } else if ( idade >= 60 ) {
+            } else if ( idade >= 60  && idade <= 65) {
                 if ( aptCardio < 16 ) {
                     this.setAptidaoCardiorespiratoria( 4 );
-                } else if ( aptCardio >= 16 && aptCardio <= 18 ) {
+                } else if ( aptCardio >= 16 && aptCardio < 19 ) {
                     this.setAptidaoCardiorespiratoria( 0 );
-                } else if ( aptCardio >= 19 && aptCardio <= 21 ) {
+                } else if ( aptCardio >= 19 && aptCardio < 22 ) {
                     this.setAptidaoCardiorespiratoria( 6 );
-                } else if ( aptCardio >= 22 && aptCardio <= 24 ) {
+                } else if ( aptCardio >= 22 && aptCardio < 25 ) {
                     this.setAptidaoCardiorespiratoria( 3 );
-                } else if ( aptCardio >= 25 && aptCardio <= 27 ) {
+                } else if ( aptCardio >= 25 && aptCardio < 28 ) {
                     this.setAptidaoCardiorespiratoria( 1 );
                 } else if ( aptCardio >= 28 && aptCardio <= 30 ) {
                     this.setAptidaoCardiorespiratoria( 5 );
@@ -745,12 +750,15 @@ export class AtendimentoProafComponent {
                     this.setAptidaoCardiorespiratoria( 2 );
                 }
             }
+            else{
+                this.setAptidaoCardiorespiratoria( -1 );
+            }
         }
     }
 
     changeForcaAbdominalValor() {
         let idade = this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getIdade();
-        let forcAbdom = Number( this.atendimento.getAvaliacaoFisica().getForcaAbdominalValor().toString().replace( ",", "." ) );
+        let forcAbdom = this.atendimento.getAvaliacaoFisica().getForcaAbdominalValor();
         if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getSexo() == "MASCULINO" ) {
             if ( idade >= 15 && idade <= 19 ) {
                 if ( forcAbdom >= 48 ) {
@@ -908,152 +916,154 @@ export class AtendimentoProafComponent {
         let flex = Number( this.atendimento.getAvaliacaoFisica().getFlexibilidadeValor().toString().replace( ",", "." ) );
         if ( this.atendimento.getFilaEsperaOcupacional().getEmpregado().getPessoa().getSexo() == "MASCULINO" ) {
             if ( idade >= 15 && idade <= 19 ) {
-                if ( flex >= 39 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 34 && flex <= 38 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 29 && flex <= 33 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 24 && flex <= 28 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 23 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            } else if ( idade >= 20 && idade <= 29 ) {
-                if ( flex >= 40 ) {
+                if ( flex > 39 ) {
                     this.setFlexibilidade( 2 );
                 } else if ( flex >= 34 && flex <= 39 ) {
                     this.setFlexibilidade( 1 );
-                } else if ( flex >= 30 && flex <= 33 ) {
+                } else if ( flex >= 29 && flex < 34 ) {
                     this.setFlexibilidade( 3 );
-                } else if ( flex >= 25 && flex <= 29 ) {
+                } else if ( flex >= 24 && flex < 29 ) {
                     this.setFlexibilidade( 0 );
-                } else if ( flex <= 24 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            } else if ( idade >= 30 && idade <= 39 ) {
-                if ( flex >= 38 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 33 && flex <= 37 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 28 && flex <= 32 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 23 && flex <= 27 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 22 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            } else if ( idade >= 40 && idade <= 49 ) {
-                if ( flex >= 35 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 29 && flex <= 34 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 24 && flex <= 28 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 18 && flex <= 23 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 17 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            } else if ( idade >= 50 && idade <= 59 ) {
-                if ( flex >= 35 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 28 && flex <= 34 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 24 && flex <= 27 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 16 && flex <= 23 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 15 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            } else if ( idade >= 60 ) {
-                if ( flex >= 33 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 25 && flex <= 32 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 20 && flex <= 24 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 15 && flex <= 19 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 14 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            }
-        } else {
-            if ( idade >= 15 && idade <= 19 ) {
-                if ( flex >= 43 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 38 && flex <= 42 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 34 && flex <= 37 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 29 && flex <= 33 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 28 ) {
+                } else if ( flex < 24 ) {
                     this.setFlexibilidade( 4 );
                 }
             } else if ( idade >= 20 && idade <= 29 ) {
-                if ( flex >= 41 ) {
+                if ( flex > 40 ) {
                     this.setFlexibilidade( 2 );
-                } else if ( flex >= 37 && flex <= 40 ) {
+                } else if ( flex >= 34 && flex <= 40) {
                     this.setFlexibilidade( 1 );
-                } else if ( flex >= 33 && flex <= 36 ) {
+                } else if ( flex >= 30 && flex < 34 ) {
                     this.setFlexibilidade( 3 );
-                } else if ( flex >= 28 && flex <= 32 ) {
+                } else if ( flex >= 25 && flex < 30 ) {
                     this.setFlexibilidade( 0 );
-                } else if ( flex <= 27 ) {
+                } else if ( flex < 25 ) {
                     this.setFlexibilidade( 4 );
                 }
             } else if ( idade >= 30 && idade <= 39 ) {
-                if ( flex >= 41 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 36 && flex <= 40 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 32 && flex <= 35 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 27 && flex <= 31 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 26 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            } else if ( idade >= 40 && idade <= 49 ) {
-                if ( flex >= 38 ) {
-                    this.setFlexibilidade( 2 );
-                } else if ( flex >= 34 && flex <= 37 ) {
-                    this.setFlexibilidade( 1 );
-                } else if ( flex >= 30 && flex <= 33 ) {
-                    this.setFlexibilidade( 3 );
-                } else if ( flex >= 25 && flex <= 29 ) {
-                    this.setFlexibilidade( 0 );
-                } else if ( flex <= 24 ) {
-                    this.setFlexibilidade( 4 );
-                }
-            } else if ( idade >= 50 && idade <= 59 ) {
-                if ( flex >= 39 ) {
+                if ( flex > 38 ) {
                     this.setFlexibilidade( 2 );
                 } else if ( flex >= 33 && flex <= 38 ) {
                     this.setFlexibilidade( 1 );
-                } else if ( flex >= 30 && flex <= 32 ) {
+                } else if ( flex >= 28 && flex < 33 ) {
                     this.setFlexibilidade( 3 );
-                } else if ( flex >= 25 && flex <= 29 ) {
+                } else if ( flex >= 23 && flex < 28 ) {
                     this.setFlexibilidade( 0 );
-                } else if ( flex <= 24 ) {
+                } else if ( flex < 23 ) {
                     this.setFlexibilidade( 4 );
                 }
-            } else if ( idade >= 60 ) {
-                if ( flex >= 35 ) {
+            } else if ( idade >= 40 && idade <= 49 ) {
+                if ( flex > 35 ) {
                     this.setFlexibilidade( 2 );
-                } else if ( flex >= 31 && flex <= 34 ) {
+                } else if ( flex >= 29 && flex <= 35 ) {
                     this.setFlexibilidade( 1 );
-                } else if ( flex >= 27 && flex <= 30 ) {
+                } else if ( flex >= 24 && flex < 29 ) {
                     this.setFlexibilidade( 3 );
-                } else if ( flex >= 23 && flex <= 26 ) {
+                } else if ( flex >= 18 && flex < 24 ) {
                     this.setFlexibilidade( 0 );
-                } else if ( flex <= 22 ) {
+                } else if ( flex < 18 ) {
                     this.setFlexibilidade( 4 );
                 }
-            }
+            } else if ( idade >= 50 && idade <= 59 ) {
+                if ( flex > 35 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 28 && flex <= 35 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 24 && flex < 28 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 16 && flex < 24 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 16 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            } else if ( idade >= 60 && idade <= 69 ) {
+                if ( flex > 33 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 25 && flex <= 33 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 20 && flex < 25 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 15 && flex < 20 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 15 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            }else
+                this.setFlexibilidade( -1 );
+        } else {
+            if ( idade >= 15 && idade <= 19 ) {
+                if ( flex > 43 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 38 && flex <= 43 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 34 && flex < 38 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 29 && flex < 34 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 29 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            } else if ( idade >= 20 && idade <= 29 ) {
+                if ( flex > 41 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 37 && flex <= 41 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 33 && flex < 37 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 28 && flex < 33 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 28 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            } else if ( idade >= 30 && idade <= 39 ) {
+                if ( flex > 41 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 36 && flex <= 41 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 32 && flex < 36 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 27 && flex < 32 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 27 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            } else if ( idade >= 40 && idade <= 49 ) {
+                if ( flex > 38 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 34 && flex <= 38 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 30 && flex < 34 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 25 && flex < 30 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 25 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            } else if ( idade >= 50 && idade <= 59 ) {
+                if ( flex > 39 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 33 && flex <= 39 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 30 && flex < 33 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 25 && flex < 30 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 25 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            } else if ( idade >= 60 && idade <= 69 ) {
+                if ( flex > 35 ) {
+                    this.setFlexibilidade( 2 );
+                } else if ( flex >= 31 && flex <= 35 ) {
+                    this.setFlexibilidade( 1 );
+                } else if ( flex >= 27 && flex < 31 ) {
+                    this.setFlexibilidade( 3 );
+                } else if ( flex >= 23 && flex < 27 ) {
+                    this.setFlexibilidade( 0 );
+                } else if ( flex < 23 ) {
+                    this.setFlexibilidade( 4 );
+                }
+            }else
+                this.setFlexibilidade( -1 );
         }
     }
 
@@ -1065,9 +1075,9 @@ export class AtendimentoProafComponent {
                 this.setForcaPreensaoManual( 1 );
             } else if ( forcPreenMan >= 41 && forcPreenMan <= 55 ) {
                 this.setForcaPreensaoManual( 0 );
-            } else if ( forcPreenMan >= 30 && forcPreenMan <= 40 ) {
+            } else if ( forcPreenMan >= 30 && forcPreenMan < 41 ) {
                 this.setForcaPreensaoManual( 2 );
-            } else if ( forcPreenMan >= 21 && forcPreenMan <= 29 ) {
+            } else if ( forcPreenMan >= 21 && forcPreenMan < 30 ) {
                 this.setForcaPreensaoManual( 3 );
             } else if ( forcPreenMan < 21 ) {
                 this.setForcaPreensaoManual( 4 );
@@ -1077,11 +1087,11 @@ export class AtendimentoProafComponent {
                 this.setForcaPreensaoManual( 1 );
             } else if ( forcPreenMan >= 29 && forcPreenMan <= 39 ) {
                 this.setForcaPreensaoManual( 0 );
-            } else if ( forcPreenMan >= 21 && forcPreenMan <= 28 ) {
+            } else if ( forcPreenMan >= 21 && forcPreenMan < 29 ) {
                 this.setForcaPreensaoManual( 2 );
-            } else if ( forcPreenMan >= 11 && forcPreenMan <= 20 ) {
+            } else if ( forcPreenMan >= 11 && forcPreenMan < 21 ) {
                 this.setForcaPreensaoManual( 3 );
-            } else if ( forcPreenMan <= 11 ) {
+            } else if ( forcPreenMan < 11 ) {
                 this.setForcaPreensaoManual( 4 );
             }
         }
@@ -1128,7 +1138,12 @@ export class AtendimentoProafComponent {
             this.atendimento.getTriagens()[3].setIndice( 4 );
             this.selectTriagem( 3, 4 );
             this.testesFisicos[0] = 4;
+        }else{            
+            this.atendimento.getTriagens()[3].setIndice( -1 );
+            this.selectTriagem( 3, -1 );
+            this.testesFisicos[0] = 0;
         }
+            
         this.setEstagioContemplacaoTriagem();
     }
 
@@ -1197,6 +1212,11 @@ export class AtendimentoProafComponent {
                 this.atendimento.getTriagens()[5].setIndice( 4 );
                 this.selectTriagem( 5, 4 );
                 this.testesFisicos[2] = 4;
+                break;
+            case -1:
+                this.atendimento.getTriagens()[5].setIndice( -1 );
+                this.selectTriagem( 5, -1 );
+                this.testesFisicos[2] = 0;
                 break;
         }
         this.setEstagioContemplacaoTriagem();
