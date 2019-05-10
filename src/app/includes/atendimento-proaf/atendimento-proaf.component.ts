@@ -82,6 +82,7 @@ export class AtendimentoProafComponent {
         this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica();
         this.getTipoAtendimento();
         this.changeAptidaoCardiorrespiratoriaValor();
+        this.testesFisicos = [0,0,0,0];
     }
 
     ngOnChanges( changes: SimpleChanges ) {
@@ -207,8 +208,7 @@ export class AtendimentoProafComponent {
                     this.respostaAtividadesFisicas.setItens(new Array<ItemRespostaFichaColeta>());
                 this.addItemResposta(this.respostaAtividadesFisicas, afaf);
             }        
-        }
-        
+        }        
     }
 
     removeAtividade( afaf: AvaliacaoFisicaAtividadeFisica, index: number ) {
@@ -224,9 +224,15 @@ export class AtendimentoProafComponent {
                            this.respostaAtividadesFisicas.setItens(undefined);                        
                         }                    
                     }
-            }
+            }            
         }   
         this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().splice(index, 1);
+        
+        setTimeout(()=>{ 
+            if (afaf.getTipo() == "REALIZADA" )                
+                this.setEstagioContemplacaoTriagem();
+       }, 3000);
+        
     }
     
     addItemResposta(resposta: RespostaFichaColeta, afaf: AvaliacaoFisicaAtividadeFisica) {
@@ -251,8 +257,10 @@ export class AtendimentoProafComponent {
             this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica();
             if ( this.respostaAtividadesFisicas != undefined ){
                 let respostaAux = this.getItemByIndex(afaf);
-                if(respostaAux)
+                if(respostaAux){
                    respostaAux.setConteudo(afaf.getAtividadeFisica().getDescricao());
+                   this.setEstagioContemplacaoTriagem();
+                }
             }
         }
     }
@@ -263,8 +271,9 @@ export class AtendimentoProafComponent {
             this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica();
             if (this.respostaAtividadesFisicas != undefined ){
                 let respostaAux = this.getItemByIndex(afaf);
-                if(respostaAux)
-                    respostaAux.getItem().setConteudo(qtdDias.toString());            
+                if(respostaAux){
+                    respostaAux.getItem().setConteudo(qtdDias.toString());   
+                }
             }
         }
     }
@@ -275,8 +284,10 @@ export class AtendimentoProafComponent {
             this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica();
             if (this.respostaAtividadesFisicas != undefined ){
                 let respostaAux = this.getItemByIndex(afaf);
-                if(respostaAux)
+                if(respostaAux){
                     respostaAux.getItem().getItem().setConteudo(afaf.getMinuto().toString());                
+                    this.setEstagioContemplacaoTriagem();
+                }
             }
         }
     }
@@ -285,9 +296,11 @@ export class AtendimentoProafComponent {
         this.respostaAtividadesFisicas = this.getRespostaAtividadesFisica();
         if (this.respostaAtividadesFisicas != undefined ){
             let respostaAux = this.getItemByIndex(afaf);
-            if(respostaAux)
-                respostaAux.getItem().getItem().getItem().setConteudo(afaf.getClassificacao());                
-        }
+            if(respostaAux){
+                respostaAux.getItem().getItem().getItem().setConteudo(afaf.getClassificacao());     
+                this.setEstagioContemplacaoTriagem();
+            }
+        }        
     }
     
     replicateAtividade( afaf: AvaliacaoFisicaAtividadeFisica ) {
@@ -305,6 +318,7 @@ export class AtendimentoProafComponent {
     }
 
     closeModal() {
+        this.setEstagioContemplacaoTriagem();
         this.modalActions.emit( { action: "modal", params: ['close'] } );
     }
     
@@ -356,6 +370,8 @@ export class AtendimentoProafComponent {
     }
 
     setEstagioContemplacaoTriagem() {
+        console.log("aqui1", this.testesFisicos)
+        console.log("aqui1", this.atendimento.getTriagens()[0].getIndice());
         if ( this.atendimento.getTriagens() == undefined || this.atendimento.getTriagens()[1] == undefined ) return;
         if ( !this.atendimento.getAvaliacaoFisica().getPraticaExercicioFisico() )
             if ( !this.atendimento.getAvaliacaoFisica().getInteresseProgramaFisico() ) {
@@ -371,8 +387,8 @@ export class AtendimentoProafComponent {
                 }
         else {
             if ( this.testesFisicos.length > 0 ) {
-                let menorQue4: boolean = false;                    
-                 if(this.testesFisicos.find( x => x < 3 ) < 3){
+                 let menorQue4: boolean = false;                    
+                 if(this.testesFisicos.find( x => x < 3 ) < 3 || this.atendimento.getTriagens()[0].getIndice() < 3){
                      this.atendimento.getTriagens()[1].setIndice( 3 );
                      this.selectTriagem( 1, 3 );  
                  }else{
@@ -1259,85 +1275,78 @@ export class AtendimentoProafComponent {
 
     changeNivelAtividadeFisica() {
         let naf: number = 4;
-        let sumDias: number = 0;
-        let sumMinutos: number = 0;
-        let verifyMuitoAtivo: boolean = false;
-        let exit: boolean = false;
-        let afafAux: AvaliacaoFisicaAtividadeFisica = new AvaliacaoFisicaAtividadeFisica();
-     
-        if ( this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").length > 0 ) {
-            naf = 1;
-                     
-            
-             this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").forEach( afaf => {                         
-                 
-                 if (afaf.getDomingo())
-                     afafAux.setDomingo(afaf.getDomingo());
-                 if (afaf.getSegunda())
-                     afafAux.setSegunda(afaf.getSegunda());
-                 if (afaf.getTerca())
-                     afafAux.setTerca(afaf.getTerca());
-                 if (afaf.getQuarta())
-                     afafAux.setQuarta(afaf.getQuarta());
-                 if (afaf.getQuinta())
-                     afafAux.setQuinta(afaf.getQuinta());
-                 if (afaf.getSexta())
-                     afafAux.setSexta(afaf.getSexta());
-                 if (afaf.getSabado())
-                     afafAux.setSabado(afaf.getSabado());
-             });
-            
-             sumDias = this.getQtdDays(afafAux);
+    if ( this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").length > 0 ) {
+        naf = 1;
              
-            this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").forEach( afaf => {
-                if ( exit ) return;
-                sumMinutos += (afaf.getTotalMinuto() != undefined ? afaf.getTotalMinuto() : 0);    
-                if ( sumDias >= 5 && sumMinutos >= 150 )
-                    naf = this.setNaf(naf, 3);
-                else if ( sumDias >= 5 || sumMinutos >= 150 )
-                    naf = this.setNaf(naf, 0);
-                if ( this.getQtdDays( afaf ) >= 3 && afaf.getMinuto() >= 20 )
-                    if ( afaf.getClassificacao() == this.classificacoes[2] ) {
-                        naf = this.setNaf(naf, 3);
-                        verifyMuitoAtivo = true;
-                    } else if ( afaf.getClassificacao() == this.classificacoes[1] || afaf.getClassificacao() == this.classificacoes[0] ) {
-                        if ( this.getQtdDays( afaf ) >= 5 && afaf.getMinuto() >= 30 && verifyMuitoAtivo ) {
-                            naf = this.setNaf(naf, 2);
-                            exit = true;
-                        }
-                    }
-                if ( !exit && this.getQtdDays( afaf ) >= 5 && afaf.getMinuto() >= 30 )
-                    if ( afaf.getClassificacao() == this.classificacoes[1] || afaf.getClassificacao() == this.classificacoes[0] )
-                        naf = this.setNaf(naf, 3);
-                    else if ( afaf.getClassificacao() == this.classificacoes[2] ) {
-                        naf = this.setNaf(naf, 2);
-                        exit = true;
-                    }
-            } )
+        let diasAtividadeVigorosa = 0;
+        let diasAtividadeNaoVigorosa = 0;
+        let avaliacaoFisicaAtividadeFisicasVigorosas : Array<AvaliacaoFisicaAtividadeFisica> = this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").filter(x=>x.getClassificacao()  == this.classificacoes[2]);
+        let avaliacaoFisicaAtividadeFisicasNaoVigorosas : Array<AvaliacaoFisicaAtividadeFisica> = this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").filter(x=>x.getClassificacao()  != this.classificacoes[2]);
+        let totalMinutosVigorosa = 0;
+        let totalMinutosNaoVigorosa = 0;
+        let diasAtividadeTodas = this.diasSemanaAtividades(this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA"));
+        
+        if(avaliacaoFisicaAtividadeFisicasVigorosas.length > 0){
+           totalMinutosVigorosa = this.somarTotalMinutosAvidades(avaliacaoFisicaAtividadeFisicasVigorosas); 
+           diasAtividadeVigorosa = this.diasSemanaAtividades(avaliacaoFisicaAtividadeFisicasVigorosas);
+         }
+         
+         if(avaliacaoFisicaAtividadeFisicasNaoVigorosas.length > 0){
+             totalMinutosNaoVigorosa = this.somarTotalMinutosAvidades(avaliacaoFisicaAtividadeFisicasNaoVigorosas);
+             diasAtividadeNaoVigorosa = this.diasSemanaAtividades(avaliacaoFisicaAtividadeFisicasNaoVigorosas);
+         }
+         
+         if((diasAtividadeVigorosa >= 5 && totalMinutosVigorosa >= 150) ||
+            (diasAtividadeVigorosa >= 3 && totalMinutosVigorosa >= 60 && diasAtividadeNaoVigorosa >= 5 && totalMinutosNaoVigorosa >= 150)){
+             naf = 2;
+         } 
+         else if((diasAtividadeVigorosa >= 3 && totalMinutosVigorosa >= 60) || 
+                 (diasAtividadeNaoVigorosa >= 5 && totalMinutosNaoVigorosa >= 150) ||
+                 (diasAtividadeTodas >= 5 && (totalMinutosVigorosa + totalMinutosNaoVigorosa)>= 150)){
+             naf = 3;                
+         }else if(diasAtividadeTodas >= 5 || (totalMinutosVigorosa + totalMinutosNaoVigorosa>= 150))
+             naf = 0;  
+          else if(diasAtividadeTodas < 2 && (totalMinutosVigorosa + totalMinutosNaoVigorosa < 10) )    
+             naf = 4;
+          else
+             naf = 1;
         }
         this.nivelAtividadeFisica.emit( this.nivelAtividadeFisicas[naf] );
+       
     }
     
-    setNaf(naf: number, num: number) {
-        let grau = this.getGrauNaf(num);
-        if ( this.getGrauNaf(naf) > grau )
-            return naf;
-        else return num;
+    
+    somarTotalMinutosAvidades(avaliacaoFisicaAtividadeFisica: Array<AvaliacaoFisicaAtividadeFisica>){
+        let total :number = 0;
+        avaliacaoFisicaAtividadeFisica.forEach(x=> total += x.getTotalMinuto());
+        
+        return total;
     }
     
-    getGrauNaf( num: number ) {
-        switch( num ) {
-            case 0:
-                return 3;
-            case 1:
-                return 2;
-            case 2:
-                return 5;
-            case 3:
-                return 4;
-            case 4:
-                return 1;
-        }
+    
+    diasSemanaAtividades(avaliacaoFisicaAtividadeFisica: Array<AvaliacaoFisicaAtividadeFisica>){        
+        
+        let afafAux: AvaliacaoFisicaAtividadeFisica = new AvaliacaoFisicaAtividadeFisica();     
+        
+         this.atendimento.getAvaliacaoFisica().getAvaliacaoFisicaAtividadeFisicas().filter(x=> x.getTipo() == "REALIZADA").forEach( afaf => {                         
+             
+             if (afaf.getDomingo())
+                 afafAux.setDomingo(afaf.getDomingo());
+             if (afaf.getSegunda())
+                 afafAux.setSegunda(afaf.getSegunda());
+             if (afaf.getTerca())
+                 afafAux.setTerca(afaf.getTerca());
+             if (afaf.getQuarta())
+                 afafAux.setQuarta(afaf.getQuarta());
+             if (afaf.getQuinta())
+                 afafAux.setQuinta(afaf.getQuinta());
+             if (afaf.getSexta())
+                 afafAux.setSexta(afaf.getSexta());
+             if (afaf.getSabado())
+                 afafAux.setSabado(afaf.getSabado());
+         });
+        
+         return this.getQtdDays(afafAux);               
     }
     
     getQtdDays( afaf: AvaliacaoFisicaAtividadeFisica ) {
